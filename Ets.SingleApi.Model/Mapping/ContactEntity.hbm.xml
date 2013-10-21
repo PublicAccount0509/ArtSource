@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.ContactEntity, Ets.SingleApi.Model" table="Contact" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="ContactId" column="ContactID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="Title" column="Title" type="String" not-null="false" />
+		<property name="Forename" column="Forename" type="String" />
+		<property name="Surname" column="Surname" type="String" />
+		<property name="Telephone" column="Telephone" type="String" not-null="false" />
+		<property name="Fax" column="Fax" type="String" not-null="false" />
+		<property name="Email" column="Email" type="String" not-null="false" />
+		<property name="Mapimages" column="Mapimages" type="String" not-null="false" />
+		<property name="Sex" column="Sex" type="Byte" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="SupplierContactList" cascade="none" lazy="true" table="SupplierContact">
+			<key column="ContactID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierContactEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

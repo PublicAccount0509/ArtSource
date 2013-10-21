@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierDishEntity, Ets.SingleApi.Model" table="SupplierDish" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="SupplierDishId" column="SupplierDishID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="SupplierCategoryId" column="SupplierCategoryID" type="Int32" not-null="false" />
+		<property name="DishId" column="DishID" type="Int32" />
+		<property name="DishNo" column="DishNo" type="String" not-null="false" />
+		<property name="SupplierDishName" column="SupplierDishName" type="String" not-null="false" />
+		<property name="Price" column="Price" type="Decimal" />
+		<property name="DishDescription" column="DishDescription" type="String" not-null="false" />
+		<property name="Recipe" column="Recipe" type="String" not-null="false" />
+		<property name="StockLevel" column="StockLevel" type="Int32" />
+		<property name="IsSpecialOffer" column="IsSpecialOffer" type="Boolean" not-null="false" />
+		<property name="SpecialOfferNo" column="SpecialOfferNo" type="Int32" />
+		<property name="SuppllierDishDescription" column="SuppllierDishDescription" type="String" not-null="false" />
+		<property name="Online" column="Online" type="Boolean" />
+		<property name="Fuzi" column="fuzi" type="Int32" not-null="false" />
+		<property name="SpicyLevel" column="SpicyLevel" type="Int32" not-null="false" />
+		<property name="Vegetarian" column="Vegetarian" type="Int32" not-null="false" />
+		<property name="HasNuts" column="HasNuts" type="Int32" not-null="false" />
+		<property name="SupplierDishOldId" column="SupplierDishOldId" type="Int32" not-null="false" />
+		<property name="AverageRating" column="AverageRating" type="Int32" not-null="false" />
+		<property name="Recommended" column="Recommended" type="Boolean" not-null="false" />
+		<property name="PackagingFee" column="PackagingFee" type="Decimal" not-null="false" />
+		<property name="QuanPin" column="QuanPin" type="String" not-null="false" />
+		<property name="JianPin" column="JianPin" type="String" not-null="false" />
+		<property name="IsCommission" column="IsCommission" type="Boolean" not-null="false" />
+		<property name="IsDiscount" column="IsDiscount" type="Boolean" not-null="false" />
+		<property name="IsDel" column="IsDel" type="Boolean" not-null="false" />
+		<property name="ModifyTime" column="ModifyTime" type="Timestamp" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="BundleSupplierDishList" cascade="none" lazy="true" table="BundleSupplierDish">
+			<key column="SupplierDishID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.BundleSupplierDishEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="CrossSupplierDishList" cascade="none" lazy="true" table="CrossSupplierDish">
+			<key column="SupplierDishID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.CrossSupplierDishEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="MenuLayoutDishList" cascade="none" lazy="true" table="MenuLayoutDish">
+			<key column="SupplierDishId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.MenuLayoutDishEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="SupplierDishMinNumberList" cascade="none" lazy="true" table="supplierDishMinNumber">
+			<key column="supplierDishID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierDishMinNumberEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="DishImage" class="Ets.SingleApi.Model.Repository.DishImageEntity, Ets.SingleApi.Model" column="DishImageID" />
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

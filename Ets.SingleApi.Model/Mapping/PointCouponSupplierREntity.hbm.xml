@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.PointCouponSupplierREntity, Ets.SingleApi.Model" table="PointCouponSupplier_R" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="PCSRId" column="PCSRID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The foreign keys-->
+		<many-to-one name="PointCoupon" class="Ets.SingleApi.Model.Repository.PointcouponEntity, Ets.SingleApi.Model" column="PointCouponID" />
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

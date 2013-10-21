@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2938E503-493B-4828-A9BD-D6E3F8692596}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ets.SingleApi.Services</RootNamespace>
+    <AssemblyName>Ets.SingleApi.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Services.Transaction">
+      <HintPath>..\lib\Castle.Services.Transaction.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessAreaServices.cs" />
+    <Compile Include="BusinessArea\AreaType.cs" />
+    <Compile Include="BusinessArea\CountryBusinessArea.cs" />
+    <Compile Include="BusinessArea\IBusinessArea.cs" />
+    <Compile Include="BusinessArea\ProvinceBusinessArea.cs" />
+    <Compile Include="BusinessArea\CityBusinessArea.cs" />
+    <Compile Include="BusinessArea\RegionBusinessArea.cs" />
+    <Compile Include="BusinessArea\BusinessAreaBusinessArea.cs" />
+    <Compile Include="BusinessArea\BusinessArea.cs" />
+    <Compile Include="BusinessArea\AllAreaBusinessArea.cs" />
+    <Compile Include="CuisineServices.cs" />
+    <Compile Include="Order\IUserOrders.cs" />
+    <Compile Include="Order\UserOrdersData.cs" />
+    <Compile Include="Order\UserWaiMaiOrders.cs" />
+    <Compile Include="Order\UserDingTaiOrders.cs" />
+    <Compile Include="Order\UserAllOrders.cs" />
+    <Compile Include="SendPassword\EmailSendPassword.cs" />
+    <Compile Include="SendPassword\ISendPassword.cs" />
+    <Compile Include="IDetailServices\ISmsDetailServices.cs" />
+    <Compile Include="IExternalServices\ISmsExternalServices.cs" />
+    <Compile Include="IRepository\INHibernateRepository.cs" />
+    <Compile Include="Login\ILogin.cs" />
+    <Compile Include="Login\LoginData.cs" />
+    <Compile Include="Login\TelephoneLogin.cs" />
+    <Compile Include="Login\EmailLogin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendPassword\SendPasswordData.cs" />
+    <Compile Include="SendPassword\TelephoneSendPassword.cs" />
+    <Compile Include="ServicesCommon.cs" />
+    <Compile Include="DetailServices\SmsDetailServices.cs" />
+    <Compile Include="SmsServices.cs" />
+    <Compile Include="SupplierServices.cs" />
+    <Compile Include="UsersServices.cs" />
+    <Compile Include="AuthenServices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">
+      <Project>{53f8a27e-0e97-4407-a106-439274c98e97}</Project>
+      <Name>Ets.SingleApi.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">
+      <Project>{b6f811c6-70b6-4d50-a5db-c7589371860c}</Project>
+      <Name>Ets.SingleApi.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ets.SingleApi.Utility\Ets.SingleApi.Utility.csproj">
+      <Project>{a26c9fac-c233-4576-a604-9806ad017a97}</Project>
+      <Name>Ets.SingleApi.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

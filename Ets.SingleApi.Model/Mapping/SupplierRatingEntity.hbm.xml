@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierRatingEntity, Ets.SingleApi.Model" table="SupplierRating" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="SupplierRatingId" column="SupplierRatingID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="Rating" column="Rating" type="Int32" not-null="false" />
+		<property name="VoteCount" column="VoteCount" type="Int32" not-null="false" />
+		<property name="CustomerId" column="CustomerID" type="Int32" not-null="false" />
+		<property name="SupplierCommentId" column="SupplierCommentID" type="Int32" not-null="false" />
+		<property name="DateAdded" column="DateAdded" type="Timestamp" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="RatingType" class="Ets.SingleApi.Model.Repository.RatingTypeEntity, Ets.SingleApi.Model" column="RatingTypeID" />
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.MenuLayoutStyleEntity, Ets.SingleApi.Model" table="MenuLayoutStyle" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="Name" column="Name" type="String" />
+		<property name="DishNumber" column="DishNumber" type="Byte" />
+		<property name="CreateTime" column="CreateTime" type="Timestamp" not-null="false" />
+		<property name="ImgUrlX" column="ImgUrlX" type="String" not-null="false" />
+		<property name="ImgUrlZ" column="ImgUrlZ" type="String" not-null="false" />
+		<property name="ImgUrlD" column="ImgUrlD" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="MenuLayoutSupplierList" cascade="none" lazy="true" table="MenuLayoutSupplier">
+			<key column="LayoutStyleCode" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.MenuLayoutSupplierEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

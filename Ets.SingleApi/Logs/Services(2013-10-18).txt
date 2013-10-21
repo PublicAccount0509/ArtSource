@@ -1,0 +1,312 @@
+
+----------------------header--------------------------
+2013-10-18 00:17:56,287 [5] INFO  Ets.SingleApi.Services - GetCuisineList
+2013-10-18 00:18:39,488 [14] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-18 00:19:22,091 [15] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-18 00:19:57,083 [15] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 00:29:15,492 [11] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-18 00:30:21,223 [11] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 10:29:21,430 [8] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 10:29:21,430 [11] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 10:29:21,430 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 10:29:36,616 [10] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 10:32:53,659 [11] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 10:33:09,931 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 10:42:57,957 [22] INFO  Ets.SingleApi.Services - SendAuthCode
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 11:19:13,325 [14] INFO  Ets.SingleApi.Services - SendAuthCode
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 11:21:56,506 [6] INFO  Ets.SingleApi.Services - SendAuthCode
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 14:29:12,513 [7] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 14:30:13,815 [7] ERROR Ets.SingleApi.Services - NHibernate.QueryException: Not all named parameters have been set: [':Point'] [select * from Supplier where SpaceLatLong.STDistance(geography::Point(39.906641807341, 116.49579479394,4326)) = 0]
+   at NHibernate.Impl.AbstractQueryImpl.VerifyParameters(Boolean reserveFirstParameter)
+   at NHibernate.Impl.AbstractQueryImpl.VerifyParameters()
+   at NHibernate.Impl.SqlQueryImpl.VerifyParameters()
+   at NHibernate.Impl.SqlQueryImpl.List[T]()
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 122
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 15:39:36,624 [7] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 15:40:03,272 [7] ERROR Ets.SingleApi.Services - NHibernate.Exceptions.GenericADOException: could not execute query
+[ select * from Supplier where SpaceLatLong.STDistance(Point(39.906641807341, 116.49579479394,4326)) = 0 ]
+[SQL: select * from Supplier where SpaceLatLong.STDistance(Point(39.906641807341, 116.49579479394,4326)) = 0] ---> System.Data.SqlClient.SqlException: 'Point' 不是可以识别的 内置函数名称。
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+   at NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Custom.CustomLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Impl.SessionImpl.ListCustomQuery(ICustomQuery customQuery, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List(NativeSQLQuerySpecification spec, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List[T](NativeSQLQuerySpecification spec, QueryParameters queryParameters)
+   at NHibernate.Impl.SqlQueryImpl.List[T]()
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 122
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 17:10:19,637 [14] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 17:11:37,998 [14] ERROR Ets.SingleApi.Services - System.ArgumentException: The value "System.Object[]" is not of type "Ets.SingleApi.Model.Repository.SupplierEntity" and cannot be used in this generic collection.
+Parameter name: value
+   at System.ThrowHelper.ThrowWrongValueTypeArgumentException(Object value, Type targetType)
+   at System.Collections.Generic.List`1.System.Collections.IList.Add(Object item)
+   at NHibernate.Util.ArrayHelper.AddAll(IList to, IList from)
+   at NHibernate.Impl.SessionImpl.ListCustomQuery(ICustomQuery customQuery, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List(NativeSQLQuerySpecification spec, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List[T](NativeSQLQuerySpecification spec, QueryParameters queryParameters)
+   at NHibernate.Impl.SqlQueryImpl.List[T]()
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 124
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 17:12:40,018 [5] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 17:13:12,834 [5] ERROR Ets.SingleApi.Services - System.ArgumentException: The value "System.Object[]" is not of type "Ets.SingleApi.Model.Services.SupplierModel" and cannot be used in this generic collection.
+Parameter name: value
+   at System.ThrowHelper.ThrowWrongValueTypeArgumentException(Object value, Type targetType)
+   at System.Collections.Generic.List`1.System.Collections.IList.Add(Object item)
+   at NHibernate.Util.ArrayHelper.AddAll(IList to, IList from)
+   at NHibernate.Impl.SessionImpl.ListCustomQuery(ICustomQuery customQuery, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List(NativeSQLQuerySpecification spec, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List[T](NativeSQLQuerySpecification spec, QueryParameters queryParameters)
+   at NHibernate.Impl.SqlQueryImpl.List[T]()
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 124
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 17:14:18,442 [8] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------header--------------------------
+2013-10-18 18:14:23,931 [6] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 18:15:06,345 [6] ERROR Ets.SingleApi.Services - NHibernate.Exceptions.GenericADOException: could not execute query
+[ exec Pro_QuerySupplierList @p0, @p1 ]
+  Name:SupplierName - Value:粉  Name:SupplierDishName - Value:粉
+[SQL: exec Pro_QuerySupplierList @p0, @p1] ---> System.IndexOutOfRangeException: Address
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at NHibernate.Driver.NHybridDataReader.GetOrdinal(String name)
+   at NHibernate.Type.NullableType.NullSafeGet(IDataReader rs, String name)
+   at NHibernate.Type.NullableType.NullSafeGet(IDataReader rs, String name, ISessionImplementor session, Object owner)
+   at NHibernate.Loader.Custom.CustomLoader.ScalarResultColumnProcessor.Extract(Object[] data, IDataReader resultSet, ISessionImplementor session)
+   at NHibernate.Loader.Custom.CustomLoader.ResultRowProcessor.BuildResultRow(Object[] data, IDataReader resultSet, Boolean hasTransformer, ISessionImplementor session)
+   at NHibernate.Loader.Custom.CustomLoader.GetResultColumnOrRow(Object[] row, IResultTransformer resultTransformer, IDataReader rs, ISessionImplementor session)
+   at NHibernate.Loader.Loader.GetRowFromResultSet(IDataReader resultSet, ISessionImplementor session, QueryParameters queryParameters, LockMode[] lockModeArray, EntityKey optionalObjectKey, IList hydratedObjects, EntityKey[] keys, Boolean returnProxies)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Custom.CustomLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Impl.SessionImpl.ListCustomQuery(ICustomQuery customQuery, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List(NativeSQLQuerySpecification spec, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List(NativeSQLQuerySpecification spec, QueryParameters queryParameters)
+   at NHibernate.Impl.SqlQueryImpl.List()
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 124
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 18:16:58,483 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 18:39:41,636 [8] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 18:40:34,734 [8] ERROR Ets.SingleApi.Services - NHibernate.Exceptions.GenericADOException: could not execute query
+[ exec Pro_QuerySupplierList ?, ? ]
+  Name:SupplierName - Value:粉  Name:SupplierDishName - Value:%
+[SQL: exec Pro_QuerySupplierList ?, ?] ---> System.NotSupportedException: The query should start with 'SELECT' or 'SELECT DISTINCT'
+   at NHibernate.Dialect.MsSql2005Dialect.GetAfterSelectInsertPoint(SqlString sql)
+   at NHibernate.Dialect.MsSql2005Dialect.GetLimitString(SqlString querySqlString, Int32 offset, Int32 limit, Nullable`1 offsetParameterIndex, Nullable`1 limitParameterIndex)
+   at NHibernate.Loader.Loader.PrepareQueryCommand(QueryParameters queryParameters, Boolean scroll, ISessionImplementor session)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Custom.CustomLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Impl.SessionImpl.ListCustomQuery(ICustomQuery customQuery, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List(NativeSQLQuerySpecification spec, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.SessionImpl.List(NativeSQLQuerySpecification spec, QueryParameters queryParameters)
+   at NHibernate.Impl.SqlQueryImpl.List()
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 134
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------header--------------------------
+2013-10-18 18:41:37,371 [7] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 18:42:01,679 [7] ERROR Ets.SingleApi.Services - System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.String.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at Ets.SingleApi.Services.SupplierServices.<GetSupplierList>b__2(Object[] item) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 136
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 135
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+2013-10-18 18:42:43,993 [14] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 18:42:46,826 [14] ERROR Ets.SingleApi.Services - System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.String.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at Ets.SingleApi.Services.SupplierServices.<GetSupplierList>b__2(Object[] item) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 136
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 135
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+2013-10-18 18:42:55,884 [14] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 18:43:00,503 [14] ERROR Ets.SingleApi.Services - System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.String.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at Ets.SingleApi.Services.SupplierServices.<GetSupplierList>b__2(Object[] item) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 136
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 135
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+2013-10-18 18:43:26,424 [16] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 18:43:29,095 [16] ERROR Ets.SingleApi.Services - System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.String.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at Ets.SingleApi.Services.SupplierServices.<GetSupplierList>b__2(Object[] item) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 136
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 135
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+2013-10-18 18:43:34,787 [14] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 18:44:28,720 [14] ERROR Ets.SingleApi.Services - System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.String.System.IConvertible.ToInt32(IFormatProvider provider)
+   at System.Convert.ToInt32(Object value)
+   at Ets.SingleApi.Services.SupplierServices.<GetSupplierList>b__2(Object[] item) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 136
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 135
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 21:32:07,949 [8] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 22:03:33,004 [11] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-18 22:03:57,298 [11] ERROR Ets.SingleApi.Services - System.ArgumentException: Parameter OrderBy does not exist as a named parameter in [exec Pro_QuerySupplierListHasDistance :SupplierName, :SupplierDishName,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize]
+   at NHibernate.Impl.AbstractQueryImpl.SetParameter(String name, Object val, IType type)
+   at NHibernate.Impl.AbstractQueryImpl.SetString(String name, String val)
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 104
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-18 22:05:16,338 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.PaymentEntity, Ets.SingleApi.Model" table="Payment" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="PaymentId" column="PaymentID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="PaymentTypeId" column="PaymentTypeID" type="Int32" />
+		<property name="Amount" column="Amount" type="Decimal" />
+		<property name="PaymentDate" column="PaymentDate" type="Timestamp" />
+		<property name="TransactionCode" column="TransactionCode" type="String" not-null="false" />
+		<property name="CardId" column="CardID" type="String" not-null="false" />
+		<property name="PaymentMethodId" column="PaymentMethodID" type="Int32" />
+		<property name="Authorized" column="Authorized" type="Boolean" not-null="false" />
+		<property name="CVV" column="CVV" type="Int32" not-null="false" />
+		<property name="AVS" column="AVS" type="String" not-null="false" />
+		<property name="PC" column="PC" type="Int32" not-null="false" />
+		<property name="AuthCode" column="AuthCode" type="String" not-null="false" />
+		<property name="VoicePayResponse" column="VoicePayResponse" type="String" not-null="false" />
+		<property name="TransactionFee" column="TransactionFee" type="Decimal" not-null="false" />
+		<property name="MethodChangeHistory" column="MethodChangeHistory" type="String" not-null="false" />
+		<property name="PayBank" column="payBank" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Delivery" class="Ets.SingleApi.Model.Repository.DeliveryEntity, Ets.SingleApi.Model" column="DeliveryID" />
+	</class>
+</hibernate-mapping>

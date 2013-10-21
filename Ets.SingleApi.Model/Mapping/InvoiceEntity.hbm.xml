@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.InvoiceEntity, Ets.SingleApi.Model" table="Invoice" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="InvoiceId" column="InvoiceID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="InvoiceDueDate" column="InvoiceDueDate" type="Timestamp" not-null="false" />
+		<property name="InvoiceIssuedDates" column="InvoiceIssuedDates" type="Timestamp" not-null="false" />
+		<property name="InvoiceStartDate" column="InvoiceStartDate" type="Timestamp" not-null="false" />
+		<property name="InvoiceEndDate" column="InvoiceEndDate" type="Timestamp" not-null="false" />
+		<property name="InvoiceStatus" column="InvoiceStatus" type="Int32" not-null="false" />
+		<property name="TransactionFeeTotal" column="TransactionFeeTotal" type="Decimal" not-null="false" />
+		<property name="CardFeeTotal" column="CardFeeTotal" type="Decimal" not-null="false" />
+		<property name="CommissionFeeTotal" column="CommissionFeeTotal" type="Decimal" not-null="false" />
+		<property name="TableBookingFeeTotal" column="TableBookingFeeTotal" type="Decimal" not-null="false" />
+		<property name="InvoiceNetAmount" column="InvoiceNetAmount" type="Decimal" not-null="false" />
+		<property name="InvoiceVatAmount" column="InvoiceVatAmount" type="Decimal" not-null="false" />
+		<property name="InvoiceTotalAmount" column="InvoiceTotalAmount" type="Decimal" not-null="false" />
+		<property name="DateCreated" column="DateCreated" type="Timestamp" not-null="false" />
+		<property name="TotCashOrder" column="totCashOrder" type="Decimal" not-null="false" />
+		<property name="TotcardOrder" column="totcardOrder" type="Decimal" not-null="false" />
+		<property name="InvoiceNo" column="InvoiceNo" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="StatementList" cascade="none" lazy="true" table="Statement">
+			<key column="InvoiceID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.StatementEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

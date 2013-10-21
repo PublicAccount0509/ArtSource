@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierCouponEntity, Ets.SingleApi.Model" table="SupplierCoupon" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="SupplierCouponTypeId" column="SupplierCouponTypeID" type="Int32" />
+		<property name="OneUserMax" column="OneUserMax" type="Int32" not-null="false" />
+		<property name="NumberMaxUse" column="NumberMaxUse" type="Int32" not-null="false" />
+		<property name="BeginDate" column="BeginDate" type="Timestamp" not-null="false" />
+		<property name="EndDate" column="EndDate" type="Timestamp" not-null="false" />
+		<property name="Discount" column="Discount" type="Decimal" not-null="false" />
+		<property name="RateLower" column="RateLower" type="Decimal" not-null="false" />
+		<property name="RateHigh" column="RateHigh" type="Decimal" not-null="false" />
+		<property name="Description" column="Description" type="String" not-null="false" />
+		<property name="CreateTime" column="CreateTime" type="Timestamp" not-null="false" />
+		<property name="TakeoutDiscount" column="TakeoutDiscount" type="Decimal" not-null="false" />
+		<property name="TakeoutCouponTypeId" column="TakeoutCouponTypeID" type="Int32" not-null="false" />
+		<property name="TakeoutRateLower" column="TakeoutRateLower" type="Decimal" not-null="false" />
+		<property name="TakeoutRateHigh" column="TakeoutRateHigh" type="Decimal" not-null="false" />
+		<property name="TakeoutDescription" column="TakeoutDescription" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="SupplierCouponTimeList" cascade="none" lazy="true" table="SupplierCouponTime">
+			<key column="SupplierCouponId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierCouponTimeEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierBusinessAreaEntity, Ets.SingleApi.Model" table="SupplierBusinessArea" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+	<composite-id access="field">
+			 <key-property name="SupplierId" column="SupplierID" type="Int32" />
+ <key-property name="BusinessAreaId" column="BusinessAreaID" type="String" />
+
+		</composite-id>
+		
+		<!--The foreign keys-->
+		<many-to-one name="BusinessArea" class="Ets.SingleApi.Model.Repository.AddrBusinessAreaEntity, Ets.SingleApi.Model" column="BusinessAreaID" />
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

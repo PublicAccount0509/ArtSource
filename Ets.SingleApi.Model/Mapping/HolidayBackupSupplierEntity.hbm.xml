@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.HolidayBackupSupplierEntity, Ets.SingleApi.Model" table="HolidayBackupSupplier" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="BackupSupplierId" column="BackupSupplierId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="FeatureOnList" column="FeatureOnList" type="String" not-null="false" />
+		<property name="FeatureOffList" column="FeatureOffList" type="String" not-null="false" />
+		<property name="DateStart" column="DateStart" type="Timestamp" not-null="false" />
+		<property name="DateEnd" column="DateEnd" type="Timestamp" not-null="false" />
+		<property name="IsFinished" column="IsFinished" type="Int32" not-null="false" />
+		<property name="ScrollingText" column="ScrollingText" type="String" not-null="false" />
+		<property name="TableOnList" column="TableOnList" type="String" not-null="false" />
+		<property name="TableOffList" column="TableOffList" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Feature" class="Ets.SingleApi.Model.Repository.FeatureEntity, Ets.SingleApi.Model" column="FeatureId" />
+	</class>
+</hibernate-mapping>

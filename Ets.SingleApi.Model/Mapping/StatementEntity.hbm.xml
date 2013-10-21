@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.StatementEntity, Ets.SingleApi.Model" table="Statement" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="StatementId" column="StatementID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="StatementIssuedDate" column="StatementIssuedDate" type="Timestamp" not-null="false" />
+		<property name="StatementStartDate" column="StatementStartDate" type="Timestamp" not-null="false" />
+		<property name="StatementEndDate" column="StatementEndDate" type="Timestamp" not-null="false" />
+		<property name="AllOrdersTotalAmount" column="AllOrdersTotalAmount" type="Decimal" not-null="false" />
+		<property name="CardOrdersNetAmount" column="CardOrdersNetAmount" type="Decimal" not-null="false" />
+		<property name="CardOrdersVatAmount" column="CardOrdersVatAmount" type="Decimal" not-null="false" />
+		<property name="CardOrdersTotalAmount" column="CardOrdersTotalAmount" type="Decimal" not-null="false" />
+		<property name="Balance" column="Balance" type="Decimal" not-null="false" />
+		<property name="DateCreated" column="DateCreated" type="Timestamp" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Invoice" class="Ets.SingleApi.Model.Repository.InvoiceEntity, Ets.SingleApi.Model" column="InvoiceID" />
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.AutorizationEntity, Ets.SingleApi.Model" table="Autorization" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="UserId" column="UserId" type="Int32" />
+		<property name="Scope" column="Scope" type="String" not-null="false" />
+		<property name="CreatedTime" column="CreatedTime" type="Timestamp" />
+		<property name="Code" column="Code" type="String" />
+		<!--The foreign keys-->
+		<many-to-one name="AppKey" class="Ets.SingleApi.Model.Repository.AppEntity, Ets.SingleApi.Model" column="AppKey" />
+	</class>
+</hibernate-mapping>

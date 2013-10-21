@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.FeedBackEntity, Ets.SingleApi.Model" table="FeedBack" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="FeedBackId" column="FeedBackID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="Forename" column="Forename" type="String" />
+		<property name="Surname" column="Surname" type="String" />
+		<property name="Address" column="Address" type="String" not-null="false" />
+		<property name="Email" column="Email" type="String" not-null="false" />
+		<property name="Phone" column="Phone" type="String" not-null="false" />
+		<property name="DateAdded" column="DateAdded" type="Timestamp" not-null="false" />
+		<property name="Status" column="Status" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="FeedBackCommentList" cascade="none" lazy="true" table="FeedBackComment">
+			<key column="FeedBackID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.FeedBackCommentEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

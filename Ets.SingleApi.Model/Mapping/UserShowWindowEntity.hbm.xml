@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.UserShowWindowEntity, Ets.SingleApi.Model" table="UserShowWindow" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="ShoWinId" column="ShoWinId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="WinType" column="WinType" type="Int32" not-null="false" />
+		<property name="IsShowWindow" column="IsShowWindow" type="Boolean" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Login" class="Ets.SingleApi.Model.Repository.LoginEntity, Ets.SingleApi.Model" column="LoginId" />
+	</class>
+</hibernate-mapping>

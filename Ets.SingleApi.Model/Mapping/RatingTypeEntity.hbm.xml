@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.RatingTypeEntity, Ets.SingleApi.Model" table="RatingType" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="RatingTypeId" column="RatingTypeID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="RatingTypeName" column="RatingTypeName" type="String" />
+		<property name="RatingTypeName1" column="RatingTypeName1" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="SupplierRatingList" cascade="none" lazy="true" table="SupplierRating">
+			<key column="RatingTypeID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierRatingEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

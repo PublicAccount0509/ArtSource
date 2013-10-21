@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.AppScopeEntity, Ets.SingleApi.Model" table="AppScope" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+	<composite-id access="field">
+			 <key-property name="AppKey" column="AppKey" type="String" />
+ <key-property name="Scope" column="Scope" type="String" />
+
+		</composite-id>
+		
+		<!--The propertys-->
+		<property name="CreatedTime" column="CreatedTime" type="Timestamp" not-null="false" />
+	</class>
+</hibernate-mapping>

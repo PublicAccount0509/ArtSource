@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.DishImageEntity, Ets.SingleApi.Model" table="DishImage" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="DishImageId" column="DishImageID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="DishId" column="DishID" type="Int32" />
+		<property name="ImagePath" column="ImagePath" type="String" />
+		<property name="Online" column="Online" type="Boolean" not-null="false" />
+		<property name="Position" column="Position" type="Int32" />
+		<property name="WIdth" column="Width" type="Int32" not-null="false" />
+		<property name="Height" column="Height" type="Int32" not-null="false" />
+		<property name="DateAdded" column="DateAdded" type="Timestamp" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="SupplierDishList" cascade="none" lazy="true" table="SupplierDish">
+			<key column="DishImageID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierDishEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.BundleSupplierDishEntity, Ets.SingleApi.Model" table="BundleSupplierDish" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+	<composite-id access="field">
+			 <key-property name="SupplierDishId" column="SupplierDishID" type="Int32" />
+ <key-property name="BundleId" column="BundleID" type="Int32" />
+
+		</composite-id>
+		
+		<!--The foreign keys-->
+		<many-to-one name="Bundle" class="Ets.SingleApi.Model.Repository.BundleEntity, Ets.SingleApi.Model" column="BundleID" />
+		<many-to-one name="SupplierDish" class="Ets.SingleApi.Model.Repository.SupplierDishEntity, Ets.SingleApi.Model" column="SupplierDishID" />
+	</class>
+</hibernate-mapping>

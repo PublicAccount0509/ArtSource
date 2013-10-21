@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.BlockedIPAddressEntity, Ets.SingleApi.Model" table="BlockedIPAddress" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="IPId" column="IP_ID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="IPAddress" column="IPAddress" type="String" not-null="false" />
+		<property name="IsBlocked" column="IsBlocked" type="Boolean" not-null="false" />
+		<property name="DateBlocked" column="DateBlocked" type="Timestamp" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Login" class="Ets.SingleApi.Model.Repository.LoginEntity, Ets.SingleApi.Model" column="LoginID" />
+	</class>
+</hibernate-mapping>

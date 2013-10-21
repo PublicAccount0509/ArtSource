@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.TransportStationEntity, Ets.SingleApi.Model" table="TransportStation" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="TransportStationId" column="TransportStationID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="TransportStationName" column="TransportStationName" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="SupplierStationList" cascade="none" lazy="true" table="SupplierStation">
+			<key column="TransportStaitionID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierStationEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="PublicTransport" class="Ets.SingleApi.Model.Repository.PublicTransportEntity, Ets.SingleApi.Model" column="PublicTransportID" />
+	</class>
+</hibernate-mapping>

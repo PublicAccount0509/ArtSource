@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierCommentEntity, Ets.SingleApi.Model" table="SupplierComment" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="SupplierCommentId" column="SupplierCommentID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="SupplierId" column="SupplierID" type="Int32" />
+		<property name="Comment" column="Comment" type="String" />
+		<property name="DateAdded" column="DateAdded" type="Timestamp" not-null="false" />
+		<property name="AverageConsumption" column="AverageConsumption" type="Int32" not-null="false" />
+		<property name="Tags" column="Tags" type="String" not-null="false" />
+		<property name="CommentImage" column="CommentImage" type="String" not-null="false" />
+		<property name="UserBaIduLat" column="UserBaiduLat" type="String" not-null="false" />
+		<property name="UserBaIduLong" column="UserBaiduLong" type="String" not-null="false" />
+		<property name="UserAddress" column="UserAddress" type="String" not-null="false" />
+		<property name="Source" column="Source" type="String" not-null="false" />
+		<property name="ISDelete" column="ISDelete" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="CommentDiningPurposeList" cascade="none" lazy="true" table="CommentDiningPurpose">
+			<key column="SupplierCommentID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.CommentDiningPurposeEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="Customer" class="Ets.SingleApi.Model.Repository.CustomerEntity, Ets.SingleApi.Model" column="CustomerID" />
+	</class>
+</hibernate-mapping>

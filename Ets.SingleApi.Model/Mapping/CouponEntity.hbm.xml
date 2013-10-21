@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.CouponEntity, Ets.SingleApi.Model" table="Coupon" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="CouponId" column="CouponID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="CouponCode" column="CouponCode" type="String" />
+		<property name="CouponTypeId" column="CouponTypeId" type="Int32" />
+		<property name="IsSingleUse" column="IsSingleUse" type="Boolean" />
+		<property name="NumberUses" column="NumberUses" type="Int32" />
+		<property name="ExpirationDate" column="ExpirationDate" type="Timestamp" not-null="false" />
+		<property name="Discount" column="Discount" type="Decimal" not-null="false" />
+		<property name="IsBulk" column="IsBulk" type="Boolean" not-null="false" />
+		<property name="StartDate" column="StartDate" type="Timestamp" not-null="false" />
+		<property name="UsePermissions" column="UsePermissions" type="String" not-null="false" />
+		<property name="UseRules" column="UseRules" type="Int32" />
+		<property name="Note" column="Note" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

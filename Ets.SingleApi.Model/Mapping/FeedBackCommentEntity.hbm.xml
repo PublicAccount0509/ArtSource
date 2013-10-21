@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.FeedBackCommentEntity, Ets.SingleApi.Model" table="FeedBackComment" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="FeedBackCommentId" column="FeedBackCommentID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="FeedBackComment" column="FeedBackComment" type="String" />
+		<!--The foreign keys-->
+		<many-to-one name="FeedBack" class="Ets.SingleApi.Model.Repository.FeedBackEntity, Ets.SingleApi.Model" column="FeedBackID" />
+	</class>
+</hibernate-mapping>

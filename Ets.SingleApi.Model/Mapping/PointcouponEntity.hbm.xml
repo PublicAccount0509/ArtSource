@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.PointcouponEntity, Ets.SingleApi.Model" table="pointcoupon" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="PointCouponId" column="PointCouponID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="PointCouponName" column="PointCouponName" type="String" not-null="false" />
+		<property name="Type" column="Type" type="Int32" not-null="false" />
+		<property name="BaseNumber" column="BaseNumber" type="Int32" not-null="false" />
+		<property name="ReturnNumber" column="ReturnNumber" type="Int32" not-null="false" />
+		<property name="BeginTime" column="BeginTime" type="Timestamp" not-null="false" />
+		<property name="EndTime" column="EndTime" type="Timestamp" not-null="false" />
+		<property name="SendBeginTime" column="SendBeginTime" type="Timestamp" not-null="false" />
+		<property name="SendEndTime" column="SendEndTime" type="Timestamp" not-null="false" />
+		<property name="Note" column="Note" type="String" not-null="false" />
+		<property name="IsOpen" column="IsOpen" type="Boolean" not-null="false" />
+		<property name="IsDeleted" column="IsDeleted" type="Boolean" not-null="false" />
+		<property name="CreateDtateTime" column="CreateDtateTime" type="Timestamp" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="PointCouponSupplierRList" cascade="none" lazy="true" table="PointCouponSupplier_R">
+			<key column="PointCouponID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.PointCouponSupplierREntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

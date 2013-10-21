@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.OrderEntity, Ets.SingleApi.Model" table="Order" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="OrderId" column="OrderID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="CustomerId" column="CustomerID" type="Int32" />
+		<property name="SupplierDishId" column="SupplierDishID" type="Int32" />
+		<property name="Quantity" column="Quantity" type="Int32" />
+		<property name="Total" column="Total" type="Decimal" />
+		<property name="SpecialInstruction" column="SpecialInstruction" type="String" not-null="false" />
+		<property name="OrderDate" column="OrderDate" type="Timestamp" not-null="false" />
+		<property name="IsRating" column="IsRating" type="Boolean" not-null="false" />
+		<property name="SupplierPrice" column="SupplierPrice" type="Decimal" not-null="false" />
+		<property name="OrderSource" column="OrderSource" type="Int32" not-null="false" />
+		<property name="PromotionId" column="PromotionId" type="Int32" not-null="false" />
+		<property name="PreTaxMoney" column="PreTaxMoney" type="Decimal" not-null="false" />
+		<property name="SupplierDishName" column="SupplierDishName" type="String" not-null="false" />
+		<property name="Note" column="Note" type="String" not-null="false" />
+		<property name="OrderNo" column="OrderNo" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Delivery" class="Ets.SingleApi.Model.Repository.DeliveryEntity, Ets.SingleApi.Model" column="DeliveryID" />
+	</class>
+</hibernate-mapping>

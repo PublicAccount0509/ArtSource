@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.FeatureEntity, Ets.SingleApi.Model" table="Feature" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="FeatureId" column="FeatureID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="Feature" column="Feature" type="String" />
+		<property name="DateAdded" column="DateAdded" type="Timestamp" />
+		<property name="ParentId" column="ParentId" type="Int32" not-null="false" />
+		<property name="IsDefault" column="IsDefault" type="Boolean" not-null="false" />
+		<property name="ImagePath" column="ImagePath" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="HolIdayBackupSupplierList" cascade="none" lazy="true" table="HolidayBackupSupplier">
+			<key column="FeatureId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.HolidayBackupSupplierEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="SupplierFeatureList" cascade="none" lazy="true" table="SupplierFeature">
+			<key column="FeatureID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierFeatureEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

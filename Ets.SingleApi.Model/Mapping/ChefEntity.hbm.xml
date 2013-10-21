@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.ChefEntity, Ets.SingleApi.Model" table="Chef" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="ChefId" column="ChefID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="Title" column="Title" type="String" not-null="false" />
+		<property name="Forename" column="Forename" type="String" not-null="false" />
+		<property name="Surname" column="Surname" type="String" not-null="false" />
+		<property name="Phone" column="Phone" type="String" not-null="false" />
+		<property name="Email" column="Email" type="String" not-null="false" />
+		<property name="Description" column="Description" type="String" not-null="false" />
+		<property name="ChefOfTheWeek" column="ChefOfTheWeek" type="Boolean" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Award" class="Ets.SingleApi.Model.Repository.AwardEntity, Ets.SingleApi.Model" column="AwardID" />
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

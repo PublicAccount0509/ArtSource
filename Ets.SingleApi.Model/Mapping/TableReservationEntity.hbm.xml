@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.TableReservationEntity, Ets.SingleApi.Model" table="TableReservation" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="TableReservationId" column="TableReservationID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="TableId" column="TableID" type="Int32" />
+		<property name="CustomerId" column="CustomerID" type="Int32" />
+		<property name="TemplateId" column="Templateid" type="String" not-null="false" />
+		<property name="NumberOfPeople" column="NumberOfPeople" type="Int32" />
+		<property name="ContactName" column="ContactName" type="String" not-null="false" />
+		<property name="ContactNumber" column="ContactNumber" type="String" not-null="false" />
+		<property name="ReservationTime" column="ReservationTime" type="Timestamp" />
+		<property name="DateReserved" column="DateReserved" type="Timestamp" />
+		<property name="BookInstruction" column="BookInstruction" type="String" not-null="false" />
+		<property name="PaymentId" column="PaymentID" type="Int32" not-null="false" />
+		<property name="Cancelled" column="Cancelled" type="Boolean" not-null="false" />
+		<property name="Refunded" column="Refunded" type="Boolean" not-null="false" />
+		<property name="IsRating" column="IsRating" type="Boolean" not-null="false" />
+		<property name="BookSource" column="BookSource" type="Int32" not-null="false" />
+		<property name="EndOccupancyTime" column="EndOccupancyTime" type="Timestamp" />
+		<property name="OrderNotes" column="OrderNotes" type="String" not-null="false" />
+		<property name="OperatorId" column="OperatorID" type="Int32" not-null="false" />
+		<property name="Sitcondition" column="Sitcondition" type="String" not-null="false" />
+		<property name="Roomprice" column="Roomprice" type="Int32" not-null="false" />
+		<property name="Contactsex" column="Contactsex" type="String" not-null="false" />
+		<property name="IsTableForOther" column="IsTableForOther" type="Boolean" not-null="false" />
+		<property name="TableForOtherName" column="TableForOtherName" type="String" not-null="false" />
+		<property name="TableForOtherType" column="TableForOtherType" type="String" not-null="false" />
+		<property name="Notes" column="Notes" type="String" not-null="false" />
+		<property name="ForOthers" column="ForOthers" type="Boolean" not-null="false" />
+		<property name="DinerName" column="DinerName" type="String" not-null="false" />
+		<property name="DinerTypeId" column="DinerTypeID" type="Int32" not-null="false" />
+		<property name="SeatRequirementId" column="SeatRequirementID" type="Int32" not-null="false" />
+		<property name="RoomTypeId" column="RoomTypeID" type="Int32" not-null="false" />
+		<property name="RealPeople" column="RealPeople" type="Int32" not-null="false" />
+		<property name="RealSpendMoney" column="RealSpendMoney" type="Decimal" not-null="false" />
+		<property name="TableStatus" column="TableStatus" type="Int32" not-null="false" />
+		<property name="OrderNumber" column="OrderNumber" type="Int32" not-null="false" />
+		<property name="ActualFinishTime" column="ActualFinishTime" type="Timestamp" not-null="false" />
+		<property name="Total" column="Total" type="Decimal" not-null="false" />
+		<property name="CustomerTotal" column="CustomerTotal" type="Decimal" not-null="false" />
+		<property name="IsPaId" column="IsPaid" type="Boolean" not-null="false" />
+		<property name="InvoiceRequired" column="InvoiceRequired" type="Boolean" not-null="false" />
+		<property name="InvoiceTitle" column="InvoiceTitle" type="String" not-null="false" />
+		<property name="DineNumber" column="DineNumber" type="Int32" not-null="false" />
+		<property name="TabelNo" column="TabelNo" type="String" not-null="false" />
+		<property name="ServerNo" column="ServerNo" type="String" not-null="false" />
+		<property name="ValIdateType" column="ValidateType" type="Int32" not-null="false" />
+		<property name="ValIdateCode" column="ValidateCode" type="String" not-null="false" />
+		<property name="InvoiceType" column="InvoiceType" type="Int32" not-null="false" />
+		<property name="Type" column="Type" type="Int32" not-null="false" />
+		<property name="ModifyDate" column="ModifyDate" type="Timestamp" not-null="false" />
+		<property name="ArravieTime" column="ArravieTime" type="Timestamp" not-null="false" />
+		<property name="LeavelTime" column="LeavelTime" type="Timestamp" not-null="false" />
+		<property name="IsReminder" column="IsReminder" type="Boolean" not-null="false" />
+		<property name="IsDeal" column="IsDeal" type="Boolean" not-null="false" />
+		<property name="IsService" column="IsService" type="Boolean" not-null="false" />
+		<property name="IsAdd" column="IsAdd" type="Boolean" not-null="false" />
+		<property name="AddTime" column="AddTime" type="Timestamp" not-null="false" />
+		<property name="OrderPwd" column="OrderPwd" type="String" not-null="false" />
+		<property name="ConsumerAmount" column="ConsumerAmount" type="Decimal" not-null="false" />
+		<property name="TeaBitFee" column="TeaBitFee" type="Decimal" not-null="false" />
+		<property name="IsupdateAmount" column="IsupdateAmount" type="Boolean" />
+		<property name="PointCouponsNumber" column="PointCouponsNumber" type="Int32" not-null="false" />
+		<property name="IsOnTime" column="IsOnTime" type="Boolean" />
+		<property name="DirectPointCouponsNumber" column="DirectPointCouponsNumber" type="Decimal" not-null="false" />
+		<property name="OrderTableName" column="OrderTableName" type="String" not-null="false" />
+		<property name="Path" column="Path" type="String" not-null="false" />
+		<property name="UserStatus" column="UserStatus" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

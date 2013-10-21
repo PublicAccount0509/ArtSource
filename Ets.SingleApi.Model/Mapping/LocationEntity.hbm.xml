@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.LocationEntity, Ets.SingleApi.Model" table="Location" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="LocationId" column="LocationID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="LocationName" column="LocationName" type="String" />
+		<property name="CityId" column="CityID" type="Int32" />
+		<property name="SupplierId" column="SupplierID" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="SupplierLocationList" cascade="none" lazy="true" table="SupplierLocation">
+			<key column="LocationID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierLocationEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="LocationType" class="Ets.SingleApi.Model.Repository.LocationTypeEntity, Ets.SingleApi.Model" column="LocationTypeID" />
+	</class>
+</hibernate-mapping>

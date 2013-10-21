@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierCouponTimeEntity, Ets.SingleApi.Model" table="SupplierCouponTime" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="OpenTime" column="OpenTime" type="String" not-null="false" />
+		<property name="CloseTime" column="CloseTime" type="String" not-null="false" />
+		<property name="DayWeek" column="DayWeek" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="SupplierCoupon" class="Ets.SingleApi.Model.Repository.SupplierCouponEntity, Ets.SingleApi.Model" column="SupplierCouponId" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.TokenEntity, Ets.SingleApi.Model" table="Token" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="AccessToken" column="AccessToken" type="String" >
+			<generator class="assigned"/>
+		</id>
+		<!--The propertys-->
+		<property name="Scope" column="Scope" type="String" not-null="false" />
+		<property name="UserId" column="UserId" type="Int32" not-null="false" />
+		<property name="RefreshToken" column="RefreshToken" type="String" not-null="false" />
+		<property name="CreatedTime" column="CreatedTime" type="Timestamp" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="AppKey" class="Ets.SingleApi.Model.Repository.AppEntity, Ets.SingleApi.Model" column="AppKey" />
+	</class>
+</hibernate-mapping>

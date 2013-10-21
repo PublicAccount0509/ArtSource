@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.AddrCityEntity, Ets.SingleApi.Model" table="Addr_City" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="CityId" column="CityID" type="String" >
+			<generator class="assigned"/>
+		</id>
+		<!--The propertys-->
+		<property name="CityName" column="CityName" type="String" />
+		<property name="LongY" column="LongY" type="String" not-null="false" />
+		<property name="LatX" column="LatX" type="String" not-null="false" />
+		<property name="Hits" column="Hits" type="Int64" not-null="false" />
+		<property name="Tags" column="Tags" type="String" not-null="false" />
+		<property name="IsActivated" column="IsActivated" type="Boolean" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="AddrBusinessAreaList" cascade="none" lazy="true" table="Addr_BusinessArea">
+			<key column="CityID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.AddrBusinessAreaEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="AddrRegionList" cascade="none" lazy="true" table="Addr_Region">
+			<key column="CityID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.AddrRegionEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="PublicTransportList" cascade="none" lazy="true" table="PublicTransport">
+			<key column="CityID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.PublicTransportEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="SupplierList" cascade="none" lazy="true" table="Supplier">
+			<key column="AddrCityID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="Province" class="Ets.SingleApi.Model.Repository.AddrProvinceEntity, Ets.SingleApi.Model" column="ProvinceID" />
+	</class>
+</hibernate-mapping>

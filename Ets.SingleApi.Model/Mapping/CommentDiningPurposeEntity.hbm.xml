@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.CommentDiningPurposeEntity, Ets.SingleApi.Model" table="CommentDiningPurpose" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+	<composite-id access="field">
+			 <key-property name="DiningPurposeId" column="DiningPurposeID" type="Int32" />
+ <key-property name="SupplierCommentId" column="SupplierCommentID" type="Int32" />
+
+		</composite-id>
+		
+		<!--The foreign keys-->
+		<many-to-one name="DiningPurpose" class="Ets.SingleApi.Model.Repository.DiningPurposeEntity, Ets.SingleApi.Model" column="DiningPurposeID" />
+		<many-to-one name="SupplierComment" class="Ets.SingleApi.Model.Repository.SupplierCommentEntity, Ets.SingleApi.Model" column="SupplierCommentID" />
+	</class>
+</hibernate-mapping>

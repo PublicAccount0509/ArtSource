@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.LoginEntity, Ets.SingleApi.Model" table="Login" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="LoginId" column="LoginID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="Token" column="Token" type="Int32" not-null="false" />
+		<property name="Username" column="Username" type="String" />
+		<property name="Password" column="Password" type="String" />
+		<property name="LastLogin" column="LastLogin" type="Timestamp" not-null="false" />
+		<property name="LastLoginIP" column="LastLoginIP" type="String" not-null="false" />
+		<property name="IsEnabled" column="IsEnabled" type="Boolean" />
+		<property name="Imprest" column="Imprest" type="Decimal" not-null="false" />
+		<property name="Overdraft" column="Overdraft" type="Decimal" not-null="false" />
+		<property name="PaymentCycle" column="PaymentCycle" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="BlockedIPAddressList" cascade="none" lazy="true" table="BlockedIPAddress">
+			<key column="LoginID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.BlockedIPAddressEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="LoginOAuthList" cascade="none" lazy="true" table="LoginOAuth">
+			<key column="LoginID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.LoginOAuthEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="SupplierList" cascade="none" lazy="true" table="Supplier">
+			<key column="LoginID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="UserShowWindowList" cascade="none" lazy="true" table="UserShowWindow">
+			<key column="LoginId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.UserShowWindowEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="Level" class="Ets.SingleApi.Model.Repository.LevelEntity, Ets.SingleApi.Model" column="LevelID" />
+	</class>
+</hibernate-mapping>

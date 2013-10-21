@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.AppEntity, Ets.SingleApi.Model" table="App" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="AppKey" column="AppKey" type="String" >
+			<generator class="assigned"/>
+		</id>
+		<!--The propertys-->
+		<property name="AppSecret" column="AppSecret" type="String" />
+		<property name="Name" column="Name" type="String" />
+		<property name="Icon" column="Icon" type="String" not-null="false" />
+		<property name="RedirectUri" column="RedirectUri" type="String" />
+		<property name="Intro" column="Intro" type="String" not-null="false" />
+		<property name="HomeUri" column="HomeUri" type="String" not-null="false" />
+		<property name="AppType" column="AppType" type="Byte" />
+		<property name="Status" column="Status" type="Byte" />
+		<property name="CreatedTime" column="CreatedTime" type="Timestamp" />
+		<property name="AppLevel" column="AppLevel" type="Byte" />
+		<property name="Version" column="Version" type="String" not-null="false" />
+		<property name="VersionType" column="VersionType" type="Byte" not-null="false" />
+		<property name="VersionLog" column="VersionLog" type="String" not-null="false" />
+		<property name="DownloadUrl" column="DownloadUrl" type="String" not-null="false" />
+		<property name="Os" column="Os" type="String" not-null="false" />
+		<property name="VersionName" column="VersionName" type="String" not-null="false" />
+		<property name="VersionCode" column="VersionCode" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="AutorizationList" cascade="none" lazy="true" table="Autorization">
+			<key column="AppKey" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.AutorizationEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="TokenList" cascade="none" lazy="true" table="Token">
+			<key column="AppKey" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.TokenEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

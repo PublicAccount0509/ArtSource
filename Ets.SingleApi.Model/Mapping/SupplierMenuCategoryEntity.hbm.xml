@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierMenuCategoryEntity, Ets.SingleApi.Model" table="SupplierMenuCategory" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="SupplierMenuCategoryId" column="SupplierMenuCategoryId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="SupplierId" column="SupplierId" type="Decimal" not-null="false" />
+		<property name="SupplierMenuCategoryName" column="SupplierMenuCategoryName" type="String" not-null="false" />
+		<property name="SupplierMenuCategoryDescription" column="SupplierMenuCategoryDescription" type="String" not-null="false" />
+		<property name="SupplierMenuCategoryOrder" column="SupplierMenuCategoryOrder" type="Int32" not-null="false" />
+		<property name="SupplierMenuCategoryOldId" column="SupplierMenuCategoryOldId" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="CuisineList" cascade="none" lazy="true" table="Cuisine">
+			<key column="SupplierMenuCategoryType" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.CuisineEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="SupplierMenuCategoryType" class="Ets.SingleApi.Model.Repository.SupplierMenuCategoryTypeEntity, Ets.SingleApi.Model" column="SupplierMenuCategoryTypeID" />
+	</class>
+</hibernate-mapping>

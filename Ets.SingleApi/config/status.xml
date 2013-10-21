@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<status>
+  <!--成功状态-->
+  <item code="200" message="操作成功"></item>
+  <item code="201" message="查询结果为空"></item>
+  <!--标准OAuth错误-->
+  <item code="10000" message="服务器错误"></item>
+  <item code="10001" message="请求参数错误"></item>
+  <item code="10002" message="禁止访问"></item>
+  <item code="10003" message="不支持的认证响应类型"></item>
+  <item code="10004" message="权限范围无效"></item>
+  <item code="10005" message="临时的服务器维护或者过载，无法处理请求"></item>
+  <item code="10006" message="未认证的客户端"></item>
+  <item code="10007" message="客户端认证失败(未知客户端、不支持的认证方法等)"></item>
+  <item code="10008" message="授权无效"></item>
+  <item code="10009" message="不支持的授权类型"></item>
+  <!--系统错误码-->
+  <item code="1000" message="未知错误"></item>
+  <item code="1001" message="签名错误"></item>
+  <item code="1002" message="内部服务器错误"></item>
+  <item code="1003" message="请求参数错误"></item>
+  <item code="1004" message="请求验证失败"></item>
+  <!--一般错误-->
+  <item code="20000" message="未知错误"></item>
+  <item code="20001" message="权限错误"></item>
+  <item code="20002" message="资源不存在"></item>
+  <item code="20003" message="请求参数格式错误"></item>
+  <item code="20004" message="短信发送失败"></item>
+  <item code="20005" message="发送短信过于频繁"></item>
+  <item code="20006" message="参数错误，无法找回密码"></item>
+  <!--校验错误-->
+  <item code="40000" message="您已是易淘食用户，直接登录叫外卖即可。"></item>
+  <item code="40001" message="邮箱已经被占用"></item>
+  <item code="40002" message="手机号不能为空"></item>
+  <item code="40003" message="无效的短信发送类型（易淘食：AC001，外卖：AC002）"></item>
+  <item code="40004" message="验证码错误"></item>
+  <item code="40005" message="用户名错误"></item>
+  <item code="40006" message="用户Id错误"></item>
+  <item code="40007" message="密码错误"></item>
+  <item code="40008" message="密码不能为空"></item>
+  <item code="40009" message="无效的餐厅Id列表"></item>
+  <item code="40010" message="无效的餐厅Id"></item>
+  <item code="40011" message="无效的用户地址Id列表"></item>
+  <item code="40012" message="无效的订单类型"></item>
+</status>

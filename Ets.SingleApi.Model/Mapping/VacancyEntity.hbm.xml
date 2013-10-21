@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.VacancyEntity, Ets.SingleApi.Model" table="Vacancy" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="VacancyId" column="VacancyID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="JobTitleId" column="JobTitleID" type="Int32" />
+		<property name="Quantity" column="Quantity" type="Int32" />
+		<property name="JobTypeId" column="JobTypeID" type="Int32" />
+		<property name="JobSpec" column="JobSpec" type="String" />
+		<property name="StartDate" column="StartDate" type="String" not-null="false" />
+		<property name="SalaryRate" column="SalaryRate" type="String" not-null="false" />
+		<property name="Contact" column="Contact" type="String" not-null="false" />
+		<property name="Telephone" column="Telephone" type="String" not-null="false" />
+		<property name="Fax" column="Fax" type="String" not-null="false" />
+		<property name="Email" column="Email" type="String" not-null="false" />
+		<property name="Reference" column="Reference" type="String" not-null="false" />
+		<property name="DateAdded" column="DateAdded" type="Timestamp" not-null="false" />
+		<property name="Online" column="Online" type="Boolean" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

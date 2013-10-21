@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.MarketingAllowanceEntity, Ets.SingleApi.Model" table="MarketingAllowance" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="MarketingAllowanceId" column="MarketingAllowanceID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="MarketingAllowed" column="MarketingAllowed" type="Boolean" />
+		<!--The foreign keys-->
+		<many-to-one name="Customer" class="Ets.SingleApi.Model.Repository.CustomerEntity, Ets.SingleApi.Model" column="CustomerID" />
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

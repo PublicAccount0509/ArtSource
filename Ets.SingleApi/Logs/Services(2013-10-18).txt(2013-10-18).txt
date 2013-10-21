@@ -1,0 +1,7 @@
+
+----------------------header--------------------------
+2013-10-18 17:10:53,867 [9] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-18 17:10:53,867 [10] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-18 17:11:20,998 [9] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+
+----------------------footer--------------------------

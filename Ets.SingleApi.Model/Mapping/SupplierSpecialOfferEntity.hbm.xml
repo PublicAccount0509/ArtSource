@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierSpecialOfferEntity, Ets.SingleApi.Model" table="SupplierSpecialOffer" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="SupplierSpecialOfferId" column="SupplierSpecialOfferID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="SpecialOfferTypeId" column="SpecialOfferTypeID" type="Int32" />
+		<property name="Title" column="Title" type="String" />
+		<property name="Contents" column="Contents" type="String" />
+		<property name="EndDate" column="EndDate" type="Timestamp" not-null="false" />
+		<property name="CreateTime" column="CreateTime" type="Timestamp" not-null="false" />
+		<property name="OfferImage" column="OfferImage" type="String" not-null="false" />
+		<property name="Ticket" column="Ticket" type="String" not-null="false" />
+		<property name="Send" column="Send" type="String" not-null="false" />
+		<property name="State" column="State" type="Int32" not-null="false" />
+		<property name="OperatorId" column="OperatorID" type="Int32" not-null="false" />
+		<property name="PassTime" column="PassTime" type="Timestamp" not-null="false" />
+		<property name="Notes" column="Notes" type="String" not-null="false" />
+		<property name="ServiceTypes" column="ServiceTypes" type="String" not-null="false" />
+		<property name="Count" column="Count" type="Int32" not-null="false" />
+		<property name="StartTime" column="StartTime" type="Timestamp" not-null="false" />
+		<property name="GroupTypes" column="GroupTypes" type="String" not-null="false" />
+		<property name="SupplierEmployeeId" column="SupplierEmployeeId" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

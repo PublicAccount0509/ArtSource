@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" table="Supplier" dynamic-update="true" optimistic-lock="all" >
+    <!--The cache-->
+    <cache usage="read-write"/>
+    <!--The primary keys-->
+    <id name="SupplierId" column="SupplierID" type="Int32" >
+      <generator class="native"/>
+    </id>
+    <!--The propertys-->
+    <property name="SupplierName" column="SupplierName" type="String" />
+    <property name="LiveUrl" column="LiveURL" type="String" not-null="false" />
+    <property name="Address1" column="Address1" type="String" />
+    <property name="Address2" column="Address2" type="String" not-null="false" />
+    <property name="CityId" column="CityID" type="Int32" not-null="false" />
+    <property name="CountyId" column="CountyID" type="Int32" not-null="false" />
+    <property name="CountryId" column="CountryID" type="Int32" not-null="false" />
+    <property name="PostCode" column="PostCode" type="String" />
+    <property name="Lat" column="Lat" type="String" not-null="false" />
+    <property name="Long" column="Long" type="String" not-null="false" />
+    <property name="BaIduLat" column="BaiduLat" type="String" not-null="false" />
+    <property name="BaIduLong" column="BaiduLong" type="String" not-null="false" />
+    <property name="SpaceLatLong" column="SpaceLatLong" type="BinaryBlob" not-null="false" />
+    <property name="IsOpenDoor" column="IsOpenDoor" type="Boolean" not-null="false" />
+    <property name="Telephone" column="Telephone" type="String" />
+    <property name="Fax" column="Fax" type="String" not-null="false" />
+    <property name="Email" column="Email" type="String" not-null="false" />
+    <property name="Commission" column="Commission" type="Decimal" />
+    <property name="DeliveryTime" column="DeliveryTime" type="String" not-null="false" />
+    <property name="MenuPath" column="MenuPath" type="String" not-null="false" />
+    <property name="MapPath" column="MapPath" type="String" not-null="false" />
+    <property name="SupplierDescription" column="SupplierDescription" type="String" not-null="false" />
+    <property name="DateJoined" column="DateJoined" type="Timestamp" not-null="false" />
+    <property name="Priority" column="Priority" type="Int16" not-null="false" />
+    <property name="FreeDeliveryLine" column="FreeDeliveryLine" type="Decimal" not-null="false" />
+    <property name="CardTransactionFee" column="CardTransactionFee" type="Decimal" not-null="false" />
+    <property name="InputType" column="InputType" type="String" not-null="false" />
+    <property name="Template" column="Template" type="String" not-null="false" />
+    <property name="UpdateTemplateCount" column="UpdateTemplateCount" type="Int32" not-null="false" />
+    <property name="ParentId" column="ParentID" type="Int32" not-null="false" />
+    <property name="ShoppingGuIde" column="ShoppingGuide" type="String" not-null="false" />
+    <property name="Help" column="Help" type="String" not-null="false" />
+    <property name="DefaultCuisineId" column="DefaultCuisineID" type="Int32" not-null="false" />
+    <property name="Career" column="Career" type="String" not-null="false" />
+    <property name="OrderHotline" column="OrderHotline" type="String" not-null="false" />
+    <property name="SpecialOffersSummary" column="SpecialOffersSummary" type="String" not-null="false" />
+    <property name="SMS" column="SMS" type="String" not-null="false" />
+    <property name="FreeMiles" column="FreeMiles" type="Decimal" not-null="false" />
+    <property name="CashTransctionFee" column="CashTransctionFee" type="Decimal" not-null="false" />
+    <property name="CashCommisionFee" column="CashCommisionFee" type="Decimal" not-null="false" />
+    <property name="CardTransctionFee" column="CardTransctionFee" type="Decimal" not-null="false" />
+    <property name="CardCommisionFee" column="CardCommisionFee" type="Decimal" not-null="false" />
+    <property name="CardFee" column="CardFee" type="Decimal" not-null="false" />
+    <property name="BankName" column="BankName" type="String" not-null="false" />
+    <property name="SortCode" column="SortCode" type="String" not-null="false" />
+    <property name="AccountNumber" column="AccountNumber" type="String" not-null="false" />
+    <property name="IsHallah" column="IsHallah" type="Int32" not-null="false" />
+    <property name="SecurityCode" column="SecurityCode" type="String" not-null="false" />
+    <property name="TableBookingCharge" column="TableBookingCharge" type="Decimal" not-null="false" />
+    <property name="AverageConsumption" column="AverageConsumption" type="Int32" not-null="false" />
+    <property name="ParkingInfo" column="ParkingInfo" type="String" not-null="false" />
+    <property name="AverageRating" column="AverageRating" type="Int32" not-null="false" />
+    <property name="PackagingFee" column="PackagingFee" type="Decimal" not-null="false" />
+    <property name="DelMinOrderAmount" column="DelMinOrderAmount" type="Int32" not-null="false" />
+    <property name="FixedDeliveryCharge" column="FixedDeliveryCharge" type="Int32" not-null="false" />
+    <property name="TakeawaySpecialOffersSummary" column="TakeawaySpecialOffersSummary" type="String" not-null="false" />
+    <property name="PublicTransport" column="PublicTransport" type="String" not-null="false" />
+    <property name="DisplayRoomList" column="DisplayRoomList" type="Boolean" not-null="false" />
+    <property name="DisplayTableList" column="DisplayTableList" type="Boolean" not-null="false" />
+    <property name="Creator" column="Creator" type="String" not-null="false" />
+    <property name="Editor" column="Editor" type="String" not-null="false" />
+    <property name="EditTime" column="EditTime" type="Timestamp" not-null="false" />
+    <property name="Maxprice" column="maxprice" type="Int32" not-null="false" />
+    <property name="Minprice" column="minprice" type="Int32" not-null="false" />
+    <property name="Averageprice" column="averageprice" type="Int32" not-null="false" />
+    <property name="Hits" column="Hits" type="Int32" not-null="false" />
+    <property name="IsOnSales" column="IsOnSales" type="Boolean" not-null="false" />
+    <property name="Tags" column="Tags" type="String" not-null="false" />
+    <property name="Tags1" column="Tags1" type="String" not-null="false" />
+    <property name="Tags2" column="Tags2" type="String" not-null="false" />
+    <property name="Tags3" column="Tags3" type="String" not-null="false" />
+    <property name="CreateDate" column="CreateDate" type="Timestamp" not-null="false" />
+    <property name="PackLadder" column="PackLadder" type="Decimal" not-null="false" />
+    <property name="PackExplain" column="PackExplain" type="String" not-null="false" />
+    <property name="OrderingCustomerCommission" column="OrderingCustomerCommission" type="Decimal" not-null="false" />
+    <property name="OrderConsumerCommission" column="OrderConsumerCommission" type="Decimal" not-null="false" />
+    <property name="OrderETaoShiCommission" column="OrderETaoShiCommission" type="Decimal" not-null="false" />
+    <property name="IsOtherSite" column="IsOtherSite" type="Boolean" not-null="false" />
+    <property name="LogisticsAreaId" column="LogisticsAreaId" type="Int32" not-null="false" />
+    <property name="ConsumerAmount" column="ConsumerAmount" type="Decimal" not-null="false" />
+    <property name="DoomNotes" column="DoomNotes" type="String" not-null="false" />
+    <property name="TeaBitFee" column="TeaBitFee" type="Decimal" not-null="false" />
+    <property name="IsDDF" column="IsDDF" type="Boolean" not-null="false" />
+    <property name="OrderCount" column="OrderCount" type="Int32" not-null="false" />
+    <property name="StoredAmount" column="StoredAmount" type="Decimal" not-null="false" />
+    <property name="RechargeBalance" column="RechargeBalance" type="Decimal" not-null="false" />
+    <property name="CurrentBalance" column="CurrentBalance" type="Decimal" not-null="false" />
+    <property name="EtkRates" column="EtkRates" type="Decimal" not-null="false" />
+    <property name="CardDisplayDiscount" column="CardDisplayDiscount" type="Decimal" not-null="false" />
+    <property name="CardDisplayRule" column="CardDisplayRule" type="String" not-null="false" />
+    <property name="RegionCode" column="RegionCode" type="String" not-null="false" />
+    <property name="ImportId" column="ImportId" type="String" not-null="false" />
+    <property name="HasDish" column="HasDish" type="Boolean" not-null="false" />
+    <property name="SignTime" column="SignTime" type="Timestamp" not-null="false" />
+    <property name="Type" column="Type" type="String" not-null="false" />
+    <property name="OrderNum" column="OrderNum" type="Int32" not-null="false" />
+    <property name="SupplierGroupId" column="SupplierGroupId" type="Int32" not-null="false" />
+    <property name="Channel" column="Channel" type="String" not-null="false" />
+    <property name="MenuLayout" column="MenuLayout" type="Int32" not-null="false" />
+    <!--The foreign keys-->
+    <bag name="BundleList" cascade="none" lazy="true" table="Bundle">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.BundleEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="CampaignSupplierList" cascade="none" lazy="true" table="CampaignSupplier">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.CampaignSupplierEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="ChefList" cascade="none" lazy="true" table="Chef">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.ChefEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="CouponList" cascade="none" lazy="true" table="Coupon">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.CouponEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="CustomerFavoriteList" cascade="none" lazy="true" table="CustomerFavorite">
+      <key column="SupplierId" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.CustomerFavoriteEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="CustomerPointList" cascade="none" lazy="true" table="CustomerPoint">
+      <key column="SupplierId" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.CustomerPointEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="FeedBackList" cascade="none" lazy="true" table="FeedBack">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.FeedBackEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="InvoiceList" cascade="none" lazy="true" table="Invoice">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.InvoiceEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="MarketingAllowanceList" cascade="none" lazy="true" table="MarketingAllowance">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.MarketingAllowanceEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="MarketingMessageList" cascade="none" lazy="true" table="MarketingMessage">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.MarketingMessageEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="MenuLayoutDishList" cascade="none" lazy="true" table="MenuLayoutDish">
+      <key column="SupplierId" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.MenuLayoutDishEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="MenuLayoutSupplierList" cascade="none" lazy="true" table="MenuLayoutSupplier">
+      <key column="SupplierId" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.MenuLayoutSupplierEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="PointCouponSupplierRList" cascade="none" lazy="true" table="PointCouponSupplier_R">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.PointCouponSupplierREntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="PromotionList" cascade="none" lazy="true" table="Promotion">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.PromotionEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="StatementList" cascade="none" lazy="true" table="Statement">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.StatementEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierBusinessAreaList" cascade="none" lazy="true" table="SupplierBusinessArea">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierBusinessAreaEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierCommissionList" cascade="none" lazy="true" table="SupplierCommission">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierCommissionEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierContactList" cascade="none" lazy="true" table="SupplierContact">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierContactEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierCouponList" cascade="none" lazy="true" table="SupplierCoupon">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierCouponEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierCuisineList" cascade="none" lazy="true" table="SupplierCuisine">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierCuisineEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierDiningPurposeList" cascade="none" lazy="true" table="SupplierDiningPurpose">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierDiningPurposeEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierDishList" cascade="none" lazy="true" table="SupplierDish">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierDishEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierFeatureList" cascade="none" lazy="true" table="SupplierFeature">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierFeatureEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierImageList" cascade="none" lazy="true" table="SupplierImage">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierImageEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierLocationList" cascade="none" lazy="true" table="SupplierLocation">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierLocationEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierRatingList" cascade="none" lazy="true" table="SupplierRating">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierRatingEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierRoomSizeList" cascade="none" lazy="true" table="SupplierRoomSize">
+      <key column="SupplierId" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierRoomSizeEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierSpecialOfferList" cascade="none" lazy="true" table="SupplierSpecialOffer">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierSpecialOfferEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierStationList" cascade="none" lazy="true" table="SupplierStation">
+      <key column="Supplier" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierStationEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierTransportList" cascade="none" lazy="true" table="SupplierTransport">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierTransportEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="TableDeskList" cascade="none" lazy="true" table="TableDesk">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.TableDeskEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="TableReservationList" cascade="none" lazy="true" table="TableReservation">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.TableReservationEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="VacancyList" cascade="none" lazy="true" table="Vacancy">
+      <key column="SupplierID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.VacancyEntity, Ets.SingleApi.Model" />
+    </bag>
+    <many-to-one name="AddrCity" class="Ets.SingleApi.Model.Repository.AddrCityEntity, Ets.SingleApi.Model" column="AddrCityID" />
+    <many-to-one name="AddrProvince" class="Ets.SingleApi.Model.Repository.AddrProvinceEntity, Ets.SingleApi.Model" column="AddrProvinceID" />
+    <many-to-one name="AddrRegion" class="Ets.SingleApi.Model.Repository.AddrRegionEntity, Ets.SingleApi.Model" column="AddrRegionID" />
+    <many-to-one name="Login" class="Ets.SingleApi.Model.Repository.LoginEntity, Ets.SingleApi.Model" column="LoginID" />
+  </class>
+  <sql-query name="Pro_QuerySupplierList">
+    <return-scalar column="SupplierId" type="Int32" />
+    <return-scalar column="SupplierName" type="String" />
+    <return-scalar column="Address" type="String" />
+    <return-scalar column="Telephone" type="String" />
+    <return-scalar column="BaIduLat" type="String" />
+    <return-scalar column="BaIduLong" type="String" />
+    <return-scalar column="SupplierDescription" type="String" />
+    <return-scalar column="Averageprice" type="Int32" />
+    <return-scalar column="ParkingInfo" type="String" />
+    <return-scalar column="CuisineID" type="Int32" />
+    <return-scalar column="CuisineName" type="String" />
+    <return-scalar column="LogoUrl" type="String" />
+    <return-scalar column="IsOpenDoor" type="Boolean" />
+    <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="DateJoined" type="DateTime" />
+    exec Pro_QuerySupplierList :SupplierName, :SupplierDishName,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:OrderBy
+  </sql-query>
+  <sql-query name="Pro_QuerySupplierListHasDistance">
+    <return-scalar column="SupplierId" type="Int32" />
+    <return-scalar column="SupplierName" type="String" />
+    <return-scalar column="Address" type="String" />
+    <return-scalar column="Telephone" type="String" />
+    <return-scalar column="BaIduLat" type="String" />
+    <return-scalar column="BaIduLong" type="String" />
+    <return-scalar column="SupplierDescription" type="String" />
+    <return-scalar column="Averageprice" type="Int32" />
+    <return-scalar column="ParkingInfo" type="String" />
+    <return-scalar column="CuisineID" type="Int32" />
+    <return-scalar column="CuisineName" type="String" />
+    <return-scalar column="LogoUrl" type="String" />
+    <return-scalar column="IsOpenDoor" type="Boolean" />
+    <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="DateJoined" type="DateTime" />
+    exec Pro_QuerySupplierListHasDistance :SupplierName, :SupplierDishName,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:OrderBy
+  </sql-query>
+</hibernate-mapping>
