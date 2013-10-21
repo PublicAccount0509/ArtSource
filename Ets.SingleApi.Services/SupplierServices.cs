@@ -221,6 +221,7 @@
             var list = this.supplierEntityRepository.NamedQuery(parameter.Distance.HasValue ? "Pro_QuerySupplierListHasDistance" : "Pro_QuerySupplierList")
                     .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
                     .SetString("SupplierDishName", parameter.DishName.IsEmptyOrNull() ? "%" : parameter.DishName)
+                    .SetInt32("CuisineID", parameter.CuisineId)
                     .SetString("BusinessAreaId", parameter.BusinessAreaId)
                     .SetString("RegionId", parameter.RegionId)
                     .SetDouble("UserLat", parameter.UserLat)

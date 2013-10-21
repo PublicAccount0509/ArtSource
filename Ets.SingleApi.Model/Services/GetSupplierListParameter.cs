@@ -39,6 +39,19 @@
         public string DishName { get; set; }
 
         /// <summary>
+        /// Gets or sets the CuisineId of GetSupplierListParameter
+        /// </summary>
+        /// <value>
+        /// The CuisineId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/21 18:00
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int CuisineId { get; set; }
+
+        /// <summary>
         /// Gets or sets the BusinessAreaId of GetSupplierListParameter
         /// </summary>
         /// <value>

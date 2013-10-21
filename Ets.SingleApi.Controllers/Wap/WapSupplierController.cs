@@ -100,6 +100,7 @@
         /// </summary>
         /// <param name="supplierName">餐厅名称</param>
         /// <param name="dishName">菜名</param>
+        /// <param name="cuisineId">菜品</param>
         /// <param name="businessAreaId">商圈Id</param>
         /// <param name="regionId">省、市、区Id</param>
         /// <param name="userLat">经度</param>
@@ -117,12 +118,13 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SearchSupplierListResponse SearchSupplierList(string supplierName, string dishName, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public SearchSupplierListResponse SearchSupplierList(string supplierName, string dishName, int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
                 {
                     SupplierName = supplierName ?? string.Empty,
                     DishName = dishName ?? string.Empty,
+                    CuisineId = cuisineId ?? -1,
                     BusinessAreaId = businessAreaId ?? string.Empty,
                     RegionId = regionId ?? string.Empty,
                     UserLat = userLat,
