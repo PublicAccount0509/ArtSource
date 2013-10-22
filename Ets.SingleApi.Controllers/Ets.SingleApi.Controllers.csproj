@@ -60,6 +60,7 @@
     <Compile Include="IServices\IAuthenServices.cs" />
     <Compile Include="IServices\IBusinessAreaServices.cs" />
     <Compile Include="IServices\ICuisineServices.cs" />
+    <Compile Include="IServices\IOrderServices.cs" />
     <Compile Include="IServices\ISmsServices.cs" />
     <Compile Include="IServices\IUsersServices.cs" />
     <Compile Include="IServices\ISupplierServices.cs" />

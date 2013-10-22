@@ -57,6 +57,7 @@
     <Compile Include="BusinessArea\BusinessArea.cs" />
     <Compile Include="BusinessArea\AllAreaBusinessArea.cs" />
     <Compile Include="CuisineServices.cs" />
+    <Compile Include="OrderServices.cs" />
     <Compile Include="Order\IUserOrders.cs" />
     <Compile Include="Order\UserOrdersData.cs" />
     <Compile Include="Order\UserWaiMaiOrders.cs" />

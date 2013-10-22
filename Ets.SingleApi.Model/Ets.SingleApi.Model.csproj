@@ -54,6 +54,7 @@
     <Compile Include="Controller\LoginResult.cs" />
     <Compile Include="Controller\LoginRequst.cs" />
     <Compile Include="Controller\LoginResponse.cs" />
+    <Compile Include="Controller\WaiMaiOrderRequst.cs" />
     <Compile Include="Controller\PasswordResponse.cs" />
     <Compile Include="Controller\FindPasswordRequest.cs" />
     <Compile Include="Controller\FindPasswordResponse.cs" />
@@ -70,9 +71,11 @@
     <Compile Include="Controller\GetSupplierResponse.cs" />
     <Compile Include="Controller\UserOrder.cs" />
     <Compile Include="Controller\UserOrderListResponse.cs" />
+    <Compile Include="Controller\AddWaiMaiOrderDish.cs" />
     <Compile Include="Controller\WaiMaiSupplierListResponse.cs" />
     <Compile Include="Controller\DingTaiSupplierListResponse.cs" />
     <Compile Include="Controller\GetGroupSupplierResponse.cs" />
+    <Compile Include="Controller\WaiMaiOrderResponse.cs" />
     <Compile Include="Mapping\Repository\CustomerAddressEntity.cs" />
     <Compile Include="Mapping\Repository\OrderSourceEntity.cs" />
     <Compile Include="Mapping\Repository\OrderStatusEntity.cs" />
@@ -80,6 +83,7 @@
     <Compile Include="Mapping\Repository\TimeTableDisplayEntity.cs" />
     <Compile Include="OrderType.cs" />
     <Compile Include="PasswordType.cs" />
+    <Compile Include="Services\AddWaiMaiOrderDishModel.cs" />
     <Compile Include="Services\CustomerModel.cs" />
     <Compile Include="Services\SupplierFeatureModel.cs" />
     <Compile Include="Services\WaiMaiOrderModel.cs" />
@@ -118,6 +122,7 @@
     <Compile Include="Services\AllOrderModel.cs" />
     <Compile Include="Services\GroupSupplierModel.cs" />
     <Compile Include="Services\GetGroupSupplierListParameter.cs" />
+    <Compile Include="Services\AddWaiMaiOrderParameter.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
