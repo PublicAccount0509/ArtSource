@@ -151,7 +151,9 @@
                                         supplierEntity.Averageprice,
                                         supplierEntity.ParkingInfo,
                                         supplierEntity.Telephone,
-                                        supplierEntity.SupplierGroupId
+                                        supplierEntity.SupplierGroupId,
+                                        supplierEntity.PackagingFee,
+                                        supplierEntity.FixedDeliveryCharge
                                     }).FirstOrDefault();
 
             if (tempSupplier == null)
@@ -173,7 +175,9 @@
                     Averageprice = tempSupplier.Averageprice,
                     ParkingInfo = tempSupplier.ParkingInfo,
                     Telephone = tempSupplier.Telephone,
-                    SupplierGroupId = tempSupplier.SupplierGroupId
+                    SupplierGroupId = tempSupplier.SupplierGroupId,
+                    PackagingFee = tempSupplier.PackagingFee,
+                    FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge
                 };
 
             var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable

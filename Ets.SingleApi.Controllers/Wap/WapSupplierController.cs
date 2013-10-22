@@ -88,7 +88,9 @@
                     CuisineName = getSupplierResult.Result.CuisineName,
                     DateJoined = getSupplierResult.Result.DateJoined,
                     IsOpenDoor = getSupplierResult.Result.IsOpenDoor,
-                    LogoUrl = getSupplierResult.Result.LogoUrl
+                    LogoUrl = getSupplierResult.Result.LogoUrl,
+                    PackagingFee = getSupplierResult.Result.PackagingFee ?? 0,
+                    FixedDeliveryCharge = getSupplierResult.Result.FixedDeliveryCharge ?? 0
                 };
 
             return new GetSupplierResponse
