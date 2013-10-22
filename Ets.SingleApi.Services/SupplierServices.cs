@@ -237,7 +237,7 @@
 
             var orderBy = OrderBy.SupplierExpression((OrderBy.Supplier)parameter.OrderByType);
             var list = this.supplierEntityRepository.NamedQuery(parameter.Distance.HasValue ? "Pro_QuerySupplierListHasDistance" : "Pro_QuerySupplierList")
-                    .SetInt32("FeatureID", parameter.CuisineId)
+                    .SetInt32("FeatureID", parameter.FeatureId)
                     .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
                     .SetInt32("CuisineID", parameter.CuisineId)
                     .SetString("BusinessAreaId", parameter.BusinessAreaId)
