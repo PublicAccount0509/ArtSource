@@ -27,7 +27,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<SupplierDetailModel> GetSupplier(int supplierId);
-        
+
         /// <summary>
         /// 获取餐厅列表
         /// </summary>
@@ -41,6 +41,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<SupplierModel> GetSupplierList(GetSupplierListParameter parameter);
+
+        /// <summary>
+        /// 获取餐厅分店列表
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回餐厅分店列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 11:38 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<GroupSupplierModel> GetGroupSupplierList(GetGroupSupplierListParameter parameter);
 
         /// <summary>
         /// 获取餐厅菜单信息

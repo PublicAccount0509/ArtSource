@@ -102,6 +102,65 @@
         }
 
         /// <summary>
+        /// 获取餐厅分店信息
+        /// </summary>
+        /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public GetGroupSupplierResponse GroupSupplierList(int supplierGroupId, int pageSize, int? pageIndex)
+        {
+            var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(new GetGroupSupplierListParameter
+                {
+                    SupplierGroupId = supplierGroupId,
+                    PageIndex = pageIndex,
+                    PageSize = pageSize
+                });
+
+            if (getGroupSupplierListResult.Result == null || getGroupSupplierListResult.Result.Count == 0)
+            {
+                return new GetGroupSupplierResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getGroupSupplierListResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getGroupSupplierListResult.StatusCode
+                    },
+                    Result = new List<GroupSupplier>()
+                };
+            }
+
+            var result = getGroupSupplierListResult.Result.Select(p => new GroupSupplier
+                {
+                    SupplierId = p.SupplierId,
+                    SupplierName = p.SupplierName,
+                    SupplierDescription = p.SupplierDescription,
+                    Address = p.Address,
+                    Averageprice = p.Averageprice,
+                    ParkingInfo = p.ParkingInfo,
+                    Telephone = p.Telephone,
+                    IsWaiMai = p.SupplierFeatureList != null && p.SupplierFeatureList.Count(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId) > 0,
+                    IsDingTai = p.SupplierFeatureList != null && p.SupplierFeatureList.Count(q => q.FeatureId == ControllersCommon.DingTaiFeatureId) > 0
+                }).ToList();
+
+            return new GetGroupSupplierResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getGroupSupplierListResult.StatusCode
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅列表
         /// </summary>
         /// <param name="supplierName">餐厅名称</param>
@@ -197,7 +256,7 @@
         [HttpGet]
         public WaiMaiSupplierListResponse WaiMaiSupplierList(int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
-            var featureId = 35;
+            var featureId = ControllersCommon.WaiMaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
             {
                 SupplierName = string.Empty,
@@ -270,7 +329,7 @@
         [HttpGet]
         public DingTaiSupplierListResponse DingTaiSupplierList(int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
-            var featureId = 36;
+            var featureId = ControllersCommon.DingTaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
             {
                 SupplierName = string.Empty,

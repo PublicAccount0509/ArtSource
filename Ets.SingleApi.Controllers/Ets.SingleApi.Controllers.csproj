@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="AuthenController.cs" />
     <Compile Include="BusinessAreaController.cs" />
+    <Compile Include="ControllersCommon.cs" />
     <Compile Include="CuisineController.cs" />
     <Compile Include="IServices\IAuthenServices.cs" />
     <Compile Include="IServices\IBusinessAreaServices.cs" />

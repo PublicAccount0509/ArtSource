@@ -50,6 +50,7 @@
     <Compile Include="Controller\DishImage.cs" />
     <Compile Include="Controller\BusinessAreaListResponse.cs" />
     <Compile Include="Controller\CuisineListResponse.cs" />
+    <Compile Include="Controller\GroupSupplier.cs" />
     <Compile Include="Controller\LoginResult.cs" />
     <Compile Include="Controller\LoginRequst.cs" />
     <Compile Include="Controller\LoginResponse.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Controller\UserOrderListResponse.cs" />
     <Compile Include="Controller\WaiMaiSupplierListResponse.cs" />
     <Compile Include="Controller\DingTaiSupplierListResponse.cs" />
+    <Compile Include="Controller\GetGroupSupplierResponse.cs" />
     <Compile Include="Mapping\Repository\CustomerAddressEntity.cs" />
     <Compile Include="Mapping\Repository\OrderSourceEntity.cs" />
     <Compile Include="Mapping\Repository\OrderStatusEntity.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="OrderType.cs" />
     <Compile Include="PasswordType.cs" />
     <Compile Include="Services\CustomerModel.cs" />
+    <Compile Include="Services\SupplierFeatureModel.cs" />
     <Compile Include="Services\WaiMaiOrderModel.cs" />
     <Compile Include="Services\TangShiOrderModel.cs" />
     <Compile Include="Services\FindPasswordParameter.cs" />
@@ -113,6 +116,8 @@
     <Compile Include="Services\DingTaiOrderModel.cs" />
     <Compile Include="Services\UserOrderModel.cs" />
     <Compile Include="Services\AllOrderModel.cs" />
+    <Compile Include="Services\GroupSupplierModel.cs" />
+    <Compile Include="Services\GetGroupSupplierListParameter.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

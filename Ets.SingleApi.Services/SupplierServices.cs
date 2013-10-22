@@ -74,6 +74,16 @@
         private readonly INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository;
 
         /// <summary>
+        /// 字段supplierFeatureEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 11:53 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
+
+        /// <summary>
         /// 字段timeTableDisplayEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -91,6 +101,7 @@
         /// <param name="supplierCategoryEntityRepository">The supplierCategoryEntityRepository</param>
         /// <param name="supplierMenuCategoryEntityRepository">The supplierMenuCategoryEntityRepository</param>
         /// <param name="suppTimeTableDisplayEntityRepository">The suppTimeTableDisplayEntityRepository</param>
+        /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
@@ -103,6 +114,7 @@
             INHibernateRepository<SupplierCategoryEntity> supplierCategoryEntityRepository,
             INHibernateRepository<SupplierMenuCategoryEntity> supplierMenuCategoryEntityRepository,
             INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
+            INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository)
         {
             this.supplierEntityRepository = supplierEntityRepository;
@@ -110,6 +122,7 @@
             this.supplierCategoryEntityRepository = supplierCategoryEntityRepository;
             this.supplierMenuCategoryEntityRepository = supplierMenuCategoryEntityRepository;
             this.suppTimeTableDisplayEntityRepository = suppTimeTableDisplayEntityRepository;
+            this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
         }
 
@@ -224,7 +237,7 @@
 
             var orderBy = OrderBy.SupplierExpression((OrderBy.Supplier)parameter.OrderByType);
             var list = this.supplierEntityRepository.NamedQuery(parameter.Distance.HasValue ? "Pro_QuerySupplierListHasDistance" : "Pro_QuerySupplierList")
-                    .SetInt32("FeatureID", parameter.CuisineId)    
+                    .SetInt32("FeatureID", parameter.CuisineId)
                     .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
                     .SetInt32("CuisineID", parameter.CuisineId)
                     .SetString("BusinessAreaId", parameter.BusinessAreaId)
@@ -259,6 +272,74 @@
             return new ServicesResultList<SupplierModel>
             {
                 Result = supplierList
+            };
+        }
+
+        /// <summary>
+        /// 获取餐厅分店列表
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回餐厅分店列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 11:38 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<GroupSupplierModel> GetGroupSupplierList(GetGroupSupplierListParameter parameter)
+        {
+            var queryable = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
+                             where supplierEntity.SupplierGroupId == parameter.SupplierGroupId
+                             select new
+                             {
+                                 supplierEntity.SupplierId,
+                                 supplierEntity.SupplierName,
+                                 supplierEntity.SupplierDescription,
+                                 Address = supplierEntity.Address1,
+                                 supplierEntity.Averageprice,
+                                 supplierEntity.ParkingInfo,
+                                 supplierEntity.Telephone,
+                                 supplierEntity.SupplierGroupId,
+                                 supplierEntity.DateJoined,
+                                 supplierEntity.IsOpenDoor,
+                                 supplierEntity.DefaultCuisineId
+                             });
+
+            var tempSupplierList = parameter.PageIndex == null ? queryable.ToList() : queryable.Skip(parameter.PageIndex.Value).Take(parameter.PageSize).ToList();
+            if (tempSupplierList.Count == 0)
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Empty,
+                    Result = new List<GroupSupplierModel>()
+                };
+            }
+
+            var supplierIdList = tempSupplierList.Select(p => p.SupplierId).ToList();
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                    p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
+                    .Select(p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId })
+                    .ToList();
+
+            var groupSupplierList = tempSupplierList.Select(item => new GroupSupplierModel
+                    {
+                        SupplierId = item.SupplierId,
+                        SupplierName = item.SupplierName,
+                        Address = item.Address,
+                        Telephone = item.Telephone,
+                        Averageprice = item.Averageprice,
+                        ParkingInfo = item.ParkingInfo,
+                        CuisineId = item.DefaultCuisineId,
+                        DateJoined = item.DateJoined,
+                        IsOpenDoor = item.IsOpenDoor,
+                        SupplierDescription = item.SupplierDescription,
+                        SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == item.SupplierId).Select(p => new SupplierFeatureModel { FeatureId = p.FeatureId, FeatureName = p.Feature, SupplierFeatureId = p.SupplierFeatureId }).ToList()
+                    }).ToList();
+
+            return new ServicesResultList<GroupSupplierModel>
+            {
+                Result = groupSupplierList
             };
         }
 
