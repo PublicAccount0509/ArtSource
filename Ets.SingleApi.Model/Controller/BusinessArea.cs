@@ -13,6 +13,19 @@
     public class BusinessArea
     {
         /// <summary>
+        /// Gets or sets the Id of BusinessArea
+        /// </summary>
+        /// <value>
+        /// The Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 11:13 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Id { get; set; }
+
+        /// <summary>
         /// Gets or sets the Name of BusinessArea
         /// </summary>
         /// <value>

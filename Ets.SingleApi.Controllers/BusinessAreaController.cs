@@ -73,6 +73,7 @@
 
             var result = list.Result.Select(p => new BusinessArea
                     {
+                        Id = p.Id,
                         Name = p.Name,
                         Code = p.Code,
                         Depth = p.Depth,

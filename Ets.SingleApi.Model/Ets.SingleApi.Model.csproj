@@ -69,6 +69,8 @@
     <Compile Include="Controller\GetSupplierResponse.cs" />
     <Compile Include="Controller\UserOrder.cs" />
     <Compile Include="Controller\UserOrderListResponse.cs" />
+    <Compile Include="Controller\WaiMaiSupplierListResponse.cs" />
+    <Compile Include="Controller\DingTaiSupplierListResponse.cs" />
     <Compile Include="Mapping\Repository\CustomerAddressEntity.cs" />
     <Compile Include="Mapping\Repository\OrderSourceEntity.cs" />
     <Compile Include="Mapping\Repository\OrderStatusEntity.cs" />

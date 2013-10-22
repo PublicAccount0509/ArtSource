@@ -28,6 +28,19 @@
         public int SupplierId { get; set; }
 
         /// <summary>
+        /// Gets or sets the SupplierGroupId of SupplierDetailModel
+        /// </summary>
+        /// <value>
+        /// The SupplierGroupId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/22 9:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? SupplierGroupId { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the supplier.
         /// </summary>
         /// <value>

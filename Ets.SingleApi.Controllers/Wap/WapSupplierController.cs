@@ -82,7 +82,13 @@
                     Address = getSupplierResult.Result.Address,
                     Averageprice = getSupplierResult.Result.Averageprice,
                     ParkingInfo = getSupplierResult.Result.ParkingInfo,
-                    Telephone = getSupplierResult.Result.Telephone
+                    Telephone = getSupplierResult.Result.Telephone,
+                    SupplierGroupId = getSupplierResult.Result.SupplierGroupId,
+                    ChainCount = getSupplierResult.Result.ChainCount,
+                    CuisineName = getSupplierResult.Result.CuisineName,
+                    DateJoined = getSupplierResult.Result.DateJoined,
+                    IsOpenDoor = getSupplierResult.Result.IsOpenDoor,
+                    LogoUrl = getSupplierResult.Result.LogoUrl
                 };
 
             return new GetSupplierResponse
@@ -99,7 +105,6 @@
         /// 获取餐厅列表
         /// </summary>
         /// <param name="supplierName">餐厅名称</param>
-        /// <param name="dishName">菜名</param>
         /// <param name="cuisineId">菜品</param>
         /// <param name="businessAreaId">商圈Id</param>
         /// <param name="regionId">省、市、区Id</param>
@@ -118,12 +123,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SearchSupplierListResponse SearchSupplierList(string supplierName, string dishName, int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public SearchSupplierListResponse SearchSupplierList(string supplierName, int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
                 {
                     SupplierName = supplierName ?? string.Empty,
-                    DishName = dishName ?? string.Empty,
+                    FeatureId = -1,
                     CuisineId = cuisineId ?? -1,
                     BusinessAreaId = businessAreaId ?? string.Empty,
                     RegionId = regionId ?? string.Empty,
@@ -167,6 +172,152 @@
                         },
                     Result = result
                 };
+        }
+
+        /// <summary>
+        /// 获取外卖餐厅列表
+        /// </summary>
+        /// <param name="cuisineId">菜品</param>
+        /// <param name="businessAreaId">商圈Id</param>
+        /// <param name="regionId">省、市、区Id</param>
+        /// <param name="userLat">经度</param>
+        /// <param name="userLong">纬度</param>
+        /// <param name="distance">距离</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="orderByType">排序规则</param>
+        /// <returns>
+        /// 返回外卖餐厅列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 17:49
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public WaiMaiSupplierListResponse WaiMaiSupplierList(int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        {
+            var featureId = 35;
+            var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
+            {
+                SupplierName = string.Empty,
+                FeatureId = featureId,
+                CuisineId = cuisineId ?? -1,
+                BusinessAreaId = businessAreaId ?? string.Empty,
+                RegionId = regionId ?? string.Empty,
+                UserLat = userLat,
+                UserLong = userLong,
+                Distance = distance,
+                PageSize = pageSize,
+                PageIndex = pageIndex,
+                OrderByType = orderByType
+            });
+
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new WaiMaiSupplierListResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<Supplier>()
+                };
+            }
+
+            var result = list.Result.Select(p => new Supplier
+            {
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName,
+                Address = p.Address,
+                Telephone = p.Telephone,
+                Averageprice = p.Averageprice,
+                CuisineName = p.CuisineName,
+                Distance = p.Distance,
+                LogoUrl = p.LogoUrl
+            }).ToList();
+
+            return new WaiMaiSupplierListResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
+        /// 获取订台餐厅列表
+        /// </summary>
+        /// <param name="cuisineId">菜品</param>
+        /// <param name="businessAreaId">商圈Id</param>
+        /// <param name="regionId">省、市、区Id</param>
+        /// <param name="userLat">经度</param>
+        /// <param name="userLong">纬度</param>
+        /// <param name="distance">距离</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="orderByType">排序规则</param>
+        /// <returns>
+        /// 返回订台餐厅列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 17:49
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public DingTaiSupplierListResponse DingTaiSupplierList(int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        {
+            var featureId = 36;
+            var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
+            {
+                SupplierName = string.Empty,
+                FeatureId = featureId,
+                CuisineId = cuisineId ?? -1,
+                BusinessAreaId = businessAreaId ?? string.Empty,
+                RegionId = regionId ?? string.Empty,
+                UserLat = userLat,
+                UserLong = userLong,
+                Distance = distance,
+                PageSize = pageSize,
+                PageIndex = pageIndex,
+                OrderByType = orderByType
+            });
+
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new DingTaiSupplierListResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<Supplier>()
+                };
+            }
+
+            var result = list.Result.Select(p => new Supplier
+            {
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName,
+                Address = p.Address,
+                Telephone = p.Telephone,
+                Averageprice = p.Averageprice,
+                CuisineName = p.CuisineName,
+                Distance = p.Distance,
+                LogoUrl = p.LogoUrl
+            }).ToList();
+
+            return new DingTaiSupplierListResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
         }
 
         /// <summary>

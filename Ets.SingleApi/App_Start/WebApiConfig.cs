@@ -30,7 +30,7 @@
             config.Routes.MapHttpRoute(
                  "GET/PUT/DELETE",
                  "api/{controller}/{action}/{id}",
-                 new { httpMethod = new HttpMethodConstraint("GET", "PUT", "DELETE", "POST") });
+                 new { id = RouteParameter.Optional, httpMethod = new HttpMethodConstraint("GET", "PUT", "DELETE", "POST") });
         }
     }
 }

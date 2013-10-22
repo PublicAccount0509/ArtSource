@@ -26,17 +26,17 @@
         public string SupplierName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the dish.
+        /// Gets or sets the FeatureId of GetSupplierListParameter
         /// </summary>
         /// <value>
-        /// The name of the dish.
+        /// The FeatureId
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/15 18:00
+        /// 创建日期：2013/10/22 10:26
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string DishName { get; set; }
+        public int FeatureId { get; set; }
 
         /// <summary>
         /// Gets or sets the CuisineId of GetSupplierListParameter

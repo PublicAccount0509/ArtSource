@@ -261,7 +261,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierList :SupplierName, :SupplierDishName,:CuisineID,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:OrderBy
+    exec Pro_QuerySupplierList :FeatureID,:SupplierName,:CuisineID,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:OrderBy
   </sql-query>
   <sql-query name="Pro_QuerySupplierListHasDistance">
     <return-scalar column="SupplierId" type="Int32" />
@@ -279,6 +279,6 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierListHasDistance :SupplierName, :SupplierDishName,:CuisineID,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:OrderBy
+    exec Pro_QuerySupplierListHasDistance :FeatureID,:SupplierName,:CuisineID,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:OrderBy
   </sql-query>
 </hibernate-mapping>

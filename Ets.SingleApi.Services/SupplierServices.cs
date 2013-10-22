@@ -137,7 +137,8 @@
                                         Address = supplierEntity.Address1,
                                         supplierEntity.Averageprice,
                                         supplierEntity.ParkingInfo,
-                                        supplierEntity.Telephone
+                                        supplierEntity.Telephone,
+                                        supplierEntity.SupplierGroupId
                                     }).FirstOrDefault();
 
             if (tempSupplier == null)
@@ -158,7 +159,8 @@
                     Address = tempSupplier.Address,
                     Averageprice = tempSupplier.Averageprice,
                     ParkingInfo = tempSupplier.ParkingInfo,
-                    Telephone = tempSupplier.Telephone
+                    Telephone = tempSupplier.Telephone,
+                    SupplierGroupId = tempSupplier.SupplierGroupId
                 };
 
             var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
@@ -188,6 +190,9 @@
 
             var serviceTime = timeTableDisplayList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime));
             supplier.ServiceTime = serviceTime.Trim();
+            supplier.ChainCount = supplier.SupplierGroupId == null
+                                      ? 0
+                                      : this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId);
             return new ServicesResult<SupplierDetailModel>
             {
                 Result = supplier
@@ -219,8 +224,8 @@
 
             var orderBy = OrderBy.SupplierExpression((OrderBy.Supplier)parameter.OrderByType);
             var list = this.supplierEntityRepository.NamedQuery(parameter.Distance.HasValue ? "Pro_QuerySupplierListHasDistance" : "Pro_QuerySupplierList")
+                    .SetInt32("FeatureID", parameter.CuisineId)    
                     .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
-                    .SetString("SupplierDishName", parameter.DishName.IsEmptyOrNull() ? "%" : parameter.DishName)
                     .SetInt32("CuisineID", parameter.CuisineId)
                     .SetString("BusinessAreaId", parameter.BusinessAreaId)
                     .SetString("RegionId", parameter.RegionId)

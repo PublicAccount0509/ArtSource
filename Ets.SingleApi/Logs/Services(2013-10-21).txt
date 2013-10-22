@@ -38,3 +38,88 @@
 ----------------------header--------------------------
 
 ----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-21 18:27:15,268 [6] INFO  Ets.SingleApi.Services - GetUserOrderList
+
+----------------------header--------------------------
+2013-10-21 18:29:21,751 [15] INFO  Ets.SingleApi.Services - GetUserOrderList
+2013-10-21 18:30:25,843 [15] ERROR Ets.SingleApi.Services - System.NotSupportedException: The UnionResultOperator result operator is not current supported
+   at NHibernate.Linq.Visitors.ResultOperatorProcessors.ResultOperatorMap.Process(ResultOperatorBase resultOperator, QueryModelVisitor queryModel, IntermediateHqlTree tree)
+   at NHibernate.Linq.Visitors.QueryModelVisitor.VisitResultOperator(ResultOperatorBase resultOperator, QueryModel queryModel, Int32 index)
+   at Remotion.Data.Linq.Clauses.ResultOperatorBase.Accept(IQueryModelVisitor visitor, QueryModel queryModel, Int32 index)
+   at Remotion.Data.Linq.QueryModelVisitorBase.VisitResultOperators(ObservableCollection`1 resultOperators, QueryModel queryModel)
+   at Remotion.Data.Linq.QueryModelVisitorBase.VisitQueryModel(QueryModel queryModel)
+   at NHibernate.Linq.Visitors.QueryModelVisitor.Visit()
+   at NHibernate.Linq.Visitors.QueryModelVisitor.GenerateHqlQuery(QueryModel queryModel, VisitorParameters parameters, Boolean root)
+   at NHibernate.Linq.Visitors.HqlGeneratorExpressionTreeVisitor.VisitSubQueryExpression(SubQueryExpression expression)
+   at NHibernate.Linq.Visitors.HqlGeneratorExpressionTreeVisitor.VisitExpression(Expression expression)
+   at NHibernate.Linq.Visitors.HqlGeneratorExpressionTreeVisitor.Visit(Expression expression, VisitorParameters parameters)
+   at NHibernate.Linq.Visitors.QueryModelVisitor.VisitMainFromClause(MainFromClause fromClause, QueryModel queryModel)
+   at Remotion.Data.Linq.Clauses.MainFromClause.Accept(IQueryModelVisitor visitor, QueryModel queryModel)
+   at Remotion.Data.Linq.QueryModelVisitorBase.VisitQueryModel(QueryModel queryModel)
+   at NHibernate.Linq.Visitors.QueryModelVisitor.Visit()
+   at NHibernate.Linq.Visitors.QueryModelVisitor.GenerateHqlQuery(QueryModel queryModel, VisitorParameters parameters, Boolean root)
+   at NHibernate.Linq.NhLinqExpression.Translate(ISessionFactoryImplementor sessionFactory)
+   at NHibernate.Hql.Ast.ANTLR.ASTQueryTranslatorFactory.CreateQueryTranslators(String queryIdentifier, IQueryExpression queryExpression, String collectionRole, Boolean shallow, IDictionary`2 filters, ISessionFactoryImplementor factory)
+   at NHibernate.Engine.Query.HQLExpressionQueryPlan.CreateTranslators(String expressionStr, IQueryExpression queryExpression, String collectionRole, Boolean shallow, IDictionary`2 enabledFilters, ISessionFactoryImplementor factory)
+   at NHibernate.Engine.Query.HQLExpressionQueryPlan..ctor(String expressionStr, IQueryExpression queryExpression, String collectionRole, Boolean shallow, IDictionary`2 enabledFilters, ISessionFactoryImplementor factory)
+   at NHibernate.Engine.Query.HQLExpressionQueryPlan..ctor(String expressionStr, IQueryExpression queryExpression, Boolean shallow, IDictionary`2 enabledFilters, ISessionFactoryImplementor factory)
+   at NHibernate.Engine.Query.QueryPlanCache.GetHQLQueryPlan(IQueryExpression queryExpression, Boolean shallow, IDictionary`2 enabledFilters)
+   at NHibernate.Impl.AbstractSessionImpl.GetHQLQueryPlan(IQueryExpression queryExpression, Boolean shallow)
+   at NHibernate.Impl.AbstractSessionImpl.CreateQuery(IQueryExpression queryExpression)
+   at NHibernate.Linq.NhQueryProvider.PrepareQuery(Expression expression, IQuery& query, NhLinqExpression& nhQuery)
+   at NHibernate.Linq.NhQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.NhQueryProvider.Execute[TResult](Expression expression)
+   at Remotion.Data.Linq.QueryableBase`1.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Ets.SingleApi.Services.UserAllOrders.GetAllOrderList(Int32 customerId, Int32 pageSize, Nullable`1 pageIndex) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\Order\UserAllOrders.cs:line 222
+   at Ets.SingleApi.Services.UserAllOrders.GetUserOrderList(Int32 customerId, Nullable`1 orderStatus, Int32 pageSize, Nullable`1 pageIndex) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\Order\UserAllOrders.cs:line 110
+   at Ets.SingleApi.Services.UsersServices.GetUserOrderList(Int32 userId, Nullable`1 orderStatus, OrderType orderType, Int32 pageSize, Nullable`1 pageIndex) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\UsersServices.cs:line 698
+   at Castle.Proxies.Invocations.IUsersServices_GetUserOrderList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------header--------------------------
+2013-10-21 18:34:12,695 [8] INFO  Ets.SingleApi.Services - GetUserOrderList
+2013-10-21 18:34:34,412 [8] ERROR Ets.SingleApi.Services - System.NotSupportedException: The UnionResultOperator result operator is not current supported
+   at NHibernate.Linq.Visitors.ResultOperatorProcessors.ResultOperatorMap.Process(ResultOperatorBase resultOperator, QueryModelVisitor queryModel, IntermediateHqlTree tree)
+   at NHibernate.Linq.Visitors.QueryModelVisitor.VisitResultOperator(ResultOperatorBase resultOperator, QueryModel queryModel, Int32 index)
+   at Remotion.Data.Linq.Clauses.ResultOperatorBase.Accept(IQueryModelVisitor visitor, QueryModel queryModel, Int32 index)
+   at Remotion.Data.Linq.QueryModelVisitorBase.VisitResultOperators(ObservableCollection`1 resultOperators, QueryModel queryModel)
+   at Remotion.Data.Linq.QueryModelVisitorBase.VisitQueryModel(QueryModel queryModel)
+   at NHibernate.Linq.Visitors.QueryModelVisitor.Visit()
+   at NHibernate.Linq.Visitors.QueryModelVisitor.GenerateHqlQuery(QueryModel queryModel, VisitorParameters parameters, Boolean root)
+   at NHibernate.Linq.Visitors.HqlGeneratorExpressionTreeVisitor.VisitSubQueryExpression(SubQueryExpression expression)
+   at NHibernate.Linq.Visitors.HqlGeneratorExpressionTreeVisitor.VisitExpression(Expression expression)
+   at NHibernate.Linq.Visitors.HqlGeneratorExpressionTreeVisitor.Visit(Expression expression, VisitorParameters parameters)
+   at NHibernate.Linq.Visitors.QueryModelVisitor.VisitMainFromClause(MainFromClause fromClause, QueryModel queryModel)
+   at Remotion.Data.Linq.Clauses.MainFromClause.Accept(IQueryModelVisitor visitor, QueryModel queryModel)
+   at Remotion.Data.Linq.QueryModelVisitorBase.VisitQueryModel(QueryModel queryModel)
+   at NHibernate.Linq.Visitors.QueryModelVisitor.Visit()
+   at NHibernate.Linq.Visitors.QueryModelVisitor.GenerateHqlQuery(QueryModel queryModel, VisitorParameters parameters, Boolean root)
+   at NHibernate.Linq.NhLinqExpression.Translate(ISessionFactoryImplementor sessionFactory)
+   at NHibernate.Hql.Ast.ANTLR.ASTQueryTranslatorFactory.CreateQueryTranslators(String queryIdentifier, IQueryExpression queryExpression, String collectionRole, Boolean shallow, IDictionary`2 filters, ISessionFactoryImplementor factory)
+   at NHibernate.Engine.Query.HQLExpressionQueryPlan.CreateTranslators(String expressionStr, IQueryExpression queryExpression, String collectionRole, Boolean shallow, IDictionary`2 enabledFilters, ISessionFactoryImplementor factory)
+   at NHibernate.Engine.Query.HQLExpressionQueryPlan..ctor(String expressionStr, IQueryExpression queryExpression, String collectionRole, Boolean shallow, IDictionary`2 enabledFilters, ISessionFactoryImplementor factory)
+   at NHibernate.Engine.Query.HQLExpressionQueryPlan..ctor(String expressionStr, IQueryExpression queryExpression, Boolean shallow, IDictionary`2 enabledFilters, ISessionFactoryImplementor factory)
+   at NHibernate.Engine.Query.QueryPlanCache.GetHQLQueryPlan(IQueryExpression queryExpression, Boolean shallow, IDictionary`2 enabledFilters)
+   at NHibernate.Impl.AbstractSessionImpl.GetHQLQueryPlan(IQueryExpression queryExpression, Boolean shallow)
+   at NHibernate.Impl.AbstractSessionImpl.CreateQuery(IQueryExpression queryExpression)
+   at NHibernate.Linq.NhQueryProvider.PrepareQuery(Expression expression, IQuery& query, NhLinqExpression& nhQuery)
+   at NHibernate.Linq.NhQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.NhQueryProvider.Execute[TResult](Expression expression)
+   at Remotion.Data.Linq.QueryableBase`1.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Ets.SingleApi.Services.UserAllOrders.GetAllOrderList(Int32 customerId, Int32 pageSize, Nullable`1 pageIndex) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\Order\UserAllOrders.cs:line 222
+   at Ets.SingleApi.Services.UserAllOrders.GetUserOrderList(Int32 customerId, Nullable`1 orderStatus, Int32 pageSize, Nullable`1 pageIndex) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\Order\UserAllOrders.cs:line 110
+   at Ets.SingleApi.Services.UsersServices.GetUserOrderList(Int32 userId, Nullable`1 orderStatus, OrderType orderType, Int32 pageSize, Nullable`1 pageIndex) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\UsersServices.cs:line 698
+   at Castle.Proxies.Invocations.IUsersServices_GetUserOrderList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
