@@ -78,6 +78,7 @@
     <Compile Include="Controller\WaiMaiOrderResponse.cs" />
     <Compile Include="Controller\WaiMaiOrderResult.cs" />
     <Compile Include="Mapping\Repository\CustomerAddressEntity.cs" />
+    <Compile Include="Mapping\Repository\DeliveryAddressEntity.cs" />
     <Compile Include="Mapping\Repository\OrderSourceEntity.cs" />
     <Compile Include="Mapping\Repository\OrderStatusEntity.cs" />
     <Compile Include="Mapping\Repository\SuppTimeTableDisplayEntity.cs" />
@@ -345,6 +346,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Mapping\SuppTimeTableDisplayEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\TimeTableDisplayEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\DeliveryAddressEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

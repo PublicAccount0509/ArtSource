@@ -11,9 +11,9 @@
 
 namespace Ets.SingleApi.Model.Repository
 {
-	using System;
-	using System.Collections.Generic;
-		
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Class:DeliveryEntity
     /// Namespace:Ets.SingleApi.Model.Repository
@@ -27,631 +27,631 @@ namespace Ets.SingleApi.Model.Repository
     [Serializable]
     public class DeliveryEntity
     {
-		#region private member
+        #region private member
 
-			/// <summary>
-		/// The DeliveryID
+        /// <summary>
+        /// The DeliveryID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int deliveryId;
+        private int deliveryId;
 
-			/// <summary>
-		/// The CustomerID
+        /// <summary>
+        /// The CustomerID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int customerId;
+        private int customerId;
 
-			/// <summary>
-		/// The OrderStatusID
+        /// <summary>
+        /// The OrderStatusID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int orderStatusId;
+        private int orderStatusId;
 
-			/// <summary>
-		/// The DeliveryMethodID
+        /// <summary>
+        /// The DeliveryMethodID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? deliveryMethodId;
+        private int? deliveryMethodId;
 
-			/// <summary>
-		/// The DeliveryAddressID
+        /// <summary>
+        /// The DeliveryAddressID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? deliveryAddressId;
+        private int? deliveryAddressId;
 
-			/// <summary>
-		/// The DeliveryZoneID
+        /// <summary>
+        /// The DeliveryZoneID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? deliveryZoneId;
+        private int? deliveryZoneId;
 
-			/// <summary>
-		/// The CouponID
+        /// <summary>
+        /// The CouponID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? couponId;
+        private int? couponId;
 
-			/// <summary>
-		/// The Total
+        /// <summary>
+        /// The Total
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? total;
+        private decimal? total;
 
-			/// <summary>
-		/// The IsPaid
+        /// <summary>
+        /// The IsPaid
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isPaId;
+        private bool? isPaId;
 
-			/// <summary>
-		/// The Cancelled
+        /// <summary>
+        /// The Cancelled
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? cancelled;
+        private bool? cancelled;
 
-			/// <summary>
-		/// The DeliveryDate
+        /// <summary>
+        /// The DeliveryDate
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? deliveryDate;
+        private DateTime? deliveryDate;
 
-			/// <summary>
-		/// The DeliveryInstruction
+        /// <summary>
+        /// The DeliveryInstruction
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string deliveryInstruction;
+        private string deliveryInstruction;
 
-			/// <summary>
-		/// The DateAdded
+        /// <summary>
+        /// The DateAdded
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? dateAdded;
+        private DateTime? dateAdded;
 
-			/// <summary>
-		/// The IPAddress
+        /// <summary>
+        /// The IPAddress
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string iPAddress;
+        private string iPAddress;
 
-			/// <summary>
-		/// The IsRating
+        /// <summary>
+        /// The IsRating
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isRating;
+        private bool? isRating;
 
-			/// <summary>
-		/// The OrderNotes
+        /// <summary>
+        /// The OrderNotes
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string orderNotes;
+        private string orderNotes;
 
-			/// <summary>
-		/// The RejectReason
+        /// <summary>
+        /// The RejectReason
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string rejectReason;
+        private string rejectReason;
 
-			/// <summary>
-		/// The QuotedDeliveryTime
+        /// <summary>
+        /// The QuotedDeliveryTime
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string quotedDeliveryTime;
+        private string quotedDeliveryTime;
 
-			/// <summary>
-		/// The OperatorID
+        /// <summary>
+        /// The OperatorID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? operatorId;
+        private int? operatorId;
 
-			/// <summary>
-		/// The ContactPhone
+        /// <summary>
+        /// The ContactPhone
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string contactPhone;
+        private string contactPhone;
 
-			/// <summary>
-		/// The Contact
+        /// <summary>
+        /// The Contact
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string contact;
+        private string contact;
 
-			/// <summary>
-		/// The Gender
+        /// <summary>
+        /// The Gender
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string gender;
+        private string gender;
 
-			/// <summary>
-		/// The Tel
+        /// <summary>
+        /// The Tel
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string tel;
+        private string tel;
 
-			/// <summary>
-		/// The InvoiceRequired
+        /// <summary>
+        /// The InvoiceRequired
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? invoiceRequired;
+        private bool? invoiceRequired;
 
-			/// <summary>
-		/// The SupplierID
+        /// <summary>
+        /// The SupplierID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? supplierId;
+        private int? supplierId;
 
-			/// <summary>
-		/// The InvoiceTitle
+        /// <summary>
+        /// The InvoiceTitle
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string invoiceTitle;
+        private string invoiceTitle;
 
-			/// <summary>
-		/// The PackagingFee
+        /// <summary>
+        /// The PackagingFee
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? packagingFee;
+        private decimal? packagingFee;
 
-			/// <summary>
-		/// The DeliverCharge
+        /// <summary>
+        /// The DeliverCharge
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? deliverCharge;
+        private decimal? deliverCharge;
 
-			/// <summary>
-		/// The DeliverSourcs
+        /// <summary>
+        /// The DeliverSourcs
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte? deliverSourcs;
+        private byte? deliverSourcs;
 
-			/// <summary>
-		/// The SendingPersonID
+        /// <summary>
+        /// The SendingPersonID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? sendingPersonId;
+        private int? sendingPersonId;
 
-			/// <summary>
-		/// The LogisticsTakeFoodTime
+        /// <summary>
+        /// The LogisticsTakeFoodTime
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? logisticsTakeFoodTime;
+        private DateTime? logisticsTakeFoodTime;
 
-			/// <summary>
-		/// The OrderNumber
+        /// <summary>
+        /// The OrderNumber
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? orderNumber;
+        private int? orderNumber;
 
-			/// <summary>
-		/// The CustomerTotal
+        /// <summary>
+        /// The CustomerTotal
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? customerTotal;
+        private decimal? customerTotal;
 
-			/// <summary>
-		/// The CCdiscount
+        /// <summary>
+        /// The CCdiscount
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? cCdiscount;
+        private decimal? cCdiscount;
 
-			/// <summary>
-		/// The ActualSendTime
+        /// <summary>
+        /// The ActualSendTime
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? actualSendTime;
+        private DateTime? actualSendTime;
 
-			/// <summary>
-		/// The ReceivablePrice
+        /// <summary>
+        /// The ReceivablePrice
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? receivablePrice;
+        private decimal? receivablePrice;
 
-			/// <summary>
-		/// The RealUserPrice
+        /// <summary>
+        /// The RealUserPrice
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? realUserPrice;
+        private decimal? realUserPrice;
 
-			/// <summary>
-		/// The RealSupplierPrice
+        /// <summary>
+        /// The RealSupplierPrice
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? realSupplierPrice;
+        private decimal? realSupplierPrice;
 
-			/// <summary>
-		/// The RealSupplierType
+        /// <summary>
+        /// The RealSupplierType
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte? realSupplierType;
+        private int? realSupplierType;
 
-			/// <summary>
-		/// The IsTakeInvoice
+        /// <summary>
+        /// The IsTakeInvoice
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isTakeInvoice;
+        private bool? isTakeInvoice;
 
-			/// <summary>
-		/// The AddedTime
+        /// <summary>
+        /// The AddedTime
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? addedTime;
+        private DateTime? addedTime;
 
-			/// <summary>
-		/// The CheckStatus
+        /// <summary>
+        /// The CheckStatus
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte? checkStatus;
+        private byte? checkStatus;
 
-			/// <summary>
-		/// The HandOverStatus
+        /// <summary>
+        /// The HandOverStatus
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte? handOverStatus;
+        private byte? handOverStatus;
 
-			/// <summary>
-		/// The Lat
+        /// <summary>
+        /// The Lat
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private double? lat;
+        private double? lat;
 
-			/// <summary>
-		/// The Lng
+        /// <summary>
+        /// The Lng
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private double? lng;
+        private double? lng;
 
-			/// <summary>
-		/// The LogisticsId
+        /// <summary>
+        /// The LogisticsId
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string logisticsId;
+        private string logisticsId;
 
-			/// <summary>
-		/// The ModifyDate
+        /// <summary>
+        /// The ModifyDate
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? modifyDate;
+        private DateTime? modifyDate;
 
-			/// <summary>
-		/// The EtsTakeFoodAmount
+        /// <summary>
+        /// The EtsTakeFoodAmount
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? etsTakeFoodAmount;
+        private decimal? etsTakeFoodAmount;
 
-			/// <summary>
-		/// The EtsActualTakeFoodAmount
+        /// <summary>
+        /// The EtsActualTakeFoodAmount
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? etsActualTakeFoodAmount;
+        private decimal? etsActualTakeFoodAmount;
 
-			/// <summary>
-		/// The TaxPointAmount
+        /// <summary>
+        /// The TaxPointAmount
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? taxPointAmount;
+        private decimal? taxPointAmount;
 
-			/// <summary>
-		/// The AreaId
+        /// <summary>
+        /// The AreaId
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? areaId;
+        private int? areaId;
 
-			/// <summary>
-		/// The CashPay
+        /// <summary>
+        /// The CashPay
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? cashPay;
+        private decimal? cashPay;
 
-			/// <summary>
-		/// The NetWorkPay
+        /// <summary>
+        /// The NetWorkPay
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? netWorkPay;
+        private decimal? netWorkPay;
 
-			/// <summary>
-		/// The PosPay
+        /// <summary>
+        /// The PosPay
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? posPay;
+        private decimal? posPay;
 
-			/// <summary>
-		/// The StoreCardPaySup
+        /// <summary>
+        /// The StoreCardPaySup
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? storeCardPaySup;
+        private decimal? storeCardPaySup;
 
-			/// <summary>
-		/// The DeliveryDistance
+        /// <summary>
+        /// The DeliveryDistance
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private double deliveryDistance;
+        private double deliveryDistance;
 
-			/// <summary>
-		/// The LogisSendTime
+        /// <summary>
+        /// The LogisSendTime
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? logisSendTime;
+        private DateTime? logisSendTime;
 
-			/// <summary>
-		/// The OrderList
+        /// <summary>
+        /// The OrderList
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private IList<OrderEntity> orderList;
+        private IList<OrderEntity> orderList;
 
-			/// <summary>
-		/// The PaymentList
+        /// <summary>
+        /// The PaymentList
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private IList<PaymentEntity> paymentList;
+        private IList<PaymentEntity> paymentList;
 
-			/// <summary>
-		/// The Path
+        /// <summary>
+        /// The Path
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private SourcePathEntity path;
+        private SourcePathEntity path;
 
-			/// <summary>
-		/// The Templateid
+        /// <summary>
+        /// The Templateid
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private SourceTypeEntity template1;
+        private SourceTypeEntity template1;
 
-			/// <summary>
-		/// The Templateid
+        /// <summary>
+        /// The Templateid
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/10/13 14:27:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private SourceTypeEntity template;
+        private SourceTypeEntity template;
 
-		#endregion
+        #endregion
 
-		/// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="DeliveryEntity"/> class.
         /// </summary>
         /// Creator:周超
@@ -661,26 +661,26 @@ namespace Ets.SingleApi.Model.Repository
         /// ----------------------------------------------------------------------------------------
         public DeliveryEntity()
         {
-			this.deliveryId = 0;
-			this.customerId = 0;
-			this.orderStatusId = 0;
-			this.deliveryInstruction = string.Empty;
-			this.iPAddress = string.Empty;
-			this.orderNotes = string.Empty;
-			this.rejectReason = string.Empty;
-			this.quotedDeliveryTime = string.Empty;
-			this.contactPhone = string.Empty;
-			this.contact = string.Empty;
-			this.gender = string.Empty;
-			this.tel = string.Empty;
-			this.invoiceTitle = string.Empty;
-			this.logisticsId = string.Empty;
-			this.deliveryDistance = -1;
-		}
+            this.deliveryId = 0;
+            this.customerId = 0;
+            this.orderStatusId = 0;
+            this.deliveryInstruction = string.Empty;
+            this.iPAddress = string.Empty;
+            this.orderNotes = string.Empty;
+            this.rejectReason = string.Empty;
+            this.quotedDeliveryTime = string.Empty;
+            this.contactPhone = string.Empty;
+            this.contact = string.Empty;
+            this.gender = string.Empty;
+            this.tel = string.Empty;
+            this.invoiceTitle = string.Empty;
+            this.logisticsId = string.Empty;
+            this.deliveryDistance = -1;
+        }
 
-		#region public member
+        #region public member
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliveryID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -688,8 +688,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int DeliveryId
-		{
+        public virtual int DeliveryId
+        {
             get
             {
                 return this.deliveryId;
@@ -701,7 +701,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CustomerID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -709,8 +709,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int CustomerId
-		{
+        public virtual int CustomerId
+        {
             get
             {
                 return this.customerId;
@@ -722,7 +722,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OrderStatusID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -730,8 +730,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int OrderStatusId
-		{
+        public virtual int OrderStatusId
+        {
             get
             {
                 return this.orderStatusId;
@@ -743,7 +743,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliveryMethodID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -751,8 +751,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? DeliveryMethodId
-		{
+        public virtual int? DeliveryMethodId
+        {
             get
             {
                 return this.deliveryMethodId;
@@ -764,7 +764,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliveryAddressID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -772,8 +772,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? DeliveryAddressId
-		{
+        public virtual int? DeliveryAddressId
+        {
             get
             {
                 return this.deliveryAddressId;
@@ -785,7 +785,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliveryZoneID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -793,8 +793,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? DeliveryZoneId
-		{
+        public virtual int? DeliveryZoneId
+        {
             get
             {
                 return this.deliveryZoneId;
@@ -806,7 +806,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CouponID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -814,8 +814,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? CouponId
-		{
+        public virtual int? CouponId
+        {
             get
             {
                 return this.couponId;
@@ -827,7 +827,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Total of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -835,8 +835,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? Total
-		{
+        public virtual decimal? Total
+        {
             get
             {
                 return this.total;
@@ -848,7 +848,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsPaid of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -856,8 +856,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsPaId
-		{
+        public virtual bool? IsPaId
+        {
             get
             {
                 return this.isPaId;
@@ -869,7 +869,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the Cancelled of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -877,8 +877,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? Cancelled
-		{
+        public virtual bool? Cancelled
+        {
             get
             {
                 return this.cancelled;
@@ -890,7 +890,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliveryDate of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -898,8 +898,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? DeliveryDate
-		{
+        public virtual DateTime? DeliveryDate
+        {
             get
             {
                 return this.deliveryDate;
@@ -911,7 +911,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliveryInstruction of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -919,8 +919,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string DeliveryInstruction
-		{
+        public virtual string DeliveryInstruction
+        {
             get
             {
                 return this.deliveryInstruction;
@@ -932,7 +932,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DateAdded of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -940,8 +940,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? DateAdded
-		{
+        public virtual DateTime? DateAdded
+        {
             get
             {
                 return this.dateAdded;
@@ -953,7 +953,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the IPAddress of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -961,8 +961,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string IPAddress
-		{
+        public virtual string IPAddress
+        {
             get
             {
                 return this.iPAddress;
@@ -974,7 +974,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsRating of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -982,8 +982,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsRating
-		{
+        public virtual bool? IsRating
+        {
             get
             {
                 return this.isRating;
@@ -995,7 +995,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OrderNotes of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1003,8 +1003,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string OrderNotes
-		{
+        public virtual string OrderNotes
+        {
             get
             {
                 return this.orderNotes;
@@ -1016,7 +1016,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the RejectReason of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1024,8 +1024,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string RejectReason
-		{
+        public virtual string RejectReason
+        {
             get
             {
                 return this.rejectReason;
@@ -1037,7 +1037,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the QuotedDeliveryTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1045,8 +1045,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string QuotedDeliveryTime
-		{
+        public virtual string QuotedDeliveryTime
+        {
             get
             {
                 return this.quotedDeliveryTime;
@@ -1058,7 +1058,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OperatorID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1066,8 +1066,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? OperatorId
-		{
+        public virtual int? OperatorId
+        {
             get
             {
                 return this.operatorId;
@@ -1079,7 +1079,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ContactPhone of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1087,8 +1087,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string ContactPhone
-		{
+        public virtual string ContactPhone
+        {
             get
             {
                 return this.contactPhone;
@@ -1100,7 +1100,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Contact of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1108,8 +1108,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Contact
-		{
+        public virtual string Contact
+        {
             get
             {
                 return this.contact;
@@ -1121,7 +1121,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Gender of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1129,8 +1129,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Gender
-		{
+        public virtual string Gender
+        {
             get
             {
                 return this.gender;
@@ -1142,7 +1142,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Tel of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1150,8 +1150,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Tel
-		{
+        public virtual string Tel
+        {
             get
             {
                 return this.tel;
@@ -1163,7 +1163,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the InvoiceRequired of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1171,8 +1171,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? InvoiceRequired
-		{
+        public virtual bool? InvoiceRequired
+        {
             get
             {
                 return this.invoiceRequired;
@@ -1184,7 +1184,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the SupplierID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1192,8 +1192,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? SupplierId
-		{
+        public virtual int? SupplierId
+        {
             get
             {
                 return this.supplierId;
@@ -1205,7 +1205,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the InvoiceTitle of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1213,8 +1213,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string InvoiceTitle
-		{
+        public virtual string InvoiceTitle
+        {
             get
             {
                 return this.invoiceTitle;
@@ -1226,7 +1226,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the PackagingFee of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1234,8 +1234,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? PackagingFee
-		{
+        public virtual decimal? PackagingFee
+        {
             get
             {
                 return this.packagingFee;
@@ -1247,7 +1247,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliverCharge of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1255,8 +1255,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? DeliverCharge
-		{
+        public virtual decimal? DeliverCharge
+        {
             get
             {
                 return this.deliverCharge;
@@ -1268,7 +1268,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliverSourcs of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1276,8 +1276,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte? DeliverSourcs
-		{
+        public virtual byte? DeliverSourcs
+        {
             get
             {
                 return this.deliverSourcs;
@@ -1289,7 +1289,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the SendingPersonID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1297,8 +1297,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? SendingPersonId
-		{
+        public virtual int? SendingPersonId
+        {
             get
             {
                 return this.sendingPersonId;
@@ -1310,7 +1310,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the LogisticsTakeFoodTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1318,8 +1318,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? LogisticsTakeFoodTime
-		{
+        public virtual DateTime? LogisticsTakeFoodTime
+        {
             get
             {
                 return this.logisticsTakeFoodTime;
@@ -1331,7 +1331,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OrderNumber of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1339,8 +1339,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? OrderNumber
-		{
+        public virtual int? OrderNumber
+        {
             get
             {
                 return this.orderNumber;
@@ -1352,7 +1352,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CustomerTotal of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1360,8 +1360,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? CustomerTotal
-		{
+        public virtual decimal? CustomerTotal
+        {
             get
             {
                 return this.customerTotal;
@@ -1373,7 +1373,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CCdiscount of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1381,8 +1381,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? CCdiscount
-		{
+        public virtual decimal? CCdiscount
+        {
             get
             {
                 return this.cCdiscount;
@@ -1394,7 +1394,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ActualSendTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1402,8 +1402,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? ActualSendTime
-		{
+        public virtual DateTime? ActualSendTime
+        {
             get
             {
                 return this.actualSendTime;
@@ -1415,7 +1415,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ReceivablePrice of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1423,8 +1423,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? ReceivablePrice
-		{
+        public virtual decimal? ReceivablePrice
+        {
             get
             {
                 return this.receivablePrice;
@@ -1436,7 +1436,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the RealUserPrice of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1444,8 +1444,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? RealUserPrice
-		{
+        public virtual decimal? RealUserPrice
+        {
             get
             {
                 return this.realUserPrice;
@@ -1457,7 +1457,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the RealSupplierPrice of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1465,8 +1465,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? RealSupplierPrice
-		{
+        public virtual decimal? RealSupplierPrice
+        {
             get
             {
                 return this.realSupplierPrice;
@@ -1478,7 +1478,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the RealSupplierType of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1486,8 +1486,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte? RealSupplierType
-		{
+        public virtual int? RealSupplierType
+        {
             get
             {
                 return this.realSupplierType;
@@ -1499,7 +1499,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsTakeInvoice of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1507,8 +1507,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsTakeInvoice
-		{
+        public virtual bool? IsTakeInvoice
+        {
             get
             {
                 return this.isTakeInvoice;
@@ -1520,7 +1520,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the AddedTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1528,8 +1528,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? AddedTime
-		{
+        public virtual DateTime? AddedTime
+        {
             get
             {
                 return this.addedTime;
@@ -1541,7 +1541,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CheckStatus of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1549,8 +1549,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte? CheckStatus
-		{
+        public virtual byte? CheckStatus
+        {
             get
             {
                 return this.checkStatus;
@@ -1562,7 +1562,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the HandOverStatus of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1570,8 +1570,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte? HandOverStatus
-		{
+        public virtual byte? HandOverStatus
+        {
             get
             {
                 return this.handOverStatus;
@@ -1583,7 +1583,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Lat of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1591,8 +1591,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual double? Lat
-		{
+        public virtual double? Lat
+        {
             get
             {
                 return this.lat;
@@ -1604,7 +1604,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Lng of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1612,8 +1612,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual double? Lng
-		{
+        public virtual double? Lng
+        {
             get
             {
                 return this.lng;
@@ -1625,7 +1625,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the LogisticsId of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1633,8 +1633,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string LogisticsId
-		{
+        public virtual string LogisticsId
+        {
             get
             {
                 return this.logisticsId;
@@ -1646,7 +1646,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ModifyDate of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1654,8 +1654,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? ModifyDate
-		{
+        public virtual DateTime? ModifyDate
+        {
             get
             {
                 return this.modifyDate;
@@ -1667,7 +1667,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the EtsTakeFoodAmount of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1675,8 +1675,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? EtsTakeFoodAmount
-		{
+        public virtual decimal? EtsTakeFoodAmount
+        {
             get
             {
                 return this.etsTakeFoodAmount;
@@ -1688,7 +1688,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the EtsActualTakeFoodAmount of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1696,8 +1696,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? EtsActualTakeFoodAmount
-		{
+        public virtual decimal? EtsActualTakeFoodAmount
+        {
             get
             {
                 return this.etsActualTakeFoodAmount;
@@ -1709,7 +1709,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TaxPointAmount of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1717,8 +1717,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? TaxPointAmount
-		{
+        public virtual decimal? TaxPointAmount
+        {
             get
             {
                 return this.taxPointAmount;
@@ -1730,7 +1730,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the AreaId of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1738,8 +1738,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? AreaId
-		{
+        public virtual int? AreaId
+        {
             get
             {
                 return this.areaId;
@@ -1751,7 +1751,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CashPay of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1759,8 +1759,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? CashPay
-		{
+        public virtual decimal? CashPay
+        {
             get
             {
                 return this.cashPay;
@@ -1772,7 +1772,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the NetWorkPay of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1780,8 +1780,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? NetWorkPay
-		{
+        public virtual decimal? NetWorkPay
+        {
             get
             {
                 return this.netWorkPay;
@@ -1793,7 +1793,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the PosPay of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1801,8 +1801,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? PosPay
-		{
+        public virtual decimal? PosPay
+        {
             get
             {
                 return this.posPay;
@@ -1814,7 +1814,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the StoreCardPaySup of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1822,8 +1822,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? StoreCardPaySup
-		{
+        public virtual decimal? StoreCardPaySup
+        {
             get
             {
                 return this.storeCardPaySup;
@@ -1835,7 +1835,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeliveryDistance of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1843,8 +1843,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual double DeliveryDistance
-		{
+        public virtual double DeliveryDistance
+        {
             get
             {
                 return this.deliveryDistance;
@@ -1856,7 +1856,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the LogisSendTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1864,8 +1864,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? LogisSendTime
-		{
+        public virtual DateTime? LogisSendTime
+        {
             get
             {
                 return this.logisSendTime;
@@ -1877,7 +1877,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OrderList of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1885,8 +1885,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual IList<OrderEntity> OrderList
-		{
+        public virtual IList<OrderEntity> OrderList
+        {
             get
             {
                 return this.orderList;
@@ -1898,7 +1898,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the PaymentList of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1906,8 +1906,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual IList<PaymentEntity> PaymentList
-		{
+        public virtual IList<PaymentEntity> PaymentList
+        {
             get
             {
                 return this.paymentList;
@@ -1919,7 +1919,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Path of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1927,8 +1927,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual SourcePathEntity Path
-		{
+        public virtual SourcePathEntity Path
+        {
             get
             {
                 return this.path;
@@ -1940,7 +1940,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Templateid of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1948,8 +1948,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual SourceTypeEntity Template1
-		{
+        public virtual SourceTypeEntity Template1
+        {
             get
             {
                 return this.template1;
@@ -1961,7 +1961,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Templateid of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -1969,8 +1969,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual SourceTypeEntity Template
-		{
+        public virtual SourceTypeEntity Template
+        {
             get
             {
                 return this.template;
@@ -1982,9 +1982,9 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-		#endregion
+        #endregion
 
-			/// <summary>
+        /// <summary>
         /// Determines whether the specified is equal to this instance.
         /// </summary>
         /// <param name="obj">The to compare with this instance.</param>
@@ -2007,7 +2007,7 @@ namespace Ets.SingleApi.Model.Repository
             return this.DeliveryId == castObj.DeliveryId;
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
@@ -2018,11 +2018,11 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public override int GetHashCode()
-		{
-			var hash = 57; 
-			hash = 27 * hash * this.DeliveryId.GetHashCode();
-			return hash;
-		}
-	}
+        public override int GetHashCode()
+        {
+            var hash = 57;
+            hash = 27 * hash * this.DeliveryId.GetHashCode();
+            return hash;
+        }
+    }
 }

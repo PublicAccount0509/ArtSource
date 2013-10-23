@@ -41,5 +41,6 @@
   <item code="40009" message="无效的餐厅Id列表"></item>
   <item code="40010" message="无效的餐厅Id"></item>
   <item code="40011" message="无效的用户地址Id列表"></item>
-  <item code="40012" message="无效的订单类型"></item>
+  <item code="40012" message="无效的用户地址Id"></item>
+  <item code="40013" message="无效的订单类型"></item>
 </status>

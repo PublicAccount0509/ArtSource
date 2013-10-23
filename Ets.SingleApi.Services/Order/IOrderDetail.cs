@@ -30,7 +30,7 @@
         /// <summary>
         /// 添加订单
         /// </summary>
-        /// <param name="addOrderData">订单数据</param>
+        /// <param name="orderData">订单数据</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -39,6 +39,34 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        OrderDetailResult<IAddOrderResult> AddOrder(IAddOrderData addOrderData);
+        OrderDetailResult<IOrderResult> AddOrder(IOrderData orderData);
+
+        /// <summary>
+        /// 确认订单
+        /// </summary>
+        /// <param name="orderData">订单数据</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        OrderDetailResult<IOrderResult> ConfirmOrder(IOrderData orderData);
+
+        /// <summary>
+        /// 订单支付
+        /// </summary>
+        /// <param name="orderData">订单数据</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        OrderDetailResult<IOrderResult> PaymentOrder(IOrderData orderData);
     }
 }

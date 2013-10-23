@@ -45,7 +45,7 @@
 		<property name="ReceivablePrice" column="ReceivablePrice" type="Decimal" not-null="false" />
 		<property name="RealUserPrice" column="RealUserPrice" type="Decimal" not-null="false" />
 		<property name="RealSupplierPrice" column="RealSupplierPrice" type="Decimal" not-null="false" />
-		<property name="RealSupplierType" column="RealSupplierType" type="Byte" not-null="false" />
+		<property name="RealSupplierType" column="RealSupplierType" type="Int32" not-null="false" />
 		<property name="IsTakeInvoice" column="IsTakeInvoice" type="Boolean" not-null="false" />
 		<property name="AddedTime" column="AddedTime" type="Timestamp" not-null="false" />
 		<property name="CheckStatus" column="CheckStatus" type="Byte" not-null="false" />

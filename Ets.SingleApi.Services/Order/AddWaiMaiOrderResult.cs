@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class AddWaiMaiOrderResult : IAddOrderResult
+    public class AddWaiMaiOrderResult : IOrderResult
     {
         /// <summary>
         /// Gets or sets the OrderId of AddWaiMaiOrderModel

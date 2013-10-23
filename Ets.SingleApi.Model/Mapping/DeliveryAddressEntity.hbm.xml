@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.DeliveryAddressEntity, Ets.SingleApi.Model" table="DeliveryAddress" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="DeliveryAddressId" column="DeliveryAddressID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="CustomerId" column="CustomerID" type="Int32" />
+		<property name="Address1" column="Address1" type="String" not-null="false" />
+		<property name="Address2" column="Address2" type="String" not-null="false" />
+		<property name="CityId" column="CityID" type="Int32" not-null="false" />
+		<property name="CountyId" column="CountyID" type="Int32" not-null="false" />
+		<property name="CountryId" column="CountryID" type="Int32" not-null="false" />
+		<property name="PostCode" column="PostCode" type="String" not-null="false" />
+		<property name="Telephone" column="Telephone" type="String" not-null="false" />
+		<property name="IsDefault" column="IsDefault" type="Boolean" not-null="false" />
+		<property name="Town" column="Town" type="String" not-null="false" />
+		<property name="AddressAlias" column="AddressAlias" type="String" not-null="false" />
+		<property name="Recipient" column="Recipient" type="String" not-null="false" />
+		<property name="Plane" column="Plane" type="String" not-null="false" />
+		<property name="Sex" column="Sex" type="Byte" not-null="false" />
+		<property name="IsDel" column="IsDel" type="Boolean" not-null="false" />
+	</class>
+</hibernate-mapping>
