@@ -1,0 +1,18 @@
+
+----------------------header--------------------------
+2013-10-23 14:27:49,395 [9] INFO  Ets.SingleApi.Services - GetMenu
+2013-10-23 14:28:02,665 [14] INFO  Ets.SingleApi.Services - GetMenu
+2013-10-23 14:28:05,045 [15] INFO  Ets.SingleApi.Services - GetMenu
+2013-10-23 14:28:22,631 [14] INFO  Ets.SingleApi.Services - GetMenu
+2013-10-23 14:28:51,731 [14] INFO  Ets.SingleApi.Services - GetMenu
+2013-10-23 14:29:19,923 [13] INFO  Ets.SingleApi.Services - GetCuisineList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 16:05:44,462 [21] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 16:05:52,733 [8] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 16:05:53,884 [21] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 16:05:54,017 [17] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 16:05:54,161 [23] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 16:05:54,311 [17] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList

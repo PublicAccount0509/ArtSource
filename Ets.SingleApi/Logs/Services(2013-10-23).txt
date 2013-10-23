@@ -1,0 +1,171 @@
+
+----------------------header--------------------------
+2013-10-23 09:45:18,468 [13] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 09:45:30,494 [5] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 09:45:35,768 [5] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 09:47:01,172 [6] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 09:47:18,944 [5] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 09:47:23,452 [13] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 09:47:26,217 [14] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 10:38:28,120 [9] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 10:42:08,226 [11] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 10:42:21,218 [9] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 11:03:51,195 [37] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 11:04:21,490 [31] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 11:04:26,728 [31] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 11:09:40,472 [30] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:09:50,874 [27] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:09:57,080 [24] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:09:59,242 [30] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:10:01,246 [30] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:10:03,638 [24] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:10:05,384 [25] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:10:07,302 [24] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:10:17,547 [27] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:10:23,328 [24] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:10:32,890 [24] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:10:45,168 [22] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:05,320 [22] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:21,265 [27] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:25,689 [22] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:33,720 [30] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:37,128 [21] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:39,131 [21] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:41,051 [22] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:45,499 [30] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:11:47,771 [32] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:20,637 [22] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:25,183 [32] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:26,398 [21] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:27,963 [27] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:29,321 [30] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:30,969 [32] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:35,148 [30] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:37,210 [22] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:41,039 [32] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:49,066 [30] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:52,790 [22] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:12:55,164 [18] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:13:23,704 [18] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 11:14:21,734 [18] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 11:57:12,608 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 14:16:20,539 [14] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 14:16:43,066 [14] ERROR Ets.SingleApi.Services - System.ArgumentException: Parameter RegionId does not exist as a named parameter in [exec Pro_QuerySupplierListHasDistanceOrderByAveragePriceDesc :FeatureID,:SupplierName,:CuisineID,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize]
+   at NHibernate.Impl.AbstractQueryImpl.SetParameter(String name, Object val, IType type)
+   at NHibernate.Impl.AbstractQueryImpl.SetString(String name, String val)
+   at Ets.SingleApi.Services.SupplierServices.GetSupplierList(GetSupplierListParameter parameter) in e:\work\Ets.SingleApi\Ets.SingleApi.Services\SupplierServices.cs:line 243
+   at Castle.Proxies.Invocations.ISupplierServices_GetSupplierList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 35
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 14:19:14,144 [6] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 14:21:07,188 [7] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 14:30:15,284 [13] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 14:32:11,983 [5] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 14:52:12,455 [23] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 14:52:54,747 [28] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 14:53:01,610 [29] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 14:53:18,173 [28] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 14:53:23,566 [27] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------header--------------------------
+2013-10-23 14:53:49,860 [10] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 14:54:48,372 [10] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 14:55:41,531 [13] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 14:56:17,124 [14] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------header--------------------------
+2013-10-23 14:58:03,613 [6] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 15:16:37,204 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:17:00,640 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:17:06,468 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:17:13,831 [11] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:17:21,807 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:17:29,382 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:18:04,055 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:18:22,302 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:18:32,784 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:18:56,213 [14] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:19:01,261 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:20:02,683 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:20:06,903 [16] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:20:22,772 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:20:27,128 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:20:37,580 [10] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:20:58,193 [12] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:21:17,499 [10] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:23:51,984 [15] INFO  Ets.SingleApi.Services - GetMenu
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 15:48:01,770 [10] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:51:04,603 [11] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:51:17,643 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:51:23,098 [17] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:51:27,782 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:52:14,695 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:52:16,789 [11] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:52:21,191 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:53:19,719 [10] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:54:14,481 [20] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:54:19,882 [9] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:54:24,253 [10] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:54:26,157 [17] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:58:24,983 [17] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:59:16,961 [17] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:59:28,088 [26] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:59:32,919 [22] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:59:35,373 [26] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 15:59:41,560 [26] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 16:00:37,030 [26] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 16:00:41,013 [17] INFO  Ets.SingleApi.Services - GetSupplierList
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
