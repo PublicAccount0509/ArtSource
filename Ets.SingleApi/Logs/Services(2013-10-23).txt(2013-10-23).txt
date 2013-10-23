@@ -16,3 +16,10 @@
 2013-10-23 16:05:54,017 [17] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
 2013-10-23 16:05:54,161 [23] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
 2013-10-23 16:05:54,311 [17] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 16:05:54,484 [24] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 16:05:54,634 [23] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 16:05:54,794 [24] INFO  Ets.SingleApi.Services - GetAllBusinessAreaList
+2013-10-23 16:05:55,022 [17] INFO  Ets.SingleApi.Services - GetCuisineList
+2013-10-23 16:06:00,244 [24] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 16:06:02,333 [17] INFO  Ets.SingleApi.Services - GetSupplierList
+2013-10-23 16:06:05,119 [24] INFO  Ets.SingleApi.Services - GetSupplierList
