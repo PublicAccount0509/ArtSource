@@ -102,7 +102,10 @@
                 Result = new WaiMaiOrderResult
                     {
                         OrderId = result.OrderId,
-                        CustomerTotal = result.CustomerTotal
+                        CustomerTotal = result.CustomerTotal,
+                        SupplierId = result.SupplierId,
+                        SupplierName = result.SupplierName,
+                        SupplierDishCount = result.SupplierDishCount
                     }
             };
         }

@@ -62,6 +62,16 @@
         private readonly INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository;
 
         /// <summary>
+        /// 字段supplierEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 4:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
+
+        /// <summary>
         /// 取得订单类型
         /// </summary>
         /// <value>
@@ -87,6 +97,7 @@
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="orderEntityRepository">The orderEntityRepository</param>
         /// <param name="supplierDishEntityRepository">The supplierDishEntityRepository</param>
+        /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -96,12 +107,14 @@
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<OrderEntity> orderEntityRepository,
-            INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository)
+            INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository,
+            INHibernateRepository<SupplierEntity> supplierEntityRepository)
         {
             this.customerEntityRepository = customerEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.orderEntityRepository = orderEntityRepository;
             this.supplierDishEntityRepository = supplierDishEntityRepository;
+            this.supplierEntityRepository = supplierEntityRepository;
         }
 
         /// <summary>
@@ -124,6 +137,19 @@
                 return new OrderDetailResult<IAddOrderResult>
                 {
                     StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = new AddWaiMaiOrderResult()
+                };
+            }
+
+
+            var supplierEntity = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == parameter.SupplierId)
+                                .Select(p => new { p.SupplierId, p.SupplierName, p.PackagingFee, p.FixedDeliveryCharge })
+                                .FirstOrDefault();
+            if (supplierEntity == null)
+            {
+                return new OrderDetailResult<IAddOrderResult>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                     Result = new AddWaiMaiOrderResult()
                 };
             }
@@ -185,14 +211,19 @@
                                  OrderDate = DateTime.Now
                              }).ToList();
 
+            var supplierDishCount = orderList.Count;
             this.orderEntityRepository.Save(orderList);
+
             return new OrderDetailResult<IAddOrderResult>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
                 Result = new AddWaiMaiOrderResult
                 {
                     OrderId = orderId,
-                    CustomerTotal = customerTotal
+                    CustomerTotal = parameter.DeliveryMethodId == 2 ? customerTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0) : customerTotal,
+                    SupplierName = supplierEntity.SupplierName,
+                    SupplierId = supplierEntity.SupplierId,
+                    SupplierDishCount = supplierDishCount
                 }
             };
         }

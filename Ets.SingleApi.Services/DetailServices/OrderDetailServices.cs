@@ -114,7 +114,10 @@
                 Result = new AddWaiMaiOrderModel
                     {
                         OrderId = addWaiMaiOrderResult.OrderId,
-                        CustomerTotal = addWaiMaiOrderResult.CustomerTotal
+                        CustomerTotal = addWaiMaiOrderResult.CustomerTotal,
+                        SupplierId = addWaiMaiOrderResult.SupplierId,
+                        SupplierName = addWaiMaiOrderResult.SupplierName,
+                        SupplierDishCount = addWaiMaiOrderResult.SupplierDishCount
                     }
             };
         }
