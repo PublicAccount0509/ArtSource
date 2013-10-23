@@ -75,7 +75,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string RegionId { get; set; }
+        public int RegionId { get; set; }
 
         /// <summary>
         /// Gets or sets the UserLat of GetSupplierListParameter

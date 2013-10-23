@@ -13,53 +13,6 @@
     public class OrderBy
     {
         /// <summary>
-        /// 餐厅排序表达式
-        /// </summary>
-        /// <param name="supplier">餐厅排序规则</param>
-        /// <returns>
-        /// 餐厅排序表达式
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：2013/10/18 22:22
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public static string SupplierExpression(Supplier supplier)
-        {
-            if (supplier == Supplier.Default)
-            {
-                return "[SupplierId] ASC";
-            }
-
-            if (supplier == Supplier.Nearest)
-            {
-                return "[Distance] ASC";
-            }
-
-            if (supplier == Supplier.Farthest)
-            {
-                return "[Distance] DESC";
-            }
-
-            if (supplier == Supplier.Newest)
-            {
-                return "[DateJoined] DESC";
-            }
-
-            if (supplier == Supplier.Cheapest)
-            {
-                return "[averageprice] ASC";
-            }
-
-            if (supplier == Supplier.Expensive)
-            {
-                return "[averageprice] DESC";
-            }
-
-            return "[SupplierId] ASC";
-        }
-
-        /// <summary>
         /// 餐厅排序规则
         /// </summary>
         /// 创建者：周超

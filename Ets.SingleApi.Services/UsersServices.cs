@@ -4,12 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Castle.Services.Transaction;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.IDetailServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
@@ -23,19 +22,8 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    [Transactional]
     public class UsersServices : IUsersServices
     {
-        /// <summary>
-        /// 字段loginEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：2013/10/17 16:35
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
-
         /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
@@ -45,16 +33,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
-
-        /// <summary>
-        /// 字段sourceTypeEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：2013/10/17 17:13
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository;
 
         /// <summary>
         /// 字段customerFavoriteEntityRepository
@@ -117,6 +95,16 @@
         private readonly INHibernateRepository<RegionEntity> regionEntityRepository;
 
         /// <summary>
+        /// 字段usersDetailServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 8:14 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IUsersDetailServices usersDetailServices;
+
+        /// <summary>
         /// 字段userOrdersList
         /// </summary>
         /// 创建者：周超
@@ -129,15 +117,14 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
-        /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
-        /// <param name="sourceTypeEntityRepository">The sourceTypeEntityRepository</param>
         /// <param name="customerFavoriteEntityRepository">The customerFavoriteEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="supplierCuisineEntityRepository">The supplierCuisineEntityRepository</param>
         /// <param name="supplierImageEntityRepository">The supplierImageEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
+        /// <param name="usersDetailServices">The usersDetailServices</param>
         /// <param name="userOrdersList">The userOrdersList</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 16:35
@@ -145,26 +132,24 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public UsersServices(
-            INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
-            INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
             INHibernateRepository<CustomerFavoriteEntity> customerFavoriteEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository,
             INHibernateRepository<SupplierImageEntity> supplierImageEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository,
+            IUsersDetailServices usersDetailServices,
             List<IUserOrders> userOrdersList)
         {
-            this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
-            this.sourceTypeEntityRepository = sourceTypeEntityRepository;
             this.customerFavoriteEntityRepository = customerFavoriteEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierCuisineEntityRepository = supplierCuisineEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
+            this.usersDetailServices = usersDetailServices;
             this.userOrdersList = userOrdersList;
         }
 
@@ -308,7 +293,7 @@
 
             var customerAddressEntityList = this.customerAddressEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.IsDefault == true && p.IsDel == false).ToList();
             customerAddressEntityList.Add(customerAddressEntity);
-            this.customerAddressEntityRepository.Save(customerAddressEntityList);
+            this.customerAddressEntityRepository.SaveTransaction(customerAddressEntityList);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -364,7 +349,7 @@
                 customerAddressEntity.IsDel = true;
             }
 
-            this.customerAddressEntityRepository.Save(customerAddressEntityList);
+            this.customerAddressEntityRepository.SaveTransaction(customerAddressEntityList);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -383,7 +368,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [Transaction(TransactionMode.RequiresNew)]
         public ServicesResult<RegisterUserModel> Register(RegisterUserParameter parameter)
         {
             if (parameter == null)
@@ -432,40 +416,13 @@
                 };
             }
 
-            var password = parameter.Password.IsEmptyOrNull() ? string.Empty : parameter.Password;
-            var loginEntity = new LoginEntity
-                {
-                    Username = parameter.Telephone,
-                    Password = password.Md5(),
-                    Level = new LevelEntity
-                        {
-                            LevelId = (int)UserLevel.User
-                        },
-                    IsEnabled = true
-                };
-
-            this.loginEntityRepository.Save(loginEntity);
-
-            var loginId = loginEntity.LoginId;
-            var customerEntity = new CustomerEntity
-                {
-                    Mobile = parameter.Telephone,
-                    Email = parameter.Email,
-                    LoginId = loginId,
-                    Forename = string.Empty,
-                    DateJoined = DateTime.Now,
-                    IsValId = false,
-                    IsRegAllowed = true,
-                    Source = parameter.SourceType.IsEmptyOrNull() ? null : this.sourceTypeEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType)
-                };
-
-            this.customerEntityRepository.Save(customerEntity);
-
+            var result = this.usersDetailServices.Register(parameter);
             return new ServicesResult<RegisterUserModel>
                 {
+                    StatusCode = result.StatusCode,
                     Result = new RegisterUserModel
                         {
-                            UserId = loginId
+                            UserId = result.Result
                         }
                 };
         }
@@ -598,7 +555,7 @@
                     DateAdded = DateTime.Now
                 }).ToList();
 
-            this.customerFavoriteEntityRepository.Save(customerFavoriteEntityList);
+            this.customerFavoriteEntityRepository.SaveTransaction(customerFavoriteEntityList);
 
             return new ServicesResult<bool>
                 {
@@ -649,7 +606,7 @@
                 };
             }
 
-            this.customerFavoriteEntityRepository.Remove(customerFavoriteList.ToList());
+            this.customerFavoriteEntityRepository.RemoveTransaction(customerFavoriteList.ToList());
             return new ServicesResult<bool>
                 {
                     Result = true

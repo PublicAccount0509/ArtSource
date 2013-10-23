@@ -239,19 +239,17 @@
                 };
             }
 
-            var orderBy = OrderBy.SupplierExpression((OrderBy.Supplier)parameter.OrderByType);
-            var list = this.supplierEntityRepository.NamedQuery(parameter.Distance.HasValue ? "Pro_QuerySupplierListHasDistance" : "Pro_QuerySupplierList")
+            var list = this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}", (OrderBy.Supplier)parameter.OrderByType))
                     .SetInt32("FeatureID", parameter.FeatureId)
                     .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
                     .SetInt32("CuisineID", parameter.CuisineId)
+                    .SetInt32("RegionId", parameter.RegionId)
                     .SetString("BusinessAreaId", parameter.BusinessAreaId)
-                    .SetString("RegionId", parameter.RegionId)
                     .SetDouble("UserLat", parameter.UserLat)
                     .SetDouble("UserLong", parameter.UserLong)
                     .SetDouble("Distance", !parameter.Distance.HasValue ? -1.0 : parameter.Distance.Value)
                     .SetInt32("PageIndex", !parameter.PageIndex.HasValue ? -1 : parameter.PageIndex.Value)
-                    .SetInt32("PageSize", parameter.PageSize)
-                    .SetString("OrderBy", orderBy).List();
+                    .SetInt32("PageSize", parameter.PageSize).List();
 
             var supplierList = (from object[] item in list
                                 select new SupplierModel
@@ -265,12 +263,11 @@
                                         SupplierDescription = item[6].ObjectToString(),
                                         Averageprice = item[7].ObjectToDouble(),
                                         ParkingInfo = item[8].ObjectToString(),
-                                        CuisineId = item[9].ObjectToInt32(),
-                                        CuisineName = item[10].ObjectToString(),
-                                        LogoUrl = item[11].ObjectToString(),
-                                        IsOpenDoor = item[12].ObjectToBoolean(),
-                                        Distance = item[13].ObjectToDouble(),
-                                        DateJoined = item[14].ObjectToDateTime()
+                                        CuisineName = item[9].ObjectToString(),
+                                        LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, item[10].ObjectToString()),
+                                        IsOpenDoor = item[11].ObjectToBoolean(),
+                                        Distance = item[12].ObjectToDouble(),
+                                        DateJoined = item[13].ObjectToDateTime()
                                     }).ToList();
 
             return new ServicesResultList<SupplierModel>
@@ -421,7 +418,7 @@
                     SupplierDishList = supplierCuisineList.Where(p => p.SupplierCategoryId == supplierCategory.SupplierCategoryId).Select(supplierDishEntity => new SupplierDishModel
                     {
                         Price = supplierDishEntity.Price,
-                        ImagePath = supplierDishEntity.ImagePath,
+                        ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishEntity.ImagePath),
                         SupplierDishId = supplierDishEntity.SupplierDishId,
                         SupplierDishName = supplierDishEntity.SupplierDishName,
                         SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,

@@ -1,6 +1,9 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System.Net.Mail;
+
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：EmailSendPassword
@@ -48,7 +51,36 @@
         /// ----------------------------------------------------------------------------------------
         public SendPasswordData Send(string account, string content)
         {
-            return new SendPasswordData();
+            var mailContent = content;
+            var mailSubject = ServicesCommon.EmailSubject;
+            var emailAddress = ServicesCommon.EmailAddress;
+            var emailPassword = ServicesCommon.EmailPassword;
+            var emailServer = ServicesCommon.EmailServer;
+
+            using (var onemail = new MailMessage())
+            {
+                onemail.BodyEncoding = System.Text.Encoding.UTF8;
+                onemail.IsBodyHtml = true;
+                onemail.From = new MailAddress(emailAddress, emailPassword);
+                onemail.To.Add(new MailAddress(account, mailSubject));
+                onemail.Subject = mailSubject;
+                onemail.Body = mailContent;
+                onemail.BodyEncoding = System.Text.Encoding.UTF8;
+
+                using (var client = new SmtpClient(emailServer))
+                {
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new System.Net.NetworkCredential(emailAddress, emailPassword);
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.Send(onemail);
+                }
+            }
+
+            return new SendPasswordData
+            {
+                Result = true,
+                StatusCode = (int)StatusCode.Succeed.Ok
+            };
         }
     }
 }

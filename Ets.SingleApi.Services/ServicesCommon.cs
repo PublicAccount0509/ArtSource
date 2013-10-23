@@ -110,6 +110,82 @@
         }
 
         /// <summary>
+        /// 邮箱地址
+        /// </summary>
+        /// <value>
+        /// 邮箱地址
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string EmailAddress
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["EmailAccount"];
+            }
+        }
+
+        /// <summary>
+        /// 邮箱密码
+        /// </summary>
+        /// <value>
+        /// 邮箱密码
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string EmailPassword
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["EmailPassword"];
+            }
+        }
+
+        /// <summary>
+        /// 邮件服务器
+        /// </summary>
+        /// <value>
+        /// 邮件服务器
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string EmailServer
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["EmailServer"];
+            }
+        }
+
+        /// <summary>
+        /// 邮件主题
+        /// </summary>
+        /// <value>
+        /// 邮件主题
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string EmailSubject
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["EmailSubject"];
+            }
+        }
+
+        /// <summary>
         /// 短信验证码缓存关键字前缀
         /// </summary>
         /// <value>

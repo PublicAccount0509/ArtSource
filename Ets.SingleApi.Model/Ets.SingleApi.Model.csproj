@@ -76,6 +76,7 @@
     <Compile Include="Controller\DingTaiSupplierListResponse.cs" />
     <Compile Include="Controller\GetGroupSupplierResponse.cs" />
     <Compile Include="Controller\WaiMaiOrderResponse.cs" />
+    <Compile Include="Controller\WaiMaiOrderResult.cs" />
     <Compile Include="Mapping\Repository\CustomerAddressEntity.cs" />
     <Compile Include="Mapping\Repository\OrderSourceEntity.cs" />
     <Compile Include="Mapping\Repository\OrderStatusEntity.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="OrderType.cs" />
     <Compile Include="PasswordType.cs" />
     <Compile Include="Services\AddWaiMaiOrderDishModel.cs" />
+    <Compile Include="Services\AddWaiMaiOrderModel.cs" />
     <Compile Include="Services\CustomerModel.cs" />
     <Compile Include="Services\SupplierFeatureModel.cs" />
     <Compile Include="Services\WaiMaiOrderModel.cs" />

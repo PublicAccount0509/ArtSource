@@ -92,7 +92,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserOrdersData GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex)
+        public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex)
         {
             var waiMaiOrderList = orderStatus == null
                                 ? this.GetWaiMaiOrderList(customerId, pageSize, pageIndex)
@@ -109,7 +109,7 @@
                 order.SupplierName = supplier == null ? string.Empty : supplier.SupplierName;
             }
 
-            return new UserOrdersData
+            return new UserOrdersResult
                 {
                     OrderList = waiMaiOrderList.Cast<IOrderModel>().ToList()
                 };

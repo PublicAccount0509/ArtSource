@@ -1,18 +1,18 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Services
 {
     using System.Collections.Generic;
 
     /// <summary>
-    /// 类名称：AddWaiMaiOrderModel
-    /// 命名空间：Ets.SingleApi.Model.Controller
-    /// 类功能：添加外卖订单实体
+    /// 类名称：AddWaiMaiOrderData
+    /// 命名空间：Ets.SingleApi.Services
+    /// 类功能：外卖订单
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：10/22/2013 5:46 PM
+    /// 创建日期：10/23/2013 10:28 AM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class AddWaiMaiOrderParameter
+    public class AddWaiMaiOrderData : IAddOrderData
     {
         /// <summary>
         /// Gets or sets the UserId of AddWaiMaiOrderModel
@@ -77,6 +77,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public List<AddWaiMaiOrderDishModel> DishList { get; set; }
+        public List<AddWaiMaiOrderDishData> DishList { get; set; }
     }
 }

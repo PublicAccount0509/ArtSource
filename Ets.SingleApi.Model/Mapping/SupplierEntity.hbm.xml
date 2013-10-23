@@ -245,7 +245,7 @@
     <many-to-one name="AddrRegion" class="Ets.SingleApi.Model.Repository.AddrRegionEntity, Ets.SingleApi.Model" column="AddrRegionID" />
     <many-to-one name="Login" class="Ets.SingleApi.Model.Repository.LoginEntity, Ets.SingleApi.Model" column="LoginID" />
   </class>
-  <sql-query name="Pro_QuerySupplierList">
+  <sql-query name="Pro_QuerySupplierListDefault">
     <return-scalar column="SupplierId" type="Int32" />
     <return-scalar column="SupplierName" type="String" />
     <return-scalar column="Address" type="String" />
@@ -255,15 +255,15 @@
     <return-scalar column="SupplierDescription" type="String" />
     <return-scalar column="Averageprice" type="Int32" />
     <return-scalar column="ParkingInfo" type="String" />
-    <return-scalar column="CuisineID" type="Int32" />
     <return-scalar column="CuisineName" type="String" />
     <return-scalar column="LogoUrl" type="String" />
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierList :FeatureID,:SupplierName,:CuisineID,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:OrderBy
+    exec Pro_QuerySupplierListDefault :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
   </sql-query>
-  <sql-query name="Pro_QuerySupplierListHasDistance">
+  
+  <sql-query name="Pro_QuerySupplierListNearest">
     <return-scalar column="SupplierId" type="Int32" />
     <return-scalar column="SupplierName" type="String" />
     <return-scalar column="Address" type="String" />
@@ -273,12 +273,83 @@
     <return-scalar column="SupplierDescription" type="String" />
     <return-scalar column="Averageprice" type="Int32" />
     <return-scalar column="ParkingInfo" type="String" />
-    <return-scalar column="CuisineID" type="Int32" />
     <return-scalar column="CuisineName" type="String" />
     <return-scalar column="LogoUrl" type="String" />
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierListHasDistance :FeatureID,:SupplierName,:CuisineID,:BusinessAreaId,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:OrderBy
+    exec Pro_QuerySupplierListNearest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+  </sql-query>
+  
+  <sql-query name="Pro_QuerySupplierListFarthest">
+    <return-scalar column="SupplierId" type="Int32" />
+    <return-scalar column="SupplierName" type="String" />
+    <return-scalar column="Address" type="String" />
+    <return-scalar column="Telephone" type="String" />
+    <return-scalar column="BaIduLat" type="String" />
+    <return-scalar column="BaIduLong" type="String" />
+    <return-scalar column="SupplierDescription" type="String" />
+    <return-scalar column="Averageprice" type="Int32" />
+    <return-scalar column="ParkingInfo" type="String" />
+    <return-scalar column="CuisineName" type="String" />
+    <return-scalar column="LogoUrl" type="String" />
+    <return-scalar column="IsOpenDoor" type="Boolean" />
+    <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="DateJoined" type="DateTime" />
+    exec Pro_QuerySupplierListFarthest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+  </sql-query>
+  
+  <sql-query name="Pro_QuerySupplierListNewest">
+    <return-scalar column="SupplierId" type="Int32" />
+    <return-scalar column="SupplierName" type="String" />
+    <return-scalar column="Address" type="String" />
+    <return-scalar column="Telephone" type="String" />
+    <return-scalar column="BaIduLat" type="String" />
+    <return-scalar column="BaIduLong" type="String" />
+    <return-scalar column="SupplierDescription" type="String" />
+    <return-scalar column="Averageprice" type="Int32" />
+    <return-scalar column="ParkingInfo" type="String" />
+    <return-scalar column="CuisineName" type="String" />
+    <return-scalar column="LogoUrl" type="String" />
+    <return-scalar column="IsOpenDoor" type="Boolean" />
+    <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="DateJoined" type="DateTime" />
+    exec Pro_QuerySupplierListNewest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+  </sql-query>
+  
+  <sql-query name="Pro_QuerySupplierListCheapest">
+    <return-scalar column="SupplierId" type="Int32" />
+    <return-scalar column="SupplierName" type="String" />
+    <return-scalar column="Address" type="String" />
+    <return-scalar column="Telephone" type="String" />
+    <return-scalar column="BaIduLat" type="String" />
+    <return-scalar column="BaIduLong" type="String" />
+    <return-scalar column="SupplierDescription" type="String" />
+    <return-scalar column="Averageprice" type="Int32" />
+    <return-scalar column="ParkingInfo" type="String" />
+    <return-scalar column="CuisineName" type="String" />
+    <return-scalar column="LogoUrl" type="String" />
+    <return-scalar column="IsOpenDoor" type="Boolean" />
+    <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="DateJoined" type="DateTime" />
+    exec Pro_QuerySupplierListCheapest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+  </sql-query>
+
+  <sql-query name="Pro_QuerySupplierListExpensive">
+    <return-scalar column="SupplierId" type="Int32" />
+    <return-scalar column="SupplierName" type="String" />
+    <return-scalar column="Address" type="String" />
+    <return-scalar column="Telephone" type="String" />
+    <return-scalar column="BaIduLat" type="String" />
+    <return-scalar column="BaIduLong" type="String" />
+    <return-scalar column="SupplierDescription" type="String" />
+    <return-scalar column="Averageprice" type="Int32" />
+    <return-scalar column="ParkingInfo" type="String" />
+    <return-scalar column="CuisineName" type="String" />
+    <return-scalar column="LogoUrl" type="String" />
+    <return-scalar column="IsOpenDoor" type="Boolean" />
+    <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="DateJoined" type="DateTime" />
+    exec Pro_QuerySupplierListExpensive :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
   </sql-query>
 </hibernate-mapping>

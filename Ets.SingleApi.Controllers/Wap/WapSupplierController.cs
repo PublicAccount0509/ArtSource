@@ -184,7 +184,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SearchSupplierListResponse SearchSupplierList(string supplierName, int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public SearchSupplierListResponse SearchSupplierList(string supplierName, int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
                 {
@@ -192,10 +192,10 @@
                     FeatureId = -1,
                     CuisineId = cuisineId ?? -1,
                     BusinessAreaId = businessAreaId ?? string.Empty,
-                    RegionId = regionId ?? string.Empty,
-                    UserLat = userLat,
-                    UserLong = userLong,
-                    Distance = distance,
+                    RegionId = regionId ?? -1,
+                    UserLat = userLat ?? 0,
+                    UserLong = userLong ?? 0,
+                    Distance = distance ?? 0,
                     PageSize = pageSize,
                     PageIndex = pageIndex,
                     OrderByType = orderByType
@@ -256,7 +256,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public WaiMaiSupplierListResponse WaiMaiSupplierList(int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public WaiMaiSupplierListResponse WaiMaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var featureId = ControllersCommon.WaiMaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
@@ -265,9 +265,9 @@
                 FeatureId = featureId,
                 CuisineId = cuisineId ?? -1,
                 BusinessAreaId = businessAreaId ?? string.Empty,
-                RegionId = regionId ?? string.Empty,
-                UserLat = userLat,
-                UserLong = userLong,
+                RegionId = regionId ?? -1,
+                UserLat = userLat ?? 0,
+                UserLong = userLong ?? 0,
                 Distance = distance,
                 PageSize = pageSize,
                 PageIndex = pageIndex,
@@ -329,7 +329,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public DingTaiSupplierListResponse DingTaiSupplierList(int? cuisineId, string businessAreaId, string regionId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public DingTaiSupplierListResponse DingTaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var featureId = ControllersCommon.DingTaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
@@ -338,7 +338,7 @@
                 FeatureId = featureId,
                 CuisineId = cuisineId ?? -1,
                 BusinessAreaId = businessAreaId ?? string.Empty,
-                RegionId = regionId ?? string.Empty,
+                RegionId = regionId ?? -1,
                 UserLat = userLat,
                 UserLong = userLong,
                 Distance = distance,

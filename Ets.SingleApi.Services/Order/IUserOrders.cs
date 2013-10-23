@@ -45,7 +45,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        UserOrdersData GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex);
+        UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex);
 
         /// <summary>
         /// 转换为用户订单

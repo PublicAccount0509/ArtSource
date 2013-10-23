@@ -47,6 +47,11 @@
             this.orderServices = orderServices;
         }
 
+        [HttpGet]
+        public string Test()
+        {
+            return "测试";
+        }
         /// <summary>
         /// 添加一个外卖订单
         /// </summary>
@@ -69,7 +74,8 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
+                    },
+                    Result = new WaiMaiOrderResult()
                 };
             }
 
@@ -78,20 +84,26 @@
             {
                 UserId = requst.UserId,
                 DeliveryMethodId = requst.DeliveryMethodId,
+                SupplierId = requst.SupplierId,
                 DishList = dishList.Select(p => new AddWaiMaiOrderDishModel
                     {
-                        SupplierId = p.SupplierId,
                         SupplierDishId = p.SupplierDishId,
                         Quantity = p.Quantity
                     }).ToList()
             });
 
+            var result = addWaiMaiOrderResult.Result ?? new AddWaiMaiOrderModel();
             return new WaiMaiOrderResponse
             {
                 Message = new ApiMessage
                 {
                     StatusCode = addWaiMaiOrderResult.StatusCode
-                }
+                },
+                Result = new WaiMaiOrderResult
+                    {
+                        OrderId = result.OrderId,
+                        CustomerTotal = result.CustomerTotal
+                    }
             };
         }
     }

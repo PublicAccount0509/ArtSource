@@ -53,6 +53,17 @@ namespace Ets.SingleApi.Services.IRepository
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        void CreateTransaction(List<TEntity> entityList);
+
+        /// <summary>
+        /// 批量写入数据 
+        /// </summary>
+        /// <param name="entityList">The entityList</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/10 9:44
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         void Create(List<TEntity> entityList);
 
         /// <summary>
@@ -65,6 +76,17 @@ namespace Ets.SingleApi.Services.IRepository
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         void Remove(TEntity entity);
+
+        /// <summary>
+        /// 批量删除数据
+        /// </summary>
+        /// <param name="entityList">The entityList</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/10 9:45
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        void RemoveTransaction(List<TEntity> entityList);
 
         /// <summary>
         /// 批量删除数据
@@ -97,6 +119,17 @@ namespace Ets.SingleApi.Services.IRepository
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        void UpdateTransaction(List<TEntity> entityList);
+
+        /// <summary>
+        /// 批量修改数据
+        /// </summary>
+        /// <param name="entityList">The entityList</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/10 9:47
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         void Update(List<TEntity> entityList);
 
         /// <summary>
@@ -109,6 +142,17 @@ namespace Ets.SingleApi.Services.IRepository
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         void Save(TEntity entity);
+
+        /// <summary>
+        /// 批量新增或修改数据
+        /// </summary>
+        /// <param name="entityList">The entityList</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/10 9:48
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        void SaveTransaction(List<TEntity> entityList);
 
         /// <summary>
         /// 批量新增或修改数据

@@ -155,8 +155,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public void Create(List<TEntity> entityList)
+        public void CreateTransaction(List<TEntity> entityList)
         {
+            if (entityList == null || entityList.Count == 0)
+            {
+                return;
+            }
+
             using (var session = this.OpenSession())
             {
                 using (var tran = session.BeginTransaction())
@@ -169,6 +174,34 @@
 
                     tran.Commit();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 批量新增数据
+        /// </summary>
+        /// <param name="entityList">The entityList</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/10 9:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void Create(List<TEntity> entityList)
+        {
+            if (entityList == null || entityList.Count == 0)
+            {
+                return;
+            }
+
+            using (var session = this.OpenSession())
+            {
+                foreach (var entity in entityList)
+                {
+                    this.ConvertLocalTimeToUtc(entity);
+                    session.Save(entity);
+                }
+
+                session.Flush();
             }
         }
 
@@ -199,8 +232,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public void Remove(List<TEntity> entityList)
+        public void RemoveTransaction(List<TEntity> entityList)
         {
+            if (entityList == null || entityList.Count == 0)
+            {
+                return;
+            }
+
             using (var session = this.OpenSession())
             {
                 using (var tran = session.BeginTransaction())
@@ -212,6 +250,33 @@
 
                     tran.Commit();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 批量删除数据
+        /// </summary>
+        /// <param name="entityList">The entityList</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/10 9:58
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void Remove(List<TEntity> entityList)
+        {
+            if (entityList == null || entityList.Count == 0)
+            {
+                return;
+            }
+
+            using (var session = this.OpenSession())
+            {
+                foreach (var entity in entityList)
+                {
+                    session.Delete(entity);
+                }
+
+                session.Flush();
             }
         }
 
@@ -243,8 +308,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public void Update(List<TEntity> entityList)
+        public void UpdateTransaction(List<TEntity> entityList)
         {
+            if (entityList == null || entityList.Count == 0)
+            {
+                return;
+            }
+
             using (var session = this.OpenSession())
             {
                 using (var tran = session.BeginTransaction())
@@ -257,6 +327,34 @@
 
                     tran.Commit();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 批量修改数据
+        /// </summary>
+        /// <param name="entityList">The entityList</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/10 9:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void Update(List<TEntity> entityList)
+        {
+            if (entityList == null || entityList.Count == 0)
+            {
+                return;
+            }
+
+            using (var session = this.OpenSession())
+            {
+                foreach (var entity in entityList)
+                {
+                    this.ConvertLocalTimeToUtc(entity);
+                    session.Update(entity);
+                }
+
+                session.Flush();
             }
         }
 
@@ -288,8 +386,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public void Save(List<TEntity> entityList)
+        public void SaveTransaction(List<TEntity> entityList)
         {
+            if (entityList == null || entityList.Count == 0)
+            {
+                return;
+            }
+
             using (var session = this.OpenSession())
             {
                 using (var tran = session.BeginTransaction())
@@ -302,6 +405,34 @@
 
                     tran.Commit();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 批量新增或修改数据
+        /// </summary>
+        /// <param name="entityList">The entityList</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/10 9:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void Save(List<TEntity> entityList)
+        {
+            if (entityList == null || entityList.Count == 0)
+            {
+                return;
+            }
+
+            using (var session = this.OpenSession())
+            {
+                foreach (var entity in entityList)
+                {
+                    this.ConvertLocalTimeToUtc(entity);
+                    session.SaveOrUpdate(entity);
+                }
+
+                session.Flush();
             }
         }
 

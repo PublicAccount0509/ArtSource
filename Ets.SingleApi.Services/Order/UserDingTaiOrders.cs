@@ -79,7 +79,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserOrdersData GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex)
+        public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex)
         {
             var orderList = orderStatus == null
                                 ? this.GetDingTaiOrderList(customerId, pageSize, pageIndex)
@@ -98,7 +98,7 @@
                     OrderType = (int)this.OrderType
                 }).ToList();
 
-            return new UserOrdersData
+            return new UserOrdersResult
                 {
                     OrderList = dingTaiOrderList.Cast<IOrderModel>().ToList()
                 };
