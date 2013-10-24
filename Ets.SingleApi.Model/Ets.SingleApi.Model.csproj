@@ -39,6 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\ConfirmWaiMaiOrderResult.cs" />
+    <Compile Include="Controller\ConfirmWaiMaiOrderRequst.cs" />
+    <Compile Include="Controller\PaymentWaiMaiOrderResult.cs" />
+    <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
+    <Compile Include="Controller\ConfirmWaiMaiOrderResponse.cs" />
+    <Compile Include="Controller\PaymentWaiMaiOrderResponse.cs" />
+    <Compile Include="Services\ConfirmWaiMaiOrderParameter.cs" />
     <Compile Include="Controller\ApiCache.cs" />
     <Compile Include="Controller\ApiRequst.cs" />
     <Compile Include="Controller\ApiResponse.cs" />
@@ -85,9 +92,12 @@
     <Compile Include="Mapping\Repository\TimeTableDisplayEntity.cs" />
     <Compile Include="OrderType.cs" />
     <Compile Include="PasswordType.cs" />
+    <Compile Include="Services\ConfirmWaiMaiOrderModel.cs" />
+    <Compile Include="Services\PaymentWaiMaiOrderParameter.cs" />
     <Compile Include="Services\AddWaiMaiOrderDishModel.cs" />
     <Compile Include="Services\AddWaiMaiOrderModel.cs" />
     <Compile Include="Services\CustomerModel.cs" />
+    <Compile Include="Services\PaymentWaiMaiOrderModel.cs" />
     <Compile Include="Services\SupplierFeatureModel.cs" />
     <Compile Include="Services\WaiMaiOrderModel.cs" />
     <Compile Include="Services\TangShiOrderModel.cs" />
@@ -126,6 +136,8 @@
     <Compile Include="Services\GroupSupplierModel.cs" />
     <Compile Include="Services\GetGroupSupplierListParameter.cs" />
     <Compile Include="Services\AddWaiMaiOrderParameter.cs" />
+    <Compile Include="Services\WaiMaiOrderDetailModel.cs" />
+    <Compile Include="Services\WaiMaiOrderDishModel.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

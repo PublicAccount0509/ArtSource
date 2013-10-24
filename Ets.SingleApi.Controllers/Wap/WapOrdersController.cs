@@ -52,6 +52,7 @@
         {
             return "测试";
         }
+
         /// <summary>
         /// 添加一个外卖订单
         /// </summary>
@@ -107,6 +108,104 @@
                         SupplierName = result.SupplierName,
                         SupplierDishCount = result.SupplierDishCount
                     }
+            };
+        }
+
+        /// <summary>
+        /// 确认外卖订单
+        /// </summary>
+        /// <param name="id">订单Id</param>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// ConfirmWaiMaiOrderResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public ConfirmWaiMaiOrderResponse ConfirmWaiMaiOrder(int id, ConfirmWaiMaiOrderRequst requst)
+        {
+            if (requst == null)
+            {
+                return new ConfirmWaiMaiOrderResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    },
+                    Result = new ConfirmWaiMaiOrderResult()
+                };
+            }
+
+            var confirmWaiMaiOrderResult = this.orderServices.ConfirmWaiMaiOrder(new ConfirmWaiMaiOrderParameter
+                {
+                    UserId = requst.UserId,
+                    OrderId = id,
+                    CustomerAddressId = requst.CustomerAddressId,
+                    RealSupplierType = requst.RealSupplierType
+                });
+
+            var result = confirmWaiMaiOrderResult.Result ?? new ConfirmWaiMaiOrderModel();
+            return new ConfirmWaiMaiOrderResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = confirmWaiMaiOrderResult.StatusCode
+                },
+                Result = new ConfirmWaiMaiOrderResult
+                {
+                    OrderId = result.OrderId
+                }
+            };
+        }
+
+        /// <summary>
+        /// 支付订单
+        /// </summary>
+        /// <param name="id">订单Id</param>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// PaymentWaiMaiOrderResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public PaymentWaiMaiOrderResponse PaymentWaiMaiOrder(int id, PaymentWaiMaiOrderRequst requst)
+        {
+            if (requst == null)
+            {
+                return new PaymentWaiMaiOrderResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    },
+                    Result = new PaymentWaiMaiOrderResult()
+                };
+            }
+
+            var paymentWaiMaiOrderResult = this.orderServices.PaymentWaiMaiOrder(new PaymentWaiMaiOrderParameter
+                {
+                    UserId = requst.UserId,
+                    OrderId = id
+                });
+
+            var result = paymentWaiMaiOrderResult.Result ?? new PaymentWaiMaiOrderModel();
+            return new PaymentWaiMaiOrderResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = paymentWaiMaiOrderResult.StatusCode
+                },
+                Result = new PaymentWaiMaiOrderResult
+                {
+                    OrderId = result.OrderId
+                }
             };
         }
     }
