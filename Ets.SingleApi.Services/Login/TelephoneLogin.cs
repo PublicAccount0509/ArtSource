@@ -88,15 +88,26 @@
             }
 
             password = password.Md5();
-            var loginIdList = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName && p.Password == password && p.IsEnabled).Select(p => p.LoginId).ToList();
-            if (loginIdList.Count == 0)
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName && p.Password == password).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
+            if (loginEntity == null)
             {
-                return new LoginData { StatusCode = (int)StatusCode.Validate.InvalidPasswordCode };
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidPasswordCode
+                };
+            }
+
+            if (!loginEntity.IsEnabled)
+            {
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.General.ErrorPermission
+                };
             }
 
             return new LoginData
                 {
-                    LoginId = loginIdList.FirstOrDefault()
+                    LoginId = loginEntity.LoginId
                 };
         }
     }

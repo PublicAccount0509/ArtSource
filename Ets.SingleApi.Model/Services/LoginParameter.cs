@@ -52,19 +52,6 @@
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets the AuthCode of LoginParameter
-        /// </summary>
-        /// <value>
-        /// The AuthCode
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/16 23:54
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string AuthCode { get; set; }
-
-        /// <summary>
         /// Gets or sets the AutorizationCode of LoginParameter
         /// </summary>
         /// <value>

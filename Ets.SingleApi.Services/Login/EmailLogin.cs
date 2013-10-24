@@ -103,10 +103,24 @@
             }
 
             password = password.Md5();
-            return this.loginEntityRepository.EntityQueryable.Any(
-                    p => p.LoginId == customer.LoginId && p.Password == password && p.IsEnabled)
-                    ? new LoginData { LoginId = customer.LoginId.Value }
-                    : new LoginData { StatusCode = (int)StatusCode.Validate.InvalidPasswordCode };
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName && p.Password == password).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
+            if (loginEntity == null)
+            {
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidPasswordCode
+                };
+            }
+
+            if (!loginEntity.IsEnabled)
+            {
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.General.ErrorPermission
+                };
+            }
+
+            return new LoginData { LoginId = loginEntity.LoginId };
         }
     }
 }
