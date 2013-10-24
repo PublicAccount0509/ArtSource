@@ -433,7 +433,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public OrderDetailResult<PaymentWaiMaiOrderModel> PaymentOrder(PaymentWaiMaiOrderParameter parameter)
+        public DetailServicesResult<PaymentWaiMaiOrderModel> PaymentOrder(PaymentWaiMaiOrderParameter parameter)
         {
             return null;
         }
