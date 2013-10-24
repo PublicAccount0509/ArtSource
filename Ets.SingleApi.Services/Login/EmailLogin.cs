@@ -103,7 +103,7 @@
             }
 
             password = password.Md5();
-            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName && p.Password == password).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == customer.LoginId && p.Password == password).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
             if (loginEntity == null)
             {
                 return new LoginData
