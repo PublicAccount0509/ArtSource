@@ -389,7 +389,7 @@
             }
 
             var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
-            if (parameter.AuthCode == (authCode == null ? string.Empty : authCode.ToString()))
+            if (parameter.AuthCode != (authCode == null ? string.Empty : authCode.ToString()))
             {
                 return new ServicesResult<RegisterUserModel>
                 {
