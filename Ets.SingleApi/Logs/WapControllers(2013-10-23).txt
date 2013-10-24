@@ -954,3 +954,21 @@
 2013-10-23 18:29:22,911 [12] INFO  Ets.SingleApi.WapControllers - ExecuteAsync
 2013-10-23 18:29:22,911 [12] INFO  Ets.SingleApi.WapControllers - Initialize
 2013-10-23 18:29:22,913 [12] INFO  Ets.SingleApi.WapControllers - Dispose
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 20:35:06,819 [10] INFO  Ets.SingleApi.WapControllers - ExecuteAsync
+2013-10-23 20:35:06,830 [10] INFO  Ets.SingleApi.WapControllers - Initialize
+2013-10-23 20:35:06,989 [10] INFO  Ets.SingleApi.WapControllers - Dispose
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-23 21:04:32,734 [6] INFO  Ets.SingleApi.WapControllers - ExecuteAsync
+2013-10-23 21:04:32,746 [6] INFO  Ets.SingleApi.WapControllers - Initialize
+2013-10-23 21:04:32,916 [6] INFO  Ets.SingleApi.WapControllers - Dispose
+
+----------------------footer--------------------------
