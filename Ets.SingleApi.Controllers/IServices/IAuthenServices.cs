@@ -29,6 +29,20 @@
         ServicesResult<LoginModel> Login(LoginParameter parameter);
 
         /// <summary>
+        /// 手机验证登陆
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回登陆结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 4:45 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<AuthLoginModel> AuthLogin(AuthLoginParameter parameter);
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="userId">The userId</param>
@@ -41,7 +55,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> Password(int userId,PasswordParameter parameter);
+        ServicesResult<bool> Password(int userId, PasswordParameter parameter);
 
         /// <summary>
         /// 找回密码

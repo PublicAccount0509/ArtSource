@@ -61,6 +61,7 @@
     <Compile Include="DetailServices\WaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
+    <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="OrderServices.cs" />
     <Compile Include="Order\IUserOrders.cs" />
     <Compile Include="Order\UserOrdersResult.cs" />

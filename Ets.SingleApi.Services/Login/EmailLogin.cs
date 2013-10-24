@@ -104,7 +104,7 @@
 
             password = password.Md5();
             return this.loginEntityRepository.EntityQueryable.Any(
-                    p => p.LoginId == customer.LoginId && p.Password == password)
+                    p => p.LoginId == customer.LoginId && p.Password == password && p.IsEnabled)
                     ? new LoginData { LoginId = customer.LoginId.Value }
                     : new LoginData { StatusCode = (int)StatusCode.Validate.InvalidPasswordCode };
         }

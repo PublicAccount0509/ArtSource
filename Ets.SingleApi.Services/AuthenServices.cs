@@ -213,6 +213,84 @@
         }
 
         /// <summary>
+        /// 手机验证登陆
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回登陆结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 4:45 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<AuthLoginModel> AuthLogin(AuthLoginParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+            
+            var login = this.loginList.FirstOrDefault(p => p.LoginWay == LoginWay.AuthTele);
+            if (login == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    StatusCode = (int)StatusCode.General.UnknowError,
+                    Result = new AuthLoginModel()
+                };
+            }
+
+            var loginData = login.Login(parameter.Telephone, parameter.AuthCode);
+            if (loginData.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = loginData.StatusCode
+                };
+            }
+
+            var autorizationEntity = this.autorizationEntityRepository.EntityQueryable.FirstOrDefault(p => p.Code == parameter.AutorizationCode);
+            if (autorizationEntity == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = (int)StatusCode.OAuth.InvalidClient
+                };
+            }
+
+            var accessToken = Guid.NewGuid().ToString("N");
+            var refreshToken = Guid.NewGuid().ToString("N");
+            var tokenEntity = new TokenEntity
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                AppKey = autorizationEntity.AppKey,
+                CreatedTime = DateTime.Now,
+                UserId = loginData.LoginId
+            };
+
+            this.tokenEntityRepository.Save(tokenEntity);
+
+            return new ServicesResult<AuthLoginModel>
+            {
+                Result = new AuthLoginModel
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    UserId = loginData.LoginId,
+                    TokenType = CommonUtility.GetTokenType()
+                }
+            };
+        }
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="userId">The userId</param>

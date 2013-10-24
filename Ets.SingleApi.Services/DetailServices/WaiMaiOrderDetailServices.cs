@@ -257,7 +257,7 @@
                 };
             }
 
-            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.LoginId == parameter.UserId).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault();
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.LoginId == parameter.UserId).Select(p => new { p.CustomerId, p.LoginId, p.Mobile, p.Gender, p.Forename, p.Surname }).FirstOrDefault();
             if (customer == null)
             {
                 return new DetailServicesResult<AddWaiMaiOrderModel>
@@ -280,10 +280,15 @@
                                         supplierDish.SupplierDishName
                                     }).ToList();
 
-            var customerTotal = supplierDishList.Sum(item => (item.Price * dishList.Where(p => p.SupplierDishId == item.SupplierDishId).Select(p => p.Quantity).FirstOrDefault()));
+
+            var dishTotal = supplierDishList.Sum(item => (item.Price * dishList.Where(p => p.SupplierDishId == item.SupplierDishId).Select(p => p.Quantity).FirstOrDefault()));
             var total = parameter.DeliveryMethodId == 2
-                    ? customerTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0)
-                    : customerTotal;
+                    ? dishTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0)
+                    : dishTotal;
+            var customerTotal = parameter.DeliveryMethodId == 2
+                    ? dishTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0)
+                    : dishTotal;
+
             var deliveryEntity = new DeliveryEntity
             {
                 SupplierId = parameter.SupplierId,
@@ -295,7 +300,13 @@
                 OrderStatusId = 1,
                 DateAdded = DateTime.Now,
                 PackagingFee = supplierEntity.PackagingFee,
-                DeliverCharge = supplierEntity.FixedDeliveryCharge
+                DeliverCharge = supplierEntity.FixedDeliveryCharge,
+                ContactPhone = customer.Mobile,
+                Gender = customer.Gender,
+                Contact = string.Format("{0}{1}", customer.Forename, customer.Surname),
+                IsPaId = false,
+                IsRating = false,
+                Cancelled = false
             };
 
             this.deliveryEntityRepository.Save(deliveryEntity);

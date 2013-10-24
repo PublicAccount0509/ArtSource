@@ -116,6 +116,74 @@
         }
 
         /// <summary>
+        /// 手机验证登陆方法
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The LoginResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 0:07
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public AuthLoginResponse AuthLogin(AuthLoginRequst requst)
+        {
+            if (requst == null)
+            {
+                return new AuthLoginResponse
+                {
+                    Result = new AuthLoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var loginResult = this.authenServices.AuthLogin(new AuthLoginParameter
+            {
+                Telephone = requst.Telephone,
+                AuthCode = requst.AuthCode,
+                AutorizationCode = Request.Headers.Authorization.Parameter //"716b590aa219495db5fb2c94d0aefaa7"
+            });
+
+            if (loginResult.Result == null)
+            {
+                return new AuthLoginResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = loginResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : loginResult.StatusCode
+                    },
+                    Result = new AuthLoginResult()
+                };
+            }
+
+            var result = new AuthLoginResult
+            {
+                UserId = loginResult.Result.UserId,
+                AccessToken = loginResult.Result.AccessToken,
+                RefreshToken = loginResult.Result.RefreshToken,
+                TokenType = loginResult.Result.TokenType
+            };
+
+            return new AuthLoginResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = loginResult.StatusCode
+                },
+                Result = result,
+                Cache = new ApiCache
+                {
+                    ExpiresIn = CommonUtility.GetTokenExpiresIn()
+                }
+            };
+        }
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="id">The id</param>

@@ -8,7 +8,7 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：TelephoneLogin
+    /// 类名称：AuthTeleLogin
     /// 命名空间：Ets.SingleApi.Services
     /// 类功能：用电话号码登录
     /// </summary>
@@ -17,7 +17,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class TelephoneLogin : ILogin
+    public class AuthTeleLogin : ILogin
     {
         /// <summary>
         /// 字段loginEntityRepository
@@ -30,7 +30,7 @@
         private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TelephoneLogin"/> class.
+        /// Initializes a new instance of the <see cref="AuthTeleLogin"/> class.
         /// </summary>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// 创建者：周超
@@ -38,7 +38,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public TelephoneLogin(INHibernateRepository<LoginEntity> loginEntityRepository)
+        public AuthTeleLogin(INHibernateRepository<LoginEntity> loginEntityRepository)
         {
             this.loginEntityRepository = loginEntityRepository;
         }
@@ -58,7 +58,7 @@
         {
             get
             {
-                return LoginWay.Telephone;
+                return LoginWay.AuthTele;
             }
         }
 
@@ -77,21 +77,19 @@
         /// ----------------------------------------------------------------------------------------
         public LoginData Login(string userName, string password)
         {
-            if (!this.loginEntityRepository.EntityQueryable.Any(p => p.Username == userName && p.IsEnabled))
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, password));
+            if (password != (authCode == null ? string.Empty : authCode.ToString()))
             {
-                return new LoginData { StatusCode = (int)StatusCode.Validate.InvalidUserNameCode };
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidAuthCode
+                };
             }
 
-            if (password.IsEmptyOrNull())
-            {
-                return new LoginData { StatusCode = (int)StatusCode.Validate.InvalidPasswordCode };
-            }
-
-            password = password.Md5();
-            var loginIdList = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName && p.Password == password && p.IsEnabled).Select(p => p.LoginId).ToList();
+            var loginIdList = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName && p.IsEnabled).Select(p => p.LoginId).ToList();
             if (loginIdList.Count == 0)
             {
-                return new LoginData { StatusCode = (int)StatusCode.Validate.InvalidPasswordCode };
+                return new LoginData { StatusCode = (int)StatusCode.Validate.InvalidUserNameCode };
             }
 
             return new LoginData
