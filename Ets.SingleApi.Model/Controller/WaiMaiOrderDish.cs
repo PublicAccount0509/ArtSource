@@ -1,54 +1,54 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：PaymentWaiMaiOrderRequst
+    /// 类名称：WaiMaiOrderDish
     /// 命名空间：Ets.SingleApi.Model.Controller
     /// 类功能：外卖订单
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：10/23/2013 10:28 AM
+    /// 创建日期：2013/10/20 15:44
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class PaymentWaiMaiOrderRequst : ApiRequst
+    public class WaiMaiOrderDish
     {
         /// <summary>
-        /// Gets or sets the UserId of PaymentWaiMaiOrderRequst
+        /// 设置或取得菜名
         /// </summary>
         /// <value>
-        /// The UserId
+        /// 菜名
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/23/2013 5:49 PM
+        /// 创建日期：10/23/2013 9:22 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int UserId { get; set; }
+        public string SupplierDishName { get; set; }
 
         /// <summary>
-        /// Gets or sets the AuthCode of PaymentWaiMaiOrderParameter
+        /// 设置或取得菜数量
         /// </summary>
         /// <value>
-        /// The AuthCode
+        /// 菜数量
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/24/2013 9:45 AM
+        /// 创建日期：10/22/2013 5:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string AuthCode { get; set; }
+        public int Quantity { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the pay.
+        /// 设置或取得菜价格
         /// </summary>
         /// <value>
-        /// The type of the pay.
+        /// 菜价格
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/24/2013 1:05 PM
+        /// 创建日期：10/22/2013 5:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int PayType { get; set; }
+        public decimal Price { get; set; }
     }
 }

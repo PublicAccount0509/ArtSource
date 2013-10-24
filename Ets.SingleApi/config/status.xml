@@ -43,4 +43,5 @@
   <item code="40011" message="无效的用户地址Id列表"></item>
   <item code="40012" message="无效的用户地址Id"></item>
   <item code="40013" message="无效的订单类型"></item>
+  <item code="40014" message="无效的订单Id"></item>
 </status>

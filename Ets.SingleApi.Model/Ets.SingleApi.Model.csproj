@@ -45,6 +45,10 @@
     <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderResponse.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderResponse.cs" />
+    <Compile Include="Controller\WaiMaiOrderDetail.cs" />
+    <Compile Include="Controller\WaiMaiOrderDish.cs" />
+    <Compile Include="Controller\WaiMaiOrderRequst.cs" />
+    <Compile Include="Controller\WaiMaiOrderResponse.cs" />
     <Compile Include="Services\ConfirmWaiMaiOrderParameter.cs" />
     <Compile Include="Controller\ApiCache.cs" />
     <Compile Include="Controller\ApiRequst.cs" />
@@ -61,7 +65,7 @@
     <Compile Include="Controller\LoginResult.cs" />
     <Compile Include="Controller\LoginRequst.cs" />
     <Compile Include="Controller\LoginResponse.cs" />
-    <Compile Include="Controller\WaiMaiOrderRequst.cs" />
+    <Compile Include="Controller\AddWaiMaiOrderRequst.cs" />
     <Compile Include="Controller\PasswordResponse.cs" />
     <Compile Include="Controller\FindPasswordRequest.cs" />
     <Compile Include="Controller\FindPasswordResponse.cs" />
@@ -82,8 +86,8 @@
     <Compile Include="Controller\WaiMaiSupplierListResponse.cs" />
     <Compile Include="Controller\DingTaiSupplierListResponse.cs" />
     <Compile Include="Controller\GetGroupSupplierResponse.cs" />
-    <Compile Include="Controller\WaiMaiOrderResponse.cs" />
-    <Compile Include="Controller\WaiMaiOrderResult.cs" />
+    <Compile Include="Controller\AddWaiMaiOrderResponse.cs" />
+    <Compile Include="Controller\AddWaiMaiOrderResult.cs" />
     <Compile Include="Mapping\Repository\CustomerAddressEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryAddressEntity.cs" />
     <Compile Include="Mapping\Repository\OrderSourceEntity.cs" />

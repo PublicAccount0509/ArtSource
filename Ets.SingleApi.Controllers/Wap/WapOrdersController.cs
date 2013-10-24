@@ -47,10 +47,66 @@
             this.orderServices = orderServices;
         }
 
+        /// <summary>
+        /// 取得外卖订单详情
+        /// </summary>
+        /// <param name="id">订单Id</param>
+        /// <param name="userId">用户Id</param>
+        /// <returns>
+        /// WaiMaiOrderResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 10:44 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public string Test()
+        public WaiMaiOrderResponse WaiMaiOrder(int id, int userId)
         {
-            return "测试";
+            var getWaiMaiOrderResult = this.orderServices.GetWaiMaiOrder(id, userId);
+            if (getWaiMaiOrderResult.Result == null)
+            {
+                return new WaiMaiOrderResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getWaiMaiOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getWaiMaiOrderResult.StatusCode
+                    },
+                    Result = new WaiMaiOrderDetail()
+                };
+            }
+
+            var dishList = getWaiMaiOrderResult.Result.DishList ?? new List<WaiMaiOrderDishModel>();
+            var result = new WaiMaiOrderDetail
+                {
+                    OrderId = getWaiMaiOrderResult.Result.OrderId,
+                    OrderStatus = getWaiMaiOrderResult.Result.OrderStatus,
+                    OrderType = getWaiMaiOrderResult.Result.OrderType,
+                    DateReserved = getWaiMaiOrderResult.Result.DateReserved == null ? string.Empty : getWaiMaiOrderResult.Result.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
+                    SupplierName = getWaiMaiOrderResult.Result.SupplierName,
+                    SupplierAddress = getWaiMaiOrderResult.Result.SupplierAddress,
+                    SupplierTelephone = getWaiMaiOrderResult.Result.SupplierTelephone,
+                    DeliveryInstruction = getWaiMaiOrderResult.Result.DeliveryInstruction,
+                    CustomerTotal = getWaiMaiOrderResult.Result.CustomerTotal == null ? "0.00" : getWaiMaiOrderResult.Result.CustomerTotal.Value.ToString("#0.00"),
+                    Commission = getWaiMaiOrderResult.Result.Commission == null ? "0.00" : getWaiMaiOrderResult.Result.Commission.Value.ToString("#0.00"),
+                    Coupon = getWaiMaiOrderResult.Result.Coupon == null ? "0.00" : getWaiMaiOrderResult.Result.Coupon.Value.ToString("#0.00"),
+                    Total = getWaiMaiOrderResult.Result.Total == null ? "0.00" : getWaiMaiOrderResult.Result.Total.Value.ToString("#0.00"),
+                    DishList = dishList.Select(p => new WaiMaiOrderDish
+                        {
+                            SupplierDishName = p.SupplierDishName,
+                            Quantity = p.Quantity,
+                            Price = p.Price == null ? 0 : p.Price.Value
+                        }).ToList()
+                };
+
+            return new WaiMaiOrderResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getWaiMaiOrderResult.StatusCode
+                    },
+                    Result = result
+                };
         }
 
         /// <summary>
@@ -58,7 +114,7 @@
         /// </summary>
         /// <param name="requst">The requst</param>
         /// <returns>
-        /// WaiMaiOrderResponse
+        /// AddWaiMaiOrderResponse
         /// </returns>
         /// 创建者：周超
         /// 创建日期：10/22/2013 6:04 PM
@@ -66,17 +122,17 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public WaiMaiOrderResponse WaiMaiOrder(WaiMaiOrderRequst requst)
+        public AddWaiMaiOrderResponse AddWaiMaiOrder(AddWaiMaiOrderRequst requst)
         {
             if (requst == null)
             {
-                return new WaiMaiOrderResponse
+                return new AddWaiMaiOrderResponse
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
                     },
-                    Result = new WaiMaiOrderResult()
+                    Result = new AddWaiMaiOrderResult()
                 };
             }
 
@@ -94,13 +150,13 @@
             });
 
             var result = addWaiMaiOrderResult.Result ?? new AddWaiMaiOrderModel();
-            return new WaiMaiOrderResponse
+            return new AddWaiMaiOrderResponse
             {
                 Message = new ApiMessage
                 {
                     StatusCode = addWaiMaiOrderResult.StatusCode
                 },
-                Result = new WaiMaiOrderResult
+                Result = new AddWaiMaiOrderResult
                     {
                         OrderId = result.OrderId,
                         CustomerTotal = result.CustomerTotal,
@@ -192,7 +248,8 @@
             var paymentWaiMaiOrderResult = this.orderServices.PaymentWaiMaiOrder(new PaymentWaiMaiOrderParameter
                 {
                     UserId = requst.UserId,
-                    OrderId = id
+                    OrderId = id,
+                    AuthCode = requst.AuthCode
                 });
 
             var result = paymentWaiMaiOrderResult.Result ?? new PaymentWaiMaiOrderModel();

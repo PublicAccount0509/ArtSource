@@ -1,30 +1,28 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
-    using System.Collections.Generic;
-
     /// <summary>
-    /// 类名称：WaiMaiOrderRequst
+    /// 类名称：AddWaiMaiOrderResponse
     /// 命名空间：Ets.SingleApi.Model.Controller
-    /// 类功能：添加外卖订单实体
+    /// 类功能：
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：10/22/2013 5:46 PM
+    /// 创建日期：2013/10/13 11:43
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class WaiMaiOrderRequst
+    public class AddWaiMaiOrderResponse : ApiResponse
     {
         /// <summary>
-        /// Gets or sets the UserId of WaiMaiOrderRequst
+        /// Gets or sets the Result of AddWaiMaiOrderResponse
         /// </summary>
         /// <value>
-        /// The UserId
+        /// The Result
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/22/2013 5:46 PM
+        /// 创建日期：10/22/2013 9:19 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int UserId { get; set; }
+        public AddWaiMaiOrderResult Result { get; set; }
     }
 }

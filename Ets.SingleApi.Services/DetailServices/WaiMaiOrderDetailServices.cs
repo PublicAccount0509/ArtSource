@@ -167,7 +167,19 @@
                 };
             }
 
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.DeliveryId == orderId && p.CustomerId == customer.CustomerId);
+            var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
+                                  where entity.DeliveryId == orderId && entity.CustomerId == customer.CustomerId
+                                  select entity).FirstOrDefault();
+
+            if (deliveryEntity == null)
+            {
+                return new ServicesResult<WaiMaiOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+
             var waiMaiOrderDishList = deliveryEntity.OrderList.Select(p => new WaiMaiOrderDishModel
                                                      {
                                                          SupplierDishId = p.SupplierDishId,
@@ -178,6 +190,14 @@
 
             var supplierId = deliveryEntity.SupplierId;
             var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<WaiMaiOrderDetailModel>
+                   {
+                       StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                       Result = new WaiMaiOrderDetailModel()
+                   };
+            }
 
             var result = new WaiMaiOrderDetailModel
                 {
@@ -435,6 +455,30 @@
         /// ----------------------------------------------------------------------------------------
         public DetailServicesResult<PaymentWaiMaiOrderModel> PaymentOrder(PaymentWaiMaiOrderParameter parameter)
         {
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.LoginId == parameter.UserId).Select(p => new { p.CustomerId, p.LoginId, p.Mobile }).FirstOrDefault();
+            if (customer == null)
+            {
+                return new DetailServicesResult<PaymentWaiMaiOrderModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = new PaymentWaiMaiOrderModel()
+                };
+            }
+
+            var customerId = customer.CustomerId;
+            var telephone = customer.Mobile;
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.WaiMaiAuthCodeCacheKey, telephone));
+            if (parameter.AuthCode == (authCode == null ? string.Empty : authCode.ToString()))
+            {
+                return new DetailServicesResult<PaymentWaiMaiOrderModel>
+                {
+                    Result = new PaymentWaiMaiOrderModel(),
+                    StatusCode = (int)StatusCode.Validate.InvalidAuthCode
+                };
+            }
+
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.DeliveryId == parameter.OrderId && p.CustomerId == customerId);
+
             return null;
         }
     }

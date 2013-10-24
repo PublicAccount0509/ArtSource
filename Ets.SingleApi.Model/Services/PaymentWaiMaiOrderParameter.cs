@@ -37,5 +37,31 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the AuthCode of PaymentWaiMaiOrderParameter
+        /// </summary>
+        /// <value>
+        /// The AuthCode
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 9:45 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string AuthCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the pay.
+        /// </summary>
+        /// <value>
+        /// The type of the pay.
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 1:05 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int PayType { get; set; }
     }
 }

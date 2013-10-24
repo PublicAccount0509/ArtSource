@@ -126,7 +126,7 @@
             {
                 return new ServicesResult<WaiMaiOrderDetailModel>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
                     Result = new WaiMaiOrderDetailModel()
                 };
             }

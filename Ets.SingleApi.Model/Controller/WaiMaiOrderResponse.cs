@@ -23,6 +23,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public WaiMaiOrderResult Result { get; set; }
+        public WaiMaiOrderDetail Result { get; set; }
     }
 }

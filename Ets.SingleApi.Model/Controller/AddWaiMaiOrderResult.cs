@@ -1,7 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：WaiMaiOrderResult
+    /// 类名称：AddWaiMaiOrderResult
     /// 命名空间：Ets.SingleApi.Model.Controller
     /// 类功能：注册用户返回值
     /// </summary>
@@ -10,10 +10,10 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class WaiMaiOrderResult
+    public class AddWaiMaiOrderResult
     {
         /// <summary>
-        /// Gets or sets the OrderId of WaiMaiOrderResult
+        /// Gets or sets the OrderId of AddWaiMaiOrderResult
         /// </summary>
         /// <value>
         /// The OrderId
@@ -26,7 +26,7 @@
         public int OrderId { get; set; }
 
         /// <summary>
-        /// Gets or sets the CustomerTotal of WaiMaiOrderResult
+        /// Gets or sets the CustomerTotal of AddWaiMaiOrderResult
         /// </summary>
         /// <value>
         /// The CustomerTotal
@@ -39,7 +39,7 @@
         public decimal CustomerTotal { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierId of WaiMaiOrderResult
+        /// Gets or sets the SupplierId of AddWaiMaiOrderResult
         /// </summary>
         /// <value>
         /// The SupplierId
@@ -65,7 +65,7 @@
         public string SupplierName { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDishCount of WaiMaiOrderResult
+        /// Gets or sets the SupplierDishCount of AddWaiMaiOrderResult
         /// </summary>
         /// <value>
         /// The SupplierDishCount
