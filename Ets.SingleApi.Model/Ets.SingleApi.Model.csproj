@@ -52,6 +52,9 @@
     <Compile Include="Controller\AuthLoginRequst.cs" />
     <Compile Include="Controller\AuthLoginResponse.cs" />
     <Compile Include="Controller\AuthLoginResult.cs" />
+    <Compile Include="Controller\ExistResponse.cs" />
+    <Compile Include="Controller\ExistResult.cs" />
+    <Compile Include="Controller\ExistRequest.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="OrderType.cs" />
     <Compile Include="PasswordType.cs" />
     <Compile Include="Services\ConfirmWaiMaiOrderModel.cs" />
+    <Compile Include="Services\ExistModel.cs" />
     <Compile Include="Services\PaymentWaiMaiOrderParameter.cs" />
     <Compile Include="Services\AddWaiMaiOrderDishModel.cs" />
     <Compile Include="Services\AddWaiMaiOrderModel.cs" />
@@ -151,6 +155,7 @@
     <Compile Include="Services\AuthLoginModel.cs" />
     <Compile Include="Services\AuthLoginParameter.cs" />
     <Compile Include="Services\DefaultServicesResult.cs" />
+    <Compile Include="Services\ExistParameter.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

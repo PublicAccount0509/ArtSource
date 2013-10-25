@@ -25,6 +25,16 @@
     public class UsersServices : IUsersServices
     {
         /// <summary>
+        /// 字段loginEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 4:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
+
+        /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -117,6 +127,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
+        /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="customerFavoriteEntityRepository">The customerFavoriteEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
@@ -132,6 +143,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public UsersServices(
+            INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<CustomerFavoriteEntity> customerFavoriteEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
@@ -142,6 +154,7 @@
             IUsersDetailServices usersDetailServices,
             List<IUserOrders> userOrdersList)
         {
+            this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.customerFavoriteEntityRepository = customerFavoriteEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
@@ -680,6 +693,59 @@
                     StatusCode = userOrderResult.StatusCode,
                     Result = list
                 };
+        }
+
+        /// <summary>
+        /// 验证用户是否存在
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 4:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ExistModel> Exist(ExistParameter parameter)
+        {
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Email == parameter.Email || p.Mobile == parameter.Telephone).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault();
+            if (customer == null)
+            {
+                return new ServicesResult<ExistModel>
+                {
+                    Result = new ExistModel
+                        {
+                            Exist = false,
+                            Login = false
+                        }
+                };
+            }
+
+            var login = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == customer.LoginId)
+                    .Select(p => new { p.LoginId, p.IsEnabled })
+                    .FirstOrDefault();
+
+            if (login == null)
+            {
+                return new ServicesResult<ExistModel>
+                {
+                    Result = new ExistModel
+                        {
+                            Exist = false,
+                            Login = false
+                        }
+                };
+            }
+
+            return new ServicesResult<ExistModel>
+            {
+                Result = new ExistModel
+                {
+                    Exist = true,
+                    Login = login.IsEnabled
+                }
+            };
         }
 
         /// <summary>

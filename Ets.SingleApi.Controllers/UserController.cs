@@ -47,6 +47,66 @@
         }
 
         /// <summary>
+        /// 是否存在
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The ExistResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 5:02 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public ExistResponse Exist(ExistRequst requst)
+        {
+            if (requst == null)
+            {
+                return new ExistResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var existResult = this.usersServices.Exist(new ExistParameter
+                {
+                    Email = requst.Email,
+                    Telephone = requst.Telephone
+                });
+
+            if (existResult.Result == null)
+            {
+                return new ExistResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = existResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : existResult.StatusCode
+                    },
+                    Result = new ExistResult()
+                };
+            }
+
+            var result = new ExistResult
+            {
+                Exist = existResult.Result.Exist,
+                Login = existResult.Result.Login
+            };
+
+            return new ExistResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = existResult.StatusCode,
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 获取用户信息
         /// </summary>
         /// <param name="id">用户Id</param>
