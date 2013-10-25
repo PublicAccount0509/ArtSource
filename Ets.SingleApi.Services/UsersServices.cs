@@ -422,7 +422,10 @@
                     StatusCode = result.StatusCode,
                     Result = new RegisterUserModel
                         {
-                            UserId = result.Result
+                            UserId = result.Result.UserId,
+                            AccessToken = result.Result.AccessToken,
+                            RefreshToken = result.Result.RefreshToken,
+                            TokenType = result.Result.TokenType
                         }
                 };
         }

@@ -76,5 +76,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string AuthCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the AutorizationCode of RegisterUserParameter
+        /// </summary>
+        /// <value>
+        /// The AutorizationCode
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 7:53 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string AutorizationCode { get; set; }
     }
 }

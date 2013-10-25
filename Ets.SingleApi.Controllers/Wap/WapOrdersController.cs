@@ -80,8 +80,8 @@
             var result = new WaiMaiOrderDetail
                 {
                     OrderId = getWaiMaiOrderResult.Result.OrderId,
-                    OrderStatus = getWaiMaiOrderResult.Result.OrderStatus,
-                    OrderType = getWaiMaiOrderResult.Result.OrderType,
+                    OrderStatusId = getWaiMaiOrderResult.Result.OrderStatusId,
+                    OrderTypeId = getWaiMaiOrderResult.Result.OrderTypeId,
                     DateReserved = getWaiMaiOrderResult.Result.DateReserved == null ? string.Empty : getWaiMaiOrderResult.Result.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
                     SupplierName = getWaiMaiOrderResult.Result.SupplierName,
                     SupplierAddress = getWaiMaiOrderResult.Result.SupplierAddress,

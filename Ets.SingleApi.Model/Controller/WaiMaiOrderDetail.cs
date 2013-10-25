@@ -38,7 +38,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string OrderType { get; set; }
+        public int? OrderTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the OrderStatus of WaiMaiOrderModel
@@ -51,7 +51,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string OrderStatus { get; set; }
+        public int? OrderStatusId { get; set; }
 
         /// <summary>
         /// 设置或取得下单时间

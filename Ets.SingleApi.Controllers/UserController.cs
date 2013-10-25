@@ -242,7 +242,10 @@
 
             var result = new RegisterUserResult
             {
-                UserId = registerResult.Result.UserId
+                UserId = registerResult.Result.UserId,
+                AccessToken = registerResult.Result.AccessToken,
+                RefreshToken = registerResult.Result.RefreshToken,
+                TokenType = registerResult.Result.TokenType
             };
 
             return new RegisterUserResponse

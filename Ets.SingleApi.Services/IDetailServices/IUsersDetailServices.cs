@@ -27,6 +27,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        DetailServicesResult<int> Register(RegisterUserParameter parameter);
+        DetailServicesResult<RegisterUserModel> Register(RegisterUserParameter parameter);
     }
 }

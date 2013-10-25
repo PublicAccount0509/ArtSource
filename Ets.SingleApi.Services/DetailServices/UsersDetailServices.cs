@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Services.DetailServices
 {
     using System;
+    using System.Linq;
 
     using Castle.Services.Transaction;
 
@@ -25,6 +26,26 @@
     [Transactional]
     public class UsersDetailServices : IUsersDetailServices
     {
+        /// <summary>
+        /// 字段autorizationEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 7:54 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<AutorizationEntity> autorizationEntityRepository;
+
+        /// <summary>
+        /// 字段tokenEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 7:55 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TokenEntity> tokenEntityRepository;
+
         /// <summary>
         /// 字段loginEntityRepository
         /// </summary>
@@ -58,6 +79,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersDetailServices" /> class.
         /// </summary>
+        /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
+        /// <param name="tokenEntityRepository">The tokenEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="sourceTypeEntityRepository">The sourceTypeEntityRepository</param>
@@ -67,10 +90,14 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public UsersDetailServices(
+            INHibernateRepository<AutorizationEntity> autorizationEntityRepository,
+            INHibernateRepository<TokenEntity> tokenEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository)
         {
+            this.autorizationEntityRepository = autorizationEntityRepository;
+            this.tokenEntityRepository = tokenEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.sourceTypeEntityRepository = sourceTypeEntityRepository;
@@ -89,13 +116,14 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [Transaction(TransactionMode.RequiresNew)]
-        public DetailServicesResult<int> Register(RegisterUserParameter parameter)
+        public DetailServicesResult<RegisterUserModel> Register(RegisterUserParameter parameter)
         {
             if (parameter == null)
             {
-                return new DetailServicesResult<int>
+                return new DetailServicesResult<RegisterUserModel>
                 {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = new RegisterUserModel()
                 };
             }
 
@@ -127,10 +155,40 @@
             };
 
             this.customerEntityRepository.Save(customerEntity);
-            return new DetailServicesResult<int>
+
+            var autorizationEntity = this.autorizationEntityRepository.EntityQueryable.FirstOrDefault(p => p.Code == parameter.AutorizationCode);
+            if (autorizationEntity == null)
+            {
+                return new DetailServicesResult<RegisterUserModel>
+                {
+                    Result = new RegisterUserModel(),
+                    StatusCode = (int)StatusCode.OAuth.InvalidClient
+                };
+            }
+
+            var accessToken = Guid.NewGuid().ToString("N");
+            var refreshToken = Guid.NewGuid().ToString("N");
+            var tokenEntity = new TokenEntity
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                AppKey = autorizationEntity.AppKey,
+                CreatedTime = DateTime.Now,
+                UserId = loginId
+            };
+
+            this.tokenEntityRepository.Save(tokenEntity);
+
+            return new DetailServicesResult<RegisterUserModel>
                 {
                     StatusCode = (int)StatusCode.Succeed.Ok,
-                    Result = loginId
+                    Result = new RegisterUserModel
+                    {
+                        AccessToken = accessToken,
+                        RefreshToken = refreshToken,
+                        UserId = loginId,
+                        TokenType = CommonUtility.GetTokenType()
+                    }
                 };
         }
     }
