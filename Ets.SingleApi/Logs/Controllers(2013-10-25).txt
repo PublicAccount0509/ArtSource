@@ -77,3 +77,12 @@
 2013-10-25 15:48:00,171 [13] INFO  Ets.SingleApi.Controllers - Dispose
 
 ----------------------footer--------------------------
+
+----------------------header--------------------------
+
+----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-25 17:05:52,829 [10] INFO  Ets.SingleApi.Controllers - ExecuteAsync
+2013-10-25 17:05:52,855 [10] INFO  Ets.SingleApi.Controllers - Initialize
+2013-10-25 17:06:02,000 [10] INFO  Ets.SingleApi.Controllers - Dispose
