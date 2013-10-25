@@ -389,3 +389,13 @@ Parameter name: source
 2013-10-25 14:44:56,353 [13] INFO  Ets.SingleApi.Services - GetWaiMaiOrder
 
 ----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-25 15:47:30,110 [13] INFO  Ets.SingleApi.Services - GetCuisineList
+2013-10-25 15:47:34,989 [13] ERROR Ets.SingleApi.Services - System.Exception: Exception of type 'System.Exception' was thrown.
+   at Ets.SingleApi.Services.CuisineServices.GetCuisineList() in e:\work\Ets.SingleApi\Ets.SingleApi.Services\CuisineServices.cs:line 61
+   at Castle.Proxies.Invocations.ICuisineServices_GetCuisineList.InvokeMethodOnTarget()
+   at Castle.DynamicProxy.AbstractInvocation.Proceed()
+   at Ets.SingleApi.Interceptor.ServicesInterceptor.Intercept(IInvocation invocation) in e:\work\Ets.SingleApi\Ets.SingleApi\Interceptor\ServicesInterceptor.cs:line 37
+
+----------------------footer--------------------------

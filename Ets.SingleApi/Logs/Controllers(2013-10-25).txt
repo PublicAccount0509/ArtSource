@@ -70,3 +70,10 @@
 ----------------------header--------------------------
 
 ----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-25 15:47:23,819 [13] INFO  Ets.SingleApi.Controllers - ExecuteAsync
+2013-10-25 15:47:23,842 [13] INFO  Ets.SingleApi.Controllers - Initialize
+2013-10-25 15:48:00,171 [13] INFO  Ets.SingleApi.Controllers - Dispose
+
+----------------------footer--------------------------
