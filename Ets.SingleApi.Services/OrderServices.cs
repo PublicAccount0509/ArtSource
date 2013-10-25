@@ -122,7 +122,7 @@
                 };
             }
 
-            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.DeliveryId == orderId))
+            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.OrderNumber == orderId))
             {
                 return new ServicesResult<WaiMaiOrderDetailModel>
                 {
@@ -220,7 +220,7 @@
                 };
             }
 
-            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.DeliveryId == parameter.OrderId))
+            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.OrderNumber == parameter.OrderId))
             {
                 return new ServicesResult<ConfirmWaiMaiOrderModel>
                 {
@@ -269,7 +269,7 @@
                 };
             }
 
-            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.DeliveryId == parameter.OrderId))
+            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.OrderNumber == parameter.OrderId))
             {
                 return new ServicesResult<PaymentWaiMaiOrderModel>
                 {

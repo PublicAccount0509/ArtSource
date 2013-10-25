@@ -25,12 +25,4 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
-Ets.OpenApi/log
-Ets.SingleApi/Logs/Controllers(2013-10-22).txt
-Ets.SingleApi/Logs/DetailServices(2013-10-22).txt
-Ets.SingleApi/Logs/NHibernate(2013-10-22).txt
-Ets.SingleApi/Logs/Services(2013-10-22).txt
-Ets.SingleApi/Logs/Services(2013-10-22).txt(2013-10-22).txt
-Ets.SingleApi/Logs/Sms(2013-10-22).txt
-Ets.SingleApi/Logs/WapControllers(2013-10-22).txt
-Ets.SingleApi/Logs/WapControllers(2013-10-22).txt(2013-10-22).txt
+Ets.SingleApi/Logs

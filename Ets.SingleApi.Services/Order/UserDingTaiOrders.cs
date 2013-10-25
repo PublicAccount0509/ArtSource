@@ -163,7 +163,7 @@
                              where tableReservation.CustomerId == customerId
                              select new DingTaiOrderModel
                              {
-                                 OrderId = tableReservation.TableReservationId,
+                                 OrderId = tableReservation.OrderNumber.HasValue ? tableReservation.OrderNumber.Value : 0,
                                  SupplierId = tableReservation.Supplier.SupplierId,
                                  SupplierName = tableReservation.Supplier.SupplierName,
                                  DateReserved = tableReservation.DateReserved,
@@ -177,7 +177,7 @@
                 return queryable.ToList();
             }
 
-            return queryable.Skip(pageIndex.Value).Take(pageSize).ToList();
+            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
         }
 
         /// <summary>
@@ -201,7 +201,7 @@
                              where tableReservation.CustomerId == customerId && tableReservation.TableStatus == orderStatus
                              select new DingTaiOrderModel
                              {
-                                 OrderId = tableReservation.TableReservationId,
+                                 OrderId = tableReservation.OrderNumber.HasValue ? tableReservation.OrderNumber.Value : 0,
                                  SupplierId = tableReservation.Supplier.SupplierId,
                                  SupplierName = tableReservation.Supplier.SupplierName,
                                  DateReserved = tableReservation.DateReserved,
@@ -215,7 +215,7 @@
                 return queryable.ToList();
             }
 
-            return queryable.Skip(pageIndex.Value).Take(pageSize).ToList();
+            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

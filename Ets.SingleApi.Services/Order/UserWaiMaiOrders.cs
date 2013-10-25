@@ -173,7 +173,7 @@
                              where deliveryEntity.CustomerId == customerId
                              select new WaiMaiOrderModel
                                      {
-                                         OrderId = deliveryEntity.DeliveryId,
+                                         OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
                                          SupplierId = deliveryEntity.SupplierId,
                                          SupplierName = string.Empty,
                                          DateReserved = deliveryEntity.DateAdded,
@@ -188,7 +188,7 @@
                 return queryable.ToList();
             }
 
-            return queryable.Skip(pageIndex.Value).Take(pageSize).ToList();
+            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
         }
 
         /// <summary>
@@ -212,7 +212,7 @@
                              where deliveryEntity.CustomerId == customerId && deliveryEntity.OrderStatusId == orderStatus
                              select new WaiMaiOrderModel
                              {
-                                 OrderId = deliveryEntity.DeliveryId,
+                                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
                                  SupplierId = deliveryEntity.SupplierId,
                                  SupplierName = string.Empty,
                                  DateReserved = deliveryEntity.DateAdded,
@@ -227,7 +227,7 @@
                 return queryable.ToList();
             }
 
-            return queryable.Skip(pageIndex.Value).Take(pageSize).ToList();
+            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

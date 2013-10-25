@@ -62,12 +62,16 @@
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
+    <Compile Include="OrderNumber\DingTaiOrderNumber.cs" />
     <Compile Include="OrderServices.cs" />
+    <Compile Include="OrderNumber\IOrderNumber.cs" />
     <Compile Include="Order\IUserOrders.cs" />
+    <Compile Include="OrderNumber\OrderNumberResult.cs" />
     <Compile Include="Order\UserOrdersResult.cs" />
     <Compile Include="Order\UserWaiMaiOrders.cs" />
     <Compile Include="Order\UserDingTaiOrders.cs" />
     <Compile Include="Order\UserAllOrders.cs" />
+    <Compile Include="OrderNumber\WaiMaiOrderNumber.cs" />
     <Compile Include="SendPassword\EmailSendPassword.cs" />
     <Compile Include="SendPassword\ISendPassword.cs" />
     <Compile Include="IDetailServices\ISmsDetailServices.cs" />

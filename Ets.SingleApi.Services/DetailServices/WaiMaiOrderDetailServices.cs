@@ -107,6 +107,16 @@
         private readonly ISmsDetailServices smsDetailServices;
 
         /// <summary>
+        /// 字段orderNumber
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 2:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IOrderNumber orderNumber;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderDetailServices" /> class.
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -117,6 +127,7 @@
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
         /// <param name="smsDetailServices">The smsDetailServices</param>
+        /// <param name="orderNumber">The orderNumber</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -130,7 +141,8 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
-            ISmsDetailServices smsDetailServices)
+            ISmsDetailServices smsDetailServices,
+            IOrderNumber orderNumber)
         {
             this.customerEntityRepository = customerEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
@@ -140,6 +152,7 @@
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
             this.smsDetailServices = smsDetailServices;
+            this.orderNumber = orderNumber;
         }
 
         /// <summary>
@@ -168,7 +181,7 @@
             }
 
             var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
-                                  where entity.DeliveryId == orderId && entity.CustomerId == customer.CustomerId
+                                  where entity.OrderNumber == orderId && entity.CustomerId == customer.CustomerId
                                   select entity).FirstOrDefault();
 
             if (deliveryEntity == null)
@@ -201,7 +214,7 @@
 
             var result = new WaiMaiOrderDetailModel
                 {
-                    OrderId = deliveryEntity.DeliveryId,
+                    OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
                     OrderTypeId = deliveryEntity.DeliveryMethodId,
                     OrderStatusId = deliveryEntity.OrderStatusId,
                     DateReserved = deliveryEntity.DateAdded,
@@ -267,6 +280,16 @@
                 };
             }
 
+            var getOrderNumberResult = this.orderNumber.GetOrderNumber();
+            if (getOrderNumberResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new DetailServicesResult<AddWaiMaiOrderModel>
+                {
+                    StatusCode = getOrderNumberResult.StatusCode,
+                    Result = new AddWaiMaiOrderModel()
+                };
+            }
+
             var customerId = customer.CustomerId;
             var dishList = parameter.DishList ?? new List<AddWaiMaiOrderDishModel>();
             var supplierDishIdList = dishList.Select(p => p.SupplierDishId).ToList();
@@ -289,10 +312,12 @@
                     ? dishTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0)
                     : dishTotal;
 
+            var orderId = getOrderNumberResult.OrderNumber;
             var deliveryEntity = new DeliveryEntity
             {
                 SupplierId = parameter.SupplierId,
                 CustomerId = customerId,
+                OrderNumber = orderId,
                 DeliveryMethodId = parameter.DeliveryMethodId,
                 DeliveryInstruction = parameter.DeliveryInstruction,
                 CustomerTotal = customerTotal,
@@ -311,7 +336,6 @@
 
             this.deliveryEntityRepository.Save(deliveryEntity);
 
-            var orderId = deliveryEntity.DeliveryId;
             if (dishList.Count == 0)
             {
                 return new DetailServicesResult<AddWaiMaiOrderModel>
@@ -323,7 +347,7 @@
                         CustomerTotal = parameter.DeliveryMethodId == 2 ? customerTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0) : customerTotal,
                         SupplierName = supplierEntity.SupplierName,
                         SupplierId = supplierEntity.SupplierId,
-                        SupplierDishCount = this.orderEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId && p.Delivery.DeliveryId == orderId).Sum(p => p.Quantity)
+                        SupplierDishCount = this.orderEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId && p.Delivery.DeliveryId == deliveryEntity.DeliveryId).Sum(p => p.Quantity)
                     }
                 };
             }
@@ -354,7 +378,7 @@
                     CustomerTotal = parameter.DeliveryMethodId == 2 ? customerTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0) : customerTotal,
                     SupplierName = supplierEntity.SupplierName,
                     SupplierId = supplierEntity.SupplierId,
-                    SupplierDishCount = this.orderEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId && p.Delivery.DeliveryId == orderId).Sum(p => p.Quantity)
+                    SupplierDishCount = this.orderEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId && p.Delivery.DeliveryId == deliveryEntity.DeliveryId).Sum(p => p.Quantity)
                 }
             };
         }
@@ -420,27 +444,26 @@
             };
             this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
 
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.DeliveryId == parameter.OrderId && p.CustomerId == customerId);
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == parameter.OrderId && p.CustomerId == customerId);
             deliveryEntity.RealSupplierType = parameter.RealSupplierType;
             deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
             this.deliveryEntityRepository.Save(deliveryEntity);
 
+            //var code = CommonUtility.RandNum(6);
+            //CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, customer.Mobile), code, DateTime.Now.AddMinutes(5));
 
-            var code = CommonUtility.RandNum(6);
-            CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, customer.Mobile), code, DateTime.Now.AddMinutes(5));
-
-            var result = this.smsDetailServices.SendSms(customer.Mobile, string.Format("{0}", code));
-            if (result == null)
-            {
-                return new DetailServicesResult<ConfirmWaiMaiOrderModel>
-                {
-                    Result = new ConfirmWaiMaiOrderModel
-                    {
-                        OrderId = parameter.OrderId
-                    },
-                    StatusCode = (int)StatusCode.General.SmsSendError
-                };
-            }
+            //var result = this.smsDetailServices.SendSms(customer.Mobile, string.Format("{0}", code));
+            //if (result == null)
+            //{
+            //    return new DetailServicesResult<ConfirmWaiMaiOrderModel>
+            //    {
+            //        Result = new ConfirmWaiMaiOrderModel
+            //        {
+            //            OrderId = parameter.OrderId
+            //        },
+            //        StatusCode = (int)StatusCode.General.SmsSendError
+            //    };
+            //}
 
             return new DetailServicesResult<ConfirmWaiMaiOrderModel>
             {
@@ -488,7 +511,7 @@
                 };
             }
 
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.DeliveryId == parameter.OrderId && p.CustomerId == customerId);
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == parameter.OrderId && p.CustomerId == customerId);
 
             return null;
         }

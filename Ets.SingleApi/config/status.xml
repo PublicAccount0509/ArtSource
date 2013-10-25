@@ -28,6 +28,7 @@
   <item code="20004" message="短信发送失败"></item>
   <item code="20005" message="发送短信过于频繁"></item>
   <item code="20006" message="参数错误，无法找回密码"></item>
+  <item code="20007" message="订单号无法找到"></item>
   <!--校验错误-->
   <item code="40000" message="您已是易淘食用户，直接登录叫外卖即可。"></item>
   <item code="40001" message="邮箱已经被占用"></item>

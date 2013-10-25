@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Ets.SingleApi.Model.Repository.OrderNumberDcEntity, Ets.SingleApi.Model" table="OrderNumberDc" dynamic-update="true" optimistic-lock="all" >
+    <!--The cache-->
+    <cache usage="read-write"/>
+    <!--The primary keys-->
+    <id name="OrderId" column="OrderId" type="Int32" >
+      <generator class="native"/>
+    </id>
+  </class>
+</hibernate-mapping>

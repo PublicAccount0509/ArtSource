@@ -250,7 +250,7 @@
                 return queryable.ToList();
             }
 
-            return queryable.Skip(pageIndex.Value).Take(pageSize).ToList();
+            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
         }
 
         /// <summary>
@@ -306,7 +306,7 @@
                 return queryable.ToList();
             }
 
-            return queryable.Skip(pageIndex.Value).Take(pageSize).ToList();
+            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

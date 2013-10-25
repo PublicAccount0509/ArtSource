@@ -52,6 +52,8 @@
     <Compile Include="Controller\AuthLoginRequst.cs" />
     <Compile Include="Controller\AuthLoginResponse.cs" />
     <Compile Include="Controller\AuthLoginResult.cs" />
+    <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
+    <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />
     <Compile Include="Services\ConfirmWaiMaiOrderParameter.cs" />
     <Compile Include="Controller\ApiCache.cs" />
     <Compile Include="Controller\ApiRequst.cs" />
@@ -370,6 +372,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\DeliveryAddressEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\OrderNumberDcEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\OrderNumberDtEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
