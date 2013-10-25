@@ -19,7 +19,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class WapSupplierController : ApiController
+    public class WapSupplierController : SingleApiController
     {
         /// <summary>
         /// 字段supplierServices

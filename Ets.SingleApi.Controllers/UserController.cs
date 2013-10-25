@@ -20,7 +20,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class UserController : ApiController
+    public class UserController : SingleApiController
     {
         /// <summary>
         /// 字段usersServices

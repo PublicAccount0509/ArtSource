@@ -18,7 +18,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class BusinessAreaController : ApiController
+    public class BusinessAreaController : SingleApiController
     {
         /// <summary>
         /// 字段businessAreaServices

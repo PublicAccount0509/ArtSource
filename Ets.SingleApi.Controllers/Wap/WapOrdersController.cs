@@ -21,7 +21,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class WapOrdersController : ApiController
+    public class WapOrdersController : SingleApiController
     {
         /// <summary>
         /// 字段orderServices

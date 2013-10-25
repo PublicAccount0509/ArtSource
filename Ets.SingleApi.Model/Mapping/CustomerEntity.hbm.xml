@@ -1,67 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-	<class name="Ets.SingleApi.Model.Repository.CustomerEntity, Ets.SingleApi.Model" table="Customer" dynamic-update="true" optimistic-lock="all" >
-	 <!--The cache-->
-	 <cache usage="read-write"/>
-	 <!--The primary keys-->
-		<id name="CustomerId" column="CustomerID" type="Int32" >
-			<generator class="native"/>
-		</id>
-		<!--The propertys-->
-		<property name="CorporateId" column="CorporateID" type="Int32" not-null="false" />
-		<property name="LoginId" column="LoginID" type="Int32" not-null="false" />
-		<property name="PrePayCardNo" column="PrePayCardNo" type="String" not-null="false" />
-		<property name="PrePayBalance" column="PrePayBalance" type="Decimal" not-null="false" />
-		<property name="Title" column="Title" type="String" not-null="false" />
-		<property name="Forename" column="Forename" type="String" not-null="false" />
-		<property name="Surname" column="Surname" type="String" not-null="false" />
-		<property name="Gender" column="Gender" type="String" not-null="false" />
-		<property name="NationalityId" column="NationalityID" type="Int32" not-null="false" />
-		<property name="Age" column="Age" type="Int32" not-null="false" />
-		<property name="Address1" column="Address1" type="String" not-null="false" />
-		<property name="Address2" column="Address2" type="String" not-null="false" />
-		<property name="CityId" column="CityID" type="Int32" not-null="false" />
-		<property name="CountyId" column="CountyID" type="Int32" not-null="false" />
-		<property name="CountryId" column="CountryID" type="Int32" not-null="false" />
-		<property name="OtherCity" column="OtherCity" type="String" not-null="false" />
-		<property name="PostCode" column="PostCode" type="String" not-null="false" />
-		<property name="HomeTelephone" column="HomeTelephone" type="String" not-null="false" />
-		<property name="WorkTelephone" column="WorkTelephone" type="String" not-null="false" />
-		<property name="Mobile" column="Mobile" type="String" not-null="false" />
-		<property name="Fax" column="Fax" type="String" not-null="false" />
-		<property name="Email" column="Email" type="String" not-null="false" />
-		<property name="DateJoined" column="DateJoined" type="Timestamp" not-null="false" />
-		<property name="HomeCity" column="HomeCity" type="String" not-null="false" />
-		<property name="Birthday" column="Birthday" type="Timestamp" not-null="false" />
-		<property name="AddrCityId" column="AddrCityId" type="String" not-null="false" />
-		<property name="AddrProvinceId" column="AddrProvinceId" type="String" not-null="false" />
-		<property name="IsValId" column="IsValid" type="Boolean" not-null="false" />
-		<property name="TemplateId" column="Templateid" type="String" not-null="false" />
-		<property name="CreateDate" column="CreateDate" type="Timestamp" not-null="false" />
-		<property name="IsRegAllowed" column="IsRegAllowed" type="Boolean" not-null="false" />
-		<property name="Avatar" column="Avatar" type="String" not-null="false" />
-		<!--The foreign keys-->
-		<bag name="CardList" cascade="none" lazy="true" table="Card">
-			<key column="CustomerID" />
-			<one-to-many class="Ets.SingleApi.Model.Repository.CardEntity, Ets.SingleApi.Model" />
-		</bag>
-		<bag name="CustomerFavoriteList" cascade="none" lazy="true" table="CustomerFavorite">
-			<key column="CustomerID" />
-			<one-to-many class="Ets.SingleApi.Model.Repository.CustomerFavoriteEntity, Ets.SingleApi.Model" />
-		</bag>
-		<bag name="CustomerPointList" cascade="none" lazy="true" table="CustomerPoint">
-			<key column="CustomerId" />
-			<one-to-many class="Ets.SingleApi.Model.Repository.CustomerPointEntity, Ets.SingleApi.Model" />
-		</bag>
-		<bag name="MarketingAllowanceList" cascade="none" lazy="true" table="MarketingAllowance">
-			<key column="CustomerID" />
-			<one-to-many class="Ets.SingleApi.Model.Repository.MarketingAllowanceEntity, Ets.SingleApi.Model" />
-		</bag>
-		<bag name="SupplierCommentList" cascade="none" lazy="true" table="SupplierComment">
-			<key column="CustomerID" />
-			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierCommentEntity, Ets.SingleApi.Model" />
-		</bag>
-		<many-to-one name="Path" class="Ets.SingleApi.Model.Repository.SourcePathEntity, Ets.SingleApi.Model" column="Path" />
-		<many-to-one name="Source" class="Ets.SingleApi.Model.Repository.SourceTypeEntity, Ets.SingleApi.Model" column="Source" />
-	</class>
+  <class name="Ets.SingleApi.Model.Repository.CustomerEntity, Ets.SingleApi.Model" table="Customer" dynamic-update="true" optimistic-lock="all" >
+    <!--The cache-->
+    <cache usage="read-write"/>
+    <!--The primary keys-->
+    <id name="CustomerId" column="CustomerID" type="Int32" >
+      <generator class="native"/>
+    </id>
+    <!--The propertys-->
+    <property name="CorporateId" column="CorporateID" type="Int32" not-null="false" />
+    <property name="LoginId" column="LoginID" type="Int32" not-null="false" />
+    <property name="PrePayCardNo" column="PrePayCardNo" type="String" not-null="false" />
+    <property name="PrePayBalance" column="PrePayBalance" type="Decimal" not-null="false" />
+    <property name="Title" column="Title" type="String" not-null="false" />
+    <property name="Forename" column="Forename" type="String" not-null="false" />
+    <property name="Surname" column="Surname" type="String" not-null="false" />
+    <property name="Gender" column="Gender" type="String" not-null="false" />
+    <property name="NationalityId" column="NationalityID" type="Int32" not-null="false" />
+    <property name="Age" column="Age" type="Int32" not-null="false" />
+    <property name="Address1" column="Address1" type="String" not-null="false" />
+    <property name="Address2" column="Address2" type="String" not-null="false" />
+    <property name="CityId" column="CityID" type="Int32" not-null="false" />
+    <property name="CountyId" column="CountyID" type="Int32" not-null="false" />
+    <property name="CountryId" column="CountryID" type="Int32" not-null="false" />
+    <property name="OtherCity" column="OtherCity" type="String" not-null="false" />
+    <property name="PostCode" column="PostCode" type="String" not-null="false" />
+    <property name="HomeTelephone" column="HomeTelephone" type="String" not-null="false" />
+    <property name="WorkTelephone" column="WorkTelephone" type="String" not-null="false" />
+    <property name="Mobile" column="Mobile" type="String" not-null="false" />
+    <property name="Fax" column="Fax" type="String" not-null="false" />
+    <property name="Email" column="Email" type="String" not-null="false" />
+    <property name="DateJoined" column="DateJoined" type="Timestamp" not-null="false" />
+    <property name="HomeCity" column="HomeCity" type="String" not-null="false" />
+    <property name="Birthday" column="Birthday" type="Timestamp" not-null="false" />
+    <property name="AddrCityId" column="AddrCityId" type="String" not-null="false" />
+    <property name="AddrProvinceId" column="AddrProvinceId" type="String" not-null="false" />
+    <property name="IsValId" column="IsValid" type="Boolean" not-null="false" />
+    <property name="TemplateId" column="Templateid" type="String" not-null="false" />
+    <property name="CreateDate" column="CreateDate" type="Timestamp" not-null="false" />
+    <property name="IsRegAllowed" column="IsRegAllowed" type="Boolean" not-null="false" />
+    <property name="Avatar" column="Avatar" type="String" not-null="false" />
+    <!--The foreign keys-->
+    <bag name="CardList" cascade="none" lazy="true" table="Card">
+      <key column="CustomerID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.CardEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="CustomerFavoriteList" cascade="none" lazy="true" table="CustomerFavorite">
+      <key column="CustomerID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.CustomerFavoriteEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="CustomerPointList" cascade="none" lazy="true" table="CustomerPoint">
+      <key column="CustomerId" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.CustomerPointEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="MarketingAllowanceList" cascade="none" lazy="true" table="MarketingAllowance">
+      <key column="CustomerID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.MarketingAllowanceEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="SupplierCommentList" cascade="none" lazy="true" table="SupplierComment">
+      <key column="CustomerID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.SupplierCommentEntity, Ets.SingleApi.Model" />
+    </bag>
+    <many-to-one name="Path" class="Ets.SingleApi.Model.Repository.SourcePathEntity, Ets.SingleApi.Model" column="Path" />
+    <many-to-one name="Source" class="Ets.SingleApi.Model.Repository.SourceTypeEntity, Ets.SingleApi.Model" column="Source" />
+  </class>
+  <sql-query name="Pro_QueryUserOrderList">
+    <return-scalar column="OrderId" type="Int32" />
+    <return-scalar column="DateReserved" type="DateTime" />
+    <return-scalar column="CustomerTotal" type="Decimal" />
+    <return-scalar column="OrderStatusId" type="Int32" />
+    <return-scalar column="DineNumber" type="Int32" />
+    <return-scalar column="OrderType" type="Int32" />
+    <return-scalar column="SupplierId" type="Int32" />
+    <return-scalar column="SupplierName" type="String" />
+    exec Pro_QueryUserOrderList :CustomerID,:OrderStatusID,:PageIndex,:PageSize
+  </sql-query>
 </hibernate-mapping>

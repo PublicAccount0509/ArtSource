@@ -17,7 +17,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SmsController : ApiController
+    public class SmsController : SingleApiController
     {
         /// <summary>
         /// 字段smsServices

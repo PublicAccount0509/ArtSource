@@ -7,6 +7,7 @@
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IRepository;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：UserAllOrders
@@ -51,6 +52,16 @@
         private readonly INHibernateRepository<TableReservationEntity> tableReservationEntityRepository;
 
         /// <summary>
+        /// 字段customerEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 11:49 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
+
+        /// <summary>
         /// 取得订单类型
         /// </summary>
         /// <value>
@@ -75,6 +86,7 @@
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="tableReservationEntityRepository">The tableReservationEntityRepository</param>
+        /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：2013/10/20 16:04
         /// 修改者：
@@ -83,11 +95,13 @@
         public UserAllOrders(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
-            INHibernateRepository<TableReservationEntity> tableReservationEntityRepository)
+            INHibernateRepository<TableReservationEntity> tableReservationEntityRepository,
+            INHibernateRepository<CustomerEntity> customerEntityRepository)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.tableReservationEntityRepository = tableReservationEntityRepository;
+            this.customerEntityRepository = customerEntityRepository;
         }
 
         /// <summary>
@@ -107,9 +121,25 @@
         /// ----------------------------------------------------------------------------------------
         public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex)
         {
-            var orderList = orderStatus == null
-                                ? this.GetAllOrderList(customerId, pageSize, pageIndex)
-                                : this.GetAllOrderList(customerId, orderStatus.Value, pageSize, pageIndex);
+            var list = this.customerEntityRepository.NamedQuery("Pro_QueryUserOrderList")
+                        .SetInt32("CustomerID", customerId)
+                        .SetInt32("OrderStatusID", !orderStatus.HasValue ? -1 : orderStatus.Value)
+                        .SetInt32("PageIndex", !pageIndex.HasValue ? -1 : pageIndex.Value)
+                        .SetInt32("PageSize", pageSize).List();
+
+            var orderList = (from object[] item in list
+                             select new AllOrderModel
+                                {
+                                    OrderId = item[0].ObjectToInt(),
+                                    DateReserved = item[1].ObjectToDateTime(),
+                                    CustomerTotal = item[2].ObjectToDecimal(),
+                                    OrderStatusId = item[3].ObjectToInt(),
+                                    DineNumber = item[4].ObjectToInt(),
+                                    OrderType = item[5].ObjectToInt(),
+                                    SupplierId = item[6].ObjectToInt(),
+                                    SupplierName = item[7].ObjectToString(),
+                                    OrderStatus = string.Empty
+                                }).ToList();
 
             var supplierIdList = orderList.Where(p => p.OrderType == (int)OrderType.WaiMai).Select(p => p.SupplierId).ToList();
             var supplierList = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
@@ -183,36 +213,37 @@
         /// ----------------------------------------------------------------------------------------
         private List<AllOrderModel> GetAllOrderList(int customerId, int pageSize, int? pageIndex)
         {
-            var queryable = ((from tableReservation in this.tableReservationEntityRepository.EntityQueryable
-                              where tableReservation.CustomerId == customerId
-                              select
-                                  new AllOrderModel
-                                      {
-                                          OrderId = tableReservation.TableReservationId,
-                                          SupplierId = tableReservation.Supplier.SupplierId,
-                                          SupplierName = tableReservation.Supplier.SupplierName,
-                                          DateReserved = tableReservation.DateReserved,
-                                          CustomerTotal = tableReservation.CustomerTotal,
-                                          OrderStatusId = tableReservation.TableStatus,
-                                          OrderStatus = string.Empty,
-                                          OrderType = (int)OrderType.DingTai,
-                                          DineNumber = tableReservation.DineNumber
-                                      }).Union(
-                                         (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
-                                          where deliveryEntity.CustomerId == customerId
-                                          select
-                                              new AllOrderModel
-                                                  {
-                                                      OrderId = deliveryEntity.DeliveryId,
-                                                      SupplierId = deliveryEntity.SupplierId,
-                                                      SupplierName = string.Empty,
-                                                      DateReserved = deliveryEntity.DateAdded,
-                                                      CustomerTotal = deliveryEntity.CustomerTotal,
-                                                      OrderStatusId = deliveryEntity.OrderStatusId,
-                                                      OrderStatus = string.Empty,
-                                                      OrderType = (int)OrderType.WaiMai,
-                                                      DineNumber = 0
-                                                  }))).OrderByDescending(p => p.DateReserved);
+            var tableReservationQueryable = from tableReservation in this.tableReservationEntityRepository.EntityQueryable
+                                            where tableReservation.CustomerId == customerId
+                                            select new AllOrderModel
+                                                    {
+                                                        OrderId = tableReservation.TableReservationId,
+                                                        SupplierId = tableReservation.Supplier.SupplierId,
+                                                        SupplierName = tableReservation.Supplier.SupplierName,
+                                                        DateReserved = tableReservation.DateReserved,
+                                                        CustomerTotal = tableReservation.CustomerTotal,
+                                                        OrderStatusId = tableReservation.TableStatus,
+                                                        OrderStatus = string.Empty,
+                                                        OrderType = (int)OrderType.DingTai,
+                                                        DineNumber = tableReservation.DineNumber
+                                                    };
+
+            var deliveryQueryable = from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
+                                    where deliveryEntity.CustomerId == customerId
+                                    select new AllOrderModel
+                                            {
+                                                OrderId = deliveryEntity.DeliveryId,
+                                                SupplierId = deliveryEntity.SupplierId,
+                                                SupplierName = string.Empty,
+                                                DateReserved = deliveryEntity.DateAdded,
+                                                CustomerTotal = deliveryEntity.CustomerTotal,
+                                                OrderStatusId = deliveryEntity.OrderStatusId,
+                                                OrderStatus = string.Empty,
+                                                OrderType = (int)OrderType.WaiMai,
+                                                DineNumber = 0
+                                            };
+
+            var queryable = deliveryQueryable.Union(tableReservationQueryable);
 
             if (pageIndex == null)
             {

@@ -18,7 +18,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class CuisineController : ApiController
+    public class CuisineController : SingleApiController
     {
         /// <summary>
         /// 字段cuisineServices

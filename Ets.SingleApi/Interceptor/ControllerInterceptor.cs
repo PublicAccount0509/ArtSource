@@ -1,7 +1,5 @@
 ﻿namespace Ets.SingleApi.Interceptor
 {
-    using System;
-
     using Castle.DynamicProxy;
 
     using Ets.SingleApi.Utility;

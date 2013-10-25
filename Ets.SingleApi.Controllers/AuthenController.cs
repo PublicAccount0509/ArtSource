@@ -19,7 +19,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class AuthenController : ApiController
+    public class AuthenController : SingleApiController
     {
         /// <summary>
         /// 字段authenServices
