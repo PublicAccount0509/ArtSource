@@ -1,7 +1,10 @@
 ﻿namespace Ets.SingleApi.Interceptor
 {
+    using System;
+
     using Castle.DynamicProxy;
 
+    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -27,8 +30,24 @@
         /// ----------------------------------------------------------------------------------------
         public void Intercept(IInvocation invocation)
         {
-            invocation.Method.Name.WriteLog("Ets.SingleApi.WapControllers", Log4NetType.Info);
-            invocation.Proceed();
+            invocation.Method.Name.WriteLog("Ets.SingleApi.Controllers", Log4NetType.Info);
+
+            try
+            {
+                invocation.Proceed();
+            }
+            catch (Exception exception)
+            {
+                exception.WriteLog("Ets.SingleApi.Controllers");
+            }
+
+            if (invocation.ReturnValue == null)
+            {
+                var result = (InterceptorCommon.GetConstructor(invocation.Method.ReturnType) as ApiResponse) ?? new ApiResponse();
+                invocation.ReturnValue = result;
+            }
+
+            InterceptorCommon.GetChildrenConstructor(invocation.ReturnValue);
         }
     }
 }

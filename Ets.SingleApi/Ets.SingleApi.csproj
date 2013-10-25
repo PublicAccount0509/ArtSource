@@ -163,6 +163,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interceptor\InterceptorCommon.cs" />
     <Compile Include="Interceptor\WapControllerInterceptor.cs" />
     <Compile Include="Interceptor\ControllerInterceptor.cs" />
     <Compile Include="Interceptor\ServicesInterceptor.cs" />

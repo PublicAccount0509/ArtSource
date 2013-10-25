@@ -30,6 +30,7 @@
         public void Intercept(IInvocation invocation)
         {
             invocation.Method.Name.WriteLog("Ets.SingleApi.DetailServices", Log4NetType.Info);
+
             try
             {
                 invocation.Proceed();
@@ -38,6 +39,14 @@
             {
                 exception.WriteLog("Ets.SingleApi.DetailServices");
             }
+
+            if (invocation.ReturnValue == null)
+            {
+                var result = InterceptorCommon.GetConstructor(invocation.Method.ReturnType);
+                invocation.ReturnValue = result;
+            }
+
+            InterceptorCommon.GetChildrenConstructor(invocation.ReturnValue);
         }
     }
 }
