@@ -4,6 +4,7 @@
 
     using Castle.DynamicProxy;
 
+    using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -42,7 +43,8 @@
 
             if (invocation.ReturnValue == null)
             {
-                var result = InterceptorCommon.GetConstructor(invocation.Method.ReturnType);
+                var result = (InterceptorCommon.GetConstructor(invocation.Method.ReturnType) as DefaultServicesResult) ?? new DefaultServicesResult();
+                result.StatusCode = (int)StatusCode.System.InternalServerError;
                 invocation.ReturnValue = result;
             }
 

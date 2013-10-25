@@ -52,6 +52,7 @@
     <Compile Include="Controller\AuthLoginRequst.cs" />
     <Compile Include="Controller\AuthLoginResponse.cs" />
     <Compile Include="Controller\AuthLoginResult.cs" />
+    <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />
     <Compile Include="Services\ConfirmWaiMaiOrderParameter.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Services\WaiMaiOrderDishModel.cs" />
     <Compile Include="Services\AuthLoginModel.cs" />
     <Compile Include="Services\AuthLoginParameter.cs" />
+    <Compile Include="Services\DefaultServicesResult.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

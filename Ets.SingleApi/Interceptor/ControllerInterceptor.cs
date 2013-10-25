@@ -44,6 +44,7 @@
             if (invocation.ReturnValue == null)
             {
                 var result = (InterceptorCommon.GetConstructor(invocation.Method.ReturnType) as ApiResponse) ?? new ApiResponse();
+                result.Message = new ApiMessage { StatusCode = (int)StatusCode.System.InternalServerError };
                 invocation.ReturnValue = result;
             }
 

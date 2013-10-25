@@ -12,34 +12,8 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ServicesResultList<T>
+    public class ServicesResultList<T> : DefaultServicesResult
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServicesResult{T}"/> class.
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：2013/10/15 22:08
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResultList()
-        {
-            this.StatusCode = (int)Utility.StatusCode.Succeed.Ok;
-        }
-
-        /// <summary>
-        /// Gets or sets the StatusCode of ServicesResult
-        /// </summary>
-        /// <value>
-        /// The StatusCode
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/15 19:48
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int StatusCode { get; set; }
-
         /// <summary>
         /// Gets or sets the Result of ServicesResultList{T}
         /// </summary>
