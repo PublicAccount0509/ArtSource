@@ -159,6 +159,7 @@
             }
 
             deliveryEntity.IsPaId = true;
+            deliveryEntity.OrderStatusId = 5;
             this.deliveryEntityRepository.Save(deliveryEntity);
 
             return new PaymentResult
@@ -286,10 +287,22 @@
         /// ----------------------------------------------------------------------------------------
         private string HttpGet(string url)
         {
-            var req = System.Net.WebRequest.Create(url);
-            var resp = req.GetResponse();
-            var sr = new System.IO.StreamReader(resp.GetResponseStream());
-            return sr.ReadToEnd().Trim();
+            var request = System.Net.WebRequest.Create(url);
+            using (var response = request.GetResponse())
+            {
+                using (var stream = response.GetResponseStream())
+                {
+                    if (stream == null)
+                    {
+                        return string.Empty;
+                    }
+
+                    using (var reader = new System.IO.StreamReader(stream))
+                    {
+                        return reader.ReadToEnd().Trim();
+                    }
+                }
+            }
         }
     }
 }
