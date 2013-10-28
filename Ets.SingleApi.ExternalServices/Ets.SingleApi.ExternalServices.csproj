@@ -42,6 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\IEtkYaoGao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\SmsSoap\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -64,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Service References\IEtkYaoGao\ETSHService.wsdl" />
     <None Include="Service References\SmsSoap\Ets.SingleApi.ExternalServices.SmsSoap.SendSmsBaseResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -73,6 +79,7 @@
     <None Include="Service References\SmsSoap\Sms.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\IEtkYaoGao\" />
     <WCFMetadataStorage Include="Service References\SmsSoap\" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +93,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\SmsSoap\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IEtkYaoGao\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IEtkYaoGao\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IEtkYaoGao\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

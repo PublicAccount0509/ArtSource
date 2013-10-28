@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B1B86090-92BA-4E91-AE27-0DC677F8CC59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ets.SingleApi.Pay</RootNamespace>
+    <AssemblyName>Ets.SingleApi.Pay</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IKVM.OpenJDK.Core">
+      <HintPath>..\lib\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Security">
+      <HintPath>..\lib\IKVM.OpenJDK.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Tools">
+      <HintPath>..\lib\IKVM.OpenJDK.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Util">
+      <HintPath>..\lib\IKVM.OpenJDK.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.API">
+      <HintPath>..\lib\IKVM.OpenJDK.XML.API.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime">
+      <HintPath>..\lib\IKVM.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime.JNI">
+      <HintPath>..\lib\IKVM.Runtime.JNI.dll</HintPath>
+    </Reference>
+    <Reference Include="mpiclient">
+      <HintPath>..\lib\mpiclient.dll</HintPath>
+    </Reference>
+    <Reference Include="ounetpayclinet">
+      <HintPath>..\lib\ounetpayclinet.dll</HintPath>
+    </Reference>
+    <Reference Include="PayGateSign">
+      <HintPath>..\lib\PayGateSign.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alipay\AlipayConfig.cs" />
+    <Compile Include="Alipay\AlipayCore.cs" />
+    <Compile Include="Alipay\AlipayNotify.cs" />
+    <Compile Include="Alipay\AlipayService.cs" />
+    <Compile Include="Alipay\AlipaySubmit.cs" />
+    <Compile Include="Allscore\AllscoreConfig.cs" />
+    <Compile Include="Allscore\AllscoreCore.cs" />
+    <Compile Include="Allscore\AllscoreNotify.cs" />
+    <Compile Include="Allscore\AllscoreService.cs" />
+    <Compile Include="Allscore\AllscoreSubmit.cs" />
+    <Compile Include="Bill99\Bill99Service.cs" />
+    <Compile Include="Etk\Edit.cs" />
+    <Compile Include="PayHelpers.cs" />
+    <Compile Include="Service References\IEtkYaoGao\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Umpay\UmpayService.cs" />
+    <Compile Include="YaGao\EtaoCardService.cs" />
+    <Compile Include="YaGao\EtaoMobileService.cs" />
+    <Compile Include="YaGao\MpiService.cs" />
+    <Compile Include="Yeepay\Buy.cs" />
+    <Compile Include="Yeepay\BuyBankDirectConnectResult.cs" />
+    <Compile Include="Yeepay\BuyCallbackResult.cs" />
+    <Compile Include="Yeepay\BuyQueryOrdDetailResult.cs" />
+    <Compile Include="Yeepay\BuyRefundOrdResult.cs" />
+    <Compile Include="Yeepay\Digest.cs" />
+    <Compile Include="Yeepay\FormatQueryString.cs" />
+    <Compile Include="Yeepay\HmacMD5.cs" />
+    <Compile Include="Yeepay\HttpUtils.cs" />
+    <Compile Include="YinBaoTong\YbtService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Service References\IEtkYaoGao\ETSHService.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\IEtkYaoGao\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IEtkYaoGao\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IEtkYaoGao\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IEtkYaoGao\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

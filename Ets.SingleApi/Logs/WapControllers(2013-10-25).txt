@@ -150,3 +150,10 @@
 ----------------------header--------------------------
 
 ----------------------footer--------------------------
+
+----------------------header--------------------------
+2013-10-25 17:20:24,390 [5] INFO  Ets.SingleApi.WapControllers - ExecuteAsync
+2013-10-25 17:20:24,393 [5] INFO  Ets.SingleApi.WapControllers - Initialize
+2013-10-25 17:20:25,229 [5] INFO  Ets.SingleApi.WapControllers - Dispose
+
+----------------------footer--------------------------

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns:tns="http://webservice.accor.huateng.com" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" targetNamespace="http://webservice.accor.huateng.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://webservice.accor.huateng.com">
+      <xsd:element name="ETSH_Card_Change_Pin">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="CardNo" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Old_Pin" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="New_Pin" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="CVV2" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="AuthCode" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ETSH_Card_Change_PinResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="return" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ETSH_Card_Balance_Inquery">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="CardNo" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="AuthCode" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ETSH_Card_Balance_InqueryResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="return" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ETSH_Card_Balance_InqueryRequest">
+    <wsdl:part name="parameters" element="tns:ETSH_Card_Balance_Inquery" />
+  </wsdl:message>
+  <wsdl:message name="ETSH_Card_Balance_InqueryResponse">
+    <wsdl:part name="parameters" element="tns:ETSH_Card_Balance_InqueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ETSH_Card_Change_PinResponse">
+    <wsdl:part name="parameters" element="tns:ETSH_Card_Change_PinResponse" />
+  </wsdl:message>
+  <wsdl:message name="ETSH_Card_Change_PinRequest">
+    <wsdl:part name="parameters" element="tns:ETSH_Card_Change_Pin" />
+  </wsdl:message>
+  <wsdl:portType name="ETSHServicePortType">
+    <wsdl:operation name="ETSH_Card_Change_Pin">
+      <wsdl:input name="ETSH_Card_Change_PinRequest" message="tns:ETSH_Card_Change_PinRequest" />
+      <wsdl:output name="ETSH_Card_Change_PinResponse" message="tns:ETSH_Card_Change_PinResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ETSH_Card_Balance_Inquery">
+      <wsdl:input name="ETSH_Card_Balance_InqueryRequest" message="tns:ETSH_Card_Balance_InqueryRequest" />
+      <wsdl:output name="ETSH_Card_Balance_InqueryResponse" message="tns:ETSH_Card_Balance_InqueryResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ETSHServiceHttpBinding" type="tns:ETSHServicePortType">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ETSH_Card_Change_Pin">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="ETSH_Card_Change_PinRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ETSH_Card_Change_PinResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ETSH_Card_Balance_Inquery">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="ETSH_Card_Balance_InqueryRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ETSH_Card_Balance_InqueryResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ETSHService">
+    <wsdl:port name="ETSHServiceHttpPort" binding="tns:ETSHServiceHttpBinding">
+      <wsdlsoap:address location="http://218.242.136.178:19080/ivrServer/ETSHService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
