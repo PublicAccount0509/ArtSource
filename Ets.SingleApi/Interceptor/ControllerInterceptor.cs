@@ -41,6 +41,11 @@
                 exception.WriteLog("Ets.SingleApi.Controllers");
             }
 
+            if (string.Equals(invocation.Method.ReturnType.Name, "void", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             if (invocation.ReturnValue == null)
             {
                 var result = (InterceptorCommon.GetConstructor(invocation.Method.ReturnType) as ApiResponse) ?? new ApiResponse();

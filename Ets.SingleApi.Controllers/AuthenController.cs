@@ -77,7 +77,7 @@
                             Email = requst.Email,
                             Password = requst.Password,
                             Telephone = requst.Telephone,
-                            AutorizationCode =  "716b590aa219495db5fb2c94d0aefaa7"
+                            AutorizationCode = "716b590aa219495db5fb2c94d0aefaa7"
                         });
             //Request.Headers.Authorization.Parameter
             if (loginResult.Result == null)

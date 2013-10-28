@@ -36,6 +36,9 @@
     <Reference Include="NHibernate">
       <HintPath>..\lib\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="PayGateSign">
+      <HintPath>..\lib\PayGateSign.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -72,6 +75,13 @@
     <Compile Include="Order\UserDingTaiOrders.cs" />
     <Compile Include="Order\UserAllOrders.cs" />
     <Compile Include="OrderNumber\WaiMaiOrderNumber.cs" />
+    <Compile Include="PaymentServices.cs" />
+    <Compile Include="Payment\IPayment.cs" />
+    <Compile Include="Payment\IPaymentData.cs" />
+    <Compile Include="Payment\PaymentResult.cs" />
+    <Compile Include="Payment\WaiMaiUmPayment.cs" />
+    <Compile Include="Payment\UmPaymentData.cs" />
+    <Compile Include="Payment\UmPaymentQueryData.cs" />
     <Compile Include="SendPassword\EmailSendPassword.cs" />
     <Compile Include="SendPassword\ISendPassword.cs" />
     <Compile Include="IDetailServices\ISmsDetailServices.cs" />

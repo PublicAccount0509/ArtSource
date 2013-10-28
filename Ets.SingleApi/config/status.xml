@@ -20,6 +20,7 @@
   <item code="1002" message="内部服务器错误"></item>
   <item code="1003" message="请求参数错误"></item>
   <item code="1004" message="请求验证失败"></item>
+  <item code="1005" message="支付参数错误"></item>
   <!--一般错误-->
   <item code="20000" message="未知错误"></item>
   <item code="20001" message="权限错误"></item>
@@ -45,4 +46,12 @@
   <item code="40012" message="无效的用户地址Id"></item>
   <item code="40013" message="无效的订单类型"></item>
   <item code="40014" message="无效的订单Id"></item>
+  <!--联动优势支付-->
+  <item code="80000" message="未知错误"></item>
+  <item code="80001" message="邮箱已经被占用"></item>
+  <item code="80002" message="交易创建，等待买家付款。"></item>
+  <item code="80003" message="交易成功，不能再次进行交易"></item>
+  <item code="80004" message="交易关闭"></item>
+  <item code="80005" message="交易取消"></item>
+  <item code="80006" message="交易失败"></item>
 </status>

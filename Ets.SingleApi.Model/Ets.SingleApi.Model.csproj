@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Controller\ConfirmWaiMaiOrderResult.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderRequst.cs" />
+    <Compile Include="Controller\PaymentResult.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderResult.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderResponse.cs" />
@@ -55,9 +56,12 @@
     <Compile Include="Controller\ExistResponse.cs" />
     <Compile Include="Controller\ExistResult.cs" />
     <Compile Include="Controller\ExistRequest.cs" />
+    <Compile Include="Controller\UmPaymentRequst.cs" />
+    <Compile Include="Controller\UmPaymentResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />
+    <Compile Include="PaymentType.cs" />
     <Compile Include="Services\ConfirmWaiMaiOrderParameter.cs" />
     <Compile Include="Controller\ApiCache.cs" />
     <Compile Include="Controller\ApiRequst.cs" />
@@ -107,6 +111,7 @@
     <Compile Include="PasswordType.cs" />
     <Compile Include="Services\ConfirmWaiMaiOrderModel.cs" />
     <Compile Include="Services\ExistModel.cs" />
+    <Compile Include="Services\UmPaymentParameter.cs" />
     <Compile Include="Services\PaymentWaiMaiOrderParameter.cs" />
     <Compile Include="Services\AddWaiMaiOrderDishModel.cs" />
     <Compile Include="Services\AddWaiMaiOrderModel.cs" />
