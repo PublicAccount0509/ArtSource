@@ -30,10 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -57,9 +66,11 @@
     <Compile Include="BusinessAreaController.cs" />
     <Compile Include="ControllersCommon.cs" />
     <Compile Include="CuisineController.cs" />
+    <Compile Include="Filters\TokenFilterAttribute.cs" />
     <Compile Include="IServices\IAuthenServices.cs" />
     <Compile Include="IServices\IBusinessAreaServices.cs" />
     <Compile Include="IServices\ICuisineServices.cs" />
+    <Compile Include="IServices\IFilterServices.cs" />
     <Compile Include="IServices\IOrderServices.cs" />
     <Compile Include="IServices\IPaymentServices.cs" />
     <Compile Include="IServices\ISmsServices.cs" />

@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Linq;
+    using System.Net.Http.Headers;
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -80,6 +82,26 @@
         }
 
         #endregion
+
+        /// <summary>
+        /// 读取header标头，如果不存在，返回空字符串
+        /// </summary>
+        /// <param name="headers">The headers</param>
+        /// <param name="key">The key</param>
+        /// <returns>
+        /// The String
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/29/2013 5:17 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string Read(this HttpRequestHeaders headers, string key)
+        {
+            IEnumerable<string> values;
+            headers.TryGetValues(key, out values);
+            return values == null ? string.Empty : values.FirstOrDefault() ?? string.Empty;
+        }
 
         /// <summary>
         /// 获取当前节点值

@@ -62,6 +62,7 @@
     <Compile Include="CuisineServices.cs" />
     <Compile Include="DetailServices\UsersDetailServices.cs" />
     <Compile Include="DetailServices\WaiMaiOrderDetailServices.cs" />
+    <Compile Include="FilterServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />

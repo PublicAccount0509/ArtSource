@@ -114,6 +114,7 @@
     <Compile Include="PasswordType.cs" />
     <Compile Include="Services\ConfirmWaiMaiOrderModel.cs" />
     <Compile Include="Services\ExistModel.cs" />
+    <Compile Include="Services\TokenModel.cs" />
     <Compile Include="Services\UmPaymentParameter.cs" />
     <Compile Include="Services\PaymentWaiMaiOrderParameter.cs" />
     <Compile Include="Services\AddWaiMaiOrderDishModel.cs" />

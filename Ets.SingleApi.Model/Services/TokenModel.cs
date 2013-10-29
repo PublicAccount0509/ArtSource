@@ -1,56 +1,56 @@
-﻿namespace Ets.SingleApi.Controllers
+﻿namespace Ets.SingleApi.Model.Services
 {
-    using System.Web.Http;
+    using System;
 
     /// <summary>
-    /// 类名称：SingleApiController
-    /// 命名空间：Ets.SingleApi.Controllers
-    /// 类功能：SingleApiController
+    /// 类名称：TokenModel
+    /// 命名空间：Ets.SingleApi.Model.Services
+    /// 类功能：Token实体
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：10/25/2013 9:38 AM
+    /// 创建日期：10/29/2013 5:32 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SingleApiController : ApiController
+    public class TokenModel
     {
         /// <summary>
-        /// 当前登陆用户Id
+        /// Gets or sets the AccessToken of TokenModel
         /// </summary>
         /// <value>
-        /// 当前登陆用户Id
+        /// The AccessToken
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/25/2013 9:42 AM
+        /// 创建日期：10/29/2013 5:33 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int UserId { get; set; }
+        public string AccessToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the AutorizationCode of SingleApiController
+        /// Gets or sets the UserId of TokenModel
         /// </summary>
         /// <value>
-        /// The AutorizationCode
+        /// The UserId
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/29/2013 5:49 PM
+        /// 创建日期：10/29/2013 5:33 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string AutorizationCode { get; set; }
+        public int? UserId { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SingleApiController"/> class.
+        /// Gets or sets the TokenDateTime of TokenModel
         /// </summary>
+        /// <value>
+        /// The TokenDateTime
+        /// </value>
         /// 创建者：周超
-        /// 创建日期：10/29/2013 5:50 PM
+        /// 创建日期：10/29/2013 5:33 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public SingleApiController()
-        {
-            this.AutorizationCode = "716b590aa219495db5fb2c94d0aefaa7";
-        }
+        public DateTime? TokenDateTime { get; set; }
     }
 }

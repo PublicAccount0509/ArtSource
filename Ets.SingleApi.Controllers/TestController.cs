@@ -2,6 +2,7 @@
 {
     using System.Web.Http;
 
+    using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Model.Controller;
 
     /// <summary>
@@ -28,6 +29,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
+        [TokenFilter]
         public ApiResponse Test()
         {
             return new ApiResponse();
