@@ -30,17 +30,31 @@
         private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthTeleLogin"/> class.
+        /// 字段customerEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/29/2013 10:56 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthTeleLogin" /> class.
         /// </summary>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
+        /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 10:01
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public AuthTeleLogin(INHibernateRepository<LoginEntity> loginEntityRepository)
+        public AuthTeleLogin(
+            INHibernateRepository<LoginEntity> loginEntityRepository,
+            INHibernateRepository<CustomerEntity> customerEntityRepository)
         {
             this.loginEntityRepository = loginEntityRepository;
+            this.customerEntityRepository = customerEntityRepository;
         }
 
         /// <summary>
@@ -86,7 +100,19 @@
                 };
             }
 
-            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Mobile == userName)
+                    .Select(p => new { p.LoginId, p.CustomerId })
+                    .FirstOrDefault();
+
+            if (customer == null)
+            {
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                };
+            }
+
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == customer.LoginId).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
             if (loginEntity == null)
             {
                 return new LoginData
