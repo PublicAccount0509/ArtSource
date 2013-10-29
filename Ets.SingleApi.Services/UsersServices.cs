@@ -709,7 +709,9 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ExistModel> Exist(ExistParameter parameter)
         {
-            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Email == parameter.Email || p.Mobile == parameter.Telephone).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault();
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Mobile == parameter.Telephone).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault() ??
+                this.customerEntityRepository.EntityQueryable.Where(p => p.Email == parameter.Email).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault();
+            
             if (customer == null)
             {
                 return new ServicesResult<ExistModel>

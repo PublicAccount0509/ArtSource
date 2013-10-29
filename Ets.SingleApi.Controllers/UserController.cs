@@ -72,6 +72,17 @@
                 };
             }
 
+            if (requst.Email.IsEmptyOrNull() && requst.Telephone.IsEmptyOrNull())
+            {
+                return new ExistResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
             var existResult = this.usersServices.Exist(new ExistParameter
                 {
                     Email = requst.Email,
