@@ -85,8 +85,8 @@
 
             var existResult = this.usersServices.Exist(new ExistParameter
                 {
-                    Email = requst.Email,
-                    Telephone = requst.Telephone
+                    Email = (requst.Email ?? string.Empty).Trim(),
+                    Telephone = (requst.Telephone ?? string.Empty).Trim()
                 });
 
             if (existResult.Result == null)
@@ -209,13 +209,13 @@
             var saveCustomerAddressResult = this.usersServices.SaveCustomerAddress(id, new CustomerAddressParameter
                 {
                     CustomerAddressId = requst.CustomerAddressId,
-                    Name = requst.Name,
-                    Address = requst.Address,
-                    AddressAlias = requst.AddressAlias,
+                    Name = (requst.Name ?? string.Empty).Trim(),
+                    Address = (requst.Address ?? string.Empty).Trim(),
+                    AddressAlias = (requst.AddressAlias ?? string.Empty).Trim(),
                     IsDefault = requst.IsDefault,
-                    RegionCode = requst.RegionCode,
+                    RegionCode = (requst.RegionCode ?? string.Empty).Trim(),
                     Sex = requst.Sex,
-                    Telephone = requst.Telephone
+                    Telephone = (requst.Telephone ?? string.Empty).Trim()
                 });
 
             return new CustomerAddressResponse
@@ -293,10 +293,10 @@
 
             var registerResult = this.usersServices.Register(new RegisterUserParameter
                 {
-                    Email = requst.Email,
-                    Telephone = requst.Telephone,
-                    Password = requst.Password,
-                    AuthCode = requst.AuthCode
+                    Email = (requst.Email ?? string.Empty).Trim(),
+                    Telephone = (requst.Telephone ?? string.Empty).Trim(),
+                    Password = (requst.Password ?? string.Empty).Trim(),
+                    AuthCode = (requst.AuthCode ?? string.Empty).Trim()
                 });
 
             if (registerResult.Result == null)

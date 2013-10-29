@@ -76,19 +76,19 @@
             var supplier = new SupplierDetail
                 {
                     SupplierId = getSupplierResult.Result.SupplierId,
-                    SupplierName = getSupplierResult.Result.SupplierName,
-                    SupplierDescription = getSupplierResult.Result.SupplierDescription,
-                    ServiceTime = getSupplierResult.Result.ServiceTime,
-                    Address = getSupplierResult.Result.Address,
-                    Averageprice = getSupplierResult.Result.Averageprice,
-                    ParkingInfo = getSupplierResult.Result.ParkingInfo,
-                    Telephone = getSupplierResult.Result.Telephone,
+                    SupplierName = getSupplierResult.Result.SupplierName ?? string.Empty,
+                    SupplierDescription = getSupplierResult.Result.SupplierDescription ?? string.Empty,
+                    ServiceTime = getSupplierResult.Result.ServiceTime ?? string.Empty,
+                    Address = getSupplierResult.Result.Address ?? string.Empty,
+                    Averageprice = getSupplierResult.Result.Averageprice ?? 0,
+                    ParkingInfo = getSupplierResult.Result.ParkingInfo ?? string.Empty,
+                    Telephone = getSupplierResult.Result.Telephone ?? string.Empty,
                     SupplierGroupId = getSupplierResult.Result.SupplierGroupId,
                     ChainCount = getSupplierResult.Result.ChainCount,
-                    CuisineName = getSupplierResult.Result.CuisineName,
+                    CuisineName = getSupplierResult.Result.CuisineName ?? string.Empty,
                     DateJoined = getSupplierResult.Result.DateJoined,
                     IsOpenDoor = getSupplierResult.Result.IsOpenDoor,
-                    LogoUrl = getSupplierResult.Result.LogoUrl,
+                    LogoUrl = getSupplierResult.Result.LogoUrl ?? string.Empty,
                     PackagingFee = getSupplierResult.Result.PackagingFee ?? 0,
                     FixedDeliveryCharge = getSupplierResult.Result.FixedDeliveryCharge ?? 0
                 };
@@ -142,12 +142,12 @@
             var result = getGroupSupplierListResult.Result.Select(p => new GroupSupplier
                 {
                     SupplierId = p.SupplierId,
-                    SupplierName = p.SupplierName,
-                    SupplierDescription = p.SupplierDescription,
-                    Address = p.Address,
-                    Averageprice = p.Averageprice,
-                    ParkingInfo = p.ParkingInfo,
-                    Telephone = p.Telephone,
+                    SupplierName = p.SupplierName ?? string.Empty,
+                    SupplierDescription = p.SupplierDescription ?? string.Empty,
+                    Address = p.Address ?? string.Empty,
+                    Averageprice = p.Averageprice ?? 0,
+                    ParkingInfo = p.ParkingInfo ?? string.Empty,
+                    Telephone = p.Telephone ?? string.Empty,
                     IsWaiMai = p.SupplierFeatureList != null && p.SupplierFeatureList.Count(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId) > 0,
                     IsDingTai = p.SupplierFeatureList != null && p.SupplierFeatureList.Count(q => q.FeatureId == ControllersCommon.DingTaiFeatureId) > 0
                 }).ToList();
@@ -188,10 +188,10 @@
         {
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
                 {
-                    SupplierName = supplierName ?? string.Empty,
+                    SupplierName = (supplierName ?? string.Empty).Trim(),
                     FeatureId = -1,
                     CuisineId = cuisineId ?? -1,
-                    BusinessAreaId = businessAreaId ?? string.Empty,
+                    BusinessAreaId = (businessAreaId ?? string.Empty).Trim(),
                     RegionId = regionId ?? -1,
                     UserLat = userLat ?? 0,
                     UserLong = userLong ?? 0,
@@ -216,13 +216,13 @@
             var result = list.Result.Select(p => new Supplier
                 {
                     SupplierId = p.SupplierId,
-                    SupplierName = p.SupplierName,
-                    Address = p.Address,
-                    Telephone = p.Telephone,
-                    Averageprice = p.Averageprice,
-                    CuisineName = p.CuisineName,
-                    Distance = p.Distance,
-                    LogoUrl = p.LogoUrl
+                    SupplierName = p.SupplierName ?? string.Empty,
+                    Address = p.Address ?? string.Empty,
+                    Telephone = p.Telephone ?? string.Empty,
+                    Averageprice = p.Averageprice ?? 0,
+                    CuisineName = p.CuisineName ?? string.Empty,
+                    Distance = p.Distance ?? 0,
+                    LogoUrl = p.LogoUrl ?? string.Empty
                 }).ToList();
 
             return new SearchSupplierListResponse
@@ -264,7 +264,7 @@
                 SupplierName = string.Empty,
                 FeatureId = featureId,
                 CuisineId = cuisineId ?? -1,
-                BusinessAreaId = businessAreaId ?? string.Empty,
+                BusinessAreaId = (businessAreaId ?? string.Empty).Trim(),
                 RegionId = regionId ?? -1,
                 UserLat = userLat ?? 0,
                 UserLong = userLong ?? 0,
@@ -289,13 +289,13 @@
             var result = list.Result.Select(p => new Supplier
             {
                 SupplierId = p.SupplierId,
-                SupplierName = p.SupplierName,
-                Address = p.Address,
-                Telephone = p.Telephone,
-                Averageprice = p.Averageprice,
-                CuisineName = p.CuisineName,
-                Distance = p.Distance,
-                LogoUrl = p.LogoUrl
+                SupplierName = p.SupplierName ?? string.Empty,
+                Address = p.Address ?? string.Empty,
+                Telephone = p.Telephone ?? string.Empty,
+                Averageprice = p.Averageprice ?? 0,
+                CuisineName = p.CuisineName ?? string.Empty,
+                Distance = p.Distance ?? 0,
+                LogoUrl = p.LogoUrl ?? string.Empty
             }).ToList();
 
             return new WaiMaiSupplierListResponse
@@ -337,7 +337,7 @@
                 SupplierName = string.Empty,
                 FeatureId = featureId,
                 CuisineId = cuisineId ?? -1,
-                BusinessAreaId = businessAreaId ?? string.Empty,
+                BusinessAreaId = (businessAreaId ?? string.Empty).Trim(),
                 RegionId = regionId ?? -1,
                 UserLat = userLat,
                 UserLong = userLong,
@@ -362,13 +362,13 @@
             var result = list.Result.Select(p => new Supplier
             {
                 SupplierId = p.SupplierId,
-                SupplierName = p.SupplierName,
-                Address = p.Address,
-                Telephone = p.Telephone,
-                Averageprice = p.Averageprice,
-                CuisineName = p.CuisineName,
-                Distance = p.Distance,
-                LogoUrl = p.LogoUrl
+                SupplierName = p.SupplierName ?? string.Empty,
+                Address = p.Address ?? string.Empty,
+                Telephone = p.Telephone ?? string.Empty,
+                Averageprice = p.Averageprice ?? 0,
+                CuisineName = p.CuisineName ?? string.Empty,
+                Distance = p.Distance ?? 0,
+                LogoUrl = p.LogoUrl ?? string.Empty
             }).ToList();
 
             return new DingTaiSupplierListResponse
@@ -417,14 +417,14 @@
                 SupplierDishList = p.SupplierDishList.Select(q => new SupplierDish
                 {
                     Price = q.Price,
-                    ImagePath = q.ImagePath,
+                    ImagePath = q.ImagePath ?? string.Empty,
                     SupplierDishId = q.SupplierDishId,
-                    SupplierDishName = q.SupplierDishName,
-                    SuppllierDishDescription = q.SuppllierDishDescription,
-                    AverageRating = q.AverageRating,
+                    SupplierDishName = q.SupplierDishName ?? string.Empty,
+                    SuppllierDishDescription = q.SuppllierDishDescription ?? string.Empty,
+                    AverageRating = q.AverageRating ?? 0,
                     IsCommission = q.IsCommission,
                     IsDiscount = q.IsDiscount,
-                    Recipe = q.Recipe,
+                    Recipe = q.Recipe ?? string.Empty,
                     Recommended = q.Recommended
                 }).ToList()
             }).ToList();

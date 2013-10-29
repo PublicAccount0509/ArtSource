@@ -83,10 +83,10 @@
                     OrderStatusId = getWaiMaiOrderResult.Result.OrderStatusId,
                     OrderTypeId = getWaiMaiOrderResult.Result.OrderTypeId,
                     DateReserved = getWaiMaiOrderResult.Result.DateReserved == null ? string.Empty : getWaiMaiOrderResult.Result.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
-                    SupplierName = getWaiMaiOrderResult.Result.SupplierName,
-                    SupplierAddress = getWaiMaiOrderResult.Result.SupplierAddress,
-                    SupplierTelephone = getWaiMaiOrderResult.Result.SupplierTelephone,
-                    DeliveryInstruction = getWaiMaiOrderResult.Result.DeliveryInstruction,
+                    SupplierName = getWaiMaiOrderResult.Result.SupplierName ?? string.Empty,
+                    SupplierAddress = getWaiMaiOrderResult.Result.SupplierAddress ?? string.Empty,
+                    SupplierTelephone = getWaiMaiOrderResult.Result.SupplierTelephone ?? string.Empty,
+                    DeliveryInstruction = getWaiMaiOrderResult.Result.DeliveryInstruction ?? string.Empty,
                     CustomerTotal = getWaiMaiOrderResult.Result.CustomerTotal == null ? "0.00" : getWaiMaiOrderResult.Result.CustomerTotal.Value.ToString("#0.00"),
                     Commission = getWaiMaiOrderResult.Result.Commission == null ? "0.00" : getWaiMaiOrderResult.Result.Commission.Value.ToString("#0.00"),
                     Coupon = getWaiMaiOrderResult.Result.Coupon == null ? "0.00" : getWaiMaiOrderResult.Result.Coupon.Value.ToString("#0.00"),
@@ -161,7 +161,7 @@
                         OrderId = result.OrderId,
                         CustomerTotal = result.CustomerTotal,
                         SupplierId = result.SupplierId,
-                        SupplierName = result.SupplierName,
+                        SupplierName = result.SupplierName ?? string.Empty,
                         SupplierDishCount = result.SupplierDishCount
                     }
             };
@@ -249,7 +249,7 @@
                 {
                     UserId = requst.UserId,
                     OrderId = id,
-                    AuthCode = requst.AuthCode
+                    AuthCode = (requst.AuthCode ?? string.Empty).Trim()
                 });
 
             var result = paymentWaiMaiOrderResult.Result ?? new PaymentWaiMaiOrderModel();

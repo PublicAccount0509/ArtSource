@@ -420,7 +420,7 @@
                 };
             }
 
-            if (parameter.Email.IsEmptyOrNull() && this.customerEntityRepository.EntityQueryable.Any(p => p.Email == parameter.Email))
+            if (!parameter.Email.IsEmptyOrNull() && this.customerEntityRepository.EntityQueryable.Any(p => p.Email == parameter.Email))
             {
                 return new ServicesResult<RegisterUserModel>
                 {

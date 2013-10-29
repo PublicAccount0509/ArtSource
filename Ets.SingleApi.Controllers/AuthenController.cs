@@ -74,10 +74,10 @@
 
             var loginResult = this.authenServices.Login(new LoginParameter
                         {
-                            Email = requst.Email,
-                            Password = requst.Password,
-                            Telephone = requst.Telephone,
-                            AutorizationCode = this.AutorizationCode
+                            Email = (requst.Email ?? string.Empty).Trim(),
+                            Password = (requst.Password ?? string.Empty).Trim(),
+                            Telephone = (requst.Telephone ?? string.Empty).Trim(),
+                            AutorizationCode = (this.AutorizationCode ?? string.Empty).Trim()
                         });
 
             if (loginResult.Result == null)
@@ -143,9 +143,9 @@
 
             var loginResult = this.authenServices.AuthLogin(new AuthLoginParameter
             {
-                Telephone = requst.Telephone,
-                AuthCode = requst.AuthCode,
-                AutorizationCode = this.AutorizationCode
+                Telephone = (requst.Telephone ?? string.Empty).Trim(),
+                AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
+                AutorizationCode = (this.AutorizationCode ?? string.Empty).Trim()
             });
 
             if (loginResult.Result == null)
@@ -211,8 +211,8 @@
 
             var passwordResult = this.authenServices.Password(id, new PasswordParameter
             {
-                OldPassword = requst.OldPassword,
-                NewPasswrod = requst.NewPasswrod,
+                OldPassword = (requst.OldPassword ?? string.Empty).Trim(),
+                NewPasswrod = (requst.NewPasswrod ?? string.Empty).Trim(),
                 IsSendSms = requst.IsSendSms
             });
 
@@ -266,7 +266,7 @@
             var wayList = requst.WayList.Select(p =>
                                         new FindPasswordWayModel
                                             {
-                                                AccountNumber = p.AccountNumber,
+                                                AccountNumber = (p.AccountNumber ?? string.Empty).Trim(),
                                                 AccountType = (PasswordType)p.AccountType
                                             }).ToList();
 
