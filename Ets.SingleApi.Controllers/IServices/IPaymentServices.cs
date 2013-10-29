@@ -19,13 +19,27 @@
         /// </summary>
         /// <param name="parameter">The parameter</param>
         /// <returns>
-        /// 返回支付结果
+        /// 返回支付交易号
         /// </returns>
         /// 创建者：周超
         /// 创建日期：10/28/2013 3:23 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> UmPayment(UmPaymentParameter parameter);
+        ServicesResult<string> UmPayment(UmPaymentParameter parameter);
+
+        /// <summary>
+        /// 支付状态
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回支付状态
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/29/2013 4:17 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> UmPaymentState(UmPaymentStateParameter parameter);
     }
 }

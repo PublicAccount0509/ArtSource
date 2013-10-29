@@ -52,7 +52,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        PaymentResult Payment(IPaymentData parameter);
+        PaymentResult<string> Payment(IPaymentData parameter);
 
         /// <summary>
         /// 查询支付状态
@@ -66,6 +66,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        PaymentResult QueryState(IPaymentData parameter);
+        PaymentResult<bool> QueryState(IPaymentData parameter);
     }
 }

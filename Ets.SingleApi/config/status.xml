@@ -48,10 +48,10 @@
   <item code="40014" message="无效的订单Id"></item>
   <!--联动优势支付-->
   <item code="80000" message="未知错误"></item>
-  <item code="80001" message="邮箱已经被占用"></item>
-  <item code="80002" message="交易创建，等待买家付款。"></item>
-  <item code="80003" message="交易成功，不能再次进行交易"></item>
-  <item code="80004" message="交易关闭"></item>
-  <item code="80005" message="交易取消"></item>
-  <item code="80006" message="交易失败"></item>
+  <item code="80001" message="交易创建，等待买家付款。"></item>
+  <item code="80002" message="交易成功，不能再次进行交易"></item>
+  <item code="80003" message="交易关闭"></item>
+  <item code="80004" message="交易取消"></item>
+  <item code="80005" message="交易失败"></item>
+  <item code="80006" message="无效交易号"></item>
 </status>

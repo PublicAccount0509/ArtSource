@@ -65,20 +65,85 @@
         /// </summary>
         /// <param name="parameter">The parameter</param>
         /// <returns>
-        /// 返回支付结果
+        /// 返回支付交易号
         /// </returns>
         /// 创建者：周超
         /// 创建日期：10/28/2013 3:23 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> UmPayment(UmPaymentParameter parameter)
+        public ServicesResult<string> UmPayment(UmPaymentParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.OrderNumber == parameter.OrderId))
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            var orderType = (OrderType)parameter.OrderType;
+            var payment = this.paymentList.FirstOrDefault(p => p.OrderType == orderType && p.PaymentType == PaymentType.UmPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var result = payment.Payment(new UmPaymentData
+                                           {
+                                               OrderId = parameter.OrderId,
+                                               Amount = parameter.Amount,
+                                               PayDate = parameter.PayDate
+                                           });
+
+            if (result == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = result.Result,
+                StatusCode = result.StatusCode
+            };
+        }
+
+        /// <summary>
+        /// 支付状态
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回支付状态
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/29/2013 4:17 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> UmPaymentState(UmPaymentStateParameter parameter)
         {
             if (parameter == null)
             {
                 return new ServicesResult<bool>
                 {
-                    Result = false,
                     StatusCode = (int)StatusCode.System.InvalidRequest
                 };
             }
@@ -87,7 +152,6 @@
             {
                 return new ServicesResult<bool>
                 {
-                    Result = false,
                     StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
                 };
             }
@@ -98,34 +162,29 @@
             {
                 return new ServicesResult<bool>
                 {
-                    Result = false,
                     StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
                 };
             }
 
-            var result = payment.Payment(new UmPaymentData
-                                           {
-                                               OrderId = parameter.OrderId,
-                                               Amount = parameter.Amount,
-                                               ReturnUrl = parameter.ReturnUrl,
-                                               MerPriv = parameter.MerPriv
-                                           });
+            var result = payment.QueryState(new UmPaymentQueryData
+            {
+                OrderId = parameter.OrderId,
+                PayDate = parameter.PayDate
+            });
 
             if (result == null)
             {
                 return new ServicesResult<bool>
                 {
-                    Result = false,
                     StatusCode = (int)StatusCode.UmPayment.TradeFailCode
                 };
             }
 
             return new ServicesResult<bool>
             {
-                Result = true,
+                Result = result.Result,
                 StatusCode = result.StatusCode
             };
-
         }
     }
 }

@@ -75,20 +75,67 @@
                                   {
                                       OrderId = requst.OrderId,
                                       Amount = requst.Amount,
-                                      MerPriv = requst.MerPriv,
-                                      OrderType = requst.OrderType,
-                                      ReturnUrl = requst.ReturnUrl
+                                      PayDate = requst.PayDate,
+                                      OrderType = requst.OrderType
                                   });
 
             return new UmPaymentResponse
             {
                 Result = new PaymentResult
                     {
-                        Result = umPaymentResult.Result
+                        Result = umPaymentResult.StatusCode == (int)StatusCode.Succeed.Ok,
+                        PaymentNo = umPaymentResult.Result
                     },
                 Message = new ApiMessage
                 {
                     StatusCode = umPaymentResult.StatusCode
+                }
+            };
+        }
+
+        /// <summary>
+        /// Ums the state of the payment.
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The UmPaymentStateResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/29/2013 4:27 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public UmPaymentStateResponse UmPaymentState(UmPaymentStateRequst requst)
+        {
+            if (requst == null)
+            {
+                return new UmPaymentStateResponse
+                {
+                    Result = new PaymentStateResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var umPaymentStateResult = this.paymentServices.UmPaymentState(new UmPaymentStateParameter
+            {
+                OrderId = requst.OrderId,
+                PayDate = requst.PayDate,
+                OrderType = requst.OrderType
+            });
+
+            return new UmPaymentStateResponse
+            {
+                Result = new PaymentStateResult
+                {
+                    Result = umPaymentStateResult.Result
+                },
+                Message = new ApiMessage
+                {
+                    StatusCode = umPaymentStateResult.StatusCode
                 }
             };
         }

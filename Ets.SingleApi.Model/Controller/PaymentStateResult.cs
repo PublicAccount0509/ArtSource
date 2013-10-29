@@ -1,7 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：PaymentResult
+    /// 类名称：PaymentStateResult
     /// 命名空间：Ets.SingleApi.Model.Controller
     /// 类功能：支付结果
     /// </summary>
@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class PaymentResult
+    public class PaymentStateResult
     {
         /// <summary>
         /// Gets or sets a value indicating whether
@@ -24,18 +24,5 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public bool Result { get; set; }
-
-        /// <summary>
-        /// Gets or sets the PaymentNo of PaymentResult
-        /// </summary>
-        /// <value>
-        /// The PaymentNo
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：10/29/2013 4:12 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string PaymentNo { get; set; }
     }
 }

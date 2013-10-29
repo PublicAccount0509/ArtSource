@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// 类名称：UmPaymentParameter
+    /// 类名称：UmPaymentStateParameter
     /// 命名空间：Ets.SingleApi.Model.Services
     /// 类功能：支付参数
     /// </summary>
@@ -12,7 +12,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class UmPaymentParameter
+    public class UmPaymentStateParameter
     {
         /// <summary>
         /// Gets or sets the OrderId of UmPaymentParameter
@@ -26,19 +26,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int OrderId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Amount of UmPaymentParameter
-        /// </summary>
-        /// <value>
-        /// The Amount
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：10/28/2013 3:19 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public decimal Amount { get; set; }
 
         /// <summary>
         /// 设置或取得支付时间

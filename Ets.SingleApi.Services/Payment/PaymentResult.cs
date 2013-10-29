@@ -10,10 +10,10 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class PaymentResult
+    public class PaymentResult<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentResult"/> class.
+        /// Initializes a new instance of the <see cref="PaymentResult{T}"/> class.
         /// </summary>
         /// 创建者：周超
         /// 创建日期：2013/10/19 10:08
@@ -49,6 +49,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public bool Result { get; set; }
+        public T Result { get; set; }
     }
 }

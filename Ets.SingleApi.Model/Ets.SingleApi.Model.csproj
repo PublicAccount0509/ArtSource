@@ -58,6 +58,9 @@
     <Compile Include="Controller\ExistRequest.cs" />
     <Compile Include="Controller\UmPaymentRequst.cs" />
     <Compile Include="Controller\UmPaymentResponse.cs" />
+    <Compile Include="Controller\UmPaymentStateRequst.cs" />
+    <Compile Include="Controller\UmPaymentStateResponse.cs" />
+    <Compile Include="Controller\PaymentStateResult.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />
@@ -161,6 +164,7 @@
     <Compile Include="Services\AuthLoginParameter.cs" />
     <Compile Include="Services\DefaultServicesResult.cs" />
     <Compile Include="Services\ExistParameter.cs" />
+    <Compile Include="Services\UmPaymentStateParameter.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

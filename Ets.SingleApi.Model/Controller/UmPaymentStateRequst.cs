@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// 类名称：UmPaymentRequst
+    /// 类名称：UmPaymentStateRequst
     /// 命名空间：Ets.SingleApi.Model.Controller
     /// 类功能：外卖订单
     /// </summary>
@@ -12,10 +12,10 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class UmPaymentRequst : ApiRequst
+    public class UmPaymentStateRequst : ApiRequst
     {
         /// <summary>
-        /// Gets or sets the UserId of ConfirmWaiMaiOrderRequst
+        /// Gets or sets the UserId of UmPaymentStateRequst
         /// </summary>
         /// <value>
         /// The UserId
@@ -52,19 +52,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int OrderType { get; set; }
-
-        /// <summary>
-        /// 设置或取得支付金额
-        /// </summary>
-        /// <value>
-        /// 支付金额
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：10/28/2013 2:29 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public decimal Amount { get; set; }
 
         /// <summary>
         /// 设置或取得支付时间

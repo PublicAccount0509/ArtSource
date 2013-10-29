@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System;
     using System.Collections;
 
     using Ets.SingleApi.Model;
@@ -94,14 +95,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public PaymentResult Payment(IPaymentData parameter)
+        public PaymentResult<string> Payment(IPaymentData parameter)
         {
             var umPaymentData = parameter as UmPaymentData;
             if (umPaymentData == null)
             {
-                return new PaymentResult
+                return new PaymentResult<string>
                     {
-                        Result = false,
                         StatusCode = (int)StatusCode.System.InvalidPaymentRequest
                     };
             }
@@ -109,9 +109,8 @@
             var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == umPaymentData.OrderId);
             if (deliveryEntity == null)
             {
-                return new PaymentResult
+                return new PaymentResult<string>
                     {
-                        Result = false,
                         StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
                     };
             }
@@ -122,8 +121,8 @@
             ht.Add("charset", "UTF-8"); // 字符编码
             ht.Add("version", "4.0"); //版本号
             ht.Add("mer_id", "7378"); //商户号
-            ht.Add("ret_url", umPaymentData.ReturnUrl); // Request.Params["ret_url"]; //页面返回地址
-            ht.Add("notify_url", umPaymentData.ReturnUrl); //结果通讯地址
+            ht.Add("ret_url", string.Empty); // Request.Params["ret_url"]; //页面返回地址
+            ht.Add("notify_url", string.Empty); //结果通讯地址
             //ht.Add("goods_id", goods_id); //商品号
             //ht.Add("goods_inf", goods_inf); //商品信息
             //ht.Add("media_id", media_id); //媒介标识
@@ -134,7 +133,7 @@
             ht.Add("amt_type", "RMB"); //金额类型
             //ht.Add("pay_type", pay_type); //支付方式
             //ht.Add("gate_id", gate_id);  //默认银行
-            ht.Add("mer_priv", umPaymentData.MerPriv); //商户私有信息
+            ht.Add("mer_priv", "delivery"); //商户私有信息
             //ht.Add("expand", expand);  //商户扩展信息
             //ht.Add("user_ip", user_ip); //用户IP地址
             //ht.Add("expire_time", expire_time); //订单过期时常
@@ -149,22 +148,9 @@
             var reqData = com.umpay.api.paygate.v40.Mer2Plat_v40.ReqDataByGet(ht); //标准支付下单
             var request = this.HttpGet(reqData.Url); //请求结果
             var req = com.umpay.api.paygate.v40.Plat2Mer_v40.getResData(request); //解析html
-            var result = req.ContainsKey("return") && (req["return"] ?? string.Empty).ToString().ToLower() == "yes";
-            if (!result)
-            {
-                return new PaymentResult
+            return new PaymentResult<string>
                 {
-                    Result = false
-                };
-            }
-
-            deliveryEntity.IsPaId = true;
-            deliveryEntity.OrderStatusId = 5;
-            this.deliveryEntityRepository.Save(deliveryEntity);
-
-            return new PaymentResult
-                {
-                    Result = true
+                    Result = req.ContainsKey("trade_no") ? (req["trade_no"] ?? string.Empty).ToString() : string.Empty
                 };
         }
 
@@ -180,16 +166,24 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public PaymentResult QueryState(IPaymentData parameter)
+        public PaymentResult<bool> QueryState(IPaymentData parameter)
         {
             var umPaymentQueryData = parameter as UmPaymentQueryData;
             if (umPaymentQueryData == null)
             {
-                return new PaymentResult
+                return new PaymentResult<bool>
                     {
-                        Result = false,
                         StatusCode = (int)StatusCode.System.InvalidPaymentRequest
                     };
+            }
+
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == umPaymentQueryData.OrderId);
+            if (deliveryEntity == null)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
             }
 
             var ht = new Hashtable();
@@ -207,18 +201,30 @@
             var req = com.umpay.api.paygate.v40.Plat2Mer_v40.getResData(request); //解析html
             if ((req["ret_code"] ?? string.Empty).ToString() == "00060760")
             {
-                return new PaymentResult
+                return new PaymentResult<bool>
                     {
-                        Result = false,
-                        StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                        StatusCode = (int)StatusCode.UmPayment.InvalidPaymentNoCode
                     };
             }
 
-            return new PaymentResult
+            var result = this.GetTradeState((req["trade_state"] ?? string.Empty).ToString());
+            if (result != StatusCode.UmPayment.Ok)
+            {
+                return new PaymentResult<bool>
                 {
-                    Result = true,
                     StatusCode = (int)this.GetTradeState((req["trade_state"] ?? string.Empty).ToString())
                 };
+            }
+
+            deliveryEntity.IsPaId = true;
+            deliveryEntity.OrderStatusId = 5;
+            this.deliveryEntityRepository.Save(deliveryEntity);
+
+            return new PaymentResult<bool>
+            {
+                StatusCode = (int)StatusCode.UmPayment.Ok,
+                Result = true
+            };
         }
 
         /// <summary>
@@ -267,7 +273,7 @@
         private string AmountToString(decimal amount)
         {
             var str = amount.ToString("C").TrimStart('¥');
-            var n = str.IndexOf(".", System.StringComparison.Ordinal);
+            var n = str.IndexOf(".", StringComparison.Ordinal);
             var pre = str.Substring(0, n);
             var end = str.Substring(n, 3).Trim('.');
             return pre + end;
