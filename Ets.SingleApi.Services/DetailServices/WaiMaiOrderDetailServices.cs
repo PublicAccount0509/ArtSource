@@ -423,7 +423,7 @@
             {
                 return new DetailServicesResult<ConfirmWaiMaiOrderModel>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdCode,
                     Result = new ConfirmWaiMaiOrderModel()
                 };
             }
