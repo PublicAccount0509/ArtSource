@@ -709,9 +709,20 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ExistModel> Exist(ExistParameter parameter)
         {
-            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Mobile == parameter.Telephone).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault() ??
-                this.customerEntityRepository.EntityQueryable.Where(p => p.Email == parameter.Email).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault();
-            
+            if (parameter.Email.IsEmptyOrNull() && parameter.Telephone.IsEmptyOrNull())
+            {
+                return new ServicesResult<ExistModel>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = new ExistModel
+                        {
+                            Exist = false,
+                            Login = false
+                        }
+                };
+            }
+
+            var customer = this.GetCustomer(parameter.Telephone, parameter.Email);
             if (customer == null)
             {
                 return new ServicesResult<ExistModel>
@@ -748,6 +759,39 @@
                     Login = login.IsEnabled
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets the customer.
+        /// </summary>
+        /// <param name="telephone">The telephone</param>
+        /// <param name="email">The email</param>
+        /// <returns>
+        /// dynamic
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/29/2013 2:53 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private CustomerEntity GetCustomer(string telephone, string email)
+        {
+            if (!telephone.IsEmptyOrNull() && !email.IsEmptyOrNull())
+            {
+                return this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Mobile == telephone && p.Email == email);
+            }
+
+            if (!telephone.IsEmptyOrNull())
+            {
+                return this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Mobile == telephone);
+            }
+
+            if (!email.IsEmptyOrNull())
+            {
+                return this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Email == email);
+            }
+
+            return null;
         }
 
         /// <summary>
