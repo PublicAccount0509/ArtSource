@@ -637,16 +637,6 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        private SourceTypeEntity template1;
-
-        /// <summary>
-        /// The Templateid
-        /// </summary>
-        /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
         private SourceTypeEntity template;
 
         #endregion
@@ -1937,27 +1927,6 @@ namespace Ets.SingleApi.Model.Repository
             set
             {
                 this.path = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value mapping the Templateid of DeliveryEntity table in the database.
-        /// </summary>
-        /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-        public virtual SourceTypeEntity Template1
-        {
-            get
-            {
-                return this.template1;
-            }
-
-            set
-            {
-                this.template1 = value;
             }
         }
 
