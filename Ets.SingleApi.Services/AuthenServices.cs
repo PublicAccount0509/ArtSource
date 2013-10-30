@@ -354,20 +354,20 @@
                 };
             }
 
-            var content = string.Format("亲爱的用户，您的易淘食密码已变更，新密码为{0}，请重新登录。如非本人操作，请及时修改账号，并联系易淘食客服。", parameter.NewPasswrod);
+            var content = string.Format(ServicesCommon.ModifyPasswordMessage, parameter.NewPasswrod);
             var result = this.smsDetailServices.SendSms(loginEntity.Username, content);
             if (result == null)
             {
                 return new ServicesResult<bool>
                 {
-                    Result = false,
+                    Result = true,
                     StatusCode = (int)StatusCode.General.SmsSendError
                 };
             }
 
             return new ServicesResult<bool>
             {
-                Result = result.StatusCode == (int)StatusCode.Succeed.Ok,
+                Result = true,
                 StatusCode = result.StatusCode
             };
         }
