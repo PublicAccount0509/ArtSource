@@ -31,6 +31,11 @@
         /// ----------------------------------------------------------------------------------------
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
+            if (!ControllersCommon.ApplicationValidationEnabled)
+            {
+                return;
+            }
+
             var controller = ((SingleApiController)actionContext.ControllerContext.Controller);
             var token = actionContext.Request.Headers.Read("Token");
             if (token.IsEmptyOrNull())
@@ -44,7 +49,7 @@
                 return;
             }
 
-            var result = filterServices.GetToken(token);
+            var result = filterServices.GetToken(token.Trim());
             if (result.Result == null)
             {
                 throw new Exception("Token无效");

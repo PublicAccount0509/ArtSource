@@ -125,6 +125,16 @@
         private readonly IUsersDetailServices usersDetailServices;
 
         /// <summary>
+        /// 字段smsDetailServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:28 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISmsDetailServices smsDetailServices;
+
+        /// <summary>
         /// 字段userOrdersList
         /// </summary>
         /// 创建者：周超
@@ -147,6 +157,7 @@
         /// <param name="supplierImageEntityRepository">The supplierImageEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// <param name="usersDetailServices">The usersDetailServices</param>
+        /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="userOrdersList">The userOrdersList</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 16:35
@@ -164,6 +175,7 @@
             INHibernateRepository<SupplierImageEntity> supplierImageEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository,
             IUsersDetailServices usersDetailServices,
+            ISmsDetailServices smsDetailServices,
             List<IUserOrders> userOrdersList)
         {
             this.autorizationEntityRepository = autorizationEntityRepository;
@@ -176,6 +188,7 @@
             this.supplierImageEntityRepository = supplierImageEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
             this.usersDetailServices = usersDetailServices;
+            this.smsDetailServices = smsDetailServices;
             this.userOrdersList = userOrdersList;
         }
 
@@ -451,8 +464,17 @@
                 };
             }
 
+            var code = CommonUtility.RandNum(6);
+            var password = (parameter.Password ?? string.Empty).Trim();
+            if (parameter.Password.IsEmptyOrNull())
+            {
+                parameter.Password = code;
+            }
+
             var result = this.usersDetailServices.Register(parameter);
-            return new ServicesResult<RegisterUserModel>
+            if (result.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<RegisterUserModel>
                 {
                     StatusCode = result.StatusCode,
                     Result = new RegisterUserModel
@@ -463,6 +485,35 @@
                             TokenType = result.Result.TokenType
                         }
                 };
+            }
+
+            if (!password.IsEmptyOrNull())
+            {
+                return new ServicesResult<RegisterUserModel>
+                {
+                    StatusCode = result.StatusCode,
+                    Result = new RegisterUserModel
+                    {
+                        UserId = result.Result.UserId,
+                        AccessToken = result.Result.AccessToken,
+                        RefreshToken = result.Result.RefreshToken,
+                        TokenType = result.Result.TokenType
+                    }
+                };
+            }
+
+            var sendSmsResult = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.DefaultPasswordMessage, code));
+            return new ServicesResult<RegisterUserModel>
+            {
+                StatusCode = sendSmsResult.StatusCode,
+                Result = new RegisterUserModel
+                {
+                    UserId = result.Result.UserId,
+                    AccessToken = result.Result.AccessToken,
+                    RefreshToken = result.Result.RefreshToken,
+                    TokenType = result.Result.TokenType
+                }
+            };
         }
 
         /// <summary>

@@ -27,5 +27,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<TokenModel> GetToken(string accessToken);
+
+        /// <summary>
+        /// 验证客户端
+        /// </summary>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> ValidateApp(string appKey, string appPassword);
     }
 }

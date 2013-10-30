@@ -2,6 +2,8 @@
 {
     using System.Web.Http;
 
+    using Ets.SingleApi.Controllers.Filters;
+
     /// <summary>
     /// 类名称：SingleApiController
     /// 命名空间：Ets.SingleApi.Controllers
@@ -12,6 +14,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
+    [AppFilter]
     public class SingleApiController : ApiController
     {
         /// <summary>
@@ -41,16 +44,20 @@
         public string AutorizationCode { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SingleApiController"/> class.
+        /// 验证UserId的有效性
         /// </summary>
+        /// <param name="userId">The userId</param>
+        /// <returns>
+        /// Boolean
+        /// </returns>
         /// 创建者：周超
-        /// 创建日期：10/29/2013 5:50 PM
+        /// 创建日期：10/30/2013 3:04 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public SingleApiController()
+        protected bool ValidateUserId(int userId)
         {
-            this.AutorizationCode = "716b590aa219495db5fb2c94d0aefaa7";
+            return !ControllersCommon.ApplicationValidationEnabled || this.UserId == userId;
         }
     }
 }

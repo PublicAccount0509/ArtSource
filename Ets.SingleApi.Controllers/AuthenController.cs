@@ -3,6 +3,7 @@
     using System.Web.Http;
     using System.Linq;
 
+    using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
@@ -196,6 +197,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [TokenFilter]
         public PasswordResponse Password(int id, PasswordRequst requst)
         {
             if (requst == null)
@@ -205,6 +207,17 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(id))
+            {
+                return new PasswordResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }
@@ -239,6 +252,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [TokenFilter]
         public FindPasswordResponse FindPassword(int id, FindPasswordRequst requst)
         {
             if (requst == null)
@@ -248,6 +262,17 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(id))
+            {
+                return new FindPasswordResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }

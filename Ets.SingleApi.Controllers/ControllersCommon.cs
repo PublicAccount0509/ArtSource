@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Controllers
 {
+    using System.Configuration;
+
     public class ControllersCommon
     {
         /// <summary>
@@ -37,6 +39,44 @@
             get
             {
                 return 36;
+            }
+        }
+
+        /// <summary>
+        /// 是否开启权限验证
+        /// </summary>
+        /// <value>
+        /// 是否开启权限验证
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool ApplicationValidationEnabled
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["ApplicationValidationEnabled"] ?? string.Empty).ToLower() == "true";
+            }
+        }
+
+        /// <summary>
+        /// 默认权限码
+        /// </summary>
+        /// <value>
+        /// 默认权限码
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string DefaultAutorizationCode
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["DefaultAutorizationCode"] ?? string.Empty).Trim();
             }
         }
     }

@@ -66,6 +66,7 @@
     <Compile Include="BusinessAreaController.cs" />
     <Compile Include="ControllersCommon.cs" />
     <Compile Include="CuisineController.cs" />
+    <Compile Include="Filters\AppFilterAttribute.cs" />
     <Compile Include="Filters\TokenFilterAttribute.cs" />
     <Compile Include="IServices\IAuthenServices.cs" />
     <Compile Include="IServices\IBusinessAreaServices.cs" />

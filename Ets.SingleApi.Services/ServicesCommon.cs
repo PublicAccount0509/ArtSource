@@ -188,6 +188,43 @@
         }
 
         /// <summary>
+        /// 找回密码通知信息
+        /// </summary>
+        /// <value>
+        /// 找回密码通知信息
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string FindPasswordMessage
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["FindPasswordMessage"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 默认密码通知信息
+        /// </summary>
+        /// <value>
+        /// 默认密码通知信息
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string DefaultPasswordMessage
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["DefaultPasswordMessage"] ?? string.Empty;
+            }
+        }
+        /// <summary>
         /// 货到付款支付类型
         /// </summary>
         /// <value>

@@ -4,6 +4,7 @@
     using System.Web.Http;
     using System.Linq;
 
+    using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
@@ -130,8 +131,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
+        [TokenFilter]
         public GetUserResponse GetUser(int id)
         {
+            if (!this.ValidateUserId(id))
+            {
+                return new GetUserResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = new Customer()
+                };
+            }
+
             var getUserResult = this.usersServices.GetUser(id);
             if (getUserResult.Result == null)
             {
@@ -193,6 +207,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [TokenFilter]
         public CustomerAddressResponse CustomerAddress(int id, CustomerAddressRequst requst)
         {
             if (requst == null)
@@ -202,6 +217,17 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(id))
+            {
+                return new CustomerAddressResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }
@@ -241,6 +267,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [TokenFilter]
         public DeleteCustomerAddressResponse DeleteCustomerAddress(int id, List<int> customerAddressIdList)
         {
             if (customerAddressIdList == null || customerAddressIdList.Count == 0)
@@ -250,6 +277,17 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(id))
+            {
+                return new DeleteCustomerAddressResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }
@@ -344,8 +382,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
+        [TokenFilter]
         public FollowerSupplierListResponse FollowerSupplierList(int id)
         {
+            if (!this.ValidateUserId(id))
+            {
+                return new FollowerSupplierListResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = new List<FollowerSupplier>()
+                };
+            }
+
             var list = this.usersServices.GetFollowerSupplierList(id);
 
             if (list.Result == null || list.Result.Count == 0)
@@ -397,6 +448,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [TokenFilter]
         public AddFollowerSupplierResponse AddFollowerSupplier(int id, List<int> supplierIdList)
         {
             if (supplierIdList == null || supplierIdList.Count == 0)
@@ -406,6 +458,17 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(id))
+            {
+                return new AddFollowerSupplierResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }
@@ -434,6 +497,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [TokenFilter]
         public DeleteFollowerSupplierResponse DeleteFollowerSupplier(int id, List<int> supplierIdList)
         {
             if (supplierIdList == null || supplierIdList.Count == 0)
@@ -443,6 +507,17 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(id))
+            {
+                return new DeleteFollowerSupplierResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }
@@ -474,8 +549,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
+        [TokenFilter]
         public UserOrderListResponse UserOrderList(int id, int orderType, int? orderStatus, int pageSize, int? pageIndex)
         {
+            if (!this.ValidateUserId(id))
+            {
+                return new UserOrderListResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = new List<UserOrder>()
+                };
+            }
+
             var list = this.usersServices.GetUserOrderList(id, orderStatus, (OrderType)orderType, pageSize, pageIndex);
 
             if (list.Result == null || list.Result.Count == 0)

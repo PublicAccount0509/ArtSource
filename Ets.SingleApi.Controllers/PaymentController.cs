@@ -2,6 +2,7 @@
 {
     using System.Web.Http;
 
+    using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
@@ -57,6 +58,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [TokenFilter]
         public UmPaymentResponse UmPayment(UmPaymentRequst requst)
         {
             if (requst == null)
@@ -67,6 +69,17 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new UmPaymentResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }
@@ -106,6 +119,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [TokenFilter]
         public UmPaymentStateResponse UmPaymentState(UmPaymentStateRequst requst)
         {
             if (requst == null)
@@ -116,6 +130,17 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new UmPaymentStateResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }

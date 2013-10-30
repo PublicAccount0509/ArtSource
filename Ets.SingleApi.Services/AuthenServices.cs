@@ -234,7 +234,7 @@
                     StatusCode = (int)StatusCode.System.InvalidRequest
                 };
             }
-            
+
             var login = this.loginList.FirstOrDefault(p => p.LoginWay == LoginWay.AuthTele);
             if (login == null)
             {
@@ -416,7 +416,11 @@
                 };
             }
 
-            var content = string.Format("亲爱的用户，您的易淘食密码为{0}。", string.Empty);
+            var code = CommonUtility.RandNum(6);
+            loginEntity.Password = code.Md5();
+            this.loginEntityRepository.Save(loginEntity);
+
+            var content = string.Format(ServicesCommon.FindPasswordMessage, code);
             var sendPasswordResultList =
                 (from way in parameter.WayList
                  let sendPassword = this.sendPasswordList.FirstOrDefault(p => p.SendType == way.AccountType)
