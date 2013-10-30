@@ -142,6 +142,7 @@
                 UserId = requst.UserId,
                 DeliveryMethodId = requst.DeliveryMethodId,
                 SupplierId = requst.SupplierId,
+                DeliveryInstruction = (requst.DeliveryInstruction ?? string.Empty).Trim(),
                 DishList = dishList.Select(p => new AddWaiMaiOrderDishModel
                     {
                         SupplierDishId = p.SupplierDishId,
