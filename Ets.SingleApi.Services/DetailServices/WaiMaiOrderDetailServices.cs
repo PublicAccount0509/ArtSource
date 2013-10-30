@@ -224,7 +224,7 @@
                     SupplierId = supplierEntity.SupplierId,
                     SupplierName = supplierEntity.SupplierName,
                     SupplierTelephone = supplierEntity.Telephone,
-                    SupplierAddress = string.Format("{0}{1}",supplierEntity.Address1,supplierEntity.Address2),
+                    SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
                     DishList = waiMaiOrderDishList
                 };
 
@@ -448,6 +448,12 @@
             var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == parameter.OrderId && p.CustomerId == customerId);
             deliveryEntity.RealSupplierType = parameter.RealSupplierType;
             deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
+
+            if (ServicesCommon.CompleteRealSupplierType.Contains(parameter.RealSupplierType.ToString()))
+            {
+                deliveryEntity.OrderStatusId = 5;
+            }
+
             this.deliveryEntityRepository.Save(deliveryEntity);
 
             //var code = CommonUtility.RandNum(6);

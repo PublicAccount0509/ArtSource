@@ -1,6 +1,8 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System.Collections.Generic;
     using System.Configuration;
+    using System.Linq;
 
     /// <summary>
     /// 类名称：ServicesCommon
@@ -124,7 +126,7 @@
         {
             get
             {
-                return ConfigurationManager.AppSettings["EmailAccount"];
+                return ConfigurationManager.AppSettings["EmailAccount"] ?? string.Empty;
             }
         }
 
@@ -143,7 +145,7 @@
         {
             get
             {
-                return ConfigurationManager.AppSettings["EmailPassword"];
+                return ConfigurationManager.AppSettings["EmailPassword"] ?? string.Empty;
             }
         }
 
@@ -162,7 +164,7 @@
         {
             get
             {
-                return ConfigurationManager.AppSettings["EmailServer"];
+                return ConfigurationManager.AppSettings["EmailServer"] ?? string.Empty;
             }
         }
 
@@ -181,7 +183,26 @@
         {
             get
             {
-                return ConfigurationManager.AppSettings["EmailSubject"];
+                return ConfigurationManager.AppSettings["EmailSubject"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 货到付款支付类型
+        /// </summary>
+        /// <value>
+        /// 货到付款支付类型
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<string> CompleteRealSupplierType
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["CompleteRealSupplierType"] ?? string.Empty).Split(',').ToList();
             }
         }
 
