@@ -25,6 +25,16 @@
     public class UsersServices : IUsersServices
     {
         /// <summary>
+        /// 字段autorizationEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 10:41 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<AutorizationEntity> autorizationEntityRepository;
+
+        /// <summary>
         /// 字段loginEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -127,6 +137,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
+        /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="customerFavoriteEntityRepository">The customerFavoriteEntityRepository</param>
@@ -143,6 +154,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public UsersServices(
+            INHibernateRepository<AutorizationEntity> autorizationEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<CustomerFavoriteEntity> customerFavoriteEntityRepository,
@@ -154,6 +166,7 @@
             IUsersDetailServices usersDetailServices,
             List<IUserOrders> userOrdersList)
         {
+            this.autorizationEntityRepository = autorizationEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.customerFavoriteEntityRepository = customerFavoriteEntityRepository;
@@ -426,6 +439,15 @@
                 {
                     Result = new RegisterUserModel(),
                     StatusCode = (int)StatusCode.Validate.ExistEmailCode
+                };
+            }
+
+            if (!this.autorizationEntityRepository.EntityQueryable.Any(p => p.Code == parameter.AutorizationCode))
+            {
+                return new ServicesResult<RegisterUserModel>
+                {
+                    Result = new RegisterUserModel(),
+                    StatusCode = (int)StatusCode.OAuth.InvalidClient
                 };
             }
 

@@ -127,6 +127,16 @@
                 };
             }
 
+            var autorizationEntity = this.autorizationEntityRepository.EntityQueryable.FirstOrDefault(p => p.Code == parameter.AutorizationCode);
+            if (autorizationEntity == null)
+            {
+                return new DetailServicesResult<RegisterUserModel>
+                {
+                    Result = new RegisterUserModel(),
+                    StatusCode = (int)StatusCode.OAuth.InvalidClient
+                };
+            }
+
             var password = parameter.Password.IsEmptyOrNull() ? string.Empty : parameter.Password;
             var loginEntity = new LoginEntity
             {
@@ -155,16 +165,6 @@
             };
 
             this.customerEntityRepository.Save(customerEntity);
-
-            var autorizationEntity = this.autorizationEntityRepository.EntityQueryable.FirstOrDefault(p => p.Code == parameter.AutorizationCode);
-            if (autorizationEntity == null)
-            {
-                return new DetailServicesResult<RegisterUserModel>
-                {
-                    Result = new RegisterUserModel(),
-                    StatusCode = (int)StatusCode.OAuth.InvalidClient
-                };
-            }
 
             var accessToken = Guid.NewGuid().ToString("N");
             var refreshToken = Guid.NewGuid().ToString("N");
