@@ -169,7 +169,6 @@
     <Compile Include="Interceptor\ServicesInterceptor.cs" />
     <Compile Include="Interceptor\DetailServicesInterceptor.cs" />
     <Compile Include="Interceptor\SmsExternalServicesInterceptor.cs" />
-    <Compile Include="Interceptor\TokenValidateInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

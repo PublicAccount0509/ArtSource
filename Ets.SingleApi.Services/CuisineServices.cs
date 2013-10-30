@@ -1,6 +1,5 @@
 ﻿namespace Ets.SingleApi.Services
 {
-    using System;
     using System.Linq;
 
     using Ets.SingleApi.Controllers.IServices;
@@ -58,7 +57,6 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResultList<CuisineModel> GetCuisineList()
         {
-            throw new Exception();
             var cuisineList = (from cuisine in this.cuisineEntityRepository.EntityQueryable
                                select new
                                {
