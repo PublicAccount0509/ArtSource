@@ -73,11 +73,11 @@
 
             var result = list.Result.Select(p => new BusinessArea
                     {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Code = p.Code,
+                        Id = (p.Id ?? string.Empty),
+                        Name = (p.Name ?? string.Empty),
+                        Code = (p.Code ?? string.Empty),
                         Depth = p.Depth,
-                        ParentCode = p.ParentCode
+                        ParentCode = (p.ParentCode ?? string.Empty)
                     }).ToList();
 
             return new BusinessAreaListResponse

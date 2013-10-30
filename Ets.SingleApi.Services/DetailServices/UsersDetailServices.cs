@@ -145,7 +145,7 @@
             var customerEntity = new CustomerEntity
             {
                 Mobile = parameter.Telephone,
-                Email = parameter.Email,
+                Email = parameter.Email.IsEmptyOrNull() ? null : parameter.Email,
                 LoginId = loginId,
                 Forename = string.Empty,
                 DateJoined = DateTime.Now,

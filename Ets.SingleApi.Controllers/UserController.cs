@@ -148,24 +148,24 @@
             var customerAddressList = getUserResult.Result.CustomerAddressList.Select(customerAddress => new CustomerAddress
                 {
                     CustomerAddressId = customerAddress.CustomerAddressId,
-                    Address = customerAddress.Address,
-                    Name = customerAddress.Name,
-                    Telephone = customerAddress.Telephone,
+                    Address = (customerAddress.Address ?? string.Empty),
+                    Name = (customerAddress.Name ?? string.Empty),
+                    Telephone = (customerAddress.Telephone ?? string.Empty),
                     IsDefault = customerAddress.IsDefault,
                     CityId = customerAddress.CityId,
                     CountyId = customerAddress.CountyId,
                     ProvinceId = customerAddress.ProvinceId,
-                    RegionCode = customerAddress.RegionCode,
+                    RegionCode = (customerAddress.RegionCode ?? string.Empty),
                     Sex = customerAddress.Sex
                 }).ToList();
 
             var result = new Customer
                 {
                     UserId = getUserResult.Result.UserId,
-                    UserName = getUserResult.Result.UserName,
-                    Avatar = getUserResult.Result.Avatar,
-                    Email = getUserResult.Result.Email,
-                    Telephone = getUserResult.Result.Telephone,
+                    UserName = (getUserResult.Result.UserName ?? string.Empty),
+                    Avatar = (getUserResult.Result.Avatar ?? string.Empty),
+                    Email = (getUserResult.Result.Email ?? string.Empty),
+                    Telephone = (getUserResult.Result.Telephone ?? string.Empty),
                     CustomerAddressList = customerAddressList
                 };
 
@@ -296,7 +296,9 @@
                     Email = (requst.Email ?? string.Empty).Trim(),
                     Telephone = (requst.Telephone ?? string.Empty).Trim(),
                     Password = (requst.Password ?? string.Empty).Trim(),
-                    AuthCode = (requst.AuthCode ?? string.Empty).Trim()
+                    AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
+                    AutorizationCode = (this.AutorizationCode ?? string.Empty).Trim(),
+                    SourceType = (requst.SourceType ?? string.Empty).Trim()
                 });
 
             if (registerResult.Result == null)
@@ -314,9 +316,9 @@
             var result = new RegisterUserResult
             {
                 UserId = registerResult.Result.UserId,
-                AccessToken = registerResult.Result.AccessToken,
-                RefreshToken = registerResult.Result.RefreshToken,
-                TokenType = registerResult.Result.TokenType
+                AccessToken = (registerResult.Result.AccessToken ?? string.Empty),
+                RefreshToken = (registerResult.Result.RefreshToken ?? string.Empty),
+                TokenType = (registerResult.Result.TokenType ?? string.Empty)
             };
 
             return new RegisterUserResponse
@@ -361,14 +363,14 @@
             var result = list.Result.Select(p => new FollowerSupplier
                 {
                     SupplierId = p.SupplierId,
-                    SupplierName = p.SupplierName,
-                    SupplierDescription = p.SupplierDescription,
-                    Address = p.Address,
-                    Averageprice = p.Averageprice,
+                    SupplierName = (p.SupplierName ?? string.Empty),
+                    SupplierDescription = (p.SupplierDescription ?? string.Empty),
+                    Address = (p.Address ?? string.Empty),
+                    Averageprice = p.Averageprice ?? 0,
                     AverageRating = p.AverageRating,
-                    CuisineName = p.CuisineName,
-                    LogoUrl = p.LogoUrl,
-                    Telephone = p.Telephone
+                    CuisineName = (p.CuisineName ?? string.Empty),
+                    LogoUrl = (p.LogoUrl ?? string.Empty),
+                    Telephone = (p.Telephone ?? string.Empty)
                 }).ToList();
 
             return new FollowerSupplierListResponse
@@ -492,11 +494,11 @@
             {
                 OrderId = p.OrderId,
                 SupplierId = p.SupplierId ?? 0,
-                SupplierName = p.SupplierName,
+                SupplierName = (p.SupplierName ?? string.Empty),
                 DateReserved = p.DateReserved == null ? string.Empty : p.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
                 CustomerTotal = p.CustomerTotal ?? 0,
                 OrderStatusId = p.OrderStatusId ?? 0,
-                OrderStatus = p.OrderStatus,
+                OrderStatus = (p.OrderStatus ?? string.Empty),
                 OrderType = p.OrderType,
                 DineNumber = p.DineNumber ?? 0
             }).ToList();

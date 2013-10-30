@@ -74,8 +74,8 @@
             var result = list.Result.Select(p => new Cuisine
             {
                 CuisineId = p.CuisineId,
-                CuisineNo = p.CuisineNo,
-                CuisineName = p.CuisineName,
+                CuisineNo = p.CuisineNo ?? 0,
+                CuisineName = (p.CuisineName ?? string.Empty),
                 SupplierCount = p.SupplierCount
             }).ToList();
 
