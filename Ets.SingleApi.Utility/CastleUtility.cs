@@ -49,6 +49,11 @@
         /// ----------------------------------------------------------------------------------------
         protected CastleUtility(HttpConfiguration config)
         {
+            if (config == null)
+            {
+                return;
+            }
+
             config.Services.Replace(typeof(IHttpControllerActivator), new CastleHttpControllerActivator(this.Container.Kernel));
         }
 

@@ -380,11 +380,11 @@
                                             entity.SupplierCategoryId
                                         }).OrderBy(p => p.CategoryNo).ToList();
 
-            var supplierCategoryIdList = supplierCategoryList.Select(p => p.SupplierCategoryId).Distinct().Cast<int?>().ToList();
+            var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
             var supplierCuisineList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
                                        where supplierDishEntity.Supplier.SupplierId == supplierId
                                        && supplierDishEntity.Online && supplierDishEntity.IsDel == false
-                                       && supplierCategoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
+                                       && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
                                        select new
                                        {
                                            supplierDishEntity.SupplierCategoryId,
@@ -415,7 +415,7 @@
                 {
                     CategoryId = supplierCategory.CategoryId,
                     CategoryName = supplierCategory.CategoryName,
-                    SupplierDishList = supplierCuisineList.Where(p => p.SupplierCategoryId == supplierCategory.SupplierCategoryId).Select(supplierDishEntity => new SupplierDishModel
+                    SupplierDishList = supplierCuisineList.Where(p => p.SupplierCategoryId == supplierCategory.CategoryId).Select(supplierDishEntity => new SupplierDishModel
                     {
                         Price = supplierDishEntity.Price,
                         ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishEntity.ImagePath),

@@ -1,23 +1,23 @@
-﻿namespace Ets.SingleApi.Interceptor
+﻿namespace Ets.SingleApi.Interceptors
 {
     using System;
 
     using Castle.DynamicProxy;
 
-    using Ets.SingleApi.Model.ExternalServices;
+    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：ExternalServicesInterceptor
-    /// 命名空间：Ets.SingleApi.Interceptor
-    /// 类功能：ExternalServices的拦截
+    /// 类名称：WapControllerInterceptor
+    /// 命名空间：Ets.SingleApi.Interceptors
+    /// 类功能：WapController的拦截
     /// </summary>
     /// 创建者：周超
     /// 创建日期：2013/10/10 16:38
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SmsExternalServicesInterceptor : IInterceptor
+    public class WapControllerInterceptor : IInterceptor
     {
         /// <summary>
         /// 拦截方法
@@ -30,25 +30,25 @@
         /// ----------------------------------------------------------------------------------------
         public void Intercept(IInvocation invocation)
         {
-            invocation.Method.Name.WriteLog("Ets.SingleApi.SmsExternalServices", Log4NetType.Info);
+            invocation.Method.Name.WriteLog("Ets.SingleApi.WapControllers", Log4NetType.Info);
+            
             try
             {
                 invocation.Proceed();
             }
             catch (Exception exception)
             {
-                exception.WriteLog("Ets.SingleApi.SmsExternalServices");
+                exception.WriteLog("Ets.SingleApi.WapControllers");
             }
 
-            if (invocation.ReturnValue != null)
+            if (invocation.ReturnValue == null)
             {
-                return;
+                var result = (InterceptorCommon.GetConstructor(invocation.Method.ReturnType) as ApiResponse) ?? new ApiResponse();
+                result.Message = new ApiMessage { StatusCode = (int)StatusCode.System.InternalServerError };
+                invocation.ReturnValue = result;
             }
 
-            invocation.ReturnValue = new SmsResult
-            {
-                StatusCode = (int)StatusCode.General.SmsSendError
-            };
+            InterceptorCommon.GetChildrenConstructor(invocation.ReturnValue);
         }
     }
 }

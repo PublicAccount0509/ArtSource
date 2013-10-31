@@ -163,12 +163,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Interceptor\InterceptorCommon.cs" />
-    <Compile Include="Interceptor\WapControllerInterceptor.cs" />
-    <Compile Include="Interceptor\ControllerInterceptor.cs" />
-    <Compile Include="Interceptor\ServicesInterceptor.cs" />
-    <Compile Include="Interceptor\DetailServicesInterceptor.cs" />
-    <Compile Include="Interceptor\SmsExternalServicesInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +183,10 @@
     <ProjectReference Include="..\Ets.SingleApi.ExternalServices\Ets.SingleApi.ExternalServices.csproj">
       <Project>{5a3d81e5-0d34-49de-a069-bd804f15f8fa}</Project>
       <Name>Ets.SingleApi.ExternalServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ets.SingleApi.Interceptors\Ets.SingleApi.Interceptors.csproj">
+      <Project>{5c17cfbe-ab03-4d68-85bf-0c70b7019c16}</Project>
+      <Name>Ets.SingleApi.Interceptors</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">
       <Project>{b6f811c6-70b6-4d50-a5db-c7589371860c}</Project>

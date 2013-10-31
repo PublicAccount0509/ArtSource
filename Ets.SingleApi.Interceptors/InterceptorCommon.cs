@@ -1,11 +1,11 @@
-﻿namespace Ets.SingleApi.Interceptor
+﻿namespace Ets.SingleApi.Interceptors
 {
     using System;
     using System.Linq;
 
     /// <summary>
     /// 类名称：InterceptorCommon
-    /// 命名空间：Ets.SingleApi.Interceptor
+    /// 命名空间：Ets.SingleApi.Interceptors
     /// 类功能：拦截公用方法
     /// </summary>
     /// 创建者：周超

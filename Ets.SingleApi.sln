@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ets.SingleApi.ExternalServi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ets.SingleApi.Pay", "Ets.SingleApi.Pay\Ets.SingleApi.Pay.csproj", "{B1B86090-92BA-4E91-AE27-0DC677F8CC59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ets.SingleApi.UnitTest", "Ets.SingleApi.UnitTest\Ets.SingleApi.UnitTest.csproj", "{CD7ACAE0-49AD-4D74-BAFA-1A65C8E3CE12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ets.SingleApi.Interceptors", "Ets.SingleApi.Interceptors\Ets.SingleApi.Interceptors.csproj", "{5C17CFBE-AB03-4D68-85BF-0C70B7019C16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +59,14 @@ Global
 		{B1B86090-92BA-4E91-AE27-0DC677F8CC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B86090-92BA-4E91-AE27-0DC677F8CC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1B86090-92BA-4E91-AE27-0DC677F8CC59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD7ACAE0-49AD-4D74-BAFA-1A65C8E3CE12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD7ACAE0-49AD-4D74-BAFA-1A65C8E3CE12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD7ACAE0-49AD-4D74-BAFA-1A65C8E3CE12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD7ACAE0-49AD-4D74-BAFA-1A65C8E3CE12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C17CFBE-AB03-4D68-85BF-0C70B7019C16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C17CFBE-AB03-4D68-85BF-0C70B7019C16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C17CFBE-AB03-4D68-85BF-0C70B7019C16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C17CFBE-AB03-4D68-85BF-0C70B7019C16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
