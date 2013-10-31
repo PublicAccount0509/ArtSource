@@ -6,7 +6,7 @@
 
     using Castle.Windsor;
 
-    using Ets.SingleApi.Utility;
+    using Ets.SingleApi.UnitTest.Utility;
 
     using NUnit.Framework;
 
@@ -67,8 +67,7 @@
         public virtual void Init()
         {
             Log4NetUtility.Register();
-            CastleUtility.Register(null);
-            StatusUtility.Register();
+            CastleUtility.Register();
 
             this.Container = CastleUtility.GetInstance().Container;
         }

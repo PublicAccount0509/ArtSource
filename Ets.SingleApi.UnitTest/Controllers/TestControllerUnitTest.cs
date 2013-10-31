@@ -1,8 +1,12 @@
 ﻿namespace Ets.SingleApi.UnitTest.Controllers
 {
+    using System.Json;
+
     using Ets.SingleApi.Controllers;
 
     using NUnit.Framework;
+
+    using StatusCode = Ets.SingleApi.UnitTest.Utility.StatusCode;
 
     /// <summary>
     /// 类名称：TestControllerUnitTest
@@ -50,6 +54,14 @@
             {
                 var url = string.Format("{0}/{1}", this.TestController.TrimEnd('/'), "Test");
                 var result = client.DownloadString(url);
+                var jsonValue = JsonValue.Parse(result);
+                if (jsonValue == null || jsonValue["Message"] == null)
+                {
+                    Assert.Fail();
+                }
+
+                int statusCode = jsonValue["Message"]["StatusCode"];
+                Assert.True(statusCode == (int)StatusCode.Succeed.Ok);
             }
         }
     }
