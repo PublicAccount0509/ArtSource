@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Controller\ConfirmWaiMaiOrderResult.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderRequst.cs" />
+    <Compile Include="Controller\Exist.cs" />
     <Compile Include="Controller\PaymentResult.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderResult.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
@@ -274,6 +275,7 @@
     <Compile Include="Services\SupplierDishDetailModel.cs" />
     <Compile Include="Services\ServicesResultList.cs" />
     <Compile Include="LoginWay.cs" />
+    <Compile Include="ExistsType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\OrderSourceEntity.hbm.xml" />

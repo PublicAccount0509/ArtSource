@@ -1,22 +1,22 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：ExistModel
+    /// 类名称：Exist
     /// 命名空间：Ets.SingleApi.Model.Controller
-    /// 类功能：登陆返回值
+    /// 类功能：存在参数
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：2013/10/17 0:03
+    /// 创建日期：10/31/2013 1:03 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ExistModel
+    public class Exist
     {
         /// <summary>
-        /// Gets or sets the Account of ExistModel
+        /// Gets or sets the Account of ExistRequst
         /// </summary>
         /// <value>
-        /// The Account
+        /// The Email
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/16 23:52
@@ -26,29 +26,16 @@
         public string Account { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether
+        /// Gets or sets the Telephone of ExistRequst
         /// </summary>
         /// <value>
-        /// The Exist
+        /// The Telephone
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/25/2013 4:26 PM
+        /// 创建日期：2013/10/16 23:53
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public bool Exist { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether
-        /// </summary>
-        /// <value>
-        /// The Login
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：10/25/2013 4:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public bool Login { get; set; }
+        public int Type { get; set; }
     }
 }

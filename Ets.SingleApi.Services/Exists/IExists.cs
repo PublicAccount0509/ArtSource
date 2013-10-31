@@ -1,41 +1,44 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Services
 {
+    using Ets.SingleApi.Model;
+
     /// <summary>
-    /// 类名称：ExistParameter
-    /// 命名空间：Ets.SingleApi.Model.Controller
-    /// 类功能：登陆返回值
+    /// 接口名称：IExists
+    /// 命名空间：Ets.SingleApi.Services
+    /// 接口功能：验证是否存在
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：2013/10/17 0:03
+    /// 创建日期：10/31/2013 12:12 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ExistParameter
+    public interface IExists
     {
         /// <summary>
-        /// Gets or sets the Account of ExistRequst
+        /// 验证存在的类型
         /// </summary>
         /// <value>
-        /// The Account
+        /// 验证存在的类型
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 23:52
+        /// 创建日期：10/31/2013 12:17 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Account { get; set; }
+        ExistsType ExistsType { get; }
 
         /// <summary>
-        /// Gets or sets the Type of ExistRequst
+        /// 验证是否存在
         /// </summary>
-        /// <value>
-        /// The Type
-        /// </value>
+        /// <param name="account">The account</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 23:53
+        /// 创建日期：10/31/2013 12:20 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int Type { get; set; }
+        ExistsData Exist(string account);
     }
 }

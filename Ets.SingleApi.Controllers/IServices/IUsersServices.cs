@@ -140,7 +140,7 @@
         /// <summary>
         /// 验证用户是否存在
         /// </summary>
-        /// <param name="parameter">The parameter</param>
+        /// <param name="parameterList">The parameterList</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -149,6 +149,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ExistModel> Exist(ExistParameter parameter);
+        ServicesResultList<ExistModel> Exist(List<ExistParameter> parameterList);
     }
 }

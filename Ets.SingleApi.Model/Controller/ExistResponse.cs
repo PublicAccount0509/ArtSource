@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// 类名称：ExistResponse
     /// 命名空间：Ets.SingleApi.Model.Controller
@@ -23,6 +25,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ExistResult Result { get; set; }
+        public List<ExistResult> Result { get; set; }
     }
 }

@@ -145,6 +145,16 @@
         private readonly List<IUserOrders> userOrdersList;
 
         /// <summary>
+        /// 字段existsList
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/31/2013 12:41 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly List<IExists> existsList;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
         /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
@@ -159,6 +169,7 @@
         /// <param name="usersDetailServices">The usersDetailServices</param>
         /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="userOrdersList">The userOrdersList</param>
+        /// <param name="existsList">The existsList</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 16:35
         /// 修改者：
@@ -176,7 +187,8 @@
             INHibernateRepository<RegionEntity> regionEntityRepository,
             IUsersDetailServices usersDetailServices,
             ISmsDetailServices smsDetailServices,
-            List<IUserOrders> userOrdersList)
+            List<IUserOrders> userOrdersList,
+            List<IExists> existsList)
         {
             this.autorizationEntityRepository = autorizationEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
@@ -190,6 +202,7 @@
             this.usersDetailServices = usersDetailServices;
             this.smsDetailServices = smsDetailServices;
             this.userOrdersList = userOrdersList;
+            this.existsList = existsList;
         }
 
         /// <summary>
@@ -771,7 +784,7 @@
         /// <summary>
         /// 验证用户是否存在
         /// </summary>
-        /// <param name="parameter">The parameter</param>
+        /// <param name="parameterList">The parameterList</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -780,91 +793,43 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ExistModel> Exist(ExistParameter parameter)
+        public ServicesResultList<ExistModel> Exist(List<ExistParameter> parameterList)
         {
-            if (parameter.Email.IsEmptyOrNull() && parameter.Telephone.IsEmptyOrNull())
+            if (parameterList == null || parameterList.Count(p => p != null) == 0)
             {
-                return new ServicesResult<ExistModel>
+                return new ServicesResultList<ExistModel>
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest,
+                        Result = new List<ExistModel>()
+                    };
+            }
+
+            var parameters = parameterList.Where(p => !p.Account.IsEmptyOrNull()).ToList();
+            if (parameters.Count == 0)
+            {
+                return new ServicesResultList<ExistModel>
                 {
                     StatusCode = (int)StatusCode.System.InvalidRequest,
-                    Result = new ExistModel
-                        {
-                            Exist = false,
-                            Login = false
-                        }
+                    Result = new List<ExistModel>()
                 };
             }
 
-            var customer = this.GetCustomer(parameter.Telephone, parameter.Email);
-            if (customer == null)
-            {
-                return new ServicesResult<ExistModel>
-                {
-                    Result = new ExistModel
-                        {
-                            Exist = false,
-                            Login = false
-                        }
-                };
-            }
+            var list = (from existParameter in parameters
+                        let existsType = (ExistsType)existParameter.Type
+                        let exists = this.existsList.FirstOrDefault(p => p.ExistsType == existsType)
+                        where exists != null
+                        let data = exists.Exist(existParameter.Account)
+                        select new ExistModel
+                            {
+                                Account = existParameter.Account,
+                                Exist = data.Exist,
+                                Login = data.Login
+                            }).ToList();
 
-            var login = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == customer.LoginId)
-                    .Select(p => new { p.LoginId, p.IsEnabled })
-                    .FirstOrDefault();
-
-            if (login == null)
+            return new ServicesResultList<ExistModel>
             {
-                return new ServicesResult<ExistModel>
-                {
-                    Result = new ExistModel
-                        {
-                            Exist = false,
-                            Login = false
-                        }
-                };
-            }
-
-            return new ServicesResult<ExistModel>
-            {
-                Result = new ExistModel
-                {
-                    Exist = true,
-                    Login = login.IsEnabled
-                }
+                Result = list
             };
-        }
-
-        /// <summary>
-        /// Gets the customer.
-        /// </summary>
-        /// <param name="telephone">The telephone</param>
-        /// <param name="email">The email</param>
-        /// <returns>
-        /// dynamic
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/29/2013 2:53 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private CustomerEntity GetCustomer(string telephone, string email)
-        {
-            if (!telephone.IsEmptyOrNull() && !email.IsEmptyOrNull())
-            {
-                return this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Mobile == telephone && p.Email == email);
-            }
-
-            if (!telephone.IsEmptyOrNull())
-            {
-                return this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Mobile == telephone);
-            }
-
-            if (!email.IsEmptyOrNull())
-            {
-                return this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Email == email);
-            }
-
-            return null;
         }
 
         /// <summary>

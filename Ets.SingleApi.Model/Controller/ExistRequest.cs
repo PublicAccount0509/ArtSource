@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// 类名称：ExistRequst
     /// 命名空间：Ets.SingleApi.Model.Controller
@@ -13,29 +15,16 @@
     public class ExistRequst : ApiRequst
     {
         /// <summary>
-        /// Gets or sets the Email of ExistRequst
+        /// Gets or sets the ExistList of ExistRequst
         /// </summary>
         /// <value>
-        /// The Email
+        /// The ExistList
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 23:52
+        /// 创建日期：10/31/2013 1:03 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Telephone of ExistRequst
-        /// </summary>
-        /// <value>
-        /// The Telephone
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/16 23:53
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string Telephone { get; set; }
+        public List<Exist> ExistList { get; set; }
     }
 }

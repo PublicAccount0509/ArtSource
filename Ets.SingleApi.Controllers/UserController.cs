@@ -62,7 +62,7 @@
         [HttpPost]
         public ExistResponse Exist(ExistRequst requst)
         {
-            if (requst == null)
+            if (requst == null || requst.ExistList == null || requst.ExistList.Count == 0)
             {
                 return new ExistResponse
                 {
@@ -73,24 +73,28 @@
                 };
             }
 
-            if (requst.Email.IsEmptyOrNull() && requst.Telephone.IsEmptyOrNull())
+            var existParameterList = requst.ExistList.Where(p => !p.Account.IsEmptyOrNull())
+                                      .Select(p => new ExistParameter
+                                          {
+                                              Account = p.Account,
+                                              Type = p.Type
+                                          })
+                                      .ToList();
+
+            var existResult = this.usersServices.Exist(existParameterList);
+            if (existResult == null)
             {
                 return new ExistResponse
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
+                        StatusCode = (int)StatusCode.Succeed.Empty
+                    },
+                    Result = new List<ExistResult>()
                 };
             }
 
-            var existResult = this.usersServices.Exist(new ExistParameter
-                {
-                    Email = (requst.Email ?? string.Empty).Trim(),
-                    Telephone = (requst.Telephone ?? string.Empty).Trim()
-                });
-
-            if (existResult.Result == null)
+            if (existResult.Result == null || existResult.Result.Count == 0)
             {
                 return new ExistResponse
                 {
@@ -98,15 +102,17 @@
                     {
                         StatusCode = existResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : existResult.StatusCode
                     },
-                    Result = new ExistResult()
+                    Result = new List<ExistResult>()
                 };
             }
 
-            var result = new ExistResult
-            {
-                Exist = existResult.Result.Exist,
-                Login = existResult.Result.Login
-            };
+            var result = existResult.Result.Select(
+                            p => new ExistResult
+                                {
+                                    Account = p.Account,
+                                    Exist = p.Exist,
+                                    Login = p.Login
+                                }).ToList();
 
             return new ExistResponse
             {

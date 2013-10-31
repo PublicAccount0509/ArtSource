@@ -13,6 +13,19 @@
     public class ExistResult
     {
         /// <summary>
+        /// Gets or sets the Account of ExistResult
+        /// </summary>
+        /// <value>
+        /// The Account
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/31/2013 1:05 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Account { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether
         /// </summary>
         /// <value>

@@ -62,6 +62,10 @@
     <Compile Include="CuisineServices.cs" />
     <Compile Include="DetailServices\UsersDetailServices.cs" />
     <Compile Include="DetailServices\WaiMaiOrderDetailServices.cs" />
+    <Compile Include="Exists\EmailExists.cs" />
+    <Compile Include="Exists\IExists.cs" />
+    <Compile Include="Exists\ExistsData.cs" />
+    <Compile Include="Exists\TelephoneExists.cs" />
     <Compile Include="FilterServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
