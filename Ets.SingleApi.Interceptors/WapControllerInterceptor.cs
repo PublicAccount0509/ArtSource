@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Interceptors
 {
     using System;
+    using System.Web.Http.Controllers;
 
     using Castle.DynamicProxy;
 
@@ -30,8 +31,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Intercept(IInvocation invocation)
         {
-            invocation.Method.Name.WriteLog("Ets.SingleApi.WapControllers", Log4NetType.Info);
-            
+            this.WriteLog(invocation);
             try
             {
                 invocation.Proceed();
@@ -49,6 +49,37 @@
             }
 
             InterceptorCommon.GetChildrenConstructor(invocation.ReturnValue);
+        }
+
+        /// <summary>
+        /// 记录日志
+        /// </summary>
+        /// <param name="invocation">The invocation</param>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 1:29 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void WriteLog(IInvocation invocation)
+        {
+            if (invocation == null)
+            {
+                return;
+            }
+
+            if (!invocation.Method.Name.Contains("Initialize"))
+            {
+                return;
+            }
+
+            var httpContext = (invocation.Arguments[0] as HttpControllerContext);
+            if (httpContext == null || httpContext.Request == null)
+            {
+                return;
+            }
+
+            var message = string.Format("Method:{0}---Url:{1}", httpContext.Request.Method, httpContext.Request.RequestUri);
+            message.WriteLog("Ets.SingleApi.WapControllers", Log4NetType.Info);
         }
     }
 }

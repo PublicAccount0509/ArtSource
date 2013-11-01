@@ -77,12 +77,12 @@
             }
 
             var code = CommonUtility.RandNum(6);
-            CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone), code, DateTime.Now.AddMinutes(5));
+            CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
 
             if (parameter.Second.HasValue)
             {
                 var second = DateTime.Now.AddSeconds(parameter.Second.Value).ToString("yyyy-MM-dd HH:mm:ss");
-                CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthSecondCacheKey, parameter.Second), second, DateTime.Now.AddMinutes(5));
+                CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthSecondCacheKey, parameter.Second), second, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
             }
 
             var result = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(message, code));

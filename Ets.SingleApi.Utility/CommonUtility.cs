@@ -3,11 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.IO;
     using System.Linq;
     using System.Net.Http.Headers;
+    using System.Runtime.Serialization.Json;
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Web.Script.Serialization;
     using System.Xml.Linq;
 
     /// <summary>
@@ -38,6 +41,11 @@
         public static void WriteLog(this string message, string name, Log4NetType logType)
         {
             var log = Log4NetUtility.GetInstance().GetLog(name);
+            if (log == null)
+            {
+                return;
+            }
+
             if (logType == Log4NetType.Debug)
             {
                 log.Debug(message);
@@ -78,7 +86,143 @@
         public static void WriteLog(this Exception exception, string name)
         {
             var log = Log4NetUtility.GetInstance().GetLog(name);
+            if (log == null)
+            {
+                return;
+            }
+
             log.Error(exception);
+        }
+
+        #endregion
+
+        #region Json Serialize and Deserialize
+
+        /// <summary>
+        /// The method indicates the object serialized using json.
+        /// </summary>
+        /// <typeparam name="TType">The type of the type.</typeparam>
+        /// <param name="obj">The TType of obj</param>
+        /// <returns>
+        /// The json string
+        /// </returns>
+        /// Creator:zhouchao
+        /// Creation Date:11/15/2011 2:50 PM
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public static string Serialize<TType>(this TType obj)
+        {
+            try
+            {
+                if (obj.GetType().Name.Contains("<>f__AnonymousType"))
+                {
+                    var serializer = new JavaScriptSerializer();
+                    return serializer.Serialize(obj);
+                }
+
+                using (var ms = new MemoryStream())
+                {
+                    var serializer = new DataContractJsonSerializer(obj.GetType(), new List<Type>(), int.MaxValue, true, null, false);
+                    serializer.WriteObject(ms, obj);
+                    return Encoding.UTF8.GetString(ms.ToArray());
+                }
+            }
+            catch (InvalidDataException exception)
+            {
+                exception.WriteLog(string.Empty);
+                return null;
+            }
+            catch (ArgumentNullException exception)
+            {
+                exception.WriteLog(string.Empty);
+                return null;
+            }
+            catch (Exception exception)
+            {
+                exception.WriteLog(string.Empty);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// The method indicates the json deserialized.
+        /// </summary>
+        /// <typeparam name="TType">The type of the type.</typeparam>
+        /// <param name="json">The value of json.</param>
+        /// <returns>
+        /// The TType
+        /// </returns>
+        /// Creator:zhouchao
+        /// Creation Date:11/15/2011 2:57 PM
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public static TType Deserialize<TType>(this string json)
+        {
+            var model = Activator.CreateInstance<TType>();
+            if (string.IsNullOrEmpty(json) || string.IsNullOrWhiteSpace(json))
+            {
+                return model;
+            }
+
+            try
+            {
+                using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                {
+                    var serializer = new DataContractJsonSerializer(model.GetType(), new List<Type>(), int.MaxValue, true, null, false);
+                    return (TType)serializer.ReadObject(ms);
+                }
+            }
+            catch (InvalidCastException exception)
+            {
+                exception.WriteLog(string.Empty);
+                return model;
+            }
+            catch (ArgumentNullException exception)
+            {
+                exception.WriteLog(string.Empty);
+                return model;
+            }
+        }
+
+        /// <summary>
+        /// The method indicates the json deserialized.
+        /// </summary>
+        /// <param name="json">The value of json.</param>
+        /// <returns>
+        /// The string
+        /// </returns>
+        /// Creator:zhouchao
+        /// Creation Date:11/15/2011 2:57 PM
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public static string Deserialize(this string json)
+        {
+            if (string.IsNullOrEmpty(json) || string.IsNullOrWhiteSpace(json))
+            {
+                return string.Empty;
+            }
+
+            try
+            {
+                using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                {
+                    var serializer = new DataContractJsonSerializer(typeof(string));
+                    return (string)serializer.ReadObject(ms);
+                }
+            }
+            catch (InvalidCastException exception)
+            {
+                exception.WriteLog(string.Empty);
+                return string.Empty;
+            }
+            catch (ArgumentNullException exception)
+            {
+                exception.WriteLog(string.Empty);
+                return string.Empty;
+            }
         }
 
         #endregion

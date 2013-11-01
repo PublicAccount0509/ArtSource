@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Interceptors
 {
     using System;
+    using System.Linq;
 
     using Castle.DynamicProxy;
 
@@ -30,8 +31,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Intercept(IInvocation invocation)
         {
-            invocation.Method.Name.WriteLog("Ets.SingleApi.DetailServices", Log4NetType.Info);
-
+            this.WriteLog(invocation);
             try
             {
                 invocation.Proceed();
@@ -49,6 +49,35 @@
             }
 
             InterceptorCommon.GetChildrenConstructor(invocation.ReturnValue);
+        }
+
+        /// <summary>
+        /// 记录日志
+        /// </summary>
+        /// <param name="invocation">The invocation</param>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 1:29 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void WriteLog(IInvocation invocation)
+        {
+            if (invocation == null)
+            {
+                return;
+            }
+
+            if (!InterceptorCommon.WriteLogParamsEnabled)
+            {
+                invocation.Method.Name.WriteLog("Ets.SingleApi.DetailServices", Log4NetType.Info);
+                return;
+            }
+
+            var method = invocation.Method;
+            var arguments = invocation.Arguments;
+            var message = string.Format("{0}({1})", method.Name, string.Join(",", arguments.Select(p => p.Serialize()).ToList()));
+            message.WriteLog("Ets.SingleApi.DetailServices", Log4NetType.Info);
+
         }
     }
 }

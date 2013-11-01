@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Controllers
 {
+    using System;
     using System.Configuration;
 
     public class ControllersCommon
@@ -57,7 +58,7 @@
         {
             get
             {
-                return (ConfigurationManager.AppSettings["ApplicationValidationEnabled"] ?? string.Empty).ToLower() == "true";
+                return string.Equals(ConfigurationManager.AppSettings["ApplicationValidationEnabled"], "true", StringComparison.OrdinalIgnoreCase);
             }
         }
 

@@ -74,6 +74,32 @@
         }
 
         /// <summary>
+        /// 外卖短信验有效时间
+        /// </summary>
+        /// <value>
+        /// 短信验证码有效时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int AuthCodeExpiredTime
+        {
+            get
+            {
+                var expiredTime = ConfigurationManager.AppSettings["AuthCodeExpiredTime"] ?? "5";
+                int result;
+                if (!int.TryParse(expiredTime, out result))
+                {
+                    result = 5;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 图片服务器地址
         /// </summary>
         /// <value>

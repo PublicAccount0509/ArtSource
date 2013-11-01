@@ -82,6 +82,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Add(string key, object value)
         {
+            string.Format("Add({0}---{1})", key, value).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             if (!this.client.KeyExists(key))
             {
                 this.client.Add(key, value);
@@ -104,6 +105,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Add(string key, object value, DateTime expiredTime)
         {
+            string.Format("Add({0}---{1}---{2})", key, value, expiredTime.ToString("yyyy-MM-dd HH:mm:ss")).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             this.client.Add(key, value, expiredTime);
         }
 
@@ -119,6 +121,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Replace(string key, object value)
         {
+            string.Format("Replace({0}---{1})", key, value).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             this.client.Replace(key, value);
         }
 
@@ -135,6 +138,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Replace(string key, object value, DateTime expiredTime)
         {
+            string.Format("Replace({0}---{1}---{2})", key, value, expiredTime.ToString("yyyy-MM-dd HH:mm:ss")).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             this.client.Replace(key, value, expiredTime);
         }
 
@@ -150,6 +154,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Set(string key, object value)
         {
+            string.Format("Set({0}---{1})", key, value).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             this.client.Set(key, value);
         }
 
@@ -166,6 +171,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Set(string key, object value, DateTime expiredTime)
         {
+            string.Format("Set({0}---{1}---{2})", key, value, expiredTime.ToString("yyyy-MM-dd HH:mm:ss")).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             this.client.Set(key, value, expiredTime);
         }
 
@@ -180,6 +186,7 @@
         /// ----------------------------------------------------------------------------------------
         public void Delete(string key)
         {
+            string.Format("Delete({0})", key).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             this.client.Delete(key);
         }
 
@@ -197,7 +204,9 @@
         /// ----------------------------------------------------------------------------------------
         public object Get(string key)
         {
-            return this.client.Get(key);
+            var value = this.client.Get(key);
+            string.Format("Get({0}---{1})", key, value).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
+            return value;
         }
 
         /// <summary>
