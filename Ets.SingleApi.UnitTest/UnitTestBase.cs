@@ -43,6 +43,25 @@
         }
 
         /// <summary>
+        /// Gets the orders controller.
+        /// </summary>
+        /// <value>
+        /// The orders controller.
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 10:56 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        protected string OrdersController
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["OrdersController"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
         /// Gets the container.
         /// </summary>
         /// <value>
