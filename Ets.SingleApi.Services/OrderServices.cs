@@ -1,8 +1,10 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using Ets.SingleApi.Controllers.IServices;
+    using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IDetailServices;
@@ -72,6 +74,16 @@
         private readonly IWaiMaiOrderDetailServices waiMaiOrderDetailServices;
 
         /// <summary>
+        /// 字段orderNumberList
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/31/2013 9:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly List<IOrderNumber> orderNumberList;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrderServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
@@ -79,6 +91,7 @@
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="waiMaiOrderDetailServices">The waiMaiOrderDetailServices</param>
+        /// <param name="orderNumberList">The orderNumberList</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:30 PM
         /// 修改者：
@@ -89,13 +102,15 @@
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
-            IWaiMaiOrderDetailServices waiMaiOrderDetailServices)
+            IWaiMaiOrderDetailServices waiMaiOrderDetailServices,
+            List<IOrderNumber> orderNumberList)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.waiMaiOrderDetailServices = waiMaiOrderDetailServices;
+            this.orderNumberList = orderNumberList;
         }
 
         /// <summary>
@@ -292,6 +307,37 @@
             {
                 StatusCode = result.StatusCode,
                 Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 获取订单号
+        /// </summary>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/31/2013 9:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> GetOrderNumber(int orderType)
+        {
+            var orderNumber = this.orderNumberList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            if (orderNumber == null)
+            {
+                return new ServicesResult<string>
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                    };
+            }
+
+            var result = orderNumber.GetOrderNumber();
+            return new ServicesResult<string>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.OrderNumber.ToString()
             };
         }
     }

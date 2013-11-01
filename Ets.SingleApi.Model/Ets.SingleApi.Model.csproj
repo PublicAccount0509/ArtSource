@@ -62,6 +62,8 @@
     <Compile Include="Controller\UmPaymentStateRequst.cs" />
     <Compile Include="Controller\UmPaymentStateResponse.cs" />
     <Compile Include="Controller\PaymentStateResult.cs" />
+    <Compile Include="Controller\OrderNumberResponse.cs" />
+    <Compile Include="Controller\OrderNumberResult.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />

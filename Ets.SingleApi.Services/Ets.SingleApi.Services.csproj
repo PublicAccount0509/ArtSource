@@ -71,6 +71,7 @@
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="OrderNumber\DingTaiOrderNumber.cs" />
+    <Compile Include="OrderNumber\TangShiOrderNumber.cs" />
     <Compile Include="OrderServices.cs" />
     <Compile Include="OrderNumber\IOrderNumber.cs" />
     <Compile Include="Order\IUserOrders.cs" />

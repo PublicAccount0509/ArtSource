@@ -70,5 +70,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<PaymentWaiMaiOrderModel> PaymentWaiMaiOrder(PaymentWaiMaiOrderParameter parameter);
+
+        /// <summary>
+        /// 获取订单号
+        /// </summary>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/31/2013 9:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> GetOrderNumber(int orderType);
     }
 }
