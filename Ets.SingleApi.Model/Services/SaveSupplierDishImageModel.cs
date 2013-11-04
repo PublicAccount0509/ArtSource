@@ -1,95 +1,80 @@
 ﻿namespace Ets.SingleApi.Model.Services
 {
-    using System.Collections.Generic;
-
     /// <summary>
-    /// 类名称：SupplierCuisineDetailModel
+    /// 类名称：SaveSupplierDishImageModel
     /// 命名空间：Ets.SingleApi.Model.Services
-    /// 类功能：菜品信息
+    /// 类功能：餐厅菜图片
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：2013/10/13 14:54
+    /// 创建日期：11/1/2013 4:22 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SupplierCuisineDetailModel
+    public class SaveSupplierDishImageModel
     {
         /// <summary>
-        /// Gets or sets the Id of SupplierCuisineDetailModel
+        /// Gets or sets the DishImageId of SaveSupplierDishImageModel
         /// </summary>
         /// <value>
-        /// The CuisineId
+        /// The DishImageId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 12:56
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int DishImageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ImagePath of SaveSupplierDishImageModel
+        /// </summary>
+        /// <value>
+        /// The ImagePath
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/13 16:17
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int CategoryId { get; set; }
+        public string ImagePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierCategoryId of SupplierCuisineDetailModel
+        /// Gets or sets the Position of SaveSupplierDishImageModel
         /// </summary>
         /// <value>
-        /// The SupplierCategoryId
+        /// The Position
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/15 15:04
+        /// 创建日期：11/3/2013 12:17 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int SupplierCategoryId { get; set; }
+        public int Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the Name of SupplierCuisineDetailModel
+        /// Gets or sets the Width of SaveSupplierDishImageModel
         /// </summary>
         /// <value>
-        /// The Name
+        /// The Width
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/13 16:17
+        /// 创建日期：11/3/2013 3:43 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string CategoryName { get; set; }
+        public int? Width { get; set; }
 
         /// <summary>
-        /// Gets or sets the CategoryDescription of SupplierCuisineDetailModel
+        /// Gets or sets the Height of SaveSupplierDishImageModel
         /// </summary>
         /// <value>
-        /// The CategoryDescription
+        /// The Height
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/15 15:03
+        /// 创建日期：11/3/2013 3:43 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string CategoryDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the CuisineNo of SupplierCuisineDetailModel
-        /// </summary>
-        /// <value>
-        /// The CuisineNo
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/15 11:22
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int? CategoryNo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the SupplierDishList of SupplierCuisineDetailModel
-        /// </summary>
-        /// <value>
-        /// The SupplierDishList
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/15 13:02
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public List<SupplierDishDetailModel> SupplierDishList { get; set; }
+        public int? Height { get; set; }
     }
 }

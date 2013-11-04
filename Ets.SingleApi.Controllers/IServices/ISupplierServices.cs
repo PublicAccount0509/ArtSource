@@ -70,5 +70,89 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<SupplierCuisineModel> GetMenu(int supplierId, int supplierMenuCategoryTypeId);
+
+        /// <summary>
+        /// 添加餐厅菜品信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 4:43 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> AddSupplierCuisine(SaveSupplierCuisineParameter parameter);
+
+        /// <summary>
+        /// 更新菜品信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 10:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> UpdateSupplierCuisine(SaveSupplierCuisineParameter parameter);
+
+        /// <summary>
+        /// 删除菜品信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 10:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> DeleteSupplierCuisine(DeleteSupplierCuisineParameter parameter);
+
+        /// <summary>
+        /// 添加餐厅菜信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 4:43 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> AddSupplierDish(SaveSupplierDishParameter parameter);
+
+        /// <summary>
+        /// 更新菜信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 10:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> UpdateSupplierDish(SaveSupplierDishParameter parameter);
+
+        /// <summary>
+        /// 删除菜信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 10:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> DeleteSupplierDish(DeleteSupplierDishParameter parameter);
     }
 }

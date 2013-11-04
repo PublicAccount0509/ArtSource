@@ -8,6 +8,7 @@
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.IDetailServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
@@ -42,6 +43,16 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository;
+
+        /// <summary>
+        /// 字段supplierDishImageEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 4:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierDishImageEntity> supplierDishImageEntityRepository;
 
         /// <summary>
         /// 字段supplierCategoryEntityRepository
@@ -94,15 +105,27 @@
         private readonly INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository;
 
         /// <summary>
+        /// 字段supplierDetailServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 5:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISupplierDetailServices supplierDetailServices;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SupplierServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="supplierDishEntityRepository">The supplierDishEntityRepository</param>
+        /// <param name="supplierDishImageEntityRepository">The supplierDishImageEntityRepository</param>
         /// <param name="supplierCategoryEntityRepository">The supplierCategoryEntityRepository</param>
         /// <param name="supplierMenuCategoryEntityRepository">The supplierMenuCategoryEntityRepository</param>
         /// <param name="suppTimeTableDisplayEntityRepository">The suppTimeTableDisplayEntityRepository</param>
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
+        /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
         /// 修改者：
@@ -111,19 +134,23 @@
         public SupplierServices(
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository,
+            INHibernateRepository<SupplierDishImageEntity> supplierDishImageEntityRepository,
             INHibernateRepository<SupplierCategoryEntity> supplierCategoryEntityRepository,
             INHibernateRepository<SupplierMenuCategoryEntity> supplierMenuCategoryEntityRepository,
             INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
-            INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository)
+            INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
+            ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierDishEntityRepository = supplierDishEntityRepository;
+            this.supplierDishImageEntityRepository = supplierDishImageEntityRepository;
             this.supplierCategoryEntityRepository = supplierCategoryEntityRepository;
             this.supplierMenuCategoryEntityRepository = supplierMenuCategoryEntityRepository;
             this.suppTimeTableDisplayEntityRepository = suppTimeTableDisplayEntityRepository;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
+            this.supplierDetailServices = supplierDetailServices;
         }
 
         /// <summary>
@@ -140,6 +167,15 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<SupplierDetailModel> GetSupplier(int supplierId)
         {
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResult<SupplierDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierDetailModel()
+                };
+            }
+
             var tempSupplier = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                                 where supplierEntity.SupplierId == supplierId
                                 select new
@@ -290,6 +326,15 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResultList<GroupSupplierModel> GetGroupSupplierList(GetGroupSupplierListParameter parameter)
         {
+            if (parameter == null)
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                {
+                    Result = new List<GroupSupplierModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
             var queryable = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                              where supplierEntity.SupplierGroupId == parameter.SupplierGroupId
                              select new
@@ -359,6 +404,15 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResultList<SupplierCuisineModel> GetMenu(int supplierId, int supplierMenuCategoryTypeId)
         {
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResultList<SupplierCuisineModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierCuisineModel>()
+                };
+            }
+
             var supplierMenuCategoryId = this.supplierMenuCategoryEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId && p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == supplierMenuCategoryTypeId).Select(p => p.SupplierMenuCategoryId).FirstOrDefault();
             var tempSupplierCategoryList = (from supplierCategoryEntity in this.supplierCategoryEntityRepository.EntityQueryable
                                             where supplierCategoryEntity.SupplierId == supplierId && supplierCategoryEntity.SupplierMenuCategoryId == supplierMenuCategoryId
@@ -381,27 +435,34 @@
                                         }).OrderBy(p => p.CategoryNo).ToList();
 
             var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
-            var supplierCuisineList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
-                                       where supplierDishEntity.Supplier.SupplierId == supplierId
-                                       && supplierDishEntity.Online && supplierDishEntity.IsDel == false
-                                       && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
-                                       select new
-                                       {
-                                           supplierDishEntity.SupplierCategoryId,
-                                           supplierDishEntity.DishNo,
-                                           supplierDishEntity.Price,
-                                           supplierDishEntity.SupplierDishId,
-                                           supplierDishEntity.SupplierDishName,
-                                           supplierDishEntity.SuppllierDishDescription,
-                                           supplierDishEntity.SpicyLevel,
-                                           supplierDishEntity.AverageRating,
-                                           supplierDishEntity.IsCommission,
-                                           supplierDishEntity.IsDiscount,
-                                           supplierDishEntity.Recipe,
-                                           supplierDishEntity.Recommended,
-                                           SupplierId = supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
-                                           ImagePath = supplierDishEntity.DishImage == null ? string.Empty : supplierDishEntity.DishImage.ImagePath,
-                                       }).OrderBy(p => p.DishNo).ToList();
+            var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
+                                    where supplierDishEntity.Supplier.SupplierId == supplierId
+                                    && supplierDishEntity.Online && supplierDishEntity.IsDel == false
+                                    && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
+                                    select new
+                                    {
+                                        supplierDishEntity.SupplierCategoryId,
+                                        supplierDishEntity.DishNo,
+                                        supplierDishEntity.Price,
+                                        supplierDishEntity.SupplierDishId,
+                                        supplierDishEntity.SupplierDishName,
+                                        supplierDishEntity.SuppllierDishDescription,
+                                        supplierDishEntity.SpicyLevel,
+                                        supplierDishEntity.AverageRating,
+                                        supplierDishEntity.IsCommission,
+                                        supplierDishEntity.IsDiscount,
+                                        supplierDishEntity.Recipe,
+                                        supplierDishEntity.Recommended,
+                                        SupplierId = supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+                                        ImagePath = string.Empty
+                                    }).OrderBy(p => p.DishNo).ToList();
+
+            var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
+            var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
+                                         where supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
+                                         select new { entity.SupplierDishId, entity.ImagePath }).ToList();
+
+
 
             var list = new List<SupplierCuisineModel>();
             foreach (var supplierCategory in supplierCategoryList)
@@ -411,29 +472,301 @@
                     continue;
                 }
 
+                var dishList = (from supplierDishEntity in supplierDishList
+                                let supplierDishImage = supplierDishImageList.FirstOrDefault(p => p.SupplierDishId == supplierDishEntity.SupplierDishId)
+                                select new SupplierDishModel
+                                    {
+                                        Price = supplierDishEntity.Price,
+                                        ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
+                                        SupplierDishId = supplierDishEntity.SupplierDishId,
+                                        SupplierDishName = supplierDishEntity.SupplierDishName,
+                                        SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,
+                                        AverageRating = supplierDishEntity.AverageRating,
+                                        IsCommission = supplierDishEntity.IsCommission,
+                                        IsDiscount = supplierDishEntity.IsDiscount,
+                                        Recipe = supplierDishEntity.Recipe,
+                                        Recommended = supplierDishEntity.Recommended
+                                    }).ToList();
+
                 list.Add(new SupplierCuisineModel
                 {
                     CategoryId = supplierCategory.CategoryId,
                     CategoryName = supplierCategory.CategoryName,
-                    SupplierDishList = supplierCuisineList.Where(p => p.SupplierCategoryId == supplierCategory.CategoryId).Select(supplierDishEntity => new SupplierDishModel
-                    {
-                        Price = supplierDishEntity.Price,
-                        ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishEntity.ImagePath),
-                        SupplierDishId = supplierDishEntity.SupplierDishId,
-                        SupplierDishName = supplierDishEntity.SupplierDishName,
-                        SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,
-                        AverageRating = supplierDishEntity.AverageRating,
-                        IsCommission = supplierDishEntity.IsCommission,
-                        IsDiscount = supplierDishEntity.IsDiscount,
-                        Recipe = supplierDishEntity.Recipe,
-                        Recommended = supplierDishEntity.Recommended
-                    }).ToList()
+                    SupplierDishList = dishList
                 });
             }
 
             return new ServicesResultList<SupplierCuisineModel>
             {
                 Result = list
+            };
+        }
+
+        /// <summary>
+        /// 添加餐厅菜品信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 4:43 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> AddSupplierCuisine(SaveSupplierCuisineParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
+            {
+                return new ServicesResult<bool>
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                    };
+            }
+
+            if (!this.supplierMenuCategoryEntityRepository.EntityQueryable.Any(p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
+            }
+
+            var result = this.supplierDetailServices.AddSupplierCuisine(parameter);
+            return new ServicesResult<bool>
+                {
+                    StatusCode = result.StatusCode,
+                    Result = result.Result
+                };
+        }
+
+        /// <summary>
+        /// 更新菜品信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 10:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> UpdateSupplierCuisine(SaveSupplierCuisineParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
+            }
+
+            if (!this.supplierMenuCategoryEntityRepository.EntityQueryable.Any(p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
+            }
+
+            var result = this.supplierDetailServices.UpdateSupplierCuisine(parameter);
+            return new ServicesResult<bool>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 删除菜品信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 10:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> DeleteSupplierCuisine(DeleteSupplierCuisineParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
+            }
+
+            if (!this.supplierMenuCategoryEntityRepository.EntityQueryable.Any(p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
+            }
+
+            var result = this.supplierDetailServices.DeleteSupplierCuisine(parameter);
+            return new ServicesResult<bool>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 添加餐厅菜信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 4:43 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> AddSupplierDish(SaveSupplierDishParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
+            }
+
+            if (!this.supplierMenuCategoryEntityRepository.EntityQueryable.Any(p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
+            }
+
+            var result = this.supplierDetailServices.AddSupplierDish(parameter);
+            return new ServicesResult<bool>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 更新菜信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 10:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> UpdateSupplierDish(SaveSupplierDishParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
+            }
+
+            if (!this.supplierMenuCategoryEntityRepository.EntityQueryable.Any(p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
+            }
+
+            var result = this.supplierDetailServices.UpdateSupplierDish(parameter);
+            return new ServicesResult<bool>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 删除菜信息
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/3/2013 10:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> DeleteSupplierDish(DeleteSupplierDishParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
+            }
+
+            var result = this.supplierDetailServices.DeleteSupplierDish(parameter);
+            return new ServicesResult<bool>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
             };
         }
     }

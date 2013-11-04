@@ -60,6 +60,9 @@
     <Compile Include="BusinessArea\BusinessArea.cs" />
     <Compile Include="BusinessArea\AllAreaBusinessArea.cs" />
     <Compile Include="CuisineServices.cs" />
+    <Compile Include="DetailServices\SupplierDetailServices.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="DetailServices\UsersDetailServices.cs" />
     <Compile Include="DetailServices\WaiMaiOrderDetailServices.cs" />
     <Compile Include="Exists\EmailExists.cs" />
@@ -69,6 +72,7 @@
     <Compile Include="FilterServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
+    <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="OrderNumber\DingTaiOrderNumber.cs" />
     <Compile Include="OrderNumber\TangShiOrderNumber.cs" />

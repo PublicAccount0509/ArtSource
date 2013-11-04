@@ -35,16 +35,6 @@
         private readonly INHibernateRepository<AutorizationEntity> autorizationEntityRepository;
 
         /// <summary>
-        /// 字段loginEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：10/25/2013 4:56 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
-
-        /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -158,7 +148,6 @@
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
         /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
-        /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="customerFavoriteEntityRepository">The customerFavoriteEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
@@ -177,7 +166,6 @@
         /// ----------------------------------------------------------------------------------------
         public UsersServices(
             INHibernateRepository<AutorizationEntity> autorizationEntityRepository,
-            INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<CustomerFavoriteEntity> customerFavoriteEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
@@ -191,7 +179,6 @@
             List<IExists> existsList)
         {
             this.autorizationEntityRepository = autorizationEntityRepository;
-            this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.customerFavoriteEntityRepository = customerFavoriteEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
