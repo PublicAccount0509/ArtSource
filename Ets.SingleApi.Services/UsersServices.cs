@@ -248,7 +248,8 @@
             customerModel.CustomerAddressList = customerAddressList.Select(p => new CustomerAddressModel
                                                 {
                                                     CustomerAddressId = p.CustomerAddressId,
-                                                    Address = string.Format("{0}{1}", p.Address1, p.Address2).IsEmptyOrNull() ? p.AddressAlias : string.Format("{0}{1}", p.Address1, p.Address2),
+                                                    Address = p.Address2.IsEmptyOrNull() ? p.AddressAlias : p.Address2,
+                                                    Building = p.Address1,
                                                     Name = p.Name,
                                                     Telephone = this.GetTelephone(p.Telephone, p.HomePhone),
                                                     IsDefault = p.IsDefault,
@@ -320,6 +321,7 @@
             customerAddressEntity.Telephone = parameter.Telephone;
             customerAddressEntity.Sex = parameter.Sex;
             customerAddressEntity.CustomerId = customerId;
+            customerAddressEntity.Address1 = parameter.Building;
 
             if (!parameter.IsDefault)
             {

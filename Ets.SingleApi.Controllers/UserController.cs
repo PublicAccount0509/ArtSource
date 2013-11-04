@@ -176,7 +176,8 @@
                     CountyId = customerAddress.CountyId,
                     ProvinceId = customerAddress.ProvinceId,
                     RegionCode = (customerAddress.RegionCode ?? string.Empty),
-                    Sex = customerAddress.Sex
+                    Sex = customerAddress.Sex,
+                    Building = customerAddress.Building
                 }).ToList();
 
             var result = new Customer
@@ -247,7 +248,8 @@
                     IsDefault = requst.IsDefault,
                     RegionCode = (requst.RegionCode ?? string.Empty).Trim(),
                     Sex = requst.Sex,
-                    Telephone = (requst.Telephone ?? string.Empty).Trim()
+                    Telephone = (requst.Telephone ?? string.Empty).Trim(),
+                    Building = (requst.Building ?? string.Empty).Trim()
                 });
 
             return new CustomerAddressResponse

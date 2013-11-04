@@ -91,6 +91,19 @@
         public string Address { get; set; }
 
         /// <summary>
+        /// Gets or sets the Building of CustomerAddressParameter
+        /// </summary>
+        /// <value>
+        /// The Building
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Building { get; set; }
+
+        /// <summary>
         /// Gets or sets the AddressAlias of CustomerAddressRequst
         /// </summary>
         /// <value>
