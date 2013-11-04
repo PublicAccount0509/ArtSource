@@ -40,13 +40,17 @@
             var appKey = actionContext.Request.Headers.Read("AppKey");
             if (appKey.IsEmptyOrNull())
             {
-                throw new Exception("未认证的客户端");
+                var exception = new Exception("未认证的客户端AppKey无效");
+                exception.WriteLog("Ets.SingleApi.Filter");
+                throw exception;
             }
 
             var appPassword = actionContext.Request.Headers.Read("AppPassword");
             if (appPassword.IsEmptyOrNull())
             {
-                throw new Exception("未认证的客户端");
+                var exception = new Exception("未认证的客户端AppPassword无效");
+                exception.WriteLog("Ets.SingleApi.Filter");
+                throw exception;
             }
 
             var filterServices = CastleUtility.GetInstance().Container.Resolve<IFilterServices>();
@@ -58,7 +62,9 @@
             var result = filterServices.ValidateApp(appKey.Trim(), appPassword.Trim());
             if (!result.Result)
             {
-                throw new Exception("未认证的客户端");
+                var exception = new Exception("未认证的客户端");
+                exception.WriteLog("Ets.SingleApi.Filter");
+                throw exception;
             }
 
             controller.AutorizationCode = appKey;

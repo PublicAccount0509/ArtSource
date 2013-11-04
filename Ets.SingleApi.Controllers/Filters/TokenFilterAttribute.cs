@@ -40,7 +40,9 @@
             var token = actionContext.Request.Headers.Read("Token");
             if (token.IsEmptyOrNull())
             {
-                throw new Exception("Token无效");
+                var exception = new Exception("Token无效");
+                exception.WriteLog("Ets.SingleApi.Filter");
+                throw exception;
             }
 
             var filterServices = CastleUtility.GetInstance().Container.Resolve<IFilterServices>();
@@ -52,12 +54,16 @@
             var result = filterServices.GetToken(token.Trim());
             if (result.Result == null)
             {
-                throw new Exception("Token无效");
+                var exception = new Exception("Token无效");
+                exception.WriteLog("Ets.SingleApi.Filter");
+                throw exception;
             }
 
             if (result.Result.AccessToken.IsEmptyOrNull() || result.Result.UserId == null)
             {
-                throw new Exception("Token无效");
+                var exception = new Exception("Token无效");
+                exception.WriteLog("Ets.SingleApi.Filter");
+                throw exception;
             }
 
             controller.UserId = result.Result.UserId.Value;
@@ -74,7 +80,9 @@
 
             if (result.Result.TokenDateTime.Value.AddSeconds(tokenExpiresIn) < DateTime.Now)
             {
-                throw new Exception("Token已过期");
+                var exception = new Exception("Token已过期");
+                exception.WriteLog("Ets.SingleApi.Filter");
+                throw exception;
             }
         }
     }
