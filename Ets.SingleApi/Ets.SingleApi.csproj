@@ -250,6 +250,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cert\testMer.key.der" />
+    <Content Include="cert\testUmpay.cert.crt" />
     <None Include="Properties\PublishProfiles\SingleApi.pubxml" />
   </ItemGroup>
   <PropertyGroup>
@@ -281,6 +283,9 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>copy $(SolutionDir)lib\umpayCfg.ini $(SolutionDir)$(ProjectName)\$(OutDir)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

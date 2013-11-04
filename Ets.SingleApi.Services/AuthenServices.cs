@@ -420,12 +420,11 @@
             loginEntity.Password = code.Md5();
             this.loginEntityRepository.Save(loginEntity);
 
-            var content = string.Format(ServicesCommon.FindPasswordMessage, code);
             var sendPasswordResultList =
                 (from way in parameter.WayList
                  let sendPassword = this.sendPasswordList.FirstOrDefault(p => p.SendType == way.AccountType)
                  where sendPassword != null
-                 select sendPassword.Send(way.AccountNumber, content)).ToList();
+                 select sendPassword.Send(way.AccountNumber, code)).ToList();
 
             var sendPasswordResult = sendPasswordResultList.FirstOrDefault(p => p.StatusCode != (int)StatusCode.Succeed.Ok) ?? new SendPasswordData
                 {

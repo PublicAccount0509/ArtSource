@@ -74,7 +74,8 @@
         /// ----------------------------------------------------------------------------------------
         public SendPasswordData Send(string account, string content)
         {
-            var result = this.smsDetailServices.SendSms(account, content);
+            var message = string.Format(ServicesCommon.SmsFindPasswordMessage, content);
+            var result = this.smsDetailServices.SendSms(account, message);
             if (result == null)
             {
                 return new SendPasswordData

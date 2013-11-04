@@ -214,48 +214,86 @@
         }
 
         /// <summary>
-        /// 找回密码通知信息
+        /// 邮箱找回密码通知信息
         /// </summary>
         /// <value>
-        /// 找回密码通知信息
+        /// 邮箱找回密码通知信息
         /// </value>
         /// 创建者：周超
         /// 创建日期：10/22/2013 7:39 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static string FindPasswordMessage
+        public static string EmailFindPasswordMessage
         {
             get
             {
-                return ConfigurationManager.AppSettings["FindPasswordMessage"] ?? string.Empty;
+                return ConfigurationManager.AppSettings["EmailFindPasswordMessage"] ?? string.Empty;
             }
         }
 
         /// <summary>
-        /// 默认密码通知信息
+        /// 短信找回密码通知信息
         /// </summary>
         /// <value>
-        /// 默认密码通知信息
+        /// 短信找回密码通知信息
         /// </value>
         /// 创建者：周超
         /// 创建日期：10/22/2013 7:39 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static string DefaultPasswordMessage
+        public static string SmsFindPasswordMessage
         {
             get
             {
-                return ConfigurationManager.AppSettings["DefaultPasswordMessage"] ?? string.Empty;
+                return ConfigurationManager.AppSettings["SmsFindPasswordMessage"] ?? string.Empty;
             }
         }
 
         /// <summary>
-        /// 修改密码通知信息
+        /// 首次购物账号获得密码通知信息
         /// </summary>
         /// <value>
-        /// 修改密码通知信息
+        /// 首次购物账号获得密码通知信息
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string FirstRegisterMessage
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["FirstRegisterMessage"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 短信验证码通知信息
+        /// </summary>
+        /// <value>
+        /// 短信验证码通知信息
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string AuthCodeMessage
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["AuthCodeMessage"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 更变密码通知信息
+        /// </summary>
+        /// <value>
+        /// 更变密码通知信息
         /// </value>
         /// 创建者：周超
         /// 创建日期：10/22/2013 7:39 PM

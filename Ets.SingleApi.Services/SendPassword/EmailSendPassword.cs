@@ -51,7 +51,7 @@
         /// ----------------------------------------------------------------------------------------
         public SendPasswordData Send(string account, string content)
         {
-            var mailContent = content;
+            var mailContent = string.Format(ServicesCommon.EmailFindPasswordMessage, content);
             var mailSubject = ServicesCommon.EmailSubject;
             var emailAddress = ServicesCommon.EmailAddress;
             var emailPassword = ServicesCommon.EmailPassword;

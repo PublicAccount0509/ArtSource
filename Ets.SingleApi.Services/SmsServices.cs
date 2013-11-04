@@ -66,16 +66,6 @@
                 };
             }
 
-            var message = this.GetAuthCodeMessage(parameter.Type);
-            if (message.IsEmptyOrNull())
-            {
-                return new ServicesResult<SendAuthCodeModel>
-                    {
-                        Result = new SendAuthCodeModel(),
-                        StatusCode = (int)StatusCode.Validate.InvalidAuthCodeType
-                    };
-            }
-
             var code = CommonUtility.RandNum(6);
             CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
 
@@ -85,7 +75,7 @@
                 CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthSecondCacheKey, parameter.Second), second, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
             }
 
-            var result = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(message, code));
+            var result = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.AuthCodeMessage, code));
             if (result == null)
             {
                 return new ServicesResult<SendAuthCodeModel>
@@ -100,33 +90,6 @@
                     Result = new SendAuthCodeModel { Result = result.StatusCode == (int)StatusCode.Succeed.Ok },
                     StatusCode = result.StatusCode
                 };
-        }
-
-        /// <summary>
-        /// 获取发送信息
-        /// </summary>
-        /// <param name="type">短信发送类型</param>
-        /// <returns>
-        /// 发送信息
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：2013/10/17 22:46
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private string GetAuthCodeMessage(string type)
-        {
-            if (type == ServicesCommon.EtkAuthCodeType)
-            {
-                return "短信验证码：{0}[易淘食]";
-            }
-
-            if (type == ServicesCommon.WaiMaiAuthCodeType)
-            {
-                return "短信验证码：{0}[叫外卖]";
-            }
-
-            return string.Empty;
         }
     }
 }

@@ -502,7 +502,7 @@
                 };
             }
 
-            var sendSmsResult = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.DefaultPasswordMessage, code));
+            var sendSmsResult = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.FirstRegisterMessage, code));
             return new ServicesResult<RegisterUserModel>
             {
                 StatusCode = sendSmsResult.StatusCode,
