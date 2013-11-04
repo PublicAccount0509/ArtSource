@@ -467,12 +467,13 @@
             var list = new List<SupplierCuisineModel>();
             foreach (var supplierCategory in supplierCategoryList)
             {
-                if (list.Exists(p => p.CategoryId == supplierCategory.CategoryId))
+                var categoryId = supplierCategory.CategoryId;
+                if (list.Exists(p => p.CategoryId == categoryId))
                 {
                     continue;
                 }
 
-                var dishList = (from supplierDishEntity in supplierDishList
+                var dishList = (from supplierDishEntity in supplierDishList.Where(p => p.SupplierCategoryId == categoryId)
                                 let supplierDishImage = supplierDishImageList.FirstOrDefault(p => p.SupplierDishId == supplierDishEntity.SupplierDishId)
                                 select new SupplierDishModel
                                     {
