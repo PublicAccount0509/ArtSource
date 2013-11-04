@@ -65,6 +65,8 @@
     </Compile>
     <Compile Include="DetailServices\UsersDetailServices.cs" />
     <Compile Include="DetailServices\WaiMaiOrderDetailServices.cs" />
+    <Compile Include="Distance\BaiduMapDistance.cs" />
+    <Compile Include="Distance\IDistance.cs" />
     <Compile Include="Exists\EmailExists.cs" />
     <Compile Include="Exists\IExists.cs" />
     <Compile Include="Exists\ExistsData.cs" />

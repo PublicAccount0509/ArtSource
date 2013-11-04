@@ -532,10 +532,12 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(int userId)
         {
-            var followerSupplierList = (from customerFavorite in this.customerFavoriteEntityRepository.EntityQueryable
-                                        where customerFavorite.Customer.LoginId == userId
-                                        let supplier = customerFavorite.Supplier
-                                        where supplier != null
+            var supplierList = (from customerFavorite in this.customerFavoriteEntityRepository.EntityQueryable
+                                where customerFavorite.Customer.LoginId == userId
+                                select customerFavorite.Supplier).Where(p => p != null).ToList();
+
+
+            var followerSupplierList = (from supplier in supplierList
                                         select new FollowerSupplierModel
                                             {
                                                 SupplierId = supplier.SupplierId,
@@ -545,7 +547,6 @@
                                                 Averageprice = supplier.Averageprice,
                                                 AverageRating = supplier.AverageRating,
                                                 Telephone = supplier.Telephone,
-                                                CuisineId = supplier.DefaultCuisineId,
                                                 CuisineName = string.Empty
                                             }).ToList();
 
@@ -585,8 +586,8 @@
                     continue;
                 }
 
-                var supplierCuisine = supplierCuisineList.FirstOrDefault(p => p.SupplierId == followerSupplier.SupplierId && p.CuisineId == followerSupplier.CuisineId);
-                followerSupplier.CuisineName = supplierCuisine == null ? string.Empty : supplierCuisine.CuisineName;
+                var cuisineNameList = supplierCuisineList.Where(p => p.SupplierId == followerSupplier.SupplierId).Select(p => p.CuisineName).Where(p => !p.IsEmptyOrNull()).ToList();
+                followerSupplier.CuisineName = string.Join(",", cuisineNameList);
             }
 
             return new ServicesResultList<FollowerSupplierModel>
