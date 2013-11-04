@@ -75,6 +75,7 @@
     <Compile Include="Controller\DeleteSupplierDishRequst.cs" />
     <Compile Include="Controller\DeleteSupplierDishResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
+    <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />

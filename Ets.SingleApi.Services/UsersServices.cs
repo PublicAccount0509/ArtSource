@@ -35,6 +35,16 @@
         private readonly INHibernateRepository<AutorizationEntity> autorizationEntityRepository;
 
         /// <summary>
+        /// 字段loginEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 7:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
+
+        /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -148,6 +158,7 @@
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
         /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
+        /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="customerFavoriteEntityRepository">The customerFavoriteEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
@@ -166,6 +177,7 @@
         /// ----------------------------------------------------------------------------------------
         public UsersServices(
             INHibernateRepository<AutorizationEntity> autorizationEntityRepository,
+            INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<CustomerFavoriteEntity> customerFavoriteEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
@@ -179,6 +191,7 @@
             List<IExists> existsList)
         {
             this.autorizationEntityRepository = autorizationEntityRepository;
+            this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.customerFavoriteEntityRepository = customerFavoriteEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
@@ -263,6 +276,14 @@
             if (!customerModel.Avatar.IsEmptyOrNull())
             {
                 customerModel.Avatar = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl.Trim('/'), customerModel.Avatar.TrimStart('/'));
+            }
+
+            if (customerModel.Telephone.IsEmptyOrNull())
+            {
+                customerModel.Telephone =
+                    this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == customerModel.UserId)
+                        .Select(p => p.Username)
+                        .FirstOrDefault();
             }
 
             return new ServicesResult<CustomerModel>

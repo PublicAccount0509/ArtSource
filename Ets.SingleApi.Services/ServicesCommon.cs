@@ -100,6 +100,25 @@
         }
 
         /// <summary>
+        /// 百度地图AK
+        /// </summary>
+        /// <value>
+        /// 百度地图AK
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string BaiduMapAk
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["BaiduMapAk"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
         /// 图片服务器地址
         /// </summary>
         /// <value>

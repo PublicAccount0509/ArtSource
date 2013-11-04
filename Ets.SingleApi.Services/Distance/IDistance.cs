@@ -34,6 +34,7 @@
         /// </summary>
         /// <param name="locationA">The locationA</param>
         /// <param name="locationB">The locationB</param>
+        /// <param name="gs">The gs</param>
         /// <returns>
         /// 距离
         /// </returns>
@@ -42,6 +43,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        double GetDistance(Location locationA, Location locationB);
+        double GetDistance(Location locationA, Location locationB, GaussSphere gs);
     }
 }

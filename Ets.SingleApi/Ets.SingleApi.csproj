@@ -250,9 +250,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cert\testMer.key.der" />
-    <Content Include="cert\testUmpay.cert.crt" />
+    <Content Include="cert\7378_YiTaoXingKong.key.der" />
+    <Content Include="cert\cert_2d59.crt" />
     <None Include="Properties\PublishProfiles\SingleApi.pubxml" />
+    <Content Include="umpayCfg.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -284,7 +287,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>copy $(SolutionDir)lib\umpayCfg.ini $(SolutionDir)$(ProjectName)\$(OutDir)</PostBuildEvent>
+    <PostBuildEvent>copy $(SolutionDir)lib\JsonValue $(SolutionDir)$(ProjectName)\$(OutDir)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

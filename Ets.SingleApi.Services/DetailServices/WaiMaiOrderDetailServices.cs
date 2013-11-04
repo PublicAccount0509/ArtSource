@@ -97,6 +97,16 @@
         private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
 
         /// <summary>
+        /// 字段regionEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 6:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<RegionEntity> regionEntityRepository;
+
+        /// <summary>
         /// 字段smsDetailServices
         /// </summary>
         /// 创建者：周超
@@ -126,6 +136,7 @@
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
+        /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="orderNumber">The orderNumber</param>
         /// 创建者：周超
@@ -141,6 +152,7 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
+            INHibernateRepository<RegionEntity> regionEntityRepository,
             ISmsDetailServices smsDetailServices,
             IOrderNumber orderNumber)
         {
@@ -151,6 +163,7 @@
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
+            this.regionEntityRepository = regionEntityRepository;
             this.smsDetailServices = smsDetailServices;
             this.orderNumber = orderNumber;
         }
@@ -428,6 +441,9 @@
                     Result = new ConfirmWaiMaiOrderModel()
                 };
             }
+
+            var regionName = this.regionEntityRepository.EntityQueryable.Where(p => p.Id == customerAddressEntity.CountryId)
+                            .Select(p => p.Name).FirstOrDefault() ?? string.Empty;
 
             var deliveryAddressEntity = new DeliveryAddressEntity
             {
