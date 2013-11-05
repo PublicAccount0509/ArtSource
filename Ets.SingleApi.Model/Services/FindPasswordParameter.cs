@@ -15,6 +15,19 @@
     public class FindPasswordParameter
     {
         /// <summary>
+        /// Gets or sets the UserName of FindPasswordParameter
+        /// </summary>
+        /// <value>
+        /// The UserName
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/16 23:53
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string UserName { get; set; }
+
+        /// <summary>
         /// Gets or sets the WayList of FindPasswordParameter
         /// </summary>
         /// <value>

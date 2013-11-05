@@ -60,7 +60,6 @@
         /// <summary>
         /// 找回密码
         /// </summary>
-        /// <param name="userId">The userId</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回找回密码结果
@@ -70,6 +69,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> FindPassword(int userId, FindPasswordParameter parameter);
+        ServicesResult<bool> FindPassword(FindPasswordParameter parameter);
     }
 }

@@ -55,6 +55,16 @@
         private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
 
         /// <summary>
+        /// 字段customerEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/5/2013 5:27 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
+
+        /// <summary>
         /// 字段smsDetailServices
         /// </summary>
         /// 创建者：周超
@@ -90,6 +100,7 @@
         /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
         /// <param name="tokenEntityRepository">The tokenEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
+        /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="loginList">The loginList</param>
         /// <param name="sendPasswordList">The sendPasswordList</param>
@@ -102,6 +113,7 @@
             INHibernateRepository<AutorizationEntity> autorizationEntityRepository,
             INHibernateRepository<TokenEntity> tokenEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
+            INHibernateRepository<CustomerEntity> customerEntityRepository,
             ISmsDetailServices smsDetailServices,
             List<ILogin> loginList,
             List<ISendPassword> sendPasswordList)
@@ -109,6 +121,7 @@
             this.autorizationEntityRepository = autorizationEntityRepository;
             this.tokenEntityRepository = tokenEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
+            this.customerEntityRepository = customerEntityRepository;
             this.smsDetailServices = smsDetailServices;
             this.loginList = loginList;
             this.sendPasswordList = sendPasswordList;
@@ -375,7 +388,6 @@
         /// <summary>
         /// 找回密码
         /// </summary>
-        /// <param name="userId">The userId</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回找回密码结果
@@ -385,7 +397,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> FindPassword(int userId, FindPasswordParameter parameter)
+        public ServicesResult<bool> FindPassword(FindPasswordParameter parameter)
         {
             if (parameter == null)
             {
@@ -396,12 +408,31 @@
                 };
             }
 
-            var loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == userId);
+            if (parameter.UserName.IsEmptyOrNull())
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                };
+            }
+
+            var customerEntity = this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Mobile == parameter.UserName || p.Email == parameter.UserName);
+            if (customerEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                };
+            }
+
+            var loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == customerEntity.LoginId);
             if (loginEntity == null)
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode,
                     Result = false
                 };
             }

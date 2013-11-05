@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model.Controller;
 
@@ -21,6 +22,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
+    [TokenFilter]
     public class WapOrdersController : SingleApiController
     {
         /// <summary>
@@ -63,6 +65,18 @@
         [HttpGet]
         public WaiMaiOrderResponse WaiMaiOrder(int id, int userId)
         {
+            if (!this.ValidateUserId(userId))
+            {
+                return new WaiMaiOrderResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = new WaiMaiOrderDetail()
+                };
+            }
+
             var getWaiMaiOrderResult = this.orderServices.GetWaiMaiOrder(id, userId);
             if (getWaiMaiOrderResult.Result == null)
             {
@@ -136,6 +150,18 @@
                 };
             }
 
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new AddWaiMaiOrderResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = new AddWaiMaiOrderResult()
+                };
+            }
+
             var dishList = requst.DishList ?? new List<AddWaiMaiOrderDish>();
             var addWaiMaiOrderResult = this.orderServices.AddWaiMaiOrder(new AddWaiMaiOrderParameter
             {
@@ -196,6 +222,18 @@
                 };
             }
 
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new ConfirmWaiMaiOrderResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = new ConfirmWaiMaiOrderResult()
+                };
+            }
+
             var confirmWaiMaiOrderResult = this.orderServices.ConfirmWaiMaiOrder(new ConfirmWaiMaiOrderParameter
                 {
                     UserId = requst.UserId,
@@ -241,6 +279,18 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    },
+                    Result = new PaymentWaiMaiOrderResult()
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new PaymentWaiMaiOrderResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     },
                     Result = new PaymentWaiMaiOrderResult()
                 };

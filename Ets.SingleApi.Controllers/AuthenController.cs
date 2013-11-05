@@ -241,7 +241,6 @@
         /// <summary>
         /// 找回密码
         /// </summary>
-        /// <param name="id">The id</param>
         /// <param name="requst">The requst</param>
         /// <returns>
         /// The FindPasswordResponse
@@ -252,8 +251,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        [TokenFilter]
-        public FindPasswordResponse FindPassword(int id, FindPasswordRequst requst)
+        public FindPasswordResponse FindPassword(FindPasswordRequst requst)
         {
             if (requst == null)
             {
@@ -262,17 +260,6 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
-                };
-            }
-
-            if (!this.ValidateUserId(id))
-            {
-                return new FindPasswordResponse
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
                     }
                 };
             }
@@ -295,8 +282,9 @@
                                                 AccountType = (PasswordType)p.AccountType
                                             }).ToList();
 
-            var findPasswordResult = this.authenServices.FindPassword(id, new FindPasswordParameter
+            var findPasswordResult = this.authenServices.FindPassword(new FindPasswordParameter
             {
+                UserName = (requst.UserName ?? string.Empty).Trim(),
                 WayList = wayList
             });
 
