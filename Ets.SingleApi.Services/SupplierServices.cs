@@ -335,6 +335,14 @@
                 };
             }
 
+            if (parameter.SupplierGroupId == ServicesCommon.TestSupplierGroupId)
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                {
+                    Result = new List<GroupSupplierModel>()
+                };
+            }
+
             var queryable = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                              where supplierEntity.SupplierGroupId == parameter.SupplierGroupId
                              select new

@@ -328,6 +328,31 @@
         }
 
         /// <summary>
+        /// 测试集团Id
+        /// </summary>
+        /// <value>
+        /// 测试集团Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int TestSupplierGroupId
+        {
+            get
+            {
+                int supplierGroupId;
+                if (int.TryParse(ConfigurationManager.AppSettings["TestSupplierGroupId"] ?? string.Empty, out supplierGroupId))
+                {
+                    return supplierGroupId;
+                }
+
+                return 1;
+            }
+        }
+
+        /// <summary>
         /// 货到付款支付类型
         /// </summary>
         /// <value>
