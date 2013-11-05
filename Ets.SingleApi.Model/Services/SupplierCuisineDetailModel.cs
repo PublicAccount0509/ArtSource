@@ -1,7 +1,5 @@
 ﻿namespace Ets.SingleApi.Model.Services
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// 类名称：SupplierCuisineDetailModel
     /// 命名空间：Ets.SingleApi.Model.Services
@@ -78,18 +76,5 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int? CategoryNo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the SupplierDishList of SupplierCuisineDetailModel
-        /// </summary>
-        /// <value>
-        /// The SupplierDishList
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/15 13:02
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public List<SupplierDishDetailModel> SupplierDishList { get; set; }
     }
 }

@@ -13,19 +13,6 @@
     public class SupplierDishDetailModel
     {
         /// <summary>
-        /// Gets or sets the DishId of SupplierDishDetailModel
-        /// </summary>
-        /// <value>
-        /// The DishId
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/13 16:17
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int DishId { get; set; }
-
-        /// <summary>
         /// Gets or sets the SupplierDishId of SupplierDishDetailModel
         /// </summary>
         /// <value>
@@ -39,7 +26,7 @@
         public int SupplierDishId { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDishName of DishModel
+        /// Gets or sets the SupplierDishName of SupplierDishDetailModel
         /// </summary>
         /// <value>
         /// The Name
