@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi
 {
+    using System;
     using System.Web.Http;
     using System.Web.Mvc;
 
@@ -27,30 +28,37 @@
         /// ----------------------------------------------------------------------------------------
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            try
+            {
+                AreaRegistration.RegisterAllAreas();
 
-            //注册路由
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
-            WapWebApiConfig.Register(GlobalConfiguration.Configuration);
+                //注册路由
+                WebApiConfig.Register(GlobalConfiguration.Configuration);
+                WapWebApiConfig.Register(GlobalConfiguration.Configuration);
 
-            //注册Filters
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                //注册Filters
+                FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
-            //注册castle组件
-            CastleUtility.Register(GlobalConfiguration.Configuration);
+                //注册castle组件
+                CastleUtility.Register(GlobalConfiguration.Configuration);
 
-            //注册log4net组件
-            Log4NetUtility.Register();
+                //注册log4net组件
+                Log4NetUtility.Register();
 
-            //注册log4net组件
-            StatusUtility.Register();
+                //注册log4net组件
+                StatusUtility.Register();
 
-            //注册缓存
-            CacheUtility.Register();
+                //注册缓存
+                CacheUtility.Register();
 
-            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+                GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
-            //RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
+                //RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
+            }
+            catch (Exception exception)
+            {
+                exception.WriteLog("Ets.SingleApi.System");
+            }
         }
     }
 }

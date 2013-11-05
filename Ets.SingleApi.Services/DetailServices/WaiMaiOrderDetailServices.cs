@@ -6,6 +6,7 @@
 
     using Castle.Services.Transaction;
 
+    using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.DetailServices;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
@@ -97,26 +98,6 @@
         private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
 
         /// <summary>
-        /// 字段regionEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/4/2013 6:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<RegionEntity> regionEntityRepository;
-
-        /// <summary>
-        /// 字段smsDetailServices
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 8:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly ISmsDetailServices smsDetailServices;
-
-        /// <summary>
         /// 字段orderNumber
         /// </summary>
         /// 创建者：周超
@@ -125,6 +106,16 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly IOrderNumber orderNumber;
+
+        /// <summary>
+        /// 字段distance
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/5/2013 9:59 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IDistance distance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderDetailServices" /> class.
@@ -136,9 +127,8 @@
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
-        /// <param name="regionEntityRepository">The regionEntityRepository</param>
-        /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="orderNumber">The orderNumber</param>
+        /// <param name="distance">The distance</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -152,9 +142,8 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
-            INHibernateRepository<RegionEntity> regionEntityRepository,
-            ISmsDetailServices smsDetailServices,
-            IOrderNumber orderNumber)
+            IOrderNumber orderNumber,
+            IDistance distance)
         {
             this.customerEntityRepository = customerEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
@@ -163,9 +152,8 @@
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
-            this.regionEntityRepository = regionEntityRepository;
-            this.smsDetailServices = smsDetailServices;
             this.orderNumber = orderNumber;
+            this.distance = distance;
         }
 
         /// <summary>
@@ -442,9 +430,6 @@
                 };
             }
 
-            var regionName = this.regionEntityRepository.EntityQueryable.Where(p => p.Id == customerAddressEntity.CountryId)
-                            .Select(p => p.Name).FirstOrDefault() ?? string.Empty;
-
             var deliveryAddressEntity = new DeliveryAddressEntity
             {
                 Recipient = customerAddressEntity.Recipient,
@@ -461,6 +446,7 @@
             };
             this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
 
+
             var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == parameter.OrderId && p.CustomerId == customerId);
             deliveryEntity.RealSupplierType = parameter.RealSupplierType;
             deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
@@ -470,23 +456,46 @@
                 deliveryEntity.OrderStatusId = 5;
             }
 
+            if (deliveryEntity.SupplierId == null)
+            {
+                this.deliveryEntityRepository.Save(deliveryEntity);
+
+                return new DetailServicesResult<ConfirmWaiMaiOrderModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = new ConfirmWaiMaiOrderModel
+                    {
+                        OrderId = parameter.OrderId
+                    }
+                };
+            }
+
+            var supplierLocation = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == deliveryEntity.SupplierId)
+                  .Select(p => new { p.BaIduLat, p.BaIduLong })
+                  .FirstOrDefault();
+
+            if (supplierLocation == null)
+            {
+                this.deliveryEntityRepository.Save(deliveryEntity);
+
+                return new DetailServicesResult<ConfirmWaiMaiOrderModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = new ConfirmWaiMaiOrderModel
+                    {
+                        OrderId = parameter.OrderId
+                    }
+                };
+            }
+
+            var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.AddressAlias, customerAddressEntity.Address2), string.Empty);
+            double baIduLat;
+            double baIduLong;
+            double.TryParse(supplierLocation.BaIduLat, out baIduLat);
+            double.TryParse(supplierLocation.BaIduLong, out baIduLong);
+
+            deliveryEntity.DeliveryDistance = distance.GetDistance(customerLocation, new Location { Lat = baIduLat, Lng = baIduLong }, GaussSphere.Beijing54);
             this.deliveryEntityRepository.Save(deliveryEntity);
-
-            //var code = CommonUtility.RandNum(6);
-            //CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, customer.Mobile), code, DateTime.Now.AddMinutes(5));
-
-            //var result = this.smsDetailServices.SendSms(customer.Mobile, string.Format("{0}", code));
-            //if (result == null)
-            //{
-            //    return new DetailServicesResult<ConfirmWaiMaiOrderModel>
-            //    {
-            //        Result = new ConfirmWaiMaiOrderModel
-            //        {
-            //            OrderId = parameter.OrderId
-            //        },
-            //        StatusCode = (int)StatusCode.General.SmsSendError
-            //    };
-            //}
 
             return new DetailServicesResult<ConfirmWaiMaiOrderModel>
             {

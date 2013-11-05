@@ -21,7 +21,7 @@
 		<property name="AddressAlias" column="AddressAlias" type="String" not-null="false" />
 		<property name="Recipient" column="Recipient" type="String" not-null="false" />
 		<property name="Plane" column="Plane" type="String" not-null="false" />
-		<property name="Sex" column="Sex" type="Byte" not-null="false" />
+		<property name="Sex" column="Sex" type="Int32" not-null="false" />
 		<property name="IsDel" column="IsDel" type="Boolean" not-null="false" />
 		<property name="Type" column="Type" type="Int32" not-null="false" />
 		<property name="SupplierId" column="SupplierId" type="Int32" not-null="false" />
