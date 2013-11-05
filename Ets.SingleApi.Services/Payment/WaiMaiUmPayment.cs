@@ -121,30 +121,11 @@
             ht.Add("charset", "UTF-8"); // 字符编码
             ht.Add("version", "4.0"); //版本号
             ht.Add("mer_id", "7378"); //商户号
-            ht.Add("ret_url", string.Empty); // Request.Params["ret_url"]; //页面返回地址
-            ht.Add("notify_url", string.Empty); //结果通讯地址
-            //ht.Add("goods_id", goods_id); //商品号
-            //ht.Add("goods_inf", goods_inf); //商品信息
-            //ht.Add("media_id", media_id); //媒介标识
-            //ht.Add("media_type", media_type); //媒介类型
             ht.Add("order_id", umPaymentData.OrderId);  //订单号
             ht.Add("mer_date", umPaymentData.PayDate.ToString("yyyyMMdd")); //订单日期
             ht.Add("amount", AmountToString(umPaymentData.Amount)); //金额,格式为圆角分，例如:3456表示34圆5角6分
             ht.Add("amt_type", "RMB"); //金额类型
-            //ht.Add("pay_type", pay_type); //支付方式
-            //ht.Add("gate_id", gate_id);  //默认银行
             ht.Add("mer_priv", "delivery"); //商户私有信息
-            //ht.Add("expand", expand);  //商户扩展信息
-            //ht.Add("user_ip", user_ip); //用户IP地址
-            //ht.Add("expire_time", expire_time); //订单过期时常
-            //string aaa = "";
-            //foreach (DictionaryEntry  item in ht)
-            //{
-            //     aaa += item.Key;
-            //     aaa += "|";
-            //     aaa += item.Value;
-            //}
-            //throw new Exception(aaa);
             var reqData = com.umpay.api.paygate.v40.Mer2Plat_v40.ReqDataByGet(ht); //标准支付下单
             var request = this.HttpGet(reqData.Url); //请求结果
             var req = com.umpay.api.paygate.v40.Plat2Mer_v40.getResData(request); //解析html
@@ -190,10 +171,8 @@
             ht.Add("service", "query_order"); // 接口名称 pay_req:一般支付请求 pay_req_ivr_call:IVR支付方式下单 pay_req_ivr_tcall:IVR转呼方式下单
             ht.Add("sign_type", "RSA"); // 签名方式
             ht.Add("charset", "UTF-8"); // 字符编码
-            //ht.Add("sign", "UTF-8"); // 字符编码
             ht.Add("version", "4.0"); //版本号
             ht.Add("mer_id", "7378"); //商户号
-            //ht.Add("res_format", "");
             ht.Add("order_id", umPaymentQueryData.OrderId);  //订单号
             ht.Add("mer_date", umPaymentQueryData.PayDate.ToString("yyyyMMdd")); //订单日期
             var reqData = com.umpay.api.paygate.v40.Mer2Plat_v40.ReqDataByGet(ht); //标准支付下单

@@ -88,7 +88,7 @@
                                   {
                                       OrderId = requst.OrderId,
                                       Amount = requst.Amount,
-                                      PayDate = requst.PayDate,
+                                      PayDate = System.DateTime.Now,
                                       OrderType = requst.OrderType
                                   });
 
@@ -148,7 +148,7 @@
             var umPaymentStateResult = this.paymentServices.UmPaymentState(new UmPaymentStateParameter
             {
                 OrderId = requst.OrderId,
-                PayDate = requst.PayDate,
+                PayDate = System.DateTime.Now,
                 OrderType = requst.OrderType
             });
 
