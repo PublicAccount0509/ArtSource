@@ -494,6 +494,8 @@
             double.TryParse(supplierLocation.BaIduLat, out baIduLat);
             double.TryParse(supplierLocation.BaIduLong, out baIduLong);
 
+            deliveryEntity.Lat = customerLocation.Lat;
+            deliveryEntity.Lng = customerLocation.Lng;
             deliveryEntity.DeliveryDistance = distance.GetDistance(customerLocation, new Location { Lat = baIduLat, Lng = baIduLong }, GaussSphere.Beijing54);
             this.deliveryEntityRepository.Save(deliveryEntity);
 
