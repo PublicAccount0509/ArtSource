@@ -100,6 +100,32 @@
         }
 
         /// <summary>
+        /// 外卖短信验有效时间
+        /// </summary>
+        /// <value>
+        /// 短信验证码有效时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int PasswordMinLength
+        {
+            get
+            {
+                var passwordMinLength = ConfigurationManager.AppSettings["PasswordMinLength"] ?? "6";
+                int result;
+                if (!int.TryParse(passwordMinLength, out result))
+                {
+                    result = 6;
+                }
+
+                return result <= 0 ? 6 : result;
+            }
+        }
+
+        /// <summary>
         /// 百度地图AK
         /// </summary>
         /// <value>

@@ -91,19 +91,38 @@
         /// ----------------------------------------------------------------------------------------
         public LoginData Login(string userName, string password)
         {
-            var customer = this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Email == userName);
-            if (customer == null || !customer.LoginId.HasValue)
-            {
-                return new LoginData { StatusCode = (int)StatusCode.Validate.InvalidUserNameCode };
-            }
-
             if (password.IsEmptyOrNull())
             {
                 return new LoginData { StatusCode = (int)StatusCode.Validate.InvalidPasswordCode };
             }
 
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Email == userName)
+                   .Select(p => new { p.LoginId })
+                   .FirstOrDefault();
+
+            var login = customer == null ? this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName)
+                 .Select(p => new { p.LoginId })
+                 .FirstOrDefault() : null;
+
+            if (customer == null && login == null)
+            {
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                };
+            }
+
+            var loginId = customer == null ? login.LoginId : customer.LoginId;
+            if (loginId == null)
+            {
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                };
+            }
+
             password = password.Md5();
-            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == customer.LoginId && p.Password == password).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == loginId && p.Password == password).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
             if (loginEntity == null)
             {
                 return new LoginData

@@ -327,6 +327,15 @@
                 };
             }
 
+            if (parameter.OldPassword.IsEmptyOrNull())
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidPasswordCode,
+                    Result = false
+                };
+            }
+
             if (parameter.NewPasswrod.IsEmptyOrNull())
             {
                 return new ServicesResult<bool>
@@ -346,7 +355,7 @@
                     };
             }
 
-            var oldPassword = parameter.OldPassword.IsEmptyOrNull() ? string.Empty : parameter.OldPassword;
+            var oldPassword = parameter.OldPassword;
             if (!string.Equals(loginEntity.Password, oldPassword.Md5(), StringComparison.OrdinalIgnoreCase))
             {
                 return new ServicesResult<bool>
@@ -447,7 +456,7 @@
                 };
             }
 
-            var code = CommonUtility.RandNum(6);
+            var code = CommonUtility.RandNum(ServicesCommon.PasswordMinLength);
             loginEntity.Password = code.Md5();
             this.loginEntityRepository.Save(loginEntity);
 
