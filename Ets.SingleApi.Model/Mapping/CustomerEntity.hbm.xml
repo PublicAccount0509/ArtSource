@@ -73,6 +73,7 @@
     <return-scalar column="OrderType" type="Int32" />
     <return-scalar column="SupplierId" type="Int32" />
     <return-scalar column="SupplierName" type="String" />
+    <return-scalar column="DeliveryMethodId" type="String" />
     exec Pro_QueryUserOrderList :CustomerID,:OrderStatusID,:PageIndex,:PageSize
   </sql-query>
 </hibernate-mapping>

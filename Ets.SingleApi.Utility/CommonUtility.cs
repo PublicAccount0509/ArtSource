@@ -500,6 +500,34 @@
         }
 
         /// <summary>
+        /// 将Object类型转换为Int32
+        /// </summary>
+        /// <param name="obj">待转换的值</param>
+        /// <returns>
+        /// 返回转换后的值
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/18 21:39
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int? ObjectToIntObject(this object obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+
+            int result;
+            if (int.TryParse(obj.ToString(), out result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// 将Object类型转换为Double
         /// </summary>
         /// <param name="obj">待转换的值</param>

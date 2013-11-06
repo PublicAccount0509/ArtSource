@@ -106,6 +106,7 @@
                     Coupon = getWaiMaiOrderResult.Result.Coupon == null ? "0.00" : getWaiMaiOrderResult.Result.Coupon.Value.ToString("#0.00"),
                     Total = getWaiMaiOrderResult.Result.Total == null ? "0.00" : getWaiMaiOrderResult.Result.Total.Value.ToString("#0.00"),
                     RealSupplierType = getWaiMaiOrderResult.Result.RealSupplierType,
+                    DeliveryMethodId = getWaiMaiOrderResult.Result.DeliveryMethodId,
                     DishList = dishList.Select(p => new WaiMaiOrderDish
                         {
                             SupplierDishName = p.SupplierDishName,

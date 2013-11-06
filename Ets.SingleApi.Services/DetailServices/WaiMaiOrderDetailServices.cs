@@ -227,6 +227,7 @@
                     SupplierName = supplierEntity.SupplierName,
                     SupplierTelephone = supplierEntity.Telephone,
                     SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
+                    DeliveryMethodId = deliveryEntity.DeliveryMethodId,
                     DishList = waiMaiOrderDishList
                 };
 

@@ -138,7 +138,8 @@
                                     OrderType = item[5].ObjectToInt(),
                                     SupplierId = item[6].ObjectToInt(),
                                     SupplierName = item[7].ObjectToString(),
-                                    OrderStatus = string.Empty
+                                    OrderStatus = string.Empty,
+                                    DeliveryMethodId = item[8].ObjectToIntObject()
                                 }).ToList();
 
             var supplierIdList = orderList.Where(p => p.OrderType == (int)OrderType.WaiMai).Select(p => p.SupplierId).ToList();
@@ -193,7 +194,8 @@
                 OrderStatusId = p.OrderStatusId,
                 OrderStatus = p.OrderStatus,
                 OrderType = p.OrderType,
-                DineNumber = p.DineNumber
+                DineNumber = p.DineNumber,
+                DeliveryMethodId = p.DeliveryMethodId
             }).ToList();
         }
 

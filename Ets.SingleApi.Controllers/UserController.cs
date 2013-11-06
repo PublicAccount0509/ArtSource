@@ -596,7 +596,8 @@
                 OrderStatusId = p.OrderStatusId ?? 0,
                 OrderStatus = (p.OrderStatus ?? string.Empty),
                 OrderType = p.OrderType,
-                DineNumber = p.DineNumber ?? 0
+                DineNumber = p.DineNumber ?? 0,
+                DeliveryMethodId = p.DeliveryMethodId
             }).ToList();
 
             return new UserOrderListResponse
