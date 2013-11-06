@@ -222,6 +222,7 @@
                     DeliveryInstruction = deliveryEntity.DeliveryInstruction,
                     CustomerTotal = deliveryEntity.CustomerTotal,
                     Total = deliveryEntity.Total,
+                    RealSupplierType = deliveryEntity.RealSupplierType,
                     SupplierId = supplierEntity.SupplierId,
                     SupplierName = supplierEntity.SupplierName,
                     SupplierTelephone = supplierEntity.Telephone,

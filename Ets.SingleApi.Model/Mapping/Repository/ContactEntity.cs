@@ -117,7 +117,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte? sex;
+		private int? sex;
 
 			/// <summary>
 		/// The SupplierContactList
@@ -329,7 +329,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte? Sex
+		public virtual int? Sex
 		{
             get
             {

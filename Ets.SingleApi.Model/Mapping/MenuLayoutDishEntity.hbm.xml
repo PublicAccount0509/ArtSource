@@ -12,7 +12,7 @@
 		<property name="SortOrder" column="SortOrder" type="Int32" not-null="false" />
 		<property name="Operator" column="Operator" type="Int32" not-null="false" />
 		<property name="CreateTime" column="CreateTime" type="Timestamp" not-null="false" />
-		<property name="Type" column="Type" type="Byte" not-null="false" />
+		<property name="Type" column="Type" type="Int32" not-null="false" />
 		<!--The foreign keys-->
 		<many-to-one name="LayoutSupplier" class="Ets.SingleApi.Model.Repository.MenuLayoutSupplierEntity, Ets.SingleApi.Model" column="LayoutSupplierId" />
 		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierId" />

@@ -107,7 +107,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte appType;
+		private int appType;
 
 			/// <summary>
 		/// The Status
@@ -117,7 +117,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte status;
+		private int status;
 
 			/// <summary>
 		/// The CreatedTime
@@ -137,7 +137,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte appLevel;
+		private int appLevel;
 
 			/// <summary>
 		/// The Version
@@ -157,7 +157,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte? versionType;
+		private int? versionType;
 
 			/// <summary>
 		/// The VersionLog
@@ -416,7 +416,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte AppType
+		public virtual int AppType
 		{
             get
             {
@@ -437,7 +437,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte Status
+		public virtual int Status
 		{
             get
             {
@@ -479,7 +479,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte AppLevel
+		public virtual int AppLevel
 		{
             get
             {
@@ -521,7 +521,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte? VersionType
+		public virtual int? VersionType
 		{
             get
             {

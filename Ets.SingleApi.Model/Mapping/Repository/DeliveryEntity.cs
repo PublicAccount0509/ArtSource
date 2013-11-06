@@ -317,7 +317,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        private byte? deliverSourcs;
+        private int? deliverSourcs;
 
         /// <summary>
         /// The SendingPersonID
@@ -447,7 +447,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        private byte? checkStatus;
+        private int? checkStatus;
 
         /// <summary>
         /// The HandOverStatus
@@ -457,7 +457,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        private byte? handOverStatus;
+        private int? handOverStatus;
 
         /// <summary>
         /// The Lat
@@ -1266,7 +1266,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public virtual byte? DeliverSourcs
+        public virtual int? DeliverSourcs
         {
             get
             {
@@ -1539,7 +1539,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public virtual byte? CheckStatus
+        public virtual int? CheckStatus
         {
             get
             {
@@ -1560,7 +1560,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public virtual byte? HandOverStatus
+        public virtual int? HandOverStatus
         {
             get
             {

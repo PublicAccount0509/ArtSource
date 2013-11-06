@@ -57,7 +57,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte dishNumber;
+		private int dishNumber;
 
 			/// <summary>
 		/// The CreateTime
@@ -181,7 +181,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte DishNumber
+		public virtual int DishNumber
 		{
             get
             {

@@ -86,7 +86,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private byte? type;
+		private int? type;
 
 			/// <summary>
 		/// The LayoutSupplierId
@@ -249,7 +249,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual byte? Type
+		public virtual int? Type
 		{
             get
             {

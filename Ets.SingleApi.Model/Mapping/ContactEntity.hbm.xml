@@ -15,7 +15,7 @@
 		<property name="Fax" column="Fax" type="String" not-null="false" />
 		<property name="Email" column="Email" type="String" not-null="false" />
 		<property name="Mapimages" column="Mapimages" type="String" not-null="false" />
-		<property name="Sex" column="Sex" type="Byte" not-null="false" />
+		<property name="Sex" column="Sex" type="Int32" not-null="false" />
 		<!--The foreign keys-->
 		<bag name="SupplierContactList" cascade="none" lazy="true" table="SupplierContact">
 			<key column="ContactID" />

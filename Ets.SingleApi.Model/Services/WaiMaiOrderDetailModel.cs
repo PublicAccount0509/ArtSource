@@ -120,6 +120,19 @@
         public int? SupplierId { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of the real supplier.
+        /// </summary>
+        /// <value>
+        /// The type of the real supplier.
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/6/2013 11:13 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? RealSupplierType { get; set; }
+
+        /// <summary>
         /// 设置或取得餐厅名称
         /// </summary>
         /// <value>

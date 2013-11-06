@@ -35,7 +35,7 @@
     <property name="InvoiceTitle" column="InvoiceTitle" type="String" not-null="false" />
     <property name="PackagingFee" column="PackagingFee" type="Decimal" not-null="false" />
     <property name="DeliverCharge" column="DeliverCharge" type="Decimal" not-null="false" />
-    <property name="DeliverSourcs" column="DeliverSourcs" type="Byte" not-null="false" />
+    <property name="DeliverSourcs" column="DeliverSourcs" type="Int32" not-null="false" />
     <property name="SendingPersonId" column="SendingPersonID" type="Int32" not-null="false" />
     <property name="LogisticsTakeFoodTime" column="LogisticsTakeFoodTime" type="Timestamp" not-null="false" />
     <property name="OrderNumber" column="OrderNumber" type="Int32" not-null="false" />
@@ -48,8 +48,8 @@
     <property name="RealSupplierType" column="RealSupplierType" type="Int32" not-null="false" />
     <property name="IsTakeInvoice" column="IsTakeInvoice" type="Boolean" not-null="false" />
     <property name="AddedTime" column="AddedTime" type="Timestamp" not-null="false" />
-    <property name="CheckStatus" column="CheckStatus" type="Byte" not-null="false" />
-    <property name="HandOverStatus" column="HandOverStatus" type="Byte" not-null="false" />
+    <property name="CheckStatus" column="CheckStatus" type="Int32" not-null="false" />
+    <property name="HandOverStatus" column="HandOverStatus" type="Int32" not-null="false" />
     <property name="Lat" column="Lat" type="Double" not-null="false" />
     <property name="Lng" column="Lng" type="Double" not-null="false" />
     <property name="LogisticsId" column="LogisticsId" type="String" not-null="false" />

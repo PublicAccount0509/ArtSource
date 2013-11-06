@@ -14,12 +14,12 @@
 		<property name="RedirectUri" column="RedirectUri" type="String" />
 		<property name="Intro" column="Intro" type="String" not-null="false" />
 		<property name="HomeUri" column="HomeUri" type="String" not-null="false" />
-		<property name="AppType" column="AppType" type="Byte" />
-		<property name="Status" column="Status" type="Byte" />
+		<property name="AppType" column="AppType" type="Int32" />
+		<property name="Status" column="Status" type="Int32" />
 		<property name="CreatedTime" column="CreatedTime" type="Timestamp" />
-		<property name="AppLevel" column="AppLevel" type="Byte" />
+		<property name="AppLevel" column="AppLevel" type="Int32" />
 		<property name="Version" column="Version" type="String" not-null="false" />
-		<property name="VersionType" column="VersionType" type="Byte" not-null="false" />
+		<property name="VersionType" column="VersionType" type="Int32" not-null="false" />
 		<property name="VersionLog" column="VersionLog" type="String" not-null="false" />
 		<property name="DownloadUrl" column="DownloadUrl" type="String" not-null="false" />
 		<property name="Os" column="Os" type="String" not-null="false" />

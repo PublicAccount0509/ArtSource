@@ -9,7 +9,7 @@
 		</id>
 		<!--The propertys-->
 		<property name="Name" column="Name" type="String" />
-		<property name="DishNumber" column="DishNumber" type="Byte" />
+		<property name="DishNumber" column="DishNumber" type="Int32" />
 		<property name="CreateTime" column="CreateTime" type="Timestamp" not-null="false" />
 		<property name="ImgUrlX" column="ImgUrlX" type="String" not-null="false" />
 		<property name="ImgUrlZ" column="ImgUrlZ" type="String" not-null="false" />
