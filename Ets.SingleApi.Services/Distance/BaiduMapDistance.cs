@@ -59,6 +59,11 @@
                 return null;
             }
 
+            if (jsonValue["result"].JsonType == JsonType.Array)
+            {
+                return null;
+            }
+
             var location = jsonValue["result"].ContainsKey("location") ? jsonValue["result"]["location"] : null;
             if (location == null)
             {

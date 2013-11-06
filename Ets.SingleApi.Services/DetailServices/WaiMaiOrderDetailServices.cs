@@ -489,6 +489,20 @@
             }
 
             var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.AddressAlias, customerAddressEntity.Address2), string.Empty);
+            if (customerLocation == null)
+            {
+                this.deliveryEntityRepository.Save(deliveryEntity);
+
+                return new DetailServicesResult<ConfirmWaiMaiOrderModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = new ConfirmWaiMaiOrderModel
+                    {
+                        OrderId = parameter.OrderId
+                    }
+                };
+            }
+
             double baIduLat;
             double baIduLong;
             double.TryParse(supplierLocation.BaIduLat, out baIduLat);

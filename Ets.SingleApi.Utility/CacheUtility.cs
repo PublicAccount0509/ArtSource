@@ -205,6 +205,7 @@
         public object Get(string key)
         {
             var value = this.client.Get(key);
+            this.client.Delete(key);
             string.Format("Get({0}---{1})", key, value).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             return value;
         }
