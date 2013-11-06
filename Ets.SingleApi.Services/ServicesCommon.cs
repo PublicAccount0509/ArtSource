@@ -338,17 +338,24 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static int TestSupplierGroupId
+        public static List<int> TestSupplierGroupId
         {
             get
             {
-                int supplierGroupId;
-                if (int.TryParse(ConfigurationManager.AppSettings["TestSupplierGroupId"] ?? string.Empty, out supplierGroupId))
+                var list = (ConfigurationManager.AppSettings["TestSupplierGroupId"] ?? string.Empty).Split(',').ToList();
+                var supplierGroupIdList = new List<int>();
+                foreach (var item in list)
                 {
-                    return supplierGroupId;
+                    int supplierGroupId;
+                    if (!int.TryParse(item, out supplierGroupId))
+                    {
+                        continue;
+                    }
+
+                    supplierGroupIdList.Add(supplierGroupId);
                 }
 
-                return 1;
+                return supplierGroupIdList;
             }
         }
 

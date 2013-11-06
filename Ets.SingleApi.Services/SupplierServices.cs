@@ -243,9 +243,12 @@
 
             var serviceTime = timeTableDisplayList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime));
             supplier.ServiceTime = serviceTime.Trim();
-            supplier.ChainCount = supplier.SupplierGroupId == null
-                                      ? 0
-                                      : this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId);
+
+            if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
+            {
+                supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId);
+            }
+
             return new ServicesResult<SupplierDetailModel>
             {
                 Result = supplier
@@ -335,7 +338,7 @@
                 };
             }
 
-            if (parameter.SupplierGroupId == ServicesCommon.TestSupplierGroupId)
+            if (ServicesCommon.TestSupplierGroupId.Contains(parameter.SupplierGroupId))
             {
                 return new ServicesResultList<GroupSupplierModel>
                 {
