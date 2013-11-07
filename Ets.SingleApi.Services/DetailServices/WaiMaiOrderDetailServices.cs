@@ -212,7 +212,7 @@
                        Result = new WaiMaiOrderDetailModel()
                    };
             }
-
+            
             var result = new WaiMaiOrderDetailModel
                 {
                     OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
@@ -228,6 +228,7 @@
                     SupplierTelephone = supplierEntity.Telephone,
                     SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
                     DeliveryMethodId = deliveryEntity.DeliveryMethodId,
+                    IsPaid = deliveryEntity.IsPaId,
                     DishList = waiMaiOrderDishList
                 };
 

@@ -82,6 +82,7 @@
         /// </summary>
         /// <param name="customerId">用户Id</param>
         /// <param name="orderStatus">订单状态</param>
+        /// <param name="paidStatus">支付状态</param>
         /// <param name="pageSize">每页最大数量</param>
         /// <param name="pageIndex">页码</param>
         /// <returns>
@@ -92,7 +93,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex)
+        public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int? paidStatus, int pageSize, int? pageIndex)
         {
             var waiMaiOrderList = orderStatus == null
                                 ? this.GetWaiMaiOrderList(customerId, pageSize, pageIndex)

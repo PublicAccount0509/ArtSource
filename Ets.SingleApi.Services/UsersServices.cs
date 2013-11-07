@@ -736,6 +736,7 @@
         /// </summary>
         /// <param name="userId">用户Id</param>
         /// <param name="orderStatus">订单状态</param>
+        /// <param name="paidStatus">支付状态</param>
         /// <param name="orderType">订单类型</param>
         /// <param name="pageSize">每页最大数量</param>
         /// <param name="pageIndex">页码</param>
@@ -747,7 +748,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<UserOrderModel> GetUserOrderList(int userId, int? orderStatus, OrderType orderType, int pageSize, int? pageIndex)
+        public ServicesResultList<UserOrderModel> GetUserOrderList(int userId, int? orderStatus, int? paidStatus, OrderType orderType, int pageSize, int? pageIndex)
         {
             var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
             if (customerEntity == null)
@@ -770,7 +771,7 @@
                     };
             }
 
-            var userOrderResult = userOrder.GetUserOrderList(customerId, orderStatus, pageSize, pageIndex);
+            var userOrderResult = userOrder.GetUserOrderList(customerId, orderStatus, paidStatus, pageSize, pageIndex);
             if (userOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResultList<UserOrderModel>

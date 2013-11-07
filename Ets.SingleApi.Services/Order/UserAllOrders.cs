@@ -109,6 +109,7 @@
         /// </summary>
         /// <param name="customerId">用户Id</param>
         /// <param name="orderStatus">订单状态</param>
+        /// <param name="paidStatus">支付状态</param>
         /// <param name="pageSize">每页最大数量</param>
         /// <param name="pageIndex">页码</param>
         /// <returns>
@@ -119,11 +120,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int pageSize, int? pageIndex)
+        public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int? paidStatus, int pageSize, int? pageIndex)
         {
             var list = this.customerEntityRepository.NamedQuery("Pro_QueryUserOrderList")
                         .SetInt32("CustomerID", customerId)
                         .SetInt32("OrderStatusID", !orderStatus.HasValue ? -1 : orderStatus.Value)
+                        .SetInt32("PaidStatus", !paidStatus.HasValue ? -1 : paidStatus.Value)
                         .SetInt32("PageIndex", !pageIndex.HasValue ? -1 : pageIndex.Value)
                         .SetInt32("PageSize", pageSize).List();
 
@@ -139,7 +141,8 @@
                                     SupplierId = item[6].ObjectToInt(),
                                     SupplierName = item[7].ObjectToString(),
                                     OrderStatus = string.Empty,
-                                    DeliveryMethodId = item[8].ObjectToIntObject()
+                                    DeliveryMethodId = item[8].ObjectToIntObject(),
+                                    IsPaid = item[9].ObjectToBoolean()
                                 }).ToList();
 
             var supplierIdList = orderList.Where(p => p.OrderType == (int)OrderType.WaiMai).Select(p => p.SupplierId).ToList();
@@ -195,7 +198,8 @@
                 OrderStatus = p.OrderStatus,
                 OrderType = p.OrderType,
                 DineNumber = p.DineNumber,
-                DeliveryMethodId = p.DeliveryMethodId
+                DeliveryMethodId = p.DeliveryMethodId,
+                IsPaid = p.IsPaid
             }).ToList();
         }
 

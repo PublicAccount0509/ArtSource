@@ -546,6 +546,7 @@
         /// <param name="id">用户Id</param>
         /// <param name="orderType">订单类型</param>
         /// <param name="orderStatus">订单状态</param>
+        /// <param name="paidStatus">支付状态</param>
         /// <param name="pageSize">每页最大数量</param>
         /// <param name="pageIndex">页码</param>
         /// <returns>
@@ -558,7 +559,7 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public UserOrderListResponse UserOrderList(int id, int orderType, int? orderStatus, int pageSize, int? pageIndex)
+        public UserOrderListResponse UserOrderList(int id, int orderType, int? orderStatus, int? paidStatus, int pageSize, int? pageIndex)
         {
             if (!this.ValidateUserId(id))
             {
@@ -572,7 +573,7 @@
                 };
             }
 
-            var list = this.usersServices.GetUserOrderList(id, orderStatus, (OrderType)orderType, pageSize, pageIndex);
+            var list = this.usersServices.GetUserOrderList(id, orderStatus, paidStatus, (OrderType)orderType, pageSize, pageIndex);
 
             if (list.Result == null || list.Result.Count == 0)
             {
@@ -597,7 +598,8 @@
                 OrderStatus = (p.OrderStatus ?? string.Empty),
                 OrderType = p.OrderType,
                 DineNumber = p.DineNumber ?? 0,
-                DeliveryMethodId = p.DeliveryMethodId
+                DeliveryMethodId = p.DeliveryMethodId,
+                IsPaid = p.IsPaid ?? false
             }).ToList();
 
             return new UserOrderListResponse

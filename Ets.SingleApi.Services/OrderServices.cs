@@ -244,15 +244,6 @@
                 };
             }
 
-            if (!this.customerAddressEntityRepository.EntityQueryable.Any(p => p.CustomerAddressId == parameter.CustomerAddressId))
-            {
-                return new ServicesResult<ConfirmWaiMaiOrderModel>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdCode,
-                    Result = new ConfirmWaiMaiOrderModel()
-                };
-            }
-
             var result = this.waiMaiOrderDetailServices.ConfirmOrder(parameter);
             return new ServicesResult<ConfirmWaiMaiOrderModel>
             {
