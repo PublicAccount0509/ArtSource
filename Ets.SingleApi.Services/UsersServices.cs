@@ -867,7 +867,7 @@
                            ? telephone
                            : homePhone;
 
-            return phone.IsEmptyOrNull() ? telephone : homePhone;
+            return phone.IsEmptyOrNull() ? telephone : phone;
         }
     }
 }

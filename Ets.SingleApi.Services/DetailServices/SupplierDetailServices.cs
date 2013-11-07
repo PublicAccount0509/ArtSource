@@ -372,7 +372,9 @@
                        IsDel = false,
                        Online = true,
                        Supplier = supplierEntity,
-                       SupplierCategoryId = dish.CategoryId
+                       SupplierCategoryId = dish.CategoryId,
+                       QuanPin = dish.SupplierDishName.ToFullSpell(),
+                       JianPin = dish.SupplierDishName.ToSimpleSpell()
                    };
 
                 this.supplierDishEntityRepository.Save(supplierDishEntity);
@@ -467,6 +469,8 @@
                 supplierDishEntity.Recipe = dish.Recipe;
                 supplierDishEntity.Recommended = dish.Recommended;
                 supplierDishEntity.SupplierCategoryId = categoryIdList.Any(p => p == dish.CategoryId) ? (int?)dish.CategoryId : null;
+                supplierDishEntity.QuanPin = dish.SupplierDishName.ToFullSpell();
+                supplierDishEntity.JianPin = dish.SupplierDishName.ToSimpleSpell();
             }
 
             this.supplierDishEntityRepository.Save(supplierDishEntityList);
