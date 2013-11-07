@@ -223,7 +223,7 @@
         {
             get
             {
-                return ConfigurationManager.AppSettings["EmailAccount"] ?? string.Empty;
+                return ConfigurationManager.AppSettings["EmailAddress"] ?? string.Empty;
             }
         }
 
