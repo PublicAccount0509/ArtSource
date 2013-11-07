@@ -35,6 +35,16 @@
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
+        /// 字段supplierCuisineEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/7/2013 10:16 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository;
+
+        /// <summary>
         /// 字段supplierDishEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -118,6 +128,7 @@
         /// Initializes a new instance of the <see cref="SupplierServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
+        /// <param name="supplierCuisineEntityRepository">The supplierCuisineEntityRepository</param>
         /// <param name="supplierDishEntityRepository">The supplierDishEntityRepository</param>
         /// <param name="supplierDishImageEntityRepository">The supplierDishImageEntityRepository</param>
         /// <param name="supplierCategoryEntityRepository">The supplierCategoryEntityRepository</param>
@@ -133,6 +144,7 @@
         /// ----------------------------------------------------------------------------------------
         public SupplierServices(
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository,
             INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository,
             INHibernateRepository<SupplierDishImageEntity> supplierDishImageEntityRepository,
             INHibernateRepository<SupplierCategoryEntity> supplierCategoryEntityRepository,
@@ -143,6 +155,7 @@
             ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
+            this.supplierCuisineEntityRepository = supplierCuisineEntityRepository;
             this.supplierDishEntityRepository = supplierDishEntityRepository;
             this.supplierDishImageEntityRepository = supplierDishImageEntityRepository;
             this.supplierCategoryEntityRepository = supplierCategoryEntityRepository;
@@ -213,8 +226,19 @@
                     Telephone = tempSupplier.Telephone,
                     SupplierGroupId = tempSupplier.SupplierGroupId,
                     PackagingFee = tempSupplier.PackagingFee,
-                    FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge
+                    FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge,
+                    CuisineName = string.Empty
                 };
+
+            if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
+            {
+                supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId);
+            }
+
+            var supplierCuisineList = this.supplierCuisineEntityRepository.EntityQueryable.Where(p => p.Supplier.SupplierId == supplierId)
+                                      .Select(p => new { p.Cuisine.CuisineId, p.Cuisine.CuisineName })
+                                      .ToList();
+            supplier.CuisineName = string.Join(",", supplierCuisineList.Select(p => p.CuisineName).Where(p => !p.IsEmptyOrNull()).Distinct().ToList());
 
             var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
                                             where entity.SupplierId == supplierId
@@ -243,11 +267,6 @@
 
             var serviceTime = timeTableDisplayList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime));
             supplier.ServiceTime = serviceTime.Trim();
-
-            if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
-            {
-                supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId);
-            }
 
             return new ServicesResult<SupplierDetailModel>
             {
