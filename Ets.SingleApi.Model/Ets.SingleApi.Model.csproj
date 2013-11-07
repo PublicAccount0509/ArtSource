@@ -74,6 +74,8 @@
     <Compile Include="Controller\SaveSupplierDishResponse.cs" />
     <Compile Include="Controller\DeleteSupplierDishRequst.cs" />
     <Compile Include="Controller\DeleteSupplierDishResponse.cs" />
+    <Compile Include="Controller\SetDefaultCustomerAddressResponse.cs" />
+    <Compile Include="Controller\GetCustomerAddressResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />

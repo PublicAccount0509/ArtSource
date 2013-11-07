@@ -171,7 +171,7 @@
                     Address = (customerAddress.Address ?? string.Empty),
                     Name = (customerAddress.Name ?? string.Empty),
                     Telephone = (customerAddress.Telephone ?? string.Empty),
-                    IsDefault = customerAddress.IsDefault,
+                    IsDefault = customerAddress.IsDefault ?? false,
                     CityId = customerAddress.CityId,
                     CountyId = customerAddress.CountyId,
                     ProvinceId = customerAddress.ProvinceId,
@@ -201,7 +201,45 @@
         }
 
         /// <summary>
-        /// 保持用户地址
+        /// 取得用户地址
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="customerAddressId">用户地址Id</param>
+        /// <returns>
+        /// The CustomerAddressResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:41
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        [TokenFilter]
+        public GetCustomerAddressResponse CustomerAddress(int id, int customerAddressId)
+        {
+            if (!this.ValidateUserId(id))
+            {
+                return new GetCustomerAddressResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+
+            var saveCustomerAddressResult = this.usersServices.GetCustomerAddress(id, customerAddressId);
+            return new GetCustomerAddressResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveCustomerAddressResult.StatusCode
+                }
+            };
+        }
+
+        /// <summary>
+        /// 保存用户地址
         /// </summary>
         /// <param name="id">用户Id</param>
         /// <param name="requst">地址信息</param>
@@ -306,6 +344,44 @@
                 Message = new ApiMessage
                 {
                     StatusCode = deleteCustomerAddressResult.StatusCode
+                }
+            };
+        }
+
+        /// <summary>
+        /// 设置默认用户地址
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="customerAddressId">用户地址Id</param>
+        /// <returns>
+        /// The SetDefaultCustomerAddressResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:43
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public SetDefaultCustomerAddressResponse SetDefaultCustomerAddress(int id, int customerAddressId)
+        {
+            if (!this.ValidateUserId(id))
+            {
+                return new SetDefaultCustomerAddressResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+
+            var setDefaultCustomerAddressResult = this.usersServices.SetDefaultCustomerAddress(id, customerAddressId);
+            return new SetDefaultCustomerAddressResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = setDefaultCustomerAddressResult.StatusCode
                 }
             };
         }

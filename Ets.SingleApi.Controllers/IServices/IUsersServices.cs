@@ -32,6 +32,21 @@
         ServicesResult<CustomerModel> GetUser(int userId);
 
         /// <summary>
+        /// 获取用户地址
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="customerAddressId">用户地址Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<CustomerAddressModel> GetCustomerAddress(int userId, int customerAddressId);
+
+        /// <summary>
         /// 管理用户地址
         /// </summary>
         /// <param name="userId">用户Id</param>
@@ -60,6 +75,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> DeleteCustomerAddress(int userId, List<int> customerAddressIdList);
+
+        /// <summary>
+        /// 设置默认用户地址
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="customerAddressId">用户地址Id列表</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SetDefaultCustomerAddress(int userId, int customerAddressId);
 
         /// <summary>
         /// 注册用户

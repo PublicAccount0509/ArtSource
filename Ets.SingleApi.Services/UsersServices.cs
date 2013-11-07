@@ -293,6 +293,83 @@
         }
 
         /// <summary>
+        /// 获取用户地址
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="customerAddressId">用户地址Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<CustomerAddressModel> GetCustomerAddress(int userId, int customerAddressId)
+        {
+            var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
+            if (customerEntity == null)
+            {
+                return new ServicesResult<CustomerAddressModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = new CustomerAddressModel()
+                };
+            }
+
+            var customerAddressEntity = (from customerAddress in this.customerAddressEntityRepository.EntityQueryable
+                                         where customerAddress.CustomerId == customerEntity.CustomerId &&
+                                         customerAddress.CustomerAddressId == customerAddressId
+                                         select new
+                                         {
+                                             customerAddress.CustomerAddressId,
+                                             customerAddress.Address1,
+                                             customerAddress.AddressAlias,
+                                             customerAddress.Address2,
+                                             Name = customerAddress.Recipient,
+                                             customerAddress.Telephone,
+                                             HomePhone = customerAddress.Plane,
+                                             customerAddress.IsDefault,
+                                             customerAddress.CityId,
+                                             customerAddress.CountyId,
+                                             ProvinceId = customerAddress.CountryId,
+                                             customerAddress.RegionCode,
+                                             customerAddress.Sex
+                                         }).FirstOrDefault();
+
+            if (customerAddressEntity == null)
+            {
+                return new ServicesResult<CustomerAddressModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdCode,
+                    Result = new CustomerAddressModel()
+                };
+            }
+
+            var result = new CustomerAddressModel
+                {
+                    CustomerAddressId = customerAddressEntity.CustomerAddressId,
+                    Address = customerAddressEntity.Address2.IsEmptyOrNull()
+                            ? customerAddressEntity.AddressAlias
+                            : customerAddressEntity.Address2,
+                    Building = customerAddressEntity.Address1,
+                    Name = customerAddressEntity.Name,
+                    Telephone = this.GetTelephone(customerAddressEntity.Telephone, customerAddressEntity.HomePhone),
+                    IsDefault = customerAddressEntity.IsDefault,
+                    CityId = customerAddressEntity.CityId,
+                    CountyId = customerAddressEntity.CountyId,
+                    ProvinceId = customerAddressEntity.ProvinceId,
+                    RegionCode = customerAddressEntity.RegionCode,
+                    Sex = customerAddressEntity.Sex
+                };
+
+            return new ServicesResult<CustomerAddressModel>
+            {
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 管理用户地址
         /// </summary>
         /// <param name="userId">用户Id</param>
@@ -417,6 +494,60 @@
             }
 
             this.customerAddressEntityRepository.SaveTransaction(customerAddressEntityList);
+            return new ServicesResult<bool>
+            {
+                Result = true
+            };
+        }
+
+        /// <summary>
+        /// 设置默认用户地址
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="customerAddressId">用户地址Id列表</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SetDefaultCustomerAddress(int userId, int customerAddressId)
+        {
+            var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
+            if (customerEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = false
+                };
+            }
+
+            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == customerAddressId && p.CustomerId == customerEntity.CustomerId && p.IsDel == false);
+            if (customerAddressEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdCode,
+                    Result = false
+                };
+            }
+
+            customerAddressEntity.IsDefault = true;
+            var defaultCustomerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.IsDefault == true && p.CustomerId == customerEntity.CustomerId && p.IsDel == false);
+            if (defaultCustomerAddressEntity == null)
+            {
+                this.customerAddressEntityRepository.Save(customerAddressEntity);
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdListCode,
+                    Result = false
+                };
+            }
+
+            this.customerAddressEntityRepository.SaveTransaction(new List<CustomerAddressEntity> { customerAddressEntity, defaultCustomerAddressEntity });
             return new ServicesResult<bool>
             {
                 Result = true

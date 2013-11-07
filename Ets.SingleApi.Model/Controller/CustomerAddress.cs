@@ -75,7 +75,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public bool? IsDefault { get; set; }
+        public bool IsDefault { get; set; }
 
         /// <summary>
         /// Gets or sets the Address of CustomerAddress
