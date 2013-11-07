@@ -100,10 +100,10 @@
         }
 
         /// <summary>
-        /// 外卖短信验有效时间
+        /// 密码最小长度
         /// </summary>
         /// <value>
-        /// 短信验证码有效时间
+        /// 密码最小长度
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/17 22:29
@@ -122,6 +122,32 @@
                 }
 
                 return result <= 0 ? 6 : result;
+            }
+        }
+
+        /// <summary>
+        /// 外卖自提Id
+        /// </summary>
+        /// <value>
+        /// 外卖自提Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int PickUpDeliveryMethodId
+        {
+            get
+            {
+                var pickUpDeliveryMethodId = ConfigurationManager.AppSettings["PickUpDeliveryMethodId"] ?? "1";
+                int result;
+                if (!int.TryParse(pickUpDeliveryMethodId, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
             }
         }
 

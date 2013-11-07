@@ -422,6 +422,38 @@
             }
 
             var customerId = customer.CustomerId;
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == parameter.OrderId && p.CustomerId == customerId);
+            if (deliveryEntity == null)
+            {
+                return new DetailServicesResult<ConfirmWaiMaiOrderModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new ConfirmWaiMaiOrderModel()
+                };
+            }
+
+            //自提类型，直接保存订单数据
+            deliveryEntity.RealSupplierType = parameter.RealSupplierType;
+            if (ServicesCommon.CompleteRealSupplierType.Contains(parameter.RealSupplierType.ToString()))
+            {
+                deliveryEntity.OrderStatusId = 5;
+            }
+
+            if (deliveryEntity.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            {
+                this.deliveryEntityRepository.Save(deliveryEntity);
+
+                return new DetailServicesResult<ConfirmWaiMaiOrderModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = new ConfirmWaiMaiOrderModel
+                    {
+                        OrderId = parameter.OrderId
+                    }
+                };
+            }
+
+            //非自提类型，添加送餐地址
             var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == parameter.CustomerAddressId && p.CustomerId == customerId);
             if (customerAddressEntity == null)
             {
@@ -443,21 +475,13 @@
                 CountryId = customerAddressEntity.CountryId,
                 Telephone = customerAddressEntity.Telephone,
                 Sex = customerAddressEntity.Sex,
-                CustomerId = customer.CustomerId,
+                CustomerId = customerId,
                 IsDel = false
             };
             this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
 
-
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == parameter.OrderId && p.CustomerId == customerId);
-            deliveryEntity.RealSupplierType = parameter.RealSupplierType;
+            //保存订单送餐地址
             deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
-
-            if (ServicesCommon.CompleteRealSupplierType.Contains(parameter.RealSupplierType.ToString()))
-            {
-                deliveryEntity.OrderStatusId = 5;
-            }
-
             if (deliveryEntity.SupplierId == null)
             {
                 this.deliveryEntityRepository.Save(deliveryEntity);
@@ -472,6 +496,7 @@
                 };
             }
 
+            //计算送餐距离
             var supplierLocation = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == deliveryEntity.SupplierId)
                   .Select(p => new { p.BaIduLat, p.BaIduLong })
                   .FirstOrDefault();

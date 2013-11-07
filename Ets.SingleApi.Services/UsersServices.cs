@@ -354,6 +354,11 @@
             }
 
             var customerAddressEntityList = this.customerAddressEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.IsDefault == true && p.IsDel == false).ToList();
+            foreach (var addressEntity in customerAddressEntityList)
+            {
+                addressEntity.IsDefault = false;
+            }
+
             customerAddressEntityList.Add(customerAddressEntity);
             this.customerAddressEntityRepository.SaveTransaction(customerAddressEntityList);
             return new ServicesResult<bool>
