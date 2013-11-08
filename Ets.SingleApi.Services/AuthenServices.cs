@@ -395,6 +395,88 @@
         }
 
         /// <summary>
+        /// 设置密码
+        /// </summary>
+        /// <param name="userId">The userId</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回设置密码结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 9:45
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SetPassword(int userId, SetPasswordParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, userId));
+            if (parameter.AuthCode != (authCode == null ? string.Empty : authCode.ToString()))
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidAuthCode
+                };
+            }
+
+            if (parameter.NewPasswrod.IsEmptyOrNull())
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.EmptyPasswordCode,
+                    Result = false
+                };
+            }
+
+            var loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == userId);
+            if (loginEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = false
+                };
+            }
+
+            loginEntity.Password = parameter.NewPasswrod.Md5();
+            this.loginEntityRepository.Save(loginEntity);
+
+            if (!parameter.IsSendSms)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = true
+                };
+            }
+
+            var content = string.Format(ServicesCommon.ModifyPasswordMessage, parameter.NewPasswrod);
+            var result = this.smsDetailServices.SendSms(loginEntity.Username, content);
+            if (result == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = true,
+                    StatusCode = (int)StatusCode.General.SmsSendError
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                Result = true,
+                StatusCode = result.StatusCode
+            };
+        }
+
+        /// <summary>
         /// 找回密码
         /// </summary>
         /// <param name="parameter">The parameter</param>
@@ -456,9 +538,11 @@
                 };
             }
 
-            var code = CommonUtility.RandNum(ServicesCommon.PasswordMinLength);
-            loginEntity.Password = code.Md5();
-            this.loginEntityRepository.Save(loginEntity);
+            var code = CommonUtility.RandNum(6);
+            CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, customerEntity.LoginId), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
+
+            // loginEntity.Password = code.Md5();
+            // this.loginEntityRepository.Save(loginEntity);
 
             var sendPasswordResultList =
                 (from way in parameter.WayList

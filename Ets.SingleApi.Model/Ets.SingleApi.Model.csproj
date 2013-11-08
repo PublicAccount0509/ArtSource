@@ -76,6 +76,8 @@
     <Compile Include="Controller\DeleteSupplierDishResponse.cs" />
     <Compile Include="Controller\SetDefaultCustomerAddressResponse.cs" />
     <Compile Include="Controller\GetCustomerAddressResponse.cs" />
+    <Compile Include="Controller\SetPasswordRequest.cs" />
+    <Compile Include="Controller\SetPasswordResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Services\SaveSupplierDishImageModel.cs" />
     <Compile Include="Services\SaveSupplierDishParameter.cs" />
     <Compile Include="Services\DeleteSupplierDishParameter.cs" />
+    <Compile Include="Services\SetPasswordParameter.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -430,7 +430,8 @@
                 };
             }
 
-            var customerAddressEntityList = this.customerAddressEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.IsDefault == true && p.IsDel == false).ToList();
+            var customerAddressId = customerAddressEntity.CustomerAddressId;
+            var customerAddressEntityList = this.customerAddressEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.CustomerAddressId == customerAddressId && p.IsDefault == true && p.IsDel == false).ToList();
             foreach (var addressEntity in customerAddressEntityList)
             {
                 addressEntity.IsDefault = false;
@@ -536,8 +537,8 @@
             }
 
             customerAddressEntity.IsDefault = true;
-            var defaultCustomerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.IsDefault == true && p.CustomerId == customerEntity.CustomerId && p.IsDel == false);
-            if (defaultCustomerAddressEntity == null)
+            var defaultCustomerAddressList = this.customerAddressEntityRepository.FindByExpression(p => p.IsDefault == true && p.CustomerId == customerEntity.CustomerId && p.CustomerAddressId != customerAddressId && p.IsDel == false).ToList();
+            if (defaultCustomerAddressList.Count == 0)
             {
                 this.customerAddressEntityRepository.Save(customerAddressEntity);
                 return new ServicesResult<bool>
@@ -547,7 +548,13 @@
                 };
             }
 
-            this.customerAddressEntityRepository.SaveTransaction(new List<CustomerAddressEntity> { customerAddressEntity, defaultCustomerAddressEntity });
+            foreach (var addressEntity in defaultCustomerAddressList)
+            {
+                addressEntity.IsDefault = false;
+            }
+
+            defaultCustomerAddressList.Add(customerAddressEntity);
+            this.customerAddressEntityRepository.SaveTransaction(defaultCustomerAddressList);
             return new ServicesResult<bool>
             {
                 Result = true

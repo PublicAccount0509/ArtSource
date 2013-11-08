@@ -1,8 +1,8 @@
-﻿namespace Ets.SingleApi.Model.Controller
+﻿namespace Ets.SingleApi.Model.Services
 {
     /// <summary>
-    /// 类名称：PasswordRequst
-    /// 命名空间：Ets.SingleApi.Model.Controller
+    /// 类名称：Password
+    /// 命名空间：Ets.SingleApi.Model.Services
     /// 类功能：修改密码参数
     /// </summary>
     /// 创建者：周超
@@ -10,23 +10,23 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class PasswordRequst : ApiRequst
+    public class SetPasswordParameter
     {
         /// <summary>
-        /// Gets or sets the OldPassword of Password
+        /// Gets or sets the AuthCode of SetPasswordParameter
         /// </summary>
         /// <value>
-        /// The OldPassword
+        /// The AuthCode
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/19 9:30
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string OldPassword { get; set; }
+        public string AuthCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the NewPasswrod of Password
+        /// Gets or sets the NewPasswrod of SetPasswordParameter
         /// </summary>
         /// <value>
         /// The NewPasswrod
@@ -45,7 +45,7 @@
         /// The IsSendSms
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/19 12:01
+        /// 创建日期：2013/10/19 11:59
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------

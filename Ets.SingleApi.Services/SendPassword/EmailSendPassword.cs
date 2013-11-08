@@ -61,8 +61,8 @@
             {
                 onemail.BodyEncoding = System.Text.Encoding.UTF8;
                 onemail.IsBodyHtml = true;
-                onemail.From = new MailAddress(emailAddress, emailPassword);
-                onemail.To.Add(new MailAddress(account, mailSubject));
+                onemail.From = new MailAddress(emailAddress, mailSubject);
+                onemail.To.Add(new MailAddress(account));
                 onemail.Subject = mailSubject;
                 onemail.Body = mailContent;
                 onemail.BodyEncoding = System.Text.Encoding.UTF8;

@@ -58,6 +58,21 @@
         ServicesResult<bool> Password(int userId, PasswordParameter parameter);
 
         /// <summary>
+        /// 设置密码
+        /// </summary>
+        /// <param name="userId">The userId</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回设置密码结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 9:45
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SetPassword(int userId, SetPasswordParameter parameter);
+
+        /// <summary>
         /// 找回密码
         /// </summary>
         /// <param name="parameter">The parameter</param>

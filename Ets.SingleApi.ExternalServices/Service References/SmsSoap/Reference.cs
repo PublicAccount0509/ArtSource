@@ -46,6 +46,13 @@ namespace Ets.SingleApi.ExternalServices.SmsSoap {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SendSmsBase", ReplyAction="*")]
         System.Threading.Tasks.Task<Ets.SingleApi.ExternalServices.SmsSoap.SendSmsBaseResponse> SendSmsBaseAsync(Ets.SingleApi.ExternalServices.SmsSoap.SendSmsBaseRequest request);
+        
+        // CODEGEN: Generating message contract since element name mobile from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/MsgSendSms", ReplyAction="*")]
+        Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponse MsgSendSms(Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/MsgSendSms", ReplyAction="*")]
+        System.Threading.Tasks.Task<Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponse> MsgSendSmsAsync(Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -196,6 +203,78 @@ namespace Ets.SingleApi.ExternalServices.SmsSoap {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class MsgSendSmsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MsgSendSms", Namespace="http://tempuri.org/", Order=0)]
+        public Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequestBody Body;
+        
+        public MsgSendSmsRequest() {
+        }
+        
+        public MsgSendSmsRequest(Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class MsgSendSmsRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string mobile;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string content;
+        
+        public MsgSendSmsRequestBody() {
+        }
+        
+        public MsgSendSmsRequestBody(string mobile, string content) {
+            this.mobile = mobile;
+            this.content = content;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class MsgSendSmsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MsgSendSmsResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponseBody Body;
+        
+        public MsgSendSmsResponse() {
+        }
+        
+        public MsgSendSmsResponse(Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class MsgSendSmsResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string MsgSendSmsResult;
+        
+        public MsgSendSmsResponseBody() {
+        }
+        
+        public MsgSendSmsResponseBody(string MsgSendSmsResult) {
+            this.MsgSendSmsResult = MsgSendSmsResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface SmsSoapChannel : Ets.SingleApi.ExternalServices.SmsSoap.SmsSoap, System.ServiceModel.IClientChannel {
     }
@@ -277,6 +356,33 @@ namespace Ets.SingleApi.ExternalServices.SmsSoap {
             inValue.Body.Content = Content;
             inValue.Body.type = type;
             return ((Ets.SingleApi.ExternalServices.SmsSoap.SmsSoap)(this)).SendSmsBaseAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponse Ets.SingleApi.ExternalServices.SmsSoap.SmsSoap.MsgSendSms(Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequest request) {
+            return base.Channel.MsgSendSms(request);
+        }
+        
+        public string MsgSendSms(string mobile, string content) {
+            Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequest inValue = new Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequest();
+            inValue.Body = new Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequestBody();
+            inValue.Body.mobile = mobile;
+            inValue.Body.content = content;
+            Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponse retVal = ((Ets.SingleApi.ExternalServices.SmsSoap.SmsSoap)(this)).MsgSendSms(inValue);
+            return retVal.Body.MsgSendSmsResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponse> Ets.SingleApi.ExternalServices.SmsSoap.SmsSoap.MsgSendSmsAsync(Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequest request) {
+            return base.Channel.MsgSendSmsAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponse> MsgSendSmsAsync(string mobile, string content) {
+            Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequest inValue = new Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequest();
+            inValue.Body = new Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsRequestBody();
+            inValue.Body.mobile = mobile;
+            inValue.Body.content = content;
+            return ((Ets.SingleApi.ExternalServices.SmsSoap.SmsSoap)(this)).MsgSendSmsAsync(inValue);
         }
     }
 }

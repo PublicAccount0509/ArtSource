@@ -505,5 +505,24 @@
                 return "find_password_second";
             }
         }
+
+        /// <summary>
+        /// 找回密码验证码缓存关键字前缀
+        /// </summary>
+        /// <value>
+        /// 找回密码验证码缓存关键字前缀
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string FindPasswordCodeCacheKey
+        {
+            get
+            {
+                return "find_password_code";
+            }
+        }
     }
 }

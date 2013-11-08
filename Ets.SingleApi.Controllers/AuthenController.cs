@@ -239,6 +239,61 @@
         }
 
         /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The PasswordResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 9:49
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public SetPasswordResponse SetPassword(int id, SetPasswordRequst requst)
+        {
+            if (requst == null)
+            {
+                return new SetPasswordResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(id))
+            {
+                return new SetPasswordResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+
+            var passwordResult = this.authenServices.SetPassword(id, new SetPasswordParameter
+            {
+                AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
+                NewPasswrod = (requst.NewPasswrod ?? string.Empty).Trim(),
+                IsSendSms = requst.IsSendSms
+            });
+
+            return new SetPasswordResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = passwordResult.StatusCode
+                }
+            };
+        }
+
+        /// <summary>
         /// 找回密码
         /// </summary>
         /// <param name="requst">The requst</param>
