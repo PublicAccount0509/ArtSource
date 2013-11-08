@@ -13,19 +13,6 @@
     public class SetPasswordRequst : ApiRequst
     {
         /// <summary>
-        /// Gets or sets the UserId of Password
-        /// </summary>
-        /// <value>
-        /// The UserId
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/19 9:30
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int UserId { get; set; }
-
-        /// <summary>
         /// Gets or sets the OldPassword of Password
         /// </summary>
         /// <value>
