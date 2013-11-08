@@ -435,11 +435,6 @@
 
             //自提类型，直接保存订单数据
             deliveryEntity.RealSupplierType = parameter.RealSupplierType;
-            if (ServicesCommon.CompleteRealSupplierType.Contains(parameter.RealSupplierType.ToString()))
-            {
-                deliveryEntity.OrderStatusId = 5;
-            }
-
             if (deliveryEntity.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
             {
                 this.deliveryEntityRepository.Save(deliveryEntity);

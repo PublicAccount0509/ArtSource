@@ -196,7 +196,6 @@
             }
 
             deliveryEntity.IsPaId = true;
-            deliveryEntity.OrderStatusId = 5;
             this.deliveryEntityRepository.Save(deliveryEntity);
 
             return new PaymentResult<bool>
