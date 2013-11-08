@@ -33,7 +33,7 @@
             var controller = ((SingleApiController)actionContext.ControllerContext.Controller);
             if (!ControllersCommon.ApplicationValidationEnabled)
             {
-                controller.AutorizationCode = ControllersCommon.DefaultAutorizationCode;
+                controller.AppKey = ControllersCommon.DefaultAppKey;
                 return;
             }
 
@@ -67,7 +67,7 @@
                 throw exception;
             }
 
-            controller.AutorizationCode = appKey;
+            controller.AppKey = appKey;
         }
     }
 }

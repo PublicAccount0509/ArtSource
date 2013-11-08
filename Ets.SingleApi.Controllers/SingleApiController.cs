@@ -31,17 +31,17 @@
         public int UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the AutorizationCode of SingleApiController
+        /// Gets or sets the AppKey of SingleApiController
         /// </summary>
         /// <value>
-        /// The AutorizationCode
+        /// The AppKey
         /// </value>
         /// 创建者：周超
         /// 创建日期：10/29/2013 5:49 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string AutorizationCode { get; set; }
+        public string AppKey { get; set; }
 
         /// <summary>
         /// 验证UserId的有效性

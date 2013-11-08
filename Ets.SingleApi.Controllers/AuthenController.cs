@@ -78,7 +78,7 @@
                             Email = (requst.Email ?? string.Empty).Trim(),
                             Password = (requst.Password ?? string.Empty).Trim(),
                             Telephone = (requst.Telephone ?? string.Empty).Trim(),
-                            AutorizationCode = (this.AutorizationCode ?? string.Empty).Trim()
+                            AppKey = (this.AppKey ?? string.Empty).Trim()
                         });
 
             if (loginResult.Result == null)
@@ -146,7 +146,7 @@
             {
                 Telephone = (requst.Telephone ?? string.Empty).Trim(),
                 AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
-                AutorizationCode = (this.AutorizationCode ?? string.Empty).Trim()
+                AppKey = (this.AppKey ?? string.Empty).Trim()
             });
 
             if (loginResult.Result == null)

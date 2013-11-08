@@ -212,7 +212,7 @@
                        Result = new WaiMaiOrderDetailModel()
                    };
             }
-            
+
             var result = new WaiMaiOrderDetailModel
                 {
                     OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,

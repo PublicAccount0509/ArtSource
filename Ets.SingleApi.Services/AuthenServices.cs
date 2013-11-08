@@ -25,14 +25,14 @@
     public class AuthenServices : IAuthenServices
     {
         /// <summary>
-        /// 字段autorizationEntityRepository
+        /// 字段appEntityRepository
         /// </summary>
         /// 创建者：周超
         /// 创建日期：2013/10/17 11:10
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<AutorizationEntity> autorizationEntityRepository;
+        private readonly INHibernateRepository<AppEntity> appEntityRepository;
 
         /// <summary>
         /// 字段tokenEntityRepository
@@ -97,7 +97,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenServices" /> class.
         /// </summary>
-        /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
+        /// <param name="appEntityRepository">The appEntityRepository</param>
         /// <param name="tokenEntityRepository">The tokenEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -110,7 +110,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public AuthenServices(
-            INHibernateRepository<AutorizationEntity> autorizationEntityRepository,
+            INHibernateRepository<AppEntity> appEntityRepository,
             INHibernateRepository<TokenEntity> tokenEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
@@ -118,7 +118,7 @@
             List<ILogin> loginList,
             List<ISendPassword> sendPasswordList)
         {
-            this.autorizationEntityRepository = autorizationEntityRepository;
+            this.appEntityRepository = appEntityRepository;
             this.tokenEntityRepository = tokenEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
@@ -190,8 +190,8 @@
                 };
             }
 
-            var autorizationEntity = this.autorizationEntityRepository.EntityQueryable.FirstOrDefault(p => p.Code == parameter.AutorizationCode);
-            if (autorizationEntity == null)
+            var appEntity = this.appEntityRepository.EntityQueryable.FirstOrDefault(p => p.AppKey == parameter.AppKey);
+            if (appEntity == null)
             {
                 return new ServicesResult<LoginModel>
                 {
@@ -206,7 +206,7 @@
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
-                    AppKey = autorizationEntity.AppKey,
+                    AppKey = appEntity,
                     CreatedTime = DateTime.Now,
                     UserId = loginData.LoginId
                 };
@@ -268,8 +268,8 @@
                 };
             }
 
-            var autorizationEntity = this.autorizationEntityRepository.EntityQueryable.FirstOrDefault(p => p.Code == parameter.AutorizationCode);
-            if (autorizationEntity == null)
+            var appEntity = this.appEntityRepository.EntityQueryable.FirstOrDefault(p => p.AppKey == parameter.AppKey);
+            if (appEntity == null)
             {
                 return new ServicesResult<AuthLoginModel>
                 {
@@ -284,7 +284,7 @@
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
-                AppKey = autorizationEntity.AppKey,
+                AppKey = appEntity,
                 CreatedTime = DateTime.Now,
                 UserId = loginData.LoginId
             };

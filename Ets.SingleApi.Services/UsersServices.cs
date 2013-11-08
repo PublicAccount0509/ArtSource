@@ -25,14 +25,14 @@
     public class UsersServices : IUsersServices
     {
         /// <summary>
-        /// 字段autorizationEntityRepository
+        /// 字段appEntityRepository
         /// </summary>
         /// 创建者：周超
         /// 创建日期：10/30/2013 10:41 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<AutorizationEntity> autorizationEntityRepository;
+        private readonly INHibernateRepository<AppEntity> appEntityRepository;
 
         /// <summary>
         /// 字段loginEntityRepository
@@ -157,7 +157,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
-        /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
+        /// <param name="appEntityRepository">The appEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="customerFavoriteEntityRepository">The customerFavoriteEntityRepository</param>
@@ -176,7 +176,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public UsersServices(
-            INHibernateRepository<AutorizationEntity> autorizationEntityRepository,
+            INHibernateRepository<AppEntity> appEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<CustomerFavoriteEntity> customerFavoriteEntityRepository,
@@ -190,7 +190,7 @@
             List<IUserOrders> userOrdersList,
             List<IExists> existsList)
         {
-            this.autorizationEntityRepository = autorizationEntityRepository;
+            this.appEntityRepository = appEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.customerFavoriteEntityRepository = customerFavoriteEntityRepository;
@@ -627,7 +627,7 @@
                 };
             }
 
-            if (!this.autorizationEntityRepository.EntityQueryable.Any(p => p.Code == parameter.AutorizationCode))
+            if (!this.appEntityRepository.EntityQueryable.Any(p => p.AppKey == parameter.AppKey))
             {
                 return new ServicesResult<RegisterUserModel>
                 {

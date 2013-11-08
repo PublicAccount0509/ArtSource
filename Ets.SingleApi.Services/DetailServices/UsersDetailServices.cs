@@ -34,7 +34,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<AutorizationEntity> autorizationEntityRepository;
+        private readonly INHibernateRepository<AppEntity> appEntityRepository;
 
         /// <summary>
         /// 字段tokenEntityRepository
@@ -79,7 +79,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersDetailServices" /> class.
         /// </summary>
-        /// <param name="autorizationEntityRepository">The autorizationEntityRepository</param>
+        /// <param name="appEntityRepository">The appEntityRepository</param>
         /// <param name="tokenEntityRepository">The tokenEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -90,13 +90,13 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public UsersDetailServices(
-            INHibernateRepository<AutorizationEntity> autorizationEntityRepository,
+            INHibernateRepository<AppEntity> appEntityRepository,
             INHibernateRepository<TokenEntity> tokenEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository)
         {
-            this.autorizationEntityRepository = autorizationEntityRepository;
+            this.appEntityRepository = appEntityRepository;
             this.tokenEntityRepository = tokenEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
@@ -127,8 +127,8 @@
                 };
             }
 
-            var autorizationEntity = this.autorizationEntityRepository.EntityQueryable.FirstOrDefault(p => p.Code == parameter.AutorizationCode);
-            if (autorizationEntity == null)
+            var appEntity = this.appEntityRepository.EntityQueryable.FirstOrDefault(p => p.AppKey == parameter.AppKey);
+            if (appEntity == null)
             {
                 return new DetailServicesResult<RegisterUserModel>
                 {
@@ -172,7 +172,7 @@
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
-                AppKey = autorizationEntity.AppKey,
+                AppKey = appEntity,
                 CreatedTime = DateTime.Now,
                 UserId = loginId
             };

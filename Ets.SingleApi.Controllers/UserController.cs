@@ -419,7 +419,7 @@
                     Telephone = (requst.Telephone ?? string.Empty).Trim(),
                     Password = (requst.Password ?? string.Empty).Trim(),
                     AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
-                    AutorizationCode = (this.AutorizationCode ?? string.Empty).Trim(),
+                    AppKey = (this.AppKey ?? string.Empty).Trim(),
                     SourceType = (requst.SourceType ?? string.Empty).Trim()
                 });
 

@@ -73,11 +73,11 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static string DefaultAutorizationCode
+        public static string DefaultAppKey
         {
             get
             {
-                return (ConfigurationManager.AppSettings["DefaultAutorizationCode"] ?? string.Empty).Trim();
+                return (ConfigurationManager.AppSettings["DefaultAppKey"] ?? string.Empty).Trim();
             }
         }
     }

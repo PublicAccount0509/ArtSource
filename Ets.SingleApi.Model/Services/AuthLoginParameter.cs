@@ -39,16 +39,16 @@
         public string AuthCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the AutorizationCode of AuthLoginParameter
+        /// Gets or sets the AppKey of AuthLoginParameter
         /// </summary>
         /// <value>
-        /// The AutorizationCode
+        /// The AppKey
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/17 11:09
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string AutorizationCode { get; set; }
+        public string AppKey { get; set; }
     }
 }
