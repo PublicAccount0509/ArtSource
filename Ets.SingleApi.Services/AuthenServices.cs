@@ -397,7 +397,6 @@
         /// <summary>
         /// 设置密码
         /// </summary>
-        /// <param name="userId">The userId</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回设置密码结果
@@ -407,7 +406,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SetPassword(int userId, SetPasswordParameter parameter)
+        public ServicesResult<bool> SetPassword(SetPasswordParameter parameter)
         {
             if (parameter == null)
             {
@@ -418,7 +417,7 @@
                 };
             }
 
-            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, userId));
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName));
             if (parameter.AuthCode != (authCode == null ? string.Empty : authCode.ToString()))
             {
                 return new ServicesResult<bool>
@@ -437,7 +436,11 @@
                 };
             }
 
-            var loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == userId);
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Mobile == parameter.UserName || p.Email == parameter.UserName)
+                            .Select(p => new { p.LoginId })
+                            .FirstOrDefault();
+            var loginId = customer == null ? null : customer.LoginId;
+            var loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == loginId || p.Username == parameter.UserName);
             if (loginEntity == null)
             {
                 return new ServicesResult<bool>
@@ -508,18 +511,12 @@
                 };
             }
 
-            var customerEntity = this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.Mobile == parameter.UserName || p.Email == parameter.UserName);
-            if (customerEntity == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
-                };
-            }
 
-            var loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == customerEntity.LoginId);
-            if (loginEntity == null)
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Mobile == parameter.UserName || p.Email == parameter.UserName)
+                            .Select(p => new { p.LoginId })
+                            .FirstOrDefault();
+            var loginId = customer == null ? null : customer.LoginId;
+            if (!this.loginEntityRepository.EntityQueryable.Any(p => p.LoginId == loginId || p.Username == parameter.UserName))
             {
                 return new ServicesResult<bool>
                 {
@@ -539,10 +536,7 @@
             }
 
             var code = CommonUtility.RandNum(6);
-            CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, customerEntity.LoginId), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
-
-            // loginEntity.Password = code.Md5();
-            // this.loginEntityRepository.Save(loginEntity);
+            CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
 
             var sendPasswordResultList =
                 (from way in parameter.WayList

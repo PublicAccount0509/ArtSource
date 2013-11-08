@@ -60,7 +60,6 @@
         /// <summary>
         /// 设置密码
         /// </summary>
-        /// <param name="userId">The userId</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回设置密码结果
@@ -70,7 +69,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SetPassword(int userId, SetPasswordParameter parameter);
+        ServicesResult<bool> SetPassword(SetPasswordParameter parameter);
 
         /// <summary>
         /// 找回密码

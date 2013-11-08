@@ -437,7 +437,7 @@
             }
 
             var customerAddressId = customerAddressEntity.CustomerAddressId;
-            var customerAddressEntityList = this.customerAddressEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.CustomerAddressId == customerAddressId && p.IsDefault == true && p.IsDel == false).ToList();
+            var customerAddressEntityList = this.customerAddressEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.CustomerAddressId != customerAddressId && p.IsDefault == true && p.IsDel == false).ToList();
             foreach (var addressEntity in customerAddressEntityList)
             {
                 addressEntity.IsDefault = false;
@@ -765,6 +765,50 @@
                       ResultTotalCount = followerSupplierList.Count,
                       Result = followerSupplierList
                   };
+        }
+
+        /// <summary>
+        /// 判定是否已经收藏餐厅
+        /// </summary>
+        /// <param name="userId">The userId</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 14:42
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> IsFollowerSupplier(int userId, int supplierId)
+        {
+            var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
+            if (customerEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = false
+                };
+            }
+
+            var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdListCode,
+                    Result = false
+                };
+            }
+
+            var result = this.customerFavoriteEntityRepository.EntityQueryable.Any(
+                    p => p.Customer.LoginId == customerEntity.LoginId && p.Supplier.SupplierId == supplierId);
+
+            return new ServicesResult<bool>
+                {
+                    Result = result
+                };
         }
 
         /// <summary>

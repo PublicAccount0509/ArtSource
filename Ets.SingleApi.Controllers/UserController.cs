@@ -520,6 +520,49 @@
         }
 
         /// <summary>
+        /// 判定是否已经收藏餐厅
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <returns>
+        /// The IsFollowerSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 14:30
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        [TokenFilter]
+        public IsFollowerSupplierResponse IsFollowerSupplier(int id, int supplierId)
+        {
+            if (!this.ValidateUserId(id))
+            {
+                return new IsFollowerSupplierResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = new IsFollowerSupplierResult()
+                };
+            }
+
+            var isFollowerSupplierResult = this.usersServices.IsFollowerSupplier(id, supplierId);
+            return new IsFollowerSupplierResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = isFollowerSupplierResult.StatusCode
+                },
+                Result = new IsFollowerSupplierResult
+                    {
+                        Follower = isFollowerSupplierResult.Result
+                    }
+            };
+        }
+
+        /// <summary>
         /// 收藏餐厅
         /// </summary>
         /// <param name="id">用户Id</param>

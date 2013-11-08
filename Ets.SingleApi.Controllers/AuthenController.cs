@@ -241,7 +241,6 @@
         /// <summary>
         /// 修改密码
         /// </summary>
-        /// <param name="id">The id</param>
         /// <param name="requst">The requst</param>
         /// <returns>
         /// The PasswordResponse
@@ -252,8 +251,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        [TokenFilter]
-        public SetPasswordResponse SetPassword(int id, SetPasswordRequst requst)
+        public SetPasswordResponse SetPassword(SetPasswordRequst requst)
         {
             if (requst == null)
             {
@@ -266,19 +264,9 @@
                 };
             }
 
-            if (!this.ValidateUserId(id))
+            var passwordResult = this.authenServices.SetPassword(new SetPasswordParameter
             {
-                return new SetPasswordResponse
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    }
-                };
-            }
-
-            var passwordResult = this.authenServices.SetPassword(id, new SetPasswordParameter
-            {
+                UserName = (requst.UserName ?? string.Empty).Trim(),
                 AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
                 NewPasswrod = (requst.NewPasswrod ?? string.Empty).Trim(),
                 IsSendSms = requst.IsSendSms

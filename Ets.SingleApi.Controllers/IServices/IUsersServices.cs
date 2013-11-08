@@ -120,6 +120,21 @@
         ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(int userId);
 
         /// <summary>
+        /// 判定是否已经收藏餐厅
+        /// </summary>
+        /// <param name="userId">The userId</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 14:42
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> IsFollowerSupplier(int userId, int supplierId);
+
+        /// <summary>
         /// 收藏餐厅
         /// </summary>
         /// <param name="userId">用户Id</param>
