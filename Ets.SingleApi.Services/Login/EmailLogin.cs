@@ -99,31 +99,18 @@
             var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Email == userName)
                    .Select(p => new { p.LoginId })
                    .FirstOrDefault();
-
-            var login = customer == null ? this.loginEntityRepository.EntityQueryable.Where(p => p.Username == userName)
-                 .Select(p => new { p.LoginId })
-                 .FirstOrDefault() : null;
-
-            if (customer == null && login == null)
-            {
-                return new LoginData
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
-                };
-            }
-
-            var loginId = customer == null ? login.LoginId : customer.LoginId;
-            if (loginId == null)
-            {
-                return new LoginData
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
-                };
-            }
-
+            var loginId = customer == null ? null : customer.LoginId;
             password = password.Md5();
-            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == loginId && p.Password == password).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == loginId || p.Username == userName).Select(p => new { p.LoginId, p.Password, p.IsEnabled }).FirstOrDefault();
             if (loginEntity == null)
+            {
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                };
+            }
+
+            if (loginEntity.Password != password)
             {
                 return new LoginData
                 {

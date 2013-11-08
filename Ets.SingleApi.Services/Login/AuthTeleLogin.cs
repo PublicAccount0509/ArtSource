@@ -101,18 +101,10 @@
             }
 
             var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Mobile == userName)
-                    .Select(p => new { p.LoginId, p.CustomerId })
-                    .FirstOrDefault();
-
-            if (customer == null)
-            {
-                return new LoginData
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
-                };
-            }
-
-            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == customer.LoginId).Select(p => new { p.LoginId, p.IsEnabled }).FirstOrDefault();
+                  .Select(p => new { p.LoginId })
+                  .FirstOrDefault();
+            var loginId = customer == null ? null : customer.LoginId;
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == loginId || p.Username == userName).Select(p => new { p.LoginId, p.Password, p.IsEnabled }).FirstOrDefault();
             if (loginEntity == null)
             {
                 return new LoginData
