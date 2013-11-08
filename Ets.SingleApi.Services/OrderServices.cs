@@ -54,16 +54,6 @@
         private readonly INHibernateRepository<DeliveryEntity> deliveryEntityRepository;
 
         /// <summary>
-        /// 字段customerAddressEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 8:44 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository;
-
-        /// <summary>
         /// 字段waiMaiOrderDetailServices
         /// </summary>
         /// 创建者：周超
@@ -89,7 +79,6 @@
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
-        /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="waiMaiOrderDetailServices">The waiMaiOrderDetailServices</param>
         /// <param name="orderNumberList">The orderNumberList</param>
         /// 创建者：周超
@@ -101,14 +90,12 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
-            INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             IWaiMaiOrderDetailServices waiMaiOrderDetailServices,
             List<IOrderNumber> orderNumberList)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
-            this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.waiMaiOrderDetailServices = waiMaiOrderDetailServices;
             this.orderNumberList = orderNumberList;
         }

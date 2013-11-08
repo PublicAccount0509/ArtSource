@@ -74,7 +74,7 @@
                                 SupplierCount = p.Count
                             }).ToList();
 
-            return new ServicesResultList<CuisineModel> { Result = result };
+            return new ServicesResultList<CuisineModel> { ResultTotalCount = result.Count, Result = result };
         }
     }
 }

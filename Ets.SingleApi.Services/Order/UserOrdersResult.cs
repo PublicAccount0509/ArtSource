@@ -30,6 +30,19 @@
         }
 
         /// <summary>
+        /// Gets or sets the ResultTotalCount of UserOrdersResult
+        /// </summary>
+        /// <value>
+        /// The ResultTotalCount
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/8/2013 12:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int ResultTotalCount { get; set; }
+
+        /// <summary>
         /// Gets or sets the StatusCode of UserOrdersResult
         /// </summary>
         /// <value>

@@ -415,6 +415,7 @@
 
             return new ServicesResultList<GroupSupplierModel>
             {
+                ResultTotalCount = groupSupplierList.Count, 
                 Result = groupSupplierList
             };
         }
@@ -529,6 +530,7 @@
 
             return new ServicesResultList<SupplierCuisineModel>
             {
+                ResultTotalCount = list.Count, 
                 Result = list
             };
         }

@@ -57,7 +57,7 @@
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.Country);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(string.Empty);
-            return new ServicesResultList<BusinessAreaModel> { Result = list };
+            return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
         }
 
         /// <summary>
@@ -76,7 +76,7 @@
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.Province);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(countryCode);
-            return new ServicesResultList<BusinessAreaModel> { Result = list };
+            return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
         }
 
         /// <summary>
@@ -95,7 +95,7 @@
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.City);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(provinceCode);
-            return new ServicesResultList<BusinessAreaModel> { Result = list };
+            return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
         }
 
         /// <summary>
@@ -114,7 +114,7 @@
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.Region);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(cityCode);
-            return new ServicesResultList<BusinessAreaModel> { Result = list };
+            return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
         }
 
         /// <summary>
@@ -133,7 +133,7 @@
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.BusinessArea);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(regionCode);
-            return new ServicesResultList<BusinessAreaModel> { Result = list };
+            return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
         }
 
         /// <summary>
@@ -152,7 +152,7 @@
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.AllArea);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(parentCode);
-            return new ServicesResultList<BusinessAreaModel> { Result = list };
+            return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
         }
     }
 }

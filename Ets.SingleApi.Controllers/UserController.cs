@@ -514,6 +514,7 @@
                 {
                     StatusCode = list.StatusCode
                 },
+                ResultTotalCount = list.ResultTotalCount,
                 Result = result
             };
         }
@@ -684,6 +685,7 @@
                 {
                     StatusCode = list.StatusCode
                 },
+                ResultTotalCount = list.ResultTotalCount,
                 Result = result
             };
         }

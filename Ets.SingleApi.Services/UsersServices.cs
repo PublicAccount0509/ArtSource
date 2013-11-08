@@ -406,12 +406,14 @@
             var customerId = customerEntity.CustomerId;
             var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Code == parameter.RegionCode);
             var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(
-                    p => p.CustomerId == customerId && p.CustomerAddressId == parameter.CustomerAddressId && p.IsDel == false) ?? new CustomerAddressEntity();
+                    p => p.CustomerId == customerId && p.CustomerAddressId == parameter.CustomerAddressId && p.IsDel == false) ?? new CustomerAddressEntity
+                        {
+                            IsDefault = parameter.IsDefault ?? false
+                        };
 
             customerAddressEntity.Recipient = parameter.Name;
             customerAddressEntity.AddressAlias = parameter.AddressAlias;
             customerAddressEntity.Address2 = parameter.Address;
-            customerAddressEntity.IsDefault = parameter.IsDefault;
             customerAddressEntity.CityId = regionEntity == null ? null : (int?)regionEntity.CityId;
             customerAddressEntity.CountyId = regionEntity == null ? null : (int?)regionEntity.Id;
             customerAddressEntity.CountryId = regionEntity == null ? null : (int?)regionEntity.ProvinceId;
@@ -420,8 +422,12 @@
             customerAddressEntity.Sex = parameter.Sex;
             customerAddressEntity.CustomerId = customerId;
             customerAddressEntity.Address1 = parameter.Building;
+            if (parameter.IsDefault != null)
+            {
+                customerAddressEntity.IsDefault = parameter.IsDefault;
+            }
 
-            if (!parameter.IsDefault)
+            if (parameter.IsDefault != true)
             {
                 this.customerAddressEntityRepository.Save(customerAddressEntity);
                 return new ServicesResult<bool>
@@ -756,6 +762,7 @@
 
             return new ServicesResultList<FollowerSupplierModel>
                   {
+                      ResultTotalCount = followerSupplierList.Count,
                       Result = followerSupplierList
                   };
         }
@@ -932,6 +939,7 @@
             return new ServicesResultList<UserOrderModel>
                 {
                     StatusCode = userOrderResult.StatusCode,
+                    ResultTotalCount = userOrderResult.ResultTotalCount,
                     Result = list
                 };
         }
