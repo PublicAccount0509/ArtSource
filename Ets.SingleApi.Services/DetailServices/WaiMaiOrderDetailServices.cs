@@ -440,7 +440,7 @@
                     Result = new AddWaiMaiOrderModel
                     {
                         OrderId = orderId,
-                        CustomerTotal = parameter.DeliveryMethodId == 2 ? customerTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0) : customerTotal,
+                        CustomerTotal = customerTotal,
                         SupplierName = supplierEntity.SupplierName,
                         SupplierId = supplierEntity.SupplierId,
                         SupplierDishCount = this.orderEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId && p.Delivery.DeliveryId == deliveryEntity.DeliveryId).Sum(p => p.Quantity)
@@ -471,7 +471,7 @@
                 Result = new AddWaiMaiOrderModel
                 {
                     OrderId = orderId,
-                    CustomerTotal = parameter.DeliveryMethodId == 2 ? customerTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0) : customerTotal,
+                    CustomerTotal = customerTotal,
                     SupplierName = supplierEntity.SupplierName,
                     SupplierId = supplierEntity.SupplierId,
                     SupplierDishCount = this.orderEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId && p.Delivery.DeliveryId == deliveryEntity.DeliveryId).Sum(p => p.Quantity)
