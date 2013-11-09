@@ -48,6 +48,46 @@
         private readonly INHibernateRepository<DeliveryEntity> deliveryEntityRepository;
 
         /// <summary>
+        /// 字段sourcePathEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/9/2013 10:30 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SourcePathEntity> sourcePathEntityRepository;
+
+        /// <summary>
+        /// 字段sourceTypeEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/9/2013 10:31 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository;
+
+        /// <summary>
+        /// 字段paymentEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/9/2013 10:30 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<PaymentEntity> paymentEntityRepository;
+
+        /// <summary>
+        /// 字段supplierCommissionEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/9/2013 10:30 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierCommissionEntity> supplierCommissionEntityRepository;
+
+        /// <summary>
         /// 字段orderEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -122,6 +162,10 @@
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
+        /// <param name="sourcePathEntityRepository">The sourcePathEntityRepository</param>
+        /// <param name="sourceTypeEntityRepository">The sourceTypeEntityRepository</param>
+        /// <param name="paymentEntityRepository">The paymentEntityRepository</param>
+        /// <param name="supplierCommissionEntityRepository">The supplierCommissionEntityRepository</param>
         /// <param name="orderEntityRepository">The orderEntityRepository</param>
         /// <param name="supplierDishEntityRepository">The supplierDishEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
@@ -137,6 +181,10 @@
         public WaiMaiOrderDetailServices(
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
+            INHibernateRepository<SourcePathEntity> sourcePathEntityRepository,
+            INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
+            INHibernateRepository<PaymentEntity> paymentEntityRepository,
+            INHibernateRepository<SupplierCommissionEntity> supplierCommissionEntityRepository,
             INHibernateRepository<OrderEntity> orderEntityRepository,
             INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
@@ -147,6 +195,10 @@
         {
             this.customerEntityRepository = customerEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
+            this.sourcePathEntityRepository = sourcePathEntityRepository;
+            this.sourceTypeEntityRepository = sourceTypeEntityRepository;
+            this.paymentEntityRepository = paymentEntityRepository;
+            this.supplierCommissionEntityRepository = supplierCommissionEntityRepository;
             this.orderEntityRepository = orderEntityRepository;
             this.supplierDishEntityRepository = supplierDishEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
@@ -263,9 +315,7 @@
                 };
             }
 
-            var supplierEntity = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == parameter.SupplierId)
-                                .Select(p => new { p.SupplierId, p.SupplierName, p.PackagingFee, p.FixedDeliveryCharge })
-                                .FirstOrDefault();
+            var supplierEntity = this.supplierEntityRepository.EntityQueryable.FirstOrDefault(p => p.SupplierId == parameter.SupplierId);
             if (supplierEntity == null)
             {
                 return new DetailServicesResult<AddWaiMaiOrderModel>
@@ -330,16 +380,57 @@
                 OrderStatusId = 1,
                 DateAdded = DateTime.Now,
                 PackagingFee = supplierEntity.PackagingFee,
-                DeliverCharge = supplierEntity.FixedDeliveryCharge,
+                DeliverCharge = parameter.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? 0 : supplierEntity.FixedDeliveryCharge,
                 ContactPhone = customer.Mobile,
                 Gender = customer.Gender,
                 Contact = string.Format("{0}{1}", customer.Forename, customer.Surname),
                 IsPaId = false,
                 IsRating = false,
-                Cancelled = false
+                Cancelled = false,
+                DeliveryDate = DateTime.Now.AddMinutes(60),
+                Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == parameter.Template),
+                InvoiceRequired = parameter.InvoiceRequired,
+                InvoiceTitle = parameter.InvoiceTitle,
+                Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == parameter.Path),
+                OrderNotes = parameter.OrderNotes,
+                AreaId = parameter.AreaId,
+                IPAddress = parameter.IpAddress,
+                IsTakeInvoice = parameter.IsTakeInvoice
             };
 
             this.deliveryEntityRepository.Save(deliveryEntity);
+
+            var paymentEntity = new PaymentEntity
+                {
+                    PaymentTypeId = 1,
+                    PaymentMethodId = parameter.DeliveryMethodId == 1 ? 1 : (parameter.DeliveryMethodId == 3 ? 7 : 6),
+                    Amount = customerTotal,
+                    Delivery = deliveryEntity,
+                    TransactionCode = string.Empty,
+                    CardId = string.Empty,
+                    Authorized = false,
+                    CVV = 0,
+                    AVS = string.Empty,
+                    PC = 0,
+                    AuthCode = string.Empty,
+                    VoicePayResponse = string.Empty,
+                    TransactionFee = 0,
+                    MethodChangeHistory = string.Empty,
+                };
+
+            this.paymentEntityRepository.Save(paymentEntity);
+
+            var supplierCommissionEntity = new SupplierCommissionEntity
+                {
+                    Supplier = supplierEntity,
+                    DeliveryId = deliveryEntity.DeliveryId,
+                    Total = total,
+                    Canncelled = false,
+                    DateAdded = DateTime.Now,
+                    Commission = 0
+                };
+
+            this.supplierCommissionEntityRepository.Save(supplierCommissionEntity);
 
             if (dishList.Count == 0)
             {

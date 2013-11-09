@@ -172,6 +172,14 @@
                 DeliveryMethodId = requst.DeliveryMethodId,
                 SupplierId = requst.SupplierId,
                 DeliveryInstruction = (requst.DeliveryInstruction ?? string.Empty).Trim(),
+                InvoiceRequired = requst.InvoiceRequired ?? false,
+                InvoiceTitle = (requst.InvoiceTitle ?? string.Empty).Trim(),
+                IsTakeInvoice = requst.IsTakeInvoice ?? false,
+                OrderNotes = (requst.OrderNotes ?? string.Empty).Trim(),
+                Template = (requst.Template ?? string.Empty).Trim(),
+                Path = (requst.Path ?? string.Empty).Trim(),
+                AreaId = requst.AreaId,
+                IpAddress = (requst.IpAddress ?? string.Empty).Trim(),
                 DishList = dishList.Select(p => new AddWaiMaiOrderDishModel
                     {
                         SupplierDishId = p.SupplierDishId,
