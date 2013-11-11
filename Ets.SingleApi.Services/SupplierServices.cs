@@ -202,7 +202,9 @@
                                         supplierEntity.Telephone,
                                         supplierEntity.SupplierGroupId,
                                         supplierEntity.PackagingFee,
-                                        supplierEntity.FixedDeliveryCharge
+                                        supplierEntity.FixedDeliveryCharge,
+                                        supplierEntity.FreeDeliveryLine,
+                                        supplierEntity.DelMinOrderAmount
                                     }).FirstOrDefault();
 
             if (tempSupplier == null)
@@ -227,7 +229,9 @@
                     SupplierGroupId = tempSupplier.SupplierGroupId,
                     PackagingFee = tempSupplier.PackagingFee,
                     FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge,
-                    CuisineName = string.Empty
+                    CuisineName = string.Empty,
+                    FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
+                    DelMinOrderAmount = tempSupplier.DelMinOrderAmount
                 };
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
@@ -415,7 +419,7 @@
 
             return new ServicesResultList<GroupSupplierModel>
             {
-                ResultTotalCount = groupSupplierList.Count, 
+                ResultTotalCount = groupSupplierList.Count,
                 Result = groupSupplierList
             };
         }
@@ -530,7 +534,7 @@
 
             return new ServicesResultList<SupplierCuisineModel>
             {
-                ResultTotalCount = list.Count, 
+                ResultTotalCount = list.Count,
                 Result = list
             };
         }

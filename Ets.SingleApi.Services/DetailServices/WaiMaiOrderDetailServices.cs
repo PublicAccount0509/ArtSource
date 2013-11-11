@@ -358,13 +358,16 @@
                                         supplierDish.SupplierDishName
                                     }).ToList();
 
-
             var dishTotal = supplierDishList.Sum(item => (item.Price * dishList.Where(p => p.SupplierDishId == item.SupplierDishId).Select(p => p.Quantity).FirstOrDefault()));
+            var fixedDeliveryCharge = (supplierEntity.FreeDeliveryLine ?? 0) <= dishTotal
+                                          ? 0
+                                          : supplierEntity.FixedDeliveryCharge ?? 0;
+
             var total = parameter.DeliveryMethodId == 2
-                    ? dishTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0)
+                    ? dishTotal + (supplierEntity.PackagingFee ?? 0) + fixedDeliveryCharge
                     : dishTotal;
             var customerTotal = parameter.DeliveryMethodId == 2
-                    ? dishTotal + (supplierEntity.PackagingFee ?? 0) + (supplierEntity.FixedDeliveryCharge ?? 0)
+                    ? dishTotal + (supplierEntity.PackagingFee ?? 0) + fixedDeliveryCharge
                     : dishTotal;
 
             var orderId = getOrderNumberResult.OrderNumber;
@@ -380,7 +383,7 @@
                 OrderStatusId = 1,
                 DateAdded = DateTime.Now,
                 PackagingFee = supplierEntity.PackagingFee,
-                DeliverCharge = parameter.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? 0 : supplierEntity.FixedDeliveryCharge,
+                DeliverCharge = parameter.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? 0 : fixedDeliveryCharge,
                 ContactPhone = customer.Mobile,
                 Gender = customer.Gender,
                 Contact = string.Format("{0}{1}", customer.Forename, customer.Surname),

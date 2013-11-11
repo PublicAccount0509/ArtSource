@@ -90,7 +90,9 @@
                     IsOpenDoor = getSupplierResult.Result.IsOpenDoor,
                     LogoUrl = getSupplierResult.Result.LogoUrl ?? string.Empty,
                     PackagingFee = getSupplierResult.Result.PackagingFee ?? 0,
-                    FixedDeliveryCharge = getSupplierResult.Result.FixedDeliveryCharge ?? 0
+                    FixedDeliveryCharge = getSupplierResult.Result.FixedDeliveryCharge ?? 0,
+                    DelMinOrderAmount = getSupplierResult.Result.DelMinOrderAmount ?? 0,
+                    FreeDeliveryLine = getSupplierResult.Result.FreeDeliveryLine ?? 0
                 };
 
             return new GetSupplierResponse

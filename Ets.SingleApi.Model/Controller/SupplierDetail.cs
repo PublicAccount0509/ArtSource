@@ -221,5 +221,31 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int FixedDeliveryCharge { get; set; }
+
+        /// <summary>
+        /// Gets or sets the FreeDeliveryLine of SupplierDetail
+        /// </summary>
+        /// <value>
+        /// The FreeDeliveryLine
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/11/2013 11:00 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal FreeDeliveryLine { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DelMinOrderAmount of SupplierDetail
+        /// </summary>
+        /// <value>
+        /// The DelMinOrderAmount
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/11/2013 11:01 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int DelMinOrderAmount { get; set; }
     }
 }
