@@ -19,7 +19,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the CustomerAddressEntity table in the database.
     /// </summary>
     /// Creator:周超
-    /// Creation Date:2013/10/19 18:50:42
+    /// Creation Date:2013/11/11 18:22:25
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CustomerAddressID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CustomerID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Address1
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Address2
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CityID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CountyID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CountryID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The PostCode
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Telephone
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -122,7 +122,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The IsDefault
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -132,7 +132,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Town
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The AddressAlias
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Recipient
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -162,7 +162,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Plane
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Sex
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -182,7 +182,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The IsDel
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -192,7 +192,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Type
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -202,7 +202,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The SupplierId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -212,11 +212,31 @@ namespace Ets.SingleApi.Model.Repository
         /// The RegionCode
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
         private string regionCode;
+
+        /// <summary>
+        /// The AddressBuilding
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/11/11 18:22:26
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private string addressBuilding;
+
+        /// <summary>
+        /// The AddressDetail
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/11/11 18:22:26
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private string addressDetail;
 
         #endregion
 
@@ -224,7 +244,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="CustomerAddressEntity"/> class.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -240,6 +260,8 @@ namespace Ets.SingleApi.Model.Repository
             this.recipient = string.Empty;
             this.plane = string.Empty;
             this.regionCode = string.Empty;
+            this.addressBuilding = string.Empty;
+            this.addressDetail = string.Empty;
         }
 
         #region public member
@@ -248,7 +270,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CustomerAddressID of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -269,7 +291,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CustomerID of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -290,7 +312,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Address1 of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -311,7 +333,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Address2 of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -332,7 +354,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CityID of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -353,7 +375,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CountyID of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -374,7 +396,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CountryID of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -395,7 +417,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the PostCode of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -416,7 +438,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Telephone of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -437,7 +459,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsDefault of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -458,7 +480,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Town of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -479,7 +501,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the AddressAlias of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -500,7 +522,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Recipient of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -521,7 +543,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Plane of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -542,7 +564,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Sex of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -563,7 +585,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsDel of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -584,7 +606,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Type of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -605,7 +627,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierId of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -626,7 +648,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RegionCode of CustomerAddressEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -643,6 +665,48 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value mapping the AddressBuilding of CustomerAddressEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/11/11 18:22:26
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual string AddressBuilding
+        {
+            get
+            {
+                return this.addressBuilding;
+            }
+
+            set
+            {
+                this.addressBuilding = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the AddressDetail of CustomerAddressEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/11/11 18:22:26
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual string AddressDetail
+        {
+            get
+            {
+                return this.addressDetail;
+            }
+
+            set
+            {
+                this.addressDetail = value;
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -653,7 +717,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -675,7 +739,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/10/19 18:50:43
+        /// Creation Date:2013/11/11 18:22:26
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

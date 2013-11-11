@@ -245,8 +245,9 @@
                                        {
                                            customerAddress.CustomerAddressId,
                                            customerAddress.Address1,
+                                           customerAddress.AddressBuilding,
+                                           customerAddress.AddressDetail,
                                            customerAddress.AddressAlias,
-                                           customerAddress.Address2,
                                            Name = customerAddress.Recipient,
                                            customerAddress.Telephone,
                                            HomePhone = customerAddress.Plane,
@@ -261,8 +262,10 @@
             customerModel.CustomerAddressList = customerAddressList.Select(p => new CustomerAddressModel
                                                 {
                                                     CustomerAddressId = p.CustomerAddressId,
-                                                    Address = p.Address2.IsEmptyOrNull() ? p.AddressAlias : p.Address2,
-                                                    Building = p.Address1,
+                                                    Address = p.Address1,
+                                                    AddressBuilding = p.AddressBuilding,
+                                                    AddressDetail = p.AddressDetail,
+                                                    AddressAlias = p.AddressAlias,
                                                     Name = p.Name,
                                                     Telephone = this.GetTelephone(p.Telephone, p.HomePhone),
                                                     IsDefault = p.IsDefault,
@@ -324,8 +327,9 @@
                                          {
                                              customerAddress.CustomerAddressId,
                                              customerAddress.Address1,
+                                             customerAddress.AddressBuilding,
+                                             customerAddress.AddressDetail,
                                              customerAddress.AddressAlias,
-                                             customerAddress.Address2,
                                              Name = customerAddress.Recipient,
                                              customerAddress.Telephone,
                                              HomePhone = customerAddress.Plane,
@@ -349,10 +353,10 @@
             var result = new CustomerAddressModel
                 {
                     CustomerAddressId = customerAddressEntity.CustomerAddressId,
-                    Address = customerAddressEntity.Address2.IsEmptyOrNull()
-                            ? customerAddressEntity.AddressAlias
-                            : customerAddressEntity.Address2,
-                    Building = customerAddressEntity.Address1,
+                    Address = customerAddressEntity.Address1,
+                    AddressBuilding = customerAddressEntity.AddressBuilding,
+                    AddressDetail = customerAddressEntity.AddressDetail,
+                    AddressAlias = customerAddressEntity.AddressAlias,
                     Name = customerAddressEntity.Name,
                     Telephone = this.GetTelephone(customerAddressEntity.Telephone, customerAddressEntity.HomePhone),
                     IsDefault = customerAddressEntity.IsDefault,
@@ -412,8 +416,11 @@
                         };
 
             customerAddressEntity.Recipient = parameter.Name;
+            customerAddressEntity.Address1 = parameter.Address;
+            customerAddressEntity.Address2 = string.Format("{0}{1}", parameter.AddressBuilding, parameter.AddressDetail);
+            customerAddressEntity.AddressBuilding = parameter.AddressBuilding;
+            customerAddressEntity.AddressDetail = parameter.AddressDetail;
             customerAddressEntity.AddressAlias = parameter.AddressAlias;
-            customerAddressEntity.Address2 = parameter.Address;
             customerAddressEntity.CityId = regionEntity == null ? null : (int?)regionEntity.CityId;
             customerAddressEntity.CountyId = regionEntity == null ? null : (int?)regionEntity.Id;
             customerAddressEntity.CountryId = regionEntity == null ? null : (int?)regionEntity.ProvinceId;
@@ -421,7 +428,6 @@
             customerAddressEntity.Telephone = parameter.Telephone;
             customerAddressEntity.Sex = parameter.Sex;
             customerAddressEntity.CustomerId = customerId;
-            customerAddressEntity.Address1 = parameter.Building;
             if (parameter.IsDefault != null)
             {
                 customerAddressEntity.IsDefault = parameter.IsDefault;

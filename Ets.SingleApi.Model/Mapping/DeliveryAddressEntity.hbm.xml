@@ -23,5 +23,7 @@
 		<property name="Plane" column="Plane" type="String" not-null="false" />
 		<property name="Sex" column="Sex" type="Int32" not-null="false" />
 		<property name="IsDel" column="IsDel" type="Boolean" not-null="false" />
+		<property name="AddressBuilding" column="AddressBuilding" type="String" not-null="false" />
+		<property name="AddressDetail" column="AddressDetail" type="String" not-null="false" />
 	</class>
 </hibernate-mapping>

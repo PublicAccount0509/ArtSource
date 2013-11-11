@@ -559,6 +559,8 @@
                 Recipient = customerAddressEntity.Recipient,
                 AddressAlias = customerAddressEntity.AddressAlias,
                 Address1 = customerAddressEntity.Address1,
+                AddressBuilding = customerAddressEntity.AddressBuilding,
+                AddressDetail = customerAddressEntity.AddressDetail,
                 Address2 = customerAddressEntity.Address2,
                 CityId = customerAddressEntity.CityId,
                 CountyId = customerAddressEntity.CountyId,
@@ -605,7 +607,7 @@
                 };
             }
 
-            var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.AddressAlias, customerAddressEntity.Address2), string.Empty);
+            var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.AddressBuilding), string.Empty);
             if (customerLocation == null)
             {
                 this.deliveryEntityRepository.Save(deliveryEntity);

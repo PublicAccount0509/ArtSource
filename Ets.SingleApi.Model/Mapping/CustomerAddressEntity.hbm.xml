@@ -26,5 +26,7 @@
 		<property name="Type" column="Type" type="Int32" not-null="false" />
 		<property name="SupplierId" column="SupplierId" type="Int32" not-null="false" />
 		<property name="RegionCode" column="RegionCode" type="String" not-null="false" />
+		<property name="AddressBuilding" column="AddressBuilding" type="String" not-null="false" />
+		<property name="AddressDetail" column="AddressDetail" type="String" not-null="false" />
 	</class>
 </hibernate-mapping>

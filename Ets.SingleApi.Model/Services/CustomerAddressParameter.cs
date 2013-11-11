@@ -91,20 +91,33 @@
         public string Address { get; set; }
 
         /// <summary>
-        /// Gets or sets the Building of CustomerAddressParameter
+        /// Gets or sets the AddressBuilding  of CustomerAddressParameter
         /// </summary>
         /// <value>
-        /// The Building
+        /// The AddressBuilding 
         /// </value>
         /// 创建者：周超
         /// 创建日期：11/4/2013 2:11 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Building { get; set; }
+        public string AddressBuilding { get; set; }
 
         /// <summary>
-        /// Gets or sets the AddressAlias of CustomerAddressRequst
+        /// Gets or sets the AddressDetail of CustomerAddressParameter
+        /// </summary>
+        /// <value>
+        /// The AddressDetail
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/11/2013 5:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string AddressDetail { get; set; }
+
+        /// <summary>
+        /// Gets or sets the AddressAlias of CustomerAddressParameter
         /// </summary>
         /// <value>
         /// The AddressAlias

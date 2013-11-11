@@ -177,7 +177,9 @@
                     ProvinceId = customerAddress.ProvinceId,
                     RegionCode = (customerAddress.RegionCode ?? string.Empty),
                     Sex = customerAddress.Sex,
-                    Building = customerAddress.Building
+                    AddressBuilding = customerAddress.AddressBuilding,
+                    AddressDetail = customerAddress.AddressDetail,
+                    AddressAlias = customerAddress.AddressAlias
                 }).ToList();
 
             var result = new Customer
@@ -241,7 +243,9 @@
                 ProvinceId = saveCustomerAddressResult.Result.ProvinceId,
                 RegionCode = (saveCustomerAddressResult.Result.RegionCode ?? string.Empty),
                 Sex = saveCustomerAddressResult.Result.Sex,
-                Building = saveCustomerAddressResult.Result.Building
+                AddressBuilding = saveCustomerAddressResult.Result.AddressBuilding,
+                AddressDetail = saveCustomerAddressResult.Result.AddressDetail,
+                AddressAlias = saveCustomerAddressResult.Result.AddressAlias
             };
 
             return new GetCustomerAddressResponse
@@ -303,7 +307,8 @@
                     RegionCode = (requst.RegionCode ?? string.Empty).Trim(),
                     Sex = requst.Sex,
                     Telephone = (requst.Telephone ?? string.Empty).Trim(),
-                    Building = (requst.Building ?? string.Empty).Trim()
+                    AddressBuilding = (requst.AddressBuilding ?? string.Empty).Trim(),
+                    AddressDetail = (requst.AddressDetail ?? string.Empty).Trim()
                 });
 
             return new CustomerAddressResponse
