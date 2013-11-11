@@ -21,6 +21,7 @@
   <item code="1003" message="请求参数错误"></item>
   <item code="1004" message="请求验证失败"></item>
   <item code="1005" message="支付参数错误"></item>
+  <item code="1006" message="无效的请求地址"></item>
   <!--一般错误-->
   <item code="20000" message="未知错误"></item>
   <item code="20001" message="权限错误"></item>
