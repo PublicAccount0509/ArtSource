@@ -365,10 +365,10 @@
 
             var total = parameter.DeliveryMethodId == 2
                     ? dishTotal + (supplierEntity.PackagingFee ?? 0) + fixedDeliveryCharge
-                    : dishTotal;
+                    : dishTotal + (supplierEntity.PackagingFee ?? 0);
             var customerTotal = parameter.DeliveryMethodId == 2
                     ? dishTotal + (supplierEntity.PackagingFee ?? 0) + fixedDeliveryCharge
-                    : dishTotal;
+                    : dishTotal + (supplierEntity.PackagingFee ?? 0);
 
             var orderId = getOrderNumberResult.OrderNumber;
             var deliveryEntity = new DeliveryEntity

@@ -229,12 +229,28 @@
             }
 
             var saveCustomerAddressResult = this.usersServices.GetCustomerAddress(id, customerAddressId);
+            var customerAddress = new CustomerAddress
+            {
+                CustomerAddressId = saveCustomerAddressResult.Result.CustomerAddressId,
+                Address = (saveCustomerAddressResult.Result.Address ?? string.Empty),
+                Name = (saveCustomerAddressResult.Result.Name ?? string.Empty),
+                Telephone = (saveCustomerAddressResult.Result.Telephone ?? string.Empty),
+                IsDefault = saveCustomerAddressResult.Result.IsDefault ?? false,
+                CityId = saveCustomerAddressResult.Result.CityId,
+                CountyId = saveCustomerAddressResult.Result.CountyId,
+                ProvinceId = saveCustomerAddressResult.Result.ProvinceId,
+                RegionCode = (saveCustomerAddressResult.Result.RegionCode ?? string.Empty),
+                Sex = saveCustomerAddressResult.Result.Sex,
+                Building = saveCustomerAddressResult.Result.Building
+            };
+
             return new GetCustomerAddressResponse
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = saveCustomerAddressResult.StatusCode
-                }
+                    StatusCode = saveCustomerAddressResult.StatusCode,
+                },
+                Result = customerAddress
             };
         }
 
