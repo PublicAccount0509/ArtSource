@@ -35,6 +35,16 @@
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
+        /// 字段supplierImageEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/12/2013 6:16 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierImageEntity> supplierImageEntityRepository;
+
+        /// <summary>
         /// 字段supplierCuisineEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -128,6 +138,7 @@
         /// Initializes a new instance of the <see cref="SupplierServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
+        /// <param name="supplierImageEntityRepository">The supplierImageEntityRepository</param>
         /// <param name="supplierCuisineEntityRepository">The supplierCuisineEntityRepository</param>
         /// <param name="supplierDishEntityRepository">The supplierDishEntityRepository</param>
         /// <param name="supplierDishImageEntityRepository">The supplierDishImageEntityRepository</param>
@@ -144,6 +155,7 @@
         /// ----------------------------------------------------------------------------------------
         public SupplierServices(
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<SupplierImageEntity> supplierImageEntityRepository,
             INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository,
             INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository,
             INHibernateRepository<SupplierDishImageEntity> supplierDishImageEntityRepository,
@@ -155,6 +167,7 @@
             ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
+            this.supplierImageEntityRepository = supplierImageEntityRepository;
             this.supplierCuisineEntityRepository = supplierCuisineEntityRepository;
             this.supplierDishEntityRepository = supplierDishEntityRepository;
             this.supplierDishImageEntityRepository = supplierDishImageEntityRepository;
@@ -240,7 +253,11 @@
                     FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
                     DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
                     BaIduLat = baIduLat,
-                    BaIduLong = baIduLong
+                    BaIduLong = baIduLong,
+                    LogoUrl = this.supplierImageEntityRepository.EntityQueryable.Where(
+                            p => p.Supplier.SupplierId == supplierId && p.Online == true)
+                            .Select(p => p.ImagePath)
+                            .FirstOrDefault()
                 };
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
