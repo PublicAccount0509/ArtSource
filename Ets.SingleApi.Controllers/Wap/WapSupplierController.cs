@@ -92,7 +92,9 @@
                     PackagingFee = getSupplierResult.Result.PackagingFee ?? 0,
                     FixedDeliveryCharge = getSupplierResult.Result.FixedDeliveryCharge ?? 0,
                     DelMinOrderAmount = getSupplierResult.Result.DelMinOrderAmount ?? 0,
-                    FreeDeliveryLine = getSupplierResult.Result.FreeDeliveryLine ?? 0
+                    FreeDeliveryLine = getSupplierResult.Result.FreeDeliveryLine ?? 0,
+                    BaIduLat = getSupplierResult.Result.BaIduLat,
+                    BaIduLong = getSupplierResult.Result.BaIduLong
                 };
 
             return new GetSupplierResponse

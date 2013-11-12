@@ -204,7 +204,9 @@
                                         supplierEntity.PackagingFee,
                                         supplierEntity.FixedDeliveryCharge,
                                         supplierEntity.FreeDeliveryLine,
-                                        supplierEntity.DelMinOrderAmount
+                                        supplierEntity.DelMinOrderAmount,
+                                        supplierEntity.BaIduLat,
+                                        supplierEntity.BaIduLong
                                     }).FirstOrDefault();
 
             if (tempSupplier == null)
@@ -215,6 +217,11 @@
                         Result = new SupplierDetailModel()
                     };
             }
+
+            decimal baIduLat;
+            decimal.TryParse(tempSupplier.BaIduLat, out baIduLat);
+            decimal baIduLong;
+            decimal.TryParse(tempSupplier.BaIduLong, out baIduLong);
 
             var supplier = new SupplierDetailModel
                 {
@@ -231,7 +238,9 @@
                     FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge,
                     CuisineName = string.Empty,
                     FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
-                    DelMinOrderAmount = tempSupplier.DelMinOrderAmount
+                    DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
+                    BaIduLat = baIduLat,
+                    BaIduLong = baIduLong
                 };
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))

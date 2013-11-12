@@ -247,5 +247,31 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int? DelMinOrderAmount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the BaIduLat of SupplierDetailModel
+        /// </summary>
+        /// <value>
+        /// The BaIduLat
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/12/2013 4:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal BaIduLat { get; set; }
+
+        /// <summary>
+        /// Gets or sets the BaIduLong of SupplierDetailModel
+        /// </summary>
+        /// <value>
+        /// The BaIduLong
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/12/2013 4:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal BaIduLong { get; set; }
     }
 }
