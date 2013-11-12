@@ -331,7 +331,7 @@
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidPasswordCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidOldPasswordCode,
                     Result = false
                 };
             }
@@ -340,7 +340,7 @@
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.EmptyPasswordCode,
+                    StatusCode = (int)StatusCode.Validate.EmptyNewPasswordCode,
                     Result = false
                 };
             }
@@ -360,7 +360,7 @@
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidPasswordCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidOldPasswordCode,
                     Result = false
                 };
             }
