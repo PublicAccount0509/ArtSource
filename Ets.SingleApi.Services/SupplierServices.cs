@@ -254,10 +254,11 @@
                     DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
                     BaIduLat = baIduLat,
                     BaIduLong = baIduLong,
-                    LogoUrl = this.supplierImageEntityRepository.EntityQueryable.Where(
+                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                    this.supplierImageEntityRepository.EntityQueryable.Where(
                             p => p.Supplier.SupplierId == supplierId && p.Online == true)
                             .Select(p => p.ImagePath)
-                            .FirstOrDefault()
+                            .FirstOrDefault())
                 };
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
