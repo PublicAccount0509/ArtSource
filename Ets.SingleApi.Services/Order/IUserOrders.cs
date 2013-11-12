@@ -33,11 +33,7 @@
         /// <summary>
         /// 取得订单列表
         /// </summary>
-        /// <param name="customerId">用户Id</param>
-        /// <param name="orderStatus">订单状态</param>
-        /// <param name="paidStatus">支付状态</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
+        /// <param name="parameter">查询用户订单参数</param>
         /// <returns>
         /// 返回订单列表
         /// </returns>
@@ -46,7 +42,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int? paidStatus, int pageSize, int? pageIndex);
+        UserOrdersResult GetUserOrderList(UserOrdersParameter parameter);
 
         /// <summary>
         /// 转换为用户订单

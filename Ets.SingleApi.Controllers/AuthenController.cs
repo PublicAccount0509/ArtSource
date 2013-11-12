@@ -339,5 +339,47 @@
                 }
             };
         }
+
+        /// <summary>
+        /// 验证验证码
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The AuthCodeResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 10:35
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public AuthCodeResponse AuthCode(AuthCodeRequst requst)
+        {
+            if (requst == null)
+            {
+                return new AuthCodeResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var authCodeResult = this.authenServices.AuthCode(new AuthCodeParameter
+            {
+                Telephone = (requst.Telephone ?? string.Empty).Trim(),
+                AuthCode = (requst.AuthCode ?? string.Empty).Trim()
+            });
+
+            return new AuthCodeResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = authCodeResult.StatusCode
+                },
+                Result = authCodeResult.Result
+            };
+        }
     }
 }

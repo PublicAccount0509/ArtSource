@@ -930,11 +930,8 @@
         /// 获取用户订单
         /// </summary>
         /// <param name="userId">用户Id</param>
-        /// <param name="orderStatus">订单状态</param>
-        /// <param name="paidStatus">支付状态</param>
         /// <param name="orderType">订单类型</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
+        /// <param name="parameter">查询订单参数</param>
         /// <returns>
         /// 获取用户订单
         /// </returns>
@@ -943,8 +940,17 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<UserOrderModel> GetUserOrderList(int userId, int? orderStatus, int? paidStatus, OrderType orderType, int pageSize, int? pageIndex)
+        public ServicesResultList<UserOrderModel> GetUserOrderList(int userId, OrderType orderType, GetUserOrderParameter parameter)
         {
+            if (parameter == null)
+            {
+                return new ServicesResultList<UserOrderModel>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = new List<UserOrderModel>()
+                };
+            }
+
             var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
             if (customerEntity == null)
             {
@@ -966,7 +972,14 @@
                     };
             }
 
-            var userOrderResult = userOrder.GetUserOrderList(customerId, orderStatus, paidStatus, pageSize, pageIndex);
+            var userOrderResult = userOrder.GetUserOrderList(new UserOrdersParameter
+                {
+                    CustomerId = customerId,
+                    OrderStatus = parameter.OrderStatus,
+                    PaidStatus = parameter.PaidStatus,
+                    PageIndex = parameter.PageIndex,
+                    PageSize = parameter.PageSize
+                });
             if (userOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResultList<UserOrderModel>

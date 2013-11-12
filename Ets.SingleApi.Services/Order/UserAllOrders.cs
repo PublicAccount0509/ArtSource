@@ -107,11 +107,7 @@
         /// <summary>
         /// 取得订单列表
         /// </summary>
-        /// <param name="customerId">用户Id</param>
-        /// <param name="orderStatus">订单状态</param>
-        /// <param name="paidStatus">支付状态</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
+        /// <param name="parameter">查询用户订单参数</param>
         /// <returns>
         /// 返回订单列表
         /// </returns>
@@ -120,30 +116,48 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int? paidStatus, int pageSize, int? pageIndex)
+        public UserOrdersResult GetUserOrderList(UserOrdersParameter parameter)
         {
+            if (parameter == null)
+            {
+                return new UserOrdersResult
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    OrderList = new List<IOrderModel>()
+                };
+            }
+
+            //var queryable = this.GetDingTaiOrderQueryable(parameter).Union(this.GetWaiMaiOrderQueryable(parameter));
+            //var list1 = new List<UserOrderModel>();
+            //if (parameter.PageIndex == null)
+            //{
+            //    list1 = queryable.ToList();
+            //}
+
+            //list1 = queryable.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize).ToList();
+
             var list = this.customerEntityRepository.NamedQuery("Pro_QueryUserOrderList")
-                        .SetInt32("CustomerID", customerId)
-                        .SetInt32("OrderStatusID", !orderStatus.HasValue ? -1 : orderStatus.Value)
-                        .SetInt32("PaidStatus", !paidStatus.HasValue ? -1 : paidStatus.Value)
-                        .SetInt32("PageIndex", !pageIndex.HasValue ? -1 : pageIndex.Value)
-                        .SetInt32("PageSize", pageSize).List();
+                        .SetInt32("CustomerID", parameter.CustomerId)
+                        .SetInt32("OrderStatusID", parameter.OrderStatus ?? -1)
+                        .SetInt32("PaidStatus", parameter.PaidStatus == null ? -1 : parameter.PaidStatus == true ? 1 : 0)
+                        .SetInt32("PageIndex", parameter.PageIndex ?? -1)
+                        .SetInt32("PageSize", parameter.PageSize).List();
 
             var orderList = (from object[] item in list
                              select new AllOrderModel
-                                {
-                                    OrderId = item[0].ObjectToInt(),
-                                    DateReserved = item[1].ObjectToDateTime(),
-                                    CustomerTotal = item[2].ObjectToDecimal(),
-                                    OrderStatusId = item[3].ObjectToInt(),
-                                    DineNumber = item[4].ObjectToInt(),
-                                    OrderType = item[5].ObjectToInt(),
-                                    SupplierId = item[6].ObjectToInt(),
-                                    SupplierName = item[7].ObjectToString(),
-                                    OrderStatus = string.Empty,
-                                    DeliveryMethodId = item[8].ObjectToIntObject(),
-                                    IsPaid = item[9].ObjectToBoolean()
-                                }).ToList();
+                             {
+                                 OrderId = item[0].ObjectToInt(),
+                                 DateReserved = item[1].ObjectToDateTime(),
+                                 CustomerTotal = item[2].ObjectToDecimal(),
+                                 OrderStatusId = item[3].ObjectToInt(),
+                                 DineNumber = item[4].ObjectToInt(),
+                                 OrderType = item[5].ObjectToInt(),
+                                 SupplierId = item[6].ObjectToInt(),
+                                 SupplierName = item[7].ObjectToString(),
+                                 OrderStatus = string.Empty,
+                                 DeliveryMethodId = item[8].ObjectToIntObject(),
+                                 IsPaid = item[9].ObjectToBoolean()
+                             }).ToList();
 
             var supplierIdList = orderList.Where(p => p.OrderType == (int)OrderType.WaiMai).Select(p => p.SupplierId).ToList();
             var supplierList = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
@@ -157,9 +171,9 @@
             }
 
             return new UserOrdersResult
-                {
-                    OrderList = orderList.Cast<IOrderModel>().ToList()
-                };
+            {
+                OrderList = orderList.Cast<IOrderModel>().ToList()
+            };
         }
 
         /// <summary>
@@ -204,115 +218,85 @@
         }
 
         /// <summary>
-        /// 取得用户订单列表
+        /// 取得用户外卖订单IQueryable
         /// </summary>
-        /// <param name="customerId">用户Id</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
+        /// <param name="parameter">查询用户订单参数</param>
         /// <returns>
-        /// 用户订单列表
+        /// 用户订单外卖订单IQueryable
         /// </returns>
         /// 创建者：周超
         /// 创建日期：2013/10/21 15:11
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private List<AllOrderModel> GetAllOrderList(int customerId, int pageSize, int? pageIndex)
+        private IQueryable<UserOrderModel> GetWaiMaiOrderQueryable(UserOrdersParameter parameter)
         {
-            var tableReservationQueryable = from tableReservation in this.tableReservationEntityRepository.EntityQueryable
-                                            where tableReservation.CustomerId == customerId
-                                            select new AllOrderModel
-                                                    {
-                                                        OrderId = tableReservation.TableReservationId,
-                                                        SupplierId = tableReservation.Supplier.SupplierId,
-                                                        SupplierName = tableReservation.Supplier.SupplierName,
-                                                        DateReserved = tableReservation.DateReserved,
-                                                        CustomerTotal = tableReservation.CustomerTotal,
-                                                        OrderStatusId = tableReservation.TableStatus,
-                                                        OrderStatus = string.Empty,
-                                                        OrderType = (int)OrderType.DingTai,
-                                                        DineNumber = tableReservation.DineNumber
-                                                    };
-
-            var deliveryQueryable = from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
-                                    where deliveryEntity.CustomerId == customerId
-                                    select new AllOrderModel
-                                            {
-                                                OrderId = deliveryEntity.DeliveryId,
-                                                SupplierId = deliveryEntity.SupplierId,
-                                                SupplierName = string.Empty,
-                                                DateReserved = deliveryEntity.DateAdded,
-                                                CustomerTotal = deliveryEntity.CustomerTotal,
-                                                OrderStatusId = deliveryEntity.OrderStatusId,
-                                                OrderStatus = string.Empty,
-                                                OrderType = (int)OrderType.WaiMai,
-                                                DineNumber = 0
-                                            };
-
-            var queryable = deliveryQueryable.Union(tableReservationQueryable);
-
-            if (pageIndex == null)
+            var queryableTemp = this.deliveryEntityRepository.EntityQueryable.Where(p => p.CustomerId == parameter.CustomerId && p.SupplierId != null);
+            if (parameter.OrderStatus != null)
             {
-                return queryable.ToList();
+                queryableTemp = queryableTemp.Where(p => p.OrderStatusId == parameter.OrderStatus);
             }
 
-            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
+            if (parameter.PaidStatus != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.IsPaId == parameter.PaidStatus);
+            }
+
+            var queryable = queryableTemp.Select(p => new UserOrderModel
+            {
+                OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
+                SupplierId = p.SupplierId,
+                SupplierName = string.Empty,
+                DateReserved = p.DateAdded,
+                CustomerTotal = p.CustomerTotal,
+                OrderStatusId = p.OrderStatusId,
+                DineNumber = 0,
+                OrderStatus = string.Empty,
+                OrderType = (int)OrderType.WaiMai
+            });
+
+            return queryable;
         }
 
         /// <summary>
-        /// 取得用户订单列表
+        /// 取得用户订台订单IQueryable
         /// </summary>
-        /// <param name="customerId">用户Id</param>
-        /// <param name="orderStatus">订单状态</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
+        /// <param name="parameter">查询用户订单参数</param>
         /// <returns>
-        /// 用户订单列表
+        /// 用户订台订单IQueryable
         /// </returns>
         /// 创建者：周超
         /// 创建日期：2013/10/21 15:11
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private List<AllOrderModel> GetAllOrderList(int customerId, int orderStatus, int pageSize, int? pageIndex)
+        private IQueryable<UserOrderModel> GetDingTaiOrderQueryable(UserOrdersParameter parameter)
         {
-            var queryable = ((from tableReservation in this.tableReservationEntityRepository.EntityQueryable
-                              where tableReservation.CustomerId == customerId && tableReservation.TableStatus == orderStatus
-                              select
-                                  new AllOrderModel
-                                  {
-                                      OrderId = tableReservation.TableReservationId,
-                                      SupplierId = tableReservation.Supplier.SupplierId,
-                                      SupplierName = tableReservation.Supplier.SupplierName,
-                                      DateReserved = tableReservation.DateReserved,
-                                      CustomerTotal = tableReservation.CustomerTotal,
-                                      OrderStatusId = tableReservation.TableStatus,
-                                      OrderStatus = string.Empty,
-                                      OrderType = (int)OrderType.DingTai,
-                                      DineNumber = tableReservation.DineNumber
-                                  }).Union(
-                                         (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
-                                          where deliveryEntity.CustomerId == customerId && deliveryEntity.OrderStatusId == orderStatus
-                                          select
-                                              new AllOrderModel
-                                              {
-                                                  OrderId = deliveryEntity.DeliveryId,
-                                                  SupplierId = deliveryEntity.SupplierId,
-                                                  SupplierName = string.Empty,
-                                                  DateReserved = deliveryEntity.DateAdded,
-                                                  CustomerTotal = deliveryEntity.CustomerTotal,
-                                                  OrderStatusId = deliveryEntity.OrderStatusId,
-                                                  OrderStatus = string.Empty,
-                                                  OrderType = (int)OrderType.WaiMai,
-                                                  DineNumber = 0
-                                              }))).OrderByDescending(p => p.DateReserved);
-
-            if (pageIndex == null)
+            var queryableTemp = this.tableReservationEntityRepository.EntityQueryable.Where(p => p.CustomerId == parameter.CustomerId && p.Supplier != null);
+            if (parameter.OrderStatus != null)
             {
-                return queryable.ToList();
+                queryableTemp = queryableTemp.Where(p => p.TableStatus == parameter.OrderStatus);
             }
 
-            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
+            if (parameter.PaidStatus != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.IsPaId == parameter.PaidStatus);
+            }
+
+            var queryable = queryableTemp.Select(p => new UserOrderModel
+            {
+                OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
+                SupplierId = p.Supplier.SupplierId,
+                SupplierName = p.Supplier.SupplierName,
+                DateReserved = p.DateReserved,
+                CustomerTotal = p.CustomerTotal,
+                OrderStatusId = p.TableStatus,
+                DineNumber = p.DineNumber,
+                OrderStatus = string.Empty,
+                OrderType = (int)OrderType.DingTai
+            });
+
+            return queryable;
         }
     }
 }

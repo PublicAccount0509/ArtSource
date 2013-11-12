@@ -7,6 +7,7 @@
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IRepository;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：UserWaiMaiOrders
@@ -80,11 +81,7 @@
         /// <summary>
         /// 取得订单列表
         /// </summary>
-        /// <param name="customerId">用户Id</param>
-        /// <param name="orderStatus">订单状态</param>
-        /// <param name="paidStatus">支付状态</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
+        /// <param name="parameter">查询用户订单参数</param>
         /// <returns>
         /// 返回订单列表
         /// </returns>
@@ -93,12 +90,18 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserOrdersResult GetUserOrderList(int customerId, int? orderStatus, int? paidStatus, int pageSize, int? pageIndex)
+        public UserOrdersResult GetUserOrderList(UserOrdersParameter parameter)
         {
-            var waiMaiOrderList = orderStatus == null
-                                ? this.GetWaiMaiOrderList(customerId, pageSize, pageIndex)
-                                : this.GetWaiMaiOrderList(customerId, orderStatus.Value, pageSize, pageIndex);
+            if (parameter == null)
+            {
+                return new UserOrdersResult
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    OrderList = new List<IOrderModel>()
+                };
+            }
 
+            var waiMaiOrderList = this.GetWaiMaiOrderList(parameter);
             var supplierIdList = waiMaiOrderList.Select(p => p.SupplierId).ToList();
             var supplierList = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                                 where supplierIdList.Contains(supplierEntity.SupplierId)
@@ -157,9 +160,7 @@
         /// <summary>
         /// 取得用户订单列表
         /// </summary>
-        /// <param name="customerId">用户Id</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
+        /// <param name="parameter">查询用户订单参数</param>
         /// <returns>
         /// 用户订单列表
         /// </returns>
@@ -168,67 +169,37 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private List<WaiMaiOrderModel> GetWaiMaiOrderList(int customerId, int pageSize, int? pageIndex)
+        private List<WaiMaiOrderModel> GetWaiMaiOrderList(UserOrdersParameter parameter)
         {
-            var queryable = (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
-                             where deliveryEntity.CustomerId == customerId
-                             select new WaiMaiOrderModel
-                                     {
-                                         OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
-                                         SupplierId = deliveryEntity.SupplierId,
-                                         SupplierName = string.Empty,
-                                         DateReserved = deliveryEntity.DateAdded,
-                                         CustomerTotal = deliveryEntity.CustomerTotal,
-                                         OrderStatusId = deliveryEntity.OrderStatusId,
-                                         OrderStatus = string.Empty,
-                                         OrderType = (int)this.OrderType
-                                     });
+            var queryableTemp = this.deliveryEntityRepository.EntityQueryable.Where(p => p.CustomerId == parameter.CustomerId && p.SupplierId != null);
+            if (parameter.OrderStatus != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.OrderStatusId == parameter.OrderStatus);
+            }
 
-            if (pageIndex == null)
+            if (parameter.PaidStatus != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.IsPaId == parameter.PaidStatus);
+            }
+
+            var queryable = queryableTemp.Select(p => new WaiMaiOrderModel
+                               {
+                                   OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
+                                   SupplierId = p.SupplierId,
+                                   SupplierName = string.Empty,
+                                   DateReserved = p.DateAdded,
+                                   CustomerTotal = p.CustomerTotal,
+                                   OrderStatusId = p.OrderStatusId,
+                                   OrderStatus = string.Empty,
+                                   OrderType = (int)this.OrderType
+                               });
+
+            if (parameter.PageIndex == null)
             {
                 return queryable.ToList();
             }
 
-            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
-        }
-
-        /// <summary>
-        /// 取得用户订单列表
-        /// </summary>
-        /// <param name="customerId">用户Id</param>
-        /// <param name="orderStatus">订单状态</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
-        /// <returns>
-        /// 用户订单列表
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：2013/10/21 15:11
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private List<WaiMaiOrderModel> GetWaiMaiOrderList(int customerId, int orderStatus, int pageSize, int? pageIndex)
-        {
-            var queryable = (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
-                             where deliveryEntity.CustomerId == customerId && deliveryEntity.OrderStatusId == orderStatus
-                             select new WaiMaiOrderModel
-                             {
-                                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
-                                 SupplierId = deliveryEntity.SupplierId,
-                                 SupplierName = string.Empty,
-                                 DateReserved = deliveryEntity.DateAdded,
-                                 CustomerTotal = deliveryEntity.CustomerTotal,
-                                 OrderStatusId = deliveryEntity.OrderStatusId,
-                                 OrderStatus = string.Empty,
-                                 OrderType = (int)this.OrderType
-                             });
-
-            if (pageIndex == null)
-            {
-                return queryable.ToList();
-            }
-
-            return queryable.Skip((pageIndex.Value - 1) * pageSize).Take(pageSize).ToList();
+            return queryable.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize).ToList();
         }
     }
 }

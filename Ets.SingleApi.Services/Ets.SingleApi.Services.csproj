@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Json">
       <HintPath>..\lib\JsonValue\System.Json.dll</HintPath>
     </Reference>

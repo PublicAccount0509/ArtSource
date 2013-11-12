@@ -84,5 +84,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> FindPassword(FindPasswordParameter parameter);
+
+        /// <summary>
+        /// 验证用户输入的验证码
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回验证结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 4:45 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> AuthCode(AuthCodeParameter parameter);
     }
 }

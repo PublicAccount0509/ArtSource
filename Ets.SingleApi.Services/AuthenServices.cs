@@ -511,7 +511,6 @@
                 };
             }
 
-
             var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Mobile == parameter.UserName || p.Email == parameter.UserName)
                             .Select(p => new { p.LoginId })
                             .FirstOrDefault();
@@ -555,6 +554,61 @@
                     Result = sendPasswordResult.Result,
                     StatusCode = sendPasswordResult.StatusCode
                 };
+        }
+
+        /// <summary>
+        /// 验证用户输入的验证码
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回验证结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/24/2013 4:45 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> AuthCode(AuthCodeParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (parameter.Telephone.IsEmptyOrNull())
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.EmptyTelephoneCode
+                };
+            }
+
+            if (parameter.AuthCode.IsEmptyOrNull())
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone), false);
+            if (authCode == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                Result = parameter.AuthCode == authCode.ToString()
+            };
         }
 
         /// <summary>

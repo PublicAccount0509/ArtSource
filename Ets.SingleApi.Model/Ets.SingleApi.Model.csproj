@@ -80,6 +80,8 @@
     <Compile Include="Controller\SetPasswordRequest.cs" />
     <Compile Include="Controller\SetPasswordResponse.cs" />
     <Compile Include="Controller\IsFollowerSupplierResponse.cs" />
+    <Compile Include="Controller\AuthCodeRequst.cs" />
+    <Compile Include="Controller\AuthCodeResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Services\CustomerModel.cs" />
     <Compile Include="Services\PaymentWaiMaiOrderModel.cs" />
     <Compile Include="Services\SupplierFeatureModel.cs" />
+    <Compile Include="Services\UserOrdersParameter.cs" />
     <Compile Include="Services\WaiMaiOrderModel.cs" />
     <Compile Include="Services\TangShiOrderModel.cs" />
     <Compile Include="Services\FindPasswordParameter.cs" />
@@ -198,6 +201,8 @@
     <Compile Include="Services\SaveSupplierDishParameter.cs" />
     <Compile Include="Services\DeleteSupplierDishParameter.cs" />
     <Compile Include="Services\SetPasswordParameter.cs" />
+    <Compile Include="Services\GetUserOrderParameter.cs" />
+    <Compile Include="Services\AuthCodeParameter.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

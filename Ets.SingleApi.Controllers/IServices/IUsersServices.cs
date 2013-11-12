@@ -168,11 +168,8 @@
         /// 获取用户订单
         /// </summary>
         /// <param name="userId">用户Id</param>
-        /// <param name="orderStatus">订单状态</param>
-        /// <param name="paidStatus">支付状态</param>
         /// <param name="orderType">订单类型</param>
-        /// <param name="pageSize">每页最大数量</param>
-        /// <param name="pageIndex">页码</param>
+        /// <param name="parameter">查询订单参数</param>
         /// <returns>
         /// 获取用户订单
         /// </returns>
@@ -181,7 +178,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<UserOrderModel> GetUserOrderList(int userId, int? orderStatus, int? paidStatus, OrderType orderType, int pageSize, int? pageIndex);
+        ServicesResultList<UserOrderModel> GetUserOrderList(int userId, OrderType orderType, GetUserOrderParameter parameter);
 
         /// <summary>
         /// 验证用户是否存在

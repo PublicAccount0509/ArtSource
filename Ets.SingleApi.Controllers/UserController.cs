@@ -700,7 +700,7 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public UserOrderListResponse UserOrderList(int id, int orderType, int? orderStatus, int? paidStatus, int pageSize, int? pageIndex)
+        public UserOrderListResponse UserOrderList(int id, int orderType, int? orderStatus, bool? paidStatus, int pageSize, int? pageIndex)
         {
             if (!this.ValidateUserId(id))
             {
@@ -714,7 +714,13 @@
                 };
             }
 
-            var list = this.usersServices.GetUserOrderList(id, orderStatus, paidStatus, (OrderType)orderType, pageSize, pageIndex);
+            var list = this.usersServices.GetUserOrderList(id, (OrderType)orderType, new GetUserOrderParameter
+                                                            {
+                                                                OrderStatus = orderStatus,
+                                                                PaidStatus = paidStatus,
+                                                                PageIndex = pageIndex,
+                                                                PageSize = pageSize
+                                                            });
 
             if (list.Result == null || list.Result.Count == 0)
             {
