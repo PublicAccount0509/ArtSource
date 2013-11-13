@@ -112,6 +112,7 @@
                     DeliveryMethodId = getWaiMaiOrderResult.Result.DeliveryMethodId,
                     IsPaid = getWaiMaiOrderResult.Result.IsPaid ?? false,
                     IsConfirm = getWaiMaiOrderResult.Result.IsConfirm,
+                    PaymentMethodId = getWaiMaiOrderResult.Result.PaymentMethodId,
                     DishList = dishList.Select(p => new WaiMaiOrderDish
                         {
                             SupplierDishName = p.SupplierDishName,

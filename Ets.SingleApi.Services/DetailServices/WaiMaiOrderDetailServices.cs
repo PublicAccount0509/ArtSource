@@ -270,6 +270,8 @@
             decimal baIduLong;
             decimal.TryParse(supplierEntity.BaIduLong, out baIduLong);
 
+            var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryEntity.DeliveryId);
+
             var result = new WaiMaiOrderDetailModel
                 {
                     OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
@@ -289,7 +291,8 @@
                     DeliveryMethodId = deliveryEntity.DeliveryMethodId,
                     IsPaid = deliveryEntity.IsPaId,
                     DishList = waiMaiOrderDishList,
-                    IsConfirm = this.paymentEntityRepository.EntityQueryable.Any(p => p.Delivery.DeliveryId == deliveryEntity.DeliveryId)
+                    PaymentMethodId = paymentEntity == null ? (int?)null : paymentEntity.PaymentMethodId,
+                    IsConfirm = paymentEntity != null
                 };
 
             return new ServicesResult<WaiMaiOrderDetailModel>
