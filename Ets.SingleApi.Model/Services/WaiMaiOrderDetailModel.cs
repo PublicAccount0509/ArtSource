@@ -117,7 +117,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int? SupplierId { get; set; }
+        public int SupplierId { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the real supplier.

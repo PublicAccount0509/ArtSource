@@ -97,6 +97,7 @@
                     OrderStatusId = getWaiMaiOrderResult.Result.OrderStatusId,
                     OrderTypeId = getWaiMaiOrderResult.Result.OrderTypeId,
                     DateReserved = getWaiMaiOrderResult.Result.DateReserved == null ? string.Empty : getWaiMaiOrderResult.Result.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
+                    SupplierId = getWaiMaiOrderResult.Result.SupplierId,
                     SupplierName = getWaiMaiOrderResult.Result.SupplierName ?? string.Empty,
                     SupplierAddress = getWaiMaiOrderResult.Result.SupplierAddress ?? string.Empty,
                     SupplierTelephone = getWaiMaiOrderResult.Result.SupplierTelephone ?? string.Empty,
