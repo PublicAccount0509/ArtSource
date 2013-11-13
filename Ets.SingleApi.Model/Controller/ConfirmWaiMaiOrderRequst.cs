@@ -39,16 +39,16 @@
         public int CustomerAddressId { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the real supplier.
+        /// Gets or sets the PaymentMethodId of ConfirmWaiMaiOrderRequst
         /// </summary>
         /// <value>
-        /// The type of the real supplier.
+        /// The PaymentMethodId
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/23/2013 5:49 PM
+        /// 创建日期：11/13/2013 4:11 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int RealSupplierType { get; set; }
+        public int PaymentMethodId { get; set; }
     }
 }

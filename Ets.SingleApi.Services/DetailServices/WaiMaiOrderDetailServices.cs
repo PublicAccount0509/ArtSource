@@ -288,7 +288,8 @@
                     SupplierBaIduLong = baIduLong,
                     DeliveryMethodId = deliveryEntity.DeliveryMethodId,
                     IsPaid = deliveryEntity.IsPaId,
-                    DishList = waiMaiOrderDishList
+                    DishList = waiMaiOrderDishList,
+                    IsConfirm = this.paymentEntityRepository.EntityQueryable.Any(p => p.Delivery.DeliveryId == deliveryEntity.DeliveryId)
                 };
 
             return new ServicesResult<WaiMaiOrderDetailModel>
@@ -410,26 +411,6 @@
 
             this.deliveryEntityRepository.Save(deliveryEntity);
 
-            var paymentEntity = new PaymentEntity
-                {
-                    PaymentTypeId = 1,
-                    PaymentMethodId = parameter.DeliveryMethodId == 1 ? 1 : (parameter.DeliveryMethodId == 3 ? 7 : 6),
-                    Amount = customerTotal,
-                    Delivery = deliveryEntity,
-                    TransactionCode = string.Empty,
-                    CardId = string.Empty,
-                    Authorized = false,
-                    CVV = 0,
-                    AVS = string.Empty,
-                    PC = 0,
-                    AuthCode = string.Empty,
-                    VoicePayResponse = string.Empty,
-                    TransactionFee = 0,
-                    MethodChangeHistory = string.Empty,
-                };
-
-            this.paymentEntityRepository.Save(paymentEntity);
-
             var supplierCommissionEntity = new SupplierCommissionEntity
                 {
                     Supplier = supplierEntity,
@@ -534,12 +515,29 @@
                 };
             }
 
-            //自提类型，直接保存订单数据
-            deliveryEntity.RealSupplierType = parameter.RealSupplierType;
+            var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryEntity.DeliveryId)
+                                  ?? new PaymentEntity
+                                  {
+                                      PaymentTypeId = 1,
+                                      Delivery = deliveryEntity,
+                                      TransactionCode = string.Empty,
+                                      CardId = string.Empty,
+                                      Authorized = false,
+                                      CVV = 0,
+                                      AVS = string.Empty,
+                                      PC = 0,
+                                      AuthCode = string.Empty,
+                                      VoicePayResponse = string.Empty,
+                                      TransactionFee = 0
+                                  };
+
+            paymentEntity.Amount = deliveryEntity.CustomerTotal ?? 0;
+            paymentEntity.MethodChangeHistory = paymentEntity.PaymentMethodId.ToString();
+            paymentEntity.PaymentMethodId = parameter.PaymentMethodId;
+            this.paymentEntityRepository.Save(paymentEntity);
+
             if (deliveryEntity.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
             {
-                this.deliveryEntityRepository.Save(deliveryEntity);
-
                 return new DetailServicesResult<ConfirmWaiMaiOrderModel>
                 {
                     StatusCode = (int)StatusCode.Succeed.Ok,

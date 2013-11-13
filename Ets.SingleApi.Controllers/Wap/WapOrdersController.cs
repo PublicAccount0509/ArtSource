@@ -111,6 +111,7 @@
                     RealSupplierType = getWaiMaiOrderResult.Result.RealSupplierType,
                     DeliveryMethodId = getWaiMaiOrderResult.Result.DeliveryMethodId,
                     IsPaid = getWaiMaiOrderResult.Result.IsPaid ?? false,
+                    IsConfirm = getWaiMaiOrderResult.Result.IsConfirm,
                     DishList = dishList.Select(p => new WaiMaiOrderDish
                         {
                             SupplierDishName = p.SupplierDishName,
@@ -253,7 +254,7 @@
                     UserId = requst.UserId,
                     OrderId = id,
                     CustomerAddressId = requst.CustomerAddressId,
-                    RealSupplierType = requst.RealSupplierType
+                    PaymentMethodId = requst.PaymentMethodId
                 });
 
             var result = confirmWaiMaiOrderResult.Result ?? new ConfirmWaiMaiOrderModel();
