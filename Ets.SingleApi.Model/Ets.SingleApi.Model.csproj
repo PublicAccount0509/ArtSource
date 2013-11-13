@@ -82,6 +82,10 @@
     <Compile Include="Controller\IsFollowerSupplierResponse.cs" />
     <Compile Include="Controller\AuthCodeRequst.cs" />
     <Compile Include="Controller\AuthCodeResponse.cs" />
+    <Compile Include="Controller\SupplierDishListResponse.cs" />
+    <Compile Include="Controller\SupplierDishResponse.cs" />
+    <Compile Include="Controller\SupplierCuisineListResponse.cs" />
+    <Compile Include="Controller\SupplierCuisineResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />

@@ -1,7 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：DishModel
+    /// 类名称：SupplierDishDetail
     /// 命名空间：Ets.SingleApi.Model.Services
     /// 类功能：菜品信息
     /// </summary>
@@ -13,20 +13,7 @@
     public class SupplierDishDetail
     {
         /// <summary>
-        /// Gets or sets the DishId of SupplierDish
-        /// </summary>
-        /// <value>
-        /// The DishId
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/13 16:17
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int DishId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the SupplierDishId of SupplierDish
+        /// Gets or sets the SupplierDishId of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The SupplierDishId
@@ -39,7 +26,7 @@
         public int SupplierDishId { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDishName of DishModel
+        /// Gets or sets the DishName of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The Name
@@ -49,7 +36,20 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string SupplierDishName { get; set; }
+        public string DishName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DishDescription of SupplierDishDetail
+        /// </summary>
+        /// <value>
+        /// The DishDescription
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 12:48
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string DishDescription { get; set; }
 
         /// <summary>
         /// Gets or sets the DishNo of DishModel
@@ -65,7 +65,7 @@
         public string DishNo { get; set; }
 
         /// <summary>
-        /// Gets or sets the Price of SupplierDish
+        /// Gets or sets the Price of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The Price
@@ -78,20 +78,7 @@
         public decimal Price { get; set; }
 
         /// <summary>
-        /// Gets or sets the DishDescription of SupplierDish
-        /// </summary>
-        /// <value>
-        /// The DishDescription
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/15 12:48
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string DishDescription { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Recipe of SupplierDish
+        /// Gets or sets the Recipe of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The Recipe
@@ -104,7 +91,7 @@
         public string Recipe { get; set; }
 
         /// <summary>
-        /// Gets or sets the StockLevel of SupplierDish
+        /// Gets or sets the StockLevel of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The StockLevel
@@ -117,7 +104,7 @@
         public int StockLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets the IsSpecialOffer of SupplierDish
+        /// Gets or sets the IsSpecialOffer of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The IsSpecialOffer
@@ -130,7 +117,7 @@
         public bool? IsSpecialOffer { get; set; }
 
         /// <summary>
-        /// Gets or sets the SpecialOfferNo of SupplierDish
+        /// Gets or sets the SpecialOfferNo of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The SpecialOfferNo
@@ -143,20 +130,20 @@
         public int SpecialOfferNo { get; set; }
 
         /// <summary>
-        /// Gets or sets the SuppllierDishDescription of SupplierDish
+        /// Gets or sets a value indicating whether
         /// </summary>
         /// <value>
-        /// The SuppllierDishDescription
+        /// The Online
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/15 12:54
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string SuppllierDishDescription { get; set; }
+        public bool Online { get; set; }
 
         /// <summary>
-        /// Gets or sets the SpicyLevel of SupplierDish
+        /// Gets or sets the SpicyLevel of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The SpicyLevel
@@ -169,7 +156,7 @@
         public int? SpicyLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets the Vegetarian of SupplierDish
+        /// Gets or sets the Vegetarian of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The Vegetarian
@@ -182,7 +169,7 @@
         public int? Vegetarian { get; set; }
 
         /// <summary>
-        /// Gets or sets the HasNuts of SupplierDish
+        /// Gets or sets the HasNuts of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The HasNuts
@@ -195,7 +182,7 @@
         public int? HasNuts { get; set; }
 
         /// <summary>
-        /// Gets or sets the AverageRating of SupplierDish
+        /// Gets or sets the AverageRating of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The AverageRating
@@ -208,7 +195,7 @@
         public int? AverageRating { get; set; }
 
         /// <summary>
-        /// Gets or sets the Recommended of SupplierDish
+        /// Gets or sets the Recommended of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The Recommended
@@ -221,20 +208,46 @@
         public bool? Recommended { get; set; }
 
         /// <summary>
-        /// Gets or sets the ImagePath of SupplierDish
+        /// Gets or sets the PackagingFee of SupplierDishDetail
         /// </summary>
         /// <value>
-        /// The ImagePath
+        /// The PackagingFee
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/15 12:55
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string ImagePath { get; set; }
+        public decimal? PackagingFee { get; set; }
 
         /// <summary>
-        /// Gets or sets the IsCommission of SupplierDish
+        /// Gets or sets the QuanPin of SupplierDishDetail
+        /// </summary>
+        /// <value>
+        /// The QuanPin
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 12:55
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string QuanPin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JianPin of SupplierDishDetail
+        /// </summary>
+        /// <value>
+        /// The JianPin
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 12:55
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string JianPin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IsCommission of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The IsCommission
@@ -247,7 +260,7 @@
         public bool? IsCommission { get; set; }
 
         /// <summary>
-        /// Gets or sets the IsDiscount of SupplierDish
+        /// Gets or sets the IsDiscount of SupplierDishDetail
         /// </summary>
         /// <value>
         /// The IsDiscount
@@ -258,5 +271,83 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public bool? IsDiscount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IsDel of SupplierDishDetail
+        /// </summary>
+        /// <value>
+        /// The IsDel
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 12:55
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool? IsDel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SupplierId of SupplierDishDetail
+        /// </summary>
+        /// <value>
+        /// The SupplierId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:05
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int SupplierId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SupplierCategoryId of SupplierDishDetail
+        /// </summary>
+        /// <value>
+        /// The CuisineId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/13/2013 10:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int SupplierCategoryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CategoryId of SupplierDishDetail
+        /// </summary>
+        /// <value>
+        /// The CuisineId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/13/2013 10:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int CategoryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the category.
+        /// </summary>
+        /// <value>
+        /// The name of the category.
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/13/2013 10:46 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string CategoryName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ImagePath of SupplierDishDetail
+        /// </summary>
+        /// <value>
+        /// The ImagePath
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 12:05
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string ImagePath { get; set; }
     }
 }

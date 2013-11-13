@@ -265,6 +265,11 @@
                    };
             }
 
+            decimal baIduLat;
+            decimal.TryParse(supplierEntity.BaIduLat, out baIduLat);
+            decimal baIduLong;
+            decimal.TryParse(supplierEntity.BaIduLong, out baIduLong);
+
             var result = new WaiMaiOrderDetailModel
                 {
                     OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
@@ -279,6 +284,8 @@
                     SupplierName = supplierEntity.SupplierName,
                     SupplierTelephone = supplierEntity.Telephone,
                     SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
+                    SupplierBaIduLat = baIduLat,
+                    SupplierBaIduLong = baIduLong,
                     DeliveryMethodId = deliveryEntity.DeliveryMethodId,
                     IsPaid = deliveryEntity.IsPaId,
                     DishList = waiMaiOrderDishList

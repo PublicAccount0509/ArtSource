@@ -26,7 +26,7 @@
         public int SupplierDishId { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDishName of SupplierDishDetailModel
+        /// Gets or sets the DishName of SupplierDishDetailModel
         /// </summary>
         /// <value>
         /// The Name
@@ -36,7 +36,20 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string SupplierDishName { get; set; }
+        public string DishName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DishDescription of SupplierDishDetailModel
+        /// </summary>
+        /// <value>
+        /// The DishDescription
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 12:48
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string DishDescription { get; set; }
 
         /// <summary>
         /// Gets or sets the DishNo of DishModel
@@ -63,19 +76,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public decimal Price { get; set; }
-
-        /// <summary>
-        /// Gets or sets the DishDescription of SupplierDishDetailModel
-        /// </summary>
-        /// <value>
-        /// The DishDescription
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/15 12:48
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string DishDescription { get; set; }
 
         /// <summary>
         /// Gets or sets the Recipe of SupplierDishDetailModel
@@ -128,19 +128,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int SpecialOfferNo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the SuppllierDishDescription of SupplierDishDetailModel
-        /// </summary>
-        /// <value>
-        /// The SuppllierDishDescription
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/15 12:54
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string SuppllierDishDescription { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether
@@ -312,16 +299,55 @@
         public int SupplierId { get; set; }
 
         /// <summary>
-        /// Gets or sets the DishImage of SupplierDishDetailModel
+        /// Gets or sets the SupplierCategoryId of SupplierDishDetailModel
         /// </summary>
         /// <value>
-        /// The DishImage
+        /// The CuisineId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/13/2013 10:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int SupplierCategoryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CategoryId of SupplierDishDetailModel
+        /// </summary>
+        /// <value>
+        /// The CuisineId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/13/2013 10:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int CategoryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the category.
+        /// </summary>
+        /// <value>
+        /// The name of the category.
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/13/2013 10:46 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string CategoryName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ImagePath of SupplierDishDetailModel
+        /// </summary>
+        /// <value>
+        /// The ImagePath
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/15 12:05
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DishImageModel DishImage { get; set; }
+        public string ImagePath { get; set; }
     }
 }

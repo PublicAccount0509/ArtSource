@@ -100,6 +100,8 @@
                     SupplierName = getWaiMaiOrderResult.Result.SupplierName ?? string.Empty,
                     SupplierAddress = getWaiMaiOrderResult.Result.SupplierAddress ?? string.Empty,
                     SupplierTelephone = getWaiMaiOrderResult.Result.SupplierTelephone ?? string.Empty,
+                    SupplierBaIduLat = getWaiMaiOrderResult.Result.SupplierBaIduLat,
+                    SupplierBaIduLong = getWaiMaiOrderResult.Result.SupplierBaIduLong,
                     DeliveryInstruction = getWaiMaiOrderResult.Result.DeliveryInstruction ?? string.Empty,
                     CustomerTotal = getWaiMaiOrderResult.Result.CustomerTotal == null ? "0.00" : getWaiMaiOrderResult.Result.CustomerTotal.Value.ToString("#0.00"),
                     Commission = getWaiMaiOrderResult.Result.Commission == null ? "0.00" : getWaiMaiOrderResult.Result.Commission.Value.ToString("#0.00"),

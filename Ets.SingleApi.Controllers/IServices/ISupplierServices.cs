@@ -72,6 +72,36 @@
         ServicesResultList<SupplierCuisineModel> GetMenu(int supplierId, int supplierMenuCategoryTypeId);
 
         /// <summary>
+        /// 获取餐厅菜品类型信息
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型</param>
+        /// <returns>
+        /// 返回餐厅菜品类型信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:13
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<SupplierCuisineDetailModel> GetSupplierCuisineList(int supplierId, int supplierMenuCategoryTypeId);
+
+        /// <summary>
+        /// 获取餐厅菜品类型信息
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="supplierCategoryId">The supplierCategoryId</param>
+        /// <returns>
+        /// 返回餐厅菜品类型信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:13
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<SupplierCuisineDetailModel> GetSupplierCuisine(int supplierId, int supplierCategoryId);
+
+        /// <summary>
         /// 添加餐厅菜品信息
         /// </summary>
         /// <param name="parameter">The parameter</param>
@@ -112,6 +142,37 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> DeleteSupplierCuisine(DeleteSupplierCuisineParameter parameter);
+
+        /// <summary>
+        /// 获取餐厅菜单信息
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型</param>
+        /// <param name="supplierCategoryId">The supplierCategoryId</param>
+        /// <returns>
+        /// 返回餐厅菜单信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:13
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<SupplierDishDetailModel> GetSupplierDishList(int supplierId, int supplierMenuCategoryTypeId, int? supplierCategoryId);
+
+        /// <summary>
+        /// 获取餐厅菜单信息
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="supplierDishId">The supplierDishId</param>
+        /// <returns>
+        /// 返回餐厅菜单信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:13
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<SupplierDishDetailModel> GetSupplierDish(int supplierId, int supplierDishId);
 
         /// <summary>
         /// 添加餐厅菜信息

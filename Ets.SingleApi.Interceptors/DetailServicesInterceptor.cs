@@ -39,6 +39,7 @@
             catch (Exception exception)
             {
                 exception.WriteLog("Ets.SingleApi.DetailServices");
+                throw new Exception(exception.Message, exception);
             }
 
             if (invocation.ReturnValue == null)

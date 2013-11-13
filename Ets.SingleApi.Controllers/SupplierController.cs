@@ -104,6 +104,102 @@
         }
 
         /// <summary>
+        /// 获取餐厅菜系列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型Id</param>
+        /// <returns>
+        /// 返回餐厅菜系列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public SupplierCuisineListResponse SupplierCuisineList(int id, int supplierMenuCategoryTypeId)
+        {
+            var list = this.supplierServices.GetSupplierCuisineList(id, supplierMenuCategoryTypeId);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new SupplierCuisineListResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<SupplierCuisineDetail>()
+                };
+            }
+
+            var result = list.Result.Select(p => new SupplierCuisineDetail
+            {
+                CategoryId = p.CategoryId,
+                CategoryName = p.CategoryName,
+                CategoryNo = p.CategoryNo ?? 0,
+                SupplierCategoryId = p.SupplierCategoryId,
+                CategoryDescription = p.CategoryDescription
+            }).ToList();
+
+            return new SupplierCuisineListResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
+        /// 获取餐厅菜系
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="supplierCategoryId">菜系Id</param>
+        /// <returns>
+        /// 返回餐厅菜系
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public SupplierCuisineResponse SupplierCuisine(int id, int supplierCategoryId)
+        {
+            var list = this.supplierServices.GetSupplierCuisine(id, supplierCategoryId);
+            if (list.Result == null)
+            {
+                return new SupplierCuisineResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new SupplierCuisineDetail()
+                };
+            }
+
+            var result = new SupplierCuisineDetail
+            {
+                CategoryId = list.Result.CategoryId,
+                CategoryName = list.Result.CategoryName,
+                CategoryNo = list.Result.CategoryNo ?? 0,
+                SupplierCategoryId = list.Result.SupplierCategoryId,
+                CategoryDescription = list.Result.CategoryDescription
+            };
+
+            return new SupplierCuisineResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 添加餐厅菜品
         /// </summary>
         /// <param name="id">The id</param>
@@ -247,6 +343,145 @@
                 {
                     StatusCode = result.StatusCode
                 }
+            };
+        }
+
+        /// <summary>
+        /// 获取餐厅菜列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型Id</param>
+        /// <param name="supplierCategoryId">餐厅菜系Id</param>
+        /// <returns>
+        /// 返回餐厅菜列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public SupplierDishListResponse SupplierDishList(int id, int supplierMenuCategoryTypeId, int? supplierCategoryId)
+        {
+            var list = this.supplierServices.GetSupplierDishList(id, supplierMenuCategoryTypeId, supplierCategoryId);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new SupplierDishListResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<SupplierDishDetail>()
+                };
+            }
+
+            var result = list.Result.Select(p => new SupplierDishDetail
+            {
+                Price = p.Price,
+                ImagePath = p.ImagePath,
+                SupplierDishId = p.SupplierDishId,
+                DishName = p.DishName,
+                DishDescription = p.DishDescription,
+                AverageRating = p.AverageRating,
+                IsCommission = p.IsCommission,
+                IsDiscount = p.IsDiscount,
+                Recipe = p.Recipe,
+                Recommended = p.Recommended,
+                CategoryId = p.CategoryId,
+                CategoryName = p.CategoryName,
+                DishNo = p.DishNo,
+                HasNuts = p.HasNuts,
+                IsDel = p.IsDel,
+                IsSpecialOffer = p.IsSpecialOffer,
+                JianPin = p.JianPin,
+                Online = p.Online,
+                PackagingFee = p.PackagingFee,
+                QuanPin = p.QuanPin,
+                SpecialOfferNo = p.SpecialOfferNo,
+                SpicyLevel = p.SpicyLevel,
+                StockLevel = p.StockLevel,
+                SupplierCategoryId = p.SupplierCategoryId,
+                SupplierId = p.SupplierId,
+                Vegetarian = p.Vegetarian
+            }).ToList();
+
+            return new SupplierDishListResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
+        /// 获取餐厅菜
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="supplierDishId">餐厅菜Id</param>
+        /// <returns>
+        /// 返回餐厅菜
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public SupplierDishResponse SupplierDish(int id, int supplierDishId)
+        {
+            var list = this.supplierServices.GetSupplierDish(id, supplierDishId);
+            if (list.Result == null)
+            {
+                return new SupplierDishResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new SupplierDishDetail()
+                };
+            }
+
+            var result = new SupplierDishDetail
+            {
+                Price = list.Result.Price,
+                ImagePath = list.Result.ImagePath,
+                SupplierDishId = list.Result.SupplierDishId,
+                DishName = list.Result.DishName,
+                DishDescription = list.Result.DishDescription,
+                AverageRating = list.Result.AverageRating,
+                IsCommission = list.Result.IsCommission,
+                IsDiscount = list.Result.IsDiscount,
+                Recipe = list.Result.Recipe,
+                Recommended = list.Result.Recommended,
+                CategoryId = list.Result.CategoryId,
+                CategoryName = list.Result.CategoryName,
+                DishNo = list.Result.DishNo,
+                HasNuts = list.Result.HasNuts,
+                IsDel = list.Result.IsDel,
+                IsSpecialOffer = list.Result.IsSpecialOffer,
+                JianPin = list.Result.JianPin,
+                Online = list.Result.Online,
+                PackagingFee = list.Result.PackagingFee,
+                QuanPin = list.Result.QuanPin,
+                SpecialOfferNo = list.Result.SpecialOfferNo,
+                SpicyLevel = list.Result.SpicyLevel,
+                StockLevel = list.Result.StockLevel,
+                SupplierCategoryId = list.Result.SupplierCategoryId,
+                SupplierId = list.Result.SupplierId,
+                Vegetarian = list.Result.Vegetarian
+            };
+
+            return new SupplierDishResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
             };
         }
 
