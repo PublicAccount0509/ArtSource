@@ -38,6 +38,16 @@
         private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
 
         /// <summary>
+        /// 字段loginEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/14/2013 10:28 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
+
+        /// <summary>
         /// 字段deliveryEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -161,6 +171,7 @@
         /// Initializes a new instance of the <see cref="WaiMaiOrderDetailServices" /> class.
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
+        /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="sourcePathEntityRepository">The sourcePathEntityRepository</param>
         /// <param name="sourceTypeEntityRepository">The sourceTypeEntityRepository</param>
@@ -180,6 +191,7 @@
         /// ----------------------------------------------------------------------------------------
         public WaiMaiOrderDetailServices(
             INHibernateRepository<CustomerEntity> customerEntityRepository,
+            INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<SourcePathEntity> sourcePathEntityRepository,
             INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
@@ -194,6 +206,7 @@
             IDistance distance)
         {
             this.customerEntityRepository = customerEntityRepository;
+            this.loginEntityRepository = loginEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.sourcePathEntityRepository = sourcePathEntityRepository;
             this.sourceTypeEntityRepository = sourceTypeEntityRepository;
@@ -497,8 +510,18 @@
                 };
             }
 
-            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.LoginId == parameter.UserId).Select(p => new { p.CustomerId, p.LoginId, p.Mobile }).FirstOrDefault();
+            var customer = this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == parameter.UserId);
             if (customer == null)
+            {
+                return new DetailServicesResult<ConfirmWaiMaiOrderModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = new ConfirmWaiMaiOrderModel()
+                };
+            }
+
+            var loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == parameter.UserId);
+            if (loginEntity == null)
             {
                 return new DetailServicesResult<ConfirmWaiMaiOrderModel>
                 {
@@ -541,6 +564,24 @@
 
             if (deliveryEntity.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
             {
+                var userName = string.Format("{0}{1}", customer.Forename, customer.Surname);
+                var tempDeliveryAddressEntity = new DeliveryAddressEntity
+                {
+                    Recipient = userName.IsEmptyOrNull() ? loginEntity.Username : userName,
+                    Telephone = customer.Mobile,
+                    Sex = string.Equals(customer.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? 1 : 0,
+                    CustomerId = customerId,
+                    IsDel = false
+                };
+                this.deliveryAddressEntityRepository.Save(tempDeliveryAddressEntity);
+
+                deliveryEntity.Contact = tempDeliveryAddressEntity.Recipient;
+                deliveryEntity.ContactPhone = tempDeliveryAddressEntity.Telephone;
+                deliveryEntity.Gender = (tempDeliveryAddressEntity.Sex == null ? ServicesCommon.DefaultGender : tempDeliveryAddressEntity.Sex.Value).ToString();
+                //保存订单送餐地址
+                deliveryEntity.DeliveryAddressId = tempDeliveryAddressEntity.DeliveryAddressId;
+                this.deliveryEntityRepository.Save(deliveryEntity);
+
                 return new DetailServicesResult<ConfirmWaiMaiOrderModel>
                 {
                     StatusCode = (int)StatusCode.Succeed.Ok,
