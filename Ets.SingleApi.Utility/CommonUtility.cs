@@ -566,7 +566,7 @@
             var ret = string.Empty;
             for (var i = 0; i < b.Length; i++)
             {
-                ret += b[i].ToString("x").PadLeft(2, '0');
+                ret += b[i].ToString("X").PadLeft(2, '0');
             }
 
             return ret;
