@@ -426,7 +426,7 @@
             customerAddressEntity.CountryId = regionEntity == null ? null : (int?)regionEntity.ProvinceId;
             customerAddressEntity.RegionCode = parameter.RegionCode;
             customerAddressEntity.Telephone = parameter.Telephone;
-            customerAddressEntity.Sex = parameter.Sex;
+            customerAddressEntity.Sex = parameter.Sex ?? ServicesCommon.DefaultGender;
             customerAddressEntity.CustomerId = customerId;
             if (parameter.IsDefault != null)
             {

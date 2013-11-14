@@ -152,6 +152,51 @@
         }
 
         /// <summary>
+        /// 默认性别
+        /// </summary>
+        /// <value>
+        /// 默认性别
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultGender
+        {
+            get
+            {
+                var defaultGender = ConfigurationManager.AppSettings["DefaultGender"] ?? "0";
+                int result;
+                if (!int.TryParse(defaultGender, out result))
+                {
+                    result = 0;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Female字串
+        /// </summary>
+        /// <value>
+        /// Female字串
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string FemaleGender
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["FemaleGender"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
         /// 百度地图AK
         /// </summary>
         /// <value>

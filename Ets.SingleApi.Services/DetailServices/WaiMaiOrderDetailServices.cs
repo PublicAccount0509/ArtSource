@@ -396,7 +396,7 @@
                 PackagingFee = supplierEntity.PackagingFee,
                 DeliverCharge = parameter.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? 0 : fixedDeliveryCharge,
                 ContactPhone = customer.Mobile,
-                Gender = customer.Gender,
+                Gender = string.Equals(customer.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? "1" : "0",
                 Contact = string.Format("{0}{1}", customer.Forename, customer.Surname),
                 IsPaId = false,
                 IsRating = false,
@@ -580,6 +580,9 @@
             };
             this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
 
+            deliveryEntity.Contact = customerAddressEntity.Recipient;
+            deliveryEntity.ContactPhone = customerAddressEntity.Telephone;
+            deliveryEntity.Gender = (customerAddressEntity.Sex == null ? ServicesCommon.DefaultGender : customerAddressEntity.Sex.Value).ToString();
             //保存订单送餐地址
             deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
             if (deliveryEntity.SupplierId == null)
