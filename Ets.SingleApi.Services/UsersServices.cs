@@ -851,7 +851,19 @@
                 };
             }
 
-            var supplierEntityList = this.supplierEntityRepository.FindByExpression(p => supplierIdList.Contains(p.SupplierId));
+            var favoriteSupplierIdList = this.customerFavoriteEntityRepository.EntityQueryable.Where(p => p.Customer.LoginId == userId)
+                              .Where(p => p.Supplier != null).Select(p => p.Supplier.SupplierId).ToList();
+
+            var list = supplierIdList.Where(p => favoriteSupplierIdList.All(q => q != p)).ToList();
+            if (list.Count == 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = true
+                };
+            }
+
+            var supplierEntityList = this.supplierEntityRepository.FindByExpression(p => list.Contains(p.SupplierId));
             if (supplierEntityList.Count == 0)
             {
                 return new ServicesResult<bool>
