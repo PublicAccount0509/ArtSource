@@ -68,10 +68,12 @@
     <Compile Include="CuisineController.cs" />
     <Compile Include="Filters\AppFilterAttribute.cs" />
     <Compile Include="Filters\TokenFilterAttribute.cs" />
+    <Compile Include="FunctionController.cs" />
     <Compile Include="IServices\IAuthenServices.cs" />
     <Compile Include="IServices\IBusinessAreaServices.cs" />
     <Compile Include="IServices\ICuisineServices.cs" />
     <Compile Include="IServices\IFilterServices.cs" />
+    <Compile Include="IServices\IFunctionServices.cs" />
     <Compile Include="IServices\IOrderServices.cs" />
     <Compile Include="IServices\IPaymentServices.cs" />
     <Compile Include="IServices\ISmsServices.cs" />

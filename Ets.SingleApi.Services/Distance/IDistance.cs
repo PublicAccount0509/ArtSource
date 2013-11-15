@@ -15,6 +15,19 @@
     public interface IDistance
     {
         /// <summary>
+        /// 定位类型
+        /// </summary>
+        /// <value>
+        /// 定位类型
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/15/2013 1:33 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        LocationType LocationType { get; }
+
+        /// <summary>
         /// 获取地址经纬度
         /// </summary>
         /// <param name="address">The address</param>

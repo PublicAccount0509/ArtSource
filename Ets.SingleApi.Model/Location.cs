@@ -13,6 +13,20 @@
     public class Location
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Location"/> class.
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/15/2013 1:24 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Location()
+        {
+            this.Lat = -1;
+            this.Lng = -1;
+        }
+
+        /// <summary>
         /// 取得或设置纬度值
         /// </summary>
         /// <value>

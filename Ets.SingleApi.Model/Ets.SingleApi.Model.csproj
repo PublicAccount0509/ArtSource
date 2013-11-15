@@ -86,9 +86,11 @@
     <Compile Include="Controller\SupplierDishResponse.cs" />
     <Compile Include="Controller\SupplierCuisineListResponse.cs" />
     <Compile Include="Controller\SupplierCuisineResponse.cs" />
+    <Compile Include="Controller\LocationResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="LocationType.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishImageEntity.cs" />
