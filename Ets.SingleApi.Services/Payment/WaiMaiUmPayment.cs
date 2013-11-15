@@ -127,8 +127,26 @@
             ht.Add("amt_type", "RMB"); //金额类型
             ht.Add("mer_priv", "delivery"); //商户私有信息
             var reqData = com.umpay.api.paygate.v40.Mer2Plat_v40.ReqDataByGet(ht); //标准支付下单
+            if (reqData == null)
+            {
+                return new PaymentResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.PaymentReqDataByGetErrorCode
+                };
+            }
+
             var request = this.HttpGet(reqData.Url); //请求结果
             var req = com.umpay.api.paygate.v40.Plat2Mer_v40.getResData(request); //解析html
+            if (req == null)
+            {
+                return new PaymentResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.PaymentGetResDataErrorCode
+                };
+            }
+
             return new PaymentResult<string>
                 {
                     Result = req.ContainsKey("trade_no") ? (req["trade_no"] ?? string.Empty).ToString() : string.Empty
@@ -176,8 +194,24 @@
             ht.Add("order_id", umPaymentQueryData.OrderId);  //订单号
             ht.Add("mer_date", umPaymentQueryData.PayDate.ToString("yyyyMMdd")); //订单日期
             var reqData = com.umpay.api.paygate.v40.Mer2Plat_v40.ReqDataByGet(ht); //标准支付下单
+            if (reqData == null)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.PaymentReqDataByGetErrorCode
+                };
+            }
+
             var request = this.HttpGet(reqData.Url); //请求结果
             var req = com.umpay.api.paygate.v40.Plat2Mer_v40.getResData(request); //解析html
+            if (req == null)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.PaymentGetResDataErrorCode
+                };
+            }
+
             if ((req["ret_code"] ?? string.Empty).ToString() == "00060760")
             {
                 return new PaymentResult<bool>

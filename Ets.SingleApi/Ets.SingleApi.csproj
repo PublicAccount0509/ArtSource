@@ -163,12 +163,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="config\status.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="config\castle.xml" />
+    <Content Include="config\status.xml" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -208,45 +204,27 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="config\castle\facilities.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="config\log4net\log.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="config\castle\components.config" />
+    <Content Include="config\castle\facilities.config" />
+    <Content Include="config\log4net\log.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\repository.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="config\castle\components\repository.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\interceptor.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="config\castle\components\interceptor.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\controllers.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="config\castle\components\controllers.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\services.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="config\castle\components\services.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\externalservices.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="config\castle\components\externalservices.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\wapcontrollers.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="config\castle\components\wapcontrollers.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\SingleApi.pubxml" />

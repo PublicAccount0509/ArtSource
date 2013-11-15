@@ -60,4 +60,6 @@
   <item code="80004" message="交易取消"></item>
   <item code="80005" message="交易失败"></item>
   <item code="80006" message="无效交易号"></item>
+  <item code="80007" message="联动优势ReqDataByGet返回值为空"></item>
+  <item code="80008" message="联动优势GetResData返回值为空"></item>
 </status>
