@@ -99,9 +99,16 @@
             var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.Mobile == userName)
                   .Select(p => new { p.LoginId })
                   .FirstOrDefault();
-            var loginId = customer == null ? null : customer.LoginId;
-            password = password.Md5();
-            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == loginId || p.Username == userName).Select(p => new { p.LoginId, p.Password, p.IsEnabled }).FirstOrDefault();
+            if (customer == null)
+            {
+                return new LoginData
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                };
+            }
+
+            var loginId = customer.LoginId;
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == loginId).Select(p => new { p.LoginId, p.Password, p.IsEnabled }).FirstOrDefault();
             if (loginEntity == null)
             {
                 return new LoginData
@@ -110,6 +117,7 @@
                 };
             }
 
+            password = password.Md5();
             if (loginEntity.Password != password)
             {
                 return new LoginData

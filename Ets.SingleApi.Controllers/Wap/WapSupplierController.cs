@@ -126,7 +126,7 @@
         [HttpGet]
         public GetRoughSupplierResponse RoughSupplier(string supplierDomain)
         {
-            var getRoughSupplierResult = this.supplierServices.GetRoughSupplier(supplierDomain);
+            var getRoughSupplierResult = this.supplierServices.GetRoughSupplier((supplierDomain ?? string.Empty).Trim());
             if (getRoughSupplierResult.Result == null)
             {
                 return new GetRoughSupplierResponse

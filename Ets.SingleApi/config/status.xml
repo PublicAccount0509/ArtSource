@@ -52,6 +52,7 @@
   <item code="40017" message="新密码不能为空"></item>
   <item code="40018" message="无效的餐厅菜Id"></item>
   <item code="40019" message="无效的餐厅菜类别Id"></item>
+  <item code="40020" message="无效的餐厅域名"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>

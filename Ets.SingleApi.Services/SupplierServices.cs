@@ -125,6 +125,16 @@
         private readonly INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository;
 
         /// <summary>
+        /// 字段loginEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/18/2013 5:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
+
+        /// <summary>
         /// 字段supplierDetailServices
         /// </summary>
         /// 创建者：周超
@@ -147,6 +157,7 @@
         /// <param name="suppTimeTableDisplayEntityRepository">The suppTimeTableDisplayEntityRepository</param>
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
+        /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
@@ -164,6 +175,7 @@
             INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
+            INHibernateRepository<LoginEntity> loginEntityRepository,
             ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
@@ -176,6 +188,7 @@
             this.suppTimeTableDisplayEntityRepository = suppTimeTableDisplayEntityRepository;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
+            this.loginEntityRepository = loginEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
         }
 
@@ -330,18 +343,39 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<RoughSupplierModel> GetRoughSupplier(string supplierDomain)
         {
-            var supplierId = 1;
-            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            if (supplierDomain.IsEmptyOrNull())
             {
                 return new ServicesResult<RoughSupplierModel>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierDomainCode,
+                    Result = new RoughSupplierModel()
+                };
+            }
+
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == supplierDomain)
+                                .Select(p => new { p.LoginId, p.IsEnabled })
+                                .FirstOrDefault();
+
+            if (loginEntity == null)
+            {
+                return new ServicesResult<RoughSupplierModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierDomainCode,
+                    Result = new RoughSupplierModel()
+                };
+            }
+
+            if (!loginEntity.IsEnabled)
+            {
+                return new ServicesResult<RoughSupplierModel>
+                {
+                    StatusCode = (int)StatusCode.General.ErrorPermission,
                     Result = new RoughSupplierModel()
                 };
             }
 
             var roughSupplierModel = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
-                                      where supplierEntity.SupplierId == supplierId
+                                      where supplierEntity.Login.LoginId == loginEntity.LoginId
                                       select new RoughSupplierModel
                                       {
                                           SupplierId = supplierEntity.SupplierId,
