@@ -29,6 +29,20 @@
         ServicesResult<SupplierDetailModel> GetSupplier(int supplierId);
 
         /// <summary>
+        /// 根据餐厅域名获取餐厅信息
+        /// </summary>
+        /// <param name="supplierDomain">餐厅域名</param>
+        /// <returns>
+        /// 返回餐厅信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<RoughSupplierModel> GetRoughSupplier(string supplierDomain);
+
+        /// <summary>
         /// 获取餐厅列表
         /// </summary>
         /// <param name="parameter">The parameter</param>

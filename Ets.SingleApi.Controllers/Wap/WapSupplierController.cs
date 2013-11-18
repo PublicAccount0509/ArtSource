@@ -73,6 +73,7 @@
                 };
             }
 
+            var supplierFeatureList = getSupplierResult.Result.SupplierFeatureList;
             var supplier = new SupplierDetail
                 {
                     SupplierId = getSupplierResult.Result.SupplierId,
@@ -94,7 +95,10 @@
                     DelMinOrderAmount = getSupplierResult.Result.DelMinOrderAmount ?? 0,
                     FreeDeliveryLine = getSupplierResult.Result.FreeDeliveryLine ?? 0,
                     BaIduLat = getSupplierResult.Result.BaIduLat,
-                    BaIduLong = getSupplierResult.Result.BaIduLong
+                    BaIduLong = getSupplierResult.Result.BaIduLong,
+                    IsWaiMai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
+                    IsDingTai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
+                    IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
                 };
 
             return new GetSupplierResponse
@@ -102,6 +106,53 @@
                 Message = new ApiMessage
                 {
                     StatusCode = getSupplierResult.StatusCode
+                },
+                Result = supplier
+            };
+        }
+
+        /// <summary>
+        /// 根据餐厅域名获取餐厅信息
+        /// </summary>
+        /// <param name="supplierDomain">餐厅域名</param>
+        /// <returns>
+        /// 返回餐厅信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public GetRoughSupplierResponse RoughSupplier(string supplierDomain)
+        {
+            var getRoughSupplierResult = this.supplierServices.GetRoughSupplier(supplierDomain);
+            if (getRoughSupplierResult.Result == null)
+            {
+                return new GetRoughSupplierResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getRoughSupplierResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getRoughSupplierResult.StatusCode
+                    },
+                    Result = new RoughSupplier()
+                };
+            }
+
+            var supplier = new RoughSupplier
+            {
+                SupplierId = getRoughSupplierResult.Result.SupplierId,
+                SupplierName = getRoughSupplierResult.Result.SupplierName ?? string.Empty,
+                SupplierDescription = getRoughSupplierResult.Result.SupplierDescription ?? string.Empty,
+                Address = getRoughSupplierResult.Result.Address ?? string.Empty,
+                Telephone = getRoughSupplierResult.Result.Telephone ?? string.Empty
+            };
+
+            return new GetRoughSupplierResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getRoughSupplierResult.StatusCode
                 },
                 Result = supplier
             };

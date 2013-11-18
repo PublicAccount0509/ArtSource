@@ -236,6 +236,16 @@
             decimal baIduLong;
             decimal.TryParse(tempSupplier.BaIduLong, out baIduLong);
 
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                                        p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true)
+                                        .Select(p => new SupplierFeatureModel
+                                            {
+                                                SupplierFeatureId = p.SupplierFeatureId,
+                                                FeatureName = p.Feature.Feature,
+                                                FeatureId = p.Feature.FeatureId
+                                            })
+                                        .ToList();
+
             var supplier = new SupplierDetailModel
                 {
                     SupplierId = tempSupplier.SupplierId,
@@ -258,7 +268,8 @@
                     this.supplierImageEntityRepository.EntityQueryable.Where(
                             p => p.Supplier.SupplierId == supplierId && p.Online == true)
                             .Select(p => p.ImagePath)
-                            .FirstOrDefault())
+                            .FirstOrDefault()),
+                    SupplierFeatureList = supplierFeatureList
                 };
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
@@ -279,7 +290,7 @@
                                                     entity.TimeTableDisplayId
                                                 }).ToList();
 
-            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => DateTime.Now.DayOfWeek.ToString("d") == (item.Day + 1).ToString()).Select(p => p.TimeTableDisplayId).ToList();
+            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => DateTime.Now.DayOfWeek.ToString("d") == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
             if (timeTableDisplayIdList.Count == 0)
             {
                 return new ServicesResult<SupplierDetailModel>
@@ -302,6 +313,56 @@
             return new ServicesResult<SupplierDetailModel>
             {
                 Result = supplier
+            };
+        }
+
+        /// <summary>
+        /// 根据餐厅域名获取餐厅信息
+        /// </summary>
+        /// <param name="supplierDomain">餐厅域名</param>
+        /// <returns>
+        /// 返回餐厅信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<RoughSupplierModel> GetRoughSupplier(string supplierDomain)
+        {
+            var supplierId = 1;
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResult<RoughSupplierModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new RoughSupplierModel()
+                };
+            }
+
+            var roughSupplierModel = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
+                                      where supplierEntity.SupplierId == supplierId
+                                      select new RoughSupplierModel
+                                      {
+                                          SupplierId = supplierEntity.SupplierId,
+                                          SupplierName = supplierEntity.SupplierName,
+                                          SupplierDescription = supplierEntity.SupplierDescription,
+                                          Address = supplierEntity.Address1,
+                                          Telephone = supplierEntity.Telephone
+                                      }).FirstOrDefault();
+
+            if (roughSupplierModel == null)
+            {
+                return new ServicesResult<RoughSupplierModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new RoughSupplierModel()
+                };
+            }
+
+            return new ServicesResult<RoughSupplierModel>
+            {
+                Result = roughSupplierModel
             };
         }
 
