@@ -76,5 +76,44 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string SupplierDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsWaiMai
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsWaiMai { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsDingTai
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsDingTai { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsTangShi
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsTangShi { get; set; }
     }
 }

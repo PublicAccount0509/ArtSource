@@ -139,13 +139,17 @@
                 };
             }
 
+            var supplierFeatureList = getRoughSupplierResult.Result.SupplierFeatureList;
             var supplier = new RoughSupplier
             {
                 SupplierId = getRoughSupplierResult.Result.SupplierId,
                 SupplierName = getRoughSupplierResult.Result.SupplierName ?? string.Empty,
                 SupplierDescription = getRoughSupplierResult.Result.SupplierDescription ?? string.Empty,
                 Address = getRoughSupplierResult.Result.Address ?? string.Empty,
-                Telephone = getRoughSupplierResult.Result.Telephone ?? string.Empty
+                Telephone = getRoughSupplierResult.Result.Telephone ?? string.Empty,
+                IsWaiMai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
+                IsDingTai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
+                IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
             };
 
             return new GetRoughSupplierResponse

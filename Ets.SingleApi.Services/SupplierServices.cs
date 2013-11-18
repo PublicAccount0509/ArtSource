@@ -394,6 +394,17 @@
                 };
             }
 
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                p => p.Supplier.SupplierId == roughSupplierModel.SupplierId && p.IsEnabled == true)
+                .Select(p => new SupplierFeatureModel
+                {
+                    SupplierFeatureId = p.SupplierFeatureId,
+                    FeatureName = p.Feature.Feature,
+                    FeatureId = p.Feature.FeatureId
+                })
+                .ToList();
+
+            roughSupplierModel.SupplierFeatureList = supplierFeatureList;
             return new ServicesResult<RoughSupplierModel>
             {
                 Result = roughSupplierModel
