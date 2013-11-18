@@ -291,6 +291,7 @@
                     OrderTypeId = deliveryEntity.DeliveryMethodId,
                     OrderStatusId = deliveryEntity.OrderStatusId,
                     DateReserved = deliveryEntity.DateAdded,
+                    DeliveryTime = deliveryEntity.DeliveryDate,
                     DeliveryInstruction = deliveryEntity.DeliveryInstruction,
                     CustomerTotal = deliveryEntity.CustomerTotal,
                     Total = deliveryEntity.Total,
@@ -414,7 +415,7 @@
                 IsPaId = false,
                 IsRating = false,
                 Cancelled = false,
-                DeliveryDate = DateTime.Now.AddMinutes(60),
+                DeliveryDate = this.GetDeliveryDate(parameter.DeliveryMethodId, parameter.DeliveryType, parameter.DeliveryTime, supplierEntity.DeliveryTime),
                 Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == parameter.Template),
                 InvoiceRequired = parameter.InvoiceRequired,
                 InvoiceTitle = parameter.InvoiceTitle,
@@ -734,5 +735,42 @@
 
             return null;
         }
+
+        /// <summary>
+        /// 取得送餐时间
+        /// </summary>
+        /// <param name="deliveryMethodId">取餐方式</param>
+        /// <param name="deliveryType">送餐类型</param>
+        /// <param name="deliveryTime">送餐日期</param>
+        /// <param name="supplierDeliveryTime">餐厅默认送餐时间</param>
+        /// <returns>
+        /// 返回送餐时间
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/18/2013 12:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private DateTime GetDeliveryDate(int deliveryMethodId, int deliveryType, DateTime deliveryTime, string supplierDeliveryTime)
+        {
+            if (deliveryType == ServicesCommon.AssignDeliveryType)
+            {
+                return deliveryTime;
+            }
+
+            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            {
+                return deliveryTime.AddHours(ServicesCommon.DefaultPickUpTime);
+            }
+
+            int result;
+            if (!int.TryParse(supplierDeliveryTime, out result))
+            {
+                result = ServicesCommon.DefaultDeliveryTime;
+            }
+
+            return deliveryTime.AddHours(result);
+        }
+
     }
 }

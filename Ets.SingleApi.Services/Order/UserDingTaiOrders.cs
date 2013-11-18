@@ -183,7 +183,7 @@
                                  DineNumber = p.DineNumber,
                                  OrderStatus = string.Empty,
                                  OrderType = (int)this.OrderType
-                             });
+                             }).OrderByDescending(p => p.DateReserved);
 
             if (parameter.PageIndex == null)
             {

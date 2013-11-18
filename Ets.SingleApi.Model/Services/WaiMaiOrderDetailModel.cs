@@ -94,6 +94,19 @@
         public DateTime? DateReserved { get; set; }
 
         /// <summary>
+        /// 设置或取得送餐时间
+        /// </summary>
+        /// <value>
+        /// 送餐时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/20 15:44
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DateTime? DeliveryTime { get; set; }
+
+        /// <summary>
         /// 设置或取得订单备注
         /// </summary>
         /// <value>

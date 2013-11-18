@@ -152,8 +152,9 @@
                     Averageprice = p.Averageprice ?? 0,
                     ParkingInfo = p.ParkingInfo ?? string.Empty,
                     Telephone = p.Telephone ?? string.Empty,
-                    IsWaiMai = p.SupplierFeatureList != null && p.SupplierFeatureList.Count(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId) > 0,
-                    IsDingTai = p.SupplierFeatureList != null && p.SupplierFeatureList.Count(q => q.FeatureId == ControllersCommon.DingTaiFeatureId) > 0
+                    IsWaiMai = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
+                    IsDingTai = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
+                    IsTangShi = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
                 }).ToList();
 
             return new GetGroupSupplierResponse
@@ -200,10 +201,11 @@
                     RegionId = regionId ?? -1,
                     UserLat = userLat ?? 0,
                     UserLong = userLong ?? 0,
-                    Distance = distance ?? 0,
+                    Distance = distance ?? -1,
                     PageSize = pageSize,
                     PageIndex = pageIndex,
-                    OrderByType = orderByType
+                    OrderByType = orderByType,
+                    IsBuilding = distance != null
                 });
 
             if (list.Result == null || list.Result.Count == 0)
@@ -277,7 +279,8 @@
                 Distance = distance,
                 PageSize = pageSize,
                 PageIndex = pageIndex,
-                OrderByType = orderByType
+                OrderByType = orderByType,
+                IsBuilding = false
             });
 
             if (list.Result == null || list.Result.Count == 0)

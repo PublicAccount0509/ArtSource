@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Controllers.Wap
 {
+    using System;
     using System.Collections.Generic;
 
     using Ets.SingleApi.Controllers.Filters;
@@ -97,6 +98,7 @@
                     OrderStatusId = getWaiMaiOrderResult.Result.OrderStatusId,
                     OrderTypeId = getWaiMaiOrderResult.Result.OrderTypeId,
                     DateReserved = getWaiMaiOrderResult.Result.DateReserved == null ? string.Empty : getWaiMaiOrderResult.Result.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
+                    DeliveryTime = getWaiMaiOrderResult.Result.DeliveryTime == null ? string.Empty : getWaiMaiOrderResult.Result.DeliveryTime.Value.ToString("yyyy-MM-dd HH:mm"),
                     SupplierId = getWaiMaiOrderResult.Result.SupplierId,
                     SupplierName = getWaiMaiOrderResult.Result.SupplierName ?? string.Empty,
                     SupplierAddress = getWaiMaiOrderResult.Result.SupplierAddress ?? string.Empty,
@@ -170,6 +172,13 @@
                 };
             }
 
+            var deliveryDate = (requst.DeliveryDate ?? DateTime.Now).ToString("yyyy-MM-dd");
+            DateTime deliveryTime;
+            if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, requst.DeliveryTime), out deliveryTime))
+            {
+                deliveryTime = DateTime.Parse(deliveryDate);
+            }
+
             var dishList = requst.DishList ?? new List<AddWaiMaiOrderDish>();
             var addWaiMaiOrderResult = this.orderServices.AddWaiMaiOrder(new AddWaiMaiOrderParameter
             {
@@ -185,6 +194,8 @@
                 Path = (requst.Path ?? string.Empty).Trim(),
                 AreaId = requst.AreaId,
                 IpAddress = (requst.IpAddress ?? string.Empty).Trim(),
+                DeliveryTime = deliveryTime,
+                DeliveryType = requst.DeliveryType,
                 DishList = dishList.Select(p => new AddWaiMaiOrderDishModel
                     {
                         SupplierDishId = p.SupplierDishId,

@@ -260,9 +260,9 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierListDefault :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListDefault :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:IsBuilding
   </sql-query>
-  
+
   <sql-query name="Pro_QuerySupplierListNearest">
     <return-scalar column="SupplierId" type="Int32" />
     <return-scalar column="SupplierName" type="String" />
@@ -278,9 +278,9 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierListNearest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListNearest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:IsBuilding
   </sql-query>
-  
+
   <sql-query name="Pro_QuerySupplierListFarthest">
     <return-scalar column="SupplierId" type="Int32" />
     <return-scalar column="SupplierName" type="String" />
@@ -296,9 +296,9 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierListFarthest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListFarthest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:IsBuilding
   </sql-query>
-  
+
   <sql-query name="Pro_QuerySupplierListNewest">
     <return-scalar column="SupplierId" type="Int32" />
     <return-scalar column="SupplierName" type="String" />
@@ -314,9 +314,9 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierListNewest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListNewest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:IsBuilding
   </sql-query>
-  
+
   <sql-query name="Pro_QuerySupplierListCheapest">
     <return-scalar column="SupplierId" type="Int32" />
     <return-scalar column="SupplierName" type="String" />
@@ -332,7 +332,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierListCheapest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListCheapest :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:IsBuilding
   </sql-query>
 
   <sql-query name="Pro_QuerySupplierListExpensive">
@@ -350,6 +350,6 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
-    exec Pro_QuerySupplierListExpensive :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListExpensive :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:IsBuilding
   </sql-query>
 </hibernate-mapping>

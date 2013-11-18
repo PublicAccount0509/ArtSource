@@ -146,7 +146,7 @@
         /// Gets or sets the OrderByType of GetSupplierListParameter
         /// </summary>
         /// <value>
-        /// The OrderBy
+        /// The OrderByType
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/18 21:58
@@ -154,5 +154,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int OrderByType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IsBuilding of GetSupplierListParameter
+        /// </summary>
+        /// <value>
+        /// The IsBuilding
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/18 21:58
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool? IsBuilding { get; set; }
     }
 }

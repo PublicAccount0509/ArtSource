@@ -197,6 +197,170 @@
         }
 
         /// <summary>
+        /// 外卖送餐上门默认时间
+        /// </summary>
+        /// <value>
+        /// 外卖送餐上门默认时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultDeliveryTime
+        {
+            get
+            {
+                var defaultDeliveryTime = ConfigurationManager.AppSettings["DefaultDeliveryTime"] ?? "45";
+                int result;
+                if (!int.TryParse(defaultDeliveryTime, out result))
+                {
+                    result = 45;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 外卖自取默认时间
+        /// </summary>
+        /// <value>
+        /// 外卖自取默认时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultPickUpTime
+        {
+            get
+            {
+                var defaultPickUpTime = ConfigurationManager.AppSettings["DefaultPickUpTime"] ?? "60";
+                int result;
+                if (!int.TryParse(defaultPickUpTime, out result))
+                {
+                    result = 60;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 立即送餐
+        /// </summary>
+        /// <value>
+        /// 立即送餐
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int QuickDeliveryType
+        {
+            get
+            {
+                var quickDeliveryMethod = ConfigurationManager.AppSettings["QuickDeliveryType"] ?? "1";
+                int result;
+                if (!int.TryParse(quickDeliveryMethod, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 按照用户指定时间送餐
+        /// </summary>
+        /// <value>
+        /// 按照用户指定时间送餐
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int AssignDeliveryType
+        {
+            get
+            {
+                var assignDeliveryMethod = ConfigurationManager.AppSettings["AssignDeliveryType"] ?? "2";
+                int result;
+                if (!int.TryParse(assignDeliveryMethod, out result))
+                {
+                    result = 2;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 联动优势商户号
+        /// </summary>
+        /// <value>
+        /// 联动优势商户号
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string UmPayMerId
+        {
+            get
+            {
+                var result = (ConfigurationManager.AppSettings["UmPayMerId"] ?? string.Empty).Trim();
+                return result.Length == 0 ? "7378" : result;
+            }
+        }
+
+        /// <summary>
+        /// 联动优势版本号
+        /// </summary>
+        /// <value>
+        /// 联动优势版本号
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string UmPayVersion
+        {
+            get
+            {
+                var result = (ConfigurationManager.AppSettings["UmPayVersion"] ?? string.Empty).Trim();
+                return result.Length == 0 ? "4.0" : result;
+            }
+        }
+
+        /// <summary>
+        /// 联动优势版本号
+        /// </summary>
+        /// <value>
+        /// 联动优势版本号
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string UmPaySignType
+        {
+            get
+            {
+                var result = (ConfigurationManager.AppSettings["UmPaySignType"] ?? string.Empty).Trim();
+                return result.Length == 0 ? "RSA" : result;
+            }
+        }
+
+        /// <summary>
         /// 百度地图AK
         /// </summary>
         /// <value>

@@ -20,7 +20,14 @@
         {
             get
             {
-                return 35;
+                var waiMaiFeatureId = ConfigurationManager.AppSettings["WaiMaiFeatureId"] ?? "35";
+                int result;
+                if (!int.TryParse(waiMaiFeatureId, out result))
+                {
+                    result = 35;
+                }
+
+                return result;
             }
         }
 
@@ -39,7 +46,40 @@
         {
             get
             {
-                return 36;
+                var dingTaiFeatureId = ConfigurationManager.AppSettings["DingTaiFeatureId"] ?? "36";
+                int result;
+                if (!int.TryParse(dingTaiFeatureId, out result))
+                {
+                    result = 36;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 堂食FeatureId
+        /// </summary>
+        /// <value>
+        /// 堂食FeatureId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int TangShiFeatureId
+        {
+            get
+            {
+                var tangShiFeatureId = ConfigurationManager.AppSettings["TangShiFeatureId"] ?? "9";
+                int result;
+                if (!int.TryParse(tangShiFeatureId, out result))
+                {
+                    result = 9;
+                }
+
+                return result;
             }
         }
 

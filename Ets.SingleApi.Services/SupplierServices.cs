@@ -338,7 +338,8 @@
                     .SetDouble("UserLong", parameter.UserLong)
                     .SetDouble("Distance", !parameter.Distance.HasValue ? -1.0 : parameter.Distance.Value)
                     .SetInt32("PageIndex", !parameter.PageIndex.HasValue ? -1 : parameter.PageIndex.Value)
-                    .SetInt32("PageSize", parameter.PageSize).List();
+                    .SetInt32("PageSize", parameter.PageSize)
+                    .SetBoolean("IsBuilding", parameter.IsBuilding ?? false).List();
 
             var supplierList = (from object[] item in list
                                 select new SupplierModel

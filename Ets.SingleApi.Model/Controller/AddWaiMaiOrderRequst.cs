@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -67,7 +68,7 @@
         public string DeliveryInstruction { get; set; }
 
         /// <summary>
-        /// Gets or sets the Template of AddWaiMaiOrderParameter
+        /// Gets or sets the Template of AddWaiMaiOrderRequst
         /// </summary>
         /// <value>
         /// The Template
@@ -93,7 +94,7 @@
         public bool? InvoiceRequired { get; set; }
 
         /// <summary>
-        /// Gets or sets the InvoiceTitle of AddWaiMaiOrderParameter
+        /// Gets or sets the InvoiceTitle of AddWaiMaiOrderRequst
         /// </summary>
         /// <value>
         /// The InvoiceTitle
@@ -106,7 +107,7 @@
         public string InvoiceTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the Path of AddWaiMaiOrderParameter
+        /// Gets or sets the Path of AddWaiMaiOrderRequst
         /// </summary>
         /// <value>
         /// The Path
@@ -119,7 +120,7 @@
         public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets the OrderNotes of AddWaiMaiOrderParameter
+        /// Gets or sets the OrderNotes of AddWaiMaiOrderRequst
         /// </summary>
         /// <value>
         /// The OrderNotes
@@ -132,7 +133,7 @@
         public string OrderNotes { get; set; }
 
         /// <summary>
-        /// Gets or sets the AreaId of AddWaiMaiOrderParameter
+        /// Gets or sets the AreaId of AddWaiMaiOrderRequst
         /// </summary>
         /// <value>
         /// The AreaId
@@ -145,7 +146,7 @@
         public int? AreaId { get; set; }
 
         /// <summary>
-        /// Gets or sets the IpAddress of AddWaiMaiOrderParameter
+        /// Gets or sets the IpAddress of AddWaiMaiOrderRequst
         /// </summary>
         /// <value>
         /// The IpAddress
@@ -158,7 +159,7 @@
         public string IpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the IsTakeInvoice of AddWaiMaiOrderParameter
+        /// Gets or sets the IsTakeInvoice of AddWaiMaiOrderRequst
         /// </summary>
         /// <value>
         /// The IsTakeInvoice
@@ -169,6 +170,45 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public bool? IsTakeInvoice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DeliveryDate of AddWaiMaiOrderRequst
+        /// </summary>
+        /// <value>
+        /// The DeliveryDate
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/18/2013 11:27 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DateTime? DeliveryDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DeliveryTime of AddWaiMaiOrderRequst
+        /// </summary>
+        /// <value>
+        /// The DeliveryTime
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/18/2013 12:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string DeliveryTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DeliveryType of AddWaiMaiOrderRequst
+        /// </summary>
+        /// <value>
+        /// The DeliveryType
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/18/2013 11:27 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int DeliveryType { get; set; }
 
         /// <summary>
         /// Gets or sets the DishList of AddWaiMaiOrderRequst

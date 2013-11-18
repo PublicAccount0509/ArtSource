@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Model.Services
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -169,6 +170,32 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public bool? IsTakeInvoice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DeliveryTime of AddWaiMaiOrderParameter
+        /// </summary>
+        /// <value>
+        /// The DeliveryTime
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/18/2013 11:27 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DateTime DeliveryTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DeliveryType of AddWaiMaiOrderParameter
+        /// </summary>
+        /// <value>
+        /// The DeliveryType
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/18/2013 11:27 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int DeliveryType { get; set; }
 
         /// <summary>
         /// Gets or sets the DishList of AddWaiMaiOrderModel

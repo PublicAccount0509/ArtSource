@@ -192,7 +192,7 @@
                                    OrderStatusId = p.OrderStatusId,
                                    OrderStatus = string.Empty,
                                    OrderType = (int)this.OrderType
-                               });
+                               }).OrderByDescending(p => p.DateReserved);
 
             if (parameter.PageIndex == null)
             {

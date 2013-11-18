@@ -117,10 +117,10 @@
 
             var ht = new Hashtable();
             ht.Add("service", "pay_req"); // 接口名称 pay_req:一般支付请求 pay_req_ivr_call:IVR支付方式下单 pay_req_ivr_tcall:IVR转呼方式下单
-            ht.Add("sign_type", "RSA"); // 签名方式
             ht.Add("charset", "UTF-8"); // 字符编码
-            ht.Add("version", "4.0"); //版本号
-            ht.Add("mer_id", "7378"); //商户号
+            ht.Add("sign_type", ServicesCommon.UmPaySignType); // 签名方式
+            ht.Add("version", ServicesCommon.UmPayVersion); //版本号
+            ht.Add("mer_id", ServicesCommon.UmPayMerId); //商户号
             ht.Add("order_id", umPaymentData.OrderId);  //订单号
             ht.Add("mer_date", umPaymentData.PayDate.ToString("yyyyMMdd")); //订单日期
             ht.Add("amount", AmountToString(umPaymentData.Amount)); //金额,格式为圆角分，例如:3456表示34圆5角6分
@@ -187,10 +187,10 @@
 
             var ht = new Hashtable();
             ht.Add("service", "query_order"); // 接口名称 pay_req:一般支付请求 pay_req_ivr_call:IVR支付方式下单 pay_req_ivr_tcall:IVR转呼方式下单
-            ht.Add("sign_type", "RSA"); // 签名方式
             ht.Add("charset", "UTF-8"); // 字符编码
-            ht.Add("version", "4.0"); //版本号
-            ht.Add("mer_id", "7378"); //商户号
+            ht.Add("sign_type", ServicesCommon.UmPaySignType); // 签名方式
+            ht.Add("version", ServicesCommon.UmPayVersion); //版本号
+            ht.Add("mer_id", ServicesCommon.UmPayMerId); //商户号
             ht.Add("order_id", umPaymentQueryData.OrderId);  //订单号
             ht.Add("mer_date", umPaymentQueryData.PayDate.ToString("yyyyMMdd")); //订单日期
             var reqData = com.umpay.api.paygate.v40.Mer2Plat_v40.ReqDataByGet(ht); //标准支付下单
