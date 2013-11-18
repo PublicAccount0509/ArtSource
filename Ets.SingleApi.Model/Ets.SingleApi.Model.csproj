@@ -89,6 +89,7 @@
     <Compile Include="Controller\LocationResponse.cs" />
     <Compile Include="Controller\RoughSupplier.cs" />
     <Compile Include="Controller\GetRoughSupplierResponse.cs" />
+    <Compile Include="Controller\NearSupplierListResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />
