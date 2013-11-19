@@ -153,7 +153,9 @@
                     CustomerTotal = p.CustomerTotal,
                     OrderStatusId = p.OrderStatusId,
                     OrderStatus = p.OrderStatus,
-                    OrderType = p.OrderType
+                    OrderType = p.OrderType,
+                    DeliveryMethodId = p.DeliveryMethodId,
+                    IsPaid = p.IsPaid
                 }).ToList();
         }
 
@@ -191,7 +193,9 @@
                                    CustomerTotal = p.CustomerTotal,
                                    OrderStatusId = p.OrderStatusId,
                                    OrderStatus = string.Empty,
-                                   OrderType = (int)this.OrderType
+                                   OrderType = (int)this.OrderType,
+                                   DeliveryMethodId = p.DeliveryMethodId,
+                                   IsPaid = p.IsPaId
                                }).OrderByDescending(p => p.DateReserved);
 
             if (parameter.PageIndex == null)

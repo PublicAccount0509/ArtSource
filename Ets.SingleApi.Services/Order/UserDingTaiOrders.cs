@@ -89,22 +89,9 @@
             }
 
             var orderList = this.GetDingTaiOrderList(parameter);
-            var dingTaiOrderList = orderList.Select(order => new DingTaiOrderModel
-                {
-                    OrderId = order.OrderId,
-                    SupplierId = order.SupplierId,
-                    SupplierName = order.SupplierName,
-                    DateReserved = order.DateReserved,
-                    CustomerTotal = order.CustomerTotal,
-                    OrderStatusId = order.OrderStatusId,
-                    OrderStatus = string.Empty,
-                    DineNumber = order.DineNumber,
-                    OrderType = (int)this.OrderType
-                }).ToList();
-
             return new UserOrdersResult
                 {
-                    OrderList = dingTaiOrderList.Cast<IOrderModel>().ToList()
+                    OrderList = orderList.Cast<IOrderModel>().ToList()
                 };
         }
 
@@ -143,7 +130,8 @@
                 OrderStatusId = p.OrderStatusId,
                 OrderStatus = p.OrderStatus,
                 OrderType = p.OrderType,
-                DineNumber = p.DineNumber
+                DineNumber = p.DineNumber,
+                IsPaid = p.IsPaid
             }).ToList();
         }
 
@@ -182,7 +170,8 @@
                                  OrderStatusId = p.TableStatus,
                                  DineNumber = p.DineNumber,
                                  OrderStatus = string.Empty,
-                                 OrderType = (int)this.OrderType
+                                 OrderType = (int)this.OrderType,
+                                 IsPaid = p.IsPaId
                              }).OrderByDescending(p => p.DateReserved);
 
             if (parameter.PageIndex == null)
