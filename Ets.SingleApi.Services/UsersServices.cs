@@ -710,10 +710,15 @@
         {
             var supplierList = (from customerFavorite in this.customerFavoriteEntityRepository.EntityQueryable
                                 where customerFavorite.Customer.LoginId == userId
-                                select customerFavorite.Supplier).Where(p => p != null).ToList();
+                                select new
+                                {
+                                    customerFavorite.Supplier,
+                                    customerFavorite.DateAdded
+                                }
+                                ).Where(p => p.Supplier != null).OrderByDescending(p => p.DateAdded).ToList();
 
 
-            var followerSupplierList = (from supplier in supplierList
+            var followerSupplierList = (from supplier in supplierList.Select(p => p.Supplier)
                                         select new FollowerSupplierModel
                                             {
                                                 SupplierId = supplier.SupplierId,
