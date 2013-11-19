@@ -263,6 +263,24 @@
     exec Pro_QuerySupplierListDefault :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:IsBuilding
   </sql-query>
 
+  <sql-query name="Pro_QuerySupplierListSearchDefault">
+    <return-scalar column="SupplierId" type="Int32" />
+    <return-scalar column="SupplierName" type="String" />
+    <return-scalar column="Address" type="String" />
+    <return-scalar column="Telephone" type="String" />
+    <return-scalar column="BaIduLat" type="String" />
+    <return-scalar column="BaIduLong" type="String" />
+    <return-scalar column="SupplierDescription" type="String" />
+    <return-scalar column="Averageprice" type="Int32" />
+    <return-scalar column="ParkingInfo" type="String" />
+    <return-scalar column="CuisineName" type="String" />
+    <return-scalar column="LogoUrl" type="String" />
+    <return-scalar column="IsOpenDoor" type="Boolean" />
+    <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="DateJoined" type="DateTime" />
+    exec Pro_QuerySupplierListSearchDefault :FeatureID,:SupplierName,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:IsBuilding
+  </sql-query>
+  
   <sql-query name="Pro_QuerySupplierListNearest">
     <return-scalar column="SupplierId" type="Int32" />
     <return-scalar column="SupplierName" type="String" />
