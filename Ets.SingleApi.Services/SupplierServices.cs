@@ -559,6 +559,56 @@
         }
 
         /// <summary>
+        /// 获取餐厅已经开通的功能列表
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <returns>
+        /// 返回餐厅已经开通的功能列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:13
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<SupplierFeatureModel> GetSupplierFeatureList(int supplierId)
+        {
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResultList<SupplierFeatureModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierFeatureModel>()
+                };
+            }
+
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true)
+                .Select(p => new SupplierFeatureModel
+                {
+                    SupplierFeatureId = p.SupplierFeatureId,
+                    FeatureName = p.Feature.Feature,
+                    FeatureId = p.Feature.FeatureId
+                })
+                .ToList();
+
+            if (supplierFeatureList.Count == 0)
+            {
+                return new ServicesResultList<SupplierFeatureModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Empty,
+                    ResultTotalCount = supplierFeatureList.Count,
+                    Result = supplierFeatureList
+                };
+            }
+
+            return new ServicesResultList<SupplierFeatureModel>
+            {
+                ResultTotalCount = supplierFeatureList.Count,
+                Result = supplierFeatureList
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅菜单信息
         /// </summary>
         /// <param name="supplierId">餐厅Id</param>
@@ -622,6 +672,7 @@
                                         supplierDishEntity.IsDiscount,
                                         supplierDishEntity.Recipe,
                                         supplierDishEntity.Recommended,
+                                        supplierDishEntity.PackagingFee,
                                         SupplierId = supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
                                         ImagePath = string.Empty
                                     }).OrderBy(p => p.DishNo).ToList();
@@ -655,7 +706,8 @@
                                         IsCommission = supplierDishEntity.IsCommission,
                                         IsDiscount = supplierDishEntity.IsDiscount,
                                         Recipe = supplierDishEntity.Recipe,
-                                        Recommended = supplierDishEntity.Recommended
+                                        Recommended = supplierDishEntity.Recommended,
+                                        PackagingFee = supplierDishEntity.PackagingFee
                                     }).ToList();
 
                 list.Add(new SupplierCuisineModel

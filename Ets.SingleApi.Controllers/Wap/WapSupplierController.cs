@@ -224,6 +224,52 @@
         }
 
         /// <summary>
+        /// 获取餐厅已经开通的功能列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <returns>
+        /// 返回餐厅已经开通的功能列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:13
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public SupplierFeatureListResponse SupplierFeatureList(int id)
+        {
+            var getSupplierFeatureListResult = this.supplierServices.GetSupplierFeatureList(id);
+            if (getSupplierFeatureListResult.Result == null || getSupplierFeatureListResult.Result.Count == 0)
+            {
+                return new SupplierFeatureListResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getSupplierFeatureListResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getSupplierFeatureListResult.StatusCode
+                    },
+                    Result = new List<SupplierFeature>()
+                };
+            }
+
+            var result = getSupplierFeatureListResult.Result.Select(p => new SupplierFeature
+            {
+                SupplierFeatureId = p.SupplierFeatureId,
+                FeatureId = p.FeatureId,
+                FeatureName = p.FeatureName
+            }).ToList();
+
+            return new SupplierFeatureListResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getSupplierFeatureListResult.StatusCode
+                },
+                ResultTotalCount = getSupplierFeatureListResult.ResultTotalCount,
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅列表
         /// </summary>
         /// <param name="supplierName">餐厅名称</param>
@@ -566,7 +612,8 @@
                     IsCommission = q.IsCommission,
                     IsDiscount = q.IsDiscount,
                     Recipe = q.Recipe ?? string.Empty,
-                    Recommended = q.Recommended
+                    Recommended = q.Recommended,
+                    PackagingFee = q.PackagingFee ?? 0
                 }).ToList()
             }).ToList();
 

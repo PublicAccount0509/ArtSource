@@ -141,5 +141,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public bool? IsDiscount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PackagingFee of SupplierDish
+        /// </summary>
+        /// <value>
+        /// The PackagingFee
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 4:36 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal PackagingFee { get; set; }
     }
 }

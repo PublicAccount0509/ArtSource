@@ -49,6 +49,7 @@
     <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderResponse.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderResponse.cs" />
+    <Compile Include="Controller\SupplierFeature.cs" />
     <Compile Include="Controller\WaiMaiOrderDetail.cs" />
     <Compile Include="Controller\WaiMaiOrderDish.cs" />
     <Compile Include="Controller\WaiMaiOrderRequst.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Controller\RoughSupplier.cs" />
     <Compile Include="Controller\GetRoughSupplierResponse.cs" />
     <Compile Include="Controller\NearSupplierListResponse.cs" />
+    <Compile Include="Controller\SupplierFeatureListResponse.cs" />
     <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />

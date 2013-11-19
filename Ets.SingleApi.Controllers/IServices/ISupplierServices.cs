@@ -71,6 +71,20 @@
         ServicesResultList<GroupSupplierModel> GetGroupSupplierList(GetGroupSupplierListParameter parameter);
 
         /// <summary>
+        /// 获取餐厅已经开通的功能列表
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <returns>
+        /// 返回餐厅已经开通的功能列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:13
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<SupplierFeatureModel> GetSupplierFeatureList(int supplierId);
+
+        /// <summary>
         /// 获取餐厅菜单信息
         /// </summary>
         /// <param name="supplierId">餐厅Id</param>
