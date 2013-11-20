@@ -760,7 +760,7 @@
             foreach (var followerSupplier in followerSupplierList)
             {
                 var supplierImage = supplierImageList.FirstOrDefault(p => p.SupplierId == followerSupplier.SupplierId);
-                followerSupplier.LogoUrl = supplierImage == null ? string.Empty : supplierImage.ImagePath;
+                followerSupplier.LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierImage == null ? string.Empty : supplierImage.ImagePath);
 
                 if (followerSupplier.CuisineId.HasValue)
                 {
