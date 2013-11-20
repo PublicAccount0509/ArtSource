@@ -315,6 +315,19 @@
         public int? PaymentMethodId { get; set; }
 
         /// <summary>
+        /// Gets or sets the InvoiceTitle of WaiMaiOrderDetailModel
+        /// </summary>
+        /// <value>
+        /// The InvoiceTitle
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 3:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string InvoiceTitle { get; set; }
+
+        /// <summary>
         /// 设置或取得菜信息
         /// </summary>
         /// <value>

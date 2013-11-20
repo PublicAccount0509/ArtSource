@@ -316,6 +316,7 @@
                     SupplierBaIduLat = baIduLat,
                     SupplierBaIduLong = baIduLong,
                     DeliveryMethodId = deliveryEntity.DeliveryMethodId,
+                    InvoiceTitle = deliveryEntity.InvoiceTitle,
                     IsPaid = deliveryEntity.IsPaId,
                     DishList = waiMaiOrderDishList,
                     PaymentMethodId = paymentEntity == null ? (int?)null : paymentEntity.PaymentMethodId,

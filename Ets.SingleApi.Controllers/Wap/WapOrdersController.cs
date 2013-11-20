@@ -115,6 +115,7 @@
                     IsPaid = getWaiMaiOrderResult.Result.IsPaid ?? false,
                     IsConfirm = getWaiMaiOrderResult.Result.IsConfirm,
                     PaymentMethodId = getWaiMaiOrderResult.Result.PaymentMethodId,
+                    InvoiceTitle = getWaiMaiOrderResult.Result.InvoiceTitle.IsEmptyOrNull() ? ControllersCommon.EmptyInvoiceTitle : getWaiMaiOrderResult.Result.InvoiceTitle,
                     DishList = dishList.Select(p => new WaiMaiOrderDish
                         {
                             SupplierDishName = p.SupplierDishName,
