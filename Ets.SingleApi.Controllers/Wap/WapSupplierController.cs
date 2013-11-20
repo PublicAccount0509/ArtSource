@@ -98,6 +98,7 @@
                     BaIduLong = getSupplierResult.Result.BaIduLong,
                     Fax = getSupplierResult.Result.Fax,
                     Email = getSupplierResult.Result.Email,
+                    SupplierDiningPurpose = getSupplierResult.Result.SupplierDiningPurpose,
                     PackLadder = getSupplierResult.Result.PackLadder ?? 0,
                     TakeawaySpecialOffersSummary = getSupplierResult.Result.TakeawaySpecialOffersSummary ?? string.Empty,
                     PublicTransport = getSupplierResult.Result.PublicTransport ?? string.Empty,

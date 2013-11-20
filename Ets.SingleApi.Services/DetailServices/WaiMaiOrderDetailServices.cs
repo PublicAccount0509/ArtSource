@@ -308,6 +308,7 @@
                     DeliveryInstruction = deliveryEntity.DeliveryInstruction,
                     CustomerTotal = deliveryEntity.CustomerTotal,
                     Total = deliveryEntity.Total,
+                    Coupon = Math.Max((deliveryEntity.Total ?? 0 - deliveryEntity.CustomerTotal ?? 0), 0),
                     RealSupplierType = deliveryEntity.RealSupplierType,
                     SupplierId = supplierEntity.SupplierId,
                     SupplierName = supplierEntity.SupplierName,

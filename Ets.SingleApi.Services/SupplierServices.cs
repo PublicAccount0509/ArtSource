@@ -115,6 +115,16 @@
         private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
 
         /// <summary>
+        /// 字段supplierDiningPurposeEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 4:43 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierDiningPurposeEntity> supplierDiningPurposeEntityRepository;
+
+        /// <summary>
         /// 字段timeTableDisplayEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -156,6 +166,7 @@
         /// <param name="supplierMenuCategoryEntityRepository">The supplierMenuCategoryEntityRepository</param>
         /// <param name="suppTimeTableDisplayEntityRepository">The suppTimeTableDisplayEntityRepository</param>
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
+        /// <param name="supplierDiningPurposeEntityRepository">The supplierDiningPurposeEntityRepository</param>
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
@@ -174,6 +185,7 @@
             INHibernateRepository<SupplierMenuCategoryEntity> supplierMenuCategoryEntityRepository,
             INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
+            INHibernateRepository<SupplierDiningPurposeEntity> supplierDiningPurposeEntityRepository,
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             ISupplierDetailServices supplierDetailServices)
@@ -187,6 +199,7 @@
             this.supplierMenuCategoryEntityRepository = supplierMenuCategoryEntityRepository;
             this.suppTimeTableDisplayEntityRepository = suppTimeTableDisplayEntityRepository;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
+            this.supplierDiningPurposeEntityRepository = supplierDiningPurposeEntityRepository;
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
@@ -299,6 +312,15 @@
             {
                 supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId);
             }
+
+            var tempDiningPurposeList = this.supplierDiningPurposeEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
+                  .Select(p => p.DiningPurpose.DiningPurpose)
+                  .ToList();
+
+            var diningPurposeList = tempDiningPurposeList.Where(p => !p.IsEmptyOrNull()).ToList();
+            supplier.SupplierDiningPurpose = diningPurposeList.Count == 0
+                                                 ? string.Empty
+                                                 : string.Join(",", diningPurposeList);
 
             var supplierCuisineList = this.supplierCuisineEntityRepository.EntityQueryable.Where(p => p.Supplier.SupplierId == supplierId)
                                       .Select(p => new { p.Cuisine.CuisineId, p.Cuisine.CuisineName })
