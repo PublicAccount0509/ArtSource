@@ -275,6 +275,71 @@
         public decimal BaIduLong { get; set; }
 
         /// <summary>
+        /// Gets or sets the Fax of SupplierDetail
+        /// </summary>
+        /// <value>
+        /// The Fax
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Fax { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Email of SupplierDetail
+        /// </summary>
+        /// <value>
+        /// The Email
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TakeawaySpecialOffersSummary of SupplierDetail
+        /// </summary>
+        /// <value>
+        /// The TakeawaySpecialOffersSummary
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string TakeawaySpecialOffersSummary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PublicTransport of SupplierDetail
+        /// </summary>
+        /// <value>
+        /// The PublicTransport
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string PublicTransport { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PackLadder of SupplierDetail
+        /// </summary>
+        /// <value>
+        /// The PackLadder
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal PackLadder { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether
         /// </summary>
         /// <value>

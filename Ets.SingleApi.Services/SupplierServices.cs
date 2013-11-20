@@ -232,7 +232,12 @@
                                         supplierEntity.FreeDeliveryLine,
                                         supplierEntity.DelMinOrderAmount,
                                         supplierEntity.BaIduLat,
-                                        supplierEntity.BaIduLong
+                                        supplierEntity.BaIduLong,
+                                        supplierEntity.TakeawaySpecialOffersSummary,
+                                        supplierEntity.PublicTransport,
+                                        supplierEntity.PackLadder,
+                                        supplierEntity.Fax,
+                                        supplierEntity.Email
                                     }).FirstOrDefault();
 
             if (tempSupplier == null)
@@ -277,6 +282,11 @@
                     DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
                     BaIduLat = baIduLat,
                     BaIduLong = baIduLong,
+                    Email = tempSupplier.Email,
+                    Fax = tempSupplier.Fax,
+                    TakeawaySpecialOffersSummary = tempSupplier.TakeawaySpecialOffersSummary,
+                    PackLadder = tempSupplier.PackLadder,
+                    PublicTransport = tempSupplier.PublicTransport,
                     LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
                     this.supplierImageEntityRepository.EntityQueryable.Where(
                             p => p.Supplier.SupplierId == supplierId && p.Online == true)

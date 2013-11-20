@@ -276,6 +276,71 @@
         public decimal BaIduLong { get; set; }
 
         /// <summary>
+        /// Gets or sets the Fax of SupplierDetailModel
+        /// </summary>
+        /// <value>
+        /// The Fax
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Fax { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Email of SupplierDetailModel
+        /// </summary>
+        /// <value>
+        /// The Email
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TakeawaySpecialOffersSummary of SupplierDetailModel
+        /// </summary>
+        /// <value>
+        /// The TakeawaySpecialOffersSummary
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string TakeawaySpecialOffersSummary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PublicTransport of SupplierDetailModel
+        /// </summary>
+        /// <value>
+        /// The PublicTransport
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string PublicTransport { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PackLadder of SupplierDetailModel
+        /// </summary>
+        /// <value>
+        /// The PackLadder
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal? PackLadder { get; set; }
+
+        /// <summary>
         /// Gets or sets the SupplierFeatureList of GroupSupplierModel
         /// </summary>
         /// <value>

@@ -96,6 +96,11 @@
                     FreeDeliveryLine = getSupplierResult.Result.FreeDeliveryLine ?? 0,
                     BaIduLat = getSupplierResult.Result.BaIduLat,
                     BaIduLong = getSupplierResult.Result.BaIduLong,
+                    Fax = getSupplierResult.Result.Fax,
+                    Email = getSupplierResult.Result.Email,
+                    PackLadder = getSupplierResult.Result.PackLadder ?? 0,
+                    TakeawaySpecialOffersSummary = getSupplierResult.Result.TakeawaySpecialOffersSummary ?? string.Empty,
+                    PublicTransport = getSupplierResult.Result.PublicTransport ?? string.Empty,
                     IsWaiMai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
                     IsDingTai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
                     IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
