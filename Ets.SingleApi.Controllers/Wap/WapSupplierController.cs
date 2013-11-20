@@ -307,11 +307,11 @@
                     RegionId = regionId ?? -1,
                     UserLat = userLat ?? 0,
                     UserLong = userLong ?? 0,
-                    Distance = distance ?? -1,
+                    Distance = (userLat == null || userLong == null) ? -1 : (distance ?? -1),
                     PageSize = pageSize,
                     PageIndex = pageIndex,
                     OrderByType = orderByType,
-                    IsBuilding = distance != null
+                    IsBuilding = userLat != null && userLong != null && distance != null
                 });
 
             if (list.Result == null || list.Result.Count == 0)
@@ -382,7 +382,7 @@
                 RegionId = regionId ?? -1,
                 UserLat = userLat ?? 0,
                 UserLong = userLong ?? 0,
-                Distance = distance ?? -1,
+                Distance = (userLat == null || userLong == null) ? -1 : (distance ?? -1),
                 PageSize = pageSize,
                 PageIndex = pageIndex,
                 OrderByType = orderByType,
@@ -457,7 +457,7 @@
                 RegionId = regionId ?? -1,
                 UserLat = userLat ?? 0,
                 UserLong = userLong ?? 0,
-                Distance = distance,
+                Distance = (userLat == null || userLong == null) ? -1 : (distance ?? -1),
                 PageSize = pageSize,
                 PageIndex = pageIndex,
                 OrderByType = orderByType,
@@ -520,7 +520,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public DingTaiSupplierListResponse DingTaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double userLat, double userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public DingTaiSupplierListResponse DingTaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var featureId = ControllersCommon.DingTaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
@@ -530,12 +530,13 @@
                 CuisineId = cuisineId ?? -1,
                 BusinessAreaId = (businessAreaId ?? string.Empty).Trim(),
                 RegionId = regionId ?? -1,
-                UserLat = userLat,
-                UserLong = userLong,
-                Distance = distance,
+                UserLat = userLat ?? 0,
+                UserLong = userLong ?? 0,
+                Distance = (userLat == null || userLong == null) ? -1 : (distance ?? -1),
                 PageSize = pageSize,
                 PageIndex = pageIndex,
-                OrderByType = orderByType
+                OrderByType = orderByType,
+                IsBuilding = false
             });
 
             if (list.Result == null || list.Result.Count == 0)
