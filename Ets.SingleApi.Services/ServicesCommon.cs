@@ -1,8 +1,11 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
+
+    using Ets.SingleApi.Model.Services;
 
     /// <summary>
     /// 类名称：ServicesCommon
@@ -16,6 +19,32 @@
     /// ----------------------------------------------------------------------------------------
     public class ServicesCommon
     {
+        /// <summary>
+        /// 阶梯打包FeatureId
+        /// </summary>
+        /// <value>
+        /// 阶梯打包FeatureId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int PackageFeatureId
+        {
+            get
+            {
+                var packageFeatureId = ConfigurationManager.AppSettings["PackageFeatureId"] ?? "34";
+                int result;
+                if (!int.TryParse(packageFeatureId, out result))
+                {
+                    result = 34;
+                }
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// WapCustom用户
         /// </summary>
@@ -732,6 +761,45 @@
             {
                 return "find_password_code";
             }
+        }
+
+        /// <summary>
+        /// 计算打包费
+        /// </summary>
+        /// <param name="packageWay">是否阶梯打包</param>
+        /// <param name="supplierPack">餐厅打包费</param>
+        /// <param name="packLadder">阶梯打包费</param>
+        /// <param name="dishList">菜品信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static decimal GetPackagingFee(bool packageWay, decimal supplierPack, decimal packLadder, List<PackagingFeeItem> dishList)
+        {
+            var totalPrice = dishList.Sum(item => item.Price * item.Quantity);
+            if (totalPrice <= 0)
+            {
+                return 0;
+            }
+
+            if (!packageWay)
+            {
+                var fee = dishList.Sum(item => item.PackagingFee * item.Quantity);
+                return fee;
+            }
+
+            if (packLadder == 0)
+            {
+                return supplierPack;
+            }
+
+            long x;
+            var y = Math.DivRem((long)totalPrice, (long)packLadder, out x);
+            return (y + 1) * supplierPack;
         }
     }
 }

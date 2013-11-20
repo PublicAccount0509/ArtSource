@@ -148,6 +148,16 @@
         private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
 
         /// <summary>
+        /// 字段supplierFeatureEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 1:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
+
+        /// <summary>
         /// 字段orderNumber
         /// </summary>
         /// 创建者：周超
@@ -182,6 +192,7 @@
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
+        /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
         /// <param name="orderNumber">The orderNumber</param>
         /// <param name="distance">The distance</param>
         /// 创建者：周超
@@ -202,6 +213,7 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
+            INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
             IOrderNumber orderNumber,
             IDistance distance)
         {
@@ -217,6 +229,7 @@
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
+            this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.orderNumber = orderNumber;
             this.distance = distance;
         }
@@ -380,20 +393,33 @@
                                     {
                                         supplierDish.SupplierDishId,
                                         supplierDish.Price,
-                                        supplierDish.SupplierDishName
+                                        supplierDish.SupplierDishName,
+                                        supplierDish.PackagingFee
                                     }).ToList();
 
+            var packagingFeeItemList = (from item in supplierDishList
+                                        let dish = dishList.FirstOrDefault(p => p.SupplierDishId == item.SupplierDishId)
+                                        where dish != null
+                                        select new PackagingFeeItem
+                                            {
+                                                PackagingFee = item.PackagingFee ?? 0,
+                                                Price = item.Price,
+                                                Quantity = dish.Quantity
+                                            }).ToList();
+
+            var packageWay = this.supplierFeatureEntityRepository.EntityQueryable.Any(p => p.Feature.FeatureId == ServicesCommon.PackageFeatureId && p.IsEnabled == true);
+            var packagingFee = ServicesCommon.GetPackagingFee(packageWay, supplierEntity.PackagingFee ?? 0, supplierEntity.PackLadder ?? 0, packagingFeeItemList);
             var dishTotal = supplierDishList.Sum(item => (item.Price * dishList.Where(p => p.SupplierDishId == item.SupplierDishId).Select(p => p.Quantity).FirstOrDefault()));
             var fixedDeliveryCharge = (supplierEntity.FreeDeliveryLine ?? 0) <= dishTotal
                                           ? 0
                                           : supplierEntity.FixedDeliveryCharge ?? 0;
 
             var total = parameter.DeliveryMethodId == 2
-                    ? dishTotal + (supplierEntity.PackagingFee ?? 0) + fixedDeliveryCharge
-                    : dishTotal + (supplierEntity.PackagingFee ?? 0);
+                    ? dishTotal + packagingFee + fixedDeliveryCharge
+                    : dishTotal + packagingFee;
             var customerTotal = parameter.DeliveryMethodId == 2
-                    ? dishTotal + (supplierEntity.PackagingFee ?? 0) + fixedDeliveryCharge
-                    : dishTotal + (supplierEntity.PackagingFee ?? 0);
+                    ? dishTotal + packagingFee + fixedDeliveryCharge
+                    : dishTotal + packagingFee;
 
             var orderId = getOrderNumberResult.OrderNumber;
             var deliveryEntity = new DeliveryEntity
@@ -407,7 +433,7 @@
                 Total = total,
                 OrderStatusId = 1,
                 DateAdded = DateTime.Now,
-                PackagingFee = supplierEntity.PackagingFee,
+                PackagingFee = packagingFee,
                 DeliverCharge = parameter.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? 0 : fixedDeliveryCharge,
                 ContactPhone = customer.Mobile,
                 Gender = string.Equals(customer.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? "1" : "0",

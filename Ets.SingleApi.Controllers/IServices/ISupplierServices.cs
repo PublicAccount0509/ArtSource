@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Controllers.IServices
 {
+    using System.Collections.Generic;
+
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
@@ -41,6 +43,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<RoughSupplierModel> GetRoughSupplier(string supplierDomain);
+
+        /// <summary>
+        /// 取得打包费
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="dishList">菜品信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 12:02 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<decimal> GetPackagingFee(int supplierId, List<PackagingFeeItem> dishList);
 
         /// <summary>
         /// 获取餐厅列表

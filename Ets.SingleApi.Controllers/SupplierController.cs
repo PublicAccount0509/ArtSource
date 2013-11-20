@@ -46,6 +46,43 @@
         }
 
         /// <summary>
+        /// 计算餐厅打包费
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="requst">菜品信息</param>
+        /// <returns>
+        /// 返回打包费
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 2:19 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public PackagingFeeResponse PackagingFee(int id, PackagingFeeRequst requst)
+        {
+            if (requst == null || requst.DishList == null || requst.DishList.Count == 0)
+            {
+                return new PackagingFeeResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var getPackagingFeeResut = this.supplierServices.GetPackagingFee(id, requst.DishList);
+            return new PackagingFeeResponse
+            {
+                Message = new ApiMessage
+                       {
+                           StatusCode = getPackagingFeeResut.StatusCode
+                       },
+                Result = getPackagingFeeResut.Result
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅菜单
         /// </summary>
         /// <param name="id">餐厅Id</param>

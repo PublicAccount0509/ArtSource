@@ -20,11 +20,11 @@
         {
             get
             {
-                var waiMaiFeatureId = ConfigurationManager.AppSettings["WaiMaiFeatureId"] ?? "35";
+                var waiMaiFeatureId = ConfigurationManager.AppSettings["WaiMaiFeatureId"] ?? "1";
                 int result;
                 if (!int.TryParse(waiMaiFeatureId, out result))
                 {
-                    result = 35;
+                    result = 1;
                 }
 
                 return result;
@@ -46,11 +46,11 @@
         {
             get
             {
-                var dingTaiFeatureId = ConfigurationManager.AppSettings["DingTaiFeatureId"] ?? "36";
+                var dingTaiFeatureId = ConfigurationManager.AppSettings["DingTaiFeatureId"] ?? "2";
                 int result;
                 if (!int.TryParse(dingTaiFeatureId, out result))
                 {
-                    result = 36;
+                    result = 2;
                 }
 
                 return result;

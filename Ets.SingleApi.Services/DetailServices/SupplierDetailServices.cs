@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Services.DetailServices
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Castle.Services.Transaction;

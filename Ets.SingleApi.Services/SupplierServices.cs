@@ -412,6 +412,49 @@
         }
 
         /// <summary>
+        /// 取得打包费
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="dishList">菜品信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 12:02 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<decimal> GetPackagingFee(int supplierId, List<PackagingFeeItem> dishList)
+        {
+            if (dishList == null || dishList.Count == 0)
+            {
+                return new ServicesResult<decimal>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
+                                .Select(p => new { p.SupplierId, p.PackLadder, p.PackagingFee })
+                                .FirstOrDefault();
+
+            if (supplier == null)
+            {
+                return new ServicesResult<decimal>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
+            }
+
+            var packageWay = this.supplierFeatureEntityRepository.EntityQueryable.Any(p => p.Feature.FeatureId == ServicesCommon.PackageFeatureId && p.IsEnabled == true);
+            var packagingFee = ServicesCommon.GetPackagingFee(packageWay, supplier.PackagingFee ?? 0, supplier.PackLadder ?? 0, dishList);
+            return new ServicesResult<decimal>
+            {
+                Result = packagingFee
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅列表
         /// </summary>
         /// <param name="parameter">The parameter</param>

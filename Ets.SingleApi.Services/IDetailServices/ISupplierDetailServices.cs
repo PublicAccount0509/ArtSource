@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Services.IDetailServices
 {
+    using System.Collections.Generic;
+
     using Ets.SingleApi.Model.DetailServices;
     using Ets.SingleApi.Model.Services;
 
