@@ -116,10 +116,8 @@
     <Compile Include="ServicesCommon.cs" />
     <Compile Include="DetailServices\SmsDetailServices.cs" />
     <Compile Include="ShoppingCartServices.cs" />
-    <Compile Include="ShoppingCart\IShoppingCartBusinessService.cs" />
     <Compile Include="ShoppingCart\IShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\ShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartSupplierService.cs" />
     <Compile Include="SmsServices.cs" />
     <Compile Include="SupplierServices.cs" />
     <Compile Include="UsersServices.cs" />

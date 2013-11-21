@@ -47,27 +47,27 @@
         /// <summary>
         /// 创建一个购物车
         /// </summary>
-        /// <param name="businessId">商家Id</param>
+        /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
-        /// 返回一个购物车
+        /// 返回购物车信息
         /// </returns>
         /// 创建者：周超
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [HttpGet]
-        public ShoppingCartResponse Create(int businessId, int? userId)
+        [HttpPost]
+        public ShoppingCartResponse Create(int supplierId, int? userId)
         {
-            var createResult = this.shoppingCartServices.Create(businessId, userId);
-            if (createResult.Result == null)
+            var createShoppingCartResult = this.shoppingCartServices.CreateShoppingCart(supplierId, userId);
+            if (createShoppingCartResult.Result == null)
             {
                 return new ShoppingCartResponse
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = createResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : createResult.StatusCode
+                        StatusCode = createShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : createShoppingCartResult.StatusCode
                     },
                     Result = new ShoppingCartModel()
                 };
@@ -77,10 +77,167 @@
                 {
                     Message = new ApiMessage
                         {
-                            StatusCode = createResult.StatusCode
+                            StatusCode = createShoppingCartResult.StatusCode
                         },
-                    Result = createResult.Result
+                    Result = createShoppingCartResult.Result
                 };
+        }
+
+        /// <summary>
+        /// 保存顾客信息
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="userId">The userId</param>
+        /// <returns>
+        /// The ShoppingCartResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:29 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public ShoppingCartResponse Customer(string id, int userId)
+        {
+            var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartCustomer(id, userId);
+            if (saveShoppingCartCustomerResult.Result == null)
+            {
+                return new ShoppingCartResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingCartCustomerResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingCartCustomerResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            return new ShoppingCartResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveShoppingCartCustomerResult.StatusCode
+                },
+                Result = saveShoppingCartCustomerResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存商品信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="requst">商品信息</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public ShoppingCartResponse Shopping(string id, ShoppingCartShoppingRequst requst)
+        {
+            if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
+            {
+                return new ShoppingCartResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(id, requst.ShoppingCartItemList);
+            if (saveShoppingItemResult.Result == null)
+            {
+                return new ShoppingCartResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingItemResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingItemResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            return new ShoppingCartResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveShoppingItemResult.StatusCode
+                },
+                Result = saveShoppingItemResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存订单信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="requst">订单信息</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public ShoppingCartResponse Order(string id, ShoppingCartOrderRequst requst)
+        {
+            if (requst == null)
+            {
+                return new ShoppingCartResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var order = new ShoppingCartOrder
+                {
+                    Id = requst.Id,
+                    AreaId = requst.AreaId,
+                    DeliveryDate = requst.DeliveryDate,
+                    DeliveryInstruction = requst.DeliveryInstruction,
+                    DeliveryMethodId = requst.DeliveryMethodId,
+                    DeliveryTime = requst.DeliveryTime,
+                    DeliveryType = requst.DeliveryType,
+                    InvoiceRequired = requst.InvoiceRequired,
+                    InvoiceTitle = requst.InvoiceTitle,
+                    IsTakeInvoice = requst.IsTakeInvoice,
+                    PaymentMethodId = requst.PaymentMethodId,
+                    Template = requst.Template,
+                    Path = requst.Path,
+                    OrderNotes = requst.OrderNotes
+                };
+
+            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingCartOrder(id, order);
+            if (saveShoppingItemResult.Result == null)
+            {
+                return new ShoppingCartResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingItemResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingItemResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            return new ShoppingCartResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveShoppingItemResult.StatusCode
+                },
+                Result = saveShoppingItemResult.Result
+            };
         }
     }
 }

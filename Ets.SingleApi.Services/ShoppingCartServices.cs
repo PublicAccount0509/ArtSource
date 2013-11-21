@@ -6,9 +6,7 @@
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
-    using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
-    using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -23,7 +21,6 @@
     /// ----------------------------------------------------------------------------------------
     public class ShoppingCartServices : IShoppingCartServices
     {
-
         /// <summary>
         /// 字段shoppingCartProvider
         /// </summary>
@@ -52,7 +49,7 @@
         /// <summary>
         /// 创建一个购物车
         /// </summary>
-        /// <param name="businessId">商家Id</param>
+        /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回一个购物车
@@ -62,7 +59,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> Create(int businessId, int? userId)
+        public ServicesResult<ShoppingCartModel> CreateShoppingCart(int supplierId, int? userId)
         {
             var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -74,7 +71,7 @@
                     };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(businessId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(supplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -142,19 +139,19 @@
         }
 
         /// <summary>
-        /// 创建一个购物车
+        /// 更改商品信息
         /// </summary>
-        /// <param name="id">The id</param>
-        /// <param name="shoppingCartItemList">The shoppingCartItemList</param>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartItemList">商品信息列表</param>
         /// <returns>
-        /// 返回一个购物车
+        /// 返回购物车信息
         /// </returns>
         /// 创建者：周超
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> LinkShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<ShoppingCartModel> SaveShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -176,12 +173,12 @@
                 };
             }
 
-            var getShoppingCartBusinessResult = this.shoppingCartProvider.GetShoppingCartSupplier(getShoppingCartLinkResult.Result.SupplierId);
-            if (getShoppingCartBusinessResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(getShoppingCartLinkResult.Result.SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
                 {
-                    StatusCode = getShoppingCartBusinessResult.StatusCode,
+                    StatusCode = getShoppingCartSupplierResult.StatusCode,
                     Result = new ShoppingCartModel()
                 };
             }
@@ -207,34 +204,260 @@
             }
 
             var shoppingCart = getShoppingCartResult.Result;
-            var business = getShoppingCartBusinessResult.Result;
+            var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var shoppingList = getShoppingCartResult.Result.ShoppingList ?? new List<ShoppingCartItem>();
-
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
+                                                    {
+                                                        PackagingFee = p.PackagingFee,
+                                                        Price = p.Price,
+                                                        Quantity = p.Quantity
+                                                    }).ToList());
 
-            getShoppingCartOrderResult.Result.TotalQuantity = shoppingList.Sum(p => p.Quantity);
-            //var fixedDeliveryCharge = (business.FreeDeliveryLine ?? 0) <= dishTotal
-            //                              ? 0
-            //                              : supplierEntity.FixedDeliveryCharge ?? 0;
+            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
+                                          ? 0
+                                         : supplier.FixedDeliveryCharge;
 
-            //var total = parameter.DeliveryMethodId == 2
-            //        ? dishTotal + packagingFee + fixedDeliveryCharge
-            //        : dishTotal + packagingFee;
-            //var customerTotal = parameter.DeliveryMethodId == 2
-            //        ? dishTotal + packagingFee + fixedDeliveryCharge
-            //        : dishTotal + packagingFee;
+            var total = order.DeliveryMethodId != null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                    ? shoppingPrice + packagingFee + fixedDeliveryCharge
+                    : shoppingPrice + packagingFee;
+            var customerTotal = order.DeliveryMethodId != null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                    ? shoppingPrice + packagingFee + fixedDeliveryCharge
+                    : shoppingPrice + packagingFee;
+
+            order.PackagingFee = packagingFee;
+            order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
+            order.TotalFee = total;
+            order.CustomerTotalFee = customerTotal;
+
+            this.shoppingCartProvider.SaveShoppingCartOrder(order);
+            return new ServicesResult<ShoppingCartModel>
+            {
+                Result = new ShoppingCartModel
+                {
+                    Id = id,
+                    ShoppingCart = shoppingCart,
+                    Supplier = supplier,
+                    Customer = customer,
+                    Order = order
+                }
+            };
+        }
+
+        /// <summary>
+        /// 保存用户信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="userId">用户Id</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ShoppingCartModel> SaveShoppingCartCustomer(string id, int userId)
+        {
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(getShoppingCartLinkResult.Result.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(getShoppingCartLinkResult.Result.SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartSupplierResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(userId);
+            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartCustomerResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(getShoppingCartLinkResult.Result.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var shoppingCart = getShoppingCartResult.Result;
+            var supplier = getShoppingCartSupplierResult.Result;
+            var customer = getShoppingCartCustomerResult.Result;
+            var order = getShoppingCartOrderResult.Result;
+
+            this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
+            return new ServicesResult<ShoppingCartModel>
+            {
+                Result = new ShoppingCartModel
+                {
+                    Id = id,
+                    ShoppingCart = shoppingCart,
+                    Supplier = supplier,
+                    Customer = customer,
+                    Order = order
+                }
+            };
+        }
+
+        /// <summary>
+        /// 保存用户信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ShoppingCartModel> SaveShoppingCartOrder(string id, ShoppingCartOrder shoppingCartOrder)
+        {
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartSupplierResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
+            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartCustomerResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var shoppingCart = getShoppingCartResult.Result;
+            var supplier = getShoppingCartSupplierResult.Result;
+            var customer = getShoppingCartCustomerResult.Result;
+            var order = getShoppingCartOrderResult.Result;
+
+            shoppingCartOrder.PackagingFee = order.PackagingFee;
+            shoppingCartOrder.TotalQuantity = order.TotalQuantity;
+            shoppingCartOrder.TotalFee = order.TotalFee;
+            shoppingCartOrder.CustomerTotalFee = order.CustomerTotalFee;
+            this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
 
             return new ServicesResult<ShoppingCartModel>
             {
                 Result = new ShoppingCartModel
                 {
-                    ShoppingCart = getShoppingCartResult.Result,
-                    Supplier = getShoppingCartBusinessResult.Result,
-                    Customer = getShoppingCartCustomerResult.Result
+                    Id = id,
+                    ShoppingCart = shoppingCart,
+                    Supplier = supplier,
+                    Customer = customer,
+                    Order = shoppingCartOrder
                 }
             };
+        }
+
+        /// <summary>
+        /// 计算打包费
+        /// </summary>
+        /// <param name="packageWay">是否阶梯打包</param>
+        /// <param name="supplierPack">餐厅打包费</param>
+        /// <param name="packLadder">阶梯打包费</param>
+        /// <param name="dishList">菜品信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private decimal GetPackagingFee(bool packageWay, decimal supplierPack, decimal packLadder, List<PackagingFeeItem> dishList)
+        {
+            var totalPrice = dishList.Sum(item => item.Price * item.Quantity);
+            if (totalPrice <= 0)
+            {
+                return 0;
+            }
+
+            if (!packageWay)
+            {
+                var fee = dishList.Sum(item => item.PackagingFee * item.Quantity);
+                return fee;
+            }
+
+            if (packLadder == 0)
+            {
+                return supplierPack;
+            }
+
+            long x;
+            var y = Math.DivRem((long)totalPrice, (long)packLadder, out x);
+            return (y + 1) * supplierPack;
         }
     }
 }

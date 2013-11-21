@@ -3,6 +3,7 @@
     using System.Web.Http;
 
     using Ets.SingleApi.Controllers.Filters;
+    using Ets.SingleApi.Model.Controller;
 
     /// <summary>
     /// 类名称：SingleApiController
@@ -58,6 +59,25 @@
         protected bool ValidateUserId(int userId)
         {
             return !ControllersCommon.ApplicationValidationEnabled || this.UserId == userId;
+        }
+
+        /// <summary>
+        /// 测试
+        /// </summary>
+        /// <returns>
+        /// 返回测试结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:54 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public TestApiResponse Test()
+        {
+            return new TestApiResponse
+                {
+                    Result = "Hello World!"
+                };
         }
     }
 }

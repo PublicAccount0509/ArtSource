@@ -789,7 +789,7 @@
 
             if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
             {
-                return deliveryTime.AddHours(ServicesCommon.DefaultPickUpTime);
+                return deliveryTime.AddMinutes(ServicesCommon.DefaultPickUpTime);
             }
 
             int result;
@@ -798,7 +798,7 @@
                 result = ServicesCommon.DefaultDeliveryTime;
             }
 
-            return deliveryTime.AddHours(result);
+            return deliveryTime.AddMinutes(result);
         }
 
     }
