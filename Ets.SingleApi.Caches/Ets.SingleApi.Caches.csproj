@@ -40,6 +40,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShoppingCartCacheServices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">
+      <Project>{b6f811c6-70b6-4d50-a5db-c7589371860c}</Project>
+      <Name>Ets.SingleApi.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ets.SingleApi.Services\Ets.SingleApi.Services.csproj">
+      <Project>{2938e503-493b-4828-a9bd-d6e3f8692596}</Project>
+      <Name>Ets.SingleApi.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ets.SingleApi.Utility\Ets.SingleApi.Utility.csproj">
+      <Project>{a26c9fac-c233-4576-a604-9806ad017a97}</Project>
+      <Name>Ets.SingleApi.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

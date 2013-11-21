@@ -5,6 +5,7 @@
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
+    using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -69,7 +70,7 @@
                     {
                         StatusCode = createResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : createResult.StatusCode
                     },
-                    Result = new ShoppingCart()
+                    Result = new ShoppingCartModel()
                 };
             }
 

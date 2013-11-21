@@ -1,11 +1,14 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System;
     using System.Collections.Generic;
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
-    using Ets.SingleApi.Services.ICacheServices;
+    using Ets.SingleApi.Services.IRepository;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：ShoppingCartServices
@@ -19,42 +22,30 @@
     /// ----------------------------------------------------------------------------------------
     public class ShoppingCartServices : IShoppingCartServices
     {
+
         /// <summary>
-        /// 字段shoppingCartCacheServices
+        /// 字段shoppingCartProvider
         /// </summary>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartCacheServices shoppingCartCacheServices;
+        private readonly IShoppingCartProvider shoppingCartProvider;
 
         /// <summary>
-        /// 字段shoppingCartBusinessServiceList
+        /// Initializes a new instance of the <see cref="ShoppingCartServices" /> class.
         /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 11:08 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly List<IShoppingCartBusinessService> shoppingCartBusinessServiceList;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartServices"/> class.
-        /// </summary>
-        /// <param name="shoppingCartCacheServices">The shoppingCartCacheServices</param>
-        /// <param name="shoppingCartBusinessServiceList">The shoppingCartBusinessServiceList</param>
+        /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ShoppingCartServices(
-            IShoppingCartCacheServices shoppingCartCacheServices,
-            List<IShoppingCartBusinessService> shoppingCartBusinessServiceList)
+            IShoppingCartProvider shoppingCartProvider)
         {
-            this.shoppingCartCacheServices = shoppingCartCacheServices;
-            this.shoppingCartBusinessServiceList = shoppingCartBusinessServiceList;
+            this.shoppingCartProvider = shoppingCartProvider;
         }
 
         /// <summary>
@@ -71,14 +62,138 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCart> Create(int type, int businessId, int? userId)
+        public ServicesResult<ShoppingCartModel> Create(int type, int businessId, int? userId)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartBusiness(type, businessId);
-            if (shoppingCartCacheResult == null)
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(Guid.NewGuid().ToString());
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                
+                return new ServicesResult<ShoppingCartModel>
+                    {
+                        StatusCode = getShoppingCartResult.StatusCode,
+                        Result = new ShoppingCartModel()
+                    };
             }
-            return new ServicesResult<ShoppingCart>();
+
+            var getShoppingCartBusinessResult = this.shoppingCartProvider.GetShoppingCartBusiness(type, businessId);
+            if (getShoppingCartBusinessResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartBusinessResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var shoppingCartLinkId = Guid.NewGuid().ToString();
+            this.shoppingCartProvider.SaveShoppingCartLink(
+                new ShoppingCartLink
+                    {
+                        ShoppingCartLinkId = shoppingCartLinkId,
+                        ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId,
+                        BusinessId = getShoppingCartBusinessResult.Result.BusinessId,
+                        UserId = userId ?? 0
+                    });
+
+            if (userId == null)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                    {
+                        Result = new ShoppingCartModel
+                            {
+                                Id = shoppingCartLinkId,
+                                ShoppingCart = getShoppingCartResult.Result,
+                                Supplier = getShoppingCartBusinessResult.Result
+                            }
+                    };
+            }
+
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(userId.Value);
+            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartCustomerResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            return new ServicesResult<ShoppingCartModel>
+            {
+                Result = new ShoppingCartModel
+                {
+                    Id = shoppingCartLinkId,
+                    ShoppingCart = getShoppingCartResult.Result,
+                    Supplier = getShoppingCartBusinessResult.Result,
+                    Customer = getShoppingCartCustomerResult.Result
+                }
+            };
+        }
+
+        /// <summary>
+        /// 创建一个购物车
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="shoppingCartItemList">The shoppingCartItemList</param>
+        /// <returns>
+        /// 返回一个购物车
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ShoppingCartModel> LinkShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
+        {
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(getShoppingCartLinkResult.Result.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartBusinessResult = this.shoppingCartProvider.GetShoppingCartBusiness(getShoppingCartLinkResult.Result.BusinessType, getShoppingCartLinkResult.Result.BusinessId);
+            if (getShoppingCartBusinessResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartBusinessResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(getShoppingCartLinkResult.Result.UserId);
+            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartCustomerResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+
+            return new ServicesResult<ShoppingCartModel>
+            {
+                Result = new ShoppingCartModel
+                {
+                    ShoppingCart = getShoppingCartResult.Result,
+                    Supplier = getShoppingCartBusinessResult.Result,
+                    Customer = getShoppingCartCustomerResult.Result
+                }
+            };
         }
     }
 }

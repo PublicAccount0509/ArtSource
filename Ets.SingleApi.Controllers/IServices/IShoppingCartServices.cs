@@ -29,6 +29,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCart> Create(int type, int businessId, int? userId);
+        ServicesResult<ShoppingCartModel> Create(int type, int businessId, int? userId);
     }
 }

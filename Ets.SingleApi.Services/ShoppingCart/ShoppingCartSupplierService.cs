@@ -94,7 +94,8 @@
                                         where supplierEntity.SupplierId == businessId
                                         select new ShoppingCartSupplier
                                         {
-                                            SupplierId = supplierEntity.SupplierId,
+                                            BusinessType = (int)this.BusinessType,
+                                            BusinessId = supplierEntity.SupplierId,
                                             SupplierName = supplierEntity.SupplierName,
                                             Telephone = supplierEntity.Telephone,
                                             PackagingFee = supplierEntity.PackagingFee ?? 0,

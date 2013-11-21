@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
+    using Ets.SingleApi.Model.Services;
+
     /// <summary>
     /// 类名称：ShoppingCartResponse
     /// 命名空间：Ets.SingleApi.Model.Controller
@@ -23,6 +25,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCart Result { get; set; }
+        public ShoppingCartModel Result { get; set; }
     }
 }

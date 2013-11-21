@@ -301,7 +301,7 @@
             var result = new WaiMaiOrderDetailModel
                 {
                     OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
-                    OrderTypeId = deliveryEntity.DeliveryMethodId,
+                    OrderTypeId = (int)OrderType.WaiMai,
                     OrderStatusId = deliveryEntity.OrderStatusId,
                     DateReserved = deliveryEntity.DateAdded,
                     DeliveryTime = deliveryEntity.DeliveryDate,
