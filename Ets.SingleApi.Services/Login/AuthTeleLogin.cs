@@ -129,6 +129,7 @@
                 };
             }
 
+            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, userName));
             return new LoginData
                 {
                     LoginId = loginEntity.LoginId

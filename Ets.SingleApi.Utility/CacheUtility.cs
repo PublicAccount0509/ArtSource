@@ -194,7 +194,6 @@
         /// 获取缓存值
         /// </summary>
         /// <param name="key">关键字</param>
-        /// <param name="isDelete">是否删除</param>
         /// <returns>
         /// 缓存的值
         /// </returns>
@@ -203,14 +202,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public object Get(string key, bool isDelete = true)
+        public object Get(string key)
         {
             var value = this.client.Get(key);
-            if (isDelete)
-            {
-                this.client.Delete(key);
-            }
-            
             string.Format("Get({0}---{1})", key, value).WriteLog("Ets.SingleApi.Cache", Log4NetType.Info);
             return value;
         }

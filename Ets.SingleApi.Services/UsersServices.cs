@@ -680,6 +680,7 @@
                 };
             }
 
+            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
             var sendSmsResult = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.FirstRegisterMessage, code));
             return new ServicesResult<RegisterUserModel>
             {

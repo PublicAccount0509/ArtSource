@@ -49,6 +49,9 @@
     <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderResponse.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderResponse.cs" />
+    <Compile Include="Controller\ShoppingCartResponse.cs" />
+    <Compile Include="ShoppingCart\IShoppingCartBusiness.cs" />
+    <Compile Include="ShoppingCart\ShoppingCart.cs" />
     <Compile Include="Controller\SupplierFeature.cs" />
     <Compile Include="Controller\WaiMaiOrderDetail.cs" />
     <Compile Include="Controller\WaiMaiOrderDish.cs" />
@@ -218,6 +221,10 @@
     <Compile Include="Services\SetPasswordParameter.cs" />
     <Compile Include="Services\GetUserOrderParameter.cs" />
     <Compile Include="Services\AuthCodeParameter.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartCustomer.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartItem.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartSupplier.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

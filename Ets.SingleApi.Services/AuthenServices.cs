@@ -453,6 +453,7 @@
             loginEntity.Password = parameter.NewPasswrod.Md5();
             this.loginEntityRepository.Save(loginEntity);
 
+            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName));
             if (!parameter.IsSendSms)
             {
                 return new ServicesResult<bool>
@@ -596,7 +597,7 @@
                 };
             }
 
-            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone), false);
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
             if (authCode == null)
             {
                 return new ServicesResult<bool>

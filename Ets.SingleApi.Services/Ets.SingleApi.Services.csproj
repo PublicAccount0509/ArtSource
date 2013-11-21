@@ -114,6 +114,7 @@
     <Compile Include="SendPassword\TelephoneSendPassword.cs" />
     <Compile Include="ServicesCommon.cs" />
     <Compile Include="DetailServices\SmsDetailServices.cs" />
+    <Compile Include="ShoppingCartServices.cs" />
     <Compile Include="SmsServices.cs" />
     <Compile Include="SupplierServices.cs" />
     <Compile Include="UsersServices.cs" />
