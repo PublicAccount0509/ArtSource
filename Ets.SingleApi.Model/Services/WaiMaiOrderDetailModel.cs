@@ -328,6 +328,19 @@
         public string InvoiceTitle { get; set; }
 
         /// <summary>
+        /// Gets or sets the DeliveryAddress of WaiMaiOrderDetailModel
+        /// </summary>
+        /// <value>
+        /// The DeliveryAddress
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:19 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string DeliveryAddress { get; set; }
+
+        /// <summary>
         /// 设置或取得菜信息
         /// </summary>
         /// <value>

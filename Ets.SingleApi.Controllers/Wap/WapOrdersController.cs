@@ -116,6 +116,7 @@
                     IsConfirm = getWaiMaiOrderResult.Result.IsConfirm,
                     PaymentMethodId = getWaiMaiOrderResult.Result.PaymentMethodId,
                     InvoiceTitle = getWaiMaiOrderResult.Result.InvoiceTitle.IsEmptyOrNull() ? ControllersCommon.EmptyInvoiceTitle : getWaiMaiOrderResult.Result.InvoiceTitle,
+                    DeliveryAddress = getWaiMaiOrderResult.Result.DeliveryAddress ?? string.Empty,
                     DishList = dishList.Select(p => new WaiMaiOrderDish
                         {
                             SupplierDishName = p.SupplierDishName,

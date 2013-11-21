@@ -301,6 +301,19 @@
         public string InvoiceTitle { get; set; }
 
         /// <summary>
+        /// 设置或取得送餐地址
+        /// </summary>
+        /// <value>
+        /// 送餐地址
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:19 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string DeliveryAddress { get; set; }
+
+        /// <summary>
         /// 设置或取得菜信息
         /// </summary>
         /// <value>

@@ -1,7 +1,6 @@
 ﻿namespace Ets.SingleApi.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     using Ets.SingleApi.Model;
@@ -34,6 +33,26 @@
         private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
 
         /// <summary>
+        /// 字段supplierEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 6:41 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
+
+        /// <summary>
+        /// 字段supplierFeatureEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 6:41 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
+
+        /// <summary>
         /// 字段shoppingCartCacheServices
         /// </summary>
         /// 创建者：周超
@@ -44,21 +63,12 @@
         private readonly IShoppingCartCacheServices shoppingCartCacheServices;
 
         /// <summary>
-        /// 字段shoppingCartBusinessServiceList
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 11:08 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly List<IShoppingCartBusinessService> shoppingCartBusinessServiceList;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartProvider" /> class.
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
+        /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
+        /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
         /// <param name="shoppingCartCacheServices">The shoppingCartCacheServices</param>
-        /// <param name="shoppingCartBusinessServiceList">The shoppingCartBusinessServiceList</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
@@ -66,19 +76,20 @@
         /// ----------------------------------------------------------------------------------------
         public ShoppingCartProvider(
             INHibernateRepository<CustomerEntity> customerEntityRepository,
-            IShoppingCartCacheServices shoppingCartCacheServices,
-            List<IShoppingCartBusinessService> shoppingCartBusinessServiceList)
+            INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
+            IShoppingCartCacheServices shoppingCartCacheServices)
         {
             this.customerEntityRepository = customerEntityRepository;
+            this.supplierEntityRepository = supplierEntityRepository;
+            this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.shoppingCartCacheServices = shoppingCartCacheServices;
-            this.shoppingCartBusinessServiceList = shoppingCartBusinessServiceList;
         }
 
         /// <summary>
-        /// 获取购物车商家信息
+        /// 获取餐厅信息
         /// </summary>
-        /// <param name="type">购物车类型</param>
-        /// <param name="businessId">商家Id</param>
+        /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -87,33 +98,45 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<IShoppingCartBusiness> GetShoppingCartBusiness(int type, int businessId)
+        public ServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(int supplierId)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartBusiness(type, businessId);
+            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartSupplier(supplierId);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<IShoppingCartBusiness>
+                return new ServicesResult<ShoppingCartSupplier>
                 {
                     Result = shoppingCartCacheResult.Result
                 };
             }
 
-            var shoppingCartBusinessService = this.shoppingCartBusinessServiceList.FirstOrDefault(p => p.BusinessType == (BusinessType)type);
-            if (shoppingCartBusinessService == null)
+            var shoppingCartSupplier = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
+                                        where supplierEntity.SupplierId == supplierId
+                                        select new ShoppingCartSupplier
+                                        {
+                                            SupplierId = supplierEntity.SupplierId,
+                                            SupplierName = supplierEntity.SupplierName,
+                                            Telephone = supplierEntity.Telephone,
+                                            PackagingFee = supplierEntity.PackagingFee ?? 0,
+                                            FixedDeliveryCharge = supplierEntity.FixedDeliveryCharge ?? 0,
+                                            FreeDeliveryLine = supplierEntity.FreeDeliveryLine ?? 0,
+                                            DelMinOrderAmount = supplierEntity.DelMinOrderAmount ?? 0,
+                                            PackLadder = supplierEntity.PackLadder ?? 0
+                                        }).FirstOrDefault();
+
+            if (shoppingCartSupplier == null)
             {
-                return null;
+                return new ServicesResult<ShoppingCartSupplier>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new ShoppingCartSupplier()
+                };
             }
 
-            var getShoppingCartBusinessResult = shoppingCartBusinessService.GetShoppingCartBusiness(businessId);
-            if (getShoppingCartBusinessResult.StatusCode == (int)StatusCode.Succeed.Ok)
+            shoppingCartSupplier.IsPackLadder = this.supplierFeatureEntityRepository.EntityQueryable.Any(p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true && p.Feature.FeatureId == ServicesCommon.PackageFeatureId);
+            this.shoppingCartCacheServices.SaveShoppingCartSupplier(shoppingCartSupplier);
+            return new ServicesResult<ShoppingCartSupplier>
             {
-                this.shoppingCartCacheServices.SaveShoppingCartBusiness(type, getShoppingCartBusinessResult.Result);
-            }
-
-            return new ServicesResult<IShoppingCartBusiness>
-            {
-                StatusCode = getShoppingCartBusinessResult.StatusCode,
-                Result = getShoppingCartBusinessResult.Result
+                Result = shoppingCartSupplier
             };
         }
 

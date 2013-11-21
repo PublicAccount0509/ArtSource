@@ -6,12 +6,12 @@
 
     public class ShoppingCartCacheServices : IShoppingCartCacheServices
     {
-        public CacheServicesResult<IShoppingCartBusiness> GetShoppingCartBusiness(int type, int businessId)
+        public CacheServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(int businessId)
         {
             throw new System.NotImplementedException();
         }
 
-        public CacheServicesResult<bool> SaveShoppingCartBusiness(int type, IShoppingCartBusiness business)
+        public CacheServicesResult<bool> SaveShoppingCartSupplier(ShoppingCartSupplier supplier)
         {
             throw new System.NotImplementedException();
         }

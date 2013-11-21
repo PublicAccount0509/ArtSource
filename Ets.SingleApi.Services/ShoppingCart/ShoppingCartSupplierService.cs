@@ -88,14 +88,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartResult<IShoppingCartBusiness> GetShoppingCartBusiness(int businessId)
+        public ShoppingCartResult<ShoppingCartSupplier> GetShoppingCartBusiness(int businessId)
         {
             var shoppingCartSupplier = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                                         where supplierEntity.SupplierId == businessId
                                         select new ShoppingCartSupplier
                                         {
-                                            BusinessType = (int)this.BusinessType,
-                                            BusinessId = supplierEntity.SupplierId,
+                                            SupplierId = supplierEntity.SupplierId,
                                             SupplierName = supplierEntity.SupplierName,
                                             Telephone = supplierEntity.Telephone,
                                             PackagingFee = supplierEntity.PackagingFee ?? 0,
@@ -107,7 +106,7 @@
 
             if (shoppingCartSupplier == null)
             {
-                return new ShoppingCartResult<IShoppingCartBusiness>
+                return new ShoppingCartResult<ShoppingCartSupplier>
                     {
                         StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new ShoppingCartSupplier()
@@ -115,7 +114,7 @@
             }
 
             shoppingCartSupplier.IsPackLadder = this.supplierFeatureEntityRepository.EntityQueryable.Any(p => p.Supplier.SupplierId == businessId && p.IsEnabled == true && p.Feature.FeatureId == ServicesCommon.PackageFeatureId);
-            return new ShoppingCartResult<IShoppingCartBusiness>
+            return new ShoppingCartResult<ShoppingCartSupplier>
             {
                 Result = shoppingCartSupplier
             };

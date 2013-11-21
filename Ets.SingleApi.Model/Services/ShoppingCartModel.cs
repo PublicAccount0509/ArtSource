@@ -75,7 +75,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public IShoppingCartBusiness Supplier { get; set; }
+        public ShoppingCartSupplier Supplier { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartModel"/> class.

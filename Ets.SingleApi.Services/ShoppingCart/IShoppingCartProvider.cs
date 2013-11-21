@@ -16,10 +16,9 @@
     public interface IShoppingCartProvider
     {
         /// <summary>
-        /// 获取购物车商家信息
+        /// 获取餐厅信息
         /// </summary>
-        /// <param name="type">购物车类型</param>
-        /// <param name="businessId">商家Id</param>
+        /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -28,7 +27,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<IShoppingCartBusiness> GetShoppingCartBusiness(int type, int businessId);
+        ServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(int supplierId);
 
         /// <summary>
         /// 获取购物车顾客信息

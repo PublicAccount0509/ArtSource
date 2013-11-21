@@ -39,6 +39,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ShoppingCartResult<IShoppingCartBusiness> GetShoppingCartBusiness(int businessId);
+        ShoppingCartResult<ShoppingCartSupplier> GetShoppingCartBusiness(int businessId);
     }
 }

@@ -47,7 +47,6 @@
         /// <summary>
         /// 创建一个购物车
         /// </summary>
-        /// <param name="type">购物车类型</param>
         /// <param name="businessId">商家Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
@@ -59,9 +58,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ShoppingCartResponse Create(int type, int businessId, int? userId)
+        public ShoppingCartResponse Create(int businessId, int? userId)
         {
-            var createResult = this.shoppingCartServices.Create(type, businessId, userId);
+            var createResult = this.shoppingCartServices.Create(businessId, userId);
             if (createResult.Result == null)
             {
                 return new ShoppingCartResponse

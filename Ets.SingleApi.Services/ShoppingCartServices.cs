@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
@@ -51,7 +52,6 @@
         /// <summary>
         /// 创建一个购物车
         /// </summary>
-        /// <param name="type">购物车类型</param>
         /// <param name="businessId">商家Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
@@ -62,7 +62,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> Create(int type, int businessId, int? userId)
+        public ServicesResult<ShoppingCartModel> Create(int businessId, int? userId)
         {
             var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -74,12 +74,12 @@
                     };
             }
 
-            var getShoppingCartBusinessResult = this.shoppingCartProvider.GetShoppingCartBusiness(type, businessId);
-            if (getShoppingCartBusinessResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(businessId);
+            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
                 {
-                    StatusCode = getShoppingCartBusinessResult.StatusCode,
+                    StatusCode = getShoppingCartSupplierResult.StatusCode,
                     Result = new ShoppingCartModel()
                 };
             }
@@ -90,7 +90,7 @@
                     {
                         ShoppingCartLinkId = shoppingCartLinkId,
                         ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId,
-                        BusinessId = getShoppingCartBusinessResult.Result.BusinessId,
+                        SupplierId = getShoppingCartSupplierResult.Result.SupplierId,
                         UserId = userId ?? 0
                     });
 
@@ -102,7 +102,7 @@
                             {
                                 Id = shoppingCartLinkId,
                                 ShoppingCart = getShoppingCartResult.Result,
-                                Supplier = getShoppingCartBusinessResult.Result
+                                Supplier = getShoppingCartSupplierResult.Result
                             }
                     };
             }
@@ -117,14 +117,26 @@
                 };
             }
 
+            var shoppingCartOrder = new ShoppingCartOrder { Id = Guid.NewGuid().ToString() };
+            var saveShoppingCartOrderResult = this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
+            if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = saveShoppingCartOrderResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
             return new ServicesResult<ShoppingCartModel>
             {
                 Result = new ShoppingCartModel
                 {
                     Id = shoppingCartLinkId,
                     ShoppingCart = getShoppingCartResult.Result,
-                    Supplier = getShoppingCartBusinessResult.Result,
-                    Customer = getShoppingCartCustomerResult.Result
+                    Supplier = getShoppingCartSupplierResult.Result,
+                    Customer = getShoppingCartCustomerResult.Result,
+                    Order = shoppingCartOrder
                 }
             };
         }
@@ -164,7 +176,7 @@
                 };
             }
 
-            var getShoppingCartBusinessResult = this.shoppingCartProvider.GetShoppingCartBusiness(getShoppingCartLinkResult.Result.BusinessType, getShoppingCartLinkResult.Result.BusinessId);
+            var getShoppingCartBusinessResult = this.shoppingCartProvider.GetShoppingCartSupplier(getShoppingCartLinkResult.Result.SupplierId);
             if (getShoppingCartBusinessResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -184,6 +196,35 @@
                 };
             }
 
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(getShoppingCartLinkResult.Result.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var shoppingCart = getShoppingCartResult.Result;
+            var business = getShoppingCartBusinessResult.Result;
+            var customer = getShoppingCartCustomerResult.Result;
+            var order = getShoppingCartOrderResult.Result;
+            var shoppingList = getShoppingCartResult.Result.ShoppingList ?? new List<ShoppingCartItem>();
+
+            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+
+            getShoppingCartOrderResult.Result.TotalQuantity = shoppingList.Sum(p => p.Quantity);
+            //var fixedDeliveryCharge = (business.FreeDeliveryLine ?? 0) <= dishTotal
+            //                              ? 0
+            //                              : supplierEntity.FixedDeliveryCharge ?? 0;
+
+            //var total = parameter.DeliveryMethodId == 2
+            //        ? dishTotal + packagingFee + fixedDeliveryCharge
+            //        : dishTotal + packagingFee;
+            //var customerTotal = parameter.DeliveryMethodId == 2
+            //        ? dishTotal + packagingFee + fixedDeliveryCharge
+            //        : dishTotal + packagingFee;
 
             return new ServicesResult<ShoppingCartModel>
             {

@@ -16,10 +16,9 @@
     public interface IShoppingCartCacheServices
     {
         /// <summary>
-        /// 取得供应商信息
+        /// 取得餐厅信息
         /// </summary>
-        /// <param name="type">购物车类型</param>
-        /// <param name="businessId">供应商Id</param>
+        /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -28,13 +27,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<IShoppingCartBusiness> GetShoppingCartBusiness(int type, int businessId);
+        CacheServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(int supplierId);
 
         /// <summary>
-        /// 保存供应商信息
+        /// 保存餐厅信息
         /// </summary>
-        /// <param name="type">购物车类型</param>
-        /// <param name="business">供应商信息</param>
+        /// <param name="supplier">餐厅信息</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -43,7 +41,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartBusiness(int type, IShoppingCartBusiness business);
+        CacheServicesResult<bool> SaveShoppingCartSupplier(ShoppingCartSupplier supplier);
 
         /// <summary>
         /// 取得顾客信息

@@ -18,7 +18,6 @@
         /// <summary>
         /// 创建一个购物车
         /// </summary>
-        /// <param name="type">购物车类型</param>
         /// <param name="businessId">商家Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
@@ -29,6 +28,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartModel> Create(int type, int businessId, int? userId);
+        ServicesResult<ShoppingCartModel> Create(int businessId, int? userId);
     }
 }
