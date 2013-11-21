@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessType.cs" />
+    <Compile Include="CacheServices\CacheServicesResult.cs" />
+    <Compile Include="CacheServices\CacheServicesListResult.cs" />
     <Compile Include="Controller\IsFollowerSupplierResult.cs" />
     <Compile Include="Controller\SaveSupplierCuisine.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderResult.cs" />
@@ -50,6 +53,8 @@
     <Compile Include="Controller\ConfirmWaiMaiOrderResponse.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderResponse.cs" />
     <Compile Include="Controller\ShoppingCartResponse.cs" />
+    <Compile Include="DefaultServicesResult.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
     <Compile Include="ShoppingCart\IShoppingCartBusiness.cs" />
     <Compile Include="ShoppingCart\ShoppingCart.cs" />
     <Compile Include="Controller\SupplierFeature.cs" />
@@ -97,7 +102,6 @@
     <Compile Include="Controller\SupplierFeatureListResponse.cs" />
     <Compile Include="Controller\PackagingFeeRequst.cs" />
     <Compile Include="Controller\PackagingFeeResponse.cs" />
-    <Compile Include="DetailServices\DefaultServicesResult.cs" />
     <Compile Include="GaussSphere.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="LocationType.cs" />
@@ -207,7 +211,6 @@
     <Compile Include="Services\WaiMaiOrderDishModel.cs" />
     <Compile Include="Services\AuthLoginModel.cs" />
     <Compile Include="Services\AuthLoginParameter.cs" />
-    <Compile Include="Services\DefaultServicesResult.cs" />
     <Compile Include="Services\ExistParameter.cs" />
     <Compile Include="Services\UmPaymentStateParameter.cs" />
     <Compile Include="Services\SaveSupplierCuisineModel.cs" />

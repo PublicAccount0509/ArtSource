@@ -428,6 +428,8 @@
             customerAddressEntity.Telephone = parameter.Telephone;
             customerAddressEntity.Sex = parameter.Sex ?? ServicesCommon.DefaultGender;
             customerAddressEntity.CustomerId = customerId;
+            customerAddressEntity.IsDel = false;
+
             if (parameter.IsDefault != null)
             {
                 customerAddressEntity.IsDefault = parameter.IsDefault;

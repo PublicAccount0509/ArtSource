@@ -78,6 +78,7 @@
     <Compile Include="Exists\TelephoneExists.cs" />
     <Compile Include="FilterServices.cs" />
     <Compile Include="FunctionServices.cs" />
+    <Compile Include="ICacheServices\IShoppingCartCacheServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
@@ -115,6 +116,8 @@
     <Compile Include="ServicesCommon.cs" />
     <Compile Include="DetailServices\SmsDetailServices.cs" />
     <Compile Include="ShoppingCartServices.cs" />
+    <Compile Include="ShoppingCart\IShoppingCartBusinessService.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartSupplierService.cs" />
     <Compile Include="SmsServices.cs" />
     <Compile Include="SupplierServices.cs" />
     <Compile Include="UsersServices.cs" />

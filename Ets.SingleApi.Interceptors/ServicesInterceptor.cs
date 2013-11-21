@@ -5,7 +5,7 @@
 
     using Castle.DynamicProxy;
 
-    using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Model;
     using Ets.SingleApi.Utility;
 
     /// <summary>
