@@ -47,6 +47,44 @@
         /// <summary>
         /// 创建一个购物车
         /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ShoppingCartResponse ShoppingCart(string id)
+        {
+            var getShoppingCartResult = this.shoppingCartServices.GetShoppingCart(id);
+            if (getShoppingCartResult.Result == null)
+            {
+                return new ShoppingCartResponse
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getShoppingCartResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            return new ShoppingCartResponse
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getShoppingCartResult.StatusCode
+                },
+                Result = getShoppingCartResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 创建一个购物车
+        /// </summary>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>

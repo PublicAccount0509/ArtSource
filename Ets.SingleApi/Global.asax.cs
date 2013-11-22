@@ -39,9 +39,6 @@
                 //注册Filters
                 FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
-                //注册castle组件
-                CastleUtility.Register(GlobalConfiguration.Configuration);
-
                 //注册log4net组件
                 Log4NetUtility.Register();
 
@@ -50,6 +47,9 @@
 
                 //注册缓存
                 CacheUtility.Register();
+
+                //注册castle组件
+                CastleUtility.Register(GlobalConfiguration.Configuration);
 
                 GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 

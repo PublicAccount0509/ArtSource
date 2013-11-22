@@ -47,6 +47,88 @@
         }
 
         /// <summary>
+        /// 取得购物车信息
+        /// </summary>
+        /// <param name="shoppingCartId">购物车Id</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ShoppingCartModel> GetShoppingCart(string shoppingCartId)
+        {
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(shoppingCartId);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartSupplierResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
+            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartCustomerResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var shoppingCart = getShoppingCartResult.Result;
+            var supplier = getShoppingCartSupplierResult.Result;
+            var customer = getShoppingCartCustomerResult.Result;
+            var order = getShoppingCartOrderResult.Result;
+            return new ServicesResult<ShoppingCartModel>
+            {
+                Result = new ShoppingCartModel
+                {
+                    Id = shoppingCartId,
+                    ShoppingCart = shoppingCart,
+                    Supplier = supplier,
+                    Customer = customer,
+                    Order = order
+                }
+            };
+        }
+
+        /// <summary>
         /// 创建一个购物车
         /// </summary>
         /// <param name="supplierId">餐厅Id</param>
@@ -125,15 +207,19 @@
                 };
             }
 
+            var shoppingCart = getShoppingCartResult.Result;
+            var supplier = getShoppingCartSupplierResult.Result;
+            var customer = getShoppingCartCustomerResult.Result;
+            var order = shoppingCartOrder;
             return new ServicesResult<ShoppingCartModel>
             {
                 Result = new ShoppingCartModel
                 {
                     Id = shoppingCartLinkId,
-                    ShoppingCart = getShoppingCartResult.Result,
-                    Supplier = getShoppingCartSupplierResult.Result,
-                    Customer = getShoppingCartCustomerResult.Result,
-                    Order = shoppingCartOrder
+                    ShoppingCart = shoppingCart,
+                    Supplier = supplier,
+                    Customer = customer,
+                    Order = order
                 }
             };
         }
@@ -163,7 +249,8 @@
                 };
             }
 
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(getShoppingCartLinkResult.Result.ShoppingCartId);
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -173,7 +260,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(getShoppingCartLinkResult.Result.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -183,7 +270,7 @@
                 };
             }
 
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(getShoppingCartLinkResult.Result.UserId);
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -193,7 +280,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(getShoppingCartLinkResult.Result.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -271,7 +358,8 @@
                 };
             }
 
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(getShoppingCartLinkResult.Result.ShoppingCartId);
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -281,7 +369,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(getShoppingCartLinkResult.Result.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -301,7 +389,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(getShoppingCartLinkResult.Result.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -311,7 +399,6 @@
                 };
             }
 
-            var shoppingCartLink = getShoppingCartLinkResult.Result;
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;

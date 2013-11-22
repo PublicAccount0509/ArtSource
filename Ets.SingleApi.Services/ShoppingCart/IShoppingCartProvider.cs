@@ -126,5 +126,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveShoppingCartLink(ShoppingCartLink shoppingCartLink);
+
+        /// <summary>
+        /// 将订单状态设置为完成状态
+        /// </summary>
+        /// <param name="orderId">订单Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> CompleteShoppingCartOrder(string orderId);
     }
 }

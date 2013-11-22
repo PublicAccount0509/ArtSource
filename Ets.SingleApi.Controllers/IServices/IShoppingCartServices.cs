@@ -18,6 +18,20 @@
     public interface IShoppingCartServices
     {
         /// <summary>
+        /// 取得购物车信息
+        /// </summary>
+        /// <param name="shoppingCartId">购物车Id</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<ShoppingCartModel> GetShoppingCart(string shoppingCartId);
+
+        /// <summary>
         /// 创建一个购物车
         /// </summary>
         /// <param name="supplierId">餐厅Id</param>

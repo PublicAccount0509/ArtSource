@@ -171,6 +171,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ets.SingleApi.Caches\Ets.SingleApi.Caches.csproj">
+      <Project>{c1bba4ef-a3c3-4cfb-bd51-50fb5d03eaae}</Project>
+      <Name>Ets.SingleApi.Caches</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">
       <Project>{53f8a27e-0e97-4407-a106-439274c98e97}</Project>
       <Name>Ets.SingleApi.Controllers</Name>
@@ -227,6 +231,7 @@
     <Content Include="config\castle\components\wapcontrollers.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="config\castle\components\caches.config" />
     <None Include="Properties\PublishProfiles\SingleApi.pubxml" />
   </ItemGroup>
   <PropertyGroup>
