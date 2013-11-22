@@ -178,7 +178,12 @@
             DateTime deliveryTime;
             if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, requst.DeliveryTime), out deliveryTime))
             {
-                deliveryTime = DateTime.Parse(deliveryDate);
+                deliveryTime = (requst.DeliveryDate ?? DateTime.Now);
+            }
+
+            if (requst.DeliveryType == ControllersCommon.QuickDeliveryType)
+            {
+                deliveryTime = (requst.DeliveryDate ?? DateTime.Now);
             }
 
             var dishList = requst.DishList ?? new List<AddWaiMaiOrderDish>();

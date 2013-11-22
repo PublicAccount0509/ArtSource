@@ -84,6 +84,58 @@
         }
 
         /// <summary>
+        /// 立即送餐
+        /// </summary>
+        /// <value>
+        /// 立即送餐
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int QuickDeliveryType
+        {
+            get
+            {
+                var quickDeliveryMethod = ConfigurationManager.AppSettings["QuickDeliveryType"] ?? "1";
+                int result;
+                if (!int.TryParse(quickDeliveryMethod, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 按照用户指定时间送餐
+        /// </summary>
+        /// <value>
+        /// 按照用户指定时间送餐
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int AssignDeliveryType
+        {
+            get
+            {
+                var assignDeliveryMethod = ConfigurationManager.AppSettings["AssignDeliveryType"] ?? "2";
+                int result;
+                if (!int.TryParse(assignDeliveryMethod, out result))
+                {
+                    result = 2;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 是否开启权限验证
         /// </summary>
         /// <value>

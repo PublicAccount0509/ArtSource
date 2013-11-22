@@ -386,6 +386,16 @@
                 };
             }
 
+            var deliveryTime = this.GetDeliveryDate(parameter.DeliveryMethodId, parameter.DeliveryType, parameter.DeliveryTime, supplierEntity.DeliveryTime);
+            if (deliveryTime <= DateTime.Now)
+            {
+                return new DetailServicesResult<AddWaiMaiOrderModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode,
+                    Result = new AddWaiMaiOrderModel()
+                };
+            }
+
             var customerId = customer.CustomerId;
             var dishList = parameter.DishList ?? new List<AddWaiMaiOrderDishModel>();
             var supplierDishIdList = dishList.Select(p => p.SupplierDishId).ToList();
@@ -444,7 +454,7 @@
                 IsPaId = false,
                 IsRating = false,
                 Cancelled = false,
-                DeliveryDate = this.GetDeliveryDate(parameter.DeliveryMethodId, parameter.DeliveryType, parameter.DeliveryTime, supplierEntity.DeliveryTime),
+                DeliveryDate = deliveryTime,
                 Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == parameter.Template),
                 InvoiceRequired = parameter.InvoiceRequired,
                 InvoiceTitle = parameter.InvoiceTitle,
