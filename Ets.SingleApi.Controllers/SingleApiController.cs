@@ -72,6 +72,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [HttpGet]
         public TestApiResponse Test()
         {
             return new TestApiResponse

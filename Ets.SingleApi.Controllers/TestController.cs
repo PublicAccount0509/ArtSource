@@ -2,8 +2,6 @@
 {
     using System.Web.Http;
 
-    using Ets.SingleApi.Model.Controller;
-
     /// <summary>
     /// 类名称：TestController
     /// 命名空间：Ets.SingleApi.Controllers
@@ -14,23 +12,23 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class TestController : SingleApiController
+    public class TestController : ApiController
     {
         /// <summary>
-        /// 测试方法
+        /// 测试
         /// </summary>
         /// <returns>
-        /// The ApiResponse
+        /// 返回测试结果
         /// </returns>
         /// 创建者：周超
-        /// 创建日期：10/28/2013 6:04 PM
+        /// 创建日期：11/21/2013 9:54 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ApiResponse Test()
+        public string Test()
         {
-            return new ApiResponse();
+            return "Hello World!";
         }
     }
 }

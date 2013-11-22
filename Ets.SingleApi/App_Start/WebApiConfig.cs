@@ -26,6 +26,12 @@
         /// ----------------------------------------------------------------------------------------
         public static void Register(HttpConfiguration config)
         {
+            //首页
+            config.Routes.MapHttpRoute(
+                 "Home",
+                 "",
+                 new { controller = "Test", action = "Test", httpMethod = new HttpMethodConstraint("GET") });
+
             //搜索、修改、删除、创建资源
             config.Routes.MapHttpRoute(
                  "GET/PUT/DELETE",
