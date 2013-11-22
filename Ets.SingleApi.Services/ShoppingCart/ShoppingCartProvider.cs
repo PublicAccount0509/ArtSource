@@ -167,6 +167,7 @@
                   .Select(p => new
                   {
                       UserId = p.LoginId,
+                      p.CustomerId,
                       Telephone = p.Mobile,
                       p.Email,
                       p.Gender,
@@ -188,6 +189,7 @@
                 UserId = tempCustomer.UserId ?? 0,
                 Telephone = tempCustomer.Telephone,
                 Email = tempCustomer.Email,
+                CustomerId = tempCustomer.CustomerId,
                 Gender = string.Equals(tempCustomer.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? "1" : "0",
                 Name = string.Format("{0}{1}", tempCustomer.Forename, tempCustomer.Surname)
             };

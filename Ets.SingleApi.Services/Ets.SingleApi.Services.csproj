@@ -87,6 +87,7 @@
     <Compile Include="OrderNumber\TangShiOrderNumber.cs" />
     <Compile Include="OrderServices.cs" />
     <Compile Include="OrderNumber\IOrderNumber.cs" />
+    <Compile Include="Order\IOrderProvider.cs" />
     <Compile Include="Order\IUserOrders.cs" />
     <Compile Include="OrderNumber\OrderNumberResult.cs" />
     <Compile Include="Order\UserOrdersResult.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Order\UserDingTaiOrders.cs" />
     <Compile Include="Order\UserAllOrders.cs" />
     <Compile Include="OrderNumber\WaiMaiOrderNumber.cs" />
+    <Compile Include="Order\WaiMaiOrderProvider.cs" />
     <Compile Include="PaymentServices.cs" />
     <Compile Include="Payment\IPayment.cs" />
     <Compile Include="Payment\IPaymentData.cs" />

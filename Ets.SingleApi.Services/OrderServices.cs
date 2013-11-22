@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -54,6 +55,26 @@
         private readonly INHibernateRepository<DeliveryEntity> deliveryEntityRepository;
 
         /// <summary>
+        /// 字段paymentEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/22/2013 3:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<PaymentEntity> paymentEntityRepository;
+
+        /// <summary>
+        /// 字段deliveryAddressEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/22/2013 3:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
+
+        /// <summary>
         /// 字段waiMaiOrderDetailServices
         /// </summary>
         /// 创建者：周超
@@ -79,6 +100,8 @@
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
+        /// <param name="paymentEntityRepository">The paymentEntityRepository</param>
+        /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
         /// <param name="waiMaiOrderDetailServices">The waiMaiOrderDetailServices</param>
         /// <param name="orderNumberList">The orderNumberList</param>
         /// 创建者：周超
@@ -90,12 +113,16 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
+            INHibernateRepository<PaymentEntity> paymentEntityRepository,
+            INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
             IWaiMaiOrderDetailServices waiMaiOrderDetailServices,
             List<IOrderNumber> orderNumberList)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
+            this.paymentEntityRepository = paymentEntityRepository;
+            this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
             this.waiMaiOrderDetailServices = waiMaiOrderDetailServices;
             this.orderNumberList = orderNumberList;
         }
@@ -115,7 +142,8 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<WaiMaiOrderDetailModel> GetWaiMaiOrder(int orderId, int userId)
         {
-            if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == userId))
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.LoginId == userId).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault();
+            if (customer == null)
             {
                 return new ServicesResult<WaiMaiOrderDetailModel>
                 {
@@ -124,7 +152,11 @@
                 };
             }
 
-            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.OrderNumber == orderId))
+            var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
+                                  where entity.OrderNumber == orderId && entity.CustomerId == customer.CustomerId
+                                  select entity).FirstOrDefault();
+
+            if (deliveryEntity == null)
             {
                 return new ServicesResult<WaiMaiOrderDetailModel>
                 {
@@ -133,11 +165,63 @@
                 };
             }
 
-            var result = this.waiMaiOrderDetailServices.GetOrder(orderId, userId);
+            var waiMaiOrderDishList = deliveryEntity.OrderList.Select(p => new WaiMaiOrderDishModel
+            {
+                SupplierDishId = p.SupplierDishId,
+                SupplierDishName = p.SupplierDishName,
+                Price = p.SupplierPrice,
+                Quantity = p.Quantity
+            }).ToList();
+
+            var supplierId = deliveryEntity.SupplierId;
+            var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<WaiMaiOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+
+            decimal baIduLat;
+            decimal.TryParse(supplierEntity.BaIduLat, out baIduLat);
+            decimal baIduLong;
+            decimal.TryParse(supplierEntity.BaIduLong, out baIduLong);
+
+            var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryEntity.DeliveryId);
+            var deliveryAddressEntity = this.deliveryAddressEntityRepository.EntityQueryable.FirstOrDefault(p => p.DeliveryAddressId == deliveryEntity.DeliveryAddressId);
+            var result = new WaiMaiOrderDetailModel
+            {
+                OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
+                OrderTypeId = (int)OrderType.WaiMai,
+                OrderStatusId = deliveryEntity.OrderStatusId,
+                DateReserved = deliveryEntity.DateAdded,
+                DeliveryTime = deliveryEntity.DeliveryDate,
+                DeliveryInstruction = deliveryEntity.DeliveryInstruction,
+                CustomerTotal = deliveryEntity.CustomerTotal,
+                Total = deliveryEntity.Total,
+                Coupon = Math.Max(((deliveryEntity.Total ?? 0) - (deliveryEntity.CustomerTotal ?? 0)), 0),
+                RealSupplierType = deliveryEntity.RealSupplierType,
+                SupplierId = supplierEntity.SupplierId,
+                SupplierName = supplierEntity.SupplierName,
+                SupplierTelephone = supplierEntity.Telephone,
+                SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
+                SupplierBaIduLat = baIduLat,
+                SupplierBaIduLong = baIduLong,
+                DeliveryMethodId = deliveryEntity.DeliveryMethodId,
+                InvoiceTitle = deliveryEntity.InvoiceTitle,
+                IsPaid = deliveryEntity.IsPaId,
+                DishList = waiMaiOrderDishList,
+                PaymentMethodId = paymentEntity == null ? (int?)null : paymentEntity.PaymentMethodId,
+                IsConfirm = paymentEntity != null,
+                DeliveryAddress = deliveryAddressEntity == null ? string.Empty : string.Format("{0}{1}", deliveryAddressEntity.Address1, deliveryAddressEntity.Address2),
+            };
+
             return new ServicesResult<WaiMaiOrderDetailModel>
             {
-                StatusCode = result.StatusCode,
-                Result = result.Result
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = result
             };
         }
 
