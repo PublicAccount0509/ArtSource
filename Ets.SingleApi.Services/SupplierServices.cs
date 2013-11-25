@@ -579,7 +579,10 @@
             }
 
             var queryable = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
+                             from loginEntity in this.loginEntityRepository.EntityQueryable 
                              where supplierEntity.SupplierGroupId == parameter.SupplierGroupId
+                             && supplierEntity.Login.LoginId == loginEntity.LoginId
+                             && loginEntity.IsEnabled
                              select new
                              {
                                  supplierEntity.SupplierId,
