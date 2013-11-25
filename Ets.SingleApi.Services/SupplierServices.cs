@@ -310,7 +310,7 @@
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
             {
-                supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId);
+                supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled);
             }
 
             var tempDiningPurposeList = this.supplierDiningPurposeEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
@@ -579,10 +579,8 @@
             }
 
             var queryable = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
-                             from loginEntity in this.loginEntityRepository.EntityQueryable 
                              where supplierEntity.SupplierGroupId == parameter.SupplierGroupId
-                             && supplierEntity.Login.LoginId == loginEntity.LoginId
-                             && loginEntity.IsEnabled
+                             && supplierEntity.Login.IsEnabled
                              select new
                              {
                                  supplierEntity.SupplierId,
