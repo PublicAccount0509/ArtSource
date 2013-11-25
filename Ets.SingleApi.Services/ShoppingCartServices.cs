@@ -287,6 +287,7 @@
                     ? shoppingPrice + packagingFee + fixedDeliveryCharge
                     : shoppingPrice + packagingFee;
 
+            order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
             order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
@@ -388,6 +389,7 @@
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
             order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
@@ -493,6 +495,7 @@
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
             order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
@@ -618,6 +621,7 @@
             }
 
             shoppingCartOrder.DeliveryDateTime = deliveryTime;
+            shoppingCartOrder.TotalPrice = order.TotalPrice;
             shoppingCartOrder.FixedDeliveryFee = order.FixedDeliveryFee;
             shoppingCartOrder.PackagingFee = order.PackagingFee;
             shoppingCartOrder.TotalQuantity = order.TotalQuantity;
@@ -706,6 +710,7 @@
             var customerTotal = total - coupon;
 
             order.DeliveryMethodId = deliveryMethodId;
+            order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
             order.TotalQuantity = shoppingList.Sum(p => p.Quantity);

@@ -89,5 +89,51 @@
                 Result = result
             };
         }
+
+        /// <summary>
+        /// 获取菜品列表
+        /// </summary>
+        /// <returns>
+        /// 返回菜品列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/14 21:45
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<Cuisine> CityCuisineList(int cityId)
+        {
+            var list = this.cuisineServices.GetCityCuisineList(cityId);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<Cuisine>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<Cuisine>()
+                };
+            }
+
+            var result = list.Result.Select(p => new Cuisine
+            {
+                CuisineId = p.CuisineId,
+                CuisineNo = p.CuisineNo ?? 0,
+                CuisineName = (p.CuisineName ?? string.Empty),
+                SupplierCount = p.SupplierCount
+            }).ToList();
+
+            return new ListResponse<Cuisine>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                ResultTotalCount = list.ResultTotalCount,
+                Result = result
+            };
+        }
     }
 }

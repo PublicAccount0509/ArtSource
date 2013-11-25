@@ -16,6 +16,19 @@
     public class ShoppingCartItem
     {
         /// <summary>
+        /// 设置或取得类目Id
+        /// </summary>
+        /// <value>
+        /// 类目Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 5:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int CategoryId { get; set; }
+
+        /// <summary>
         /// 设置或取得商品Id
         /// </summary>
         /// <value>

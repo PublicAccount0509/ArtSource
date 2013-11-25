@@ -30,18 +30,57 @@
         private readonly INHibernateRepository<CuisineEntity> cuisineEntityRepository;
 
         /// <summary>
+        /// 字段supplierCuisineEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/25/2013 3:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository;
+
+        /// <summary>
+        /// 字段supplierBusinessAreaEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/25/2013 3:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierBusinessAreaEntity> supplierBusinessAreaEntityRepository;
+
+        /// <summary>
+        /// 字段regionEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/25/2013 3:27 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<RegionEntity> regionEntityRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CuisineServices" /> class.
         /// </summary>
         /// <param name="cuisineEntityRepository">The cuisineEntityRepository</param>
+        /// <param name="supplierCuisineEntityRepository">The supplierCuisineEntityRepository</param>
+        /// <param name="supplierBusinessAreaEntityRepository">The supplierBusinessAreaEntityRepository</param>
+        /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：2013/10/13 15:23
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public CuisineServices(
-            INHibernateRepository<CuisineEntity> cuisineEntityRepository)
+            INHibernateRepository<CuisineEntity> cuisineEntityRepository,
+            INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository,
+            INHibernateRepository<SupplierBusinessAreaEntity> supplierBusinessAreaEntityRepository,
+            INHibernateRepository<RegionEntity> regionEntityRepository)
         {
             this.cuisineEntityRepository = cuisineEntityRepository;
+            this.supplierCuisineEntityRepository = supplierCuisineEntityRepository;
+            this.supplierBusinessAreaEntityRepository = supplierBusinessAreaEntityRepository;
+            this.regionEntityRepository = regionEntityRepository;
         }
 
         /// <summary>
@@ -73,6 +112,53 @@
                                 CuisineNo = p.CuisineNo,
                                 SupplierCount = p.Count
                             }).ToList();
+
+            return new ServicesResultList<CuisineModel> { ResultTotalCount = result.Count, Result = result };
+        }
+
+        /// <summary>
+        /// 获取菜品信息列表
+        /// </summary>
+        /// <param name="cityId">城市Id</param>
+        /// <returns>
+        /// 返回菜品信息列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/13 15:19
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<CuisineModel> GetCityCuisineList(int cityId)
+        {
+            var cuisineList = (from regionEntity in this.regionEntityRepository.EntityQueryable
+                               from supplierBusinessArea in this.supplierBusinessAreaEntityRepository.EntityQueryable
+                               from supplierCuisine in this.supplierCuisineEntityRepository.EntityQueryable
+                               from cuisine in this.cuisineEntityRepository.EntityQueryable
+                               where (regionEntity.CityId == cityId || regionEntity.ProvinceId == cityId)
+                               && supplierBusinessArea.BusinessArea.RegionCode == regionEntity.Code
+                               && supplierCuisine.Supplier.SupplierId == supplierBusinessArea.Supplier.SupplierId
+                               && supplierCuisine.Cuisine.CuisineId == cuisine.CuisineId
+                               select new
+                                                  {
+                                                      cuisine.CuisineId,
+                                                      cuisine.CuisineName,
+                                                      cuisine.CuisineNo,
+                                                      supplierCuisine.Supplier.SupplierId
+                                                  }).ToList();
+
+
+            var cuisineIdList = cuisineList.Select(p => p.CuisineId).Distinct().ToList();
+            var result = (from cuisineId in cuisineIdList
+                          let cuisine = cuisineList.FirstOrDefault(p => p.CuisineId == cuisineId)
+                          where cuisine != null
+                          let count = cuisineList.Where(p => p.CuisineId == cuisineId).Select(p => p.SupplierId).Distinct().Count()
+                          select new CuisineModel
+                              {
+                                  CuisineId = cuisine.CuisineId,
+                                  CuisineName = cuisine.CuisineName,
+                                  CuisineNo = cuisine.CuisineNo,
+                                  SupplierCount = count
+                              }).ToList();
 
             return new ServicesResultList<CuisineModel> { ResultTotalCount = result.Count, Result = result };
         }
