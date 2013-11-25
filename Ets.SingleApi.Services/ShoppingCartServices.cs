@@ -141,58 +141,25 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> CreateShoppingCart(int supplierId, int? userId)
+        public ServicesResult<string> CreateShoppingCart(int supplierId, int? userId)
         {
             var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<string>
                     {
                         StatusCode = getShoppingCartResult.StatusCode,
-                        Result = new ShoppingCartModel()
+                        Result = string.Empty
                     };
             }
 
             var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(supplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<string>
                 {
                     StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
-            var shoppingCartLinkId = Guid.NewGuid().ToString();
-            this.shoppingCartProvider.SaveShoppingCartLink(
-                new ShoppingCartLink
-                    {
-                        ShoppingCartLinkId = shoppingCartLinkId,
-                        ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId,
-                        SupplierId = getShoppingCartSupplierResult.Result.SupplierId,
-                        UserId = userId ?? 0
-                    });
-
-            if (userId == null)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                    {
-                        Result = new ShoppingCartModel
-                            {
-                                Id = shoppingCartLinkId,
-                                ShoppingCart = getShoppingCartResult.Result,
-                                Supplier = getShoppingCartSupplierResult.Result
-                            }
-                    };
-            }
-
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(userId.Value);
-            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    Result = string.Empty
                 };
             }
 
@@ -200,27 +167,45 @@
             var saveShoppingCartOrderResult = this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<string>
                 {
                     StatusCode = saveShoppingCartOrderResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    Result = string.Empty
                 };
             }
 
-            var shoppingCart = getShoppingCartResult.Result;
-            var supplier = getShoppingCartSupplierResult.Result;
-            var customer = getShoppingCartCustomerResult.Result;
-            var order = shoppingCartOrder;
-            return new ServicesResult<ShoppingCartModel>
-            {
-                Result = new ShoppingCartModel
+            var shoppingCartLinkId = Guid.NewGuid().ToString();
+            var shoppingCartLink = new ShoppingCartLink
                 {
-                    Id = shoppingCartLinkId,
-                    ShoppingCart = shoppingCart,
-                    Supplier = supplier,
-                    Customer = customer,
-                    Order = order
-                }
+                    ShoppingCartLinkId = shoppingCartLinkId,
+                    ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId,
+                    SupplierId = getShoppingCartSupplierResult.Result.SupplierId,
+                    OrderId = shoppingCartOrder.Id,
+                    UserId = userId ?? 0
+                };
+            this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
+
+            if (userId == null)
+            {
+                return new ServicesResult<string>
+                    {
+                        Result = shoppingCartLinkId
+                    };
+            }
+
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(userId.Value);
+            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = getShoppingCartCustomerResult.StatusCode,
+                    Result = string.Empty
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = shoppingCartLinkId
             };
         }
 
@@ -237,15 +222,14 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> SaveShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> SaveShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartLinkResult.StatusCode
                 };
             }
 
@@ -253,46 +237,32 @@
             var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartResult.StatusCode
                 };
             }
 
             var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
-            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartSupplierResult.StatusCode
                 };
             }
 
             var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
 
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
-            var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var shoppingList = shoppingCartItemList;
             shoppingCart.ShoppingList = shoppingList;
@@ -324,16 +294,9 @@
             order.CustomerTotalFee = customerTotal;
 
             this.shoppingCartProvider.SaveShoppingCartOrder(order);
-            return new ServicesResult<ShoppingCartModel>
+            return new ServicesResult<bool>
             {
-                Result = new ShoppingCartModel
-                {
-                    Id = id,
-                    ShoppingCart = shoppingCart,
-                    Supplier = supplier,
-                    Customer = customer,
-                    Order = order
-                }
+                Result = true
             };
         }
 
@@ -350,15 +313,14 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> AddShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> AddShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartLinkResult.StatusCode
                 };
             }
 
@@ -366,48 +328,34 @@
             var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartResult.StatusCode
                 };
             }
 
             var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
-            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartSupplierResult.StatusCode
                 };
             }
 
             var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
 
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
-            var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
-            var shoppingList = getShoppingCartResult.Result.ShoppingList ?? new List<ShoppingCartItem>();
+            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
                 var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId);
@@ -433,33 +381,26 @@
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
 
-            var total = order.DeliveryMethodId != null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                    ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                    : shoppingPrice + packagingFee;
-            var customerTotal = order.DeliveryMethodId != null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                    ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                    : shoppingPrice + packagingFee;
+            var deliveryMethodId = order.DeliveryMethodId;
+            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                        ? shoppingPrice + packagingFee + fixedDeliveryCharge
+                        : shoppingPrice + packagingFee;
+            var coupon = 0;
+            var customerTotal = total - coupon;
 
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
             order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
             order.TotalFee = total;
             order.CustomerTotalFee = customerTotal;
+            order.CouponFee = coupon;
 
             this.shoppingCartProvider.SaveShoppingCartOrder(order);
-            return new ServicesResult<ShoppingCartModel>
+            return new ServicesResult<bool>
             {
-                Result = new ShoppingCartModel
-                {
-                    Id = id,
-                    ShoppingCart = shoppingCart,
-                    Supplier = supplier,
-                    Customer = customer,
-                    Order = order
-                }
+                Result = true
             };
         }
-
 
         /// <summary>
         /// 删除商品信息
@@ -474,15 +415,14 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> DeleteShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> DeleteShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartLinkResult.StatusCode
                 };
             }
 
@@ -490,48 +430,34 @@
             var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartResult.StatusCode
                 };
             }
 
             var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
-            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartSupplierResult.StatusCode
                 };
             }
 
             var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
 
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
-            var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
-            var shoppingList = getShoppingCartResult.Result.ShoppingList ?? new List<ShoppingCartItem>();
+            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
                 var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId);
@@ -560,30 +486,24 @@
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
 
-            var total = order.DeliveryMethodId != null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                    ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                    : shoppingPrice + packagingFee;
-            var customerTotal = order.DeliveryMethodId != null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                    ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                    : shoppingPrice + packagingFee;
+            var deliveryMethodId = order.DeliveryMethodId;
+            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                        ? shoppingPrice + packagingFee + fixedDeliveryCharge
+                        : shoppingPrice + packagingFee;
+            var coupon = 0;
+            var customerTotal = total - coupon;
 
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
             order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
             order.TotalFee = total;
             order.CustomerTotalFee = customerTotal;
+            order.CouponFee = coupon;
 
             this.shoppingCartProvider.SaveShoppingCartOrder(order);
-            return new ServicesResult<ShoppingCartModel>
+            return new ServicesResult<bool>
             {
-                Result = new ShoppingCartModel
-                {
-                    Id = id,
-                    ShoppingCart = shoppingCart,
-                    Supplier = supplier,
-                    Customer = customer,
-                    Order = order
-                }
+                Result = true
             };
         }
 
@@ -600,75 +520,33 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> SaveShoppingCartCustomer(string id, int userId)
+        public ServicesResult<bool> SaveShoppingCartCustomer(string id, int userId)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartLinkResult.StatusCode
                 };
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
-            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
-            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
             var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(userId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartCustomerResult.StatusCode
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
-            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
-            var shoppingCart = getShoppingCartResult.Result;
-            var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
-            var order = getShoppingCartOrderResult.Result;
-
+            shoppingCartLink.UserId = customer.UserId;
             this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
-            return new ServicesResult<ShoppingCartModel>
+            return new ServicesResult<bool>
             {
-                Result = new ShoppingCartModel
-                {
-                    Id = id,
-                    ShoppingCart = shoppingCart,
-                    Supplier = supplier,
-                    Customer = customer,
-                    Order = order
-                }
+                Result = true
             };
         }
 
@@ -685,62 +563,37 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> SaveShoppingCartOrder(string id, ShoppingCartOrder shoppingCartOrder)
+        public ServicesResult<bool> SaveShoppingCartOrder(string id, ShoppingCartOrder shoppingCartOrder)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartLinkResult.StatusCode
                 };
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
-            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
             var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = new ShoppingCartModel()
-                };
-            }
-
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
-            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartSupplierResult.StatusCode
                 };
             }
 
             var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = new ShoppingCartModel()
+                    StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
 
-            var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
-            var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
 
             var deliveryDate = (order.DeliveryDate ?? DateTime.Now).ToString("yyyy-MM-dd");
@@ -758,17 +611,9 @@
             var deliveryTime = this.GetDeliveryDate(order.DeliveryMethodId ?? 0, order.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
             if (deliveryTime <= DateTime.Now)
             {
-                return new ServicesResult<ShoppingCartModel>
+                return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode,
-                    Result = new ShoppingCartModel
-                    {
-                        Id = id,
-                        ShoppingCart = shoppingCart,
-                        Supplier = supplier,
-                        Customer = customer,
-                        Order = shoppingCartOrder
-                    }
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
                 };
             }
 
@@ -780,16 +625,98 @@
             shoppingCartOrder.CustomerTotalFee = order.CustomerTotalFee;
             this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
 
-            return new ServicesResult<ShoppingCartModel>
+            return new ServicesResult<bool>
             {
-                Result = new ShoppingCartModel
+                Result = true
+            };
+        }
+
+        /// <summary>
+        /// 更改购物车送餐方式
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string id, int deliveryMethodId)
+        {
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
                 {
-                    Id = id,
-                    ShoppingCart = shoppingCart,
-                    Supplier = supplier,
-                    Customer = customer,
-                    Order = shoppingCartOrder
-                }
+                    StatusCode = getShoppingCartLinkResult.StatusCode
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartResult.StatusCode
+                };
+            }
+
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartSupplierResult.StatusCode
+                };
+            }
+
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode
+                };
+            }
+
+            var shoppingCart = getShoppingCartResult.Result;
+            var supplier = getShoppingCartSupplierResult.Result;
+            var order = getShoppingCartOrderResult.Result;
+            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
+            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
+            {
+                PackagingFee = p.PackagingFee,
+                Price = p.Price,
+                Quantity = p.Quantity
+            }).ToList());
+
+            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
+                                          ? 0
+                                         : supplier.FixedDeliveryCharge;
+
+            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                        ? shoppingPrice + packagingFee + fixedDeliveryCharge
+                        : shoppingPrice + packagingFee;
+            var coupon = 0;
+            var customerTotal = total - coupon;
+
+            order.DeliveryMethodId = deliveryMethodId;
+            order.FixedDeliveryFee = fixedDeliveryCharge;
+            order.PackagingFee = packagingFee;
+            order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
+            order.TotalFee = total;
+            order.CustomerTotalFee = customerTotal;
+            order.CouponFee = coupon;
+
+            this.shoppingCartProvider.SaveShoppingCartOrder(order);
+            return new ServicesResult<bool>
+            {
+                Result = true
             };
         }
 

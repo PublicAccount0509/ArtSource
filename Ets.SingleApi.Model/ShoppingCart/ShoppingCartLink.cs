@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Model
 {
+    using System;
+
     /// <summary>
     /// 类名称：ShoppingCartLink
     /// 命名空间：Ets.SingleApi.Model
@@ -10,6 +12,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
+    [Serializable]
     public class ShoppingCartLink
     {
         /// <summary>

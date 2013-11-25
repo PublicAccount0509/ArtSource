@@ -15,6 +15,19 @@
     public class ShoppingCartShoppingRequst : ApiRequst
     {
         /// <summary>
+        /// Gets or sets the Order of ShoppingCartShoppingRequst
+        /// </summary>
+        /// <value>
+        /// The Order
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/25/2013 11:14 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ShoppingCartOrder Order { get; set; }
+
+        /// <summary>
         /// Gets or sets the ShoppingCartItemList of ShoppingCartShoppingRequst
         /// </summary>
         /// <value>

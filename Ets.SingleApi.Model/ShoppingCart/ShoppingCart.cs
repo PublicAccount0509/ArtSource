@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Model
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -12,6 +13,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
+    [Serializable]
     public class ShoppingCart
     {
         /// <summary>

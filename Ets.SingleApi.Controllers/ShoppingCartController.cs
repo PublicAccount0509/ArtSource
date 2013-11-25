@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Http;
 
     using Ets.SingleApi.Controllers.IServices;
@@ -99,7 +100,7 @@
         public Response<ShoppingCartModel> Create(int supplierId, int? userId)
         {
             var createShoppingCartResult = this.shoppingCartServices.CreateShoppingCart(supplierId, userId);
-            if (createShoppingCartResult.Result == null)
+            if (createShoppingCartResult.Result.IsEmptyOrNull())
             {
                 return new Response<ShoppingCartModel>
                 {
@@ -111,13 +112,14 @@
                 };
             }
 
+            var result = this.shoppingCartServices.GetShoppingCart(createShoppingCartResult.Result);
             return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                         {
-                            StatusCode = createShoppingCartResult.StatusCode
+                            StatusCode = result.StatusCode
                         },
-                    Result = createShoppingCartResult.Result
+                    Result = result.Result
                 };
         }
 
@@ -138,25 +140,26 @@
         public Response<ShoppingCartModel> Customer(string id, int userId)
         {
             var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartCustomer(id, userId);
-            if (saveShoppingCartCustomerResult.Result == null)
+            if (!saveShoppingCartCustomerResult.Result)
             {
                 return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = saveShoppingCartCustomerResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingCartCustomerResult.StatusCode
+                        StatusCode = saveShoppingCartCustomerResult.StatusCode
                     },
                     Result = new ShoppingCartModel()
                 };
             }
 
+            var result = this.shoppingCartServices.GetShoppingCart(id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = saveShoppingCartCustomerResult.StatusCode
+                    StatusCode = result.StatusCode
                 },
-                Result = saveShoppingCartCustomerResult.Result
+                Result = result.Result
             };
         }
 
@@ -176,7 +179,7 @@
         [HttpPost]
         public Response<ShoppingCartModel> Shopping(string id, ShoppingCartShoppingRequst requst)
         {
-            if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
+            if (requst == null)
             {
                 return new Response<ShoppingCartModel>
                 {
@@ -187,26 +190,28 @@
                 };
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(id, requst.ShoppingCartItemList);
-            if (saveShoppingItemResult.Result == null)
+            var shoppingCartItemList = requst.ShoppingCartItemList ?? new List<ShoppingCartItem>();
+            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(id, shoppingCartItemList);
+            if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = saveShoppingItemResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingItemResult.StatusCode
+                        StatusCode = saveShoppingItemResult.StatusCode
                     },
                     Result = new ShoppingCartModel()
                 };
             }
 
+            var result = this.shoppingCartServices.GetShoppingCart(id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = saveShoppingItemResult.StatusCode
+                    StatusCode = result.StatusCode
                 },
-                Result = saveShoppingItemResult.Result
+                Result = result.Result
             };
         }
 
@@ -238,25 +243,26 @@
             }
 
             var saveShoppingItemResult = this.shoppingCartServices.AddShoppingItem(id, requst.ShoppingCartItemList);
-            if (saveShoppingItemResult.Result == null)
+            if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = saveShoppingItemResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingItemResult.StatusCode
+                        StatusCode = saveShoppingItemResult.StatusCode
                     },
                     Result = new ShoppingCartModel()
                 };
             }
 
+            var result = this.shoppingCartServices.GetShoppingCart(id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = saveShoppingItemResult.StatusCode
+                    StatusCode = result.StatusCode
                 },
-                Result = saveShoppingItemResult.Result
+                Result = result.Result
             };
         }
 
@@ -288,25 +294,26 @@
             }
 
             var saveShoppingItemResult = this.shoppingCartServices.DeleteShoppingItem(id, requst.ShoppingCartItemList);
-            if (saveShoppingItemResult.Result == null)
+            if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = saveShoppingItemResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingItemResult.StatusCode
+                        StatusCode = saveShoppingItemResult.StatusCode
                     },
                     Result = new ShoppingCartModel()
                 };
             }
 
+            var result = this.shoppingCartServices.GetShoppingCart(id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = saveShoppingItemResult.StatusCode
+                    StatusCode = result.StatusCode
                 },
-                Result = saveShoppingItemResult.Result
+                Result = result.Result
             };
         }
 
@@ -356,25 +363,66 @@
                 };
 
             var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingCartOrder(id, order);
-            if (saveShoppingItemResult.Result == null)
+            if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = saveShoppingItemResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingItemResult.StatusCode
+                        StatusCode = saveShoppingItemResult.StatusCode
                     },
                     Result = new ShoppingCartModel()
                 };
             }
 
+            var result = this.shoppingCartServices.GetShoppingCart(id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = saveShoppingItemResult.StatusCode
+                    StatusCode = result.StatusCode
                 },
-                Result = saveShoppingItemResult.Result
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存订单信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="deliveryMethodId">取餐方式</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<ShoppingCartModel> SaveDeliveryMethod(string id, int deliveryMethodId)
+        {
+            var saveShoppingCartOrderDeliveryMethodResult = this.shoppingCartServices.SaveShoppingCartOrderDeliveryMethod(id, deliveryMethodId);
+            if (!saveShoppingCartOrderDeliveryMethodResult.Result)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingCartOrderDeliveryMethodResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var result = this.shoppingCartServices.GetShoppingCart(id);
+            return new Response<ShoppingCartModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
     }
