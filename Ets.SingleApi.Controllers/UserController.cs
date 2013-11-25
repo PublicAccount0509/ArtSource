@@ -60,16 +60,17 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ExistResponse Exist(ExistRequst requst)
+        public ListResponse<ExistResult> Exist(ExistRequst requst)
         {
             if (requst == null || requst.ExistList == null || requst.ExistList.Count == 0)
             {
-                return new ExistResponse
+                return new ListResponse<ExistResult>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
+                    },
+                    Result = new List<ExistResult>()
                 };
             }
 
@@ -84,7 +85,7 @@
             var existResult = this.usersServices.Exist(existParameterList);
             if (existResult == null)
             {
-                return new ExistResponse
+                return new ListResponse<ExistResult>
                 {
                     Message = new ApiMessage
                     {
@@ -96,7 +97,7 @@
 
             if (existResult.Result == null || existResult.Result.Count == 0)
             {
-                return new ExistResponse
+                return new ListResponse<ExistResult>
                 {
                     Message = new ApiMessage
                     {
@@ -114,7 +115,7 @@
                                     Login = p.Login
                                 }).ToList();
 
-            return new ExistResponse
+            return new ListResponse<ExistResult>
             {
                 Message = new ApiMessage
                 {
@@ -138,11 +139,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public GetUserResponse GetUser(int id)
+        public Response<Customer> GetUser(int id)
         {
             if (!this.ValidateUserId(id))
             {
-                return new GetUserResponse
+                return new Response<Customer>
                 {
                     Message = new ApiMessage
                     {
@@ -155,7 +156,7 @@
             var getUserResult = this.usersServices.GetUser(id);
             if (getUserResult.Result == null)
             {
-                return new GetUserResponse
+                return new Response<Customer>
                 {
                     Message = new ApiMessage
                     {
@@ -192,7 +193,7 @@
                     CustomerAddressList = customerAddressList
                 };
 
-            return new GetUserResponse
+            return new Response<Customer>
                 {
                     Message = new ApiMessage
                         {
@@ -217,16 +218,17 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public GetCustomerAddressResponse CustomerAddress(int id, int customerAddressId)
+        public Response<CustomerAddress> CustomerAddress(int id, int customerAddressId)
         {
             if (!this.ValidateUserId(id))
             {
-                return new GetCustomerAddressResponse
+                return new Response<CustomerAddress>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    }
+                    },
+                    Result = new CustomerAddress()
                 };
             }
 
@@ -248,7 +250,7 @@
                 AddressAlias = saveCustomerAddressResult.Result.AddressAlias
             };
 
-            return new GetCustomerAddressResponse
+            return new Response<CustomerAddress>
             {
                 Message = new ApiMessage
                 {
@@ -273,11 +275,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public CustomerAddressResponse CustomerAddress(int id, CustomerAddressRequst requst)
+        public Response<bool> CustomerAddress(int id, CustomerAddressRequst requst)
         {
             if (requst == null)
             {
-                return new CustomerAddressResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -288,7 +290,7 @@
 
             if (!this.ValidateUserId(id))
             {
-                return new CustomerAddressResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -297,7 +299,7 @@
                 };
             }
 
-            var saveCustomerAddressResult = this.usersServices.SaveCustomerAddress(id, new CustomerAddressParameter
+            var result = this.usersServices.SaveCustomerAddress(id, new CustomerAddressParameter
                 {
                     CustomerAddressId = requst.CustomerAddressId,
                     Name = (requst.Name ?? string.Empty).Trim(),
@@ -311,12 +313,13 @@
                     AddressDetail = (requst.AddressDetail ?? string.Empty).Trim()
                 });
 
-            return new CustomerAddressResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = saveCustomerAddressResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -335,11 +338,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public DeleteCustomerAddressResponse DeleteCustomerAddress(int id, List<int> customerAddressIdList)
+        public Response<bool> DeleteCustomerAddress(int id, List<int> customerAddressIdList)
         {
             if (customerAddressIdList == null || customerAddressIdList.Count == 0)
             {
-                return new DeleteCustomerAddressResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -350,7 +353,7 @@
 
             if (!this.ValidateUserId(id))
             {
-                return new DeleteCustomerAddressResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -359,13 +362,14 @@
                 };
             }
 
-            var deleteCustomerAddressResult = this.usersServices.DeleteCustomerAddress(id, customerAddressIdList);
-            return new DeleteCustomerAddressResponse
+            var result = this.usersServices.DeleteCustomerAddress(id, customerAddressIdList);
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = deleteCustomerAddressResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -384,11 +388,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public SetDefaultCustomerAddressResponse SetDefaultCustomerAddress(int id, int customerAddressId)
+        public Response<bool> SetDefaultCustomerAddress(int id, int customerAddressId)
         {
             if (!this.ValidateUserId(id))
             {
-                return new SetDefaultCustomerAddressResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -397,13 +401,14 @@
                 };
             }
 
-            var setDefaultCustomerAddressResult = this.usersServices.SetDefaultCustomerAddress(id, customerAddressId);
-            return new SetDefaultCustomerAddressResponse
+            var result = this.usersServices.SetDefaultCustomerAddress(id, customerAddressId);
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = setDefaultCustomerAddressResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -420,11 +425,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public RegisterUserResponse Register(RegisterUserRequst requst)
+        public Response<RegisterUserResult> Register(RegisterUserRequst requst)
         {
             if (requst == null)
             {
-                return new RegisterUserResponse
+                return new Response<RegisterUserResult>
                 {
                     Result = new RegisterUserResult(),
                     Message = new ApiMessage
@@ -446,7 +451,7 @@
 
             if (registerResult.Result == null)
             {
-                return new RegisterUserResponse
+                return new Response<RegisterUserResult>
                 {
                     Message = new ApiMessage
                     {
@@ -464,7 +469,7 @@
                 TokenType = (registerResult.Result.TokenType ?? string.Empty)
             };
 
-            return new RegisterUserResponse
+            return new Response<RegisterUserResult>
             {
                 Message = new ApiMessage
                 {
@@ -488,11 +493,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public FollowerSupplierListResponse FollowerSupplierList(int id)
+        public ListResponse<FollowerSupplier> FollowerSupplierList(int id)
         {
             if (!this.ValidateUserId(id))
             {
-                return new FollowerSupplierListResponse
+                return new ListResponse<FollowerSupplier>
                 {
                     Message = new ApiMessage
                     {
@@ -506,7 +511,7 @@
 
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new FollowerSupplierListResponse
+                return new ListResponse<FollowerSupplier>
                 {
                     Message = new ApiMessage
                     {
@@ -529,7 +534,7 @@
                     Telephone = (p.Telephone ?? string.Empty)
                 }).ToList();
 
-            return new FollowerSupplierListResponse
+            return new ListResponse<FollowerSupplier>
             {
                 Message = new ApiMessage
                 {
@@ -555,31 +560,27 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public IsFollowerSupplierResponse IsFollowerSupplier(int id, int supplierId)
+        public Response<bool> IsFollowerSupplier(int id, int supplierId)
         {
             if (!this.ValidateUserId(id))
             {
-                return new IsFollowerSupplierResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    },
-                    Result = new IsFollowerSupplierResult()
+                    }
                 };
             }
 
-            var isFollowerSupplierResult = this.usersServices.IsFollowerSupplier(id, supplierId);
-            return new IsFollowerSupplierResponse
+            var result = this.usersServices.IsFollowerSupplier(id, supplierId);
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = isFollowerSupplierResult.StatusCode
+                    StatusCode = result.StatusCode
                 },
-                Result = new IsFollowerSupplierResult
-                    {
-                        Follower = isFollowerSupplierResult.Result
-                    }
+                Result = result.Result
             };
         }
 
@@ -598,11 +599,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public AddFollowerSupplierResponse AddFollowerSupplier(int id, List<int> supplierIdList)
+        public Response<bool> AddFollowerSupplier(int id, List<int> supplierIdList)
         {
             if (supplierIdList == null || supplierIdList.Count == 0)
             {
-                return new AddFollowerSupplierResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -613,7 +614,7 @@
 
             if (!this.ValidateUserId(id))
             {
-                return new AddFollowerSupplierResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -622,13 +623,14 @@
                 };
             }
 
-            var addFollowerSupplierResult = this.usersServices.AddFollowerSupplier(id, supplierIdList);
-            return new AddFollowerSupplierResponse
+            var result = this.usersServices.AddFollowerSupplier(id, supplierIdList);
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = addFollowerSupplierResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -647,11 +649,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public DeleteFollowerSupplierResponse DeleteFollowerSupplier(int id, List<int> supplierIdList)
+        public Response<bool> DeleteFollowerSupplier(int id, List<int> supplierIdList)
         {
             if (supplierIdList == null || supplierIdList.Count == 0)
             {
-                return new DeleteFollowerSupplierResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -662,7 +664,7 @@
 
             if (!this.ValidateUserId(id))
             {
-                return new DeleteFollowerSupplierResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -671,13 +673,14 @@
                 };
             }
 
-            var addFollowerSupplierResult = this.usersServices.DeleteFollowerSupplier(id, supplierIdList);
-            return new DeleteFollowerSupplierResponse
+            var result = this.usersServices.DeleteFollowerSupplier(id, supplierIdList);
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = addFollowerSupplierResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -700,11 +703,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public UserOrderListResponse UserOrderList(int id, int orderType, int? orderStatus, bool? paidStatus, int pageSize, int? pageIndex)
+        public ListResponse<UserOrder> UserOrderList(int id, int orderType, int? orderStatus, bool? paidStatus, int pageSize, int? pageIndex)
         {
             if (!this.ValidateUserId(id))
             {
-                return new UserOrderListResponse
+                return new ListResponse<UserOrder>
                 {
                     Message = new ApiMessage
                     {
@@ -724,7 +727,7 @@
 
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new UserOrderListResponse
+                return new ListResponse<UserOrder>
                 {
                     Message = new ApiMessage
                     {
@@ -749,7 +752,7 @@
                 IsPaid = p.IsPaid ?? false
             }).ToList();
 
-            return new UserOrderListResponse
+            return new ListResponse<UserOrder>
             {
                 Message = new ApiMessage
                 {

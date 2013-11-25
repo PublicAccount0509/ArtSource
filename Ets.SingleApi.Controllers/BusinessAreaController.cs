@@ -56,12 +56,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public BusinessAreaListResponse BusinessAreaList(string parentCode)
+        public ListResponse<BusinessArea> BusinessAreaList(string parentCode)
         {
             var list = this.businessAreaServices.GetAllBusinessAreaList((parentCode ?? string.Empty).Trim());
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new BusinessAreaListResponse
+                return new ListResponse<BusinessArea>
                     {
                         Message = new ApiMessage
                             {
@@ -80,7 +80,7 @@
                         ParentCode = (p.ParentCode ?? string.Empty)
                     }).ToList();
 
-            return new BusinessAreaListResponse
+            return new ListResponse<BusinessArea>
                 {
                     Message = new ApiMessage
                     {

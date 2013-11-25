@@ -23,6 +23,16 @@
     public class ShoppingCartProvider : IShoppingCartProvider
     {
         /// <summary>
+        /// 字段loginEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/23/2013 11:22 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
+
+        /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -65,6 +75,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartProvider" /> class.
         /// </summary>
+        /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
@@ -75,11 +86,13 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ShoppingCartProvider(
+            INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
             IShoppingCartCacheServices shoppingCartCacheServices)
         {
+            this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
@@ -163,6 +176,22 @@
                 };
             }
 
+            var tempLogin = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == userId && p.IsEnabled)
+                .Select(p => new
+                {
+                    UserId = p.LoginId,
+                    p.Username
+                }).FirstOrDefault();
+
+            if (tempLogin == null)
+            {
+                return new ServicesResult<ShoppingCartCustomer>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = new ShoppingCartCustomer()
+                };
+            }
+
             var tempCustomer = this.customerEntityRepository.EntityQueryable.Where(p => p.LoginId == userId)
                   .Select(p => new
                   {
@@ -191,7 +220,8 @@
                 Email = tempCustomer.Email,
                 CustomerId = tempCustomer.CustomerId,
                 Gender = string.Equals(tempCustomer.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? "1" : "0",
-                Name = string.Format("{0}{1}", tempCustomer.Forename, tempCustomer.Surname)
+                Name = string.Format("{0}{1}", tempCustomer.Forename, tempCustomer.Surname),
+                Username = tempLogin.Username
             };
 
             this.shoppingCartCacheServices.SaveShoppingCartCustomer(customer);

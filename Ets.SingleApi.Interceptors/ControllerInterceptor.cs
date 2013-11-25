@@ -1,12 +1,9 @@
 ﻿namespace Ets.SingleApi.Interceptors
 {
-    using System;
-    using System.Web.Http;
     using System.Web.Http.Controllers;
 
     using Castle.DynamicProxy;
 
-    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -32,36 +29,8 @@
         /// ----------------------------------------------------------------------------------------
         public void Intercept(IInvocation invocation)
         {
-            var statusCode = (int)StatusCode.Succeed.Ok;
             this.WriteLog(invocation);
-            try
-            {
-                invocation.Proceed();
-            }
-            catch (HttpResponseException exception)
-            {
-                statusCode = (int)StatusCode.System.InvalidRequestUrl;
-                exception.WriteLog("Ets.SingleApi.Controllers");
-            }
-            catch (Exception exception)
-            {
-                statusCode = (int)StatusCode.System.InternalServerError;
-                exception.WriteLog("Ets.SingleApi.Controllers");
-            }
-
-            if (string.Equals(invocation.Method.ReturnType.Name, "void", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
-            if (invocation.ReturnValue == null)
-            {
-                var result = (InterceptorCommon.GetConstructor(invocation.Method.ReturnType) as ApiResponse) ?? new ApiResponse();
-                result.Message = new ApiMessage { StatusCode = statusCode };
-                invocation.ReturnValue = result;
-            }
-
-            InterceptorCommon.GetChildrenConstructor(invocation.ReturnValue);
+            invocation.Proceed();
         }
 
         /// <summary>

@@ -13,7 +13,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class WaiMaiOrderDetailModel
+    public class WaiMaiOrderDetailModel : IOrderDetailModel
     {
         /// <summary>
         /// 设置或取得订单号
@@ -29,19 +29,6 @@
         public int OrderId { get; set; }
 
         /// <summary>
-        /// 设置或取得订单类型Id
-        /// </summary>
-        /// <value>
-        /// 订单类型Id
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/20 15:45
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int? OrderTypeId { get; set; }
-
-        /// <summary>
         /// 设置或取得订单类型
         /// </summary>
         /// <value>
@@ -52,20 +39,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string OrderType { get; set; }
-
-        /// <summary>
-        /// 设置或取得订单状态Id
-        /// </summary>
-        /// <value>
-        /// 订单状态Id
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/20 15:45
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int? OrderStatusId { get; set; }
+        public int? OrderTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the OrderStatus of WaiMaiOrderModel
@@ -78,7 +52,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string OrderStatus { get; set; }
+        public int? OrderStatusId { get; set; }
 
         /// <summary>
         /// 设置或取得下单时间
@@ -91,7 +65,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime? DateReserved { get; set; }
+        public string DateReserved { get; set; }
 
         /// <summary>
         /// 设置或取得送餐时间
@@ -104,7 +78,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime? DeliveryTime { get; set; }
+        public string DeliveryTime { get; set; }
 
         /// <summary>
         /// 设置或取得订单备注
@@ -126,24 +100,11 @@
         /// 餐厅Id
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/23/2013 9:42 PM
+        /// 创建日期：2013/10/20 15:44
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int SupplierId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the real supplier.
-        /// </summary>
-        /// <value>
-        /// The type of the real supplier.
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/6/2013 11:13 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int? RealSupplierType { get; set; }
 
         /// <summary>
         /// 设置或取得餐厅名称
@@ -221,7 +182,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal? CustomerTotal { get; set; }
+        public string CustomerTotal { get; set; }
 
         /// <summary>
         /// 设置或取得折扣
@@ -234,7 +195,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal? Commission { get; set; }
+        public string Commission { get; set; }
 
         /// <summary>
         /// 设置或取得优惠
@@ -247,7 +208,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal? Coupon { get; set; }
+        public string Coupon { get; set; }
 
         /// <summary>
         /// 设置或取得总计
@@ -260,7 +221,20 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal? Total { get; set; }
+        public string Total { get; set; }
+
+        /// <summary>
+        /// 设置或取得付款方式
+        /// </summary>
+        /// <value>
+        /// 付款方式
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/6/2013 11:15 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? RealSupplierType { get; set; }
 
         /// <summary>
         /// 设置或取得取餐方式
@@ -286,7 +260,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public bool? IsPaid { get; set; }
+        public bool IsPaid { get; set; }
 
         /// <summary>
         /// 设置或取得是否确认订单
@@ -315,10 +289,10 @@
         public int? PaymentMethodId { get; set; }
 
         /// <summary>
-        /// Gets or sets the InvoiceTitle of WaiMaiOrderDetailModel
+        /// 设置或取得发票信息
         /// </summary>
         /// <value>
-        /// The InvoiceTitle
+        /// 发票信息
         /// </value>
         /// 创建者：周超
         /// 创建日期：11/20/2013 3:39 PM
@@ -328,10 +302,10 @@
         public string InvoiceTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the DeliveryAddress of WaiMaiOrderDetailModel
+        /// 设置或取得送餐地址
         /// </summary>
         /// <value>
-        /// The DeliveryAddress
+        /// 送餐地址
         /// </value>
         /// 创建者：周超
         /// 创建日期：11/21/2013 7:19 PM

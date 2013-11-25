@@ -85,11 +85,13 @@
     <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="OrderNumber\DingTaiOrderNumber.cs" />
     <Compile Include="OrderNumber\TangShiOrderNumber.cs" />
-    <Compile Include="OrderServices.cs" />
+    <Compile Include="OrderServicesTemp.cs" />
     <Compile Include="OrderNumber\IOrderNumber.cs" />
+    <Compile Include="Order\DingTaiOrderProvider.cs" />
     <Compile Include="Order\IOrderProvider.cs" />
     <Compile Include="Order\IUserOrders.cs" />
     <Compile Include="OrderNumber\OrderNumberResult.cs" />
+    <Compile Include="Order\TangShiOrderProvider.cs" />
     <Compile Include="Order\UserOrdersResult.cs" />
     <Compile Include="Order\UserWaiMaiOrders.cs" />
     <Compile Include="Order\UserDingTaiOrders.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="SupplierServices.cs" />
     <Compile Include="UsersServices.cs" />
     <Compile Include="AuthenServices.cs" />
+    <Compile Include="OrderServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">

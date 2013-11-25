@@ -299,31 +299,32 @@
             var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryEntity.DeliveryId);
             var deliveryAddressEntity = this.deliveryAddressEntityRepository.EntityQueryable.FirstOrDefault(p => p.DeliveryAddressId == deliveryEntity.DeliveryAddressId);
             var result = new WaiMaiOrderDetailModel
-                {
-                    OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
-                    OrderTypeId = (int)OrderType.WaiMai,
-                    OrderStatusId = deliveryEntity.OrderStatusId,
-                    DateReserved = deliveryEntity.DateAdded,
-                    DeliveryTime = deliveryEntity.DeliveryDate,
-                    DeliveryInstruction = deliveryEntity.DeliveryInstruction,
-                    CustomerTotal = deliveryEntity.CustomerTotal,
-                    Total = deliveryEntity.Total,
-                    Coupon = Math.Max(((deliveryEntity.Total ?? 0) - (deliveryEntity.CustomerTotal ?? 0)), 0),
-                    RealSupplierType = deliveryEntity.RealSupplierType,
-                    SupplierId = supplierEntity.SupplierId,
-                    SupplierName = supplierEntity.SupplierName,
-                    SupplierTelephone = supplierEntity.Telephone,
-                    SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
-                    SupplierBaIduLat = baIduLat,
-                    SupplierBaIduLong = baIduLong,
-                    DeliveryMethodId = deliveryEntity.DeliveryMethodId,
-                    InvoiceTitle = deliveryEntity.InvoiceTitle,
-                    IsPaid = deliveryEntity.IsPaId,
-                    DishList = waiMaiOrderDishList,
-                    PaymentMethodId = paymentEntity == null ? (int?)null : paymentEntity.PaymentMethodId,
-                    IsConfirm = paymentEntity != null,
-                    DeliveryAddress = deliveryAddressEntity == null ? string.Empty : string.Format("{0}{1}", deliveryAddressEntity.Address1, deliveryAddressEntity.Address2),
-                };
+            {
+                OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
+                OrderTypeId = (int)OrderType.WaiMai,
+                OrderStatusId = deliveryEntity.OrderStatusId,
+                DateReserved = deliveryEntity.DateAdded == null ? string.Empty : deliveryEntity.DateAdded.Value.ToString("yyyy-MM-dd HH:mm"),
+                DeliveryTime = deliveryEntity.DeliveryDate == null ? string.Empty : deliveryEntity.DeliveryDate.Value.ToString("yyyy-MM-dd HH:mm"),
+                DeliveryInstruction = deliveryEntity.DeliveryInstruction ?? string.Empty,
+                CustomerTotal = (deliveryEntity.CustomerTotal ?? 0).ToString("#0.00"),
+                Total = (deliveryEntity.Total ?? 0).ToString("#0.00"),
+                Coupon = Math.Max(((deliveryEntity.Total ?? 0) - (deliveryEntity.CustomerTotal ?? 0)), 0).ToString("#0.00"),
+                Commission = "0.00",
+                RealSupplierType = deliveryEntity.RealSupplierType,
+                SupplierId = supplierEntity.SupplierId,
+                SupplierName = supplierEntity.SupplierName ?? string.Empty,
+                SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
+                SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
+                SupplierBaIduLat = baIduLat,
+                SupplierBaIduLong = baIduLong,
+                DeliveryMethodId = deliveryEntity.DeliveryMethodId,
+                InvoiceTitle = deliveryEntity.InvoiceTitle ?? string.Empty,
+                IsPaid = deliveryEntity.IsPaId ?? false,
+                DishList = waiMaiOrderDishList,
+                PaymentMethodId = paymentEntity == null ? (int?)null : paymentEntity.PaymentMethodId,
+                IsConfirm = paymentEntity != null,
+                DeliveryAddress = deliveryAddressEntity == null ? string.Empty : string.Format("{0}{1}", deliveryAddressEntity.Address1, deliveryAddressEntity.Address2),
+            };
 
             return new ServicesResult<WaiMaiOrderDetailModel>
                 {

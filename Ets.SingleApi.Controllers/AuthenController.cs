@@ -59,11 +59,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public LoginResponse Login(LoginRequst requst)
+        public Response<LoginResult> Login(LoginRequst requst)
         {
             if (requst == null)
             {
-                return new LoginResponse
+                return new Response<LoginResult>
                     {
                         Result = new LoginResult(),
                         Message = new ApiMessage
@@ -83,7 +83,7 @@
 
             if (loginResult.Result == null)
             {
-                return new LoginResponse
+                return new Response<LoginResult>
                 {
                     Message = new ApiMessage
                     {
@@ -101,7 +101,7 @@
                     TokenType = loginResult.Result.TokenType
                 };
 
-            return new LoginResponse
+            return new Response<LoginResult>
             {
                 Message = new ApiMessage
                 {
@@ -128,11 +128,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public AuthLoginResponse AuthLogin(AuthLoginRequst requst)
+        public Response<AuthLoginResult> AuthLogin(AuthLoginRequst requst)
         {
             if (requst == null)
             {
-                return new AuthLoginResponse
+                return new Response<AuthLoginResult>
                 {
                     Result = new AuthLoginResult(),
                     Message = new ApiMessage
@@ -151,7 +151,7 @@
 
             if (loginResult.Result == null)
             {
-                return new AuthLoginResponse
+                return new Response<AuthLoginResult>
                 {
                     Message = new ApiMessage
                     {
@@ -169,7 +169,7 @@
                 TokenType = loginResult.Result.TokenType
             };
 
-            return new AuthLoginResponse
+            return new Response<AuthLoginResult>
             {
                 Message = new ApiMessage
                 {
@@ -198,11 +198,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public PasswordResponse Password(int id, PasswordRequst requst)
+        public Response<bool> Password(int id, PasswordRequst requst)
         {
             if (requst == null)
             {
-                return new PasswordResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -213,7 +213,7 @@
 
             if (!this.ValidateUserId(id))
             {
-                return new PasswordResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -222,19 +222,20 @@
                 };
             }
 
-            var passwordResult = this.authenServices.Password(id, new PasswordParameter
+            var result = this.authenServices.Password(id, new PasswordParameter
             {
                 OldPassword = (requst.OldPassword ?? string.Empty).Trim(),
                 NewPasswrod = (requst.NewPasswrod ?? string.Empty).Trim(),
                 IsSendSms = requst.IsSendSms
             });
 
-            return new PasswordResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = passwordResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -251,11 +252,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public SetPasswordResponse SetPassword(SetPasswordRequst requst)
+        public Response<bool> SetPassword(SetPasswordRequst requst)
         {
             if (requst == null)
             {
-                return new SetPasswordResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -264,7 +265,7 @@
                 };
             }
 
-            var passwordResult = this.authenServices.SetPassword(new SetPasswordParameter
+            var result = this.authenServices.SetPassword(new SetPasswordParameter
             {
                 UserName = (requst.UserName ?? string.Empty).Trim(),
                 AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
@@ -272,12 +273,13 @@
                 IsSendSms = requst.IsSendSms
             });
 
-            return new SetPasswordResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = passwordResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -294,11 +296,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public FindPasswordResponse FindPassword(FindPasswordRequst requst)
+        public Response<bool> FindPassword(FindPasswordRequst requst)
         {
             if (requst == null)
             {
-                return new FindPasswordResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -309,7 +311,7 @@
 
             if (requst.WayList == null || requst.WayList.Count == 0)
             {
-                return new FindPasswordResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -325,18 +327,19 @@
                                                 AccountType = (PasswordType)p.AccountType
                                             }).ToList();
 
-            var findPasswordResult = this.authenServices.FindPassword(new FindPasswordParameter
+            var result = this.authenServices.FindPassword(new FindPasswordParameter
             {
                 UserName = (requst.UserName ?? string.Empty).Trim(),
                 WayList = wayList
             });
 
-            return new FindPasswordResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = findPasswordResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -353,11 +356,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public AuthCodeResponse AuthCode(AuthCodeRequst requst)
+        public Response<bool> AuthCode(AuthCodeRequst requst)
         {
             if (requst == null)
             {
-                return new AuthCodeResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -366,19 +369,19 @@
                 };
             }
 
-            var authCodeResult = this.authenServices.AuthCode(new AuthCodeParameter
+            var result = this.authenServices.AuthCode(new AuthCodeParameter
             {
                 Telephone = (requst.Telephone ?? string.Empty).Trim(),
                 AuthCode = (requst.AuthCode ?? string.Empty).Trim()
             });
 
-            return new AuthCodeResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = authCodeResult.StatusCode
+                    StatusCode = result.StatusCode
                 },
-                Result = authCodeResult.Result
+                Result = result.Result
             };
         }
     }

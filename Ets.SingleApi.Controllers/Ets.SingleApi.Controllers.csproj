@@ -80,6 +80,7 @@
     <Compile Include="IServices\ISmsServices.cs" />
     <Compile Include="IServices\IUsersServices.cs" />
     <Compile Include="IServices\ISupplierServices.cs" />
+    <Compile Include="IServices\IOrderServicesTemp.cs" />
     <Compile Include="OrdersController.cs" />
     <Compile Include="PaymentController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

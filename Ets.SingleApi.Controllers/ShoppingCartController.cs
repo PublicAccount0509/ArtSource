@@ -57,12 +57,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ShoppingCartResponse ShoppingCart(string id)
+        public Response<ShoppingCartModel> ShoppingCart(string id)
         {
             var getShoppingCartResult = this.shoppingCartServices.GetShoppingCart(id);
             if (getShoppingCartResult.Result == null)
             {
-                return new ShoppingCartResponse
+                return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -72,7 +72,7 @@
                 };
             }
 
-            return new ShoppingCartResponse
+            return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -96,12 +96,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ShoppingCartResponse Create(int supplierId, int? userId)
+        public Response<ShoppingCartModel> Create(int supplierId, int? userId)
         {
             var createShoppingCartResult = this.shoppingCartServices.CreateShoppingCart(supplierId, userId);
             if (createShoppingCartResult.Result == null)
             {
-                return new ShoppingCartResponse
+                return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -111,7 +111,7 @@
                 };
             }
 
-            return new ShoppingCartResponse
+            return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                         {
@@ -135,12 +135,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ShoppingCartResponse Customer(string id, int userId)
+        public Response<ShoppingCartModel> Customer(string id, int userId)
         {
             var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartCustomer(id, userId);
             if (saveShoppingCartCustomerResult.Result == null)
             {
-                return new ShoppingCartResponse
+                return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -150,7 +150,7 @@
                 };
             }
 
-            return new ShoppingCartResponse
+            return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -174,11 +174,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ShoppingCartResponse Shopping(string id, ShoppingCartShoppingRequst requst)
+        public Response<ShoppingCartModel> Shopping(string id, ShoppingCartShoppingRequst requst)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
-                return new ShoppingCartResponse
+                return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -190,7 +190,7 @@
             var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(id, requst.ShoppingCartItemList);
             if (saveShoppingItemResult.Result == null)
             {
-                return new ShoppingCartResponse
+                return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -200,7 +200,7 @@
                 };
             }
 
-            return new ShoppingCartResponse
+            return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -224,11 +224,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ShoppingCartResponse Order(string id, ShoppingCartOrderRequst requst)
+        public Response<ShoppingCartModel> Order(string id, ShoppingCartOrderRequst requst)
         {
             if (requst == null)
             {
-                return new ShoppingCartResponse
+                return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -258,7 +258,7 @@
             var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingCartOrder(id, order);
             if (saveShoppingItemResult.Result == null)
             {
-                return new ShoppingCartResponse
+                return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -268,7 +268,7 @@
                 };
             }
 
-            return new ShoppingCartResponse
+            return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
                 {

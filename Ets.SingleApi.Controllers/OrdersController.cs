@@ -3,6 +3,7 @@
     using System.Web.Http;
 
     using Ets.SingleApi.Controllers.IServices;
+    using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Utility;
 
@@ -43,6 +44,83 @@
         }
 
         /// <summary>
+        /// 取得订单详情
+        /// </summary>
+        /// <param name="id">订单号</param>
+        /// <param name="userId">用户Id</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<IOrderDetailModel> GetOrder(int id, int userId, int orderType)
+        {
+            var getOrderResult = this.orderServices.GetOrder(id, userId, orderType);
+            if (getOrderResult.Result == null)
+            {
+                return new Response<IOrderDetailModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
+                    }
+                };
+            }
+
+            return new Response<IOrderDetailModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderResult.StatusCode
+                },
+                Result = getOrderResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存订单信息
+        /// </summary>
+        /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/20 16:01
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<string> SaveOrder(string shoppingCartId, int orderType)
+        {
+            var getOrderResult = this.orderServices.SaveOrder(shoppingCartId, orderType);
+            if (getOrderResult.Result == null)
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
+                    }
+                };
+            }
+
+            return new Response<string>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderResult.StatusCode
+                },
+                Result = getOrderResult.Result
+            };
+        }
+
+        /// <summary>
         /// 获取订单号
         /// </summary>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
@@ -55,31 +133,28 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public OrderNumberResponse OrderNumber(int orderType)
+        public Response<string> OrderNumber(int orderType)
         {
             var getOrderNumberResult = this.orderServices.GetOrderNumber(orderType);
             if (getOrderNumberResult.Result == null)
             {
-                return new OrderNumberResponse
+                return new Response<string>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getOrderNumberResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderNumberResult.StatusCode
                     },
-                    Result = new OrderNumberResult()
+                    Result = string.Empty
                 };
             }
 
-            return new OrderNumberResponse
+            return new Response<string>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getOrderNumberResult.StatusCode
                     },
-                    Result = new OrderNumberResult
-                        {
-                            OrderNumber = getOrderNumberResult.Result
-                        }
+                    Result = getOrderNumberResult.Result
                 };
         }
     }

@@ -4,10 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Castle.Services.Transaction;
+
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
-    using Ets.SingleApi.Services.DetailServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
@@ -21,27 +22,18 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
+    [Transactional]
     public class WaiMaiOrderProvider : IOrderProvider
     {
         /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
         /// 创建者：周超
-        /// 创建日期：10/22/2013 8:54 PM
+        /// 创建日期：11/23/2013 11:52 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
-
-        /// <summary>
-        /// 字段loginEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/14/2013 10:28 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
 
         /// <summary>
         /// 字段deliveryEntityRepository
@@ -104,16 +96,6 @@
         private readonly INHibernateRepository<OrderEntity> orderEntityRepository;
 
         /// <summary>
-        /// 字段supplierDishEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：10/22/2013 9:01 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository;
-
-        /// <summary>
         /// 字段supplierEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -144,24 +126,14 @@
         private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
 
         /// <summary>
-        /// 字段supplierFeatureEntityRepository
+        /// 字段orderNumberDcEntityRepository
         /// </summary>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 1:46 PM
+        /// 创建日期：11/23/2013 12:13 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
-
-        /// <summary>
-        /// 字段orderNumber
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：10/25/2013 2:34 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly IOrderNumber orderNumber;
+        private readonly INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository;
 
         /// <summary>
         /// 字段distance
@@ -184,22 +156,19 @@
         private readonly IShoppingCartProvider shoppingCartProvider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WaiMaiOrderProvider"/> class.
+        /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
-        /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="sourcePathEntityRepository">The sourcePathEntityRepository</param>
         /// <param name="sourceTypeEntityRepository">The sourceTypeEntityRepository</param>
         /// <param name="paymentEntityRepository">The paymentEntityRepository</param>
         /// <param name="supplierCommissionEntityRepository">The supplierCommissionEntityRepository</param>
         /// <param name="orderEntityRepository">The orderEntityRepository</param>
-        /// <param name="supplierDishEntityRepository">The supplierDishEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
-        /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
-        /// <param name="orderNumber">The orderNumber</param>
+        /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="distance">The distance</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
         /// 创建者：周超
@@ -209,36 +178,30 @@
         /// ----------------------------------------------------------------------------------------
         public WaiMaiOrderProvider(
             INHibernateRepository<CustomerEntity> customerEntityRepository,
-            INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<SourcePathEntity> sourcePathEntityRepository,
             INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
             INHibernateRepository<PaymentEntity> paymentEntityRepository,
             INHibernateRepository<SupplierCommissionEntity> supplierCommissionEntityRepository,
             INHibernateRepository<OrderEntity> orderEntityRepository,
-            INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
-            INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
-            IOrderNumber orderNumber,
+            INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             IDistance distance,
             IShoppingCartProvider shoppingCartProvider)
         {
             this.customerEntityRepository = customerEntityRepository;
-            this.loginEntityRepository = loginEntityRepository;
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.sourcePathEntityRepository = sourcePathEntityRepository;
             this.sourceTypeEntityRepository = sourceTypeEntityRepository;
             this.paymentEntityRepository = paymentEntityRepository;
             this.supplierCommissionEntityRepository = supplierCommissionEntityRepository;
             this.orderEntityRepository = orderEntityRepository;
-            this.supplierDishEntityRepository = supplierDishEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
-            this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
-            this.orderNumber = orderNumber;
+            this.orderNumberDcEntityRepository = orderNumberDcEntityRepository;
             this.distance = distance;
             this.shoppingCartProvider = shoppingCartProvider;
         }
@@ -263,6 +226,105 @@
         }
 
         /// <summary>
+        /// 取得订单详情
+        /// </summary>
+        /// <param name="orderId">The orderId</param>
+        /// <param name="userId">The userId</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<IOrderDetailModel> GetOrder(int orderId, int userId)
+        {
+            var customer = this.customerEntityRepository.EntityQueryable.Where(p => p.LoginId == userId).Select(p => new { p.CustomerId, p.LoginId }).FirstOrDefault();
+            if (customer == null)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+
+            var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
+                                  where entity.OrderNumber == orderId && entity.CustomerId == customer.CustomerId
+                                  select entity).FirstOrDefault();
+
+            if (deliveryEntity == null)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+
+            var waiMaiOrderDishList = deliveryEntity.OrderList.Select(p => new WaiMaiOrderDishModel
+            {
+                SupplierDishId = p.SupplierDishId,
+                SupplierDishName = p.SupplierDishName,
+                Price = p.SupplierPrice,
+                Quantity = p.Quantity
+            }).ToList();
+
+            var supplierId = deliveryEntity.SupplierId;
+            var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+
+            decimal baIduLat;
+            decimal.TryParse(supplierEntity.BaIduLat, out baIduLat);
+            decimal baIduLong;
+            decimal.TryParse(supplierEntity.BaIduLong, out baIduLong);
+
+            var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryEntity.DeliveryId);
+            var deliveryAddressEntity = this.deliveryAddressEntityRepository.EntityQueryable.FirstOrDefault(p => p.DeliveryAddressId == deliveryEntity.DeliveryAddressId);
+            var result = new WaiMaiOrderDetailModel
+            {
+                OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
+                OrderTypeId = (int)OrderType.WaiMai,
+                OrderStatusId = deliveryEntity.OrderStatusId,
+                DateReserved = deliveryEntity.DateAdded == null ? string.Empty : deliveryEntity.DateAdded.Value.ToString("yyyy-MM-dd HH:mm"),
+                DeliveryTime = deliveryEntity.DeliveryDate == null ? string.Empty : deliveryEntity.DeliveryDate.Value.ToString("yyyy-MM-dd HH:mm"),
+                DeliveryInstruction = deliveryEntity.DeliveryInstruction ?? string.Empty,
+                CustomerTotal = (deliveryEntity.CustomerTotal ?? 0).ToString("#0.00"),
+                Total = (deliveryEntity.Total ?? 0).ToString("#0.00"),
+                Coupon = Math.Max(((deliveryEntity.Total ?? 0) - (deliveryEntity.CustomerTotal ?? 0)), 0).ToString("#0.00"),
+                Commission = "0.00",
+                RealSupplierType = deliveryEntity.RealSupplierType,
+                SupplierId = supplierEntity.SupplierId,
+                SupplierName = supplierEntity.SupplierName ?? string.Empty,
+                SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
+                SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
+                SupplierBaIduLat = baIduLat,
+                SupplierBaIduLong = baIduLong,
+                DeliveryMethodId = deliveryEntity.DeliveryMethodId,
+                InvoiceTitle = deliveryEntity.InvoiceTitle ?? string.Empty,
+                IsPaid = deliveryEntity.IsPaId ?? false,
+                DishList = waiMaiOrderDishList,
+                PaymentMethodId = paymentEntity == null ? (int?)null : paymentEntity.PaymentMethodId,
+                IsConfirm = paymentEntity != null,
+                DeliveryAddress = deliveryAddressEntity == null ? string.Empty : string.Format("{0}{1}", deliveryAddressEntity.Address1, deliveryAddressEntity.Address2),
+            };
+
+            return new ServicesResult<IOrderDetailModel>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 保存订单信息
         /// </summary>
         /// <param name="shoppingCartId">购物车Id</param>
@@ -274,6 +336,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [Transaction(TransactionMode.RequiresNew)]
         public ServicesResult<string> SaveOrder(string shoppingCartId)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(shoppingCartId);
@@ -332,6 +395,16 @@
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
 
+            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
+            if (shoppingList.Count == 0)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.EmptyShoppingCartCode,
+                    Result = string.Empty
+                };
+            }
+
             var supplierId = supplier.SupplierId;
             var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
             if (supplierEntity == null)
@@ -343,12 +416,22 @@
                 };
             }
 
-            var getOrderNumberResult = this.orderNumber.GetOrderNumber();
-            if (getOrderNumberResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == customer.CustomerAddressId && p.CustomerId == customer.CustomerId);
+            if (customerAddressEntity == null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 return new ServicesResult<string>
                 {
-                    StatusCode = getOrderNumberResult.StatusCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdCode,
+                    Result = string.Empty
+                };
+            }
+
+            var orderId = this.GetOrderNumberId();
+            if (orderId <= 0)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.General.OrderNumberNotFound,
                     Result = string.Empty
                 };
             }
@@ -364,22 +447,12 @@
             }
 
             var customerId = customer.CustomerId;
-            var orderId = getOrderNumberResult.OrderNumber;
-            var deliveryId = this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer, order);
+            var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
+                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer, order)
+                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer, order);
             this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
-
-            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
-            if (shoppingList.Count == 0)
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Succeed.Ok,
-                    Result = orderId.ToString()
-                };
-            }
-
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
-
+            this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId);
             return new ServicesResult<string>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
@@ -388,7 +461,99 @@
         }
 
         /// <summary>
-        /// 保存订单详情
+        /// 取得一个订单号
+        /// </summary>
+        /// <returns>
+        /// 订单号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 2:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> GetOrderNumber()
+        {
+            var orderId = this.GetOrderNumberId();
+            if (orderId <= 0)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.General.OrderNumberNotFound,
+                    Result = string.Empty
+                };
+            }
+
+            return new ServicesResult<string>
+                {
+                    Result = orderId.ToString()
+                };
+        }
+
+        /// <summary>
+        /// 保存自提订单详情
+        /// </summary>
+        /// <param name="orderId">订单Id</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="customer">顾客信息</param>
+        /// <param name="order">订单信息</param>
+        /// <returns>
+        /// 返回订单信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/22/2013 5:16 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int SavePickUpDeliveryEntity(int orderId, int supplierId, ShoppingCartCustomer customer, ShoppingCartOrder order)
+        {
+            var userName = customer.Name;
+            var deliveryAddressEntity = new DeliveryAddressEntity
+            {
+                Recipient = userName.IsEmptyOrNull() ? customer.Username : userName,
+                Telephone = customer.Telephone,
+                Sex = string.Equals(customer.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? 1 : 0,
+                CustomerId = customer.CustomerId,
+                IsDel = false
+            };
+            this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
+
+            var deliveryEntity = new DeliveryEntity
+            {
+                SupplierId = supplierId,
+                CustomerId = customer.CustomerId,
+                OrderNumber = orderId,
+                DeliveryMethodId = order.DeliveryMethodId,
+                DeliveryInstruction = order.DeliveryInstruction,
+                CustomerTotal = order.CustomerTotalFee,
+                Total = order.TotalFee,
+                OrderStatusId = 1,
+                DateAdded = DateTime.Now,
+                PackagingFee = order.PackagingFee,
+                DeliverCharge = order.FixedDeliveryFee,
+                ContactPhone = deliveryAddressEntity.Telephone,
+                Gender = (deliveryAddressEntity.Sex ?? ServicesCommon.DefaultGender).ToString(),
+                Contact = deliveryAddressEntity.Recipient,
+                IsPaId = false,
+                IsRating = false,
+                Cancelled = false,
+                DeliveryDate = order.DeliveryDateTime,
+                Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Template),
+                InvoiceRequired = order.InvoiceRequired,
+                InvoiceTitle = order.InvoiceTitle,
+                Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path),
+                OrderNotes = order.OrderNotes,
+                AreaId = order.AreaId,
+                IPAddress = customer.IpAddress,
+                IsTakeInvoice = order.IsTakeInvoice,
+                DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
+            };
+
+            this.deliveryEntityRepository.Save(deliveryEntity);
+            return deliveryEntity.DeliveryId;
+        }
+
+        /// <summary>
+        /// 保存送餐订单详情
         /// </summary>
         /// <param name="orderId">订单Id</param>
         /// <param name="supplierId">餐厅Id</param>
@@ -404,6 +569,25 @@
         /// ----------------------------------------------------------------------------------------
         private int SaveDeliveryEntity(int orderId, int supplierId, ShoppingCartCustomer customer, ShoppingCartOrder order)
         {
+            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == customer.CustomerAddressId && p.CustomerId == customer.CustomerId);
+            var deliveryAddressEntity = new DeliveryAddressEntity
+            {
+                Recipient = customerAddressEntity.Recipient,
+                AddressAlias = customerAddressEntity.AddressAlias,
+                Address1 = customerAddressEntity.Address1,
+                AddressBuilding = customerAddressEntity.AddressBuilding,
+                AddressDetail = customerAddressEntity.AddressDetail,
+                Address2 = customerAddressEntity.Address2,
+                CityId = customerAddressEntity.CityId,
+                CountyId = customerAddressEntity.CountyId,
+                CountryId = customerAddressEntity.CountryId,
+                Telephone = customerAddressEntity.Telephone,
+                Sex = customerAddressEntity.Sex,
+                CustomerId = customer.CustomerId,
+                IsDel = false
+            };
+            this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
+
             var deliveryEntity = new DeliveryEntity
             {
                 SupplierId = supplierId,
@@ -417,9 +601,9 @@
                 DateAdded = DateTime.Now,
                 PackagingFee = order.PackagingFee,
                 DeliverCharge = order.FixedDeliveryFee,
-                ContactPhone = customer.Telephone,
-                Gender = customer.Gender,
-                Contact = customer.Name,
+                ContactPhone = deliveryAddressEntity.Telephone,
+                Gender = (deliveryAddressEntity.Sex ?? ServicesCommon.DefaultGender).ToString(),
+                Contact = deliveryAddressEntity.Recipient,
                 IsPaId = false,
                 IsRating = false,
                 Cancelled = false,
@@ -431,9 +615,36 @@
                 OrderNotes = order.OrderNotes,
                 AreaId = order.AreaId,
                 IPAddress = customer.IpAddress,
-                IsTakeInvoice = order.IsTakeInvoice
+                IsTakeInvoice = order.IsTakeInvoice,
+                DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
             };
 
+            //计算送餐距离
+            var supplierLocation = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
+                  .Select(p => new { p.BaIduLat, p.BaIduLong })
+                  .FirstOrDefault();
+
+            if (supplierLocation == null)
+            {
+                this.deliveryEntityRepository.Save(deliveryEntity);
+                return deliveryEntity.DeliveryId;
+            }
+
+            var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.AddressBuilding), string.Empty);
+            if (customerLocation == null)
+            {
+                this.deliveryEntityRepository.Save(deliveryEntity);
+                return deliveryEntity.DeliveryId;
+            }
+
+            double baIduLat;
+            double baIduLong;
+            double.TryParse(supplierLocation.BaIduLat, out baIduLat);
+            double.TryParse(supplierLocation.BaIduLong, out baIduLong);
+
+            deliveryEntity.Lat = customerLocation.Lat;
+            deliveryEntity.Lng = customerLocation.Lng;
+            deliveryEntity.DeliveryDistance = distance.GetDistance(customerLocation, new Location { Lat = baIduLat, Lng = baIduLong }, GaussSphere.Beijing54);
             this.deliveryEntityRepository.Save(deliveryEntity);
             return deliveryEntity.DeliveryId;
         }
@@ -494,6 +705,65 @@
                              }).ToList();
 
             this.orderEntityRepository.Save(orderList);
+        }
+
+        /// <summary>
+        /// 保存支付信息
+        /// </summary>
+        /// <param name="deliveryId">订单Id</param>
+        /// <param name="customerTotal">支付总金额</param>
+        /// <param name="paymentMethodId">支付方式</param>
+        /// 创建者：周超
+        /// 创建日期：11/23/2013 11:07 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId)
+        {
+            var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryId)
+                                 ?? new PaymentEntity
+                                 {
+                                     PaymentTypeId = 1,
+                                     Delivery = new DeliveryEntity { DeliveryId = deliveryId },
+                                     TransactionCode = string.Empty,
+                                     CardId = string.Empty,
+                                     Authorized = false,
+                                     CVV = 0,
+                                     AVS = string.Empty,
+                                     PC = 0,
+                                     AuthCode = string.Empty,
+                                     VoicePayResponse = string.Empty,
+                                     TransactionFee = 0
+                                 };
+
+            paymentEntity.Amount = customerTotal;
+            paymentEntity.MethodChangeHistory = paymentEntity.PaymentMethodId.ToString();
+            paymentEntity.PaymentMethodId = paymentMethodId;
+            this.paymentEntityRepository.Save(paymentEntity);
+        }
+
+        /// <summary>
+        /// 取得一个订单号
+        /// </summary>
+        /// <returns>
+        /// 订单号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 2:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int GetOrderNumberId()
+        {
+            var entity = this.orderNumberDcEntityRepository.EntityQueryable.FirstOrDefault();
+            if (entity == null)
+            {
+                return 0;
+            }
+
+            var orderNumber = entity.OrderId;
+            this.orderNumberDcEntityRepository.Remove(entity);
+            return orderNumber;
         }
     }
 }

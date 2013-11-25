@@ -34,7 +34,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IOrderServices orderServices;
+        private readonly IOrderServicesTemp orderServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WapOrdersController"/> class.
@@ -45,7 +45,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public WapOrdersController(IOrderServices orderServices)
+        public WapOrdersController(IOrderServicesTemp orderServices)
         {
             this.orderServices = orderServices;
         }
@@ -64,11 +64,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public WaiMaiOrderResponse WaiMaiOrder(int id, int userId)
+        public Response<WaiMaiOrderDetail> WaiMaiOrder(int id, int userId)
         {
             if (!this.ValidateUserId(userId))
             {
-                return new WaiMaiOrderResponse
+                return new Response<WaiMaiOrderDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -81,7 +81,7 @@
             var getWaiMaiOrderResult = this.orderServices.GetWaiMaiOrder(id, userId);
             if (getWaiMaiOrderResult.Result == null)
             {
-                return new WaiMaiOrderResponse
+                return new Response<WaiMaiOrderDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -97,8 +97,8 @@
                     OrderId = getWaiMaiOrderResult.Result.OrderId,
                     OrderStatusId = getWaiMaiOrderResult.Result.OrderStatusId,
                     OrderTypeId = getWaiMaiOrderResult.Result.OrderTypeId,
-                    DateReserved = getWaiMaiOrderResult.Result.DateReserved == null ? string.Empty : getWaiMaiOrderResult.Result.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
-                    DeliveryTime = getWaiMaiOrderResult.Result.DeliveryTime == null ? string.Empty : getWaiMaiOrderResult.Result.DeliveryTime.Value.ToString("yyyy-MM-dd HH:mm"),
+                    DateReserved = getWaiMaiOrderResult.Result.DateReserved,
+                    DeliveryTime = getWaiMaiOrderResult.Result.DeliveryTime,
                     SupplierId = getWaiMaiOrderResult.Result.SupplierId,
                     SupplierName = getWaiMaiOrderResult.Result.SupplierName ?? string.Empty,
                     SupplierAddress = getWaiMaiOrderResult.Result.SupplierAddress ?? string.Empty,
@@ -106,13 +106,13 @@
                     SupplierBaIduLat = getWaiMaiOrderResult.Result.SupplierBaIduLat,
                     SupplierBaIduLong = getWaiMaiOrderResult.Result.SupplierBaIduLong,
                     DeliveryInstruction = getWaiMaiOrderResult.Result.DeliveryInstruction ?? string.Empty,
-                    CustomerTotal = getWaiMaiOrderResult.Result.CustomerTotal == null ? "0.00" : getWaiMaiOrderResult.Result.CustomerTotal.Value.ToString("#0.00"),
-                    Commission = getWaiMaiOrderResult.Result.Commission == null ? "0.00" : getWaiMaiOrderResult.Result.Commission.Value.ToString("#0.00"),
-                    Coupon = getWaiMaiOrderResult.Result.Coupon == null ? "0.00" : getWaiMaiOrderResult.Result.Coupon.Value.ToString("#0.00"),
-                    Total = getWaiMaiOrderResult.Result.Total == null ? "0.00" : getWaiMaiOrderResult.Result.Total.Value.ToString("#0.00"),
+                    CustomerTotal = getWaiMaiOrderResult.Result.CustomerTotal,
+                    Commission = getWaiMaiOrderResult.Result.Commission,
+                    Coupon = getWaiMaiOrderResult.Result.Coupon,
+                    Total = getWaiMaiOrderResult.Result.Total,
                     RealSupplierType = getWaiMaiOrderResult.Result.RealSupplierType,
                     DeliveryMethodId = getWaiMaiOrderResult.Result.DeliveryMethodId,
-                    IsPaid = getWaiMaiOrderResult.Result.IsPaid ?? false,
+                    IsPaid = getWaiMaiOrderResult.Result.IsPaid,
                     IsConfirm = getWaiMaiOrderResult.Result.IsConfirm,
                     PaymentMethodId = getWaiMaiOrderResult.Result.PaymentMethodId,
                     InvoiceTitle = getWaiMaiOrderResult.Result.InvoiceTitle.IsEmptyOrNull() ? ControllersCommon.EmptyInvoiceTitle : getWaiMaiOrderResult.Result.InvoiceTitle,
@@ -125,7 +125,7 @@
                         }).ToList()
                 };
 
-            return new WaiMaiOrderResponse
+            return new Response<WaiMaiOrderDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -148,11 +148,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public AddWaiMaiOrderResponse AddWaiMaiOrder(AddWaiMaiOrderRequst requst)
+        public Response<AddWaiMaiOrderResult> AddWaiMaiOrder(AddWaiMaiOrderRequst requst)
         {
             if (requst == null)
             {
-                return new AddWaiMaiOrderResponse
+                return new Response<AddWaiMaiOrderResult>
                 {
                     Message = new ApiMessage
                     {
@@ -164,7 +164,7 @@
 
             if (!this.ValidateUserId(requst.UserId))
             {
-                return new AddWaiMaiOrderResponse
+                return new Response<AddWaiMaiOrderResult>
                 {
                     Message = new ApiMessage
                     {
@@ -211,7 +211,7 @@
             });
 
             var result = addWaiMaiOrderResult.Result ?? new AddWaiMaiOrderModel();
-            return new AddWaiMaiOrderResponse
+            return new Response<AddWaiMaiOrderResult>
             {
                 Message = new ApiMessage
                 {
@@ -242,11 +242,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ConfirmWaiMaiOrderResponse ConfirmWaiMaiOrder(int id, ConfirmWaiMaiOrderRequst requst)
+        public Response<ConfirmWaiMaiOrderResult> ConfirmWaiMaiOrder(int id, ConfirmWaiMaiOrderRequst requst)
         {
             if (requst == null)
             {
-                return new ConfirmWaiMaiOrderResponse
+                return new Response<ConfirmWaiMaiOrderResult>
                 {
                     Message = new ApiMessage
                     {
@@ -258,7 +258,7 @@
 
             if (!this.ValidateUserId(requst.UserId))
             {
-                return new ConfirmWaiMaiOrderResponse
+                return new Response<ConfirmWaiMaiOrderResult>
                 {
                     Message = new ApiMessage
                     {
@@ -277,7 +277,7 @@
                 });
 
             var result = confirmWaiMaiOrderResult.Result ?? new ConfirmWaiMaiOrderModel();
-            return new ConfirmWaiMaiOrderResponse
+            return new Response<ConfirmWaiMaiOrderResult>
             {
                 Message = new ApiMessage
                 {
@@ -304,11 +304,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public PaymentWaiMaiOrderResponse PaymentWaiMaiOrder(int id, PaymentWaiMaiOrderRequst requst)
+        public Response<PaymentWaiMaiOrderResult> PaymentWaiMaiOrder(int id, PaymentWaiMaiOrderRequst requst)
         {
             if (requst == null)
             {
-                return new PaymentWaiMaiOrderResponse
+                return new Response<PaymentWaiMaiOrderResult>
                 {
                     Message = new ApiMessage
                     {
@@ -320,7 +320,7 @@
 
             if (!this.ValidateUserId(requst.UserId))
             {
-                return new PaymentWaiMaiOrderResponse
+                return new Response<PaymentWaiMaiOrderResult>
                 {
                     Message = new ApiMessage
                     {
@@ -338,7 +338,7 @@
                 });
 
             var result = paymentWaiMaiOrderResult.Result ?? new PaymentWaiMaiOrderModel();
-            return new PaymentWaiMaiOrderResponse
+            return new Response<PaymentWaiMaiOrderResult>
             {
                 Message = new ApiMessage
                 {

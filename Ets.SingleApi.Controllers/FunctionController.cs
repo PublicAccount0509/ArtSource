@@ -58,12 +58,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public LocationResponse Location(string address, string city, int? type)
+        public Response<Location> Location(string address, string city, int? type)
         {
             var getLocationResult = this.functionServices.GetLocation(address, city, type ?? 0);
             if (getLocationResult.Result == null)
             {
-                return new LocationResponse
+                return new Response<Location>
                 {
                     Message = new ApiMessage
                     {
@@ -73,7 +73,7 @@
                 };
             }
 
-            return new LocationResponse
+            return new Response<Location>
             {
                 Message = new ApiMessage
                 {

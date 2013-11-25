@@ -56,12 +56,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public CuisineListResponse CuisineList()
+        public ListResponse<Cuisine> CuisineList()
         {
             var list = this.cuisineServices.GetCuisineList();
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new CuisineListResponse
+                return new ListResponse<Cuisine>
                 {
                     Message = new ApiMessage
                     {
@@ -79,7 +79,7 @@
                 SupplierCount = p.SupplierCount
             }).ToList();
 
-            return new CuisineListResponse
+            return new ListResponse<Cuisine>
             {
                 Message = new ApiMessage
                 {

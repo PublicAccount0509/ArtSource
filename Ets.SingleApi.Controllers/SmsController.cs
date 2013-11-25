@@ -56,51 +56,34 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public SendAuthCodeResponse SendAuthCode(SendAuthCodeRequst requst)
+        public Response<SendAuthCodeModel> SendAuthCode(SendAuthCodeRequst requst)
         {
             if (requst == null)
             {
-                return new SendAuthCodeResponse
+                return new Response<SendAuthCodeModel>
                 {
-                    Result = new SendAuthCodeResult(),
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
+                    },
+                    Result = new SendAuthCodeModel()
                 };
             }
 
-            var sendAuthCodeResult = this.smsServices.SendAuthCode(new SendAuthCodeParameter
+            var result = this.smsServices.SendAuthCode(new SendAuthCodeParameter
             {
                 Telephone = (requst.Telephone ?? string.Empty).Trim(),
                 Type = (requst.Type ?? string.Empty).Trim(),
                 Second = requst.Second
             });
 
-            if (sendAuthCodeResult.Result == null)
-            {
-                return new SendAuthCodeResponse
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = sendAuthCodeResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : sendAuthCodeResult.StatusCode
-                    },
-                    Result = new SendAuthCodeResult()
-                };
-            }
-
-            var result = new SendAuthCodeResult
-            {
-                Result = sendAuthCodeResult.Result.Result
-            };
-
-            return new SendAuthCodeResponse
+            return new Response<SendAuthCodeModel>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = sendAuthCodeResult.StatusCode
+                    StatusCode = result.StatusCode
                 },
-                Result = result
+                Result = result.Result
             };
         }
     }

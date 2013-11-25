@@ -58,12 +58,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public GetSupplierResponse Supplier(int id)
+        public Response<SupplierDetail> Supplier(int id)
         {
             var getSupplierResult = this.supplierServices.GetSupplier(id);
             if (getSupplierResult.Result == null)
             {
-                return new GetSupplierResponse
+                return new Response<SupplierDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -107,7 +107,7 @@
                     IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
                 };
 
-            return new GetSupplierResponse
+            return new Response<SupplierDetail>
             {
                 Message = new ApiMessage
                 {
@@ -130,12 +130,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public GetRoughSupplierResponse RoughSupplier(string supplierDomain)
+        public Response<RoughSupplier> RoughSupplier(string supplierDomain)
         {
             var getRoughSupplierResult = this.supplierServices.GetRoughSupplier((supplierDomain ?? string.Empty).Trim());
             if (getRoughSupplierResult.Result == null)
             {
-                return new GetRoughSupplierResponse
+                return new Response<RoughSupplier>
                 {
                     Message = new ApiMessage
                     {
@@ -158,7 +158,7 @@
                 IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
             };
 
-            return new GetRoughSupplierResponse
+            return new Response<RoughSupplier>
             {
                 Message = new ApiMessage
                 {
@@ -183,7 +183,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public GetGroupSupplierResponse GroupSupplierList(int supplierGroupId, int pageSize, int? pageIndex)
+        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize, int? pageIndex)
         {
             var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(new GetGroupSupplierListParameter
                 {
@@ -194,7 +194,7 @@
 
             if (getGroupSupplierListResult.Result == null || getGroupSupplierListResult.Result.Count == 0)
             {
-                return new GetGroupSupplierResponse
+                return new ListResponse<GroupSupplier>
                 {
                     Message = new ApiMessage
                     {
@@ -218,7 +218,7 @@
                     IsTangShi = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
                 }).ToList();
 
-            return new GetGroupSupplierResponse
+            return new ListResponse<GroupSupplier>
             {
                 Message = new ApiMessage
                 {
@@ -242,12 +242,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SupplierFeatureListResponse SupplierFeatureList(int id)
+        public ListResponse<SupplierFeature> SupplierFeatureList(int id)
         {
             var getSupplierFeatureListResult = this.supplierServices.GetSupplierFeatureList(id);
             if (getSupplierFeatureListResult.Result == null || getSupplierFeatureListResult.Result.Count == 0)
             {
-                return new SupplierFeatureListResponse
+                return new ListResponse<SupplierFeature>
                 {
                     Message = new ApiMessage
                     {
@@ -264,7 +264,7 @@
                 FeatureName = p.FeatureName
             }).ToList();
 
-            return new SupplierFeatureListResponse
+            return new ListResponse<SupplierFeature>
             {
                 Message = new ApiMessage
                 {
@@ -297,7 +297,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SearchSupplierListResponse SearchSupplierList(string supplierName, int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public ListResponse<Supplier> SearchSupplierList(string supplierName, int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
                 {
@@ -317,7 +317,7 @@
 
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new SearchSupplierListResponse
+                return new ListResponse<Supplier>
                 {
                     Message = new ApiMessage
                     {
@@ -339,7 +339,7 @@
                     LogoUrl = p.LogoUrl ?? string.Empty
                 }).ToList();
 
-            return new SearchSupplierListResponse
+            return new ListResponse<Supplier>
                 {
                     Message = new ApiMessage
                         {
@@ -372,7 +372,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public NearSupplierListResponse NearSupplierList(string supplierName, int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public ListResponse<Supplier> NearSupplierList(string supplierName, int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
             {
@@ -392,7 +392,7 @@
 
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new NearSupplierListResponse
+                return new ListResponse<Supplier>
                 {
                     Message = new ApiMessage
                     {
@@ -414,7 +414,7 @@
                 LogoUrl = p.LogoUrl ?? string.Empty
             }).ToList();
 
-            return new NearSupplierListResponse
+            return new ListResponse<Supplier>
             {
                 Message = new ApiMessage
                 {
@@ -446,7 +446,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public WaiMaiSupplierListResponse WaiMaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public ListResponse<Supplier> WaiMaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var featureId = ControllersCommon.WaiMaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
@@ -467,7 +467,7 @@
 
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new WaiMaiSupplierListResponse
+                return new ListResponse<Supplier>
                 {
                     Message = new ApiMessage
                     {
@@ -489,7 +489,7 @@
                 LogoUrl = p.LogoUrl ?? string.Empty
             }).ToList();
 
-            return new WaiMaiSupplierListResponse
+            return new ListResponse<Supplier>
             {
                 Message = new ApiMessage
                 {
@@ -521,7 +521,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public DingTaiSupplierListResponse DingTaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public ListResponse<Supplier> DingTaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
         {
             var featureId = ControllersCommon.DingTaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
@@ -542,7 +542,7 @@
 
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new DingTaiSupplierListResponse
+                return new ListResponse<Supplier>
                 {
                     Message = new ApiMessage
                     {
@@ -564,7 +564,7 @@
                 LogoUrl = p.LogoUrl ?? string.Empty
             }).ToList();
 
-            return new DingTaiSupplierListResponse
+            return new ListResponse<Supplier>
             {
                 Message = new ApiMessage
                 {
@@ -589,12 +589,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SupplierMenuResponse Menu(int id, int supplierMenuCategoryTypeId)
+        public ListResponse<SupplierCuisine> Menu(int id, int supplierMenuCategoryTypeId)
         {
             var list = this.supplierServices.GetMenu(id, supplierMenuCategoryTypeId);
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new SupplierMenuResponse
+                return new ListResponse<SupplierCuisine>
                 {
                     Message = new ApiMessage
                     {
@@ -624,7 +624,7 @@
                 }).ToList()
             }).ToList();
 
-            return new SupplierMenuResponse
+            return new ListResponse<SupplierCuisine>
             {
                 Message = new ApiMessage
                 {

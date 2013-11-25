@@ -1,7 +1,9 @@
 ﻿namespace Ets.SingleApi.Utility
 {
     using System;
-    using System.Web;
+    using System.Net;
+    using System.Net.Http;
+    using System.Web.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Dispatcher;
     using Castle.MicroKernel;
@@ -52,16 +54,20 @@
         ///   <see cref="T:System.Web.Http.Controllers.IHttpController" /> 对象。
         /// </returns>
         /// 创建者：周超
-        /// 创建日期：2013/10/10 1:37
+        /// 创建日期：11/23/2013 9:21 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        /// <exception cref="System.Web.HttpException">404</exception>
-        public IHttpController Create(System.Net.Http.HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
+        /// <exception cref="System.Web.Http.HttpResponseException"></exception>
+        public IHttpController Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)
         {
             if (controllerType == null)
             {
-                throw new HttpException(404, string.Format("The controller for path '{0}' could not be found.", request.RequestUri));
+                var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent(string.Format("The controller for path '{0}' could not be found.", request.RequestUri))
+                    };
+                throw new HttpResponseException(httpResponseMessage);
             }
 
             return (IHttpController)kernel.Resolve(controllerType);

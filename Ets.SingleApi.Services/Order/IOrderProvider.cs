@@ -6,7 +6,7 @@
     /// <summary>
     /// 接口名称：IOrderProvider
     /// 命名空间：Ets.SingleApi.Services
-    /// 接口功能：订单添加
+    /// 接口功能：订单功能
     /// </summary>
     /// 创建者：周超
     /// 创建日期：11/22/2013 3:23 PM
@@ -29,6 +29,21 @@
         OrderType OrderType { get; }
 
         /// <summary>
+        /// 取得订单详情
+        /// </summary>
+        /// <param name="orderId">订单号</param>
+        /// <param name="userId">用户Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<IOrderDetailModel> GetOrder(int orderId, int userId);
+
+        /// <summary>
         /// 保存订单信息
         /// </summary>
         /// <param name="shoppingCartId">购物车Id</param>
@@ -41,5 +56,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<string> SaveOrder(string shoppingCartId);
+
+        /// <summary>
+        /// 取得一个订单号
+        /// </summary>
+        /// <returns>
+        /// 订单号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 2:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> GetOrderNumber();
     }
 }

@@ -56,7 +56,12 @@
     <Compile Include="Controller\ShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\ShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\TestApiResponse.cs" />
+    <Compile Include="Controller\GetOrderResponse.cs" />
+    <Compile Include="Controller\Response.cs" />
+    <Compile Include="Controller\SaveOrderResponse.cs" />
+    <Compile Include="Controller\ListResponse.cs" />
     <Compile Include="DefaultServicesResult.cs" />
+    <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />

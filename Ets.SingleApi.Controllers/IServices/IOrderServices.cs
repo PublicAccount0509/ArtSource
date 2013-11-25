@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Controllers.IServices
 {
+    using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
@@ -15,10 +16,11 @@
     public interface IOrderServices
     {
         /// <summary>
-        /// 取得外卖订单详情
+        /// 取得订单详情
         /// </summary>
-        /// <param name="orderId">The orderId</param>
-        /// <param name="userId">The userId</param>
+        /// <param name="orderId">订单号</param>
+        /// <param name="userId">用户Id</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -27,49 +29,22 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<WaiMaiOrderDetailModel> GetWaiMaiOrder(int orderId, int userId);
+        ServicesResult<IOrderDetailModel> GetOrder(int orderId, int userId, int orderType);
 
         /// <summary>
-        /// 添加一个外卖订单
+        /// 保存订单信息
         /// </summary>
-        /// <param name="parameter">The parameter</param>
+        /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
         /// 返回结果
         /// </returns>
         /// 创建者：周超
-        /// 创建日期：10/22/2013 6:09 PM
+        /// 创建日期：2013/10/20 16:01
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<AddWaiMaiOrderModel> AddWaiMaiOrder(AddWaiMaiOrderParameter parameter);
-
-        /// <summary>
-        /// 确认外卖订单
-        /// </summary>
-        /// <param name="parameter">订单数据</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 5:32 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<ConfirmWaiMaiOrderModel> ConfirmWaiMaiOrder(ConfirmWaiMaiOrderParameter parameter);
-
-        /// <summary>
-        /// 订单外卖支付
-        /// </summary>
-        /// <param name="parameter">订单数据</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 5:32 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<PaymentWaiMaiOrderModel> PaymentWaiMaiOrder(PaymentWaiMaiOrderParameter parameter);
+        ServicesResult<string> SaveOrder(string shoppingCartId, int orderType);
 
         /// <summary>
         /// 获取订单号

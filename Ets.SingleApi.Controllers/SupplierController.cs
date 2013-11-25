@@ -58,11 +58,11 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public PackagingFeeResponse PackagingFee(int id, PackagingFeeRequst requst)
+        public Response<decimal> PackagingFee(int id, PackagingFeeRequst requst)
         {
             if (requst == null || requst.DishList == null || requst.DishList.Count == 0)
             {
-                return new PackagingFeeResponse
+                return new Response<decimal>
                 {
                     Message = new ApiMessage
                     {
@@ -71,14 +71,14 @@
                 };
             }
 
-            var getPackagingFeeResut = this.supplierServices.GetPackagingFee(id, requst.DishList);
-            return new PackagingFeeResponse
+            var result = this.supplierServices.GetPackagingFee(id, requst.DishList);
+            return new Response<decimal>
             {
                 Message = new ApiMessage
-                       {
-                           StatusCode = getPackagingFeeResut.StatusCode
-                       },
-                Result = getPackagingFeeResut.Result
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
 
@@ -96,12 +96,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SupplierMenuResponse Menu(int id, int supplierMenuCategoryTypeId)
+        public ListResponse<SupplierCuisine> Menu(int id, int supplierMenuCategoryTypeId)
         {
             var list = this.supplierServices.GetMenu(id, supplierMenuCategoryTypeId);
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new SupplierMenuResponse
+                return new ListResponse<SupplierCuisine>
                 {
                     Message = new ApiMessage
                     {
@@ -130,7 +130,7 @@
                 }).ToList()
             }).ToList();
 
-            return new SupplierMenuResponse
+            return new ListResponse<SupplierCuisine>
             {
                 Message = new ApiMessage
                 {
@@ -154,12 +154,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SupplierCuisineListResponse SupplierCuisineList(int id, int supplierMenuCategoryTypeId)
+        public ListResponse<SupplierCuisineDetail> SupplierCuisineList(int id, int supplierMenuCategoryTypeId)
         {
             var list = this.supplierServices.GetSupplierCuisineList(id, supplierMenuCategoryTypeId);
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new SupplierCuisineListResponse
+                return new ListResponse<SupplierCuisineDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -178,7 +178,7 @@
                 CategoryDescription = p.CategoryDescription
             }).ToList();
 
-            return new SupplierCuisineListResponse
+            return new ListResponse<SupplierCuisineDetail>
             {
                 Message = new ApiMessage
                 {
@@ -202,12 +202,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SupplierCuisineResponse SupplierCuisine(int id, int supplierCategoryId)
+        public Response<SupplierCuisineDetail> SupplierCuisine(int id, int supplierCategoryId)
         {
             var list = this.supplierServices.GetSupplierCuisine(id, supplierCategoryId);
             if (list.Result == null)
             {
-                return new SupplierCuisineResponse
+                return new Response<SupplierCuisineDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -226,7 +226,7 @@
                 CategoryDescription = list.Result.CategoryDescription
             };
 
-            return new SupplierCuisineResponse
+            return new Response<SupplierCuisineDetail>
             {
                 Message = new ApiMessage
                 {
@@ -250,11 +250,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public SaveSupplierCuisineResponse AddSupplierCuisine(int id, SaveSupplierCuisineRequst requst)
+        public Response<bool> AddSupplierCuisine(int id, SaveSupplierCuisineRequst requst)
         {
             if (requst == null || requst.CuisineList == null || requst.CuisineList.Count == 0)
             {
-                return new SaveSupplierCuisineResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -279,13 +279,14 @@
                             CuisineList = cuisineList
                         });
 
-            return new SaveSupplierCuisineResponse
+            return new Response<bool>
+            {
+                Message = new ApiMessage
                 {
-                    Message = new ApiMessage
-                        {
-                            StatusCode = result.StatusCode
-                        }
-                };
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -302,11 +303,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public SaveSupplierCuisineResponse UpdateSupplierCuisine(int id, SaveSupplierCuisineRequst requst)
+        public Response<bool> UpdateSupplierCuisine(int id, SaveSupplierCuisineRequst requst)
         {
             if (requst == null || requst.CuisineList == null || requst.CuisineList.Count == 0)
             {
-                return new SaveSupplierCuisineResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -331,12 +332,13 @@
                 CuisineList = cuisineList
             });
 
-            return new SaveSupplierCuisineResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
                     StatusCode = result.StatusCode
-                }
+                },
+                Result = result.Result
             };
         }
 
@@ -354,11 +356,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public DeleteSupplierCuisineResponse DeleteSupplierCuisine(int id, DeleteSupplierCuisineRequst requst)
+        public Response<bool> DeleteSupplierCuisine(int id, DeleteSupplierCuisineRequst requst)
         {
             if (requst == null || requst.CategoryIdList == null || requst.CategoryIdList.Count == 0)
             {
-                return new DeleteSupplierCuisineResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -374,12 +376,13 @@
                 CategoryIdList = requst.CategoryIdList
             });
 
-            return new DeleteSupplierCuisineResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
                     StatusCode = result.StatusCode
-                }
+                },
+                Result = result.Result
             };
         }
 
@@ -398,12 +401,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SupplierDishListResponse SupplierDishList(int id, int supplierMenuCategoryTypeId, int? supplierCategoryId)
+        public ListResponse<SupplierDishDetail> SupplierDishList(int id, int supplierMenuCategoryTypeId, int? supplierCategoryId)
         {
             var list = this.supplierServices.GetSupplierDishList(id, supplierMenuCategoryTypeId, supplierCategoryId);
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new SupplierDishListResponse
+                return new ListResponse<SupplierDishDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -443,7 +446,7 @@
                 Vegetarian = p.Vegetarian
             }).ToList();
 
-            return new SupplierDishListResponse
+            return new ListResponse<SupplierDishDetail>
             {
                 Message = new ApiMessage
                 {
@@ -467,12 +470,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public SupplierDishResponse SupplierDish(int id, int supplierDishId)
+        public Response<SupplierDishDetail> SupplierDish(int id, int supplierDishId)
         {
             var list = this.supplierServices.GetSupplierDish(id, supplierDishId);
             if (list.Result == null)
             {
-                return new SupplierDishResponse
+                return new Response<SupplierDishDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -512,7 +515,7 @@
                 Vegetarian = list.Result.Vegetarian
             };
 
-            return new SupplierDishResponse
+            return new Response<SupplierDishDetail>
             {
                 Message = new ApiMessage
                 {
@@ -536,11 +539,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public SaveSupplierDishResponse AddSupplierDish(int id, SaveSupplierDishRequst requst)
+        public Response<bool> AddSupplierDish(int id, SaveSupplierDishRequst requst)
         {
             if (requst == null || requst.DishList == null || requst.DishList.Count == 0)
             {
-                return new SaveSupplierDishResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -575,12 +578,13 @@
                 DishList = dishList
             });
 
-            return new SaveSupplierDishResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
                     StatusCode = result.StatusCode
-                }
+                },
+                Result = result.Result
             };
         }
 
@@ -598,11 +602,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public SaveSupplierDishResponse UpdateSupplierDish(int id, SaveSupplierDishRequst requst)
+        public Response<bool> UpdateSupplierDish(int id, SaveSupplierDishRequst requst)
         {
             if (requst == null || requst.DishList == null || requst.DishList.Count == 0)
             {
-                return new SaveSupplierDishResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -637,12 +641,13 @@
                 DishList = dishList
             });
 
-            return new SaveSupplierDishResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
                     StatusCode = result.StatusCode
-                }
+                },
+                Result = result.Result
             };
         }
 
@@ -660,11 +665,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public DeleteSupplierDishResponse DeleteSupplierDish(int id, DeleteSupplierDishRequst requst)
+        public Response<bool> DeleteSupplierDish(int id, DeleteSupplierDishRequst requst)
         {
             if (requst == null || requst.DishIdList == null || requst.DishIdList.Count == 0)
             {
-                return new DeleteSupplierDishResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -679,12 +684,13 @@
                 DishIdList = requst.DishIdList
             });
 
-            return new DeleteSupplierDishResponse
+            return new Response<bool>
             {
                 Message = new ApiMessage
                 {
                     StatusCode = result.StatusCode
-                }
+                },
+                Result = result.Result
             };
         }
     }

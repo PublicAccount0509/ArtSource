@@ -59,11 +59,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public UmPaymentResponse UmPayment(UmPaymentRequst requst)
+        public Response<PaymentResult> UmPayment(UmPaymentRequst requst)
         {
             if (requst == null)
             {
-                return new UmPaymentResponse
+                return new Response<PaymentResult>
                 {
                     Result = new PaymentResult(),
                     Message = new ApiMessage
@@ -75,12 +75,13 @@
 
             if (!this.ValidateUserId(requst.UserId))
             {
-                return new UmPaymentResponse
+                return new Response<PaymentResult>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    }
+                    },
+                    Result = new PaymentResult()
                 };
             }
 
@@ -92,7 +93,7 @@
                                       OrderType = requst.OrderType
                                   });
 
-            return new UmPaymentResponse
+            return new Response<PaymentResult>
             {
                 Result = new PaymentResult
                     {
@@ -120,13 +121,12 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public UmPaymentStateResponse UmPaymentState(UmPaymentStateRequst requst)
+        public Response<bool> UmPaymentState(UmPaymentStateRequst requst)
         {
             if (requst == null)
             {
-                return new UmPaymentStateResponse
+                return new Response<bool>
                 {
-                    Result = new PaymentStateResult(),
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
@@ -136,7 +136,7 @@
 
             if (!this.ValidateUserId(requst.UserId))
             {
-                return new UmPaymentStateResponse
+                return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
@@ -145,23 +145,20 @@
                 };
             }
 
-            var umPaymentStateResult = this.paymentServices.UmPaymentState(new UmPaymentStateParameter
+            var result = this.paymentServices.UmPaymentState(new UmPaymentStateParameter
             {
                 OrderId = requst.OrderId,
                 PayDate = System.DateTime.Now,
                 OrderType = requst.OrderType
             });
 
-            return new UmPaymentStateResponse
+            return new Response<bool>
             {
-                Result = new PaymentStateResult
-                {
-                    Result = umPaymentStateResult.Result
-                },
                 Message = new ApiMessage
                 {
-                    StatusCode = umPaymentStateResult.StatusCode
-                }
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
             };
         }
     }
