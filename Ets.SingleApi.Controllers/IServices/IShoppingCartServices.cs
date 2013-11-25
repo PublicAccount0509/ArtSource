@@ -62,6 +62,36 @@
         ServicesResult<ShoppingCartModel> SaveShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList);
 
         /// <summary>
+        /// 添加商品信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartItemList">商品信息列表</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<ShoppingCartModel> AddShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList);
+
+        /// <summary>
+        /// 删除商品信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartItemList">商品信息列表</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<ShoppingCartModel> DeleteShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList);
+
+        /// <summary>
         /// 保存用户信息
         /// </summary>
         /// <param name="id">购物车Id</param>

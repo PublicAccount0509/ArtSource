@@ -161,7 +161,7 @@
         }
 
         /// <summary>
-        /// 保存商品信息
+        /// 保存全部商品信息
         /// </summary>
         /// <param name="id">购物车Id</param>
         /// <param name="requst">商品信息</param>
@@ -188,6 +188,106 @@
             }
 
             var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(id, requst.ShoppingCartItemList);
+            if (saveShoppingItemResult.Result == null)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingItemResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingItemResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            return new Response<ShoppingCartModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveShoppingItemResult.StatusCode
+                },
+                Result = saveShoppingItemResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 添加商品信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="requst">商品信息</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<ShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst)
+        {
+            if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var saveShoppingItemResult = this.shoppingCartServices.AddShoppingItem(id, requst.ShoppingCartItemList);
+            if (saveShoppingItemResult.Result == null)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingItemResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : saveShoppingItemResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            return new Response<ShoppingCartModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveShoppingItemResult.StatusCode
+                },
+                Result = saveShoppingItemResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 删除商品信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="requst">商品信息</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<ShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst)
+        {
+            if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var saveShoppingItemResult = this.shoppingCartServices.DeleteShoppingItem(id, requst.ShoppingCartItemList);
             if (saveShoppingItemResult.Result == null)
             {
                 return new Response<ShoppingCartModel>
