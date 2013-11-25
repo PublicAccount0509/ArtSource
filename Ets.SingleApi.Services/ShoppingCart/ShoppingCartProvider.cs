@@ -165,9 +165,17 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(int userId)
+        public ServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(int? userId)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartCustomer(userId);
+            if (userId == null || userId.Value <= 0)
+            {
+                return new ServicesResult<ShoppingCartCustomer>
+                    {
+                        Result = new ShoppingCartCustomer()
+                    };
+            }
+
+            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartCustomer(userId.Value);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartCustomer>

@@ -41,7 +41,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(int userId);
+        ServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(int? userId);
 
         /// <summary>
         /// 获取购物车信息
