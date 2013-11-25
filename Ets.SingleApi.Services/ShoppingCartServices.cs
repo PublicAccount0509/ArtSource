@@ -369,6 +369,7 @@
                 item.Quantity += shoppingCartItem.Quantity;
             }
 
+            shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(shoppingCart);
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
@@ -475,6 +476,7 @@
                 }
             }
 
+            shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(shoppingCart);
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem

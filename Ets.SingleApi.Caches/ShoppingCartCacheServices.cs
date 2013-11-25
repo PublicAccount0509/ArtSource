@@ -33,8 +33,8 @@
         /// ----------------------------------------------------------------------------------------
         public CacheServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(int supplierId)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_supplier", supplierId)) as ShoppingCartSupplier;
-            if (result == null)
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_supplier", supplierId)) as string;
+            if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartSupplier>
                {
@@ -44,7 +44,7 @@
 
             return new CacheServicesResult<ShoppingCartSupplier>
                 {
-                    Result = result
+                    Result = result.Deserialize<ShoppingCartSupplier>()
                 };
         }
 
@@ -64,7 +64,7 @@
         {
             var supplierId = supplier.SupplierId;
             CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_supplier", supplierId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_supplier", supplierId), supplier, DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_supplier", supplierId), supplier.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
             return new CacheServicesResult<bool>
                 {
                     Result = true
@@ -85,8 +85,8 @@
         /// ----------------------------------------------------------------------------------------
         public CacheServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(int userId)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_customer", userId)) as ShoppingCartCustomer;
-            if (result == null)
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_customer", userId)) as string;
+            if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartCustomer>
                 {
@@ -96,7 +96,7 @@
 
             return new CacheServicesResult<ShoppingCartCustomer>
             {
-                Result = result
+                Result = result.Deserialize<ShoppingCartCustomer>()
             };
         }
 
@@ -116,7 +116,7 @@
         {
             var userId = customer.UserId;
             CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_customer", userId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_customer", userId), customer, DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_customer", userId), customer.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -137,8 +137,8 @@
         /// ----------------------------------------------------------------------------------------
         public CacheServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string id)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_order", id)) as ShoppingCartOrder;
-            if (result == null)
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_order", id)) as string;
+            if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartOrder>
                 {
@@ -148,7 +148,7 @@
 
             return new CacheServicesResult<ShoppingCartOrder>
             {
-                Result = result
+                Result = result.Deserialize<ShoppingCartOrder>()
             };
         }
 
@@ -168,7 +168,7 @@
         {
             var id = order.Id;
             CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_order", id));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_order", id), order, DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_order", id), order.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -189,8 +189,8 @@
         /// ----------------------------------------------------------------------------------------
         public CacheServicesResult<ShoppingCart> GetShoppingCart(string id)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart", id)) as ShoppingCart;
-            if (result == null)
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart", id)) as string;
+            if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCart>
                 {
@@ -200,7 +200,7 @@
 
             return new CacheServicesResult<ShoppingCart>
             {
-                Result = result
+                Result = result.Deserialize<ShoppingCart>()
             };
         }
 
@@ -220,7 +220,7 @@
         {
             var shoppingCartId = shoppingCart.ShoppingCartId;
             CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart", shoppingCartId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart", shoppingCartId), shoppingCart, DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart", shoppingCartId), shoppingCart.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -241,8 +241,8 @@
         /// ----------------------------------------------------------------------------------------
         public CacheServicesResult<ShoppingCartLink> GetShoppingCartLink(string shoppingCartLinkId)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId)) as ShoppingCartLink;
-            if (result == null)
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId)) as string;
+            if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartLink>
                 {
@@ -252,7 +252,7 @@
 
             return new CacheServicesResult<ShoppingCartLink>
             {
-                Result = result
+                Result = result.Deserialize<ShoppingCartLink>()
             };
         }
 
@@ -272,7 +272,7 @@
         {
             var shoppingCartLinkId = shoppingCartLink.ShoppingCartLinkId;
             CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId), shoppingCartLink, DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId), shoppingCartLink.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true

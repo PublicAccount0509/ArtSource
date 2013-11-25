@@ -12,7 +12,6 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    [Serializable]
     public class ShoppingCartOrder
     {
         /// <summary>
@@ -195,7 +194,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime DeliveryDateTime { get; set; }
+        public DateTime? DeliveryDateTime { get; set; }
 
         /// <summary>
         /// 设置或取得是送餐时间类型
