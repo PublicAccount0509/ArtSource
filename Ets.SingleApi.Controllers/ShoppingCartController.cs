@@ -97,7 +97,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Create(int supplierId, int? userId)
+        public Response<ShoppingCartModel> Create(int supplierId, string userId)
         {
             var createShoppingCartResult = this.shoppingCartServices.CreateShoppingCart(supplierId, userId);
             if (createShoppingCartResult.Result.IsEmptyOrNull())

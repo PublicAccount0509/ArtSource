@@ -273,6 +273,8 @@
             var shoppingCartLinkId = shoppingCartLink.ShoppingCartLinkId;
             CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId));
             CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId), shoppingCartLink.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Delete(string.Format("{0}{1}_{2}", "shopping_cart_link", shoppingCartLink.AnonymityId, shoppingCartLink.UserId));
+            CacheUtility.GetInstance().Add(string.Format("{0}{1}_{2}", "shopping_cart_link", shoppingCartLink.AnonymityId, shoppingCartLink.UserId), shoppingCartLink.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true

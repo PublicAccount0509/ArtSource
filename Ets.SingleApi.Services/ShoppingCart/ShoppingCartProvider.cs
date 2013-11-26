@@ -176,7 +176,7 @@
             }
 
             var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartCustomer(userId.Value);
-            if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
+            if (shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartCustomer>
                 {
@@ -356,6 +356,29 @@
         public ServicesResult<ShoppingCartLink> GetShoppingCartLink(string shoppingCartLinkId)
         {
             var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(shoppingCartLinkId);
+            return new ServicesResult<ShoppingCartLink>
+            {
+                StatusCode = getShoppingCartLinkResult.StatusCode,
+                Result = getShoppingCartLinkResult.Result ?? new ShoppingCartLink()
+            };
+        }
+
+        /// <summary>
+        /// 获取购物车关联信息
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="anonymityId">匿名用户Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ShoppingCartLink> GetShoppingCartLink(int supplierId, string anonymityId)
+        {
+            var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(string.Format("{0}_{1}", anonymityId, supplierId));
             return new ServicesResult<ShoppingCartLink>
             {
                 StatusCode = getShoppingCartLinkResult.StatusCode,

@@ -86,6 +86,21 @@
         ServicesResult<ShoppingCartLink> GetShoppingCartLink(string shoppingCartLinkId);
 
         /// <summary>
+        /// 获取购物车关联信息
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="anonymityId">匿名用户Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<ShoppingCartLink> GetShoppingCartLink(int supplierId, string anonymityId);
+
+        /// <summary>
         /// 保存购物车信息
         /// </summary>
         /// <param name="shoppingCart">购物车信息</param>

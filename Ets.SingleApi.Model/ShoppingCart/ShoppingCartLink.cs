@@ -1,7 +1,5 @@
 ﻿namespace Ets.SingleApi.Model
 {
-    using System;
-
     /// <summary>
     /// 类名称：ShoppingCartLink
     /// 命名空间：Ets.SingleApi.Model
@@ -78,5 +76,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string OrderId { get; set; }
+
+        /// <summary>
+        /// 设置或取得匿名用户Id
+        /// </summary>
+        /// <value>
+        /// 匿名用户Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string AnonymityId { get; set; }
     }
 }

@@ -44,7 +44,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> CreateShoppingCart(int supplierId, int? userId);
+        ServicesResult<string> CreateShoppingCart(int supplierId, string userId);
 
         /// <summary>
         /// 更改商品信息

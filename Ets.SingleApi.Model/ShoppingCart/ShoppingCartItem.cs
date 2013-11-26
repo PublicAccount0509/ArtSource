@@ -1,7 +1,5 @@
 ﻿namespace Ets.SingleApi.Model
 {
-    using System;
-
     /// <summary>
     /// 类名称：ShoppingCartItem
     /// 命名空间：Ets.SingleApi.Model

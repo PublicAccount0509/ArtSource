@@ -141,8 +141,17 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> CreateShoppingCart(int supplierId, int? userId)
+        public ServicesResult<string> CreateShoppingCart(int supplierId, string userId)
         {
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(supplierId, userId);
+            if (getShoppingCartLinkResult.StatusCode == (int)StatusCode.Succeed.Ok && getShoppingCartLinkResult.Result != null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = getShoppingCartLinkResult.Result.ShoppingCartLinkId
+                };
+            }
+
             var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
@@ -181,19 +190,22 @@
                     ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId,
                     SupplierId = getShoppingCartSupplierResult.Result.SupplierId,
                     OrderId = shoppingCartOrder.Id,
-                    UserId = userId ?? 0
+                    AnonymityId = userId
                 };
-            this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
 
-            if (userId == null)
+            int tempUserId;
+            if (!int.TryParse(userId, out tempUserId))
             {
+                this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
                 return new ServicesResult<string>
-                    {
-                        Result = shoppingCartLinkId
-                    };
+                {
+                    Result = shoppingCartLinkId
+                };
             }
 
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(userId.Value);
+            shoppingCartLink.UserId = tempUserId;
+            this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(tempUserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
