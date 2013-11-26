@@ -316,6 +316,14 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> AddShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
         {
+            if (shoppingCartItemList.Count(p => p.Quantity > 0) == 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
