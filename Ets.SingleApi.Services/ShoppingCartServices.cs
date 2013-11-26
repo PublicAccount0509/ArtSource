@@ -172,7 +172,12 @@
                 };
             }
 
-            var shoppingCartOrder = new ShoppingCartOrder { Id = Guid.NewGuid().ToString() };
+            var shoppingCartOrder = new ShoppingCartOrder
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId,
+                    DeliveryType = ServicesCommon.DefaultDeliveryType
+                };
             var saveShoppingCartOrderResult = this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
@@ -621,20 +626,21 @@
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
 
-            var deliveryDate = (order.DeliveryDate ?? DateTime.Now).ToString("yyyy-MM-dd");
+            var now = DateTime.Now;
+            var deliveryDate = (order.DeliveryDate ?? now).ToString("yyyy-MM-dd");
             DateTime deliveryTimeTemp;
             if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, order.DeliveryTime), out deliveryTimeTemp))
             {
-                deliveryTimeTemp = (order.DeliveryDate ?? DateTime.Now);
+                deliveryTimeTemp = (order.DeliveryDate ?? now);
             }
 
             if (order.DeliveryType == ServicesCommon.QuickDeliveryType)
             {
-                deliveryTimeTemp = (order.DeliveryDate ?? DateTime.Now);
+                deliveryTimeTemp = (order.DeliveryDate ?? now);
             }
 
-            var deliveryTime = this.GetDeliveryDate(order.DeliveryMethodId ?? 0, order.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
-            if (deliveryTime <= DateTime.Now)
+            var deliveryTime = this.GetDeliveryDate(order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId, order.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
+            if (deliveryTime < now.AddMinutes(ServicesCommon.MinDeliveryHours))
             {
                 return new ServicesResult<bool>
                 {

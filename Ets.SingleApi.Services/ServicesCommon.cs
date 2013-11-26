@@ -20,6 +20,84 @@
     public class ServicesCommon
     {
         /// <summary>
+        /// 默认的送餐方式
+        /// </summary>
+        /// <value>
+        /// 默认的送餐方式
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int MinDeliveryHours
+        {
+            get
+            {
+                var minDeliveryHours = ConfigurationManager.AppSettings["MinDeliveryHours"] ?? "45";
+                int result;
+                if (!int.TryParse(minDeliveryHours, out result))
+                {
+                    result = 45;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 默认的送餐方式
+        /// </summary>
+        /// <value>
+        /// 默认的送餐方式
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultDeliveryMethodId
+        {
+            get
+            {
+                var defaultDeliveryMethodId = ConfigurationManager.AppSettings["DefaultDeliveryMethodId"] ?? "2";
+                int result;
+                if (!int.TryParse(defaultDeliveryMethodId, out result))
+                {
+                    result = 2;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 默认的送餐类型
+        /// </summary>
+        /// <value>
+        /// 默认的送餐类型
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultDeliveryType
+        {
+            get
+            {
+                var defaultDeliveryType = ConfigurationManager.AppSettings["DefaultDeliveryType"] ?? "1";
+                int result;
+                if (!int.TryParse(defaultDeliveryType, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 阶梯打包FeatureId
         /// </summary>
         /// <value>
