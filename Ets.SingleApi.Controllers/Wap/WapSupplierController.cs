@@ -279,15 +279,14 @@
         /// 获取餐厅列表
         /// </summary>
         /// <param name="supplierName">餐厅名称</param>
-        /// <param name="cuisineId">菜品</param>
         /// <param name="regionId">省、市、区Id</param>
-        /// <param name="businessAreaId">商圈Id</param>
-        /// <param name="userLat">经度</param>
-        /// <param name="userLong">纬度</param>
+        /// <param name="userLat">用户经度</param>
+        /// <param name="userLong">用户纬度</param>
         /// <param name="distance">距离</param>
         /// <param name="pageSize">每页显示的数量</param>
         /// <param name="pageIndex">页码</param>
-        /// <param name="orderByType">排序规则</param>
+        /// <param name="buildingLat">楼宇经度</param>
+        /// <param name="buildingLong">楼宇纬度</param>
         /// <returns>
         /// 返回餐厅列表
         /// </returns>
@@ -297,22 +296,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Supplier> SearchSupplierList(string supplierName, int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
+        public ListResponse<Supplier> SearchSupplierList(string supplierName, int? regionId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, double? buildingLat = null, double? buildingLong = null)
         {
-            var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
+            var list = this.supplierServices.GetSearchSupplierList(new GetSearchSupplierListParameter
                 {
                     SupplierName = (supplierName ?? string.Empty).Trim(),
-                    FeatureId = -1,
-                    CuisineId = cuisineId ?? -1,
-                    BusinessAreaId = (businessAreaId ?? string.Empty).Trim(),
                     RegionId = regionId ?? -1,
                     UserLat = userLat ?? 0,
                     UserLong = userLong ?? 0,
                     Distance = (userLat == null || userLong == null) ? -1 : (distance ?? -1),
                     PageSize = pageSize,
                     PageIndex = pageIndex,
-                    OrderByType = orderByType,
-                    IsBuilding = userLat != null && userLong != null && distance != null
+                    BuildingLat = buildingLat ?? 0,
+                    BuildingLong = buildingLong ?? 0,
                 });
 
             if (list.Result == null || list.Result.Count == 0)

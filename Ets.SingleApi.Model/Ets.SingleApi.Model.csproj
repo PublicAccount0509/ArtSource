@@ -63,6 +63,7 @@
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
+    <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
     <Compile Include="ShoppingCart\IShoppingCartBusiness.cs" />

@@ -1,158 +1,132 @@
-﻿namespace Ets.SingleApi.Model
+﻿namespace Ets.SingleApi.Model.Services
 {
     /// <summary>
-    /// 类名称：ShoppingCartSupplier
-    /// 命名空间：Ets.SingleApi.Model
-    /// 类功能：餐厅信息
+    /// 类名称：GetSearchSupplierListParameter
+    /// 命名空间：Ets.SingleApi.Model.Services
+    /// 类功能：方法GetSearchSupplierList传入的参数
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：11/20/2013 10:57 PM
+    /// 创建日期：2013/10/15 17:55
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartSupplier
+    public class GetSearchSupplierListParameter
     {
         /// <summary>
-        /// 设置或取得餐厅Id
+        /// Gets or sets the name of the supplier.
         /// </summary>
         /// <value>
-        /// 餐厅Id
+        /// The name of the supplier.
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 10:57 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int SupplierId { get; set; }
-
-        /// <summary>
-        /// 设置或取得餐厅名称
-        /// </summary>
-        /// <value>
-        /// 餐厅名称
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 10:57 PM
+        /// 创建日期：2013/10/15 18:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string SupplierName { get; set; }
 
         /// <summary>
-        /// 设置或取得餐厅电话
+        /// Gets or sets the RegionId of GetSearchSupplierListParameter
         /// </summary>
         /// <value>
-        /// 餐厅电话
+        /// The RegionId
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 10:57 PM
+        /// 创建日期：2013/10/18 21:24
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Telephone { get; set; }
+        public int RegionId { get; set; }
 
         /// <summary>
-        /// 设置或取得餐厅营业时间
+        /// Gets or sets the UserLat of GetSearchSupplierListParameter
         /// </summary>
         /// <value>
-        /// 营业时间
+        /// The UserLat
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 10:57 PM
+        /// 创建日期：2013/10/15 18:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string ServiceTime { get; set; }
+        public double UserLat { get; set; }
 
         /// <summary>
-        /// 设置或取得餐厅送餐时间
+        /// Gets or sets the UserLong of GetSearchSupplierListParameter
         /// </summary>
         /// <value>
-        /// 送餐时间
+        /// The UserLong
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 10:57 PM
+        /// 创建日期：2013/10/15 18:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string DeliveryTime { get; set; }
+        public double UserLong { get; set; }
 
         /// <summary>
-        /// 设置或取得餐厅阶梯打包费
+        /// Gets or sets the size of the page.
         /// </summary>
         /// <value>
-        /// 餐厅阶梯打包费
+        /// The size of the page.
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 11:02 PM
+        /// 创建日期：2013/10/15 18:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal PackLadder { get; set; }
+        public int PageSize { get; set; }
 
         /// <summary>
-        /// 设置或取得餐厅打包费
+        /// Gets or sets the index of the page.
         /// </summary>
         /// <value>
-        /// 餐厅打包费
+        /// The index of the page.
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 11:02 PM
+        /// 创建日期：2013/10/15 18:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal PackagingFee { get; set; }
+        public int? PageIndex { get; set; }
 
         /// <summary>
-        /// 设置或取得餐厅免送餐费价格
+        /// Gets or sets the Distance of GetSearchSupplierListParameter
         /// </summary>
         /// <value>
-        /// 餐厅免送餐费价格
+        /// The Distance
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 11:02 PM
+        /// 创建日期：2013/10/15 18:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal FreeDeliveryLine { get; set; }
+        public double? Distance { get; set; }
 
         /// <summary>
-        /// 设置或取得餐厅送餐费
+        /// Gets or sets the BuildingLat of GetSearchSupplierListParameter
         /// </summary>
         /// <value>
-        /// 餐厅送餐费
+        /// The UserLat
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 11:02 PM
+        /// 创建日期：2013/10/15 18:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int FixedDeliveryCharge { get; set; }
+        public double BuildingLat { get; set; }
 
         /// <summary>
-        /// 设置或取得餐厅送餐起送价格
+        /// Gets or sets the BuildingLong of GetSearchSupplierListParameter
         /// </summary>
         /// <value>
-        /// 餐厅送餐起送价格
+        /// The UserLong
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 11:02 PM
+        /// 创建日期：2013/10/15 18:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int DelMinOrderAmount { get; set; }
-
-        /// <summary>
-        /// 设置或取得餐厅是否支持阶梯打包
-        /// </summary>
-        /// <value>
-        /// 餐厅是否支持阶梯打包
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 11:02 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public bool IsPackLadder { get; set; }
+        public double BuildingLong { get; set; }
     }
 }

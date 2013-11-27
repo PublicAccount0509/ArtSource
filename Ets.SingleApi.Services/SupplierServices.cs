@@ -511,7 +511,6 @@
 
             var list = this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}", (OrderBy.Supplier)parameter.OrderByType))
                     .SetInt32("FeatureID", parameter.FeatureId)
-                    .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
                     .SetInt32("CuisineID", parameter.CuisineId)
                     .SetInt32("RegionId", parameter.RegionId)
                     .SetString("BusinessAreaId", parameter.BusinessAreaId)
@@ -519,8 +518,7 @@
                     .SetDouble("UserLong", parameter.UserLong)
                     .SetDouble("Distance", !parameter.Distance.HasValue ? -1.0 : parameter.Distance.Value)
                     .SetInt32("PageIndex", !parameter.PageIndex.HasValue ? -1 : parameter.PageIndex.Value)
-                    .SetInt32("PageSize", parameter.PageSize)
-                    .SetBoolean("IsBuilding", parameter.IsBuilding ?? false).List();
+                    .SetInt32("PageSize", parameter.PageSize).List();
 
             var supplierList = (from object[] item in list
                                 select new SupplierModel
@@ -540,6 +538,65 @@
                                         Distance = item[12].ObjectToDouble(),
                                         DateJoined = item[13].ObjectToDateTime()
                                     }).ToList();
+
+            return new ServicesResultList<SupplierModel>
+            {
+                Result = supplierList
+            };
+        }
+
+        /// <summary>
+        /// 获取餐厅列表
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回餐厅列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 17:56
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<SupplierModel> GetSearchSupplierList(GetSearchSupplierListParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResultList<SupplierModel>
+                {
+                    Result = new List<SupplierModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var list = this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}", OrderBy.Supplier.SearchDefault))
+                    .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
+                    .SetInt32("RegionId", parameter.RegionId)
+                    .SetDouble("UserLat", parameter.UserLat)
+                    .SetDouble("UserLong", parameter.UserLong)
+                    .SetDouble("Distance", !parameter.Distance.HasValue ? -1.0 : parameter.Distance.Value)
+                    .SetInt32("PageIndex", !parameter.PageIndex.HasValue ? -1 : parameter.PageIndex.Value)
+                    .SetInt32("PageSize", parameter.PageSize)
+                    .SetDouble("BuildingLat", parameter.BuildingLat)
+                    .SetDouble("BuildingLong", parameter.BuildingLong).List();
+
+            var supplierList = (from object[] item in list
+                                select new SupplierModel
+                                {
+                                    SupplierId = item[0].ObjectToInt(),
+                                    SupplierName = item[1].ObjectToString(),
+                                    Address = item[2].ObjectToString(),
+                                    Telephone = item[3].ObjectToString(),
+                                    BaIduLat = item[4].ObjectToString(),
+                                    BaIduLong = item[5].ObjectToString(),
+                                    SupplierDescription = item[6].ObjectToString(),
+                                    Averageprice = item[7].ObjectToDouble(),
+                                    ParkingInfo = item[8].ObjectToString(),
+                                    CuisineName = item[9].ObjectToString(),
+                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, item[10].ObjectToString()),
+                                    IsOpenDoor = item[11].ObjectToBoolean(),
+                                    Distance = item[12].ObjectToDouble(),
+                                    DateJoined = item[13].ObjectToDateTime()
+                                }).ToList();
 
             return new ServicesResultList<SupplierModel>
             {

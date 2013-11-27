@@ -74,6 +74,20 @@
         ServicesResultList<SupplierModel> GetSupplierList(GetSupplierListParameter parameter);
 
         /// <summary>
+        /// 获取餐厅列表
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回餐厅列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 17:56
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<SupplierModel> GetSearchSupplierList(GetSearchSupplierListParameter parameter);
+
+        /// <summary>
         /// 获取餐厅分店列表
         /// </summary>
         /// <param name="parameter">The parameter</param>

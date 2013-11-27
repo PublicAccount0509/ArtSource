@@ -63,6 +63,26 @@
         private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
 
         /// <summary>
+        /// 字段suppTimeTableDisplayEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/27/2013 11:24 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository;
+
+        /// <summary>
+        /// 字段timeTableDisplayEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/27/2013 11:22 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository;
+
+        /// <summary>
         /// 字段shoppingCartCacheServices
         /// </summary>
         /// 创建者：周超
@@ -79,6 +99,8 @@
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
+        /// <param name="suppTimeTableDisplayEntityRepository">The suppTimeTableDisplayEntityRepository</param>
+        /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// <param name="shoppingCartCacheServices">The shoppingCartCacheServices</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
@@ -90,12 +112,16 @@
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
+            INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
+            INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             IShoppingCartCacheServices shoppingCartCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
+            this.suppTimeTableDisplayEntityRepository = suppTimeTableDisplayEntityRepository;
+            this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
             this.shoppingCartCacheServices = shoppingCartCacheServices;
         }
 
@@ -146,6 +172,35 @@
             }
 
             shoppingCartSupplier.IsPackLadder = this.supplierFeatureEntityRepository.EntityQueryable.Any(p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true && p.Feature.FeatureId == ServicesCommon.PackageFeatureId);
+            var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
+                                            where entity.SupplierId == supplierId
+                                            select new
+                                            {
+                                                entity.Day,
+                                                entity.TimeTableDisplayId
+                                            }).ToList();
+
+            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => DateTime.Now.DayOfWeek.ToString("d") == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
+            if (timeTableDisplayIdList.Count == 0)
+            {
+                shoppingCartSupplier.ServiceTime = string.Empty;
+                this.shoppingCartCacheServices.SaveShoppingCartSupplier(shoppingCartSupplier);
+                return new ServicesResult<ShoppingCartSupplier>
+                {
+                    Result = shoppingCartSupplier
+                };
+            }
+
+            var timeTableDisplayList = (from entity in this.timeTableDisplayEntityRepository.EntityQueryable
+                                        where timeTableDisplayIdList.Contains(entity.TimeTableDisplayId)
+                                        select new
+                                        {
+                                            entity.OpenTime,
+                                            entity.CloseTime
+                                        }).ToList();
+
+            var serviceTime = timeTableDisplayList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime));
+            shoppingCartSupplier.ServiceTime = serviceTime.Trim();
             this.shoppingCartCacheServices.SaveShoppingCartSupplier(shoppingCartSupplier);
             return new ServicesResult<ShoppingCartSupplier>
             {
