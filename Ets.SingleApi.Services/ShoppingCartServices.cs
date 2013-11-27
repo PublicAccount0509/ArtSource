@@ -770,6 +770,8 @@
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            shoppingCartOrder.Id = order.Id;
+            shoppingCartOrder.OrderId = order.OrderId;
             shoppingCartOrder.DeliveryDateTime = deliveryTime;
             shoppingCartOrder.DeliveryMethodId = deliveryMethodId;
             shoppingCartOrder.TotalPrice = shoppingPrice;
