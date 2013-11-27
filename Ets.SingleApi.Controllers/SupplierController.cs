@@ -401,7 +401,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<SupplierDishDetail> SupplierDishList(int id, int supplierMenuCategoryTypeId, int? supplierCategoryId)
+        public ListResponse<SupplierDishDetail> SupplierDishList(int id, int supplierMenuCategoryTypeId, int? supplierCategoryId = null)
         {
             var list = this.supplierServices.GetSupplierDishList(id, supplierMenuCategoryTypeId, supplierCategoryId);
             if (list.Result == null || list.Result.Count == 0)

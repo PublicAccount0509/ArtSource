@@ -703,7 +703,7 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public ListResponse<UserOrder> UserOrderList(int id, int orderType, int? orderStatus, bool? paidStatus, int pageSize, int? pageIndex)
+        public ListResponse<UserOrder> UserOrderList(int id, int orderType = -1, int? orderStatus = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null)
         {
             if (!this.ValidateUserId(id))
             {

@@ -183,7 +183,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize, int? pageIndex)
+        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize = 10, int? pageIndex = null)
         {
             var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(new GetGroupSupplierListParameter
                 {
@@ -280,8 +280,8 @@
         /// </summary>
         /// <param name="supplierName">餐厅名称</param>
         /// <param name="cuisineId">菜品</param>
-        /// <param name="businessAreaId">商圈Id</param>
         /// <param name="regionId">省、市、区Id</param>
+        /// <param name="businessAreaId">商圈Id</param>
         /// <param name="userLat">经度</param>
         /// <param name="userLong">纬度</param>
         /// <param name="distance">距离</param>
@@ -297,7 +297,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Supplier> SearchSupplierList(string supplierName, int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public ListResponse<Supplier> SearchSupplierList(string supplierName, int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
         {
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
                 {
@@ -372,7 +372,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Supplier> NearSupplierList(string supplierName, int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public ListResponse<Supplier> NearSupplierList(string supplierName, int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
         {
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
             {
@@ -446,7 +446,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Supplier> WaiMaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public ListResponse<Supplier> WaiMaiSupplierList(int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
         {
             var featureId = ControllersCommon.WaiMaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
@@ -521,7 +521,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Supplier> DingTaiSupplierList(int? cuisineId, int? regionId, string businessAreaId, double? userLat, double? userLong, double? distance, int pageSize, int? pageIndex, int orderByType)
+        public ListResponse<Supplier> DingTaiSupplierList(int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
         {
             var featureId = ControllersCommon.DingTaiFeatureId;
             var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter

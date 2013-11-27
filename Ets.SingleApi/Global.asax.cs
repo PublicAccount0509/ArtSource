@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi
 {
     using System;
+    using System.Net.Http;
     using System.Web.Http;
     using System.Web.Mvc;
 
@@ -52,6 +53,8 @@
                 CastleUtility.Register(GlobalConfiguration.Configuration);
 
                 GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
+                GlobalConfiguration.Configuration.MessageHandlers.Add(new RequestHandler());
 
                 //RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
             }

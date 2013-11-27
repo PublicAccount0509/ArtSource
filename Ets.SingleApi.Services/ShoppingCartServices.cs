@@ -605,6 +605,15 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartResult.StatusCode
+                };
+            }
+
             var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
@@ -648,13 +657,37 @@
                 };
             }
 
+            var shoppingCart = getShoppingCartResult.Result;
+            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
+            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
+            {
+                PackagingFee = p.PackagingFee,
+                Price = p.Price,
+                Quantity = p.Quantity
+            }).ToList());
+
+            var deliveryMethodId = shoppingCartOrder.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
+                                          ? 0
+                                         : supplier.FixedDeliveryCharge;
+
+            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                        ? shoppingPrice + packagingFee + fixedDeliveryCharge
+                        : shoppingPrice + packagingFee;
+            var coupon = 0;
+            var customerTotal = total - coupon;
+
             shoppingCartOrder.DeliveryDateTime = deliveryTime;
-            shoppingCartOrder.TotalPrice = order.TotalPrice;
-            shoppingCartOrder.FixedDeliveryFee = order.FixedDeliveryFee;
-            shoppingCartOrder.PackagingFee = order.PackagingFee;
-            shoppingCartOrder.TotalQuantity = order.TotalQuantity;
-            shoppingCartOrder.TotalFee = order.TotalFee;
-            shoppingCartOrder.CustomerTotalFee = order.CustomerTotalFee;
+            shoppingCartOrder.DeliveryMethodId = deliveryMethodId;
+            shoppingCartOrder.TotalPrice = shoppingPrice;
+            shoppingCartOrder.FixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
+            shoppingCartOrder.PackagingFee = packagingFee;
+            shoppingCartOrder.TotalQuantity = shoppingList.Sum(p => p.Quantity);
+            shoppingCartOrder.TotalFee = total;
+            shoppingCartOrder.CustomerTotalFee = customerTotal;
+            shoppingCartOrder.CouponFee = coupon;
+
             this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
 
             return new ServicesResult<bool>
@@ -739,7 +772,7 @@
 
             order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
-            order.FixedDeliveryFee = fixedDeliveryCharge;
+            order.FixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             order.PackagingFee = packagingFee;
             order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
             order.TotalFee = total;
