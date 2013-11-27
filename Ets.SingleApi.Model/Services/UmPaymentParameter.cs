@@ -65,5 +65,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int OrderType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ReturnUrl of UmPaymentParameter
+        /// </summary>
+        /// <value>
+        /// The ReturnUrl
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/27/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string ReturnUrl { get; set; }
     }
 }

@@ -90,7 +90,8 @@
                                       OrderId = requst.OrderId,
                                       Amount = requst.Amount,
                                       PayDate = System.DateTime.Now,
-                                      OrderType = requst.OrderType
+                                      OrderType = requst.OrderType,
+                                      ReturnUrl = requst.ReturnUrl
                                   });
 
             return new Response<PaymentResult>
