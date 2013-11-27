@@ -107,7 +107,7 @@
         ServicesResult<bool> SaveShoppingCartCustomer(string id, int userId);
 
         /// <summary>
-        /// 保存用户信息
+        /// 保存订单信息
         /// </summary>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
@@ -120,6 +120,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveShoppingCartOrder(string id, ShoppingCartOrder shoppingCartOrder);
+
+        /// <summary>
+        /// 保存订单配送信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartDelivery">The shoppingCartOrder</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SaveShoppingCartDelivery(string id, ShoppingCartDelivery shoppingCartDelivery);
 
         /// <summary>
         /// 更改购物车送餐方式

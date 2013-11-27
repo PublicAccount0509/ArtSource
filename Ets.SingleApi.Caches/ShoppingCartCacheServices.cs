@@ -228,6 +228,58 @@
         }
 
         /// <summary>
+        /// 获取订单配送信息
+        /// </summary>
+        /// <param name="id">订单配送信息唯一标识符</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public CacheServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string id)
+        {
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_delivery", id)) as string;
+            if (result.IsEmptyOrNull())
+            {
+                return new CacheServicesResult<ShoppingCartDelivery>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Empty
+                };
+            }
+
+            return new CacheServicesResult<ShoppingCartDelivery>
+            {
+                Result = result.Deserialize<ShoppingCartDelivery>()
+            };
+        }
+
+        /// <summary>
+        /// 保存订单配送信息
+        /// </summary>
+        /// <param name="shoppingCartDelivery">订单配送信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public CacheServicesResult<bool> SaveShoppingCartDelivery(ShoppingCartDelivery shoppingCartDelivery)
+        {
+            var id = shoppingCartDelivery.Id;
+            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_delivery", id));
+            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_delivery", id), shoppingCartDelivery.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            return new CacheServicesResult<bool>
+            {
+                Result = true
+            };
+        }
+
+        /// <summary>
         /// 获取购物车关联信息
         /// </summary>
         /// <param name="shoppingCartLinkId">购物车关联Id</param>

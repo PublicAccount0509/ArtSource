@@ -78,6 +78,19 @@
         public ShoppingCartSupplier Supplier { get; set; }
 
         /// <summary>
+        /// 设置或取得当前订单配送信息
+        /// </summary>
+        /// <value>
+        /// 当前订单配送信息
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 10:38 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ShoppingCartDelivery Delivery { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartModel"/> class.
         /// </summary>
         /// 创建者：周超
@@ -91,6 +104,7 @@
             this.Customer = new ShoppingCartCustomer();
             this.Order = new ShoppingCartOrder();
             this.Supplier = new ShoppingCartSupplier();
+            this.Delivery = new ShoppingCartDelivery();
         }
     }
 }

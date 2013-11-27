@@ -390,10 +390,21 @@
                 };
             }
 
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(shoppingCartLink.DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = getShoppingCartDeliveryResult.StatusCode,
+                    Result = string.Empty
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
+            var delivery = getShoppingCartDeliveryResult.Result;
 
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             if (shoppingList.Count == 0)
@@ -416,7 +427,7 @@
                 };
             }
 
-            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == customer.CustomerAddressId && p.CustomerId == customer.CustomerId);
+            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customer.CustomerId);
             if (customerAddressEntity == null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 return new ServicesResult<string>
@@ -448,8 +459,8 @@
 
             var customerId = customer.CustomerId;
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
-                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer, order)
-                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer, order);
+                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order)
+                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
             this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId);
@@ -494,7 +505,8 @@
         /// </summary>
         /// <param name="orderId">订单Id</param>
         /// <param name="supplierId">餐厅Id</param>
-        /// <param name="customer">顾客信息</param>
+        /// <param name="customerId">The customerId</param>
+        /// <param name="delivery">The delivery</param>
         /// <param name="order">订单信息</param>
         /// <returns>
         /// 返回订单信息
@@ -504,15 +516,15 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SavePickUpDeliveryEntity(int orderId, int supplierId, ShoppingCartCustomer customer, ShoppingCartOrder order)
+        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
         {
-            var userName = customer.Name;
+            var userName = delivery.Name;
             var deliveryAddressEntity = new DeliveryAddressEntity
             {
-                Recipient = userName.IsEmptyOrNull() ? customer.Username : userName,
-                Telephone = customer.Telephone,
-                Sex = string.Equals(customer.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? 1 : 0,
-                CustomerId = customer.CustomerId,
+                Recipient = userName.IsEmptyOrNull() ? delivery.Name : userName,
+                Telephone = delivery.Telephone,
+                Sex = string.Equals(delivery.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? 1 : 0,
+                CustomerId = customerId,
                 IsDel = false
             };
             this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
@@ -520,7 +532,7 @@
             var deliveryEntity = new DeliveryEntity
             {
                 SupplierId = supplierId,
-                CustomerId = customer.CustomerId,
+                CustomerId = customerId,
                 OrderNumber = orderId,
                 DeliveryMethodId = order.DeliveryMethodId,
                 DeliveryInstruction = order.DeliveryInstruction,
@@ -543,7 +555,7 @@
                 Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path),
                 OrderNotes = order.OrderNotes,
                 AreaId = order.AreaId,
-                IPAddress = customer.IpAddress,
+                IPAddress = delivery.IpAddress,
                 IsTakeInvoice = order.IsTakeInvoice,
                 DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
             };
@@ -557,7 +569,8 @@
         /// </summary>
         /// <param name="orderId">订单Id</param>
         /// <param name="supplierId">餐厅Id</param>
-        /// <param name="customer">顾客信息</param>
+        /// <param name="customerId">The customerId</param>
+        /// <param name="delivery">The delivery</param>
         /// <param name="order">订单信息</param>
         /// <returns>
         /// 返回订单信息
@@ -567,9 +580,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveDeliveryEntity(int orderId, int supplierId, ShoppingCartCustomer customer, ShoppingCartOrder order)
+        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
         {
-            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == customer.CustomerAddressId && p.CustomerId == customer.CustomerId);
+            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customerId);
             var deliveryAddressEntity = new DeliveryAddressEntity
             {
                 Recipient = customerAddressEntity.Recipient,
@@ -583,7 +596,7 @@
                 CountryId = customerAddressEntity.CountryId,
                 Telephone = customerAddressEntity.Telephone,
                 Sex = customerAddressEntity.Sex,
-                CustomerId = customer.CustomerId,
+                CustomerId = customerId,
                 IsDel = false
             };
             this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
@@ -591,7 +604,7 @@
             var deliveryEntity = new DeliveryEntity
             {
                 SupplierId = supplierId,
-                CustomerId = customer.CustomerId,
+                CustomerId = customerId,
                 OrderNumber = orderId,
                 DeliveryMethodId = order.DeliveryMethodId,
                 DeliveryInstruction = order.DeliveryInstruction,
@@ -614,7 +627,7 @@
                 Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path),
                 OrderNotes = order.OrderNotes,
                 AreaId = order.AreaId,
-                IPAddress = customer.IpAddress,
+                IPAddress = delivery.IpAddress,
                 IsTakeInvoice = order.IsTakeInvoice,
                 DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
             };

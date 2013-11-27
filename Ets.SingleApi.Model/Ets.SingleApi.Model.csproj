@@ -60,6 +60,7 @@
     <Compile Include="Controller\Response.cs" />
     <Compile Include="Controller\SaveOrderResponse.cs" />
     <Compile Include="Controller\ListResponse.cs" />
+    <Compile Include="Controller\ShoppingCartDeliveryRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="ShoppingCart\ShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\ShoppingCartOrder.cs" />
     <Compile Include="ShoppingCart\ShoppingCartSupplier.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartDelivery.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

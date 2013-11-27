@@ -111,10 +111,21 @@
                 };
             }
 
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(shoppingCartLink.DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartDeliveryResult.StatusCode,
+                    Result = new ShoppingCartModel()
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
+            var delivery = getShoppingCartDeliveryResult.Result;
             return new ServicesResult<ShoppingCartModel>
             {
                 Result = new ShoppingCartModel
@@ -123,7 +134,8 @@
                     ShoppingCart = shoppingCart,
                     Supplier = supplier,
                     Customer = customer,
-                    Order = order
+                    Order = order,
+                    Delivery = delivery
                 }
             };
         }
@@ -188,6 +200,20 @@
                 };
             }
 
+            var shoppingCartDelivery = new ShoppingCartDelivery
+            {
+                Id = Guid.NewGuid().ToString()
+            };
+            var shoppingCartDeliveryResult = this.shoppingCartProvider.SaveShoppingCartDelivery(shoppingCartDelivery);
+            if (shoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = shoppingCartDeliveryResult.StatusCode,
+                    Result = string.Empty
+                };
+            }
+
             var shoppingCartLinkId = Guid.NewGuid().ToString();
             var shoppingCartLink = new ShoppingCartLink
                 {
@@ -195,6 +221,7 @@
                     ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId,
                     SupplierId = getShoppingCartSupplierResult.Result.SupplierId,
                     OrderId = shoppingCartOrder.Id,
+                    DeliveryId = shoppingCartDelivery.Id,
                     AnonymityId = userId
                 };
 
@@ -694,6 +721,50 @@
             {
                 Result = true
             };
+        }
+
+        /// <summary>
+        /// Saves the shopping cart delivery.
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="shoppingCartDelivery">The shoppingCartDelivery</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/27/2013 5:31 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCartDelivery(string id, ShoppingCartDelivery shoppingCartDelivery)
+        {
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(shoppingCartLink.DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeliveryResult.StatusCode
+                };
+            }
+
+            shoppingCartDelivery.Id = getShoppingCartDeliveryResult.Result.Id;
+            this.shoppingCartProvider.SaveShoppingCartDelivery(shoppingCartDelivery);
+
+            return new ServicesResult<bool>
+            {
+                Result = true
+            };
+
         }
 
         /// <summary>

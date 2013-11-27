@@ -353,6 +353,28 @@
         }
 
         /// <summary>
+        /// 获取订单配送信息
+        /// </summary>
+        /// <param name="id">订单配送信息唯一标识符</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string id)
+        {
+            var shoppingCartDeliveryResult = this.shoppingCartCacheServices.GetShoppingCartDelivery(id);
+            return new ServicesResult<ShoppingCartDelivery>
+            {
+                StatusCode = shoppingCartDeliveryResult.StatusCode,
+                Result = shoppingCartDeliveryResult.Result ?? new ShoppingCartDelivery()
+            };
+        }
+
+        /// <summary>
         /// 保存购物车信息
         /// </summary>
         /// <param name="shoppingCart">购物车信息</param>
@@ -393,6 +415,28 @@
             {
                 StatusCode = saveShoppingCartOrderResult.StatusCode,
                 Result = saveShoppingCartOrderResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存订单配送信息
+        /// </summary>
+        /// <param name="shoppingCartDelivery">订单配送信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCartDelivery(ShoppingCartDelivery shoppingCartDelivery)
+        {
+            var saveShoppingCartDeliveryResult = this.shoppingCartCacheServices.SaveShoppingCartDelivery(shoppingCartDelivery);
+            return new ServicesResult<bool>
+            {
+                StatusCode = saveShoppingCartDeliveryResult.StatusCode,
+                Result = saveShoppingCartDeliveryResult.Result
             };
         }
 

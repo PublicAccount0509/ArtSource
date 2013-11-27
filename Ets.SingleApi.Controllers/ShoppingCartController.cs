@@ -124,7 +124,7 @@
         }
 
         /// <summary>
-        /// 保存顾客信息
+        /// 关联顾客信息
         /// </summary>
         /// <param name="id">The id</param>
         /// <param name="userId">The userId</param>
@@ -140,6 +140,66 @@
         public Response<ShoppingCartModel> Customer(string id, int userId)
         {
             var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartCustomer(id, userId);
+            if (!saveShoppingCartCustomerResult.Result)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingCartCustomerResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var result = this.shoppingCartServices.GetShoppingCart(id);
+            return new Response<ShoppingCartModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存顾客信息
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The ShoppingCartResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:29 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<ShoppingCartModel> Delivery(string id, ShoppingCartDeliveryRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var delivery = new ShoppingCartDelivery
+                {
+                    Name = requst.Name,
+                    Telephone = requst.Telephone,
+                    Gender = requst.Gender,
+                    IpAddress = requst.IpAddress,
+                    CustomerAddressId = requst.CustomerAddressId
+                };
+
+            var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartDelivery(id, delivery);
             if (!saveShoppingCartCustomerResult.Result)
             {
                 return new Response<ShoppingCartModel>

@@ -72,6 +72,20 @@
         ServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string id);
 
         /// <summary>
+        /// 获取订单配送信息
+        /// </summary>
+        /// <param name="id">订单配送信息唯一标识符</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string id);
+
+        /// <summary>
         /// 获取购物车关联信息
         /// </summary>
         /// <param name="shoppingCartLinkId">购物车关联Id</param>
@@ -127,6 +141,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveShoppingCartOrder(ShoppingCartOrder shoppingCartOrder);
+
+        /// <summary>
+        /// 保存订单配送信息
+        /// </summary>
+        /// <param name="shoppingCartDelivery">订单配送信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SaveShoppingCartDelivery(ShoppingCartDelivery shoppingCartDelivery);
 
         /// <summary>
         /// 保存购物车关联信息
