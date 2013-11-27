@@ -304,7 +304,7 @@
                     RegionId = regionId ?? -1,
                     UserLat = userLat ?? 0,
                     UserLong = userLong ?? 0,
-                    Distance = (userLat == null || userLong == null) ? -1 : (distance ?? -1),
+                    Distance = (buildingLat == null || buildingLong == null) ? -1 : (distance ?? -1),
                     PageSize = pageSize,
                     PageIndex = pageIndex,
                     BuildingLat = buildingLat ?? 0,
