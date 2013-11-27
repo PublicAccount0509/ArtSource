@@ -464,6 +464,8 @@
             this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId);
+            order.IsComplete = true;
+            this.shoppingCartProvider.SaveShoppingCartOrder(order);
             return new ServicesResult<string>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,

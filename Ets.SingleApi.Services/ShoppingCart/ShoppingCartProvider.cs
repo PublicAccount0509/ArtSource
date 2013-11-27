@@ -478,6 +478,26 @@
         public ServicesResult<ShoppingCartLink> GetShoppingCartLink(int supplierId, string anonymityId)
         {
             var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(string.Format("{0}_{1}", anonymityId, supplierId));
+            var shoppingCartLink = getShoppingCartLinkResult.Result ?? new ShoppingCartLink();
+            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<ShoppingCartLink>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = null
+                };
+            }
+
+            if (getShoppingCartOrderResult.Result.IsComplete)
+            {
+                return new ServicesResult<ShoppingCartLink>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = null
+                };
+            }
+
             return new ServicesResult<ShoppingCartLink>
             {
                 StatusCode = getShoppingCartLinkResult.StatusCode,
