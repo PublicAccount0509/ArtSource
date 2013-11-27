@@ -95,7 +95,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [HttpGet]
+        [HttpPost]
         public Response<string> SaveOrder(string shoppingCartId, int orderType)
         {
             var getOrderResult = this.orderServices.SaveOrder(shoppingCartId, orderType);

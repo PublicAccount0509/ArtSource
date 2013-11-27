@@ -728,19 +728,20 @@
             var order = getShoppingCartOrderResult.Result;
 
             var now = DateTime.Now;
-            var deliveryDate = (order.DeliveryDate ?? now).ToString("yyyy-MM-dd");
+            var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
             DateTime deliveryTimeTemp;
-            if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, order.DeliveryTime), out deliveryTimeTemp))
+            if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, shoppingCartOrder.DeliveryTime), out deliveryTimeTemp))
             {
-                deliveryTimeTemp = (order.DeliveryDate ?? now);
+                deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
             }
 
             if (order.DeliveryType == ServicesCommon.QuickDeliveryType)
             {
-                deliveryTimeTemp = (order.DeliveryDate ?? now);
+                deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
             }
 
-            var deliveryTime = this.GetDeliveryDate(order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId, order.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
+            var deliveryMethodId = shoppingCartOrder.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
             if (deliveryTime < now.AddMinutes(ServicesCommon.MinDeliveryHours))
             {
                 return new ServicesResult<bool>
@@ -759,7 +760,6 @@
                 Quantity = p.Quantity
             }).ToList());
 
-            var deliveryMethodId = shoppingCartOrder.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
