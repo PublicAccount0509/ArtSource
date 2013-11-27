@@ -61,6 +61,7 @@
     <Compile Include="Controller\SaveOrderResponse.cs" />
     <Compile Include="Controller\ListResponse.cs" />
     <Compile Include="Controller\ShoppingCartDeliveryRequst.cs" />
+    <Compile Include="Controller\ShoppingCartRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />

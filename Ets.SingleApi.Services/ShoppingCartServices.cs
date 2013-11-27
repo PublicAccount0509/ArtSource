@@ -608,6 +608,71 @@
         }
 
         /// <summary>
+        /// 保存订单信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCart">The shoppingCart</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCart(string id, ShoppingCartModel shoppingCart)
+        {
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartResult.StatusCode
+                };
+            }
+
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(shoppingCartLink.DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeliveryResult.StatusCode
+                };
+            }
+
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode
+                };
+            }
+
+            shoppingCart.Delivery.Id = getShoppingCartDeliveryResult.Result.Id;
+            shoppingCart.Order.Id = getShoppingCartOrderResult.Result.Id;
+            shoppingCart.ShoppingCart.ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId;
+            this.shoppingCartProvider.SaveShoppingCartDelivery(shoppingCart.Delivery);
+            this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCart.Order);
+            this.shoppingCartProvider.SaveShoppingCart(shoppingCart.ShoppingCart);
+
+            return new ServicesResult<bool>
+            {
+                Result = true
+            };
+        }
+
+        /// <summary>
         /// 保存用户信息
         /// </summary>
         /// <param name="id">购物车Id</param>

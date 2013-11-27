@@ -84,6 +84,64 @@
         }
 
         /// <summary>
+        /// 保存一个购物车
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="requst">购物车信息</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<ShoppingCartModel> ShoppingCart(string id, ShoppingCartRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var shoppingCartModel = new ShoppingCartModel
+                {
+                    Delivery = requst.Delivery,
+                    Order = requst.Order,
+                    ShoppingCart = requst.ShoppingCart
+                };
+
+            var getShoppingCartResult = this.shoppingCartServices.SaveShoppingCart(id, shoppingCartModel);
+            if (!getShoppingCartResult.Result)
+            {
+                return new Response<ShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getShoppingCartResult.StatusCode
+                    },
+                    Result = new ShoppingCartModel()
+                };
+            }
+
+            var result = this.shoppingCartServices.GetShoppingCart(id);
+            return new Response<ShoppingCartModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
         /// 创建一个购物车
         /// </summary>
         /// <param name="supplierId">餐厅Id</param>

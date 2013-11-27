@@ -110,6 +110,21 @@
         /// 保存订单信息
         /// </summary>
         /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCart">The shoppingCart</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SaveShoppingCart(string id, ShoppingCartModel shoppingCart);
+
+        /// <summary>
+        /// 保存订单信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
         /// <returns>
         /// 返回购物车信息
