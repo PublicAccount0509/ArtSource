@@ -19,6 +19,25 @@
     public class ControllerInterceptor : IInterceptor
     {
         /// <summary>
+        /// 记录日志的名称
+        /// </summary>
+        /// <value>
+        /// 记录日志的名称
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/28/2013 3:36 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string LogName
+        {
+            get
+            {
+                return "Ets.SingleApi.Controllers";
+            }
+        }
+
+        /// <summary>
         /// 拦截方法
         /// </summary>
         /// <param name="invocation">The invocation</param>
@@ -61,7 +80,7 @@
             }
 
             var message = string.Format("Method:{0}---Url:{1}", httpContext.Request.Method, httpContext.Request.RequestUri);
-            message.WriteLog("Ets.SingleApi.Controllers", Log4NetType.Info);
+            message.WriteLog(this.LogName, Log4NetType.Info);
         }
     }
 }

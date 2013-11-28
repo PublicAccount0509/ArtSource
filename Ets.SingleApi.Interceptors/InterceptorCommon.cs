@@ -17,10 +17,10 @@
     internal class InterceptorCommon
     {
         /// <summary>
-        /// 是否记录详细参数log
+        /// 是否开启记录请求参数的详细日志
         /// </summary>
         /// <value>
-        /// 是否记录详细参数log
+        /// 是否开启记录请求参数的详细日志
         /// </value>
         /// 创建者：周超
         /// 创建日期：10/30/2013 3:12 PM
@@ -32,6 +32,25 @@
             get
             {
                 return string.Equals(ConfigurationManager.AppSettings["WriteLogParamsEnabled"], "true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// 是否开启记录返回值的详细日志
+        /// </summary>
+        /// <value>
+        /// 是否开启记录返回值的详细日志
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool WriteLogReturnEnabled
+        {
+            get
+            {
+                return string.Equals(ConfigurationManager.AppSettings["WriteLogReturnEnabled"], "true", StringComparison.OrdinalIgnoreCase);
             }
         }
 

@@ -1,11 +1,9 @@
 ﻿namespace Ets.SingleApi.Interceptors
 {
-    using System;
     using System.Web.Http.Controllers;
 
     using Castle.DynamicProxy;
 
-    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -21,6 +19,25 @@
     public class WapControllerInterceptor : IInterceptor
     {
         /// <summary>
+        /// 记录日志的名称
+        /// </summary>
+        /// <value>
+        /// 记录日志的名称
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/28/2013 3:36 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string LogName
+        {
+            get
+            {
+                return "Ets.SingleApi.WapControllers";
+            }
+        }
+
+        /// <summary>
         /// 拦截方法
         /// </summary>
         /// <param name="invocation">The invocation</param>
@@ -32,23 +49,7 @@
         public void Intercept(IInvocation invocation)
         {
             this.WriteLog(invocation);
-            try
-            {
-                invocation.Proceed();
-            }
-            catch (Exception exception)
-            {
-                exception.WriteLog("Ets.SingleApi.WapControllers");
-            }
-
-            if (invocation.ReturnValue == null)
-            {
-                var result = (InterceptorCommon.GetConstructor(invocation.Method.ReturnType) as ApiResponse) ?? new ApiResponse();
-                result.Message = new ApiMessage { StatusCode = (int)StatusCode.System.InternalServerError };
-                invocation.ReturnValue = result;
-            }
-
-            InterceptorCommon.GetChildrenConstructor(invocation.ReturnValue);
+            invocation.Proceed();
         }
 
         /// <summary>
@@ -79,7 +80,7 @@
             }
 
             var message = string.Format("Method:{0}---Url:{1}", httpContext.Request.Method, httpContext.Request.RequestUri);
-            message.WriteLog("Ets.SingleApi.WapControllers", Log4NetType.Info);
+            message.WriteLog(this.LogName, Log4NetType.Info);
         }
     }
 }
