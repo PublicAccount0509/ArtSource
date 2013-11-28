@@ -736,28 +736,31 @@
 
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
-
-            var now = DateTime.Now;
-            var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
-            DateTime deliveryTimeTemp;
-            if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, shoppingCartOrder.DeliveryTime), out deliveryTimeTemp))
-            {
-                deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
-            }
-
-            if (order.DeliveryType == ServicesCommon.QuickDeliveryType)
-            {
-                deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
-            }
-
             var deliveryMethodId = shoppingCartOrder.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
-            var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
-            if (deliveryTime < now.AddMinutes(ServicesCommon.MinDeliveryHours))
+            var deliveryTime = order.DeliveryDateTime;
+            if (deliveryTime == null)
             {
-                return new ServicesResult<bool>
+                var now = DateTime.Now;
+                var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
+                DateTime deliveryTimeTemp;
+                if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, shoppingCartOrder.DeliveryTime), out deliveryTimeTemp))
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
-                };
+                    deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
+                }
+
+                if (order.DeliveryType == ServicesCommon.QuickDeliveryType)
+                {
+                    deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
+                }
+                
+                deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
+                if (deliveryTime < now.AddMinutes(ServicesCommon.MinDeliveryHours))
+                {
+                    return new ServicesResult<bool>
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+                    };
+                }
             }
 
             var shoppingCart = getShoppingCartResult.Result;
