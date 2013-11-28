@@ -405,6 +405,13 @@
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
+            if (order.IsComplete)
+            {
+                return new ServicesResult<string>
+                    {
+                        Result = order.OrderId.ToString()
+                    };
+            }
 
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             if (shoppingList.Count == 0)
@@ -465,6 +472,7 @@
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId);
             order.IsComplete = true;
+            order.OrderId = orderId;
             this.shoppingCartProvider.SaveShoppingCartOrder(order);
             return new ServicesResult<string>
             {
