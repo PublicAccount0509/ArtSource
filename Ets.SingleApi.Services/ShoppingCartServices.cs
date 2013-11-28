@@ -187,7 +187,6 @@
             var shoppingCartOrder = new ShoppingCartOrder
                 {
                     Id = Guid.NewGuid().ToString(),
-                    DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId,
                     DeliveryType = ServicesCommon.DefaultDeliveryType
                 };
             var saveShoppingCartOrderResult = this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
@@ -323,15 +322,16 @@
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
-
             var totalfee = shoppingPrice + packagingFee;
-            var deliveryMethodId = totalfee < supplier.DelMinOrderAmount ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
+            var deliveryMethodId = canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? totalfee + fixedDeliveryCharge
                         : totalfee;
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            order.CanDelivery = canDelivery;
             order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
@@ -437,13 +437,15 @@
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
             var totalfee = shoppingPrice + packagingFee;
-            var deliveryMethodId = totalfee < supplier.DelMinOrderAmount ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
+            var deliveryMethodId = canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? totalfee + fixedDeliveryCharge
                         : totalfee;
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            order.CanDelivery = canDelivery;
             order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
@@ -546,15 +548,16 @@
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
-
             var totalfee = shoppingPrice + packagingFee;
-            var deliveryMethodId = totalfee < supplier.DelMinOrderAmount ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
+            var deliveryMethodId = canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? totalfee + fixedDeliveryCharge
                         : totalfee;
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            order.CanDelivery = canDelivery;
             order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
@@ -779,6 +782,7 @@
 
             shoppingCartOrder.Id = order.Id;
             shoppingCartOrder.OrderId = order.OrderId;
+            shoppingCartOrder.CanDelivery = order.CanDelivery;
             shoppingCartOrder.DeliveryDateTime = deliveryTime;
             shoppingCartOrder.DeliveryMethodId = deliveryMethodId;
             shoppingCartOrder.TotalPrice = shoppingPrice;
