@@ -324,13 +324,15 @@
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
 
-            var total = order.DeliveryMethodId != null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                    ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                    : shoppingPrice + packagingFee;
-            var customerTotal = order.DeliveryMethodId != null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                    ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                    : shoppingPrice + packagingFee;
+            var totalfee = shoppingPrice + packagingFee;
+            var deliveryMethodId = totalfee < supplier.DelMinOrderAmount ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                        ? totalfee + fixedDeliveryCharge
+                        : totalfee;
+            var coupon = 0;
+            var customerTotal = total - coupon;
 
+            order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
@@ -434,14 +436,15 @@
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
-
-            var deliveryMethodId = order.DeliveryMethodId;
+            var totalfee = shoppingPrice + packagingFee;
+            var deliveryMethodId = totalfee < supplier.DelMinOrderAmount ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                        ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                        : shoppingPrice + packagingFee;
+                        ? totalfee + fixedDeliveryCharge
+                        : totalfee;
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
@@ -451,6 +454,8 @@
             order.CouponFee = coupon;
 
             this.shoppingCartProvider.SaveShoppingCartOrder(order);
+
+
             return new ServicesResult<bool>
             {
                 Result = true
@@ -542,13 +547,15 @@
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
 
-            var deliveryMethodId = order.DeliveryMethodId;
+            var totalfee = shoppingPrice + packagingFee;
+            var deliveryMethodId = totalfee < supplier.DelMinOrderAmount ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                        ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                        : shoppingPrice + packagingFee;
+                        ? totalfee + fixedDeliveryCharge
+                        : totalfee;
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryCharge;
             order.PackagingFee = packagingFee;
