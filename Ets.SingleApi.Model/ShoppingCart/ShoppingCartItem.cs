@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Model
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// 类名称：ShoppingCartItem
     /// 命名空间：Ets.SingleApi.Model
@@ -23,7 +25,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int CategoryId { get; set; }
+        public List<int> CategoryIdList { get; set; }
 
         /// <summary>
         /// 设置或取得商品Id
@@ -89,5 +91,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int Quantity { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShoppingCartItem"/> class.
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/29/2013 6:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ShoppingCartItem()
+        {
+            this.CategoryIdList = new List<int>();
+        }
     }
 }
