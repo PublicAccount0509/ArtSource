@@ -745,13 +745,13 @@
                 deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
             }
 
-            if (order.DeliveryType == ServicesCommon.QuickDeliveryType)
+            if (shoppingCartOrder.DeliveryType == ServicesCommon.QuickDeliveryType)
             {
                 deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
             }
 
             var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
-            if (deliveryTime < now.AddMinutes(ServicesCommon.MinDeliveryHours))
+            if (deliveryTime < DateTime.Parse(now.ToString("yyyy-MM-dd HH:mm")).AddMinutes(ServicesCommon.MinDeliveryHours))
             {
                 return new ServicesResult<bool>
                 {
