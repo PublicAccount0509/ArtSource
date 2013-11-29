@@ -949,7 +949,7 @@
             order.CanDelivery = canDelivery;
             order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
-            order.FixedDeliveryFee = fixedDeliveryCharge;
+            order.FixedDeliveryFee = fixedDeliveryFee;
             order.PackagingFee = packagingFee;
             order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
             order.TotalFee = total;
