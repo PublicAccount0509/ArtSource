@@ -390,6 +390,11 @@
                     continue;
                 }
 
+                foreach (var categoryId in shoppingCartItem.CategoryIdList.Where(categoryId => !item.CategoryIdList.Contains(categoryId)))
+                {
+                    item.CategoryIdList.Add(categoryId);
+                }
+
                 item.Quantity += shoppingCartItem.Quantity;
             }
 
