@@ -653,7 +653,7 @@
                                  supplierEntity.DefaultCuisineId
                              });
 
-            var tempSupplierList = parameter.PageIndex == null ? queryable.ToList() : queryable.Skip(parameter.PageIndex.Value).Take(parameter.PageSize).ToList();
+            var tempSupplierList = parameter.PageIndex == null ? queryable.ToList() : queryable.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize).ToList();
             if (tempSupplierList.Count == 0)
             {
                 return new ServicesResultList<GroupSupplierModel>
