@@ -16,10 +16,24 @@
     public interface IOrderServices
     {
         /// <summary>
+        /// 取得订单是否存在以及支付支付状态
+        /// </summary>
+        /// <param name="orderId">订单状态</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <returns>
+        /// 返回结果 0 不存在 1 支付 2 未支付
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<int> Exist(int orderId, int orderType);
+
+        /// <summary>
         /// 取得订单详情
         /// </summary>
         /// <param name="orderId">订单号</param>
-        /// <param name="userId">用户Id</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
         /// 返回结果
@@ -29,7 +43,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<IOrderDetailModel> GetOrder(int orderId, int userId, int orderType);
+        ServicesResult<IOrderDetailModel> GetOrder(int orderId, int orderType);
 
         /// <summary>
         /// 保存订单信息

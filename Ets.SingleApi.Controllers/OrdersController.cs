@@ -47,7 +47,33 @@
         /// 取得订单详情
         /// </summary>
         /// <param name="id">订单号</param>
-        /// <param name="userId">用户Id</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <returns>
+        /// 返回结果 0 不存在 1 支付 2 未支付
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<int> Exist(int id, int orderType)
+        {
+            var getOrderResult = this.orderServices.Exist(id, orderType);
+            return new Response<int>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderResult.StatusCode
+                },
+                Result = getOrderResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 取得订单详情
+        /// </summary>
+        /// <param name="id">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
         /// 返回结果
@@ -58,9 +84,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<IOrderDetailModel> GetOrder(int id, int userId, int orderType)
+        public Response<IOrderDetailModel> GetOrder(int id, int orderType)
         {
-            var getOrderResult = this.orderServices.GetOrder(id, userId, orderType);
+            var getOrderResult = this.orderServices.GetOrder(id, orderType);
             if (getOrderResult.Result == null)
             {
                 return new Response<IOrderDetailModel>

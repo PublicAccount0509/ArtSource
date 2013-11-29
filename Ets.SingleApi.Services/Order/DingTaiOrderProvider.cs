@@ -65,10 +65,26 @@
         }
 
         /// <summary>
+        /// 取得订单是否存在以及支付支付状态
+        /// </summary>
+        /// <param name="orderId">订单状态</param>
+        /// <returns>
+        /// 返回结果 0 不存在 1 支付 2 未支付
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<int> Exist(int orderId)
+        {
+            return new ServicesResult<int>();
+        }
+
+        /// <summary>
         /// 取得订单详情
         /// </summary>
         /// <param name="orderId">订单号</param>
-        /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -77,7 +93,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<IOrderDetailModel> GetOrder(int orderId, int userId)
+        public ServicesResult<IOrderDetailModel> GetOrder(int orderId)
         {
             return new ServicesResult<IOrderDetailModel>();
         }

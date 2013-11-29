@@ -1,6 +1,5 @@
 ﻿namespace Ets.SingleApi.Model.Services
 {
-    using System;
     using System.Collections.Generic;
 
     /// <summary>

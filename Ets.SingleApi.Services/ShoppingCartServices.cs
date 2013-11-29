@@ -324,7 +324,7 @@
                                          : supplier.FixedDeliveryCharge;
             var totalfee = shoppingPrice + packagingFee;
             var canDelivery = totalfee >= supplier.DelMinOrderAmount;
-            var deliveryMethodId = canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? totalfee + fixedDeliveryCharge
                         : totalfee;
@@ -438,7 +438,7 @@
                                          : supplier.FixedDeliveryCharge;
             var totalfee = shoppingPrice + packagingFee;
             var canDelivery = totalfee >= supplier.DelMinOrderAmount;
-            var deliveryMethodId = canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? totalfee + fixedDeliveryCharge
                         : totalfee;
@@ -550,7 +550,7 @@
                                          : supplier.FixedDeliveryCharge;
             var totalfee = shoppingPrice + packagingFee;
             var canDelivery = totalfee >= supplier.DelMinOrderAmount;
-            var deliveryMethodId = canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? totalfee + fixedDeliveryCharge
                         : totalfee;
@@ -737,30 +737,26 @@
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var deliveryMethodId = shoppingCartOrder.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
-            var deliveryTime = order.DeliveryDateTime;
-            if (deliveryTime == null)
+            var now = DateTime.Now;
+            var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
+            DateTime deliveryTimeTemp;
+            if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, shoppingCartOrder.DeliveryTime), out deliveryTimeTemp))
             {
-                var now = DateTime.Now;
-                var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
-                DateTime deliveryTimeTemp;
-                if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, shoppingCartOrder.DeliveryTime), out deliveryTimeTemp))
-                {
-                    deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
-                }
+                deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
+            }
 
-                if (order.DeliveryType == ServicesCommon.QuickDeliveryType)
+            if (order.DeliveryType == ServicesCommon.QuickDeliveryType)
+            {
+                deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
+            }
+
+            var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
+            if (deliveryTime < now.AddMinutes(ServicesCommon.MinDeliveryHours))
+            {
+                return new ServicesResult<bool>
                 {
-                    deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
-                }
-                
-                deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
-                if (deliveryTime < now.AddMinutes(ServicesCommon.MinDeliveryHours))
-                {
-                    return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
-                    };
-                }
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+                };
             }
 
             var shoppingCart = getShoppingCartResult.Result;
