@@ -310,37 +310,7 @@
             var shoppingList = shoppingCartItemList;
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(shoppingCart);
-
-            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
-            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
-                                                    {
-                                                        PackagingFee = p.PackagingFee,
-                                                        Price = p.Price,
-                                                        Quantity = p.Quantity
-                                                    }).ToList());
-
-            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
-                                          ? 0
-                                         : supplier.FixedDeliveryCharge;
-            var totalfee = shoppingPrice + packagingFee;
-            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
-            var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
-            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                        ? totalfee + fixedDeliveryCharge
-                        : totalfee;
-            var coupon = 0;
-            var customerTotal = total - coupon;
-
-            order.CanDelivery = canDelivery;
-            order.DeliveryMethodId = deliveryMethodId;
-            order.TotalPrice = shoppingPrice;
-            order.FixedDeliveryFee = fixedDeliveryCharge;
-            order.PackagingFee = packagingFee;
-            order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
-            order.TotalFee = total;
-            order.CustomerTotalFee = customerTotal;
-
-            this.shoppingCartProvider.SaveShoppingCartOrder(order);
+            this.SaveShoppingCartOrder(shoppingList, supplier, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -425,39 +395,7 @@
 
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(shoppingCart);
-            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
-            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
-            {
-                PackagingFee = p.PackagingFee,
-                Price = p.Price,
-                Quantity = p.Quantity
-            }).ToList());
-
-            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
-                                          ? 0
-                                         : supplier.FixedDeliveryCharge;
-            var totalfee = shoppingPrice + packagingFee;
-            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
-            var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
-            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                        ? totalfee + fixedDeliveryCharge
-                        : totalfee;
-            var coupon = 0;
-            var customerTotal = total - coupon;
-
-            order.CanDelivery = canDelivery;
-            order.DeliveryMethodId = deliveryMethodId;
-            order.TotalPrice = shoppingPrice;
-            order.FixedDeliveryFee = fixedDeliveryCharge;
-            order.PackagingFee = packagingFee;
-            order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
-            order.TotalFee = total;
-            order.CustomerTotalFee = customerTotal;
-            order.CouponFee = coupon;
-
-            this.shoppingCartProvider.SaveShoppingCartOrder(order);
-
-
+            this.SaveShoppingCartOrder(shoppingList, supplier, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -537,37 +475,7 @@
 
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(shoppingCart);
-            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
-            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
-            {
-                PackagingFee = p.PackagingFee,
-                Price = p.Price,
-                Quantity = p.Quantity
-            }).ToList());
-
-            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
-                                          ? 0
-                                         : supplier.FixedDeliveryCharge;
-            var totalfee = shoppingPrice + packagingFee;
-            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
-            var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
-            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                        ? totalfee + fixedDeliveryCharge
-                        : totalfee;
-            var coupon = 0;
-            var customerTotal = total - coupon;
-
-            order.CanDelivery = canDelivery;
-            order.DeliveryMethodId = deliveryMethodId;
-            order.TotalPrice = shoppingPrice;
-            order.FixedDeliveryFee = fixedDeliveryCharge;
-            order.PackagingFee = packagingFee;
-            order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
-            order.TotalFee = total;
-            order.CustomerTotalFee = customerTotal;
-            order.CouponFee = coupon;
-
-            this.shoppingCartProvider.SaveShoppingCartOrder(order);
+            this.SaveShoppingCartOrder(shoppingList, supplier, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -769,13 +677,12 @@
                 Quantity = p.Quantity
             }).ToList());
 
-            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
+            var totalfee = shoppingPrice + packagingFee;
+            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
-
-            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                        ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                        : shoppingPrice + packagingFee;
+            var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
+            var total = totalfee + fixedDeliveryFee;
             var coupon = 0;
             var customerTotal = total - coupon;
 
@@ -785,15 +692,13 @@
             shoppingCartOrder.DeliveryDateTime = deliveryTime;
             shoppingCartOrder.DeliveryMethodId = deliveryMethodId;
             shoppingCartOrder.TotalPrice = shoppingPrice;
-            shoppingCartOrder.FixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
+            shoppingCartOrder.FixedDeliveryFee = fixedDeliveryFee;
             shoppingCartOrder.PackagingFee = packagingFee;
             shoppingCartOrder.TotalQuantity = shoppingList.Sum(p => p.Quantity);
             shoppingCartOrder.TotalFee = total;
             shoppingCartOrder.CustomerTotalFee = customerTotal;
             shoppingCartOrder.CouponFee = coupon;
-
             this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
-
             return new ServicesResult<bool>
             {
                 Result = true
@@ -1007,6 +912,50 @@
             }
 
             return deliveryTime.AddMinutes(result);
+        }
+
+        /// <summary>
+        /// Saves the shopping cart order.
+        /// </summary>
+        /// <param name="shoppingList">The shoppingList</param>
+        /// <param name="supplier">The supplier</param>
+        /// <param name="order">The order</param>
+        /// 创建者：周超
+        /// 创建日期：11/29/2013 11:17 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SaveShoppingCartOrder(List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, ShoppingCartOrder order)
+        {
+            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
+            {
+                PackagingFee = p.PackagingFee,
+                Price = p.Price,
+                Quantity = p.Quantity
+            }).ToList());
+
+            var totalfee = shoppingPrice + packagingFee;
+            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
+                                          ? 0
+                                         : supplier.FixedDeliveryCharge;
+            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
+            var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+            var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
+            var total = totalfee + fixedDeliveryFee;
+            var coupon = 0;
+            var customerTotal = total - coupon;
+
+            order.CanDelivery = canDelivery;
+            order.DeliveryMethodId = deliveryMethodId;
+            order.TotalPrice = shoppingPrice;
+            order.FixedDeliveryFee = fixedDeliveryCharge;
+            order.PackagingFee = packagingFee;
+            order.TotalQuantity = shoppingList.Sum(p => p.Quantity);
+            order.TotalFee = total;
+            order.CustomerTotalFee = customerTotal;
+            order.CouponFee = coupon;
+            this.shoppingCartProvider.SaveShoppingCartOrder(order);
         }
     }
 }
