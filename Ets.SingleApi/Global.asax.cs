@@ -1,7 +1,6 @@
 ﻿namespace Ets.SingleApi
 {
     using System;
-    using System.Net.Http;
     using System.Web.Http;
     using System.Web.Mvc;
 
