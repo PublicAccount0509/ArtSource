@@ -55,6 +55,7 @@
     <Compile Include="Controller\ShoppingCartResponse.cs" />
     <Compile Include="Controller\ShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\ShoppingCartOrderRequst.cs" />
+    <Compile Include="Controller\SupplierServiceTime.cs" />
     <Compile Include="Controller\TestApiResponse.cs" />
     <Compile Include="Controller\GetOrderResponse.cs" />
     <Compile Include="Controller\Response.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
+    <Compile Include="Services\SupplierServiceTimeModel.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
     <Compile Include="ShoppingCart\IShoppingCartBusiness.cs" />

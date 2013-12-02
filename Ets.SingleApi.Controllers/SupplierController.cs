@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
@@ -692,6 +693,26 @@
                 },
                 Result = result.Result
             };
+        }
+
+        /// <summary>
+        /// 取得餐厅营业时间
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="startDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<SupplierServiceTime> SupplierServiceTime(int id, DateTime? startDate = null, int? days = null)
+        {
+            return new ListResponse<SupplierServiceTime>();
         }
     }
 }

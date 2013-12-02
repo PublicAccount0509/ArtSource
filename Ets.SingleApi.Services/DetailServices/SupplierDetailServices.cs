@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     using Castle.Services.Transaction;
 
@@ -97,6 +98,26 @@
         private readonly INHibernateRepository<SupplierMenuCategoryEntity> supplierMenuCategoryEntityRepository;
 
         /// <summary>
+        /// 字段suppTimeTableDisplayEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:44 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository;
+
+        /// <summary>
+        /// 字段timeTableDisplayEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:44 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SupplierDetailServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
@@ -106,6 +127,8 @@
         /// <param name="supplierDishImageEntityRepository">The supplierDishImageEntityRepository</param>
         /// <param name="supplierCategoryEntityRepository">The supplierCategoryEntityRepository</param>
         /// <param name="supplierMenuCategoryEntityRepository">The supplierMenuCategoryEntityRepository</param>
+        /// <param name="suppTimeTableDisplayEntityRepository">The suppTimeTableDisplayEntityRepository</param>
+        /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：11/1/2013 5:03 PM
         /// 修改者：
@@ -118,7 +141,9 @@
             INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository,
             INHibernateRepository<SupplierDishImageEntity> supplierDishImageEntityRepository,
             INHibernateRepository<SupplierCategoryEntity> supplierCategoryEntityRepository,
-            INHibernateRepository<SupplierMenuCategoryEntity> supplierMenuCategoryEntityRepository)
+            INHibernateRepository<SupplierMenuCategoryEntity> supplierMenuCategoryEntityRepository,
+            INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
+            INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.categoryEntityRepository = categoryEntityRepository;
@@ -127,6 +152,8 @@
             this.supplierDishImageEntityRepository = supplierDishImageEntityRepository;
             this.supplierCategoryEntityRepository = supplierCategoryEntityRepository;
             this.supplierMenuCategoryEntityRepository = supplierMenuCategoryEntityRepository;
+            this.suppTimeTableDisplayEntityRepository = suppTimeTableDisplayEntityRepository;
+            this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
         }
 
         /// <summary>
@@ -534,6 +561,77 @@
             {
                 Result = true
             };
+        }
+
+        /// <summary>
+        /// 取得餐厅营业时间
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="startServiceDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DetailServicesResult<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId, DateTime startServiceDate, int days)
+        {
+            var dayList = new List<int>();
+
+            for (var i = 0; i < days; i++)
+            {
+                DateTime.Now.DayOfWeek.ToString("d");
+            }
+            //foreach (var day in days)
+            //{
+            //    DateTime.Now.DayOfWeek.ToString("d")
+            //}
+            var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
+                                            where entity.SupplierId == supplierId
+                                            select new
+                                            {
+                                                entity.Day,
+                                                entity.TimeTableDisplayId
+                                            }).ToList();
+
+            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => DateTime.Now.DayOfWeek.ToString("d") == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
+            if (timeTableDisplayIdList.Count == 0)
+            {
+                return new DetailServicesResult<SupplierServiceTimeModel>
+                {
+                    Result = new SupplierServiceTimeModel()
+                };
+            }
+
+            var timeTableDisplayList = (from entity in this.timeTableDisplayEntityRepository.EntityQueryable
+                                        where timeTableDisplayIdList.Contains(entity.TimeTableDisplayId)
+                                        select new
+                                        {
+                                            entity.OpenTime,
+                                            entity.CloseTime
+                                        }).ToList();
+
+
+            
+            var pattern = @"(\d{1,2}:\d{1,2}).*?-.*?(\d{1,2}:\d{1,2})";
+            var matches = Regex.Matches(string.Empty, pattern);
+            foreach (Match match in matches)
+            {
+                if (match.Groups.Count < 2)
+                {
+                    continue;
+                }
+
+                //BussinessHours model = new BussinessHours();
+                //model.StartTime = DateTime.Parse(match.Groups[1].Value);
+                //model.EndTime = DateTime.Parse(match.Groups[2].Value);
+                //result.Add(model);
+            }
+
+            return new DetailServicesResult<SupplierServiceTimeModel>();
         }
     }
 }
