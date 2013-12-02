@@ -617,6 +617,12 @@
                     var endDate = item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime);
                     while (startDate <= endDate)
                     {
+                        if (serviceDate.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") && DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate)) < DateTime.Now)
+                        {
+                            startDate = startDate.AddMinutes(ServicesCommon.ServiceTimeInterval);
+                            continue;
+                        }
+
                         list.Add(startDate.ToString("HH:mm"));
                         startDate = startDate.AddMinutes(ServicesCommon.ServiceTimeInterval);
                     }

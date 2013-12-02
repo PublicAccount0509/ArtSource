@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
@@ -664,11 +665,12 @@
             }
 
             var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
-            if (deliveryTime < DateTime.Parse(now.ToString("yyyy-MM-dd HH:mm")).AddMinutes(ServicesCommon.MinDeliveryHours))
+            var validateDeliveryTimeResult = this.shoppingCartProvider.ValidateDeliveryTime(supplier.SupplierId, deliveryTime, now);
+            if (!validateDeliveryTimeResult.Result)
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+                    StatusCode = validateDeliveryTimeResult.StatusCode
                 };
             }
 

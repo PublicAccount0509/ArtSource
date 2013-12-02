@@ -559,5 +559,74 @@
                 Result = saveShoppingCartOrderResult.Result
             };
         }
+
+        /// <summary>
+        /// 验证送餐时间
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryTime">送餐时间</param>
+        /// <param name="now">当前时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 6:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> ValidateDeliveryTime(int supplierId, DateTime deliveryTime, DateTime now)
+        {
+            var tempDeliveryTime = DateTime.Parse(deliveryTime.ToString("yyyy-MM-dd HH:mm"));
+            if (tempDeliveryTime < DateTime.Parse(now.ToString("yyyy-MM-dd HH:mm")).AddMinutes(ServicesCommon.MinDeliveryHours))
+            {
+                return new ServicesResult<bool>
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+                    };
+            }
+
+            var deliveryDate = DateTime.Parse(deliveryTime.ToString("yyyy-MM-dd"));
+            var day = now.DayOfWeek.ToString("d");
+            var timeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
+                                        from timeTable in this.timeTableDisplayEntityRepository.EntityQueryable
+                                        where entity.SupplierId == supplierId
+                                        && entity.TimeTableDisplayId == timeTable.TimeTableDisplayId
+                                        && timeTable.OpenTime != null
+                                        && timeTable.CloseTime != null
+                                        select new
+                                        {
+                                            entity.Day,
+                                            timeTable.OpenTime,
+                                            timeTable.CloseTime
+                                        }).ToList();
+
+            var timeTableList = timeTableDisplayList.Where(p => p.Day != null && p.OpenTime != null && p.CloseTime != null)
+                                   .Where(p => p.Day.Value.ToString() == day).ToList();
+            if (timeTableList.Count <= 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+                };
+            }
+
+            foreach (var item in timeTableList)
+            {
+                var startDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate, item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
+                var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate, item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
+                if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
+                {
+                    return new ServicesResult<bool>
+                        {
+                            Result = true
+                        };
+                }
+            }
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+            };
+        }
     }
 }

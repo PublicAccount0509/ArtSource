@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System;
+
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Services;
 
@@ -183,5 +185,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> CompleteShoppingCartOrder(string orderId);
+
+        /// <summary>
+        /// 验证送餐时间
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryTime">送餐时间</param>
+        /// <param name="now">当前时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 6:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> ValidateDeliveryTime(int supplierId, DateTime deliveryTime, DateTime now);
     }
 }
