@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Controllers.IServices
 {
+    using System;
     using System.Collections.Generic;
 
     using Ets.SingleApi.Model.Services;
@@ -274,5 +275,22 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> DeleteSupplierDish(DeleteSupplierDishParameter parameter);
+
+        /// <summary>
+        /// 取得餐厅营业时间
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="startServiceDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(
+            int supplierId, DateTime? startServiceDate, int? days);
     }
 }

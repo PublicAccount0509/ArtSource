@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text.RegularExpressions;
 
     using Castle.Services.Transaction;
 
@@ -577,61 +576,70 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DetailServicesResult<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId, DateTime startServiceDate, int days)
+        public DetailServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId, DateTime startServiceDate, int days)
         {
-            var dayList = new List<int>();
-
+            var dayList = new List<string>();
             for (var i = 0; i < days; i++)
             {
-                DateTime.Now.DayOfWeek.ToString("d");
-            }
-            //foreach (var day in days)
-            //{
-            //    DateTime.Now.DayOfWeek.ToString("d")
-            //}
-            var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
-                                            where entity.SupplierId == supplierId
-                                            select new
-                                            {
-                                                entity.Day,
-                                                entity.TimeTableDisplayId
-                                            }).ToList();
-
-            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => DateTime.Now.DayOfWeek.ToString("d") == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
-            if (timeTableDisplayIdList.Count == 0)
-            {
-                return new DetailServicesResult<SupplierServiceTimeModel>
-                {
-                    Result = new SupplierServiceTimeModel()
-                };
+                var day = startServiceDate.AddDays(i).DayOfWeek.ToString("d");
+                dayList.Add(day);
             }
 
-            var timeTableDisplayList = (from entity in this.timeTableDisplayEntityRepository.EntityQueryable
-                                        where timeTableDisplayIdList.Contains(entity.TimeTableDisplayId)
+            var timeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
+                                        from timeTable in this.timeTableDisplayEntityRepository.EntityQueryable
+                                        where entity.SupplierId == supplierId
+                                        && entity.TimeTableDisplayId == timeTable.TimeTableDisplayId
+                                        && timeTable.OpenTime != null
+                                        && timeTable.CloseTime != null
                                         select new
                                         {
-                                            entity.OpenTime,
-                                            entity.CloseTime
+                                            entity.Day,
+                                            timeTable.OpenTime,
+                                            timeTable.CloseTime
                                         }).ToList();
 
-
-            
-            var pattern = @"(\d{1,2}:\d{1,2}).*?-.*?(\d{1,2}:\d{1,2})";
-            var matches = Regex.Matches(string.Empty, pattern);
-            foreach (Match match in matches)
+            var result = new List<SupplierServiceTimeModel>();
+            for (var i = 0; i < days; i++)
             {
-                if (match.Groups.Count < 2)
+                var serviceDate = startServiceDate.AddDays(i);
+                var day = serviceDate.AddDays(i).DayOfWeek.ToString("d");
+                var timeTableList = timeTableDisplayList.Where(p => p.Day != null && p.OpenTime != null && p.CloseTime != null)
+                                    .Where(p => p.Day.Value.ToString() == day).ToList();
+                if (timeTableList.Count <= 0)
                 {
                     continue;
                 }
 
-                //BussinessHours model = new BussinessHours();
-                //model.StartTime = DateTime.Parse(match.Groups[1].Value);
-                //model.EndTime = DateTime.Parse(match.Groups[2].Value);
-                //result.Add(model);
+                var list = new List<string>();
+                foreach (var item in timeTableList)
+                {
+                    var startDate = item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime);
+                    var endDate = item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime);
+                    while (startDate <= endDate)
+                    {
+                        list.Add(startDate.ToString("HH:mm"));
+                        startDate = startDate.AddMinutes(ServicesCommon.ServiceTimeInterval);
+                    }
+                }
+
+                if (list.Count <= 0)
+                {
+                    continue;
+                }
+
+                result.Add(new SupplierServiceTimeModel
+                    {
+                        SupplierId = supplierId,
+                        ServiceDate = serviceDate.ToString("yyyy-MM-dd"),
+                        ServiceTimeList = list
+                    });
             }
 
-            return new DetailServicesResult<SupplierServiceTimeModel>();
+            return new DetailServicesResultList<SupplierServiceTimeModel>
+                {
+                    Result = result,
+                    StatusCode = result.Count == 0 ? (int)StatusCode.Succeed.Empty : (int)StatusCode.Succeed.Ok
+                };
         }
     }
 }

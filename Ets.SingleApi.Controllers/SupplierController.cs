@@ -712,7 +712,44 @@
         [HttpGet]
         public ListResponse<SupplierServiceTime> SupplierServiceTime(int id, DateTime? startDate = null, int? days = null)
         {
-            return new ListResponse<SupplierServiceTime>();
+            var result = this.supplierServices.GetSupplierServiceTime(id, startDate, days);
+            if (result == null)
+            {
+                return new ListResponse<SupplierServiceTime>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Succeed.Empty
+                    },
+                    Result = new List<SupplierServiceTime>()
+                };
+            }
+
+            if (result.Result == null || result.Result.Count == 0)
+            {
+                return new ListResponse<SupplierServiceTime>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = result.StatusCode
+                    },
+                    Result = new List<SupplierServiceTime>()
+                };
+            }
+
+            return new ListResponse<SupplierServiceTime>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result.Select(p => new SupplierServiceTime
+                    {
+                        SupplierId = p.SupplierId,
+                        ServiceDate = p.ServiceDate,
+                        ServiceTimeList = p.ServiceTimeList
+                    }).ToList()
+            };
         }
     }
 }

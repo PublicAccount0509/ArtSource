@@ -20,10 +20,114 @@
     public class ServicesCommon
     {
         /// <summary>
-        /// 默认的送餐方式
+        /// 营业前准备时间
         /// </summary>
         /// <value>
-        /// 默认的送餐方式
+        /// 营业前准备时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int ServiceTimeBeginReadyTime
+        {
+            get
+            {
+                var serviceTimeBeginReadyTime = ConfigurationManager.AppSettings["ServiceTimeBeginReadyTime"] ?? "60";
+                int result;
+                if (!int.TryParse(serviceTimeBeginReadyTime, out result))
+                {
+                    result = 60;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 打烊前准备时间
+        /// </summary>
+        /// <value>
+        /// 打烊前准备时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int ServiceTimeEndReadyTime
+        {
+            get
+            {
+                var serviceTimeEndReadyTime = ConfigurationManager.AppSettings["ServiceTimeEndReadyTime"] ?? "45";
+                int result;
+                if (!int.TryParse(serviceTimeEndReadyTime, out result))
+                {
+                    result = 45;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 服务时间间隔
+        /// </summary>
+        /// <value>
+        /// 服务时间间隔
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int ServiceTimeInterval
+        {
+            get
+            {
+                var serviceTimeInterval = ConfigurationManager.AppSettings["ServiceTimeInterval"] ?? "15";
+                int result;
+                if (!int.TryParse(serviceTimeInterval, out result))
+                {
+                    result = 15;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 取得服务时间的默认天数
+        /// </summary>
+        /// <value>
+        /// 取得服务时间的默认天数
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int ServiceTimeDefaultDays
+        {
+            get
+            {
+                var serviceTimeDefaultDays = ConfigurationManager.AppSettings["ServiceTimeDefaultDays"] ?? "3";
+                int result;
+                if (!int.TryParse(serviceTimeDefaultDays, out result))
+                {
+                    result = 3;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 最快送餐时间
+        /// </summary>
+        /// <value>
+        /// 最快送餐时间
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/19 11:24

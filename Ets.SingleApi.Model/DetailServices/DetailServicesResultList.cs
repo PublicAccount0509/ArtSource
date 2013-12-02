@@ -1,27 +1,27 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model.DetailServices
 {
     using System.Collections.Generic;
 
     /// <summary>
-    /// 类名称：ServicesResult
-    /// 命名空间：Ets.SingleApi.Model.Services
-    /// 类功能：Service返回值
+    /// 类名称：DetailServicesResultList
+    /// 命名空间：Ets.SingleApi.Model.DetailServices
+    /// 类功能：DetailServices返回值
     /// </summary>
     /// 创建者：周超
     /// 创建日期：2013/10/15 19:48
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ServicesResultList<T> : DefaultServicesResult
+    public class DetailServicesResultList<T> : DefaultServicesResult
     {
         /// <summary>
-        /// Gets or sets the Result of ServicesResultList{T}
+        /// Gets or sets the Result of DetailServicesResultList{T}
         /// </summary>
         /// <value>
         /// The Result
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/15 19:52
+        /// 创建日期：2013/10/15 19:51
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------

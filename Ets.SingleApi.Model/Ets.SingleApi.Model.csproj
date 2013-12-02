@@ -64,6 +64,7 @@
     <Compile Include="Controller\ShoppingCartDeliveryRequst.cs" />
     <Compile Include="Controller\ShoppingCartRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
+    <Compile Include="DetailServices\DetailServicesResultList.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />

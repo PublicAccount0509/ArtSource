@@ -39,7 +39,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime ServiceDate { get; set; }
+        public string ServiceDate { get; set; }
 
         /// <summary>
         /// 设置或取得营业时间列表

@@ -1495,5 +1495,39 @@
                 Result = result.Result
             };
         }
+
+        /// <summary>
+        /// 取得餐厅营业时间
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="startServiceDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId, DateTime? startServiceDate, int? days)
+        {
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResultList<SupplierServiceTimeModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierServiceTimeModel>()
+                };
+            }
+
+            var result = this.supplierDetailServices.GetSupplierServiceTime(supplierId, startServiceDate ?? DateTime.Now, days ?? ServicesCommon.ServiceTimeDefaultDays);
+            return new ServicesResultList<SupplierServiceTimeModel>
+            {
+                ResultTotalCount = result.ResultTotalCount,
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
     }
 }
