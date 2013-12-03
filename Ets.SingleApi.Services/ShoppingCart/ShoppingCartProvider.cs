@@ -612,8 +612,8 @@
 
             foreach (var item in timeTableList)
             {
-                var startDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate, item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
-                var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate, item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
+                var startDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
+                var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
                 if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
                 {
                     return new ServicesResult<bool>
