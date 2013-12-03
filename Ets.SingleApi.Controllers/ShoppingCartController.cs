@@ -473,6 +473,7 @@
                     DeliveryType = requst.DeliveryType,
                     InvoiceRequired = requst.InvoiceRequired,
                     InvoiceTitle = requst.InvoiceTitle,
+                    InvoiceType = requst.InvoiceType,
                     IsTakeInvoice = requst.IsTakeInvoice,
                     PaymentMethodId = requst.PaymentMethodId,
                     Template = requst.Template,
