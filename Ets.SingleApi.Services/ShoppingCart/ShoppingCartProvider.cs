@@ -610,10 +610,17 @@
                 };
             }
 
+            var list = timeTableList.Select(
+                    p =>
+                    string.Format(
+                        "{0:t}-{1:t}",
+                        p.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime),
+                        p.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime)));
+            string.Format("送餐或取餐时间：{0}，当前时间：{1}，餐厅服务时间：{2}", tempDeliveryTime, now, string.Join(" ", list)).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
             foreach (var item in timeTableList)
             {
                 var startDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
-                var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
+                var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime)));
                 if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
                 {
                     return new ServicesResult<bool>

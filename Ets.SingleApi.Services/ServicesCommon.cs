@@ -67,7 +67,7 @@
                     result = 45;
                 }
 
-                return result;
+                return result * (-1);
             }
         }
 

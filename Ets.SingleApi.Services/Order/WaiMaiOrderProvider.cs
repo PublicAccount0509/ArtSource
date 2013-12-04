@@ -542,7 +542,7 @@
             {
                 Recipient = userName.IsEmptyOrNull() ? delivery.Name : userName,
                 Telephone = delivery.Telephone,
-                Sex = string.Equals(delivery.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? 1 : 0,
+                Sex = string.Equals(delivery.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) || delivery.Gender == "1" ? 1 : 0,
                 CustomerId = customerId,
                 IsDel = false
             };
