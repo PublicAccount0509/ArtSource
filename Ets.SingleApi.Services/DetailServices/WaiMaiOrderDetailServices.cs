@@ -761,7 +761,7 @@
 
             var customerId = customer.CustomerId;
             var telephone = customer.Mobile;
-            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.WaiMaiAuthCodeCacheKey, telephone));
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", string.Empty, ServicesCommon.WaiMaiAuthCodeCacheKey, telephone));
             if (parameter.AuthCode == (authCode == null ? string.Empty : authCode.ToString()))
             {
                 return new DetailServicesResult<PaymentWaiMaiOrderModel>

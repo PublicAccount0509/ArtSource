@@ -58,7 +58,7 @@
         [HttpGet]
         public ListResponse<BusinessArea> BusinessAreaList(string parentCode = null)
         {
-            var list = this.businessAreaServices.GetAllBusinessAreaList((parentCode ?? string.Empty).Trim());
+            var list = this.businessAreaServices.GetAllBusinessAreaList(this.Source, (parentCode ?? string.Empty).Trim());
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<BusinessArea>

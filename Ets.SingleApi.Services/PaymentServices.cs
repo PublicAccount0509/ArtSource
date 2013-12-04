@@ -63,6 +63,7 @@
         /// <summary>
         /// 支付功能
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回支付交易号
@@ -72,7 +73,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> UmPayment(UmPaymentParameter parameter)
+        public ServicesResult<string> UmPayment(string source, UmPaymentParameter parameter)
         {
             if (parameter == null)
             {
@@ -129,6 +130,7 @@
         /// <summary>
         /// 支付状态
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回支付状态
@@ -138,7 +140,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> UmPaymentState(UmPaymentStateParameter parameter)
+        public ServicesResult<bool> UmPaymentState(string source, UmPaymentStateParameter parameter)
         {
             if (parameter == null)
             {

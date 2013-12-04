@@ -82,7 +82,7 @@
                                           })
                                       .ToList();
 
-            var existResult = this.usersServices.Exist(existParameterList);
+            var existResult = this.usersServices.Exist(this.Source, existParameterList);
             if (existResult == null)
             {
                 return new ListResponse<ExistResult>
@@ -153,7 +153,7 @@
                 };
             }
 
-            var getUserResult = this.usersServices.GetUser(id);
+            var getUserResult = this.usersServices.GetUser(this.Source, id);
             if (getUserResult.Result == null)
             {
                 return new Response<Customer>
@@ -232,7 +232,7 @@
                 };
             }
 
-            var saveCustomerAddressResult = this.usersServices.GetCustomerAddress(id, customerAddressId);
+            var saveCustomerAddressResult = this.usersServices.GetCustomerAddress(this.Source, id, customerAddressId);
             var customerAddress = new CustomerAddress
             {
                 CustomerAddressId = saveCustomerAddressResult.Result.CustomerAddressId,
@@ -299,7 +299,7 @@
                 };
             }
 
-            var result = this.usersServices.SaveCustomerAddress(id, new CustomerAddressParameter
+            var result = this.usersServices.SaveCustomerAddress(this.Source, id, new CustomerAddressParameter
                 {
                     CustomerAddressId = requst.CustomerAddressId,
                     Name = (requst.Name ?? string.Empty).Trim(),
@@ -362,7 +362,7 @@
                 };
             }
 
-            var result = this.usersServices.DeleteCustomerAddress(id, customerAddressIdList);
+            var result = this.usersServices.DeleteCustomerAddress(this.Source, id, customerAddressIdList);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -401,7 +401,7 @@
                 };
             }
 
-            var result = this.usersServices.SetDefaultCustomerAddress(id, customerAddressId);
+            var result = this.usersServices.SetDefaultCustomerAddress(this.Source, id, customerAddressId);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -439,7 +439,7 @@
                 };
             }
 
-            var registerResult = this.usersServices.Register(new RegisterUserParameter
+            var registerResult = this.usersServices.Register(this.Source, new RegisterUserParameter
                 {
                     Email = (requst.Email ?? string.Empty).Trim(),
                     Telephone = (requst.Telephone ?? string.Empty).Trim(),
@@ -507,7 +507,7 @@
                 };
             }
 
-            var list = this.usersServices.GetFollowerSupplierList(id);
+            var list = this.usersServices.GetFollowerSupplierList(this.Source, id);
 
             if (list.Result == null || list.Result.Count == 0)
             {
@@ -573,7 +573,7 @@
                 };
             }
 
-            var result = this.usersServices.IsFollowerSupplier(id, supplierId);
+            var result = this.usersServices.IsFollowerSupplier(this.Source, id, supplierId);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -623,7 +623,7 @@
                 };
             }
 
-            var result = this.usersServices.AddFollowerSupplier(id, supplierIdList);
+            var result = this.usersServices.AddFollowerSupplier(this.Source, id, supplierIdList);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -673,7 +673,7 @@
                 };
             }
 
-            var result = this.usersServices.DeleteFollowerSupplier(id, supplierIdList);
+            var result = this.usersServices.DeleteFollowerSupplier(this.Source, id, supplierIdList);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -717,7 +717,7 @@
                 };
             }
 
-            var list = this.usersServices.GetUserOrderList(id, (OrderType)orderType, new GetUserOrderParameter
+            var list = this.usersServices.GetUserOrderList(this.Source, id, (OrderType)orderType, new GetUserOrderParameter
                                                             {
                                                                 OrderStatus = orderStatus,
                                                                 PaidStatus = paidStatus,

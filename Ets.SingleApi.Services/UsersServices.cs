@@ -195,6 +195,7 @@
         /// <summary>
         /// 获取用户信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回用户信息
@@ -204,7 +205,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<CustomerModel> GetUser(int userId)
+        public ServicesResult<CustomerModel> GetUser(string source, int userId)
         {
             var customerModel = (from customer in this.customerEntityRepository.EntityQueryable
                                  where customer.LoginId == userId
@@ -277,6 +278,7 @@
         /// <summary>
         /// 获取用户地址
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="customerAddressId">用户地址Id</param>
         /// <returns>
@@ -287,7 +289,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<CustomerAddressModel> GetCustomerAddress(int userId, int customerAddressId)
+        public ServicesResult<CustomerAddressModel> GetCustomerAddress(string source, int userId, int customerAddressId)
         {
             var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
             if (customerEntity == null)
@@ -355,6 +357,7 @@
         /// <summary>
         /// 管理用户地址
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
@@ -365,7 +368,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveCustomerAddress(int userId, CustomerAddressParameter parameter)
+        public ServicesResult<bool> SaveCustomerAddress(string source, int userId, CustomerAddressParameter parameter)
         {
             if (parameter == null)
             {
@@ -441,6 +444,7 @@
         /// <summary>
         /// 删除用户地址
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="customerAddressIdList">用户地址Id列表</param>
         /// <returns>
@@ -451,7 +455,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> DeleteCustomerAddress(int userId, List<int> customerAddressIdList)
+        public ServicesResult<bool> DeleteCustomerAddress(string source, int userId, List<int> customerAddressIdList)
         {
             if (customerAddressIdList == null || customerAddressIdList.Count == 0)
             {
@@ -497,6 +501,7 @@
         /// <summary>
         /// 设置默认用户地址
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="customerAddressId">用户地址Id列表</param>
         /// <returns>
@@ -507,7 +512,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SetDefaultCustomerAddress(int userId, int customerAddressId)
+        public ServicesResult<bool> SetDefaultCustomerAddress(string source, int userId, int customerAddressId)
         {
             var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
             if (customerEntity == null)
@@ -557,6 +562,7 @@
         /// <summary>
         /// 注册用户
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">参数</param>
         /// <returns>
         /// 返回注册结果
@@ -566,7 +572,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<RegisterUserModel> Register(RegisterUserParameter parameter)
+        public ServicesResult<RegisterUserModel> Register(string source, RegisterUserParameter parameter)
         {
             if (parameter == null)
             {
@@ -586,7 +592,7 @@
                     };
             }
 
-            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
             if (parameter.AuthCode != (authCode == null ? string.Empty : authCode.ToString()))
             {
                 return new ServicesResult<RegisterUserModel>
@@ -661,7 +667,7 @@
                 };
             }
 
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
             var sendSmsResult = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.FirstRegisterMessage, code));
             return new ServicesResult<RegisterUserModel>
             {
@@ -679,6 +685,7 @@
         /// <summary>
         /// 获取收藏餐厅列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回收藏餐厅列表
@@ -688,7 +695,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(int userId)
+        public ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId)
         {
             var supplierList = (from customerFavorite in this.customerFavoriteEntityRepository.EntityQueryable
                                 where customerFavorite.Customer.LoginId == userId
@@ -763,6 +770,7 @@
         /// <summary>
         /// 判定是否已经收藏餐厅
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">The userId</param>
         /// <param name="supplierId">The supplierId</param>
         /// <returns>
@@ -773,7 +781,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> IsFollowerSupplier(int userId, int supplierId)
+        public ServicesResult<bool> IsFollowerSupplier(string source, int userId, int supplierId)
         {
             var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
             if (customerEntity == null)
@@ -807,6 +815,7 @@
         /// <summary>
         /// 收藏餐厅
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="supplierIdList">餐厅Id列表</param>
         /// <returns>
@@ -817,7 +826,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> AddFollowerSupplier(int userId, List<int> supplierIdList)
+        public ServicesResult<bool> AddFollowerSupplier(string source, int userId, List<int> supplierIdList)
         {
             if (supplierIdList == null || supplierIdList.Count == 0)
             {
@@ -878,6 +887,7 @@
         /// <summary>
         /// 取消收藏餐厅
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="supplierIdList">餐厅Id列表</param>
         /// <returns>
@@ -888,7 +898,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> DeleteFollowerSupplier(int userId, List<int> supplierIdList)
+        public ServicesResult<bool> DeleteFollowerSupplier(string source, int userId, List<int> supplierIdList)
         {
             if (supplierIdList == null || supplierIdList.Count == 0)
             {
@@ -928,6 +938,7 @@
         /// <summary>
         /// 获取用户订单
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="orderType">订单类型</param>
         /// <param name="parameter">查询订单参数</param>
@@ -939,7 +950,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<UserOrderModel> GetUserOrderList(int userId, OrderType orderType, GetUserOrderParameter parameter)
+        public ServicesResultList<UserOrderModel> GetUserOrderList(string source, int userId, OrderType orderType, GetUserOrderParameter parameter)
         {
             if (parameter == null)
             {
@@ -1009,6 +1020,7 @@
         /// <summary>
         /// 验证用户是否存在
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameterList">The parameterList</param>
         /// <returns>
         /// 返回结果
@@ -1018,7 +1030,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<ExistModel> Exist(List<ExistParameter> parameterList)
+        public ServicesResultList<ExistModel> Exist(string source, List<ExistParameter> parameterList)
         {
             if (parameterList == null || parameterList.Count(p => p != null) == 0)
             {

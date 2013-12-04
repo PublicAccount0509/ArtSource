@@ -60,7 +60,7 @@
         [HttpGet]
         public Response<SupplierDetail> Supplier(int id)
         {
-            var getSupplierResult = this.supplierServices.GetSupplier(id);
+            var getSupplierResult = this.supplierServices.GetSupplier(this.Source, id);
             if (getSupplierResult.Result == null)
             {
                 return new Response<SupplierDetail>
@@ -132,7 +132,7 @@
         [HttpGet]
         public Response<RoughSupplier> RoughSupplier(string supplierDomain)
         {
-            var getRoughSupplierResult = this.supplierServices.GetRoughSupplier((supplierDomain ?? string.Empty).Trim());
+            var getRoughSupplierResult = this.supplierServices.GetRoughSupplier(this.Source, (supplierDomain ?? string.Empty).Trim());
             if (getRoughSupplierResult.Result == null)
             {
                 return new Response<RoughSupplier>
@@ -185,7 +185,7 @@
         [HttpGet]
         public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize = 10, int? pageIndex = null)
         {
-            var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(new GetGroupSupplierListParameter
+            var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(this.Source, new GetGroupSupplierListParameter
                 {
                     SupplierGroupId = supplierGroupId,
                     PageIndex = pageIndex,
@@ -244,7 +244,7 @@
         [HttpGet]
         public ListResponse<SupplierFeature> SupplierFeatureList(int id)
         {
-            var getSupplierFeatureListResult = this.supplierServices.GetSupplierFeatureList(id);
+            var getSupplierFeatureListResult = this.supplierServices.GetSupplierFeatureList(this.Source, id);
             if (getSupplierFeatureListResult.Result == null || getSupplierFeatureListResult.Result.Count == 0)
             {
                 return new ListResponse<SupplierFeature>
@@ -298,7 +298,7 @@
         [HttpGet]
         public ListResponse<Supplier> SearchSupplierList(string supplierName, int? regionId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, double? buildingLat = null, double? buildingLong = null)
         {
-            var list = this.supplierServices.GetSearchSupplierList(new GetSearchSupplierListParameter
+            var list = this.supplierServices.GetSearchSupplierList(this.Source, new GetSearchSupplierListParameter
                 {
                     SupplierName = (supplierName ?? string.Empty).Trim(),
                     RegionId = regionId ?? -1,
@@ -370,7 +370,7 @@
         [HttpGet]
         public ListResponse<Supplier> NearSupplierList(string supplierName, int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
         {
-            var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
+            var list = this.supplierServices.GetSupplierList(this.Source, new GetSupplierListParameter
             {
                 SupplierName = (supplierName ?? string.Empty).Trim(),
                 FeatureId = -1,
@@ -445,7 +445,7 @@
         public ListResponse<Supplier> WaiMaiSupplierList(int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
         {
             var featureId = ControllersCommon.WaiMaiFeatureId;
-            var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
+            var list = this.supplierServices.GetSupplierList(this.Source, new GetSupplierListParameter
             {
                 SupplierName = string.Empty,
                 FeatureId = featureId,
@@ -520,7 +520,7 @@
         public ListResponse<Supplier> DingTaiSupplierList(int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
         {
             var featureId = ControllersCommon.DingTaiFeatureId;
-            var list = this.supplierServices.GetSupplierList(new GetSupplierListParameter
+            var list = this.supplierServices.GetSupplierList(this.Source, new GetSupplierListParameter
             {
                 SupplierName = string.Empty,
                 FeatureId = featureId,
@@ -587,7 +587,7 @@
         [HttpGet]
         public ListResponse<SupplierCuisine> Menu(int id, int supplierMenuCategoryTypeId)
         {
-            var list = this.supplierServices.GetMenu(id, supplierMenuCategoryTypeId);
+            var list = this.supplierServices.GetMenu(this.Source, id, supplierMenuCategoryTypeId);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<SupplierCuisine>

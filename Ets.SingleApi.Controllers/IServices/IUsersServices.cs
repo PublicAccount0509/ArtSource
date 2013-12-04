@@ -20,6 +20,7 @@
         /// <summary>
         /// 获取用户信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回用户信息
@@ -29,11 +30,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<CustomerModel> GetUser(int userId);
+        ServicesResult<CustomerModel> GetUser(string source, int userId);
 
         /// <summary>
         /// 获取用户地址
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="customerAddressId">用户地址Id</param>
         /// <returns>
@@ -44,11 +46,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<CustomerAddressModel> GetCustomerAddress(int userId, int customerAddressId);
+        ServicesResult<CustomerAddressModel> GetCustomerAddress(string source, int userId, int customerAddressId);
 
         /// <summary>
         /// 管理用户地址
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
@@ -59,11 +62,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveCustomerAddress(int userId, CustomerAddressParameter parameter);
+        ServicesResult<bool> SaveCustomerAddress(string source, int userId, CustomerAddressParameter parameter);
 
         /// <summary>
         /// 删除用户地址
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="customerAddressIdList">用户地址Id列表</param>
         /// <returns>
@@ -74,11 +78,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> DeleteCustomerAddress(int userId, List<int> customerAddressIdList);
+        ServicesResult<bool> DeleteCustomerAddress(string source, int userId, List<int> customerAddressIdList);
 
         /// <summary>
         /// 设置默认用户地址
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="customerAddressId">用户地址Id列表</param>
         /// <returns>
@@ -89,11 +94,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SetDefaultCustomerAddress(int userId, int customerAddressId);
+        ServicesResult<bool> SetDefaultCustomerAddress(string source, int userId, int customerAddressId);
 
         /// <summary>
         /// 注册用户
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">参数</param>
         /// <returns>
         /// 返回注册结果
@@ -103,11 +109,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<RegisterUserModel> Register(RegisterUserParameter parameter);
+        ServicesResult<RegisterUserModel> Register(string source, RegisterUserParameter parameter);
 
         /// <summary>
         /// 获取收藏餐厅列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回收藏餐厅列表
@@ -117,11 +124,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(int userId);
+        ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId);
 
         /// <summary>
         /// 判定是否已经收藏餐厅
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">The userId</param>
         /// <param name="supplierId">The supplierId</param>
         /// <returns>
@@ -132,11 +140,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> IsFollowerSupplier(int userId, int supplierId);
+        ServicesResult<bool> IsFollowerSupplier(string source, int userId, int supplierId);
 
         /// <summary>
         /// 收藏餐厅
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="supplierIdList">餐厅Id列表</param>
         /// <returns>
@@ -147,11 +156,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> AddFollowerSupplier(int userId, List<int> supplierIdList);
+        ServicesResult<bool> AddFollowerSupplier(string source, int userId, List<int> supplierIdList);
 
         /// <summary>
         /// 取消收藏餐厅
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="supplierIdList">餐厅Id列表</param>
         /// <returns>
@@ -162,11 +172,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> DeleteFollowerSupplier(int userId, List<int> supplierIdList);
+        ServicesResult<bool> DeleteFollowerSupplier(string source, int userId, List<int> supplierIdList);
 
         /// <summary>
         /// 获取用户订单
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <param name="orderType">订单类型</param>
         /// <param name="parameter">查询订单参数</param>
@@ -178,11 +189,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<UserOrderModel> GetUserOrderList(int userId, OrderType orderType, GetUserOrderParameter parameter);
+        ServicesResultList<UserOrderModel> GetUserOrderList(string source, int userId, OrderType orderType, GetUserOrderParameter parameter);
 
         /// <summary>
         /// 验证用户是否存在
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameterList">The parameterList</param>
         /// <returns>
         /// 返回结果
@@ -192,6 +204,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<ExistModel> Exist(List<ExistParameter> parameterList);
+        ServicesResultList<ExistModel> Exist(string source, List<ExistParameter> parameterList);
     }
 }

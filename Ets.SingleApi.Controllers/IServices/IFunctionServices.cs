@@ -18,6 +18,7 @@
         /// <summary>
         /// 根据地址取得对应坐标
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="address">楼宇地址</param>
         /// <param name="city">当前城市</param>
         /// <param name="type">定位类型</param>
@@ -29,6 +30,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<Location> GetLocation(string address, string city, int type);
+        ServicesResult<Location> GetLocation(string source, string address, string city, int type);
     }
 }

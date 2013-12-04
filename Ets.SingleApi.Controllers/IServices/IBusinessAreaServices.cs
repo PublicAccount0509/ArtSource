@@ -17,6 +17,7 @@
         /// <summary>
         /// 获取国家列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <returns>
         /// 返回国家列表信息
         /// </returns>
@@ -25,11 +26,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<BusinessAreaModel> GetCountryList();
+        ServicesResultList<BusinessAreaModel> GetCountryList(string source);
 
         /// <summary>
         /// 获取省份列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="countryCode">国家code</param>
         /// <returns>
         /// 返回省份列表信息
@@ -39,11 +41,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<BusinessAreaModel> GetProvinceList(string countryCode);
+        ServicesResultList<BusinessAreaModel> GetProvinceList(string source, string countryCode);
 
         /// <summary>
         /// 获取城市列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="provinceCode">省份code</param>
         /// <returns>
         /// 返回城市列表信息
@@ -53,11 +56,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<BusinessAreaModel> GetCityList(string provinceCode);
+        ServicesResultList<BusinessAreaModel> GetCityList(string source, string provinceCode);
 
         /// <summary>
         /// 获取区域列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="cityCode">城市code</param>
         /// <returns>
         /// 返回区域列表信息
@@ -67,11 +71,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<BusinessAreaModel> GetRegionList(string cityCode);
+        ServicesResultList<BusinessAreaModel> GetRegionList(string source, string cityCode);
 
         /// <summary>
         /// 获取商圈列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="regionCode">区域code</param>
         /// <returns>
         /// 返回商圈列表信息
@@ -81,11 +86,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<BusinessAreaModel> GetBusinessAreaList(string regionCode);
+        ServicesResultList<BusinessAreaModel> GetBusinessAreaList(string source, string regionCode);
 
         /// <summary>
         /// 获取地区和商圈信息列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parentCode">父节点code</param>
         /// <returns>
         /// 返回地区和商圈信息列表
@@ -95,6 +101,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<BusinessAreaModel> GetAllBusinessAreaList(string parentCode);
+        ServicesResultList<BusinessAreaModel> GetAllBusinessAreaList(string source, string parentCode);
     }
 }

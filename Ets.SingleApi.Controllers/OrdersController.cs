@@ -59,7 +59,7 @@
         [HttpGet]
         public Response<int> Exist(int id, int orderType)
         {
-            var getOrderResult = this.orderServices.Exist(id, orderType);
+            var getOrderResult = this.orderServices.Exist(this.Source, id, orderType);
             return new Response<int>
             {
                 Message = new ApiMessage
@@ -86,7 +86,7 @@
         [HttpGet]
         public Response<IOrderDetailModel> GetOrder(int id, int orderType)
         {
-            var getOrderResult = this.orderServices.GetOrder(id, orderType);
+            var getOrderResult = this.orderServices.GetOrder(this.Source, id, orderType);
             if (getOrderResult.Result == null)
             {
                 return new Response<IOrderDetailModel>
@@ -124,7 +124,7 @@
         [HttpPost]
         public Response<string> SaveOrder(string shoppingCartId, int orderType)
         {
-            var getOrderResult = this.orderServices.SaveOrder(shoppingCartId, orderType);
+            var getOrderResult = this.orderServices.SaveOrder(this.Source, shoppingCartId, orderType);
             if (getOrderResult.Result == null)
             {
                 return new Response<string>
@@ -161,7 +161,7 @@
         [HttpGet]
         public Response<string> OrderNumber(int orderType)
         {
-            var getOrderNumberResult = this.orderServices.GetOrderNumber(orderType);
+            var getOrderNumberResult = this.orderServices.GetOrderNumber(this.Source, orderType);
             if (getOrderNumberResult.Result == null)
             {
                 return new Response<string>

@@ -30,6 +30,7 @@
         /// <summary>
         /// 登录方法
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password</param>
         /// <returns>
@@ -40,6 +41,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        LoginData Login(string userName, string password);
+        LoginData Login(string source, string userName, string password);
     }
 }

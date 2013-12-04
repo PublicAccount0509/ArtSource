@@ -31,6 +31,7 @@
         /// <summary>
         /// 取得订单是否存在以及支付支付状态
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderId">订单状态</param>
         /// <returns>
         /// 返回结果 0 不存在 1 支付 2 未支付
@@ -40,11 +41,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<int> Exist(int orderId);
+        ServicesResult<int> Exist(string source, int orderId);
 
         /// <summary>
         /// 取得订单详情
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderId">订单号</param>
         /// <returns>
         /// 返回结果
@@ -54,11 +56,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<IOrderDetailModel> GetOrder(int orderId);
+        ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId);
 
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <returns>
         /// 返回结果
@@ -68,11 +71,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> SaveOrder(string shoppingCartId);
+        ServicesResult<string> SaveOrder(string source, string shoppingCartId);
 
         /// <summary>
         /// 取得一个订单号
         /// </summary>
+        /// <param name="source">The source</param>
         /// <returns>
         /// 订单号
         /// </returns>
@@ -81,6 +85,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> GetOrderNumber();
+        ServicesResult<string> GetOrderNumber(string source);
     }
 }

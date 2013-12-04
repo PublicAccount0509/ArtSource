@@ -20,6 +20,7 @@
         /// <summary>
         /// 获取餐厅信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回餐厅信息
@@ -29,11 +30,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<SupplierDetailModel> GetSupplier(int supplierId);
+        ServicesResult<SupplierDetailModel> GetSupplier(string source, int supplierId);
 
         /// <summary>
         /// 根据餐厅域名获取餐厅信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierDomain">餐厅域名</param>
         /// <returns>
         /// 返回餐厅信息
@@ -43,11 +45,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<RoughSupplierModel> GetRoughSupplier(string supplierDomain);
+        ServicesResult<RoughSupplierModel> GetRoughSupplier(string source, string supplierDomain);
 
         /// <summary>
         /// 取得打包费
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="dishList">菜品信息</param>
         /// <returns>
@@ -58,11 +61,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<decimal> GetPackagingFee(int supplierId, List<PackagingFeeItem> dishList);
+        ServicesResult<decimal> GetPackagingFee(string source, int supplierId, List<PackagingFeeItem> dishList);
 
         /// <summary>
         /// 获取餐厅列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回餐厅列表
@@ -72,11 +76,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<SupplierModel> GetSupplierList(GetSupplierListParameter parameter);
+        ServicesResultList<SupplierModel> GetSupplierList(string source, GetSupplierListParameter parameter);
 
         /// <summary>
         /// 获取餐厅列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回餐厅列表
@@ -86,11 +91,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<SupplierModel> GetSearchSupplierList(GetSearchSupplierListParameter parameter);
+        ServicesResultList<SupplierModel> GetSearchSupplierList(string source, GetSearchSupplierListParameter parameter);
 
         /// <summary>
         /// 获取餐厅分店列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回餐厅分店列表
@@ -100,11 +106,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<GroupSupplierModel> GetGroupSupplierList(GetGroupSupplierListParameter parameter);
+        ServicesResultList<GroupSupplierModel> GetGroupSupplierList(string source, GetGroupSupplierListParameter parameter);
 
         /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回餐厅已经开通的功能列表
@@ -114,11 +121,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<SupplierFeatureModel> GetSupplierFeatureList(int supplierId);
+        ServicesResultList<SupplierFeatureModel> GetSupplierFeatureList(string source, int supplierId);
 
         /// <summary>
         /// 获取餐厅菜单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型</param>
         /// <returns>
@@ -129,11 +137,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<SupplierCuisineModel> GetMenu(int supplierId, int supplierMenuCategoryTypeId);
+        ServicesResultList<SupplierCuisineModel> GetMenu(string source, int supplierId, int supplierMenuCategoryTypeId);
 
         /// <summary>
         /// 获取餐厅菜品类型信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型</param>
         /// <returns>
@@ -144,11 +153,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<SupplierCuisineDetailModel> GetSupplierCuisineList(int supplierId, int supplierMenuCategoryTypeId);
+        ServicesResultList<SupplierCuisineDetailModel> GetSupplierCuisineList(string source, int supplierId, int supplierMenuCategoryTypeId);
 
         /// <summary>
         /// 获取餐厅菜品类型信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierCategoryId">The supplierCategoryId</param>
         /// <returns>
@@ -159,11 +169,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<SupplierCuisineDetailModel> GetSupplierCuisine(int supplierId, int supplierCategoryId);
+        ServicesResult<SupplierCuisineDetailModel> GetSupplierCuisine(string source, int supplierId, int supplierCategoryId);
 
         /// <summary>
         /// 添加餐厅菜品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -173,11 +184,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> AddSupplierCuisine(SaveSupplierCuisineParameter parameter);
+        ServicesResult<bool> AddSupplierCuisine(string source, SaveSupplierCuisineParameter parameter);
 
         /// <summary>
         /// 更新菜品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -187,11 +199,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> UpdateSupplierCuisine(SaveSupplierCuisineParameter parameter);
+        ServicesResult<bool> UpdateSupplierCuisine(string source, SaveSupplierCuisineParameter parameter);
 
         /// <summary>
         /// 删除菜品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -201,11 +214,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> DeleteSupplierCuisine(DeleteSupplierCuisineParameter parameter);
+        ServicesResult<bool> DeleteSupplierCuisine(string source, DeleteSupplierCuisineParameter parameter);
 
         /// <summary>
         /// 获取餐厅菜单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型</param>
         /// <param name="supplierCategoryId">The supplierCategoryId</param>
@@ -217,11 +231,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<SupplierDishDetailModel> GetSupplierDishList(int supplierId, int supplierMenuCategoryTypeId, int? supplierCategoryId);
+        ServicesResultList<SupplierDishDetailModel> GetSupplierDishList(string source, int supplierId, int supplierMenuCategoryTypeId, int? supplierCategoryId);
 
         /// <summary>
         /// 获取餐厅菜单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierDishId">The supplierDishId</param>
         /// <returns>
@@ -232,11 +247,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<SupplierDishDetailModel> GetSupplierDish(int supplierId, int supplierDishId);
+        ServicesResult<SupplierDishDetailModel> GetSupplierDish(string source, int supplierId, int supplierDishId);
 
         /// <summary>
         /// 添加餐厅菜信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -246,11 +262,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> AddSupplierDish(SaveSupplierDishParameter parameter);
+        ServicesResult<bool> AddSupplierDish(string source, SaveSupplierDishParameter parameter);
 
         /// <summary>
         /// 更新菜信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -260,11 +277,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> UpdateSupplierDish(SaveSupplierDishParameter parameter);
+        ServicesResult<bool> UpdateSupplierDish(string source, SaveSupplierDishParameter parameter);
 
         /// <summary>
         /// 删除菜信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -274,11 +292,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> DeleteSupplierDish(DeleteSupplierDishParameter parameter);
+        ServicesResult<bool> DeleteSupplierDish(string source, DeleteSupplierDishParameter parameter);
 
         /// <summary>
         /// 取得餐厅营业时间
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="startServiceDate">开始日期</param>
         /// <param name="days">天数</param>
@@ -290,7 +309,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(
+        ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(string source, 
             int supplierId, DateTime? startServiceDate, int? days);
     }
 }

@@ -17,6 +17,7 @@
         /// <summary>
         /// 发送短信验证码
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -26,6 +27,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<SendAuthCodeModel> SendAuthCode(SendAuthCodeParameter parameter);
+        ServicesResult<SendAuthCodeModel> SendAuthCode(string source, SendAuthCodeParameter parameter);
     }
 }

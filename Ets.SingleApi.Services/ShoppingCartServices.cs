@@ -49,6 +49,7 @@
         /// <summary>
         /// 取得购物车信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <returns>
         /// 返回购物车信息
@@ -58,9 +59,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartModel> GetShoppingCart(string shoppingCartId)
+        public ServicesResult<ShoppingCartModel> GetShoppingCart(string source, string shoppingCartId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(shoppingCartId);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -71,7 +72,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -81,7 +82,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -91,7 +92,7 @@
                 };
             }
 
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -101,7 +102,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -111,7 +112,7 @@
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -143,6 +144,7 @@
         /// <summary>
         /// 创建一个购物车
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
@@ -153,9 +155,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> CreateShoppingCart(int supplierId, string userId)
+        public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(supplierId, userId);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, supplierId, userId);
             if (getShoppingCartLinkResult.StatusCode == (int)StatusCode.Succeed.Ok && getShoppingCartLinkResult.Result != null)
             {
                 return new ServicesResult<string>
@@ -164,7 +166,7 @@
                 };
             }
 
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(Guid.NewGuid().ToString());
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -174,7 +176,7 @@
                     };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(supplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, supplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -189,7 +191,7 @@
                     Id = Guid.NewGuid().ToString(),
                     DeliveryType = ServicesCommon.DefaultDeliveryType
                 };
-            var saveShoppingCartOrderResult = this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
+            var saveShoppingCartOrderResult = this.shoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -203,7 +205,7 @@
             {
                 Id = Guid.NewGuid().ToString()
             };
-            var shoppingCartDeliveryResult = this.shoppingCartProvider.SaveShoppingCartDelivery(shoppingCartDelivery);
+            var shoppingCartDeliveryResult = this.shoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
             if (shoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -227,7 +229,7 @@
             int tempUserId;
             if (!int.TryParse(userId, out tempUserId))
             {
-                this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
+                this.shoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
                 return new ServicesResult<string>
                 {
                     Result = shoppingCartLinkId
@@ -235,8 +237,8 @@
             }
 
             shoppingCartLink.UserId = tempUserId;
-            this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(tempUserId);
+            this.shoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(source, tempUserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -255,6 +257,7 @@
         /// <summary>
         /// 更改商品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
         /// <returns>
@@ -265,9 +268,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> SaveShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -277,7 +280,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -286,7 +289,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -295,7 +298,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -309,8 +312,8 @@
             var order = getShoppingCartOrderResult.Result;
             var shoppingList = shoppingCartItemList;
             shoppingCart.ShoppingList = shoppingList;
-            this.shoppingCartProvider.SaveShoppingCart(shoppingCart);
-            this.SaveShoppingCartOrder(shoppingList, supplier, order);
+            this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -320,6 +323,7 @@
         /// <summary>
         /// 添加商品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
         /// <returns>
@@ -330,7 +334,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> AddShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> AddShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList)
         {
             if (shoppingCartItemList.Count(p => p.Quantity > 0) == 0)
             {
@@ -340,7 +344,7 @@
                 };
             }
 
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -350,7 +354,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -359,7 +363,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -368,7 +372,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -399,8 +403,8 @@
             }
 
             shoppingCart.ShoppingList = shoppingList;
-            this.shoppingCartProvider.SaveShoppingCart(shoppingCart);
-            this.SaveShoppingCartOrder(shoppingList, supplier, order);
+            this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -410,6 +414,7 @@
         /// <summary>
         /// 删除商品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
         /// <returns>
@@ -420,9 +425,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> DeleteShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> DeleteShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -432,7 +437,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -441,7 +446,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -450,7 +455,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -479,8 +484,8 @@
             }
 
             shoppingCart.ShoppingList = shoppingList;
-            this.shoppingCartProvider.SaveShoppingCart(shoppingCart);
-            this.SaveShoppingCartOrder(shoppingList, supplier, order);
+            this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -490,6 +495,7 @@
         /// <summary>
         /// 保存用户信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
@@ -500,9 +506,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartCustomer(string id, int userId)
+        public ServicesResult<bool> SaveShoppingCartCustomer(string source, string id, int userId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -512,7 +518,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(userId);
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(source, userId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -523,7 +529,7 @@
 
             var customer = getShoppingCartCustomerResult.Result;
             shoppingCartLink.UserId = customer.UserId;
-            this.shoppingCartProvider.SaveShoppingCartLink(shoppingCartLink);
+            this.shoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -533,6 +539,7 @@
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCart">The shoppingCart</param>
         /// <returns>
@@ -543,9 +550,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCart(string id, ShoppingCartModel shoppingCart)
+        public ServicesResult<bool> SaveShoppingCart(string source, string id, ShoppingCartModel shoppingCart)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -555,7 +562,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -564,7 +571,7 @@
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -573,7 +580,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -585,9 +592,9 @@
             shoppingCart.Delivery.Id = getShoppingCartDeliveryResult.Result.Id;
             shoppingCart.Order.Id = getShoppingCartOrderResult.Result.Id;
             shoppingCart.ShoppingCart.ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId;
-            this.shoppingCartProvider.SaveShoppingCartDelivery(shoppingCart.Delivery);
-            this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCart.Order);
-            this.shoppingCartProvider.SaveShoppingCart(shoppingCart.ShoppingCart);
+            this.shoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCart.Delivery);
+            this.shoppingCartProvider.SaveShoppingCartOrder(source, shoppingCart.Order);
+            this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart.ShoppingCart);
 
             return new ServicesResult<bool>
             {
@@ -598,6 +605,7 @@
         /// <summary>
         /// 保存用户信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
         /// <returns>
@@ -608,9 +616,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartOrder(string id, ShoppingCartOrder shoppingCartOrder)
+        public ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -620,7 +628,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -629,7 +637,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -638,7 +646,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -664,7 +672,7 @@
             }
 
             var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
-            var validateDeliveryTimeResult = this.shoppingCartProvider.ValidateDeliveryTime(supplier.SupplierId, deliveryTime, now);
+            var validateDeliveryTimeResult = this.shoppingCartProvider.ValidateDeliveryTime(source, supplier.SupplierId, deliveryTime, now);
             if (!validateDeliveryTimeResult.Result)
             {
                 return new ServicesResult<bool>
@@ -704,7 +712,7 @@
             shoppingCartOrder.TotalFee = total;
             shoppingCartOrder.CustomerTotalFee = customerTotal;
             shoppingCartOrder.CouponFee = coupon;
-            this.shoppingCartProvider.SaveShoppingCartOrder(shoppingCartOrder);
+            this.shoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -714,6 +722,7 @@
         /// <summary>
         /// Saves the shopping cart delivery.
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">The id</param>
         /// <param name="shoppingCartDelivery">The shoppingCartDelivery</param>
         /// <returns>
@@ -724,9 +733,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartDelivery(string id, ShoppingCartDelivery shoppingCartDelivery)
+        public ServicesResult<bool> SaveShoppingCartDelivery(string source, string id, ShoppingCartDelivery shoppingCartDelivery)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -736,7 +745,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -746,7 +755,7 @@
             }
 
             shoppingCartDelivery.Id = getShoppingCartDeliveryResult.Result.Id;
-            this.shoppingCartProvider.SaveShoppingCartDelivery(shoppingCartDelivery);
+            this.shoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
 
             return new ServicesResult<bool>
             {
@@ -758,6 +767,7 @@
         /// <summary>
         /// 更改购物车送餐方式
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="deliveryMethodId">送餐方式</param>
         /// <returns>
@@ -768,9 +778,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string id, int deliveryMethodId)
+        public ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string source, string id, int deliveryMethodId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(id);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -780,7 +790,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -789,7 +799,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -798,7 +808,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -838,7 +848,7 @@
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
 
-            this.shoppingCartProvider.SaveShoppingCartOrder(order);
+            this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -923,6 +933,7 @@
         /// <summary>
         /// Saves the shopping cart order.
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingList">The shoppingList</param>
         /// <param name="supplier">The supplier</param>
         /// <param name="order">The order</param>
@@ -931,7 +942,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void SaveShoppingCartOrder(List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, ShoppingCartOrder order)
+        private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, ShoppingCartOrder order)
         {
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
@@ -961,7 +972,7 @@
             order.TotalFee = total;
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
-            this.shoppingCartProvider.SaveShoppingCartOrder(order);
+            this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
         }
     }
 }

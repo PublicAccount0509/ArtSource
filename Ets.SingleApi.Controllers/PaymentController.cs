@@ -85,7 +85,7 @@
                 };
             }
 
-            var umPaymentResult = this.paymentServices.UmPayment(new UmPaymentParameter
+            var umPaymentResult = this.paymentServices.UmPayment(this.Source, new UmPaymentParameter
                                   {
                                       OrderId = requst.OrderId,
                                       Amount = requst.Amount,
@@ -146,7 +146,7 @@
                 };
             }
 
-            var result = this.paymentServices.UmPaymentState(new UmPaymentStateParameter
+            var result = this.paymentServices.UmPaymentState(this.Source, new UmPaymentStateParameter
             {
                 OrderId = requst.OrderId,
                 PayDate = System.DateTime.Now,

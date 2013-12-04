@@ -17,6 +17,7 @@
         /// <summary>
         /// 获取菜品信息列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <returns>
         /// 返回菜品信息列表
         /// </returns>
@@ -25,11 +26,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<CuisineModel> GetCuisineList();
+        ServicesResultList<CuisineModel> GetCuisineList(string source);
 
         /// <summary>
         /// 获取菜品信息列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="cityId">城市Id</param>
         /// <returns>
         /// 返回菜品信息列表
@@ -39,6 +41,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<CuisineModel> GetCityCuisineList(int cityId);
+        ServicesResultList<CuisineModel> GetCityCuisineList(string source, int cityId);
     }
 }

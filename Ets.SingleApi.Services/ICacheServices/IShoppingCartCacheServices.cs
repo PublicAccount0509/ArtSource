@@ -18,6 +18,7 @@
         /// <summary>
         /// 取得餐厅信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回结果
@@ -27,11 +28,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(int supplierId);
+        CacheServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(string source, int supplierId);
 
         /// <summary>
         /// 保存餐厅信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplier">餐厅信息</param>
         /// <returns>
         /// 返回结果
@@ -41,11 +43,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartSupplier(ShoppingCartSupplier supplier);
+        CacheServicesResult<bool> SaveShoppingCartSupplier(string source, ShoppingCartSupplier supplier);
 
         /// <summary>
         /// 取得顾客信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回结果
@@ -55,11 +58,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(int userId);
+        CacheServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(string source, int userId);
 
         /// <summary>
         /// 保存顾客信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="customer">顾客信息</param>
         /// <returns>
         /// 返回结果
@@ -69,11 +73,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartCustomer(ShoppingCartCustomer customer);
+        CacheServicesResult<bool> SaveShoppingCartCustomer(string source, ShoppingCartCustomer customer);
 
         /// <summary>
         /// 取得订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">订单唯一标识符</param>
         /// <returns>
         /// 返回结果
@@ -83,11 +88,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string id);
+        CacheServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string source, string id);
 
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="order">订单信息</param>
         /// <returns>
         /// 返回结果
@@ -97,11 +103,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartOrder(ShoppingCartOrder order);
+        CacheServicesResult<bool> SaveShoppingCartOrder(string source, ShoppingCartOrder order);
 
         /// <summary>
         /// 取得购物车信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车唯一标识符</param>
         /// <returns>
         /// 返回结果
@@ -111,11 +118,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<ShoppingCart> GetShoppingCart(string id);
+        CacheServicesResult<ShoppingCart> GetShoppingCart(string source, string id);
 
         /// <summary>
         /// 保存购物车信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCart">购物车信息</param>
         /// <returns>
         /// 返回结果
@@ -125,11 +133,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCart(ShoppingCart shoppingCart);
+        CacheServicesResult<bool> SaveShoppingCart(string source, ShoppingCart shoppingCart);
 
         /// <summary>
         /// 获取订单配送信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">订单配送信息唯一标识符</param>
         /// <returns>
         /// 返回结果
@@ -139,11 +148,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string id);
+        CacheServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id);
 
         /// <summary>
         /// 保存订单配送信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartDelivery">订单配送信息</param>
         /// <returns>
         /// 返回结果
@@ -153,11 +163,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartDelivery(ShoppingCartDelivery shoppingCartDelivery);
+        CacheServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery);
 
         /// <summary>
         /// 获取购物车关联信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartLinkId">购物车关联Id</param>
         /// <returns>
         /// 返回结果
@@ -167,11 +178,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<ShoppingCartLink> GetShoppingCartLink(string shoppingCartLinkId);
+        CacheServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId);
 
         /// <summary>
         /// 保存购物车关联信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartLink">购物车关联信息</param>
         /// <returns>
         /// 返回结果
@@ -181,6 +193,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartLink(ShoppingCartLink shoppingCartLink);
+        CacheServicesResult<bool> SaveShoppingCartLink(string source, ShoppingCartLink shoppingCartLink);
     }
 }

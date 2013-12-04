@@ -72,7 +72,7 @@
                 };
             }
 
-            var result = this.supplierServices.GetPackagingFee(id, requst.DishList);
+            var result = this.supplierServices.GetPackagingFee(this.Source, id, requst.DishList);
             return new Response<decimal>
             {
                 Message = new ApiMessage
@@ -99,7 +99,7 @@
         [HttpGet]
         public ListResponse<SupplierCuisine> Menu(int id, int supplierMenuCategoryTypeId)
         {
-            var list = this.supplierServices.GetMenu(id, supplierMenuCategoryTypeId);
+            var list = this.supplierServices.GetMenu(this.Source, id, supplierMenuCategoryTypeId);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<SupplierCuisine>
@@ -157,7 +157,7 @@
         [HttpGet]
         public ListResponse<SupplierCuisineDetail> SupplierCuisineList(int id, int supplierMenuCategoryTypeId)
         {
-            var list = this.supplierServices.GetSupplierCuisineList(id, supplierMenuCategoryTypeId);
+            var list = this.supplierServices.GetSupplierCuisineList(this.Source, id, supplierMenuCategoryTypeId);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<SupplierCuisineDetail>
@@ -205,7 +205,7 @@
         [HttpGet]
         public Response<SupplierCuisineDetail> SupplierCuisine(int id, int supplierCategoryId)
         {
-            var list = this.supplierServices.GetSupplierCuisine(id, supplierCategoryId);
+            var list = this.supplierServices.GetSupplierCuisine(this.Source, id, supplierCategoryId);
             if (list.Result == null)
             {
                 return new Response<SupplierCuisineDetail>
@@ -273,7 +273,7 @@
                                                             CuisineType = p.CuisineType
                                                         }).ToList();
 
-            var result = this.supplierServices.AddSupplierCuisine(new SaveSupplierCuisineParameter
+            var result = this.supplierServices.AddSupplierCuisine(this.Source, new SaveSupplierCuisineParameter
                         {
                             SupplierId = id,
                             SupplierMenuCategoryTypeId = requst.SupplierMenuCategoryTypeId,
@@ -326,7 +326,7 @@
                 CuisineType = p.CuisineType
             }).ToList();
 
-            var result = this.supplierServices.UpdateSupplierCuisine(new SaveSupplierCuisineParameter
+            var result = this.supplierServices.UpdateSupplierCuisine(this.Source, new SaveSupplierCuisineParameter
             {
                 SupplierId = id,
                 SupplierMenuCategoryTypeId = requst.SupplierMenuCategoryTypeId,
@@ -370,7 +370,7 @@
                 };
             }
 
-            var result = this.supplierServices.DeleteSupplierCuisine(new DeleteSupplierCuisineParameter
+            var result = this.supplierServices.DeleteSupplierCuisine(this.Source, new DeleteSupplierCuisineParameter
             {
                 SupplierId = id,
                 SupplierMenuCategoryTypeId = requst.SupplierMenuCategoryTypeId,
@@ -404,7 +404,7 @@
         [HttpGet]
         public ListResponse<SupplierDishDetail> SupplierDishList(int id, int supplierMenuCategoryTypeId, int? supplierCategoryId = null)
         {
-            var list = this.supplierServices.GetSupplierDishList(id, supplierMenuCategoryTypeId, supplierCategoryId);
+            var list = this.supplierServices.GetSupplierDishList(this.Source, id, supplierMenuCategoryTypeId, supplierCategoryId);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<SupplierDishDetail>
@@ -473,7 +473,7 @@
         [HttpGet]
         public Response<SupplierDishDetail> SupplierDish(int id, int supplierDishId)
         {
-            var list = this.supplierServices.GetSupplierDish(id, supplierDishId);
+            var list = this.supplierServices.GetSupplierDish(this.Source, id, supplierDishId);
             if (list.Result == null)
             {
                 return new Response<SupplierDishDetail>
@@ -572,7 +572,7 @@
                 SupplierDishId = p.SupplierDishId
             }).ToList();
 
-            var result = this.supplierServices.AddSupplierDish(new SaveSupplierDishParameter
+            var result = this.supplierServices.AddSupplierDish(this.Source, new SaveSupplierDishParameter
             {
                 SupplierId = id,
                 SupplierMenuCategoryTypeId = requst.SupplierMenuCategoryTypeId,
@@ -635,7 +635,7 @@
                 SupplierDishId = p.SupplierDishId
             }).ToList();
 
-            var result = this.supplierServices.AddSupplierDish(new SaveSupplierDishParameter
+            var result = this.supplierServices.AddSupplierDish(this.Source, new SaveSupplierDishParameter
             {
                 SupplierId = id,
                 SupplierMenuCategoryTypeId = requst.SupplierMenuCategoryTypeId,
@@ -679,7 +679,7 @@
                 };
             }
 
-            var result = this.supplierServices.DeleteSupplierDish(new DeleteSupplierDishParameter
+            var result = this.supplierServices.DeleteSupplierDish(this.Source, new DeleteSupplierDishParameter
             {
                 SupplierId = id,
                 DishIdList = requst.DishIdList
@@ -712,7 +712,7 @@
         [HttpGet]
         public ListResponse<SupplierServiceTime> SupplierServiceTime(int id, DateTime? startDate = null, int? days = null)
         {
-            var result = this.supplierServices.GetSupplierServiceTime(id, startDate, days);
+            var result = this.supplierServices.GetSupplierServiceTime(this.Source, id, startDate, days);
             if (result == null)
             {
                 return new ListResponse<SupplierServiceTime>

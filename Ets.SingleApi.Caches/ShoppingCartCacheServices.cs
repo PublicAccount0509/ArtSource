@@ -22,6 +22,7 @@
         /// <summary>
         /// 取得餐厅信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回结果
@@ -31,9 +32,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(int supplierId)
+        public CacheServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(string source, int supplierId)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_supplier", supplierId)) as string;
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart_supplier", supplierId)) as string;
             if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartSupplier>
@@ -51,6 +52,7 @@
         /// <summary>
         /// 保存餐厅信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplier">餐厅信息</param>
         /// <returns>
         /// 返回结果
@@ -60,11 +62,11 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCartSupplier(ShoppingCartSupplier supplier)
+        public CacheServicesResult<bool> SaveShoppingCartSupplier(string source, ShoppingCartSupplier supplier)
         {
             var supplierId = supplier.SupplierId;
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_supplier", supplierId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_supplier", supplierId), supplier.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_supplier", supplierId));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_supplier", supplierId), supplier.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
             return new CacheServicesResult<bool>
                 {
                     Result = true
@@ -74,6 +76,7 @@
         /// <summary>
         /// 取得顾客信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回结果
@@ -83,9 +86,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(int userId)
+        public CacheServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(string source, int userId)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_customer", userId)) as string;
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart_customer", userId)) as string;
             if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartCustomer>
@@ -103,6 +106,7 @@
         /// <summary>
         /// 保存顾客信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="customer">顾客信息</param>
         /// <returns>
         /// 返回结果
@@ -112,11 +116,11 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCartCustomer(ShoppingCartCustomer customer)
+        public CacheServicesResult<bool> SaveShoppingCartCustomer(string source, ShoppingCartCustomer customer)
         {
             var userId = customer.UserId;
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_customer", userId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_customer", userId), customer.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_customer", userId));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_customer", userId), customer.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -126,6 +130,7 @@
         /// <summary>
         /// 取得订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">订单唯一标识符</param>
         /// <returns>
         /// 返回结果
@@ -135,9 +140,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string id)
+        public CacheServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string source, string id)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_order", id)) as string;
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart_order", id)) as string;
             if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartOrder>
@@ -155,6 +160,7 @@
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="order">订单信息</param>
         /// <returns>
         /// 返回结果
@@ -164,11 +170,11 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCartOrder(ShoppingCartOrder order)
+        public CacheServicesResult<bool> SaveShoppingCartOrder(string source, ShoppingCartOrder order)
         {
             var id = order.Id;
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_order", id));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_order", id), order.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_order", id));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_order", id), order.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -178,6 +184,7 @@
         /// <summary>
         /// 取得购物车信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车唯一标识符</param>
         /// <returns>
         /// 返回结果
@@ -187,9 +194,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<ShoppingCart> GetShoppingCart(string id)
+        public CacheServicesResult<ShoppingCart> GetShoppingCart(string source, string id)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart", id)) as string;
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart", id)) as string;
             if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCart>
@@ -207,6 +214,7 @@
         /// <summary>
         /// 保存购物车信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCart">购物车信息</param>
         /// <returns>
         /// 返回结果
@@ -216,11 +224,11 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCart(ShoppingCart shoppingCart)
+        public CacheServicesResult<bool> SaveShoppingCart(string source, ShoppingCart shoppingCart)
         {
             var shoppingCartId = shoppingCart.ShoppingCartId;
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart", shoppingCartId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart", shoppingCartId), shoppingCart.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart", shoppingCartId));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart", shoppingCartId), shoppingCart.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -230,6 +238,7 @@
         /// <summary>
         /// 获取订单配送信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">订单配送信息唯一标识符</param>
         /// <returns>
         /// 返回结果
@@ -239,9 +248,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string id)
+        public CacheServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_delivery", id)) as string;
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart_delivery", id)) as string;
             if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartDelivery>
@@ -259,6 +268,7 @@
         /// <summary>
         /// 保存订单配送信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartDelivery">订单配送信息</param>
         /// <returns>
         /// 返回结果
@@ -268,11 +278,11 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCartDelivery(ShoppingCartDelivery shoppingCartDelivery)
+        public CacheServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery)
         {
             var id = shoppingCartDelivery.Id;
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_delivery", id));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_delivery", id), shoppingCartDelivery.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_delivery", id));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_delivery", id), shoppingCartDelivery.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -282,6 +292,7 @@
         /// <summary>
         /// 获取购物车关联信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartLinkId">购物车关联Id</param>
         /// <returns>
         /// 返回结果
@@ -291,9 +302,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<ShoppingCartLink> GetShoppingCartLink(string shoppingCartLinkId)
+        public CacheServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
         {
-            var result = CacheUtility.GetInstance().Get(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId)) as string;
+            var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart_link", shoppingCartLinkId)) as string;
             if (result.IsEmptyOrNull())
             {
                 return new CacheServicesResult<ShoppingCartLink>
@@ -311,6 +322,7 @@
         /// <summary>
         /// 保存购物车关联信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartLink">购物车关联信息</param>
         /// <returns>
         /// 返回结果
@@ -320,13 +332,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCartLink(ShoppingCartLink shoppingCartLink)
+        public CacheServicesResult<bool> SaveShoppingCartLink(string source, ShoppingCartLink shoppingCartLink)
         {
             var shoppingCartLinkId = shoppingCartLink.ShoppingCartLinkId;
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}", "shopping_cart_link", shoppingCartLinkId), shoppingCartLink.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}_{2}", "shopping_cart_link", shoppingCartLink.AnonymityId, shoppingCartLink.SupplierId));
-            CacheUtility.GetInstance().Add(string.Format("{0}{1}_{2}", "shopping_cart_link", shoppingCartLink.AnonymityId, shoppingCartLink.SupplierId), shoppingCartLink.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_link", shoppingCartLinkId));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_link", shoppingCartLinkId), shoppingCartLink.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}_{3}", source, "shopping_cart_link", shoppingCartLink.AnonymityId, shoppingCartLink.SupplierId));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}_{3}", source, "shopping_cart_link", shoppingCartLink.AnonymityId, shoppingCartLink.SupplierId), shoppingCartLink.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true

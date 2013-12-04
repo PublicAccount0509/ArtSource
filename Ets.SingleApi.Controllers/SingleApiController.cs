@@ -45,6 +45,19 @@
         public string AppKey { get; set; }
 
         /// <summary>
+        /// Gets or sets the Source of SingleApiController
+        /// </summary>
+        /// <value>
+        /// The Source
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/29/2013 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Source { get; set; }
+
+        /// <summary>
         /// 验证UserId的有效性
         /// </summary>
         /// <param name="userId">The userId</param>

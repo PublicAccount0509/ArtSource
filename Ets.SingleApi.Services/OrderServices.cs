@@ -48,6 +48,7 @@
         /// <summary>
         /// 取得订单是否存在以及支付支付状态
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderId">订单状态</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
@@ -58,7 +59,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<int> Exist(int orderId, int orderType)
+        public ServicesResult<int> Exist(string source, int orderId, int orderType)
         {
             var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
             if (orderProvider == null)
@@ -69,7 +70,7 @@
                 };
             }
 
-            var result = orderProvider.Exist(orderId);
+            var result = orderProvider.Exist(source, orderId);
             return new ServicesResult<int>
             {
                 StatusCode = result.StatusCode,
@@ -80,6 +81,7 @@
         /// <summary>
         /// 取得订单详情
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderId">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
@@ -90,7 +92,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<IOrderDetailModel> GetOrder(int orderId, int orderType)
+        public ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId, int orderType)
         {
             var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
             if (orderProvider == null)
@@ -101,7 +103,7 @@
                 };
             }
 
-            var result = orderProvider.GetOrder(orderId);
+            var result = orderProvider.GetOrder(source, orderId);
             return new ServicesResult<IOrderDetailModel>
             {
                 StatusCode = result.StatusCode,
@@ -112,6 +114,7 @@
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
@@ -122,7 +125,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> SaveOrder(string shoppingCartId, int orderType)
+        public ServicesResult<string> SaveOrder(string source, string shoppingCartId, int orderType)
         {
             var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
             if (orderProvider == null)
@@ -133,7 +136,7 @@
                 };
             }
 
-            var result = orderProvider.SaveOrder(shoppingCartId);
+            var result = orderProvider.SaveOrder(source, shoppingCartId);
             return new ServicesResult<string>
             {
                 StatusCode = result.StatusCode,
@@ -144,6 +147,7 @@
         /// <summary>
         /// 获取订单号
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
         /// 返回结果
@@ -153,7 +157,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> GetOrderNumber(int orderType)
+        public ServicesResult<string> GetOrderNumber(string source, int orderType)
         {
             var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
             if (orderProvider == null)
@@ -164,7 +168,7 @@
                 };
             }
 
-            var result = orderProvider.GetOrderNumber();
+            var result = orderProvider.GetOrderNumber(source);
             return new ServicesResult<string>
             {
                 StatusCode = result.StatusCode,

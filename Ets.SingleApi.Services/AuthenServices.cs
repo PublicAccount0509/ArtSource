@@ -130,6 +130,7 @@
         /// <summary>
         /// 登陆
         /// </summary>
+        /// <param name="source">来源</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回登陆结果
@@ -139,7 +140,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<LoginModel> Login(LoginParameter parameter)
+        public ServicesResult<LoginModel> Login(string source, LoginParameter parameter)
         {
             if (parameter == null)
             {
@@ -180,7 +181,7 @@
                     };
             }
 
-            var loginData = login.Login(userName, parameter.Password);
+            var loginData = login.Login(source, userName, parameter.Password);
             if (loginData.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<LoginModel>
@@ -228,6 +229,7 @@
         /// <summary>
         /// 手机验证登陆
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回登陆结果
@@ -237,7 +239,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<AuthLoginModel> AuthLogin(AuthLoginParameter parameter)
+        public ServicesResult<AuthLoginModel> AuthLogin(string source, AuthLoginParameter parameter)
         {
             if (parameter == null)
             {
@@ -258,7 +260,7 @@
                 };
             }
 
-            var loginData = login.Login(parameter.Telephone, parameter.AuthCode);
+            var loginData = login.Login(source, parameter.Telephone, parameter.AuthCode);
             if (loginData.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<AuthLoginModel>
@@ -306,6 +308,7 @@
         /// <summary>
         /// 修改密码
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userId">The userId</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
@@ -316,7 +319,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> Password(int userId, PasswordParameter parameter)
+        public ServicesResult<bool> Password(string source, int userId, PasswordParameter parameter)
         {
             if (parameter == null)
             {
@@ -397,6 +400,7 @@
         /// <summary>
         /// 设置密码
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回设置密码结果
@@ -406,7 +410,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SetPassword(SetPasswordParameter parameter)
+        public ServicesResult<bool> SetPassword(string source, SetPasswordParameter parameter)
         {
             if (parameter == null)
             {
@@ -417,7 +421,7 @@
                 };
             }
 
-            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName));
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName));
             if (parameter.AuthCode != (authCode == null ? string.Empty : authCode.ToString()))
             {
                 return new ServicesResult<bool>
@@ -453,7 +457,7 @@
             loginEntity.Password = parameter.NewPasswrod.Md5();
             this.loginEntityRepository.Save(loginEntity);
 
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName));
             if (!parameter.IsSendSms)
             {
                 return new ServicesResult<bool>
@@ -483,6 +487,7 @@
         /// <summary>
         /// 找回密码
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回找回密码结果
@@ -492,7 +497,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> FindPassword(FindPasswordParameter parameter)
+        public ServicesResult<bool> FindPassword(string source, FindPasswordParameter parameter)
         {
             if (parameter == null)
             {
@@ -536,7 +541,7 @@
             }
 
             var code = CommonUtility.RandNum(6);
-            CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
+            CacheUtility.GetInstance().Set(string.Format("{0}_{1}{2}", source, ServicesCommon.FindPasswordCodeCacheKey, parameter.UserName), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
 
             var sendPasswordResultList =
                 (from way in parameter.WayList
@@ -560,6 +565,7 @@
         /// <summary>
         /// 验证用户输入的验证码
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回验证结果
@@ -569,7 +575,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> AuthCode(AuthCodeParameter parameter)
+        public ServicesResult<bool> AuthCode(string source, AuthCodeParameter parameter)
         {
             if (parameter == null)
             {
@@ -597,7 +603,7 @@
                 };
             }
 
-            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
             if (authCode == null)
             {
                 return new ServicesResult<bool>

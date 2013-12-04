@@ -46,6 +46,7 @@
         /// <summary>
         /// 发送短信验证码
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -55,7 +56,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<SendAuthCodeModel> SendAuthCode(SendAuthCodeParameter parameter)
+        public ServicesResult<SendAuthCodeModel> SendAuthCode(string source, SendAuthCodeParameter parameter)
         {
             if (parameter == null)
             {
@@ -67,12 +68,12 @@
             }
 
             var code = CommonUtility.RandNum(6);
-            CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, parameter.Telephone), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
+            CacheUtility.GetInstance().Set(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthCodeCacheKey, parameter.Telephone), code, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
 
             if (parameter.Second.HasValue)
             {
                 var second = DateTime.Now.AddSeconds(parameter.Second.Value).ToString("yyyy-MM-dd HH:mm:ss");
-                CacheUtility.GetInstance().Set(string.Format("{0}{1}", ServicesCommon.AuthSecondCacheKey, parameter.Second), second, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
+                CacheUtility.GetInstance().Set(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthSecondCacheKey, parameter.Second), second, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
             }
 
             var result = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.AuthCodeMessage, code));

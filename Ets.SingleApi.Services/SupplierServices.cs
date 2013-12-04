@@ -208,6 +208,7 @@
         /// <summary>
         /// 获取餐厅信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回餐厅信息
@@ -217,7 +218,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<SupplierDetailModel> GetSupplier(int supplierId)
+        public ServicesResult<SupplierDetailModel> GetSupplier(string source, int supplierId)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -364,6 +365,7 @@
         /// <summary>
         /// 根据餐厅域名获取餐厅信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierDomain">餐厅域名</param>
         /// <returns>
         /// 返回餐厅信息
@@ -373,7 +375,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<RoughSupplierModel> GetRoughSupplier(string supplierDomain)
+        public ServicesResult<RoughSupplierModel> GetRoughSupplier(string source, string supplierDomain)
         {
             if (supplierDomain.IsEmptyOrNull())
             {
@@ -446,6 +448,7 @@
         /// <summary>
         /// 取得打包费
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="dishList">菜品信息</param>
         /// <returns>
@@ -456,7 +459,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<decimal> GetPackagingFee(int supplierId, List<PackagingFeeItem> dishList)
+        public ServicesResult<decimal> GetPackagingFee(string source, int supplierId, List<PackagingFeeItem> dishList)
         {
             if (dishList == null || dishList.Count == 0)
             {
@@ -489,6 +492,7 @@
         /// <summary>
         /// 获取餐厅列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回餐厅列表
@@ -498,7 +502,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierModel> GetSupplierList(GetSupplierListParameter parameter)
+        public ServicesResultList<SupplierModel> GetSupplierList(string source, GetSupplierListParameter parameter)
         {
             if (parameter == null)
             {
@@ -548,6 +552,7 @@
         /// <summary>
         /// 获取餐厅列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回餐厅列表
@@ -557,7 +562,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierModel> GetSearchSupplierList(GetSearchSupplierListParameter parameter)
+        public ServicesResultList<SupplierModel> GetSearchSupplierList(string source, GetSearchSupplierListParameter parameter)
         {
             if (parameter == null)
             {
@@ -607,6 +612,7 @@
         /// <summary>
         /// 获取餐厅分店列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回餐厅分店列表
@@ -616,7 +622,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<GroupSupplierModel> GetGroupSupplierList(GetGroupSupplierListParameter parameter)
+        public ServicesResultList<GroupSupplierModel> GetGroupSupplierList(string source, GetGroupSupplierListParameter parameter)
         {
             if (parameter == null)
             {
@@ -694,6 +700,7 @@
         /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回餐厅已经开通的功能列表
@@ -703,7 +710,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierFeatureModel> GetSupplierFeatureList(int supplierId)
+        public ServicesResultList<SupplierFeatureModel> GetSupplierFeatureList(string source, int supplierId)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -744,6 +751,7 @@
         /// <summary>
         /// 获取餐厅菜单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型</param>
         /// <returns>
@@ -754,7 +762,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierCuisineModel> GetMenu(int supplierId, int supplierMenuCategoryTypeId)
+        public ServicesResultList<SupplierCuisineModel> GetMenu(string source, int supplierId, int supplierMenuCategoryTypeId)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -861,6 +869,7 @@
         /// <summary>
         /// 获取餐厅菜品类型信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型</param>
         /// <returns>
@@ -871,7 +880,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierCuisineDetailModel> GetSupplierCuisineList(int supplierId, int supplierMenuCategoryTypeId)
+        public ServicesResultList<SupplierCuisineDetailModel> GetSupplierCuisineList(string source, int supplierId, int supplierMenuCategoryTypeId)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -913,6 +922,7 @@
         /// <summary>
         /// 获取餐厅菜品类型信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierCategoryId">The supplierCategoryId</param>
         /// <returns>
@@ -923,7 +933,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<SupplierCuisineDetailModel> GetSupplierCuisine(int supplierId, int supplierCategoryId)
+        public ServicesResult<SupplierCuisineDetailModel> GetSupplierCuisine(string source, int supplierId, int supplierCategoryId)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -970,6 +980,7 @@
         /// <summary>
         /// 添加餐厅菜品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -979,7 +990,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> AddSupplierCuisine(SaveSupplierCuisineParameter parameter)
+        public ServicesResult<bool> AddSupplierCuisine(string source, SaveSupplierCuisineParameter parameter)
         {
             if (parameter == null)
             {
@@ -1016,6 +1027,7 @@
         /// <summary>
         /// 更新菜品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -1025,7 +1037,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> UpdateSupplierCuisine(SaveSupplierCuisineParameter parameter)
+        public ServicesResult<bool> UpdateSupplierCuisine(string source, SaveSupplierCuisineParameter parameter)
         {
             if (parameter == null)
             {
@@ -1062,6 +1074,7 @@
         /// <summary>
         /// 删除菜品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -1071,7 +1084,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> DeleteSupplierCuisine(DeleteSupplierCuisineParameter parameter)
+        public ServicesResult<bool> DeleteSupplierCuisine(string source, DeleteSupplierCuisineParameter parameter)
         {
             if (parameter == null)
             {
@@ -1108,6 +1121,7 @@
         /// <summary>
         /// 获取餐厅菜单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型</param>
         /// <param name="supplierCategoryId">The supplierCategoryId</param>
@@ -1119,7 +1133,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierDishDetailModel> GetSupplierDishList(int supplierId, int supplierMenuCategoryTypeId, int? supplierCategoryId)
+        public ServicesResultList<SupplierDishDetailModel> GetSupplierDishList(string source, int supplierId, int supplierMenuCategoryTypeId, int? supplierCategoryId)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -1252,6 +1266,7 @@
         /// <summary>
         /// 获取餐厅菜单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="supplierDishId">The supplierDishId</param>
         /// <returns>
@@ -1262,7 +1277,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<SupplierDishDetailModel> GetSupplierDish(int supplierId, int supplierDishId)
+        public ServicesResult<SupplierDishDetailModel> GetSupplierDish(string source, int supplierId, int supplierDishId)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -1369,6 +1384,7 @@
         /// <summary>
         /// 添加餐厅菜信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -1378,7 +1394,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> AddSupplierDish(SaveSupplierDishParameter parameter)
+        public ServicesResult<bool> AddSupplierDish(string source, SaveSupplierDishParameter parameter)
         {
             if (parameter == null)
             {
@@ -1415,6 +1431,7 @@
         /// <summary>
         /// 更新菜信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -1424,7 +1441,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> UpdateSupplierDish(SaveSupplierDishParameter parameter)
+        public ServicesResult<bool> UpdateSupplierDish(string source, SaveSupplierDishParameter parameter)
         {
             if (parameter == null)
             {
@@ -1461,6 +1478,7 @@
         /// <summary>
         /// 删除菜信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
         /// <returns>
         /// 返回结果
@@ -1470,7 +1488,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> DeleteSupplierDish(DeleteSupplierDishParameter parameter)
+        public ServicesResult<bool> DeleteSupplierDish(string source, DeleteSupplierDishParameter parameter)
         {
             if (parameter == null)
             {
@@ -1499,6 +1517,7 @@
         /// <summary>
         /// 取得餐厅营业时间
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="startServiceDate">开始日期</param>
         /// <param name="days">天数</param>
@@ -1510,7 +1529,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId, DateTime? startServiceDate, int? days)
+        public ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(string source, int supplierId, DateTime? startServiceDate, int? days)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {

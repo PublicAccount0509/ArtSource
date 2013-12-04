@@ -86,6 +86,7 @@
         /// <summary>
         /// 获取菜品信息列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <returns>
         /// 返回菜品信息列表
         /// </returns>
@@ -94,7 +95,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<CuisineModel> GetCuisineList()
+        public ServicesResultList<CuisineModel> GetCuisineList(string source)
         {
             var cuisineList = (from cuisine in this.cuisineEntityRepository.EntityQueryable
                                select new
@@ -119,6 +120,7 @@
         /// <summary>
         /// 获取菜品信息列表
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="cityId">城市Id</param>
         /// <returns>
         /// 返回菜品信息列表
@@ -128,7 +130,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<CuisineModel> GetCityCuisineList(int cityId)
+        public ServicesResultList<CuisineModel> GetCityCuisineList(string source, int cityId)
         {
             var cuisineList = (from regionEntity in this.regionEntityRepository.EntityQueryable
                                from supplierBusinessArea in this.supplierBusinessAreaEntityRepository.EntityQueryable

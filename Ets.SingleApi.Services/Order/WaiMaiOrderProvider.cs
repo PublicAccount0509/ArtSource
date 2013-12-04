@@ -215,6 +215,7 @@
         /// <summary>
         /// 取得订单是否存在以及支付支付状态
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderId">订单状态</param>
         /// <returns>
         /// 返回结果 0 不存在 1 支付 2 未支付
@@ -224,7 +225,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<int> Exist(int orderId)
+        public ServicesResult<int> Exist(string source, int orderId)
         {
             var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
                                   where entity.OrderNumber == orderId
@@ -248,6 +249,7 @@
         /// <summary>
         /// 取得订单详情
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderId">订单状态</param>
         /// <returns>
         /// 返回结果
@@ -257,7 +259,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<IOrderDetailModel> GetOrder(int orderId)
+        public ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId)
         {
             var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
                                   where entity.OrderNumber == orderId
@@ -336,6 +338,7 @@
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <returns>
         /// 返回结果
@@ -346,9 +349,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [Transaction(TransactionMode.RequiresNew)]
-        public ServicesResult<string> SaveOrder(string shoppingCartId)
+        public ServicesResult<string> SaveOrder(string source, string shoppingCartId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(shoppingCartId);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -359,7 +362,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -369,7 +372,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -379,7 +382,7 @@
                 };
             }
 
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(shoppingCartLink.UserId);
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -389,7 +392,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -399,7 +402,7 @@
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -482,7 +485,7 @@
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId);
             order.IsComplete = true;
             order.OrderId = orderId;
-            this.shoppingCartProvider.SaveShoppingCartOrder(order);
+            this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
             return new ServicesResult<string>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
@@ -493,6 +496,7 @@
         /// <summary>
         /// 取得一个订单号
         /// </summary>
+        /// <param name="source">The source</param>
         /// <returns>
         /// 订单号
         /// </returns>
@@ -501,7 +505,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> GetOrderNumber()
+        public ServicesResult<string> GetOrderNumber(string source)
         {
             var orderId = this.GetOrderNumberId();
             if (orderId <= 0)

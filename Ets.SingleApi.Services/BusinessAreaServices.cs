@@ -45,6 +45,7 @@
         /// <summary>
         /// 获取国家列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <returns>
         /// 返回国家列表信息
         /// </returns>
@@ -53,7 +54,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<BusinessAreaModel> GetCountryList()
+        public ServicesResultList<BusinessAreaModel> GetCountryList(string source)
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.Country);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(string.Empty);
@@ -63,6 +64,7 @@
         /// <summary>
         /// 获取省份列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="countryCode">国家code</param>
         /// <returns>
         /// 返回省份列表信息
@@ -72,7 +74,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<BusinessAreaModel> GetProvinceList(string countryCode)
+        public ServicesResultList<BusinessAreaModel> GetProvinceList(string source, string countryCode)
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.Province);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(countryCode);
@@ -82,6 +84,7 @@
         /// <summary>
         /// 获取城市列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="provinceCode">省份code</param>
         /// <returns>
         /// 返回城市列表信息
@@ -91,7 +94,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<BusinessAreaModel> GetCityList(string provinceCode)
+        public ServicesResultList<BusinessAreaModel> GetCityList(string source, string provinceCode)
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.City);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(provinceCode);
@@ -101,6 +104,7 @@
         /// <summary>
         /// 获取区域列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="cityCode">城市code</param>
         /// <returns>
         /// 返回区域列表信息
@@ -110,7 +114,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<BusinessAreaModel> GetRegionList(string cityCode)
+        public ServicesResultList<BusinessAreaModel> GetRegionList(string source, string cityCode)
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.Region);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(cityCode);
@@ -120,6 +124,7 @@
         /// <summary>
         /// 获取商圈列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="regionCode">区域code</param>
         /// <returns>
         /// 返回商圈列表信息
@@ -129,7 +134,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<BusinessAreaModel> GetBusinessAreaList(string regionCode)
+        public ServicesResultList<BusinessAreaModel> GetBusinessAreaList(string source, string regionCode)
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.BusinessArea);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(regionCode);
@@ -139,6 +144,7 @@
         /// <summary>
         /// 获取商圈列表信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="parentCode">父节点code</param>
         /// <returns>
         /// 返回商圈列表信息
@@ -148,7 +154,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<BusinessAreaModel> GetAllBusinessAreaList(string parentCode)
+        public ServicesResultList<BusinessAreaModel> GetAllBusinessAreaList(string source, string parentCode)
         {
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.AllArea);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(parentCode);

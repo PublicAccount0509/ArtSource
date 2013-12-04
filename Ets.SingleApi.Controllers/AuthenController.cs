@@ -73,7 +73,7 @@
                     };
             }
 
-            var loginResult = this.authenServices.Login(new LoginParameter
+            var loginResult = this.authenServices.Login(this.Source, new LoginParameter
                         {
                             Email = (requst.Email ?? string.Empty).Trim(),
                             Password = (requst.Password ?? string.Empty).Trim(),
@@ -142,7 +142,7 @@
                 };
             }
 
-            var loginResult = this.authenServices.AuthLogin(new AuthLoginParameter
+            var loginResult = this.authenServices.AuthLogin(this.Source, new AuthLoginParameter
             {
                 Telephone = (requst.Telephone ?? string.Empty).Trim(),
                 AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
@@ -222,7 +222,7 @@
                 };
             }
 
-            var result = this.authenServices.Password(id, new PasswordParameter
+            var result = this.authenServices.Password(this.Source, id, new PasswordParameter
             {
                 OldPassword = (requst.OldPassword ?? string.Empty).Trim(),
                 NewPasswrod = (requst.NewPasswrod ?? string.Empty).Trim(),
@@ -265,7 +265,7 @@
                 };
             }
 
-            var result = this.authenServices.SetPassword(new SetPasswordParameter
+            var result = this.authenServices.SetPassword(this.Source, new SetPasswordParameter
             {
                 UserName = (requst.UserName ?? string.Empty).Trim(),
                 AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
@@ -327,7 +327,7 @@
                                                 AccountType = (PasswordType)p.AccountType
                                             }).ToList();
 
-            var result = this.authenServices.FindPassword(new FindPasswordParameter
+            var result = this.authenServices.FindPassword(this.Source, new FindPasswordParameter
             {
                 UserName = (requst.UserName ?? string.Empty).Trim(),
                 WayList = wayList
@@ -369,7 +369,7 @@
                 };
             }
 
-            var result = this.authenServices.AuthCode(new AuthCodeParameter
+            var result = this.authenServices.AuthCode(this.Source, new AuthCodeParameter
             {
                 Telephone = (requst.Telephone ?? string.Empty).Trim(),
                 AuthCode = (requst.AuthCode ?? string.Empty).Trim()

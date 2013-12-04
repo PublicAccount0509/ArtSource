@@ -191,5 +191,24 @@
                 return (ConfigurationManager.AppSettings["EmptyInvoiceTitle"] ?? string.Empty).Trim();
             }
         }
+
+        /// <summary>
+        /// 未知来源
+        /// </summary>
+        /// <value>
+        /// 未知来源
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：12/4/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string UnkownSource
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["UnkownSource"] ?? string.Empty).Trim();
+            }
+        }
     }
 }

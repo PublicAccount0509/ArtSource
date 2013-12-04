@@ -18,6 +18,7 @@
         /// <summary>
         /// 取得订单是否存在以及支付支付状态
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderId">订单状态</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
@@ -28,11 +29,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<int> Exist(int orderId, int orderType);
+        ServicesResult<int> Exist(string source, int orderId, int orderType);
 
         /// <summary>
         /// 取得订单详情
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderId">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
@@ -43,11 +45,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<IOrderDetailModel> GetOrder(int orderId, int orderType);
+        ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId, int orderType);
 
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
@@ -58,11 +61,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> SaveOrder(string shoppingCartId, int orderType);
+        ServicesResult<string> SaveOrder(string source, string shoppingCartId, int orderType);
 
         /// <summary>
         /// 获取订单号
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <returns>
         /// 返回结果
@@ -72,6 +76,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> GetOrderNumber(int orderType);
+        ServicesResult<string> GetOrderNumber(string source, int orderType);
     }
 }

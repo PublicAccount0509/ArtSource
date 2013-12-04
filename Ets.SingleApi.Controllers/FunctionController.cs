@@ -60,7 +60,7 @@
         [HttpGet]
         public Response<Location> Location(string address, string city = null, int? type = 0)
         {
-            var getLocationResult = this.functionServices.GetLocation(address, city ?? string.Empty, type ?? 0);
+            var getLocationResult = this.functionServices.GetLocation(this.Source, address, city ?? string.Empty, type ?? 0);
             if (getLocationResult.Result == null)
             {
                 return new Response<Location>

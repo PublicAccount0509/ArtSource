@@ -20,6 +20,7 @@
         /// <summary>
         /// 取得购物车信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <returns>
         /// 返回购物车信息
@@ -29,11 +30,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartModel> GetShoppingCart(string shoppingCartId);
+        ServicesResult<ShoppingCartModel> GetShoppingCart(string source, string shoppingCartId);
 
         /// <summary>
         /// 创建一个购物车
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
@@ -44,11 +46,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> CreateShoppingCart(int supplierId, string userId);
+        ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId);
 
         /// <summary>
         /// 更改商品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
         /// <returns>
@@ -59,11 +62,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList);
+        ServicesResult<bool> SaveShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList);
 
         /// <summary>
         /// 添加商品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
         /// <returns>
@@ -74,11 +78,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> AddShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList);
+        ServicesResult<bool> AddShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList);
 
         /// <summary>
         /// 删除商品信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
         /// <returns>
@@ -89,11 +94,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> DeleteShoppingItem(string id, List<ShoppingCartItem> shoppingCartItemList);
+        ServicesResult<bool> DeleteShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList);
 
         /// <summary>
         /// 保存用户信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
@@ -104,11 +110,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartCustomer(string id, int userId);
+        ServicesResult<bool> SaveShoppingCartCustomer(string source, string id, int userId);
 
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCart">The shoppingCart</param>
         /// <returns>
@@ -119,11 +126,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCart(string id, ShoppingCartModel shoppingCart);
+        ServicesResult<bool> SaveShoppingCart(string source, string id, ShoppingCartModel shoppingCart);
 
         /// <summary>
         /// 保存订单信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
         /// <returns>
@@ -134,11 +142,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartOrder(string id, ShoppingCartOrder shoppingCartOrder);
+        ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder);
 
         /// <summary>
         /// 保存订单配送信息
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartDelivery">The shoppingCartOrder</param>
         /// <returns>
@@ -149,11 +158,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartDelivery(string id, ShoppingCartDelivery shoppingCartDelivery);
+        ServicesResult<bool> SaveShoppingCartDelivery(string source, string id, ShoppingCartDelivery shoppingCartDelivery);
 
         /// <summary>
         /// 更改购物车送餐方式
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="deliveryMethodId">送餐方式</param>
         /// <returns>
@@ -164,6 +174,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string id, int deliveryMethodId);
+        ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string source, string id, int deliveryMethodId);
     }
 }

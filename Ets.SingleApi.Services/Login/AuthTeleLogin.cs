@@ -79,6 +79,7 @@
         /// <summary>
         /// 登录方法
         /// </summary>
+        /// <param name="source">The source</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password</param>
         /// <returns>
@@ -89,9 +90,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public LoginData Login(string userName, string password)
+        public LoginData Login(string source, string userName, string password)
         {
-            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, userName));
+            var authCode = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthCodeCacheKey, userName));
             if (password != (authCode == null ? string.Empty : authCode.ToString()))
             {
                 return new LoginData
@@ -129,7 +130,7 @@
                 };
             }
 
-            CacheUtility.GetInstance().Delete(string.Format("{0}{1}", ServicesCommon.AuthCodeCacheKey, userName));
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthCodeCacheKey, userName));
             return new LoginData
                 {
                     LoginId = loginEntity.LoginId

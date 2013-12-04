@@ -58,7 +58,7 @@
         [HttpGet]
         public ListResponse<Cuisine> CuisineList()
         {
-            var list = this.cuisineServices.GetCuisineList();
+            var list = this.cuisineServices.GetCuisineList(this.Source);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<Cuisine>
@@ -104,7 +104,7 @@
         [HttpGet]
         public ListResponse<Cuisine> CityCuisineList(int cityId)
         {
-            var list = this.cuisineServices.GetCityCuisineList(cityId);
+            var list = this.cuisineServices.GetCityCuisineList(this.Source, cityId);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<Cuisine>
