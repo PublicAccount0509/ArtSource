@@ -189,7 +189,8 @@
             var shoppingCartOrder = new ShoppingCartOrder
                 {
                     Id = Guid.NewGuid().ToString(),
-                    DeliveryType = ServicesCommon.DefaultDeliveryType
+                    DeliveryType = ServicesCommon.DefaultDeliveryType,
+                    DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId
                 };
             var saveShoppingCartOrderResult = this.shoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -260,6 +261,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -268,7 +270,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> SaveShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -313,7 +315,7 @@
             var shoppingList = shoppingCartItemList;
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
-            this.SaveShoppingCartOrder(source, shoppingList, supplier, order);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -326,6 +328,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -334,7 +337,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> AddShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> AddShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId)
         {
             if (shoppingCartItemList.Count(p => p.Quantity > 0) == 0)
             {
@@ -404,7 +407,7 @@
 
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
-            this.SaveShoppingCartOrder(source, shoppingList, supplier, order);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -417,6 +420,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -425,7 +429,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> DeleteShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList)
+        public ServicesResult<bool> DeleteShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -485,7 +489,7 @@
 
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
-            this.SaveShoppingCartOrder(source, shoppingList, supplier, order);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -937,12 +941,13 @@
         /// <param name="shoppingList">The shoppingList</param>
         /// <param name="supplier">The supplier</param>
         /// <param name="order">The order</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// 创建者：周超
         /// 创建日期：11/29/2013 11:17 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, ShoppingCartOrder order)
+        private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, ShoppingCartOrder order, bool saveDeliveryMethodId)
         {
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
@@ -963,8 +968,16 @@
             var coupon = 0;
             var customerTotal = total - coupon;
 
+            if (saveDeliveryMethodId)
+            {
+                order.DeliveryMethodId = deliveryMethodId;
+            }
+            else
+            {
+                order.DeliveryMethodId = canDelivery ? ServicesCommon.DefaultDeliveryMethodId : ServicesCommon.PickUpDeliveryMethodId;
+            }
+
             order.CanDelivery = canDelivery;
-            order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryFee;
             order.PackagingFee = packagingFee;

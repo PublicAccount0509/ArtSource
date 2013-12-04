@@ -54,6 +54,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -62,7 +63,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList);
+        ServicesResult<bool> SaveShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId);
 
         /// <summary>
         /// 添加商品信息
@@ -70,6 +71,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -78,7 +80,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> AddShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList);
+        ServicesResult<bool> AddShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId);
 
         /// <summary>
         /// 删除商品信息
@@ -86,6 +88,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartItemList">商品信息列表</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -94,7 +97,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> DeleteShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList);
+        ServicesResult<bool> DeleteShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId);
 
         /// <summary>
         /// 保存用户信息

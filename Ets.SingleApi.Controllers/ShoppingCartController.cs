@@ -286,6 +286,7 @@
         /// </summary>
         /// <param name="id">购物车Id</param>
         /// <param name="requst">商品信息</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -295,7 +296,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Shopping(string id, ShoppingCartShoppingRequst requst)
+        public Response<ShoppingCartModel> Shopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null)
             {
@@ -309,7 +310,7 @@
             }
 
             var shoppingCartItemList = requst.ShoppingCartItemList ?? new List<ShoppingCartItem>();
-            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList);
+            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -338,6 +339,7 @@
         /// </summary>
         /// <param name="id">购物车Id</param>
         /// <param name="requst">商品信息</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -347,7 +349,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst)
+        public Response<ShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
@@ -360,7 +362,7 @@
                 };
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.AddShoppingItem(this.Source, id, requst.ShoppingCartItemList);
+            var saveShoppingItemResult = this.shoppingCartServices.AddShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -389,6 +391,7 @@
         /// </summary>
         /// <param name="id">购物车Id</param>
         /// <param name="requst">商品信息</param>
+        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -398,7 +401,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst)
+        public Response<ShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
@@ -411,7 +414,7 @@
                 };
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList);
+            var saveShoppingItemResult = this.shoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
