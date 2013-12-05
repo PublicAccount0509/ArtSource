@@ -2,6 +2,8 @@
 {
     using System.Web.Http;
 
+    using Ets.SingleApi.Model.Controller;
+
     /// <summary>
     /// 类名称：TestController
     /// 命名空间：Ets.SingleApi.Controllers
@@ -26,9 +28,12 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public string Test()
+        public Response<string> Test()
         {
-            return "Hello World!";
+            return new Response<string>
+            {
+                Result = "Hello World!"
+            };
         }
     }
 }

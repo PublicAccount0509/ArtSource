@@ -86,9 +86,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public TestApiResponse Test()
+        public Response<string> Test()
         {
-            return new TestApiResponse
+            return new Response<string>
                 {
                     Result = "Hello World!"
                 };
