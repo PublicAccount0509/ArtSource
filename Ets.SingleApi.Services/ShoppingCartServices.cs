@@ -718,7 +718,7 @@
                                          : supplier.FixedDeliveryCharge;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             var total = totalfee + fixedDeliveryFee;
-            var coupon = isCalculateCoupon ? this.CalculateCoupon(total, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
+            var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
 
             shoppingCartOrder.Id = order.Id;

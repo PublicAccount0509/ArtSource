@@ -8,7 +8,7 @@
     /// <summary>
     /// 接口名称：IBusinessAreaService
     /// 命名空间：Ets.SingleApi.Hosting.Contracts
-    /// 接口功能：Authen服务
+    /// 接口功能：BusinessArea服务
     /// </summary>
     /// 创建者：周超
     /// 创建日期：12/9/2013 3:06 PM
