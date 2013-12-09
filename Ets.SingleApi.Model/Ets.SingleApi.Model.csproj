@@ -52,16 +52,22 @@
     <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
     <Compile Include="Controller\ShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\ShoppingCartOrderRequst.cs" />
+    <Compile Include="Controller\SupplierCoupon.cs" />
+    <Compile Include="Controller\SupplierCouponRequst.cs" />
     <Compile Include="Controller\SupplierServiceTime.cs" />
     <Compile Include="Controller\Response.cs" />
     <Compile Include="Controller\ListResponse.cs" />
     <Compile Include="Controller\ShoppingCartDeliveryRequst.cs" />
     <Compile Include="Controller\ShoppingCartRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
+    <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
     <Compile Include="IOrderDetailModel.cs" />
+    <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
+    <Compile Include="Services\SupplierCouponModel.cs" />
+    <Compile Include="Services\SupplierCouponParameter.cs" />
     <Compile Include="Services\SupplierServiceTimeModel.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
@@ -427,6 +433,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\SupplierDishImageEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\SupplierCouponCustomerEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

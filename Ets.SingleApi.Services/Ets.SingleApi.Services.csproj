@@ -64,6 +64,10 @@
     <Compile Include="BusinessArea\BusinessAreaBusinessArea.cs" />
     <Compile Include="BusinessArea\BusinessArea.cs" />
     <Compile Include="BusinessArea\AllAreaBusinessArea.cs" />
+    <Compile Include="CouponServices.cs" />
+    <Compile Include="Coupon\ISupplierCouponProvider.cs" />
+    <Compile Include="Coupon\PickUpSupplierCouponProvider.cs" />
+    <Compile Include="Coupon\DeliverySupplierCouponProvider.cs" />
     <Compile Include="CuisineServices.cs" />
     <Compile Include="DetailServices\SupplierDetailServices.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>

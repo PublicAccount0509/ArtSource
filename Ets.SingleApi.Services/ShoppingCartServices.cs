@@ -32,18 +32,31 @@
         private readonly IShoppingCartProvider shoppingCartProvider;
 
         /// <summary>
+        /// 字段supplierCouponProviderList
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/7/2013 4:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly List<ISupplierCouponProvider> supplierCouponProviderList;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartServices" /> class.
         /// </summary>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
+        /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ShoppingCartServices(
-            IShoppingCartProvider shoppingCartProvider)
+            IShoppingCartProvider shoppingCartProvider,
+            List<ISupplierCouponProvider> supplierCouponProviderList)
         {
             this.shoppingCartProvider = shoppingCartProvider;
+            this.supplierCouponProviderList = supplierCouponProviderList;
         }
 
         /// <summary>
@@ -315,6 +328,7 @@
             var shoppingList = shoppingCartItemList;
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
@@ -407,6 +421,7 @@
 
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
@@ -489,6 +504,7 @@
 
             shoppingCart.ShoppingList = shoppingList;
             this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
@@ -612,6 +628,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
+        /// <param name="isCalculateCoupon">是否计算优惠</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -620,7 +637,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder)
+        public ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder, bool isCalculateCoupon)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -688,7 +705,7 @@
             var shoppingCart = getShoppingCartResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
-            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
+            var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
             {
                 PackagingFee = p.PackagingFee,
                 Price = p.Price,
@@ -701,7 +718,7 @@
                                          : supplier.FixedDeliveryCharge;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             var total = totalfee + fixedDeliveryFee;
-            var coupon = 0;
+            var coupon = isCalculateCoupon ? this.CalculateCoupon(total, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
 
             shoppingCartOrder.Id = order.Id;
@@ -826,13 +843,14 @@
             var order = getShoppingCartOrderResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
-            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
+            var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
             {
                 PackagingFee = p.PackagingFee,
                 Price = p.Price,
                 Quantity = p.Quantity
             }).ToList());
 
+            order.CouponFee = 0;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
@@ -840,7 +858,7 @@
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? shoppingPrice + packagingFee + fixedDeliveryCharge
                         : shoppingPrice + packagingFee;
-            var coupon = 0;
+            var coupon = order.CouponFee;
             var customerTotal = total - coupon;
 
             order.DeliveryMethodId = deliveryMethodId;
@@ -857,45 +875,6 @@
             {
                 Result = true
             };
-        }
-
-        /// <summary>
-        /// 计算打包费
-        /// </summary>
-        /// <param name="packageWay">是否阶梯打包</param>
-        /// <param name="supplierPack">餐厅打包费</param>
-        /// <param name="packLadder">阶梯打包费</param>
-        /// <param name="dishList">菜品信息</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 12:12 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private decimal GetPackagingFee(bool packageWay, decimal supplierPack, decimal packLadder, List<PackagingFeeItem> dishList)
-        {
-            var totalPrice = dishList.Sum(item => item.Price * item.Quantity);
-            if (totalPrice <= 0)
-            {
-                return 0;
-            }
-
-            if (!packageWay)
-            {
-                var fee = dishList.Sum(item => item.PackagingFee * item.Quantity);
-                return fee;
-            }
-
-            if (packLadder == 0)
-            {
-                return supplierPack;
-            }
-
-            long x;
-            var y = Math.DivRem((long)totalPrice, (long)packLadder, out x);
-            return (y + 1) * supplierPack;
         }
 
         /// <summary>
@@ -950,7 +929,7 @@
         private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, ShoppingCartOrder order, bool saveDeliveryMethodId)
         {
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
-            var packagingFee = this.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
+            var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
             {
                 PackagingFee = p.PackagingFee,
                 Price = p.Price,
@@ -965,7 +944,7 @@
             var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             var total = totalfee + fixedDeliveryFee;
-            var coupon = 0;
+            var coupon = order.CouponFee;
             var customerTotal = total - coupon;
 
             if (saveDeliveryMethodId)
@@ -986,6 +965,43 @@
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
             this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
+        }
+
+        /// <summary>
+        /// 取得折扣信息
+        /// </summary>
+        /// <param name="total">总消费</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryMethodId">取餐方式</param>
+        /// <param name="userId">用户Id</param>
+        /// <returns>
+        /// 返回折扣
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/6/2013 5:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private decimal CalculateCoupon(decimal total, int supplierId, int deliveryMethodId, int? userId)
+        {
+            if (userId == null)
+            {
+                return 0;
+            }
+
+            var supplierCouponProvider = this.supplierCouponProviderList.FirstOrDefault(p => p.DeliveryMethodType == (DeliveryMethodType)deliveryMethodId);
+            if (supplierCouponProvider == null)
+            {
+                return 0;
+            }
+
+            var supplierCouponList = supplierCouponProvider.CalculateCoupon(total, supplierId, DateTime.Now, userId.Value);
+            if (supplierCouponList == null || supplierCouponList.Count == 0)
+            {
+                return 0;
+            }
+
+            return ServicesCommon.CalculateCoupon(total, ServicesCommon.CalculateCouponWay, supplierCouponList);
         }
     }
 }

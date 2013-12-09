@@ -165,7 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\castle.xml" />
-    <Content Include="config\status.xml" />
+    <Content Include="config\status.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

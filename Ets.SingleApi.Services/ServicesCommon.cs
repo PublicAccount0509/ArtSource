@@ -20,6 +20,84 @@
     public class ServicesCommon
     {
         /// <summary>
+        /// 优惠折扣类型Id
+        /// </summary>
+        /// <value>
+        /// 优惠折扣类型Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int CouponTypeFirstId
+        {
+            get
+            {
+                var couponTypeFirstId = ConfigurationManager.AppSettings["CouponTypeFirstId"] ?? "1";
+                int result;
+                if (!int.TryParse(couponTypeFirstId, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 优惠满折类型Id
+        /// </summary>
+        /// <value>
+        /// 优惠满折类型Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int CouponTypeSecondId
+        {
+            get
+            {
+                var couponTypeSecondId = ConfigurationManager.AppSettings["CouponTypeSecondId"] ?? "2";
+                int result;
+                if (!int.TryParse(couponTypeSecondId, out result))
+                {
+                    result = 2;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 计算打折的方式，1 先减后打折 2 先打折后减  3 叠加最优惠的  4 不叠加最优惠的  5 满减优先  6 折扣优先
+        /// </summary>
+        /// <value>
+        /// 计算打折的方式
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int CalculateCouponWay
+        {
+            get
+            {
+                var calculateCouponWay = ConfigurationManager.AppSettings["CalculateCouponWay"] ?? "4";
+                int result;
+                if (!int.TryParse(calculateCouponWay, out result))
+                {
+                    result = 4;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 营业前准备时间
         /// </summary>
         /// <value>
@@ -982,6 +1060,68 @@
             long x;
             var y = Math.DivRem((long)totalPrice, (long)packLadder, out x);
             return (y + 1) * supplierPack;
+        }
+
+        /// <summary>
+        /// 计算折扣
+        /// </summary>
+        /// <param name="total">消费总额</param>
+        /// <param name="calculateCouponWay">计算打折的方式，1 先减后打折 2 先打折后减  3 叠加最优惠的  4 不叠加最优惠的  5 满减优先  6 折扣优先</param>
+        /// <param name="supplierCouponList">折扣信息</param>
+        /// <returns>
+        /// 返回计算结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/9/2013 9:36 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static decimal CalculateCoupon(decimal total, int calculateCouponWay, List<SupplierCouponModel> supplierCouponList)
+        {
+            var firstDiscount = supplierCouponList.Where(p => p.CouponTypeId == ServicesCommon.CouponTypeFirstId)
+                             .Select(p => p.Discount)
+                             .Max();
+
+            var secondDiscount = supplierCouponList.Where(p => p.CouponTypeId == ServicesCommon.CouponTypeSecondId)
+                  .Select(p => p.Discount)
+                  .Max() / 10;
+
+            if (secondDiscount <= 0)
+            {
+                secondDiscount = 1;
+            }
+
+            if (calculateCouponWay == 1)
+            {
+                return (total - firstDiscount) * secondDiscount;
+            }
+
+            if (calculateCouponWay == 2)
+            {
+                return total * secondDiscount - firstDiscount;
+            }
+
+            if (calculateCouponWay == 3)
+            {
+                return Math.Min((total - firstDiscount) * secondDiscount, total * secondDiscount - firstDiscount);
+            }
+
+            if (calculateCouponWay == 4)
+            {
+                return Math.Min(total - firstDiscount, total * secondDiscount);
+            }
+
+            if (calculateCouponWay == 5)
+            {
+                return firstDiscount > 0 ? total - firstDiscount : total * secondDiscount;
+            }
+
+            if (calculateCouponWay == 6)
+            {
+                return secondDiscount > 0 && secondDiscount < 1 ? total * secondDiscount : total - firstDiscount;
+            }
+
+            return total;
         }
     }
 }

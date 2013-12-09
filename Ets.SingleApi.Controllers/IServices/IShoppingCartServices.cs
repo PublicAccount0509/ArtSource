@@ -137,6 +137,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
+        /// <param name="isCalculateCoupon">是否计算优惠</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -145,7 +146,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder);
+        ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder, bool isCalculateCoupon);
 
         /// <summary>
         /// 保存订单配送信息

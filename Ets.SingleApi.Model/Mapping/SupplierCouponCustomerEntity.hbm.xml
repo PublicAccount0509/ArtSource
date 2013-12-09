@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierCouponCustomerEntity, Ets.SingleApi.Model" table="SupplierCouponCustomer" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="SupplierCouponId" column="SupplierCouponID" type="Int32" not-null="false" />
+		<property name="CustomerId" column="CustomerID" type="Int32" not-null="false" />
+		<property name="DiscountValue" column="DiscountValue" type="Decimal" not-null="false" />
+		<property name="Description" column="Description" type="String" not-null="false" />
+		<property name="CreateTime" column="CreateTime" type="Timestamp" not-null="false" />
+		<property name="DeliveryId" column="DeliveryID" type="Int32" not-null="false" />
+	</class>
+</hibernate-mapping>
