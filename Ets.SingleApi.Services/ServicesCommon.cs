@@ -1078,13 +1078,11 @@
         /// ----------------------------------------------------------------------------------------
         public static decimal CalculateCoupon(decimal total, int calculateCouponWay, List<SupplierCouponModel> supplierCouponList)
         {
-            var firstDiscount = supplierCouponList.Where(p => p.CouponTypeId == ServicesCommon.CouponTypeFirstId)
-                             .Select(p => p.Discount)
-                             .Max();
+            var firstDiscount = supplierCouponList.Any(p => p.CouponTypeId == CouponTypeFirstId) ?
+                                supplierCouponList.Where(p => p.CouponTypeId == CouponTypeFirstId).Select(p => p.Discount).Max() : 0;
 
-            var secondDiscount = supplierCouponList.Where(p => p.CouponTypeId == ServicesCommon.CouponTypeSecondId)
-                  .Select(p => p.Discount)
-                  .Max() / 10;
+            var secondDiscount = supplierCouponList.Any(p => p.CouponTypeId == CouponTypeSecondId) ?
+                                 supplierCouponList.Where(p => p.CouponTypeId == CouponTypeSecondId).Select(p => p.Discount).Max() / 10 : 1;
 
             if (secondDiscount <= 0)
             {
@@ -1118,7 +1116,7 @@
 
             if (calculateCouponWay == 6)
             {
-                return secondDiscount > 0 && secondDiscount < 1 ? total * secondDiscount : total - firstDiscount;
+                return secondDiscount >= 0 && secondDiscount < 1 ? total * secondDiscount : total - firstDiscount;
             }
 
             return total;
