@@ -70,7 +70,9 @@
         {
             var routes = new Dictionary<string, Type>
                 {
-                    { "Authen", typeof(IAuthenService) }
+                    { "Authen", typeof(IAuthenService) },
+                    { "BusinessArea", typeof(IBusinessAreaService) },
+                    { "Coupon", typeof(ICouponService) }
                 };
 
             foreach (var key in routes.Keys)
@@ -78,7 +80,7 @@
                 RouteTable.Routes.Add(new ServiceRoute(string.Format("Api/{0}", key), new DefaultServiceHostFactory(), routes[key]));
             }
 
-            RouteTable.Routes.MapPageRoute("Help", string.Empty, "~/Help.aspx");
+            RouteTable.Routes.MapPageRoute(string.Empty, string.Empty, "~/Help.aspx");
         }
     }
 }

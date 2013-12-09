@@ -1089,6 +1089,7 @@
                 secondDiscount = 1;
             }
 
+            secondDiscount = 1 - secondDiscount;
             if (calculateCouponWay == 1)
             {
                 return (total - firstDiscount) * secondDiscount;
@@ -1116,7 +1117,7 @@
 
             if (calculateCouponWay == 6)
             {
-                return secondDiscount >= 0 && secondDiscount < 1 ? total * secondDiscount : total - firstDiscount;
+                return secondDiscount >= 0 && secondDiscount <= 1 ? total * secondDiscount : total - firstDiscount;
             }
 
             return total;

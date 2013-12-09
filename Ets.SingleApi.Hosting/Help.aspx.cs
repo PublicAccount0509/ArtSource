@@ -48,7 +48,7 @@
                 root = string.Format("{0}://{1}/Api", scheme, HttpContext.Current.Request.Url.Authority.TrimEnd(new[] { '/', '\\' }));
             }
 
-            var list = new[] { "Authen" };
+            var list = new[] { "Authen", "BusinessArea", "Coupon" };
             if (list.Length == 0)
             {
                 return;
@@ -73,8 +73,8 @@
             var htmlContent = this.GetHtmlContent(string.Format("{0}/{1}/help", root, list.First()));
             var style = this.GetHtmlItem(htmlContent, @"(?i)[\<]style.*?[\>].*?(</style>)");
             // var title = string.Format("<p class=\"heading1\">{0}/</p><p>SinleApi接口文档.</p>", root);
-            var title = string.Format("<p class=\"heading1\">{0}</p>", "SinleApi接口说明");
-            var head = string.Format("<head><title>{0}</title>{1}</head>", root, style);
+            var title = string.Format("<p class=\"heading1\">{0}({1})</p>", "SingleApi接口说明", root);
+            var head = string.Format("<head><title>{0}</title>{1}</head>", "SingleApi接口说明", style);
             var body = string.Format("<body><div id=\"content\">{0}<table style=\"width:100%;\"><tr style=\"height:25px;\"><th width=\"10%\"></th><th width=\"30%\">Uri</th><th width=\"10%\">Method</th><th>Description</th></tr>{1}<tr style=\"height:25px;\"><th colspan=\"4\">The system version is {2}</th></tr></table><div></body>", title, string.Join(string.Empty, tableItemList), resut);
             var html = string.Format("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"[]><html xmlns=\"http://www.w3.org/1999/xhtml/\">{0}{1}</html>", head, body);
 
