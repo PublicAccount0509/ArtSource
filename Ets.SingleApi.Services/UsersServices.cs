@@ -401,7 +401,7 @@
 
             var isDefault = parameter.IsDefault;
             var customerId = customerEntity.CustomerId;
-            if (this.customerAddressEntityRepository.EntityQueryable.Count(p => p.CustomerId == customerId) == 0)
+            if (this.customerAddressEntityRepository.EntityQueryable.Count(p => p.CustomerId == customerId && p.IsDel == false) == 0)
             {
                 isDefault = true;
             }
