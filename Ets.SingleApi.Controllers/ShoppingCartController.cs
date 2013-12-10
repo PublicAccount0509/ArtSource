@@ -46,7 +46,7 @@
         }
 
         /// <summary>
-        /// 创建一个购物车
+        /// 根据购物车Id获取购物车信息
         /// </summary>
         /// <param name="id">购物车Id</param>
         /// <returns>
@@ -222,7 +222,7 @@
         }
 
         /// <summary>
-        /// 保存顾客信息
+        /// 保存送餐信息
         /// </summary>
         /// <param name="id">The id</param>
         /// <param name="requst">The requst</param>
@@ -510,10 +510,10 @@
         }
 
         /// <summary>
-        /// 保存订单信息
+        /// 保存送餐方式
         /// </summary>
         /// <param name="id">购物车Id</param>
-        /// <param name="deliveryMethodId">取餐方式</param>
+        /// <param name="deliveryMethodId">送餐方式Id</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>

@@ -31,7 +31,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("用户账户或邮箱登陆方法")]
+        [Description("方法功能：用户账户或邮箱登陆方法")]
         Response<LoginResult> Login(LoginRequst requst);
 
         /// <summary>
@@ -47,7 +47,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("手机验证登陆方法")]
+        [Description("方法功能：手机验证登陆方法")]
         Response<AuthLoginResult> AuthLogin(AuthLoginRequst requst);
 
         /// <summary>
@@ -64,7 +64,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("修改密码")]
+        [Description("方法功能：修改密码")]
         Response<bool> Password(string id, PasswordRequst requst);
 
         /// <summary>
@@ -80,7 +80,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("设置密码")]
+        [Description("方法功能：设置密码")]
         Response<bool> SetPassword(SetPasswordRequst requst);
 
         /// <summary>
@@ -96,7 +96,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("找回密码")]
+        [Description("方法功能：找回密码")]
         Response<bool> FindPassword(FindPasswordRequst requst);
 
         /// <summary>
@@ -112,7 +112,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("验证验证码")]
+        [Description("方法功能：验证验证码")]
         Response<bool> AuthCode(AuthCodeRequst requst);
     }
 }

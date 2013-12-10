@@ -82,6 +82,11 @@
     <Compile Include="Contracts\IBusinessAreaService.cs" />
     <Compile Include="Contracts\ICouponService.cs" />
     <Compile Include="Contracts\ICuisineService.cs" />
+    <Compile Include="Contracts\IFunctionService.cs" />
+    <Compile Include="Contracts\IOrdersService.cs" />
+    <Compile Include="Contracts\IPaymentService.cs" />
+    <Compile Include="Contracts\ISmsService.cs" />
+    <Compile Include="Contracts\IShoppingCartService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -97,6 +102,11 @@
     <Compile Include="Services\BusinessAreaService.cs" />
     <Compile Include="Services\CouponService.cs" />
     <Compile Include="Services\CuisineService.cs" />
+    <Compile Include="Services\FunctionService.cs" />
+    <Compile Include="Services\OrdersService.cs" />
+    <Compile Include="Services\PaymentService.cs" />
+    <Compile Include="Services\SmsService.cs" />
+    <Compile Include="Services\ShoppingCartService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -48,7 +48,7 @@
                 root = string.Format("{0}://{1}/Api", scheme, HttpContext.Current.Request.Url.Authority.TrimEnd(new[] { '/', '\\' }));
             }
 
-            var list = new[] { "Authen", "BusinessArea", "Coupon", "Cuisine" };
+            var list = new[] { "Authen", "BusinessArea", "Coupon", "Cuisine", "Function", "Orders", "Payment", "ShoppingCart", "Sms" };
             if (list.Length == 0)
             {
                 return;

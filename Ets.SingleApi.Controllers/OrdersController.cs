@@ -44,7 +44,7 @@
         }
 
         /// <summary>
-        /// 取得订单详情
+        /// 判定指定订单支付状态
         /// </summary>
         /// <param name="id">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>

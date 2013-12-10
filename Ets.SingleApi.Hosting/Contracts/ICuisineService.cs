@@ -30,7 +30,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("获取菜品列表")]
+        [Description("方法功能：获取菜品列表")]
         ListResponse<Cuisine> CuisineList();
 
         /// <summary>
@@ -46,7 +46,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("根据城市Id获取菜品列表")]
+        [Description("方法功能：根据城市Id获取菜品列表")]
         ListResponse<Cuisine> CityCuisineList(string cityId);
     }
 }

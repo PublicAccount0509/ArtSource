@@ -84,6 +84,185 @@
         }
 
         /// <summary>
+        /// 获取餐厅信息
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<SupplierDetail> Supplier(int id)
+        {
+            var getSupplierResult = this.supplierServices.GetSupplier(this.Source, id);
+            if (getSupplierResult.Result == null)
+            {
+                return new Response<SupplierDetail>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getSupplierResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getSupplierResult.StatusCode
+                    },
+                    Result = new SupplierDetail()
+                };
+            }
+
+            var supplierFeatureList = getSupplierResult.Result.SupplierFeatureList;
+            var supplier = new SupplierDetail
+            {
+                SupplierId = getSupplierResult.Result.SupplierId,
+                SupplierName = getSupplierResult.Result.SupplierName ?? string.Empty,
+                SupplierDescription = getSupplierResult.Result.SupplierDescription ?? string.Empty,
+                ServiceTime = getSupplierResult.Result.ServiceTime ?? string.Empty,
+                Address = getSupplierResult.Result.Address ?? string.Empty,
+                Averageprice = getSupplierResult.Result.Averageprice ?? 0,
+                ParkingInfo = getSupplierResult.Result.ParkingInfo ?? string.Empty,
+                Telephone = getSupplierResult.Result.Telephone ?? string.Empty,
+                SupplierGroupId = getSupplierResult.Result.SupplierGroupId,
+                ChainCount = getSupplierResult.Result.ChainCount,
+                CuisineName = getSupplierResult.Result.CuisineName ?? string.Empty,
+                DateJoined = getSupplierResult.Result.DateJoined,
+                IsOpenDoor = getSupplierResult.Result.IsOpenDoor,
+                LogoUrl = getSupplierResult.Result.LogoUrl ?? string.Empty,
+                PackagingFee = getSupplierResult.Result.PackagingFee ?? 0,
+                FixedDeliveryCharge = getSupplierResult.Result.FixedDeliveryCharge ?? 0,
+                DelMinOrderAmount = getSupplierResult.Result.DelMinOrderAmount ?? 0,
+                FreeDeliveryLine = getSupplierResult.Result.FreeDeliveryLine ?? 0,
+                BaIduLat = getSupplierResult.Result.BaIduLat,
+                BaIduLong = getSupplierResult.Result.BaIduLong,
+                Fax = getSupplierResult.Result.Fax,
+                Email = getSupplierResult.Result.Email,
+                SupplierDiningPurpose = getSupplierResult.Result.SupplierDiningPurpose,
+                PackLadder = getSupplierResult.Result.PackLadder ?? 0,
+                TakeawaySpecialOffersSummary = getSupplierResult.Result.TakeawaySpecialOffersSummary ?? string.Empty,
+                PublicTransport = getSupplierResult.Result.PublicTransport ?? string.Empty,
+                IsWaiMai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
+                IsDingTai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
+                IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
+            };
+
+            return new Response<SupplierDetail>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getSupplierResult.StatusCode
+                },
+                Result = supplier
+            };
+        }
+
+        /// <summary>
+        /// 获取餐厅分店信息
+        /// </summary>
+        /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize = 10, int? pageIndex = null)
+        {
+            var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(this.Source, new GetGroupSupplierListParameter
+            {
+                SupplierGroupId = supplierGroupId,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            });
+
+            if (getGroupSupplierListResult.Result == null || getGroupSupplierListResult.Result.Count == 0)
+            {
+                return new ListResponse<GroupSupplier>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getGroupSupplierListResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getGroupSupplierListResult.StatusCode
+                    },
+                    Result = new List<GroupSupplier>()
+                };
+            }
+
+            var result = getGroupSupplierListResult.Result.Select(p => new GroupSupplier
+            {
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName ?? string.Empty,
+                SupplierDescription = p.SupplierDescription ?? string.Empty,
+                Address = p.Address ?? string.Empty,
+                Averageprice = p.Averageprice ?? 0,
+                ParkingInfo = p.ParkingInfo ?? string.Empty,
+                Telephone = p.Telephone ?? string.Empty,
+                IsWaiMai = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
+                IsDingTai = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
+                IsTangShi = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
+            }).ToList();
+
+            return new ListResponse<GroupSupplier>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getGroupSupplierListResult.StatusCode
+                },
+                ResultTotalCount = getGroupSupplierListResult.ResultTotalCount,
+                Result = result
+            };
+        }
+
+        /// <summary>
+        /// 获取餐厅已经开通的功能列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <returns>
+        /// 返回餐厅已经开通的功能列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:13
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<SupplierFeature> SupplierFeatureList(int id)
+        {
+            var getSupplierFeatureListResult = this.supplierServices.GetSupplierFeatureList(this.Source, id);
+            if (getSupplierFeatureListResult.Result == null || getSupplierFeatureListResult.Result.Count == 0)
+            {
+                return new ListResponse<SupplierFeature>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getSupplierFeatureListResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getSupplierFeatureListResult.StatusCode
+                    },
+                    Result = new List<SupplierFeature>()
+                };
+            }
+
+            var result = getSupplierFeatureListResult.Result.Select(p => new SupplierFeature
+            {
+                SupplierFeatureId = p.SupplierFeatureId,
+                FeatureId = p.FeatureId,
+                FeatureName = p.FeatureName
+            }).ToList();
+
+            return new ListResponse<SupplierFeature>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getSupplierFeatureListResult.StatusCode
+                },
+                ResultTotalCount = getSupplierFeatureListResult.ResultTotalCount,
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅菜单
         /// </summary>
         /// <param name="id">餐厅Id</param>

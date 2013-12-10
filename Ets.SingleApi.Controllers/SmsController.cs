@@ -73,7 +73,6 @@
             var result = this.smsServices.SendAuthCode(this.Source, new SendAuthCodeParameter
             {
                 Telephone = (requst.Telephone ?? string.Empty).Trim(),
-                Type = (requst.Type ?? string.Empty).Trim(),
                 Second = requst.Second
             });
 

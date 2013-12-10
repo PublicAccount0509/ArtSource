@@ -44,6 +44,7 @@
             {
                 return StatusUtility.GetInstance().GetMessage(this.StatusCode.ToString());
             }
+            set { }
         }
 
         /// <summary>

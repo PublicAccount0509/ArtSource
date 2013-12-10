@@ -73,7 +73,12 @@
                     { "Authen", typeof(IAuthenService) },
                     { "BusinessArea", typeof(IBusinessAreaService) },
                     { "Coupon", typeof(ICouponService) },
-                    { "Cuisine", typeof(ICuisineService) }
+                    { "Cuisine", typeof(ICuisineService) },
+                    { "Function", typeof(IFunctionService) },
+                    { "Orders", typeof(IOrdersService) },
+                    { "Payment", typeof(IPaymentService) },
+                    { "ShoppingCart", typeof(IShoppingCartService) },
+                    { "Sms", typeof(ISmsService) }
                 };
 
             foreach (var key in routes.Keys)
