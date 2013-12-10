@@ -399,12 +399,18 @@
                 };
             }
 
+            var isDefault = parameter.IsDefault;
             var customerId = customerEntity.CustomerId;
+            if (this.customerAddressEntityRepository.EntityQueryable.Count(p => p.CustomerId == customerId) == 0)
+            {
+                isDefault = true;
+            }
+
             var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Code == parameter.RegionCode);
             var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(
                     p => p.CustomerId == customerId && p.CustomerAddressId == parameter.CustomerAddressId && p.IsDel == false) ?? new CustomerAddressEntity
                         {
-                            IsDefault = parameter.IsDefault ?? false
+                            IsDefault = isDefault ?? false
                         };
 
             customerAddressEntity.Recipient = parameter.Name;
@@ -422,12 +428,12 @@
             customerAddressEntity.CustomerId = customerId;
             customerAddressEntity.IsDel = false;
 
-            if (parameter.IsDefault != null)
+            if (isDefault != null)
             {
                 customerAddressEntity.IsDefault = parameter.IsDefault;
             }
 
-            if (parameter.IsDefault != true)
+            if (isDefault != true)
             {
                 this.customerAddressEntityRepository.Save(customerAddressEntity);
                 return new ServicesResult<bool>
@@ -499,6 +505,14 @@
             foreach (var customerAddressEntity in customerAddressEntityList)
             {
                 customerAddressEntity.IsDel = true;
+            }
+
+            var customerAddressList = this.customerAddressEntityRepository.FindByExpression(p => !customerAddressIdList.Contains(p.CustomerAddressId) && p.CustomerId == customerEntity.CustomerId && p.IsDel == false);
+            if (customerAddressList.Count == 1)
+            {
+                var customerAddress = customerAddressList.First();
+                customerAddress.IsDefault = true;
+                customerAddressEntityList.Add(customerAddress);
             }
 
             this.customerAddressEntityRepository.SaveTransaction(customerAddressEntityList);
