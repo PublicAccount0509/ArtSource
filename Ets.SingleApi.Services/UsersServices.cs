@@ -227,6 +227,16 @@
                 };
             }
 
+            var supplierEntity = this.supplierEntityRepository.EntityQueryable.Where(p => p.Login.LoginId == userId).Select(p => new
+                   {
+                       p.SupplierId,
+                       p.SupplierName
+                   }).FirstOrDefault();
+            if (supplierEntity != null)
+            {
+                customerModel.SupplierId = supplierEntity.SupplierId;
+            }
+
             var customerAddressList = (from customerAddress in this.customerAddressEntityRepository.EntityQueryable
                                        where customerAddress.CustomerId == customerModel.CustomerId && customerAddress.IsDel == false
                                        select new

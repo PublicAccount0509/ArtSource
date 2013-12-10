@@ -190,6 +190,7 @@
                     Avatar = (getUserResult.Result.Avatar ?? string.Empty),
                     Email = (getUserResult.Result.Email ?? string.Empty),
                     Telephone = (getUserResult.Result.Telephone ?? string.Empty),
+                    SupplierId = getUserResult.Result.SupplierId,
                     CustomerAddressList = customerAddressList
                 };
 

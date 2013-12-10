@@ -106,6 +106,19 @@
         public string Email { get; set; }
 
         /// <summary>
+        /// Gets or sets the SupplierId of CustomerModel
+        /// </summary>
+        /// <value>
+        /// The SupplierId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：12/10/2013 9:14 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int SupplierId { get; set; }
+
+        /// <summary>
         /// Gets or sets the CustomerAddressList of Customer
         /// </summary>
         /// <value>
