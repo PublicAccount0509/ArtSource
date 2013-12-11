@@ -83,6 +83,7 @@
     <Compile Include="IServices\IUsersServices.cs" />
     <Compile Include="IServices\ISupplierServices.cs" />
     <Compile Include="IServices\IOrderServicesTemp.cs" />
+    <Compile Include="IServices\IHtjExtendServices.cs" />
     <Compile Include="OrdersController.cs" />
     <Compile Include="PaymentController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="UserController.cs" />
     <Compile Include="Wap\WapOrdersController.cs" />
     <Compile Include="Wap\WapSupplierController.cs" />
+    <Compile Include="Wap\WeiXinWapHtjUserController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">

@@ -42,6 +42,8 @@
     <Compile Include="BusinessType.cs" />
     <Compile Include="CacheServices\CacheServicesResult.cs" />
     <Compile Include="CacheServices\CacheServicesListResult.cs" />
+    <Compile Include="Controller\HtjRegisterUserRequest.cs" />
+    <Compile Include="Controller\HtjUserExtendResult.cs" />
     <Compile Include="Controller\IsFollowerSupplierResult.cs" />
     <Compile Include="Controller\SaveSupplierCuisine.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderResult.cs" />
@@ -64,12 +66,15 @@
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
+    <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />
     <Compile Include="Services\SupplierCouponParameter.cs" />
     <Compile Include="Services\SupplierServiceTimeModel.cs" />
     <Compile Include="Services\ShoppingCartHaiDiLaoModel.cs" />
+    <Compile Include="Services\HtjRegisterUserParameter.cs" />
+    <Compile Include="Services\HtjUserExtendModel.cs" />
     <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
@@ -439,6 +444,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\SupplierCouponCustomerEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\WxToEtsEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

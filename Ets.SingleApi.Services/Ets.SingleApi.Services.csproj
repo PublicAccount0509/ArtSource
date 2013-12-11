@@ -131,6 +131,7 @@
     <Compile Include="UsersServices.cs" />
     <Compile Include="AuthenServices.cs" />
     <Compile Include="OrderServices.cs" />
+    <Compile Include="HtjExtendServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.WxToEtsEntity, Ets.SingleApi.Model" table="WxToEts" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="LoginId" column="LoginId" type="Int32" />
+		<property name="WeChatId" column="WeChatId" type="String" />
+		<property name="InsBy" column="InsBy" type="String" />
+		<property name="InsDt" column="InsDt" type="Timestamp" />
+		<property name="UpdBy" column="UpdBy" type="String" />
+		<property name="UpdDt" column="UpdDt" type="Timestamp" />
+		<property name="Recsts" column="Recsts" type="String" />
+		<property name="SourceCd" column="SourceCd" type="String" />
+	</class>
+</hibernate-mapping>
