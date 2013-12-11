@@ -430,7 +430,7 @@
 
             if (isDefault != null)
             {
-                customerAddressEntity.IsDefault = parameter.IsDefault;
+                customerAddressEntity.IsDefault = isDefault;
             }
 
             if (isDefault != true)

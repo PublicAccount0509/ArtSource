@@ -648,10 +648,22 @@
             var timeTableList = supplierTimeTableList.Where(p => p.Day.ToString() == day).ToList();
             if (timeTableList.Count <= 0)
             {
-                return new ServicesResult<bool>
+                if (timeTableList.Count <= 0)
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
-                };
+                    foreach (var item in ServicesCommon.EmptyDeliveryTime.Split(' '))
+                    {
+                        var timeList = item.Split('-').ToList();
+                        if (timeList.Count != 2)
+                        {
+                            continue;
+                        }
+
+                        var itemDay = Convert.ToInt32(day);
+                        var itemOpenTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.First()));
+                        var itemCloseTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.Last()));
+                        timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
+                    }
+                }
             }
 
             var list = timeTableList.Select(

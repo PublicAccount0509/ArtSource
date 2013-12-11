@@ -714,13 +714,25 @@
             {
                 var deliveryDate = startDeliveryDate.AddDays(i);
                 var day = deliveryDate.AddDays(i).DayOfWeek.ToString("d");
+                var list = new List<string>();
                 var timeTableList = supplierTimeTableList.Where(p => p.Day.ToString() == day).ToList();
                 if (timeTableList.Count <= 0)
                 {
-                    continue;
+                    foreach (var item in ServicesCommon.EmptyDeliveryTime.Split(' '))
+                    {
+                        var timeList = item.Split('-').ToList();
+                        if (timeList.Count != 2)
+                        {
+                            continue;
+                        }
+
+                        var itemDay = Convert.ToInt32(day);
+                        var itemOpenTime = DateTime.Parse(string.Format("{0} {1}", startDeliveryDate.ToString("yyyy-MM-dd"), timeList.First()));
+                        var itemCloseTime = DateTime.Parse(string.Format("{0} {1}", startDeliveryDate.ToString("yyyy-MM-dd"), timeList.Last()));
+                        timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
+                    }
                 }
 
-                var list = new List<string>();
                 foreach (var item in timeTableList)
                 {
                     var startDate = item.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime);

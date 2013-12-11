@@ -467,6 +467,25 @@
         }
 
         /// <summary>
+        /// 送餐时间为空时默认送餐时间
+        /// </summary>
+        /// <value>
+        /// 送餐时间为空时默认送餐时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string EmptyDeliveryTime
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["EmptyDeliveryTime"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
         /// 外卖短信验有效时间
         /// </summary>
         /// <value>
