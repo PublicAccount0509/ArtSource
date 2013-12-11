@@ -926,8 +926,67 @@
                     {
                         SupplierId = p.SupplierId,
                         ServiceDate = p.ServiceDate,
+                        ServiceTime = p.ServiceTime,
                         ServiceTimeList = p.ServiceTimeList
                     }).ToList()
+            };
+        }
+
+        /// <summary>
+        /// 取得餐厅营业时间
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="startDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<SupplierDeliveryTime> SupplierDeliveryTime(int id, DateTime? startDate = null, int? days = null)
+        {
+            var result = this.supplierServices.GetSupplierDeliveryTime(this.Source, id, startDate, days);
+            if (result == null)
+            {
+                return new ListResponse<SupplierDeliveryTime>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Succeed.Empty
+                    },
+                    Result = new List<SupplierDeliveryTime>()
+                };
+            }
+
+            if (result.Result == null || result.Result.Count == 0)
+            {
+                return new ListResponse<SupplierDeliveryTime>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = result.StatusCode
+                    },
+                    Result = new List<SupplierDeliveryTime>()
+                };
+            }
+
+            return new ListResponse<SupplierDeliveryTime>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result.Select(p => new SupplierDeliveryTime
+                {
+                    SupplierId = p.SupplierId,
+                    DeliveryDate = p.DeliveryDate,
+                    DeliveryTime = p.DeliveryTime,
+                    DeliveryTimeList = p.DeliveryTimeList
+                }).ToList()
             };
         }
     }

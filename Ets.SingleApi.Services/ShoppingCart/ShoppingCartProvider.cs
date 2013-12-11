@@ -83,6 +83,26 @@
         private readonly INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository;
 
         /// <summary>
+        /// 字段supplierTimeTableEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/11/2013 3:47 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository;
+
+        /// <summary>
+        /// 字段timeTableEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/11/2013 3:47 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TimeTableEntity> timeTableEntityRepository;
+
+        /// <summary>
         /// 字段shoppingCartCacheServices
         /// </summary>
         /// 创建者：周超
@@ -101,6 +121,8 @@
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
         /// <param name="suppTimeTableDisplayEntityRepository">The suppTimeTableDisplayEntityRepository</param>
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
+        /// <param name="supplierTimeTableEntityRepository">The supplierTimeTableEntityRepository</param>
+        /// <param name="timeTableEntityRepository">The timeTableEntityRepository</param>
         /// <param name="shoppingCartCacheServices">The shoppingCartCacheServices</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
@@ -114,6 +136,8 @@
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
             INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
+            INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository,
+            INHibernateRepository<TimeTableEntity> timeTableEntityRepository,
             IShoppingCartCacheServices shoppingCartCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
@@ -122,6 +146,8 @@
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.suppTimeTableDisplayEntityRepository = suppTimeTableDisplayEntityRepository;
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
+            this.supplierTimeTableEntityRepository = supplierTimeTableEntityRepository;
+            this.timeTableEntityRepository = timeTableEntityRepository;
             this.shoppingCartCacheServices = shoppingCartCacheServices;
         }
 
@@ -589,6 +615,14 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> ValidateDeliveryTime(string source, int supplierId, DateTime deliveryTime, DateTime now)
         {
+            if (!ServicesCommon.ValidateDeliveryTimeEnabled)
+            {
+                return new ServicesResult<bool>
+                    {
+                        Result = true
+                    };
+            }
+
             var tempDeliveryTime = DateTime.Parse(deliveryTime.ToString("yyyy-MM-dd HH:mm"));
             if (tempDeliveryTime < DateTime.Parse(now.ToString("yyyy-MM-dd HH:mm")).AddMinutes(ServicesCommon.MinDeliveryHours))
             {
@@ -600,21 +634,18 @@
 
             var deliveryDate = DateTime.Parse(deliveryTime.ToString("yyyy-MM-dd"));
             var day = now.DayOfWeek.ToString("d");
-            var timeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
-                                        from timeTable in this.timeTableDisplayEntityRepository.EntityQueryable
-                                        where entity.SupplierId == supplierId
-                                        && entity.TimeTableDisplayId == timeTable.TimeTableDisplayId
-                                        && timeTable.OpenTime != null
-                                        && timeTable.CloseTime != null
-                                        select new
-                                        {
-                                            entity.Day,
-                                            timeTable.OpenTime,
-                                            timeTable.CloseTime
-                                        }).ToList();
+            var supplierTimeTableList = (from entity in this.supplierTimeTableEntityRepository.EntityQueryable
+                                         from timeTable in this.timeTableEntityRepository.EntityQueryable
+                                         where entity.SupplierId == supplierId
+                                         && entity.TimeTableId == timeTable.TimeTableId
+                                         select new
+                                         {
+                                             entity.Day,
+                                             timeTable.OpenTime,
+                                             timeTable.CloseTime
+                                         }).ToList();
 
-            var timeTableList = timeTableDisplayList.Where(p => p.Day != null && p.OpenTime != null && p.CloseTime != null)
-                                   .Where(p => p.Day.Value.ToString() == day).ToList();
+            var timeTableList = supplierTimeTableList.Where(p => p.Day.ToString() == day).ToList();
             if (timeTableList.Count <= 0)
             {
                 return new ServicesResult<bool>
@@ -627,13 +658,13 @@
                     p =>
                     string.Format(
                         "{0:t}-{1:t}",
-                        p.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime),
-                        p.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime)));
+                        p.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime),
+                        p.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime)));
             string.Format("送餐或取餐时间：{0}，当前时间：{1}，餐厅服务时间：{2}", tempDeliveryTime, now, string.Join(" ", list)).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
             foreach (var item in timeTableList)
             {
-                var startDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
-                var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime)));
+                var startDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime)));
+                var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime)));
                 if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
                 {
                     return new ServicesResult<bool>

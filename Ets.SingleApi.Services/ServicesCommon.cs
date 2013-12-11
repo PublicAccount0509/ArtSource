@@ -202,6 +202,110 @@
         }
 
         /// <summary>
+        /// 营业前准备时间
+        /// </summary>
+        /// <value>
+        /// 营业前准备时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DeliveryTimeBeginReadyTime
+        {
+            get
+            {
+                var deliveryTimeBeginReadyTime = ConfigurationManager.AppSettings["DeliveryTimeBeginReadyTime"] ?? "0";
+                int result;
+                if (!int.TryParse(deliveryTimeBeginReadyTime, out result))
+                {
+                    result = 0;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 打烊前准备时间
+        /// </summary>
+        /// <value>
+        /// 打烊前准备时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DeliveryTimeEndReadyTime
+        {
+            get
+            {
+                var deliveryTimeEndReadyTime = ConfigurationManager.AppSettings["DeliveryTimeEndReadyTime"] ?? "0";
+                int result;
+                if (!int.TryParse(deliveryTimeEndReadyTime, out result))
+                {
+                    result = 0;
+                }
+
+                return result * (-1);
+            }
+        }
+
+        /// <summary>
+        /// 送餐时间间隔
+        /// </summary>
+        /// <value>
+        /// 送餐时间间隔
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DeliveryTimeInterval
+        {
+            get
+            {
+                var deliveryTimeInterval = ConfigurationManager.AppSettings["DeliveryTimeInterval"] ?? "15";
+                int result;
+                if (!int.TryParse(deliveryTimeInterval, out result))
+                {
+                    result = 15;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 取得送餐时间的默认天数
+        /// </summary>
+        /// <value>
+        /// 取得送餐时间的默认天数
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DeliveryTimeDefaultDays
+        {
+            get
+            {
+                var deliveryTimeDefaultDays = ConfigurationManager.AppSettings["DeliveryTimeDefaultDays"] ?? "3";
+                int result;
+                if (!int.TryParse(deliveryTimeDefaultDays, out result))
+                {
+                    result = 3;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 最快送餐时间
         /// </summary>
         /// <value>
@@ -874,6 +978,25 @@
             get
             {
                 return ConfigurationManager.AppSettings["ModifyPasswordMessage"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 是否开启送餐时间验证
+        /// </summary>
+        /// <value>
+        /// 是否开启送餐时间验证
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool ValidateDeliveryTimeEnabled
+        {
+            get
+            {
+                return string.Equals(ConfigurationManager.AppSettings["ValidateDeliveryTimeEnabled"], "true", StringComparison.OrdinalIgnoreCase);
             }
         }
 

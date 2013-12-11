@@ -93,7 +93,7 @@
             }
 
             var wxToEtsEntity = this.wxToEtsEntityRepository.FindSingleByExpression(
-                                    p => p.WeChatId == parameter.WeChatId && p.LoginId == parameter.UserId);
+                                    p => p.WeChatId == parameter.WeChatId && p.LoginId == parameter.UserId && p.SourceCd == parameter.SourceCd);
 
             if (wxToEtsEntity != null)
             {

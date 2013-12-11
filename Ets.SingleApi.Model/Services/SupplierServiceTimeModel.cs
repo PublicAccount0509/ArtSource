@@ -1,6 +1,5 @@
 ﻿namespace Ets.SingleApi.Model.Services
 {
-    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -40,6 +39,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string ServiceDate { get; set; }
+
+        /// <summary>
+        /// 设置或取得餐厅营业时间
+        /// </summary>
+        /// <value>
+        /// 餐厅营业时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:37 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string ServiceTime { get; set; }
 
         /// <summary>
         /// 设置或取得营业时间列表

@@ -56,6 +56,7 @@
     <Compile Include="Controller\ShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\SupplierCoupon.cs" />
     <Compile Include="Controller\SupplierCouponRequst.cs" />
+    <Compile Include="Controller\SupplierDeliveryTime.cs" />
     <Compile Include="Controller\SupplierServiceTime.cs" />
     <Compile Include="Controller\Response.cs" />
     <Compile Include="Controller\ListResponse.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
+    <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="Services\ShoppingCartHaiDiLaoModel.cs" />
     <Compile Include="Services\HtjRegisterUserParameter.cs" />
     <Compile Include="Services\HtjUserExtendModel.cs" />
+    <Compile Include="Services\SupplierDeliveryTimeModel.cs" />
     <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
@@ -447,6 +451,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\WxToEtsEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\TimeTableEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\SupplierTimeTableEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

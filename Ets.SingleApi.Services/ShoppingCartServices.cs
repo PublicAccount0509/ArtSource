@@ -692,8 +692,7 @@
                 deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
             }
 
-            var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
-            var validateDeliveryTimeResult = this.shoppingCartProvider.ValidateDeliveryTime(source, supplier.SupplierId, deliveryTime, now);
+            var validateDeliveryTimeResult = this.shoppingCartProvider.ValidateDeliveryTime(source, supplier.SupplierId, deliveryTimeTemp, now);
             if (!validateDeliveryTimeResult.Result)
             {
                 return new ServicesResult<bool>
@@ -720,6 +719,7 @@
             var total = totalfee + fixedDeliveryFee;
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
+            var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
 
             shoppingCartOrder.Id = order.Id;
             shoppingCartOrder.OrderId = order.OrderId;

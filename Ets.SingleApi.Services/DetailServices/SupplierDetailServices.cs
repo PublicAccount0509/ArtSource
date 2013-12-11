@@ -117,6 +117,26 @@
         private readonly INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository;
 
         /// <summary>
+        /// 字段supplierTimeTableEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/11/2013 2:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository;
+
+        /// <summary>
+        /// 字段timeTableEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/11/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TimeTableEntity> timeTableEntityRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SupplierDetailServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
@@ -128,6 +148,8 @@
         /// <param name="supplierMenuCategoryEntityRepository">The supplierMenuCategoryEntityRepository</param>
         /// <param name="suppTimeTableDisplayEntityRepository">The suppTimeTableDisplayEntityRepository</param>
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
+        /// <param name="supplierTimeTableEntityRepository">The supplierTimeTableEntityRepository</param>
+        /// <param name="timeTableEntityRepository">The timeTableEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：11/1/2013 5:03 PM
         /// 修改者：
@@ -142,7 +164,9 @@
             INHibernateRepository<SupplierCategoryEntity> supplierCategoryEntityRepository,
             INHibernateRepository<SupplierMenuCategoryEntity> supplierMenuCategoryEntityRepository,
             INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
-            INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository)
+            INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
+            INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository,
+            INHibernateRepository<TimeTableEntity> timeTableEntityRepository)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.categoryEntityRepository = categoryEntityRepository;
@@ -153,6 +177,8 @@
             this.supplierMenuCategoryEntityRepository = supplierMenuCategoryEntityRepository;
             this.suppTimeTableDisplayEntityRepository = suppTimeTableDisplayEntityRepository;
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
+            this.supplierTimeTableEntityRepository = supplierTimeTableEntityRepository;
+            this.timeTableEntityRepository = timeTableEntityRepository;
         }
 
         /// <summary>
@@ -637,6 +663,7 @@
                     {
                         SupplierId = supplierId,
                         ServiceDate = serviceDate.ToString("yyyy-MM-dd"),
+                        ServiceTime = timeTableList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime)),
                         ServiceTimeList = list
                     });
             }
@@ -646,6 +673,90 @@
                     Result = result,
                     StatusCode = result.Count == 0 ? (int)StatusCode.Succeed.Empty : (int)StatusCode.Succeed.Ok
                 };
+        }
+
+        /// <summary>
+        /// 取得餐厅送餐时间
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="startDeliveryDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DetailServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(int supplierId, DateTime startDeliveryDate, int days)
+        {
+            var dayList = new List<string>();
+            for (var i = 0; i < days; i++)
+            {
+                var day = startDeliveryDate.AddDays(i).DayOfWeek.ToString("d");
+                dayList.Add(day);
+            }
+
+            var supplierTimeTableList = (from entity in this.supplierTimeTableEntityRepository.EntityQueryable
+                                         from timeTable in this.timeTableEntityRepository.EntityQueryable
+                                         where entity.SupplierId == supplierId
+                                         && entity.TimeTableId == timeTable.TimeTableId
+                                         select new
+                                         {
+                                             entity.Day,
+                                             timeTable.OpenTime,
+                                             timeTable.CloseTime
+                                         }).ToList();
+
+            var result = new List<SupplierDeliveryTimeModel>();
+            for (var i = 0; i < days; i++)
+            {
+                var deliveryDate = startDeliveryDate.AddDays(i);
+                var day = deliveryDate.AddDays(i).DayOfWeek.ToString("d");
+                var timeTableList = supplierTimeTableList.Where(p => p.Day.ToString() == day).ToList();
+                if (timeTableList.Count <= 0)
+                {
+                    continue;
+                }
+
+                var list = new List<string>();
+                foreach (var item in timeTableList)
+                {
+                    var startDate = item.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime);
+                    var endDate = item.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime);
+                    while (startDate <= endDate)
+                    {
+                        if (deliveryDate.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") && DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate)) < DateTime.Now)
+                        {
+                            startDate = startDate.AddMinutes(ServicesCommon.DeliveryTimeInterval);
+                            continue;
+                        }
+
+                        list.Add(startDate.ToString("HH:mm"));
+                        startDate = startDate.AddMinutes(ServicesCommon.DeliveryTimeInterval);
+                    }
+                }
+
+                if (list.Count <= 0)
+                {
+                    continue;
+                }
+
+                result.Add(new SupplierDeliveryTimeModel
+                {
+                    SupplierId = supplierId,
+                    DeliveryDate = deliveryDate.ToString("yyyy-MM-dd"),
+                    DeliveryTime = timeTableList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime)),
+                    DeliveryTimeList = list
+                });
+            }
+
+            return new DetailServicesResultList<SupplierDeliveryTimeModel>
+            {
+                Result = result,
+                StatusCode = result.Count == 0 ? (int)StatusCode.Succeed.Empty : (int)StatusCode.Succeed.Ok
+            };
         }
     }
 }
