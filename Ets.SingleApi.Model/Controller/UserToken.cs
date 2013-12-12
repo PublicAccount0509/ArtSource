@@ -1,55 +1,54 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：HtjUserExtendResult
+    /// 类名称：UserToken
     /// 命名空间：Ets.SingleApi.Model.Controller
-    /// 类功能：黄太吉注册用户参数
+    /// 类功能：用户Token信息
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：2013/10/14 10:03
+    /// 创建日期：12/12/2013 6:20 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class HtjUserExtendResult
+    public class UserToken
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtjUserExtendResult"/> class.
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：12/12/2013 6:35 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public HtjUserExtendResult()
-        {
-            this.User = new HtjUser();
-            this.UserToken = new UserToken();
-        }
-
-        /// <summary>
-        /// Gets or sets the User of HtjUserExtendResult
+        /// Gets or sets the AccessToken of UserToken
         /// </summary>
         /// <value>
-        /// The User
+        /// The AccessToken
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/17 16:20
+        /// 创建日期：2013/10/17 0:03
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public HtjUser User { get; set; }
+        public string AccessToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the UserToken of HtjUserExtendResult
+        /// Gets or sets the type of the token.
         /// </summary>
         /// <value>
-        /// The UserToken
+        /// The type of the token.
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/14 10:03
+        /// 创建日期：2013/10/17 0:06
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserToken UserToken { get; set; }
+        public string TokenType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the RefreshToken of UserToken
+        /// </summary>
+        /// <value>
+        /// The RefreshToken
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 0:06
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string RefreshToken { get; set; }
     }
 }

@@ -27,7 +27,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<HtjUserExtendModel> Register(string source, HtjRegisterUserParameter parameter);
+        ServicesResult<HtjUserModel> Register(string source, HtjRegisterUserParameter parameter);
 
         /// <summary>
         /// 用户关联信息
@@ -35,6 +35,7 @@
         /// <param name="source">The source</param>
         /// <param name="weChatId">The weChatId</param>
         /// <param name="sourceCd">The sourceCd</param>
+        /// <param name="appKey">The appKey</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -43,6 +44,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<HtjUserExtendModel> GetUser(string source, string weChatId, string sourceCd);
+        ServicesResult<HtjUserExtendModel> GetUser(string source, string weChatId, string sourceCd, string appKey);
     }
 }

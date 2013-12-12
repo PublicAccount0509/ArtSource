@@ -22,6 +22,26 @@
     public class HtjExtendServices : IHtjExtendServices
     {
         /// <summary>
+        /// 字段appEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/12/2013 6:42 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<AppEntity> appEntityRepository;
+
+        /// <summary>
+        /// 字段tokenEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/12/2013 6:42 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TokenEntity> tokenEntityRepository;
+
+        /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -44,6 +64,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="HtjExtendServices" /> class.
         /// </summary>
+        /// <param name="appEntityRepository">The appEntityRepository</param>
+        /// <param name="tokenEntityRepository">The tokenEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="wxToEtsEntityRepository">The wxToEtsEntityRepository</param>
         /// 创建者：周超
@@ -52,9 +74,13 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public HtjExtendServices(
+                        INHibernateRepository<AppEntity> appEntityRepository,
+            INHibernateRepository<TokenEntity> tokenEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<WxToEtsEntity> wxToEtsEntityRepository)
         {
+            this.appEntityRepository = appEntityRepository;
+            this.tokenEntityRepository = tokenEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.wxToEtsEntityRepository = wxToEtsEntityRepository;
         }
@@ -72,22 +98,22 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<HtjUserExtendModel> Register(string source, HtjRegisterUserParameter parameter)
+        public ServicesResult<HtjUserModel> Register(string source, HtjRegisterUserParameter parameter)
         {
             if (parameter == null)
             {
-                return new ServicesResult<HtjUserExtendModel>
+                return new ServicesResult<HtjUserModel>
                 {
-                    Result = new HtjUserExtendModel(),
+                    Result = new HtjUserModel(),
                     StatusCode = (int)StatusCode.System.InvalidRequest
                 };
             }
 
             if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
             {
-                return new ServicesResult<HtjUserExtendModel>
+                return new ServicesResult<HtjUserModel>
                 {
-                    Result = new HtjUserExtendModel(),
+                    Result = new HtjUserModel(),
                     StatusCode = (int)StatusCode.Validate.InvalidUserIdCode
                 };
             }
@@ -97,9 +123,9 @@
 
             if (wxToEtsEntity != null)
             {
-                return new ServicesResult<HtjUserExtendModel>
+                return new ServicesResult<HtjUserModel>
                 {
-                    Result = new HtjUserExtendModel
+                    Result = new HtjUserModel
                         {
                             WeChatId = wxToEtsEntity.WeChatId,
                             UserId = wxToEtsEntity.LoginId,
@@ -127,9 +153,9 @@
 
             this.wxToEtsEntityRepository.Save(newWxToEtsEntity);
 
-            return new ServicesResult<HtjUserExtendModel>
+            return new ServicesResult<HtjUserModel>
             {
-                Result = new HtjUserExtendModel
+                Result = new HtjUserModel
                 {
                     WeChatId = newWxToEtsEntity.WeChatId,
                     UserId = newWxToEtsEntity.LoginId,
@@ -149,6 +175,7 @@
         /// <param name="source">The source</param>
         /// <param name="weChatId">The weChatId</param>
         /// <param name="sourceCd">The sourceCd</param>
+        /// <param name="appKey">The appKey</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -157,7 +184,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<HtjUserExtendModel> GetUser(string source, string weChatId, string sourceCd)
+        public ServicesResult<HtjUserExtendModel> GetUser(string source, string weChatId, string sourceCd, string appKey)
         {
             var wxToEtsEntity = this.wxToEtsEntityRepository.FindSingleByExpression(p => p.WeChatId == weChatId && p.SourceCd == sourceCd);
             if (wxToEtsEntity == null)
@@ -169,9 +196,37 @@
                     };
             }
 
-            return new ServicesResult<HtjUserExtendModel>
+            var appEntity = this.appEntityRepository.EntityQueryable.FirstOrDefault(p => p.AppKey == appKey);
+            if (appEntity == null)
             {
-                Result = new HtjUserExtendModel
+                return new ServicesResult<HtjUserExtendModel>
+                {
+                    Result = new HtjUserExtendModel(),
+                    StatusCode = (int)StatusCode.OAuth.InvalidClient
+                };
+            }
+
+            var accessToken = Guid.NewGuid().ToString("N");
+            var refreshToken = Guid.NewGuid().ToString("N");
+            var tokenEntity = new TokenEntity
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                AppKey = appEntity,
+                CreatedTime = DateTime.Now,
+                UserId = wxToEtsEntity.LoginId
+            };
+
+            this.tokenEntityRepository.Save(tokenEntity);
+
+            var userTokenModel = new UserTokenModel
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    TokenType = CommonUtility.GetTokenType()
+                };
+
+            var userModel = new HtjUserModel
                 {
                     WeChatId = wxToEtsEntity.WeChatId,
                     UserId = wxToEtsEntity.LoginId,
@@ -181,6 +236,14 @@
                     SourceCd = wxToEtsEntity.SourceCd,
                     UpdBy = wxToEtsEntity.UpdBy,
                     UpdDt = wxToEtsEntity.UpdDt
+                };
+
+            return new ServicesResult<HtjUserExtendModel>
+            {
+                Result = new HtjUserExtendModel
+                {
+                    User = userModel,
+                    UserToken = userTokenModel
                 }
             };
         }

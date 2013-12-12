@@ -57,13 +57,13 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<HtjUserExtendResult> Register(HtjRegisterUserRequest requst)
+        public Response<HtjUser> Register(HtjRegisterUserRequest requst)
         {
             if (requst == null)
             {
-                return new Response<HtjUserExtendResult>
+                return new Response<HtjUser>
                 {
-                    Result = new HtjUserExtendResult(),
+                    Result = new HtjUser(),
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
@@ -83,17 +83,17 @@
 
             if (registerResult.Result == null)
             {
-                return new Response<HtjUserExtendResult>
+                return new Response<HtjUser>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = registerResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : registerResult.StatusCode
                     },
-                    Result = new HtjUserExtendResult()
+                    Result = new HtjUser()
                 };
             }
 
-            var result = new HtjUserExtendResult
+            var user = new HtjUser
             {
                 WeChatId = (registerResult.Result.WeChatId ?? string.Empty).Trim(),
                 UserId = registerResult.Result.UserId,
@@ -105,13 +105,13 @@
                 UpdDt = registerResult.Result.UpdDt
             };
 
-            return new Response<HtjUserExtendResult>
+            return new Response<HtjUser>
             {
                 Message = new ApiMessage
                 {
                     StatusCode = registerResult.StatusCode
                 },
-                Result = result
+                Result = user
             };
         }
 
@@ -131,8 +131,8 @@
         [HttpGet]
         public Response<HtjUserExtendResult> GetUser(string weChatId, string sourceCd)
         {
-            var getUserResult = this.htjExtendServices.GetUser(this.Source, weChatId, sourceCd);
-            if (getUserResult.Result == null)
+            var getUserResult = this.htjExtendServices.GetUser(this.Source, weChatId, sourceCd, this.AppKey);
+            if (getUserResult.Result == null || getUserResult.Result.User == null || getUserResult.Result.UserToken == null)
             {
                 return new Response<HtjUserExtendResult>
                 {
@@ -144,25 +144,35 @@
                 };
             }
 
-            var result = new HtjUserExtendResult
+            var user = new HtjUser
             {
-                WeChatId = (getUserResult.Result.WeChatId ?? string.Empty).Trim(),
-                UserId = getUserResult.Result.UserId,
-                InsBy = (getUserResult.Result.InsBy ?? string.Empty).Trim(),
-                UpdBy = (getUserResult.Result.UpdBy ?? string.Empty).Trim(),
-                Recsts = (getUserResult.Result.Recsts ?? string.Empty).Trim(),
-                SourceCd = (getUserResult.Result.SourceCd ?? string.Empty).Trim(),
-                InsDt = getUserResult.Result.InsDt,
-                UpdDt = getUserResult.Result.UpdDt
+                WeChatId = (getUserResult.Result.User.WeChatId ?? string.Empty).Trim(),
+                UserId = getUserResult.Result.User.UserId,
+                InsBy = (getUserResult.Result.User.InsBy ?? string.Empty).Trim(),
+                UpdBy = (getUserResult.Result.User.UpdBy ?? string.Empty).Trim(),
+                Recsts = (getUserResult.Result.User.Recsts ?? string.Empty).Trim(),
+                SourceCd = (getUserResult.Result.User.SourceCd ?? string.Empty).Trim(),
+                InsDt = getUserResult.Result.User.InsDt,
+                UpdDt = getUserResult.Result.User.UpdDt
             };
 
+            var userToken = new UserToken
+            {
+                AccessToken = (getUserResult.Result.UserToken.AccessToken ?? string.Empty).Trim(),
+                RefreshToken = (getUserResult.Result.UserToken.RefreshToken ?? string.Empty).Trim(),
+                TokenType = (getUserResult.Result.UserToken.TokenType ?? string.Empty).Trim()
+            };
             return new Response<HtjUserExtendResult>
             {
                 Message = new ApiMessage
                 {
                     StatusCode = getUserResult.StatusCode
                 },
-                Result = result
+                Result = new HtjUserExtendResult
+                {
+                    User = user,
+                    UserToken = userToken
+                }
             };
         }
     }
