@@ -332,6 +332,32 @@
         }
 
         /// <summary>
+        /// 最快取餐时间
+        /// </summary>
+        /// <value>
+        /// 最快取餐时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int MinPickUpHours
+        {
+            get
+            {
+                var minPickUpHours = ConfigurationManager.AppSettings["MinPickUpHours"] ?? "45";
+                int result;
+                if (!int.TryParse(minPickUpHours, out result))
+                {
+                    result = 45;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 默认的送餐方式
         /// </summary>
         /// <value>

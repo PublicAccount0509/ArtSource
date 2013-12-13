@@ -672,13 +672,14 @@
                         "{0:t}-{1:t}",
                         p.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime),
                         p.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime)));
-            string.Format("送餐或取餐时间：{0}，当前时间：{1}，餐厅服务时间：{2}", tempDeliveryTime, now, string.Join(" ", list)).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+
             foreach (var item in timeTableList)
             {
                 var startDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime)));
                 var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime)));
                 if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
                 {
+                    string.Format("送餐或取餐时间：{0}，当前时间：{1}，餐厅服务时间：{2}，是否为有效时间：{3}", tempDeliveryTime, now, string.Join(" ", list), "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     return new ServicesResult<bool>
                         {
                             Result = true
@@ -686,9 +687,111 @@
                 }
             }
 
+            string.Format("送餐或取餐时间：{0}，当前时间：{1}，餐厅服务时间：{2}，是否为有效时间：{3}", tempDeliveryTime, now, string.Join(" ", list), "无效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+            };
+        }
+
+        /// <summary>
+        /// 验证送餐时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryTime">送餐时间</param>
+        /// <param name="now">当前时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 6:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> ValidatePickUpTime(string source, int supplierId, DateTime deliveryTime, DateTime now)
+        {
+            if (!ServicesCommon.ValidateDeliveryTimeEnabled)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = true
+                };
+            }
+
+            var tempDeliveryTime = DateTime.Parse(deliveryTime.ToString("yyyy-MM-dd HH:mm"));
+            if (tempDeliveryTime < DateTime.Parse(now.ToString("yyyy-MM-dd HH:mm")).AddMinutes(ServicesCommon.MinPickUpHours))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                };
+            }
+
+            var deliveryDate = DateTime.Parse(deliveryTime.ToString("yyyy-MM-dd"));
+            var day = now.DayOfWeek.ToString("d");
+            var supplierTimeTableList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
+                                         from timeTable in this.timeTableDisplayEntityRepository.EntityQueryable
+                                         where entity.SupplierId == supplierId
+                                         && entity.TimeTableDisplayId == timeTable.TimeTableDisplayId
+                                         select new
+                                         {
+                                             entity.Day,
+                                             timeTable.OpenTime,
+                                             timeTable.CloseTime
+                                         }).ToList();
+
+            var timeTableList = supplierTimeTableList.Where(p => p.Day != null && p.OpenTime != null && p.CloseTime != null).Where(p => p.Day.ToString() == day).Select(p => new
+                {
+                    Day = p.Day.Value,
+                    OpenTime = p.OpenTime.Value,
+                    CloseTime = p.CloseTime.Value
+                }).ToList();
+            if (timeTableList.Count <= 0)
+            {
+                if (timeTableList.Count <= 0)
+                {
+                    foreach (var item in ServicesCommon.EmptyDeliveryTime.Split(' '))
+                    {
+                        var timeList = item.Split('-').ToList();
+                        if (timeList.Count != 2)
+                        {
+                            continue;
+                        }
+
+                        var itemDay = Convert.ToInt32(day);
+                        var itemOpenTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.First()));
+                        var itemCloseTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.Last()));
+                        timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
+                    }
+                }
+            }
+
+            var list = timeTableList.Select(
+                    p =>
+                    string.Format(
+                        "{0:t}-{1:t}",
+                        p.OpenTime.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime),
+                        p.CloseTime.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime)));
+
+            foreach (var item in timeTableList)
+            {
+                var startDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.OpenTime.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime)));
+                var endDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), item.CloseTime.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime)));
+                if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
+                {
+                    string.Format("取餐时间：{0}，当前时间：{1}，餐厅服务时间：{2}，是否为有效时间：{3}", tempDeliveryTime, now, string.Join(" ", list), "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    return new ServicesResult<bool>
+                    {
+                        Result = true
+                    };
+                }
+            }
+
+            string.Format("取餐时间：{0}，当前时间：{1}，餐厅服务时间：{2}，是否为有效时间：{3}", tempDeliveryTime, now, string.Join(" ", list), "无效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
             };
         }
     }

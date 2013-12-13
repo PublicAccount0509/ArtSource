@@ -297,9 +297,27 @@
             decimal.TryParse(supplierEntity.BaIduLat, out baIduLat);
             decimal baIduLong;
             decimal.TryParse(supplierEntity.BaIduLong, out baIduLong);
-
             var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryEntity.DeliveryId);
             var deliveryAddressEntity = this.deliveryAddressEntityRepository.EntityQueryable.FirstOrDefault(p => p.DeliveryAddressId == deliveryEntity.DeliveryAddressId);
+            var gender = deliveryEntity.Gender.IsEmptyOrNull()
+                ? (deliveryAddressEntity == null ? ServicesCommon.DefaultGender : (deliveryAddressEntity.Sex ?? ServicesCommon.DefaultGender)).ToString()
+                : deliveryEntity.Gender;
+
+            if (gender.IsEmptyOrNull())
+            {
+                gender = ServicesCommon.DefaultGender.ToString();
+            }
+
+            if (string.Equals(gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(gender, "1", StringComparison.OrdinalIgnoreCase))
+            {
+                gender = "1";
+            }
+            else
+            {
+                gender = "0";
+            }
+
             var result = new WaiMaiOrderDetailModel
             {
                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
@@ -326,6 +344,9 @@
                 PaymentMethodId = paymentEntity == null ? (int?)null : paymentEntity.PaymentMethodId,
                 IsConfirm = paymentEntity != null,
                 DeliveryAddress = deliveryAddressEntity == null ? string.Empty : string.Format("{0}{1}", deliveryAddressEntity.Address1, deliveryAddressEntity.Address2),
+                DeliveryCustomerName = deliveryEntity.Contact.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Recipient) : deliveryEntity.Contact,
+                DeliveryCustomerTelphone = deliveryEntity.ContactPhone.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Telephone) : deliveryEntity.ContactPhone,
+                DeliveryCustomerGender = gender
             };
 
             return new ServicesResult<IOrderDetailModel>
@@ -737,6 +758,7 @@
                                  SupplierPrice = dish.Price,
                                  SupplierDishName = dish.ItemName,
                                  Total = dish.Price * dish.Quantity,
+                                 SpecialInstruction = dish.Instruction,
                                  OrderDate = DateTime.Now
                              }).ToList();
 

@@ -74,7 +74,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public HtjExtendServices(
-                        INHibernateRepository<AppEntity> appEntityRepository,
+            INHibernateRepository<AppEntity> appEntityRepository,
             INHibernateRepository<TokenEntity> tokenEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<WxToEtsEntity> wxToEtsEntityRepository)
