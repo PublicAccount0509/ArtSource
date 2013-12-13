@@ -10,7 +10,7 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：ShoppingCartController
+    /// 类名称：HaiDiLaoShoppingCartController
     /// 命名空间：Ets.SingleApi.Controllers
     /// 类功能：购物车功能
     /// </summary>
@@ -19,7 +19,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartController : SingleApiController
+    public class HaiDiLaoShoppingCartController : SingleApiController
     {
         /// <summary>
         /// 字段shoppingCartServices
@@ -40,7 +40,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartController(IShoppingCartServices shoppingCartServices)
+        public HaiDiLaoShoppingCartController(IShoppingCartServices shoppingCartServices)
         {
             this.shoppingCartServices = shoppingCartServices;
         }

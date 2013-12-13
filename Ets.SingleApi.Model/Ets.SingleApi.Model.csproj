@@ -62,6 +62,7 @@
     <Compile Include="Controller\ListResponse.cs" />
     <Compile Include="Controller\ShoppingCartDeliveryRequst.cs" />
     <Compile Include="Controller\ShoppingCartRequst.cs" />
+    <Compile Include="Controller\CustomerSimple.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
+    <Compile Include="Services\CustomerSimpleModel.cs" />
     <Compile Include="Services\HtjUserModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
@@ -325,6 +327,7 @@
     <Compile Include="Services\ServicesResultList.cs" />
     <Compile Include="LoginWay.cs" />
     <Compile Include="ExistsType.cs" />
+    <Compile Include="AccountType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\OrderSourceEntity.hbm.xml" />

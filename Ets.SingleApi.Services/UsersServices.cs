@@ -145,6 +145,16 @@
         private readonly List<IExists> existsList;
 
         /// <summary>
+        /// 字段accountList
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/12/2013 11:29 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly List<IAccount> accountList;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
         /// <param name="appEntityRepository">The appEntityRepository</param>
@@ -159,6 +169,7 @@
         /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="userOrdersList">The userOrdersList</param>
         /// <param name="existsList">The existsList</param>
+        /// <param name="accountList">The accountList</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 16:35
         /// 修改者：
@@ -176,7 +187,8 @@
             IUsersDetailServices usersDetailServices,
             ISmsDetailServices smsDetailServices,
             List<IUserOrders> userOrdersList,
-            List<IExists> existsList)
+            List<IExists> existsList,
+            List<IAccount> accountList)
         {
             this.appEntityRepository = appEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
@@ -190,6 +202,7 @@
             this.smsDetailServices = smsDetailServices;
             this.userOrdersList = userOrdersList;
             this.existsList = existsList;
+            this.accountList = accountList;
         }
 
         /// <summary>
@@ -282,6 +295,55 @@
             return new ServicesResult<CustomerModel>
                 {
                     Result = customerModel
+                };
+        }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="account">账号</param>
+        /// <param name="type">账号类型 1 邮箱  2 电话</param>
+        /// <returns>
+        /// The GetUserResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 18:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<CustomerSimpleModel> GetUserSimple(string source, string account, int type)
+        {
+            var accountProvide = this.accountList.FirstOrDefault(p => p.AccountType == (AccountType)type);
+            if (accountProvide == null)
+            {
+                return new ServicesResult<CustomerSimpleModel>
+                {
+                    StatusCode = (int)StatusCode.General.UnknowError,
+                    Result = new CustomerSimpleModel()
+                };
+            }
+
+            var getCustomerData = accountProvide.GetCustomer(account);
+            if (getCustomerData.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<CustomerSimpleModel>
+                {
+                    Result = new CustomerSimpleModel(),
+                    StatusCode = getCustomerData.StatusCode
+                };
+            }
+
+            var result = new CustomerSimpleModel
+                {
+                    UserId = getCustomerData.UserId,
+                    Email = getCustomerData.Email,
+                    Telephone = getCustomerData.Telephone
+                };
+
+            return new ServicesResult<CustomerSimpleModel>
+                {
+                    Result = result
                 };
         }
 

@@ -205,6 +205,52 @@
         }
 
         /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="account">账号</param>
+        /// <param name="type">账号类型 1 邮箱  2 电话</param>
+        /// <returns>
+        /// The GetUserResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 18:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<CustomerSimple> GetUserSimple(string account, int type)
+        {
+            var getUserSimpleResult = this.usersServices.GetUserSimple(this.Source, account, type);
+            if (getUserSimpleResult.Result == null)
+            {
+                return new Response<CustomerSimple>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getUserSimpleResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getUserSimpleResult.StatusCode
+                    },
+                    Result = new CustomerSimple()
+                };
+            }
+
+            var result = new CustomerSimple
+            {
+                UserId = getUserSimpleResult.Result.UserId,
+                Email = (getUserSimpleResult.Result.Email ?? string.Empty),
+                Telephone = (getUserSimpleResult.Result.Telephone ?? string.Empty)
+            };
+
+            return new Response<CustomerSimple>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getUserSimpleResult.StatusCode
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 取得用户地址
         /// </summary>
         /// <param name="id">用户Id</param>
