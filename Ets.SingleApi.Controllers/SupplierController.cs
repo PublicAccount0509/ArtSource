@@ -140,9 +140,12 @@
                 PackLadder = getSupplierResult.Result.PackLadder ?? 0,
                 TakeawaySpecialOffersSummary = getSupplierResult.Result.TakeawaySpecialOffersSummary ?? string.Empty,
                 PublicTransport = getSupplierResult.Result.PublicTransport ?? string.Empty,
-                IsWaiMai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
-                IsDingTai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
-                IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
+                SupplierFeatureList = supplierFeatureList.Select(q => new SupplierFeature
+                {
+                    SupplierFeatureId = q.SupplierFeatureId,
+                    FeatureId = q.FeatureId,
+                    FeatureName = q.FeatureName
+                }).ToList()
             };
 
             return new Response<SupplierDetail>
@@ -200,9 +203,12 @@
                 Averageprice = p.Averageprice ?? 0,
                 ParkingInfo = p.ParkingInfo ?? string.Empty,
                 Telephone = p.Telephone ?? string.Empty,
-                IsWaiMai = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
-                IsDingTai = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
-                IsTangShi = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
+                SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
+                {
+                    SupplierFeatureId = q.SupplierFeatureId,
+                    FeatureId = q.FeatureId,
+                    FeatureName = q.FeatureName
+                }).ToList()
             }).ToList();
 
             return new ListResponse<GroupSupplier>

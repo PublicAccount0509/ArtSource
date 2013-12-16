@@ -1,10 +1,9 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
-    /// 类名称：SupplierDetail
+    /// 类名称：WapSupplierDetail
     /// 命名空间：Ets.SingleApi.Model.Services
     /// 类功能：餐厅列表
     /// </summary>
@@ -13,10 +12,10 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SupplierDetail
+    public class WapSupplierDetail
     {
         /// <summary>
-        /// Gets or sets the SupplierId of SupplierDetail
+        /// Gets or sets the SupplierId of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The SupplierId
@@ -29,7 +28,7 @@
         public int SupplierId { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierGroupId of SupplierDetailModel
+        /// Gets or sets the SupplierGroupId of WapSupplierDetailModel
         /// </summary>
         /// <value>
         /// The SupplierGroupId
@@ -55,7 +54,7 @@
         public string SupplierName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Address of SupplierDetail
+        /// Gets or sets the Address of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The Address
@@ -68,7 +67,7 @@
         public string Address { get; set; }
 
         /// <summary>
-        /// Gets or sets the Telephone of SupplierDetail
+        /// Gets or sets the Telephone of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The Telephone
@@ -81,7 +80,7 @@
         public string Telephone { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDescription of SupplierDetail
+        /// Gets or sets the SupplierDescription of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The SupplierDescription
@@ -94,7 +93,7 @@
         public string SupplierDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets the Averageprice of SupplierDetail
+        /// Gets or sets the Averageprice of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The Averageprice
@@ -107,7 +106,7 @@
         public double? Averageprice { get; set; }
 
         /// <summary>
-        /// Gets or sets the ParkingInfo of SupplierDetail
+        /// Gets or sets the ParkingInfo of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The ParkingInfo
@@ -133,7 +132,7 @@
         public string CuisineName { get; set; }
 
         /// <summary>
-        /// Gets or sets the LogoUrl of SupplierDetail
+        /// Gets or sets the LogoUrl of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The LogoUrl
@@ -146,7 +145,7 @@
         public string LogoUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the IsOpenDoor of SupplierDetail
+        /// Gets or sets the IsOpenDoor of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The IsOpenDoor
@@ -159,7 +158,7 @@
         public bool? IsOpenDoor { get; set; }
 
         /// <summary>
-        /// Gets or sets the DateJoined of SupplierDetail
+        /// Gets or sets the DateJoined of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The DateJoined
@@ -172,7 +171,7 @@
         public DateTime? DateJoined { get; set; }
 
         /// <summary>
-        /// Gets or sets the ServiceTime of SupplierDetail
+        /// Gets or sets the ServiceTime of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The ServiceTime
@@ -198,7 +197,7 @@
         public int ChainCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the PackagingFee of SupplierDetail
+        /// Gets or sets the PackagingFee of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The PackagingFee
@@ -211,7 +210,7 @@
         public decimal PackagingFee { get; set; }
 
         /// <summary>
-        /// Gets or sets the FixedDeliveryCharge of SupplierDetail
+        /// Gets or sets the FixedDeliveryCharge of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The FixedDeliveryCharge
@@ -224,7 +223,7 @@
         public int FixedDeliveryCharge { get; set; }
 
         /// <summary>
-        /// Gets or sets the FreeDeliveryLine of SupplierDetail
+        /// Gets or sets the FreeDeliveryLine of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The FreeDeliveryLine
@@ -237,7 +236,7 @@
         public decimal FreeDeliveryLine { get; set; }
 
         /// <summary>
-        /// Gets or sets the DelMinOrderAmount of SupplierDetail
+        /// Gets or sets the DelMinOrderAmount of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The DelMinOrderAmount
@@ -250,7 +249,7 @@
         public int DelMinOrderAmount { get; set; }
 
         /// <summary>
-        /// Gets or sets the BaIduLat of SupplierDetail
+        /// Gets or sets the BaIduLat of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The BaIduLat
@@ -263,7 +262,7 @@
         public decimal BaIduLat { get; set; }
 
         /// <summary>
-        /// Gets or sets the BaIduLong of SupplierDetail
+        /// Gets or sets the BaIduLong of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The BaIduLong
@@ -276,7 +275,7 @@
         public decimal BaIduLong { get; set; }
 
         /// <summary>
-        /// Gets or sets the Fax of SupplierDetail
+        /// Gets or sets the Fax of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The Fax
@@ -289,7 +288,7 @@
         public string Fax { get; set; }
 
         /// <summary>
-        /// Gets or sets the Email of SupplierDetail
+        /// Gets or sets the Email of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The Email
@@ -302,7 +301,7 @@
         public string Email { get; set; }
 
         /// <summary>
-        /// Gets or sets the TakeawaySpecialOffersSummary of SupplierDetail
+        /// Gets or sets the TakeawaySpecialOffersSummary of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The TakeawaySpecialOffersSummary
@@ -315,7 +314,7 @@
         public string TakeawaySpecialOffersSummary { get; set; }
 
         /// <summary>
-        /// Gets or sets the PublicTransport of SupplierDetail
+        /// Gets or sets the PublicTransport of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The PublicTransport
@@ -328,7 +327,7 @@
         public string PublicTransport { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDiningPurpose of SupplierDetail
+        /// Gets or sets the SupplierDiningPurpose of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The SupplierDiningPurpose
@@ -341,7 +340,7 @@
         public string SupplierDiningPurpose { get; set; }
 
         /// <summary>
-        /// Gets or sets the PackLadder of SupplierDetail
+        /// Gets or sets the PackLadder of WapSupplierDetail
         /// </summary>
         /// <value>
         /// The PackLadder
@@ -354,16 +353,42 @@
         public decimal PackLadder { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierFeatureList of SupplierDetail
+        /// Gets or sets a value indicating whether
         /// </summary>
         /// <value>
-        /// The SupplierFeatureList
+        /// The IsWaiMai
         /// </value>
         /// 创建者：周超
-        /// 创建日期：12/16/2013 11:06 AM
+        /// 创建日期：10/22/2013 12:12 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public List<SupplierFeature> SupplierFeatureList { get; set; }
+        public bool IsWaiMai { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsDingTai
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsDingTai { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsTangShi
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsTangShi { get; set; }
     }
 }

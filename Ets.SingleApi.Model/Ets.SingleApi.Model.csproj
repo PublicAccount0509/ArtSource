@@ -68,6 +68,8 @@
     <Compile Include="Controller\HaiDiLaoShoppingCartRequst.cs" />
     <Compile Include="Controller\HaiDiLaoShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\HaiDiLaoShoppingCartExtraRequst.cs" />
+    <Compile Include="Controller\WapGroupSupplier.cs" />
+    <Compile Include="Controller\WapSupplierDetail.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />

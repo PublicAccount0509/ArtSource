@@ -1,9 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
-    using System.Collections.Generic;
-
     /// <summary>
-    /// 类名称：GroupSupplier
+    /// 类名称：WapGroupSupplier
     /// 命名空间：Ets.SingleApi.Model.Services
     /// 类功能：集团餐厅
     /// </summary>
@@ -12,10 +10,10 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class GroupSupplier
+    public class WapGroupSupplier
     {
         /// <summary>
-        /// Gets or sets the SupplierId of GroupSupplier
+        /// Gets or sets the SupplierId of WapGroupSupplier
         /// </summary>
         /// <value>
         /// The SupplierId
@@ -41,20 +39,7 @@
         public string SupplierName { get; set; }
 
         /// <summary>
-        /// Gets or sets the LogoUrl of SupplierDetail
-        /// </summary>
-        /// <value>
-        /// The LogoUrl
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/16 14:10
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string LogoUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Address of GroupSupplier
+        /// Gets or sets the Address of WapGroupSupplier
         /// </summary>
         /// <value>
         /// The Address
@@ -67,7 +52,7 @@
         public string Address { get; set; }
 
         /// <summary>
-        /// Gets or sets the Telephone of GroupSupplier
+        /// Gets or sets the Telephone of WapGroupSupplier
         /// </summary>
         /// <value>
         /// The Telephone
@@ -80,7 +65,7 @@
         public string Telephone { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDescription of GroupSupplier
+        /// Gets or sets the SupplierDescription of WapGroupSupplier
         /// </summary>
         /// <value>
         /// The SupplierDescription
@@ -93,7 +78,7 @@
         public string SupplierDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets the Averageprice of GroupSupplier
+        /// Gets or sets the Averageprice of WapGroupSupplier
         /// </summary>
         /// <value>
         /// The Averageprice
@@ -106,7 +91,7 @@
         public double? Averageprice { get; set; }
 
         /// <summary>
-        /// Gets or sets the ParkingInfo of GroupSupplier
+        /// Gets or sets the ParkingInfo of WapGroupSupplier
         /// </summary>
         /// <value>
         /// The ParkingInfo
@@ -119,16 +104,42 @@
         public string ParkingInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierFeatureList of SupplierDetail
+        /// Gets or sets a value indicating whether
         /// </summary>
         /// <value>
-        /// The SupplierFeatureList
+        /// The IsWaiMai
         /// </value>
         /// 创建者：周超
-        /// 创建日期：12/16/2013 11:06 AM
+        /// 创建日期：10/22/2013 12:12 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public List<SupplierFeature> SupplierFeatureList { get; set; }
+        public bool IsWaiMai { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsDingTai
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsDingTai { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsTangShi
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 12:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsTangShi { get; set; }
     }
 }

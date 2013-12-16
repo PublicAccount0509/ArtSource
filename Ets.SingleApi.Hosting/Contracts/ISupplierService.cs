@@ -1,6 +1,5 @@
 ﻿namespace Ets.SingleApi.Hosting.Contracts
 {
-    using System;
     using System.ComponentModel;
     using System.ServiceModel;
 

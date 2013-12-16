@@ -42,6 +42,19 @@
         public string SupplierName { get; set; }
 
         /// <summary>
+        /// Gets or sets the LogoUrl of SupplierDetail
+        /// </summary>
+        /// <value>
+        /// The LogoUrl
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/16 14:10
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string LogoUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the Address of GroupSupplierModel
         /// </summary>
         /// <value>

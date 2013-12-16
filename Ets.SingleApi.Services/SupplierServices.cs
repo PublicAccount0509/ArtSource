@@ -683,6 +683,14 @@
             }
 
             var supplierIdList = tempSupplierList.Select(p => p.SupplierId).ToList();
+            var supplierImageList = this.supplierImageEntityRepository.EntityQueryable.Where(
+                  p => supplierIdList.Contains(p.Supplier.SupplierId) && p.Online == true)
+                  .Select(p => new
+                      {
+                          p.Supplier.SupplierId,
+                          p.ImagePath
+                      }).ToList();
+
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                     p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
                     .Select(p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId })
@@ -700,6 +708,7 @@
                         DateJoined = item.DateJoined,
                         IsOpenDoor = item.IsOpenDoor,
                         SupplierDescription = item.SupplierDescription,
+                        LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, (supplierImageList.FirstOrDefault(p => p.SupplierId == item.SupplierId) ?? new { item.SupplierId, ImagePath = string.Empty }).ImagePath),
                         SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == item.SupplierId).Select(p => new SupplierFeatureModel { FeatureId = p.FeatureId, FeatureName = p.Feature, SupplierFeatureId = p.SupplierFeatureId }).ToList()
                     }).ToList();
 

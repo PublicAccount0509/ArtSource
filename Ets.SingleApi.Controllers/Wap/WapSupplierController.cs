@@ -58,23 +58,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<SupplierDetail> Supplier(int id)
+        public Response<WapSupplierDetail> Supplier(int id)
         {
             var getSupplierResult = this.supplierServices.GetSupplier(this.Source, id);
             if (getSupplierResult.Result == null)
             {
-                return new Response<SupplierDetail>
+                return new Response<WapSupplierDetail>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getSupplierResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getSupplierResult.StatusCode
                     },
-                    Result = new SupplierDetail()
+                    Result = new WapSupplierDetail()
                 };
             }
 
             var supplierFeatureList = getSupplierResult.Result.SupplierFeatureList;
-            var supplier = new SupplierDetail
+            var supplier = new WapSupplierDetail
                 {
                     SupplierId = getSupplierResult.Result.SupplierId,
                     SupplierName = getSupplierResult.Result.SupplierName ?? string.Empty,
@@ -107,7 +107,7 @@
                     IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
                 };
 
-            return new Response<SupplierDetail>
+            return new Response<WapSupplierDetail>
             {
                 Message = new ApiMessage
                 {
@@ -132,7 +132,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize = 10, int? pageIndex = null)
+        public ListResponse<WapGroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize = 10, int? pageIndex = null)
         {
             var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(this.Source, new GetGroupSupplierListParameter
                 {
@@ -143,17 +143,17 @@
 
             if (getGroupSupplierListResult.Result == null || getGroupSupplierListResult.Result.Count == 0)
             {
-                return new ListResponse<GroupSupplier>
+                return new ListResponse<WapGroupSupplier>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getGroupSupplierListResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getGroupSupplierListResult.StatusCode
                     },
-                    Result = new List<GroupSupplier>()
+                    Result = new List<WapGroupSupplier>()
                 };
             }
 
-            var result = getGroupSupplierListResult.Result.Select(p => new GroupSupplier
+            var result = getGroupSupplierListResult.Result.Select(p => new WapGroupSupplier
                 {
                     SupplierId = p.SupplierId,
                     SupplierName = p.SupplierName ?? string.Empty,
@@ -167,7 +167,7 @@
                     IsTangShi = p.SupplierFeatureList != null && p.SupplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
                 }).ToList();
 
-            return new ListResponse<GroupSupplier>
+            return new ListResponse<WapGroupSupplier>
             {
                 Message = new ApiMessage
                 {
