@@ -87,6 +87,7 @@
     <Compile Include="FilterServices.cs" />
     <Compile Include="FunctionServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartCacheServices.cs" />
+    <Compile Include="ICacheServices\IHaiDiLaoShoppingCartCacheServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
@@ -130,12 +131,15 @@
     <Compile Include="ShoppingCartServices.cs" />
     <Compile Include="ShoppingCart\IShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\ShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\IHaiDiLaoShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\HaiDiLaoShoppingCartProvider.cs" />
     <Compile Include="SmsServices.cs" />
     <Compile Include="SupplierServices.cs" />
     <Compile Include="UsersServices.cs" />
     <Compile Include="AuthenServices.cs" />
     <Compile Include="OrderServices.cs" />
     <Compile Include="HtjExtendServices.cs" />
+    <Compile Include="HaiDiLaoShoppingCartServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">

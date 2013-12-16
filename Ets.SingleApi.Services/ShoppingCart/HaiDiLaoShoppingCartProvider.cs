@@ -11,7 +11,7 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：ShoppingCartProvider
+    /// 类名称：HaiDiLaoShoppingCartProvider
     /// 命名空间：Ets.SingleApi.Services
     /// 类功能：购物车功能
     /// </summary>
@@ -20,7 +20,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartProvider : IShoppingCartProvider
+    public class HaiDiLaoShoppingCartProvider : IHaiDiLaoShoppingCartProvider
     {
         /// <summary>
         /// 字段loginEntityRepository
@@ -110,10 +110,10 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartCacheServices shoppingCartCacheServices;
+        private readonly IHaiDiLaoShoppingCartCacheServices haiDiLaoShoppingCartCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartProvider" /> class.
+        /// Initializes a new instance of the <see cref="HaiDiLaoShoppingCartProvider" /> class.
         /// </summary>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -123,13 +123,13 @@
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// <param name="supplierTimeTableEntityRepository">The supplierTimeTableEntityRepository</param>
         /// <param name="timeTableEntityRepository">The timeTableEntityRepository</param>
-        /// <param name="shoppingCartCacheServices">The shoppingCartCacheServices</param>
+        /// <param name="haiDiLaoShoppingCartCacheServices">The haiDiLaoShoppingCartCacheServices</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartProvider(
+        public HaiDiLaoShoppingCartProvider(
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
@@ -138,7 +138,7 @@
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository,
             INHibernateRepository<TimeTableEntity> timeTableEntityRepository,
-            IShoppingCartCacheServices shoppingCartCacheServices)
+            IHaiDiLaoShoppingCartCacheServices haiDiLaoShoppingCartCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
@@ -148,7 +148,7 @@
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
             this.supplierTimeTableEntityRepository = supplierTimeTableEntityRepository;
             this.timeTableEntityRepository = timeTableEntityRepository;
-            this.shoppingCartCacheServices = shoppingCartCacheServices;
+            this.haiDiLaoShoppingCartCacheServices = haiDiLaoShoppingCartCacheServices;
         }
 
         /// <summary>
@@ -166,7 +166,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(string source, int supplierId)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartSupplier(source, supplierId);
+            var shoppingCartCacheResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartSupplier(source, supplierId);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartSupplier>
@@ -211,7 +211,7 @@
             if (timeTableDisplayIdList.Count == 0)
             {
                 shoppingCartSupplier.ServiceTime = string.Empty;
-                this.shoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
+                this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
                 return new ServicesResult<ShoppingCartSupplier>
                 {
                     Result = shoppingCartSupplier
@@ -228,7 +228,7 @@
 
             var serviceTime = timeTableDisplayList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime));
             shoppingCartSupplier.ServiceTime = serviceTime.Trim();
-            this.shoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
+            this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
             return new ServicesResult<ShoppingCartSupplier>
             {
                 Result = shoppingCartSupplier
@@ -258,7 +258,7 @@
                     };
             }
 
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartCustomer(source, userId.Value);
+            var shoppingCartCacheResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartCustomer(source, userId.Value);
             if (shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartCustomer>
@@ -315,7 +315,7 @@
                 Username = tempLogin.Username
             };
 
-            this.shoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
+            this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
             return new ServicesResult<ShoppingCartCustomer>
             {
                 Result = customer
@@ -337,7 +337,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCart> GetShoppingCart(string source, string id)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCart(source, id);
+            var shoppingCartCacheResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCart(source, id);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCart>
@@ -352,7 +352,7 @@
                 IsActive = true
             };
 
-            this.shoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
+            this.haiDiLaoShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
             return new ServicesResult<ShoppingCart>
             {
                 Result = shoppingCart
@@ -360,7 +360,7 @@
         }
 
         /// <summary>
-        /// 获取订单信息
+        /// 获取海底捞订单信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="id">订单唯一标识符</param>
@@ -372,13 +372,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string source, string id)
+        public ServicesResult<HaiDiLaoShoppingCartOrder> GetShoppingCartOrder(string source, string id)
         {
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, id);
-            return new ServicesResult<ShoppingCartOrder>
+            var getHaiDiLaoShoppingCartOrderResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartOrder(source, id);
+            return new ServicesResult<HaiDiLaoShoppingCartOrder>
             {
-                StatusCode = getShoppingCartOrderResult.StatusCode,
-                Result = getShoppingCartOrderResult.Result ?? new ShoppingCartOrder()
+                StatusCode = getHaiDiLaoShoppingCartOrderResult.StatusCode,
+                Result = getHaiDiLaoShoppingCartOrderResult.Result ?? new HaiDiLaoShoppingCartOrder()
             };
         }
 
@@ -397,11 +397,101 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id)
         {
-            var shoppingCartDeliveryResult = this.shoppingCartCacheServices.GetShoppingCartDelivery(source, id);
+            var shoppingCartDeliveryResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartDelivery(source, id);
             return new ServicesResult<ShoppingCartDelivery>
             {
                 StatusCode = shoppingCartDeliveryResult.StatusCode,
                 Result = shoppingCartDeliveryResult.Result ?? new ShoppingCartDelivery()
+            };
+        }
+
+        /// <summary>
+        /// 获取订单额外信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">订单额外信息唯一标识符</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ShoppingCartExtra> GetShoppingCartExtra(string source, string id)
+        {
+            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartExtra(source, id);
+            return new ServicesResult<ShoppingCartExtra>
+            {
+                StatusCode = getShoppingCartExtraResult.StatusCode,
+                Result = getShoppingCartExtraResult.Result ?? new ShoppingCartExtra()
+            };
+        }
+
+        /// <summary>
+        /// 获取购物车关联信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartLinkId">购物车关联Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<HaiDiLaoShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
+        {
+            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartLink(source, shoppingCartLinkId);
+            return new ServicesResult<HaiDiLaoShoppingCartLink>
+            {
+                StatusCode = getShoppingCartLinkResult.StatusCode,
+                Result = getShoppingCartLinkResult.Result ?? new HaiDiLaoShoppingCartLink()
+            };
+        }
+
+        /// <summary>
+        /// 获取海底捞购物车关联信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="anonymityId">匿名用户Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<HaiDiLaoShoppingCartLink> GetShoppingCartLink(string source, int supplierId, string anonymityId)
+        {
+            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartLink(source, string.Format("{0}_{1}", anonymityId, supplierId));
+            var shoppingCartLink = getShoppingCartLinkResult.Result ?? new HaiDiLaoShoppingCartLink();
+            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<HaiDiLaoShoppingCartLink>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = null
+                };
+            }
+
+            if (getShoppingCartOrderResult.Result.IsComplete)
+            {
+                return new ServicesResult<HaiDiLaoShoppingCartLink>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = null
+                };
+            }
+
+            return new ServicesResult<HaiDiLaoShoppingCartLink>
+            {
+                StatusCode = getShoppingCartLinkResult.StatusCode,
+                Result = getShoppingCartLinkResult.Result ?? new HaiDiLaoShoppingCartLink()
             };
         }
 
@@ -420,7 +510,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCart(string source, ShoppingCart shoppingCart)
         {
-            var saveShoppingCartResult = this.shoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
+            var saveShoppingCartResult = this.haiDiLaoShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartResult.StatusCode,
@@ -429,7 +519,7 @@
         }
 
         /// <summary>
-        /// 保存订单信息
+        /// 保存海底捞订单信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartOrder">订单信息</param>
@@ -441,13 +531,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartOrder(string source, ShoppingCartOrder shoppingCartOrder)
+        public ServicesResult<bool> SaveShoppingCartOrder(string source, HaiDiLaoShoppingCartOrder shoppingCartOrder)
         {
-            var saveShoppingCartOrderResult = this.shoppingCartCacheServices.SaveShoppingCartOrder(source, shoppingCartOrder);
+            var saveHaiDiLaoShoppingCartOrderResult = this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {
-                StatusCode = saveShoppingCartOrderResult.StatusCode,
-                Result = saveShoppingCartOrderResult.Result
+                StatusCode = saveHaiDiLaoShoppingCartOrderResult.StatusCode,
+                Result = saveHaiDiLaoShoppingCartOrderResult.Result
             };
         }
 
@@ -466,7 +556,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery)
         {
-            var saveShoppingCartDeliveryResult = this.shoppingCartCacheServices.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+            var saveShoppingCartDeliveryResult = this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartDelivery(source, shoppingCartDelivery);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartDeliveryResult.StatusCode,
@@ -475,10 +565,10 @@
         }
 
         /// <summary>
-        /// 获取购物车关联信息
+        /// 保存订单额外信息
         /// </summary>
         /// <param name="source">The source</param>
-        /// <param name="shoppingCartLinkId">购物车关联Id</param>
+        /// <param name="shoppingCartExtra">订单额外信息</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -487,62 +577,18 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
+        public ServicesResult<bool> SaveShoppingCartExtra(string source, ShoppingCartExtra shoppingCartExtra)
         {
-            var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(source, shoppingCartLinkId);
-            return new ServicesResult<ShoppingCartLink>
+            var saveShoppingCartExtraResult = this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartExtra(source, shoppingCartExtra);
+            return new ServicesResult<bool>
             {
-                StatusCode = getShoppingCartLinkResult.StatusCode,
-                Result = getShoppingCartLinkResult.Result ?? new ShoppingCartLink()
+                StatusCode = saveShoppingCartExtraResult.StatusCode,
+                Result = saveShoppingCartExtraResult.Result
             };
         }
 
         /// <summary>
-        /// 获取购物车关联信息
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="supplierId">餐厅Id</param>
-        /// <param name="anonymityId">匿名用户Id</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, int supplierId, string anonymityId)
-        {
-            var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(source, string.Format("{0}_{1}", anonymityId, supplierId));
-            var shoppingCartLink = getShoppingCartLinkResult.Result ?? new ShoppingCartLink();
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
-            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<ShoppingCartLink>
-                {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = null
-                };
-            }
-
-            if (getShoppingCartOrderResult.Result.IsComplete)
-            {
-                return new ServicesResult<ShoppingCartLink>
-                {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = null
-                };
-            }
-
-            return new ServicesResult<ShoppingCartLink>
-            {
-                StatusCode = getShoppingCartLinkResult.StatusCode,
-                Result = getShoppingCartLinkResult.Result ?? new ShoppingCartLink()
-            };
-        }
-
-        /// <summary>
-        /// 保存购物车关联信息
+        /// 保存海底捞购物车关联信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartLink">购物车关联信息</param>
@@ -554,9 +600,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartLink(string source, ShoppingCartLink shoppingCartLink)
+        public ServicesResult<bool> SaveShoppingCartLink(string source, HaiDiLaoShoppingCartLink shoppingCartLink)
         {
-            var saveShoppingCartLinkResult = this.shoppingCartCacheServices.SaveShoppingCartLink(source, shoppingCartLink);
+            var saveShoppingCartLinkResult = this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartLink(source, shoppingCartLink);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartLinkResult.StatusCode,
@@ -579,7 +625,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> CompleteShoppingCartOrder(string source, string orderId)
         {
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
+            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -590,7 +636,7 @@
 
             var order = getShoppingCartOrderResult.Result;
             order.IsComplete = true;
-            var saveShoppingCartOrderResult = this.shoppingCartCacheServices.SaveShoppingCartOrder(source, order);
+            var saveShoppingCartOrderResult = this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartOrderResult.StatusCode,

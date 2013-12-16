@@ -1,30 +1,17 @@
-﻿namespace Ets.SingleApi.Model
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：ShoppingCartExtra
-    /// 命名空间：Ets.SingleApi.Model
-    /// 类功能：购物车附属信息
+    /// 类名称：HaiDiLaoShoppingCartExtraRequst
+    /// 命名空间：Ets.SingleApi.Model.Controller
+    /// 类功能：外卖订单额外信息
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：12/10/2013 11:12 AM
+    /// 创建日期：10/23/2013 10:28 AM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartExtra
+    public class HaiDiLaoShoppingCartExtraRequst : ApiRequst
     {
-        /// <summary>
-        /// 设置或取得订单唯一标识符
-        /// </summary>
-        /// <value>
-        /// 订单唯一标识符
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：10/22/2013 5:46 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string Id { get; set; }
-
         /// <summary>
         /// 设置或取得订单炉灶数
         /// </summary>

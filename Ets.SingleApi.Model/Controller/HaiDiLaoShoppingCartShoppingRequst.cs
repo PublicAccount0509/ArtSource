@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// 类名称：ShoppingCartShoppingRequst
+    /// 类名称：HaiDiLaoShoppingCartShoppingRequst
     /// 命名空间：Ets.SingleApi.Model.Controller
     /// 类功能：保存商品信息参数
     /// </summary>
@@ -12,7 +12,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartShoppingRequst : ApiRequst
+    public class HaiDiLaoShoppingCartShoppingRequst : ApiRequst
     {
         /// <summary>
         /// Gets or sets the ShoppingCartItemList of ShoppingCartShoppingRequst

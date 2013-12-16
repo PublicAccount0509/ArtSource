@@ -43,7 +43,6 @@
             this.htjExtendServices = htjExtendServices;
         }
 
-
         /// <summary>
         /// 注册用户
         /// </summary>

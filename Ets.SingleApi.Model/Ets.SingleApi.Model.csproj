@@ -63,6 +63,11 @@
     <Compile Include="Controller\ShoppingCartDeliveryRequst.cs" />
     <Compile Include="Controller\ShoppingCartRequst.cs" />
     <Compile Include="Controller\CustomerSimple.cs" />
+    <Compile Include="Controller\HaiDiLaoShoppingCartDeliveryRequst.cs" />
+    <Compile Include="Controller\HaiDiLaoShoppingCartOrderRequst.cs" />
+    <Compile Include="Controller\HaiDiLaoShoppingCartRequst.cs" />
+    <Compile Include="Controller\HaiDiLaoShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\HaiDiLaoShoppingCartExtraRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -78,7 +83,7 @@
     <Compile Include="Services\SupplierCouponModel.cs" />
     <Compile Include="Services\SupplierCouponParameter.cs" />
     <Compile Include="Services\SupplierServiceTimeModel.cs" />
-    <Compile Include="Services\ShoppingCartHaiDiLaoModel.cs" />
+    <Compile Include="Services\HaiDiLaoShoppingCartModel.cs" />
     <Compile Include="Services\HtjRegisterUserParameter.cs" />
     <Compile Include="Services\HtjUserExtendModel.cs" />
     <Compile Include="Services\SupplierDeliveryTimeModel.cs" />
@@ -217,7 +222,8 @@
     <Compile Include="ShoppingCart\ShoppingCartOrder.cs" />
     <Compile Include="ShoppingCart\ShoppingCartSupplier.cs" />
     <Compile Include="ShoppingCart\ShoppingCartDelivery.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartHaiDiLaoLink.cs" />
+    <Compile Include="ShoppingCart\HaiDiLaoShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\HaiDiLaoShoppingCartOrder.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

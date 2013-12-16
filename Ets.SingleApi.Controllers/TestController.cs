@@ -28,6 +28,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
+        [HttpPost]
         public Response<string> Test()
         {
             return new Response<string>

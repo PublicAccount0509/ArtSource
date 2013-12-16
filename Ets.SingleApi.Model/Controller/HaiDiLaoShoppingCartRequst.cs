@@ -1,30 +1,17 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：ShoppingCartHaiDiLaoModel
-    /// 命名空间：Ets.SingleApi.Model
-    /// 类功能：购物车
+    /// 类名称：HaiDiLaoShoppingCartRequst
+    /// 命名空间：Ets.SingleApi.Model.Controller
+    /// 类功能：保存商品信息参数
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：11/20/2013 10:35 PM
+    /// 创建日期：10/23/2013 10:28 AM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartHaiDiLaoModel
+    public class HaiDiLaoShoppingCartRequst : ApiRequst
     {
-        /// <summary>
-        /// 设置或取得唯一标识符
-        /// </summary>
-        /// <value>
-        /// 唯一标识符
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 10:35 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string Id { get; set; }
-
         /// <summary>
         /// 设置或取得购物车信息
         /// </summary>
@@ -62,7 +49,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartOrder Order { get; set; }
+        public HaiDiLaoShoppingCartOrder Order { get; set; }
 
         /// <summary>
         /// 设置或取得当前餐厅信息
@@ -102,22 +89,5 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ShoppingCartExtra Extra { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartHaiDiLaoModel"/> class.
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 10:41 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ShoppingCartHaiDiLaoModel()
-        {
-            this.ShoppingCart = new ShoppingCart();
-            this.Customer = new ShoppingCartCustomer();
-            this.Order = new ShoppingCartOrder();
-            this.Supplier = new ShoppingCartSupplier();
-            this.Delivery = new ShoppingCartDelivery();
-        }
     }
 }

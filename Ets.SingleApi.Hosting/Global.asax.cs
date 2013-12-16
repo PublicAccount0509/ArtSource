@@ -10,6 +10,7 @@
     using Castle.Windsor;
 
     using Ets.SingleApi.Hosting.Contracts;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：Global
@@ -35,6 +36,8 @@
         /// ----------------------------------------------------------------------------------------
         protected void Application_Start(object sender, EventArgs e)
         {
+            //注册log4net组件
+            StatusUtility.Register();
             CastleUtility.Register();
             RegisterRoutes();
         }
@@ -70,6 +73,7 @@
         {
             var routes = new Dictionary<string, Type>
                 {
+                    { "Test", typeof(ITestService) },
                     { "Authen", typeof(IAuthenService) },
                     { "BusinessArea", typeof(IBusinessAreaService) },
                     { "Coupon", typeof(ICouponService) },
@@ -78,7 +82,12 @@
                     { "Orders", typeof(IOrdersService) },
                     { "Payment", typeof(IPaymentService) },
                     { "ShoppingCart", typeof(IShoppingCartService) },
-                    { "Sms", typeof(ISmsService) }
+                    { "HaiDiLaoShoppingCart", typeof(IHaiDiLaoShoppingCartService) },
+                    { "Sms", typeof(ISmsService) },
+                    { "User", typeof(IUserService) },
+                    { "Supplier", typeof(ISupplierService) },
+                    { "WapSupplier", typeof(IWapSupplierService) },
+                    { "WeiXinWapHtjUser", typeof(IWeiXinWapHtjUserService) }
                 };
 
             foreach (var key in routes.Keys)

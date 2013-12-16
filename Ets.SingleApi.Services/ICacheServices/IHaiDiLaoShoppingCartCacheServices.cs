@@ -4,7 +4,7 @@
     using Ets.SingleApi.Model.CacheServices;
 
     /// <summary>
-    /// 接口名称：IShoppingCartCacheServices
+    /// 接口名称：IHaiDiLaoShoppingCartCacheServices
     /// 命名空间：Ets.SingleApi.Services.ICacheServices
     /// 接口功能：购物车缓存信息
     /// </summary>
@@ -13,7 +13,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public interface IShoppingCartCacheServices
+    public interface IHaiDiLaoShoppingCartCacheServices
     {
         /// <summary>
         /// 取得餐厅信息
@@ -76,7 +76,7 @@
         CacheServicesResult<bool> SaveShoppingCartCustomer(string source, ShoppingCartCustomer customer);
 
         /// <summary>
-        /// 取得订单信息
+        /// 取得海底捞订单信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="id">订单唯一标识符</param>
@@ -88,10 +88,10 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string source, string id);
+        CacheServicesResult<HaiDiLaoShoppingCartOrder> GetShoppingCartOrder(string source, string id);
 
         /// <summary>
-        /// 保存订单信息
+        /// 保存海底捞订单信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="order">订单信息</param>
@@ -103,7 +103,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartOrder(string source, ShoppingCartOrder order);
+        CacheServicesResult<bool> SaveShoppingCartOrder(string source, HaiDiLaoShoppingCartOrder order);
 
         /// <summary>
         /// 取得购物车信息
@@ -166,7 +166,7 @@
         CacheServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery);
 
         /// <summary>
-        /// 获取购物车关联信息
+        /// 获取海底捞购物车关联信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartLinkId">购物车关联Id</param>
@@ -178,13 +178,28 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId);
+        CacheServicesResult<HaiDiLaoShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId);
 
         /// <summary>
-        /// 保存购物车关联信息
+        /// 保存海底捞购物车关联信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartLink">购物车关联信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 11:06 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        CacheServicesResult<bool> SaveShoppingCartLink(string source, HaiDiLaoShoppingCartLink shoppingCartLink);
+
+        /// <summary>
+        /// 获取购物车额外信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">购物车额外信息Id</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -193,6 +208,21 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartLink(string source, ShoppingCartLink shoppingCartLink);
+        CacheServicesResult<ShoppingCartExtra> GetShoppingCartExtra(string source, string id);
+
+        /// <summary>
+        /// 保存购物车额外信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartExtra">购物车额外信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 11:06 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        CacheServicesResult<bool> SaveShoppingCartExtra(string source, ShoppingCartExtra shoppingCartExtra);
     }
 }

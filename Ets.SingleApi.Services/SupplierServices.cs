@@ -275,8 +275,7 @@
                                                 SupplierFeatureId = p.SupplierFeatureId,
                                                 FeatureName = p.Feature.Feature,
                                                 FeatureId = p.Feature.FeatureId
-                                            })
-                                        .ToList();
+                                            }).ToList();
 
             var supplier = new SupplierDetailModel
                 {
@@ -308,6 +307,13 @@
                             .FirstOrDefault()),
                     SupplierFeatureList = supplierFeatureList
                 };
+
+            var cooperationWaimaiList = ServicesCommon.CooperationWaimaiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p)).ToList();
+            var cooperationTangshiList = ServicesCommon.CooperationTangshiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p)).ToList();
+            if (cooperationWaimaiList.All(p => p) || cooperationTangshiList.All(p => p))
+            {
+                supplier.Telephone = ServicesCommon.CooperationHotline;
+            }
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
             {
@@ -435,10 +441,17 @@
                     SupplierFeatureId = p.SupplierFeatureId,
                     FeatureName = p.Feature.Feature,
                     FeatureId = p.Feature.FeatureId
-                })
-                .ToList();
+                }).ToList();
 
             roughSupplierModel.SupplierFeatureList = supplierFeatureList;
+
+            var cooperationWaimaiList = ServicesCommon.CooperationWaimaiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p)).ToList();
+            var cooperationTangshiList = ServicesCommon.CooperationTangshiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p)).ToList();
+            if (cooperationWaimaiList.All(p => p) || cooperationTangshiList.All(p => p))
+            {
+                roughSupplierModel.Telephone = ServicesCommon.CooperationHotline;
+            }
+
             return new ServicesResult<RoughSupplierModel>
             {
                 Result = roughSupplierModel

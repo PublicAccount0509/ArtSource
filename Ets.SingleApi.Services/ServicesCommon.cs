@@ -1046,6 +1046,25 @@
         }
 
         /// <summary>
+        /// 合作商户订餐热线
+        /// </summary>
+        /// <value>
+        /// 合作商户订餐热线
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string CooperationHotline
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["CooperationHotline"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
         /// 测试集团Id
         /// </summary>
         /// <value>
@@ -1074,6 +1093,70 @@
                 }
 
                 return supplierGroupIdList;
+            }
+        }
+
+        /// <summary>
+        /// 外卖合作商户所必须开通的功能
+        /// </summary>
+        /// <value>
+        /// 外卖合作商户所必须开通的功能
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> CooperationWaimaiFeatures
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["CooperationWaimaiFeatures"] ?? string.Empty).Split(',').ToList();
+                var cooperationWaimaiFeatureList = new List<int>();
+                foreach (var item in list)
+                {
+                    int featureId;
+                    if (!int.TryParse(item, out featureId))
+                    {
+                        continue;
+                    }
+
+                    cooperationWaimaiFeatureList.Add(featureId);
+                }
+
+                return cooperationWaimaiFeatureList;
+            }
+        }
+
+        /// <summary>
+        /// 堂食合作商户所必须开通的功能
+        /// </summary>
+        /// <value>
+        /// 堂食合作商户所必须开通的功能
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> CooperationTangshiFeatures
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["CooperationTangshiFeatures"] ?? string.Empty).Split(',').ToList();
+                var cooperationTangshiFeatureList = new List<int>();
+                foreach (var item in list)
+                {
+                    int featureId;
+                    if (!int.TryParse(item, out featureId))
+                    {
+                        continue;
+                    }
+
+                    cooperationTangshiFeatureList.Add(featureId);
+                }
+
+                return cooperationTangshiFeatureList;
             }
         }
 

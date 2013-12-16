@@ -1,4 +1,4 @@
-﻿namespace Ets.SingleApi.Controllers.Wap
+﻿namespace Ets.SingleApi.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Http;
@@ -22,27 +22,27 @@
     public class HaiDiLaoShoppingCartController : SingleApiController
     {
         /// <summary>
-        /// 字段shoppingCartServices
+        /// 字段haiDiLaoshoppingCartServices
         /// </summary>
         /// 创建者：周超
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartServices shoppingCartServices;
+        private readonly IHaiDiLaoShoppingCartServices haiDiLaoshoppingCartServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartController"/> class.
         /// </summary>
-        /// <param name="shoppingCartServices">The shoppingCartServices</param>
+        /// <param name="haiDiLaoshoppingCartServices">The haiDiLaoshoppingCartServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public HaiDiLaoShoppingCartController(IShoppingCartServices shoppingCartServices)
+        public HaiDiLaoShoppingCartController(IHaiDiLaoShoppingCartServices haiDiLaoshoppingCartServices)
         {
-            this.shoppingCartServices = shoppingCartServices;
+            this.haiDiLaoshoppingCartServices = haiDiLaoshoppingCartServices;
         }
 
         /// <summary>
@@ -58,22 +58,22 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<ShoppingCartModel> ShoppingCart(string id)
+        public Response<HaiDiLaoShoppingCartModel> ShoppingCart(string id)
         {
-            var getShoppingCartResult = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var getShoppingCartResult = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
             if (getShoppingCartResult.Result == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getShoppingCartResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            return new Response<ShoppingCartModel>
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -97,11 +97,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> ShoppingCart(string id, ShoppingCartRequst requst)
+        public Response<HaiDiLaoShoppingCartModel> ShoppingCart(string id, HaiDiLaoShoppingCartRequst requst)
         {
             if (requst == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -110,28 +110,28 @@
                 };
             }
 
-            var shoppingCartModel = new ShoppingCartModel
+            var haiDiLaoShoppingCartModel = new HaiDiLaoShoppingCartModel
                 {
                     Delivery = requst.Delivery,
                     Order = requst.Order,
                     ShoppingCart = requst.ShoppingCart
                 };
 
-            var getShoppingCartResult = this.shoppingCartServices.SaveShoppingCart(this.Source, id, shoppingCartModel);
+            var getShoppingCartResult = this.haiDiLaoshoppingCartServices.SaveShoppingCart(this.Source, id, haiDiLaoShoppingCartModel);
             if (!getShoppingCartResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getShoppingCartResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -155,23 +155,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Create(int supplierId, string userId)
+        public Response<HaiDiLaoShoppingCartModel> Create(int supplierId, string userId)
         {
-            var createShoppingCartResult = this.shoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
+            var createShoppingCartResult = this.haiDiLaoshoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
             if (createShoppingCartResult.Result.IsEmptyOrNull())
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = createShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : createShoppingCartResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
+            return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                         {
@@ -195,23 +195,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Customer(string id, int userId)
+        public Response<HaiDiLaoShoppingCartModel> Customer(string id, int userId)
         {
-            var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
+            var saveShoppingCartCustomerResult = this.haiDiLaoshoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
             if (!saveShoppingCartCustomerResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingCartCustomerResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -235,11 +235,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Delivery(string id, ShoppingCartDeliveryRequst requst)
+        public Response<HaiDiLaoShoppingCartModel> Delivery(string id, HaiDiLaoShoppingCartDeliveryRequst requst)
         {
             if (requst == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -257,21 +257,79 @@
                     CustomerAddressId = requst.CustomerAddressId
                 };
 
-            var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
+            var saveShoppingCartCustomerResult = this.haiDiLaoshoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
             if (!saveShoppingCartCustomerResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingCartCustomerResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存送餐信息
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The ShoppingCartResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 9:29 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<HaiDiLaoShoppingCartModel> Extra(string id, HaiDiLaoShoppingCartExtraRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<HaiDiLaoShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var extra = new ShoppingCartExtra
+                {
+                    CookingCount = requst.CookingCount,
+                    PanCount = requst.PanCount,
+                    DiningCount = requst.DiningCount
+                };
+
+            var saveShoppingCartCustomerResult = this.haiDiLaoshoppingCartServices.SaveShoppingCartExtra(this.Source, id, extra);
+            if (!saveShoppingCartCustomerResult.Result)
+            {
+                return new Response<HaiDiLaoShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingCartCustomerResult.StatusCode
+                    },
+                    Result = new HaiDiLaoShoppingCartModel()
+                };
+            }
+
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -296,11 +354,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Shopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
+        public Response<HaiDiLaoShoppingCartModel> Shopping(string id, HaiDiLaoShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -310,21 +368,21 @@
             }
 
             var shoppingCartItemList = requst.ShoppingCartItemList ?? new List<ShoppingCartItem>();
-            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.haiDiLaoshoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -349,11 +407,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
+        public Response<HaiDiLaoShoppingCartModel> AddShopping(string id, HaiDiLaoShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -362,21 +420,21 @@
                 };
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.AddShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.haiDiLaoshoppingCartServices.AddShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -401,11 +459,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
+        public Response<HaiDiLaoShoppingCartModel> DeleteShopping(string id, HaiDiLaoShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -414,21 +472,21 @@
                 };
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.haiDiLaoshoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -453,11 +511,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Order(string id, ShoppingCartOrderRequst requst, bool isCalculateCoupon = false)
+        public Response<HaiDiLaoShoppingCartModel> Order(string id, HaiDiLaoShoppingCartOrderRequst requst, bool isCalculateCoupon = false)
         {
             if (requst == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -466,7 +524,7 @@
                 };
             }
 
-            var order = new ShoppingCartOrder
+            var order = new HaiDiLaoShoppingCartOrder
                 {
                     Id = requst.Id,
                     AreaId = requst.AreaId,
@@ -485,21 +543,21 @@
                     OrderNotes = requst.OrderNotes
                 };
 
-            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon);
+            var saveShoppingItemResult = this.haiDiLaoshoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -523,23 +581,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> SaveDeliveryMethod(string id, int deliveryMethodId)
+        public Response<HaiDiLaoShoppingCartModel> SaveDeliveryMethod(string id, int deliveryMethodId)
         {
-            var saveShoppingCartOrderDeliveryMethodResult = this.shoppingCartServices.SaveShoppingCartOrderDeliveryMethod(this.Source, id, deliveryMethodId);
+            var saveShoppingCartOrderDeliveryMethodResult = this.haiDiLaoshoppingCartServices.SaveShoppingCartOrderDeliveryMethod(this.Source, id, deliveryMethodId);
             if (!saveShoppingCartOrderDeliveryMethodResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingCartOrderDeliveryMethodResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.haiDiLaoshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
