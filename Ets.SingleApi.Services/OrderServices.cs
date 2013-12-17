@@ -51,6 +51,7 @@
         /// <param name="source">The source</param>
         /// <param name="orderId">订单状态</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果 0 不存在 1 支付 2 未支付
         /// </returns>
@@ -59,9 +60,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<int> Exist(string source, int orderId, int orderType)
+        public ServicesResult<int> Exist(string source, int orderId, int orderType, int orderSourceType)
         {
-            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
             if (orderProvider == null)
             {
                 return new ServicesResult<int>
@@ -84,6 +85,7 @@
         /// <param name="source">The source</param>
         /// <param name="orderId">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -92,9 +94,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId, int orderType)
+        public ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId, int orderType, int orderSourceType)
         {
-            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
             if (orderProvider == null)
             {
                 return new ServicesResult<IOrderDetailModel>
@@ -117,6 +119,7 @@
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -125,9 +128,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> SaveOrder(string source, string shoppingCartId, int orderType)
+        public ServicesResult<string> SaveOrder(string source, string shoppingCartId, int orderType, int orderSourceType)
         {
-            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
             if (orderProvider == null)
             {
                 return new ServicesResult<string>
@@ -149,6 +152,7 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -157,9 +161,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> GetOrderNumber(string source, int orderType)
+        public ServicesResult<string> GetOrderNumber(string source, int orderType, int orderSourceType)
         {
-            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
             if (orderProvider == null)
             {
                 return new ServicesResult<string>

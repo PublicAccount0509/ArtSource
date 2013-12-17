@@ -204,11 +204,15 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public OrderType OrderType
+        public OrderProviderType OrderProviderType
         {
             get
             {
-                return OrderType.WaiMai;
+                return new OrderProviderType
+                    {
+                        OrderType = OrderType.WaiMai,
+                        OrderSourceType = OrderSourceType.Default
+                    };
             }
         }
 

@@ -21,6 +21,7 @@
         /// <param name="source">The source</param>
         /// <param name="orderId">订单状态</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果 0 不存在 1 支付 2 未支付
         /// </returns>
@@ -29,7 +30,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<int> Exist(string source, int orderId, int orderType);
+        ServicesResult<int> Exist(string source, int orderId, int orderType, int orderSourceType);
 
         /// <summary>
         /// 取得订单详情
@@ -37,6 +38,7 @@
         /// <param name="source">The source</param>
         /// <param name="orderId">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -45,7 +47,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId, int orderType);
+        ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId, int orderType, int orderSourceType);
 
         /// <summary>
         /// 保存订单信息
@@ -53,6 +55,7 @@
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -61,13 +64,14 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> SaveOrder(string source, string shoppingCartId, int orderType);
+        ServicesResult<string> SaveOrder(string source, string shoppingCartId, int orderType, int orderSourceType);
 
         /// <summary>
         /// 获取订单号
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -76,6 +80,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> GetOrderNumber(string source, int orderType);
+        ServicesResult<string> GetOrderNumber(string source, int orderType, int orderSourceType);
     }
 }

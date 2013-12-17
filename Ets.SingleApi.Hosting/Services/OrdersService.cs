@@ -25,6 +25,7 @@
         /// </summary>
         /// <param name="id">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为0</param>
         /// <returns>
         /// 返回结果 0 不存在 1 支付 2 未支付
         /// </returns>
@@ -33,8 +34,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/Exist/{id}?orderType={orderType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<int> Exist(string id, int orderType)
+        [WebGet(UriTemplate = "/Exist/{id}?orderType={orderType}&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<int> Exist(string id, int orderType, int orderSourceType)
         {
             return new Response<int>();
         }
@@ -44,6 +45,7 @@
         /// </summary>
         /// <param name="id">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -53,7 +55,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/GetOrder/{id}?orderType={orderType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<WaiMaiOrderDetailModel> GetOrder(string id, int orderType)
+        public Response<WaiMaiOrderDetailModel> GetOrder(string id, int orderType, int orderSourceType)
         {
             return new Response<WaiMaiOrderDetailModel>();
         }
@@ -63,6 +65,7 @@
         /// </summary>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -72,7 +75,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebInvoke(UriTemplate = "/SaveOrder?shoppingCartId={shoppingCartId}&orderType={orderType}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<string> SaveOrder(string shoppingCartId, int orderType)
+        public Response<string> SaveOrder(string shoppingCartId, int orderType, int orderSourceType)
         {
             return new Response<string>();
         }
@@ -81,6 +84,7 @@
         /// 获取订单号
         /// </summary>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -90,7 +94,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/OrderNumber?orderType={orderType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<string> OrderNumber(int orderType)
+        public Response<string> OrderNumber(int orderType, int orderSourceType)
         {
             return new Response<string>();
         }

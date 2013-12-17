@@ -48,6 +48,7 @@
         /// </summary>
         /// <param name="id">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞</param>
         /// <returns>
         /// 返回结果 0 不存在 1 支付 2 未支付
         /// </returns>
@@ -57,9 +58,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<int> Exist(int id, int orderType)
+        public Response<int> Exist(int id, int orderType, int orderSourceType = 0)
         {
-            var getOrderResult = this.orderServices.Exist(this.Source, id, orderType);
+            var getOrderResult = this.orderServices.Exist(this.Source, id, orderType, orderSourceType);
             return new Response<int>
             {
                 Message = new ApiMessage
@@ -75,6 +76,7 @@
         /// </summary>
         /// <param name="id">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -84,9 +86,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<IOrderDetailModel> GetOrder(int id, int orderType)
+        public Response<IOrderDetailModel> GetOrder(int id, int orderType, int orderSourceType = 0)
         {
-            var getOrderResult = this.orderServices.GetOrder(this.Source, id, orderType);
+            var getOrderResult = this.orderServices.GetOrder(this.Source, id, orderType, orderSourceType);
             if (getOrderResult.Result == null)
             {
                 return new Response<IOrderDetailModel>
@@ -113,6 +115,7 @@
         /// </summary>
         /// <param name="shoppingCartId">购物车Id</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -122,9 +125,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<string> SaveOrder(string shoppingCartId, int orderType)
+        public Response<string> SaveOrder(string shoppingCartId, int orderType, int orderSourceType = 0)
         {
-            var getOrderResult = this.orderServices.SaveOrder(this.Source, shoppingCartId, orderType);
+            var getOrderResult = this.orderServices.SaveOrder(this.Source, shoppingCartId, orderType, orderSourceType);
             if (getOrderResult.Result == null)
             {
                 return new Response<string>
@@ -150,6 +153,7 @@
         /// 获取订单号
         /// </summary>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞</param>
         /// <returns>
         /// OrderNumberResponse
         /// </returns>
@@ -159,9 +163,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<string> OrderNumber(int orderType)
+        public Response<string> OrderNumber(int orderType, int orderSourceType = 0)
         {
-            var getOrderNumberResult = this.orderServices.GetOrderNumber(this.Source, orderType);
+            var getOrderNumberResult = this.orderServices.GetOrderNumber(this.Source, orderType, orderSourceType);
             if (getOrderNumberResult.Result == null)
             {
                 return new Response<string>

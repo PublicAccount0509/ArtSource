@@ -41,11 +41,15 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public OrderType OrderType
+        public OrderProviderType OrderProviderType
         {
             get
             {
-                return OrderType.DingTai;
+                return new OrderProviderType
+                {
+                    OrderType = OrderType.DingTai,
+                    OrderSourceType = OrderSourceType.Default
+                };
             }
         }
 

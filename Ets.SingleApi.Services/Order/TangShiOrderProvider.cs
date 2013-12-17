@@ -41,11 +41,15 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public OrderType OrderType
+        public OrderProviderType OrderProviderType
         {
             get
             {
-                return OrderType.TangShi;
+                return new OrderProviderType
+                {
+                    OrderType = OrderType.TangShi,
+                    OrderSourceType = OrderSourceType.Default
+                };
             }
         }
 

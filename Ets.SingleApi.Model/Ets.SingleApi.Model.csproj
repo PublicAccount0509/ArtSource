@@ -78,6 +78,8 @@
     <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
+    <Compile Include="OrderProviderType.cs" />
+    <Compile Include="OrderSourceType.cs" />
     <Compile Include="Services\CustomerSimpleModel.cs" />
     <Compile Include="Services\HtjUserModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
