@@ -63,6 +63,7 @@
                     "Sms",
                     "User", 
                     "Supplier",
+                    "HaiDiLaoSupplier",
                     "WapSupplier", 
                     "WeiXinWapHtjUser"
                 };

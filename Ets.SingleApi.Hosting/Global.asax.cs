@@ -87,7 +87,8 @@
                     { "User", typeof(IUserService) },
                     { "Supplier", typeof(ISupplierService) },
                     { "WapSupplier", typeof(IWapSupplierService) },
-                    { "WeiXinWapHtjUser", typeof(IWeiXinWapHtjUserService) }
+                    { "WeiXinWapHtjUser", typeof(IWeiXinWapHtjUserService) },
+                    { "HaiDiLaoSupplier", typeof(IHaiDiLaoSupplierService) }
                 };
 
             foreach (var key in routes.Keys)

@@ -1,6 +1,5 @@
 ﻿namespace Ets.SingleApi.Hosting.Services
 {
-    using System;
     using System.ServiceModel.Activation;
     using System.ServiceModel.Web;
 

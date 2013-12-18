@@ -10,6 +10,16 @@
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
+    /// <summary>
+    /// 类名称：HaiDiLaoSupplierServices
+    /// 命名空间：Ets.SingleApi.Services
+    /// 类功能：海底捞餐厅功能
+    /// </summary>
+    /// 创建者：周超
+    /// 创建日期：12/18/2013 2:41 PM
+    /// 修改者：
+    /// 修改时间：
+    /// ----------------------------------------------------------------------------------------
     public class HaiDiLaoSupplierServices : IHaiDiLaoSupplierServices
     {
         /// <summary>
