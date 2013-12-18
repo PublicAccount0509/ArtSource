@@ -86,11 +86,13 @@
     <Compile Include="Exists\TelephoneExists.cs" />
     <Compile Include="FilterServices.cs" />
     <Compile Include="FunctionServices.cs" />
+    <Compile Include="HaiDiLaoSupplierServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IHaiDiLaoShoppingCartCacheServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
+    <Compile Include="IDetailServices\IHaiDiLaoSupplierDetailServices.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="OrderNumber\DingTaiOrderNumber.cs" />
     <Compile Include="OrderNumber\TangShiOrderNumber.cs" />

@@ -85,6 +85,7 @@
     <Compile Include="IServices\IOrderServicesTemp.cs" />
     <Compile Include="IServices\IHtjExtendServices.cs" />
     <Compile Include="IServices\IHaiDiLaoShoppingCartServices.cs" />
+    <Compile Include="IServices\IHaiDiLaoSupplierServices.cs" />
     <Compile Include="OrdersController.cs" />
     <Compile Include="PaymentController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

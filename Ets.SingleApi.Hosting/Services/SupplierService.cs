@@ -115,6 +115,24 @@
         }
 
         /// <summary>
+        /// 获取赠品菜列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <returns>
+        /// 返回赠品菜列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/PresentDishList/{id}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<SupplierDish> PresentDishList(string id)
+        {
+            return new ListResponse<SupplierDish>();
+        }
+
+        /// <summary>
         /// 获取餐厅菜系列表
         /// </summary>
         /// <param name="id">餐厅Id</param>

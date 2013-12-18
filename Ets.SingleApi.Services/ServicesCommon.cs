@@ -1180,6 +1180,101 @@
         }
 
         /// <summary>
+        /// 海底捞不能出现在菜单的类目
+        /// </summary>
+        /// <value>
+        /// 海底捞不能出现在菜单的类目
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<string> HaiDiLaoNoContainMenuList
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["HaiDiLaoNoContainMenuList"] ?? string.Empty).Split(',').ToList();
+            }
+        }
+
+        /// <summary>
+        /// 海底捞排在菜单面前的类目
+        /// </summary>
+        /// <value>
+        /// 海底捞排在菜单面前的类目
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<string> HaiDiLaoFrontMenuList
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["HaiDiLaoFrontMenuList"] ?? string.Empty).Split(',').ToList();
+            }
+        }
+
+        /// <summary>
+        /// 海底捞排在菜单最后的类目
+        /// </summary>
+        /// <value>
+        /// 海底捞排在菜单最后的类目
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<string> HaiDiLaoEndMenuList
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["HaiDiLaoEndMenuList"] ?? string.Empty).Split(',').ToList();
+            }
+        }
+
+        /// <summary>
+        /// 海底捞在菜单的套餐类目显示的名称
+        /// </summary>
+        /// <value>
+        /// 海底捞在菜单的套餐类目显示的名称
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string HaiDiLaoPackageMenu
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["HaiDiLaoPackageMenu"] ?? string.Empty).Trim();
+            }
+        }
+
+        /// <summary>
+        /// 赠品菜菜单的类目
+        /// </summary>
+        /// <value>
+        /// 赠品菜菜单的类目
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string PresentMenu
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["PresentMenu"] ?? string.Empty).Trim();
+            }
+        }
+
+        /// <summary>
         /// 外卖短信验证码缓存关键字前缀
         /// </summary>
         /// <value>

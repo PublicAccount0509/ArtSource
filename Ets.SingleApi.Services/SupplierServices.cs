@@ -889,6 +889,85 @@
         }
 
         /// <summary>
+        /// 取得赠品菜
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/18/2013 11:59 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<SupplierDishModel> GetPresentDishList(string source, int supplierId)
+        {
+            var categoryIdList = this.supplierCategoryEntityRepository.EntityQueryable.Where(
+                  p => p.Category.CategoryName == ServicesCommon.PresentMenu && p.SupplierId == supplierId)
+                  .Select(p => p.Category.CategoryId)
+                  .ToList().Cast<int?>().ToList();
+
+            if (categoryIdList.Count == 0)
+            {
+                return new ServicesResultList<SupplierDishModel>
+                {
+                    Result = new List<SupplierDishModel>()
+                };
+            }
+
+            var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
+                                    where supplierDishEntity.Supplier.SupplierId == supplierId
+                                    && supplierDishEntity.Online && supplierDishEntity.IsDel == false
+                                    && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
+                                    select new
+                                    {
+                                        supplierDishEntity.SupplierCategoryId,
+                                        supplierDishEntity.DishNo,
+                                        supplierDishEntity.Price,
+                                        supplierDishEntity.SupplierDishId,
+                                        supplierDishEntity.SupplierDishName,
+                                        supplierDishEntity.SuppllierDishDescription,
+                                        supplierDishEntity.SpicyLevel,
+                                        supplierDishEntity.AverageRating,
+                                        supplierDishEntity.IsCommission,
+                                        supplierDishEntity.IsDiscount,
+                                        supplierDishEntity.Recipe,
+                                        supplierDishEntity.Recommended,
+                                        supplierDishEntity.PackagingFee,
+                                        SupplierId = supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+                                        ImagePath = string.Empty
+                                    }).OrderBy(p => p.DishNo).ToList();
+
+            var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
+            var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
+                                         where supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
+                                         select new { entity.SupplierDishId, entity.ImagePath }).ToList();
+
+            var dishList = (from supplierDishEntity in supplierDishList
+                            let supplierDishImage = supplierDishImageList.FirstOrDefault(p => p.SupplierDishId == supplierDishEntity.SupplierDishId)
+                            select new SupplierDishModel
+                            {
+                                Price = supplierDishEntity.Price,
+                                ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
+                                SupplierDishId = supplierDishEntity.SupplierDishId,
+                                SupplierDishName = supplierDishEntity.SupplierDishName,
+                                SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,
+                                AverageRating = supplierDishEntity.AverageRating,
+                                IsCommission = supplierDishEntity.IsCommission,
+                                IsDiscount = supplierDishEntity.IsDiscount,
+                                Recipe = supplierDishEntity.Recipe,
+                                Recommended = supplierDishEntity.Recommended,
+                                PackagingFee = supplierDishEntity.PackagingFee
+                            }).ToList();
+
+            return new ServicesResultList<SupplierDishModel>
+            {
+                Result = dishList
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅菜品类型信息
         /// </summary>
         /// <param name="source">The source</param>

@@ -327,6 +327,58 @@
         }
 
         /// <summary>
+        /// 获取赠品菜列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <returns>
+        /// 返回赠品菜列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<SupplierDish> PresentDishList(int id)
+        {
+            var list = this.supplierServices.GetPresentDishList(this.Source, id);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<SupplierDish>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<SupplierDish>()
+                };
+            }
+
+            var result = list.Result.Select(q => new SupplierDish
+            {
+                Price = q.Price,
+                ImagePath = q.ImagePath ?? string.Empty,
+                SupplierDishId = q.SupplierDishId,
+                SupplierDishName = q.SupplierDishName ?? string.Empty,
+                SuppllierDishDescription = q.SuppllierDishDescription ?? string.Empty,
+                AverageRating = q.AverageRating ?? 0,
+                IsCommission = q.IsCommission,
+                IsDiscount = q.IsDiscount,
+                Recipe = q.Recipe ?? string.Empty,
+                Recommended = q.Recommended
+            }).ToList();
+
+            return new ListResponse<SupplierDish>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅菜系列表
         /// </summary>
         /// <param name="id">餐厅Id</param>

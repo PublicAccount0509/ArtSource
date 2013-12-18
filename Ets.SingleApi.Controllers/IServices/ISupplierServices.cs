@@ -140,6 +140,21 @@
         ServicesResultList<SupplierCuisineModel> GetMenu(string source, int supplierId, int supplierMenuCategoryTypeId);
 
         /// <summary>
+        /// 取得赠品菜
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/18/2013 11:59 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<SupplierDishModel> GetPresentDishList(string source, int supplierId);
+
+        /// <summary>
         /// 获取餐厅菜品类型信息
         /// </summary>
         /// <param name="source">The source</param>
@@ -309,7 +324,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(string source, 
+        ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(string source,
             int supplierId, DateTime? startServiceDate, int? days);
 
         /// <summary>

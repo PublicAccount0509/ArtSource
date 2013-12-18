@@ -54,7 +54,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/GetOrder/{id}?orderType={orderType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebGet(UriTemplate = "/GetOrder/{id}?orderType={orderType}&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         public Response<WaiMaiOrderDetailModel> GetOrder(string id, int orderType, int orderSourceType)
         {
             return new Response<WaiMaiOrderDetailModel>();
@@ -74,7 +74,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/SaveOrder?shoppingCartId={shoppingCartId}&orderType={orderType}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebInvoke(UriTemplate = "/SaveOrder?shoppingCartId={shoppingCartId}&orderType={orderType}&orderSourceType={orderSourceType}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         public Response<string> SaveOrder(string shoppingCartId, int orderType, int orderSourceType)
         {
             return new Response<string>();
@@ -93,7 +93,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/OrderNumber?orderType={orderType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebGet(UriTemplate = "/OrderNumber?orderType={orderType}&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         public Response<string> OrderNumber(int orderType, int orderSourceType)
         {
             return new Response<string>();
