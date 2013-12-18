@@ -249,7 +249,7 @@
                 resultList.Add(item);
             }
 
-            resultList.AddRange(list.Where(p => ServicesCommon.HaiDiLaoFrontMenuList.Contains((p.CategoryName ?? string.Empty).Trim()) && ServicesCommon.HaiDiLaoEndMenuList.Contains((p.CategoryName ?? string.Empty).Trim())).ToList());
+            resultList.AddRange(list.Where(p => !ServicesCommon.HaiDiLaoFrontMenuList.Contains((p.CategoryName ?? string.Empty).Trim()) && !ServicesCommon.HaiDiLaoEndMenuList.Contains((p.CategoryName ?? string.Empty).Trim())).ToList());
             foreach (var name in ServicesCommon.HaiDiLaoEndMenuList)
             {
                 var tempName = (name ?? string.Empty).Trim();

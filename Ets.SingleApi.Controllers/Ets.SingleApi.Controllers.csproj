@@ -99,6 +99,7 @@
     <Compile Include="Wap\WapSupplierController.cs" />
     <Compile Include="Wap\WeiXinWapHtjUserController.cs" />
     <Compile Include="HaiDiLaoShoppingCartController.cs" />
+    <Compile Include="HaiDiLaoSupplierController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">
