@@ -45,6 +45,8 @@
     <Compile Include="Controller\HtjRegisterUserRequest.cs" />
     <Compile Include="Controller\HtjUserExtendResult.cs" />
     <Compile Include="Controller\IsFollowerSupplierResult.cs" />
+    <Compile Include="Controller\PackageCuisine.cs" />
+    <Compile Include="Controller\PackageDish.cs" />
     <Compile Include="Controller\SaveSupplierCuisine.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderResult.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderRequst.cs" />
@@ -99,6 +101,8 @@
     <Compile Include="Controller\UserToken.cs" />
     <Compile Include="Controller\HtjUser.cs" />
     <Compile Include="Services\UserToken.cs" />
+    <Compile Include="Services\PackageDishModel.cs" />
+    <Compile Include="Services\PackageCuisineModel.cs" />
     <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />

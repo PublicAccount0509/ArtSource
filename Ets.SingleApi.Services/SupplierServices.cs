@@ -805,6 +805,14 @@
                                                 supplierCategoryEntity.SupplierCategoryId
                                             }).ToList();
 
+            if (tempSupplierCategoryList.Count == 0)
+            {
+                return new ServicesResultList<SupplierCuisineModel>
+                {
+                    Result = new List<SupplierCuisineModel>()
+                };
+            }
+
             var supplierCategoryList = (from entity in tempSupplierCategoryList
                                         where entity.Category != null
                                         select new

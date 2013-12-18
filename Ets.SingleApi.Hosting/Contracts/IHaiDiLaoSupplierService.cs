@@ -34,5 +34,22 @@
         [OperationContract]
         [Description("方法功能：获取海底捞餐厅菜单")]
         ListResponse<SupplierCuisine> Menu(string id, int supplierMenuCategoryTypeId);
+
+        /// <summary>
+        /// 获取套餐详细信息
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="packageId">套餐Id</param>
+        /// <returns>
+        /// 返回套餐详细信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取套餐详细信息")]
+        ListResponse<PackageCuisine> PackageDetail(string id, int packageId);
     }
 }

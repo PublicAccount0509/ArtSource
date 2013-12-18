@@ -101,5 +101,68 @@
                 Result = result
             };
         }
+
+        /// <summary>
+        /// 获取套餐详细信息
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="packageId">套餐Id</param>
+        /// <returns>
+        /// 返回套餐详细信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 13:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<PackageCuisine> PackageDetail(int id, int packageId)
+        {
+            var list = this.haiDiLaoSupplierServices.GetPackageDetail(this.Source, id, packageId);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<PackageCuisine>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<PackageCuisine>()
+                };
+            }
+
+            var result = list.Result.Select(p => new PackageCuisine
+            {
+                CategoryId = p.CategoryId,
+                CategoryName = p.CategoryName,
+                CanSelectCount = p.CanSelectCount ?? 0,
+                IsChoose = p.IsChoose != 0,
+                PackageDishList = p.PackageDishList.Select(q => new PackageDish
+                {
+                    PackageContentId = q.PackageContentId,
+                    CanSelectCount = q.CanSelectCount ?? 1,
+                    DefaultNum = q.DefaultNum ?? 1,
+                    Price = q.Price,
+                    ImagePath = q.ImagePath ?? string.Empty,
+                    SupplierDishId = q.SupplierDishId,
+                    SupplierDishName = q.SupplierDishName ?? string.Empty,
+                    SuppllierDishDescription = q.SuppllierDishDescription ?? string.Empty,
+                    AverageRating = q.AverageRating ?? 0,
+                    IsCommission = q.IsCommission,
+                    IsDiscount = q.IsDiscount,
+                    Recipe = q.Recipe ?? string.Empty,
+                    Recommended = q.Recommended
+                }).ToList()
+            }).ToList();
+
+            return new ListResponse<PackageCuisine>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
+        }
     }
 }
