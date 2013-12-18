@@ -114,6 +114,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取餐厅赠品菜列表")]
         ListResponse<SupplierDish> PresentDishList(string id);
 
         /// <summary>
