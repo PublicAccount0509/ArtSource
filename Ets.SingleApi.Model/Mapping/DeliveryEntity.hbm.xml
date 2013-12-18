@@ -35,7 +35,7 @@
     <property name="InvoiceTitle" column="InvoiceTitle" type="String" not-null="false" />
     <property name="PackagingFee" column="PackagingFee" type="Decimal" not-null="false" />
     <property name="DeliverCharge" column="DeliverCharge" type="Decimal" not-null="false" />
-    <property name="DeliverSourcs" column="DeliverSourcs" type="Int32" not-null="false" />
+    <property name="DeliverSourcs" column="DeliverSourcs" type="Byte" not-null="false" />
     <property name="SendingPersonId" column="SendingPersonID" type="Int32" not-null="false" />
     <property name="LogisticsTakeFoodTime" column="LogisticsTakeFoodTime" type="Timestamp" not-null="false" />
     <property name="OrderNumber" column="OrderNumber" type="Int32" not-null="false" />
@@ -45,11 +45,11 @@
     <property name="ReceivablePrice" column="ReceivablePrice" type="Decimal" not-null="false" />
     <property name="RealUserPrice" column="RealUserPrice" type="Decimal" not-null="false" />
     <property name="RealSupplierPrice" column="RealSupplierPrice" type="Decimal" not-null="false" />
-    <property name="RealSupplierType" column="RealSupplierType" type="Int32" not-null="false" />
+    <property name="RealSupplierType" column="RealSupplierType" type="Byte" not-null="false" />
     <property name="IsTakeInvoice" column="IsTakeInvoice" type="Boolean" not-null="false" />
     <property name="AddedTime" column="AddedTime" type="Timestamp" not-null="false" />
-    <property name="CheckStatus" column="CheckStatus" type="Int32" not-null="false" />
-    <property name="HandOverStatus" column="HandOverStatus" type="Int32" not-null="false" />
+    <property name="CheckStatus" column="CheckStatus" type="Byte" not-null="false" />
+    <property name="HandOverStatus" column="HandOverStatus" type="Byte" not-null="false" />
     <property name="Lat" column="Lat" type="Double" not-null="false" />
     <property name="Lng" column="Lng" type="Double" not-null="false" />
     <property name="LogisticsId" column="LogisticsId" type="String" not-null="false" />
@@ -64,10 +64,25 @@
     <property name="StoreCardPaySup" column="StoreCardPaySup" type="Decimal" not-null="false" />
     <property name="DeliveryDistance" column="DeliveryDistance" type="Double" />
     <property name="LogisSendTime" column="LogisSendTime" type="Timestamp" not-null="false" />
+    <property name="NumOfPeople" column="NumOfPeople" type="Int32" not-null="false" />
+    <property name="NumOfCutlery" column="NumOfCutlery" type="Int32" not-null="false" />
+    <property name="ServiceFee" column="ServiceFee" type="Decimal" not-null="false" />
+    <property name="Pot" column="Pot" type="Int32" not-null="false" />
+    <property name="Stove" column="Stove" type="Int32" not-null="false" />
+    <property name="ZBGD" column="ZBGD" type="Int32" not-null="false" />
+    <property name="ZBXL" column="ZBXL" type="Int32" not-null="false" />
+    <property name="PrintState" column="PrintState" type="Boolean" not-null="false" />
+    <property name="CcName" column="CcName" type="String" not-null="false" />
+    <property name="Discount" column="Discount" type="Decimal" not-null="false" />
+    <property name="ReprintState" column="ReprintState" type="Boolean" not-null="false" />
     <!--The foreign keys-->
     <bag name="OrderList" cascade="none" lazy="true" table="Order">
       <key column="DeliveryID" />
       <one-to-many class="Ets.SingleApi.Model.Repository.OrderEntity, Ets.SingleApi.Model" />
+    </bag>
+    <bag name="PackageSelectedList" cascade="none" lazy="true" table="PackageSelected">
+      <key column="DeliveryID" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.PackageSelectedEntity, Ets.SingleApi.Model" />
     </bag>
     <bag name="PaymentList" cascade="none" lazy="true" table="Payment">
       <key column="DeliveryID" />

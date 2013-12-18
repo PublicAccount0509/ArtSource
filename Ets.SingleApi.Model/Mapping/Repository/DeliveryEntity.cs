@@ -20,7 +20,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the DeliveryEntity table in the database.
     /// </summary>
     /// Creator:周超
-    /// Creation Date:2013/10/13 14:27:05
+    /// Creation Date:2013/12/17 17:42:38
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliveryID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CustomerID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The OrderStatusID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliveryMethodID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliveryAddressID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliveryZoneID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CouponID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Total
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The IsPaid
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Cancelled
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliveryDate
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliveryInstruction
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DateAdded
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -163,7 +163,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The IPAddress
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The IsRating
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The OrderNotes
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -193,7 +193,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The RejectReason
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The QuotedDeliveryTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -213,7 +213,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The OperatorID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -223,7 +223,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The ContactPhone
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -233,7 +233,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Contact
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Gender
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -253,7 +253,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Tel
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The InvoiceRequired
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -273,7 +273,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The SupplierID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -283,7 +283,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The InvoiceTitle
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -293,7 +293,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The PackagingFee
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -303,7 +303,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliverCharge
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -313,17 +313,17 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliverSourcs
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        private int? deliverSourcs;
+        private byte? deliverSourcs;
 
         /// <summary>
         /// The SendingPersonID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -333,7 +333,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The LogisticsTakeFoodTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -343,7 +343,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The OrderNumber
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -353,7 +353,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CustomerTotal
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -363,7 +363,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CCdiscount
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -373,7 +373,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The ActualSendTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -383,7 +383,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The ReceivablePrice
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -393,7 +393,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The RealUserPrice
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -403,7 +403,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The RealSupplierPrice
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -413,17 +413,17 @@ namespace Ets.SingleApi.Model.Repository
         /// The RealSupplierType
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        private int? realSupplierType;
+        private byte? realSupplierType;
 
         /// <summary>
         /// The IsTakeInvoice
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -433,7 +433,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The AddedTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -443,27 +443,27 @@ namespace Ets.SingleApi.Model.Repository
         /// The CheckStatus
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        private int? checkStatus;
+        private byte? checkStatus;
 
         /// <summary>
         /// The HandOverStatus
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        private int? handOverStatus;
+        private byte? handOverStatus;
 
         /// <summary>
         /// The Lat
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -473,7 +473,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Lng
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -483,7 +483,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The LogisticsId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -493,7 +493,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The ModifyDate
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -503,7 +503,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The EtsTakeFoodAmount
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -513,7 +513,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The EtsActualTakeFoodAmount
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -523,7 +523,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The TaxPointAmount
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -533,7 +533,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The AreaId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -543,7 +543,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The CashPay
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -553,7 +553,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The NetWorkPay
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -563,7 +563,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The PosPay
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -573,7 +573,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The StoreCardPaySup
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -583,7 +583,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The DeliveryDistance
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -593,27 +593,147 @@ namespace Ets.SingleApi.Model.Repository
         /// The LogisSendTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
         private DateTime? logisSendTime;
 
         /// <summary>
+        /// The NumOfPeople
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private int? numOfPeople;
+
+        /// <summary>
+        /// The NumOfCutlery
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private int? numOfCutlery;
+
+        /// <summary>
+        /// The ServiceFee
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private decimal? serviceFee;
+
+        /// <summary>
+        /// The Pot
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private int? pot;
+
+        /// <summary>
+        /// The Stove
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private int? stove;
+
+        /// <summary>
+        /// The ZBGD
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private int? zBGD;
+
+        /// <summary>
+        /// The ZBXL
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private int? zBXL;
+
+        /// <summary>
+        /// The PrintState
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private bool? printState;
+
+        /// <summary>
+        /// The CcName
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private string ccName;
+
+        /// <summary>
+        /// The Discount
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private decimal? discount;
+
+        /// <summary>
+        /// The ReprintState
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private bool? reprintState;
+
+        /// <summary>
         /// The OrderList
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
         private IList<OrderEntity> orderList;
 
         /// <summary>
+        /// The PackageSelectedList
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private IList<PackageSelectedEntity> packageSelectedList;
+
+        /// <summary>
         /// The PaymentList
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -623,7 +743,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Path
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -633,7 +753,7 @@ namespace Ets.SingleApi.Model.Repository
         /// The Templateid
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -645,7 +765,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="DeliveryEntity"/> class.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -666,6 +786,7 @@ namespace Ets.SingleApi.Model.Repository
             this.invoiceTitle = string.Empty;
             this.logisticsId = string.Empty;
             this.deliveryDistance = -1;
+            this.ccName = string.Empty;
         }
 
         #region public member
@@ -674,7 +795,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliveryID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -695,7 +816,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CustomerID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -716,7 +837,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OrderStatusID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -737,7 +858,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliveryMethodID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -758,7 +879,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliveryAddressID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -779,7 +900,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliveryZoneID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -800,7 +921,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CouponID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -821,7 +942,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Total of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -842,7 +963,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsPaid of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -863,7 +984,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the Cancelled of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -884,7 +1005,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliveryDate of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -905,7 +1026,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliveryInstruction of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -926,7 +1047,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DateAdded of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -947,7 +1068,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the IPAddress of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -968,7 +1089,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsRating of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -989,7 +1110,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OrderNotes of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1010,7 +1131,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RejectReason of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1031,7 +1152,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the QuotedDeliveryTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1052,7 +1173,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OperatorID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1073,7 +1194,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ContactPhone of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1094,7 +1215,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Contact of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1115,7 +1236,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Gender of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1136,7 +1257,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Tel of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1157,7 +1278,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the InvoiceRequired of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1178,7 +1299,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1199,7 +1320,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the InvoiceTitle of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1220,7 +1341,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the PackagingFee of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1241,7 +1362,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliverCharge of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1262,11 +1383,11 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliverSourcs of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public virtual int? DeliverSourcs
+        public virtual byte? DeliverSourcs
         {
             get
             {
@@ -1283,7 +1404,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SendingPersonID of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1304,7 +1425,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the LogisticsTakeFoodTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1325,7 +1446,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OrderNumber of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1346,7 +1467,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CustomerTotal of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1367,7 +1488,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CCdiscount of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1388,7 +1509,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ActualSendTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1409,7 +1530,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ReceivablePrice of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1430,7 +1551,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RealUserPrice of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1451,7 +1572,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RealSupplierPrice of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1472,11 +1593,11 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RealSupplierType of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public virtual int? RealSupplierType
+        public virtual byte? RealSupplierType
         {
             get
             {
@@ -1493,7 +1614,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsTakeInvoice of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1514,7 +1635,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the AddedTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1535,11 +1656,11 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CheckStatus of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public virtual int? CheckStatus
+        public virtual byte? CheckStatus
         {
             get
             {
@@ -1556,11 +1677,11 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the HandOverStatus of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public virtual int? HandOverStatus
+        public virtual byte? HandOverStatus
         {
             get
             {
@@ -1577,7 +1698,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Lat of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1598,7 +1719,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Lng of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1619,7 +1740,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the LogisticsId of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1640,7 +1761,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ModifyDate of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1661,7 +1782,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the EtsTakeFoodAmount of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1682,7 +1803,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the EtsActualTakeFoodAmount of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1703,7 +1824,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TaxPointAmount of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1724,7 +1845,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the AreaId of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1745,7 +1866,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CashPay of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1766,7 +1887,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the NetWorkPay of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1787,7 +1908,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the PosPay of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1808,7 +1929,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the StoreCardPaySup of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1829,7 +1950,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeliveryDistance of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1850,7 +1971,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the LogisSendTime of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1868,10 +1989,241 @@ namespace Ets.SingleApi.Model.Repository
         }
 
         /// <summary>
+        /// Gets or sets a value mapping the NumOfPeople of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? NumOfPeople
+        {
+            get
+            {
+                return this.numOfPeople;
+            }
+
+            set
+            {
+                this.numOfPeople = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the NumOfCutlery of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? NumOfCutlery
+        {
+            get
+            {
+                return this.numOfCutlery;
+            }
+
+            set
+            {
+                this.numOfCutlery = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the ServiceFee of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual decimal? ServiceFee
+        {
+            get
+            {
+                return this.serviceFee;
+            }
+
+            set
+            {
+                this.serviceFee = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the Pot of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? Pot
+        {
+            get
+            {
+                return this.pot;
+            }
+
+            set
+            {
+                this.pot = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the Stove of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? Stove
+        {
+            get
+            {
+                return this.stove;
+            }
+
+            set
+            {
+                this.stove = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the ZBGD of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? ZBGD
+        {
+            get
+            {
+                return this.zBGD;
+            }
+
+            set
+            {
+                this.zBGD = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the ZBXL of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? ZBXL
+        {
+            get
+            {
+                return this.zBXL;
+            }
+
+            set
+            {
+                this.zBXL = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether mapping the PrintState of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual bool? PrintState
+        {
+            get
+            {
+                return this.printState;
+            }
+
+            set
+            {
+                this.printState = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the CcName of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual string CcName
+        {
+            get
+            {
+                return this.ccName;
+            }
+
+            set
+            {
+                this.ccName = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the Discount of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual decimal? Discount
+        {
+            get
+            {
+                return this.discount;
+            }
+
+            set
+            {
+                this.discount = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether mapping the ReprintState of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual bool? ReprintState
+        {
+            get
+            {
+                return this.reprintState;
+            }
+
+            set
+            {
+                this.reprintState = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value mapping the OrderList of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1889,10 +2241,31 @@ namespace Ets.SingleApi.Model.Repository
         }
 
         /// <summary>
+        /// Gets or sets a value mapping the PackageSelectedList of DeliveryEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/17 17:42:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual IList<PackageSelectedEntity> PackageSelectedList
+        {
+            get
+            {
+                return this.packageSelectedList;
+            }
+
+            set
+            {
+                this.packageSelectedList = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value mapping the PaymentList of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1913,7 +2286,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Path of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1934,7 +2307,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Templateid of DeliveryEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1961,7 +2334,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1983,7 +2356,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:27:05
+        /// Creation Date:2013/12/17 17:42:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.PackageNameEntity, Ets.SingleApi.Model" table="PackageName" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="PackageId" column="PackageID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="SupplierId" column="SupplierID" type="Int32" />
+		<property name="PackageNames" column="PackageNames" type="String" not-null="false" />
+		<property name="PackagePrice" column="PackagePrice" type="Decimal" not-null="false" />
+		<property name="PackageNote" column="PackageNote" type="String" not-null="false" />
+		<property name="ImageUrl" column="ImageUrl" type="String" not-null="false" />
+		<property name="IsEnabled" column="IsEnabled" type="Boolean" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="PackageSelectedList" cascade="none" lazy="true" table="PackageSelected">
+			<key column="PackageID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.PackageSelectedEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

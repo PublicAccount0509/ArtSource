@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.PackageSelectedEntity, Ets.SingleApi.Model" table="PackageSelected" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="PackageSelectedId" column="PackageSelectedID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="PackageName" column="PackageName" type="String" />
+		<property name="PackagePrice" column="PackagePrice" type="Decimal" />
+		<property name="PackageNum" column="PackageNum" type="Int32" />
+		<property name="Comment" column="Comment" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="PackageSelectedDetailList" cascade="none" lazy="true" table="PackageSelectedDetail">
+			<key column="PackageSelectedID" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.PackageSelectedDetailEntity, Ets.SingleApi.Model" />
+		</bag>
+		<many-to-one name="Delivery" class="Ets.SingleApi.Model.Repository.DeliveryEntity, Ets.SingleApi.Model" column="DeliveryID" />
+		<many-to-one name="Package" class="Ets.SingleApi.Model.Repository.PackageNameEntity, Ets.SingleApi.Model" column="PackageID" />
+		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
+	</class>
+</hibernate-mapping>

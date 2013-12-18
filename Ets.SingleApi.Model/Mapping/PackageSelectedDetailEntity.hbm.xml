@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.PackageSelectedDetailEntity, Ets.SingleApi.Model" table="PackageSelectedDetail" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="PackageSelectedDetailId" column="PackageSelectedDetailID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="DishName" column="DishName" type="String" />
+		<property name="DishNum" column="DishNum" type="Int32" />
+		<property name="DishPrice" column="DishPrice" type="Decimal" not-null="false" />
+		<property name="DeliveryId" column="DeliveryID" type="Int32" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="PackageSelected" class="Ets.SingleApi.Model.Repository.PackageSelectedEntity, Ets.SingleApi.Model" column="PackageSelectedID" />
+	</class>
+</hibernate-mapping>
