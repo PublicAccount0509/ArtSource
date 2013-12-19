@@ -132,6 +132,7 @@
   <ItemGroup>
     <Content Include="config\castle\components.config" />
     <Content Include="config\castle\facilities.config" />
+    <None Include="Properties\PublishProfiles\SingleApiHelp.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
