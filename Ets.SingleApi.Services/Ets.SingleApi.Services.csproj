@@ -109,6 +109,7 @@
     <Compile Include="Order\UserAllOrders.cs" />
     <Compile Include="OrderNumber\WaiMaiOrderNumber.cs" />
     <Compile Include="Order\WaiMaiOrderProvider.cs" />
+    <Compile Include="Order\HaiDiLaoWaiMaiOrderProvider.cs" />
     <Compile Include="PaymentServices.cs" />
     <Compile Include="Payment\IPayment.cs" />
     <Compile Include="Payment\IPaymentData.cs" />

@@ -39,6 +39,19 @@
         public string SupplierDishName { get; set; }
 
         /// <summary>
+        /// 设置或取得菜备注
+        /// </summary>
+        /// <value>
+        /// 菜备注
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Instruction { get; set; }
+
+        /// <summary>
         /// 设置或取得菜数量
         /// </summary>
         /// <value>

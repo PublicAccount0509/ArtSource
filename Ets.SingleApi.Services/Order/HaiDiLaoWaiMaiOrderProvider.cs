@@ -13,9 +13,9 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：WaiMaiOrderProvider
+    /// 类名称：HaiDiLaoWaiMaiOrderProvider
     /// 命名空间：Ets.SingleApi.Services
-    /// 类功能：外卖订单
+    /// 类功能：海底捞外卖订单
     /// </summary>
     /// 创建者：周超
     /// 创建日期：11/22/2013 3:25 PM
@@ -23,7 +23,7 @@
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
     [Transactional]
-    public class WaiMaiOrderProvider : IOrderProvider
+    public class HaiDiLaoWaiMaiOrderProvider : IOrderProvider
     {
         /// <summary>
         /// 字段deliveryEntityRepository
@@ -146,7 +146,7 @@
         private readonly IShoppingCartProvider shoppingCartProvider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
+        /// Initializes a new instance of the <see cref="HaiDiLaoWaiMaiOrderProvider" /> class.
         /// </summary>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="sourcePathEntityRepository">The sourcePathEntityRepository</param>
@@ -165,7 +165,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public WaiMaiOrderProvider(
+        public HaiDiLaoWaiMaiOrderProvider(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<SourcePathEntity> sourcePathEntityRepository,
             INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
@@ -211,7 +211,7 @@
                 return new OrderProviderType
                     {
                         OrderType = OrderType.WaiMai,
-                        OrderSourceType = OrderSourceType.Default
+                        OrderSourceType = OrderSourceType.HaiDiLao
                     };
             }
         }
