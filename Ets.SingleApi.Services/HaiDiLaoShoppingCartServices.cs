@@ -734,6 +734,7 @@
             var total = totalfee + fixedDeliveryFee;
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
+            var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
             var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
 
             shoppingCartOrder.Id = order.Id;
@@ -747,6 +748,7 @@
             shoppingCartOrder.TotalQuantity = shoppingList.Sum(p => p.Quantity);
             shoppingCartOrder.TotalFee = total;
             shoppingCartOrder.CustomerTotalFee = customerTotal;
+            shoppingCartOrder.ServicesFee = servicesFee;
             shoppingCartOrder.CouponFee = coupon;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
@@ -894,6 +896,7 @@
                         : shoppingPrice + packagingFee;
             var coupon = order.CouponFee;
             var customerTotal = total - coupon;
+            var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
 
             order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
@@ -903,7 +906,7 @@
             order.TotalFee = total;
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
-
+            order.ServicesFee = servicesFee;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
             {
@@ -980,6 +983,7 @@
             var total = totalfee + fixedDeliveryFee;
             var coupon = order.CouponFee;
             var customerTotal = total - coupon;
+            var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
 
             if (saveDeliveryMethodId)
             {
@@ -998,6 +1002,7 @@
             order.TotalFee = total;
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
+            order.ServicesFee = servicesFee;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
         }
 

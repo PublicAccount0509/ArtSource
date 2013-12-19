@@ -117,6 +117,19 @@
         public decimal FreeDeliveryLine { get; set; }
 
         /// <summary>
+        /// 设置或取得餐厅服务费百分率
+        /// </summary>
+        /// <value>
+        /// 餐厅服务费百分率
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/20/2013 11:02 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal ConsumerAmount { get; set; }
+
+        /// <summary>
         /// 设置或取得餐厅送餐费
         /// </summary>
         /// <value>

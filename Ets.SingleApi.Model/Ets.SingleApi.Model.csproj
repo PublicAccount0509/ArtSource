@@ -76,6 +76,9 @@
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
     <Compile Include="IOrderDetailModel.cs" />
+    <Compile Include="Mapping\Repository\DeliveryChargeEntity.cs" />
+    <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
+    <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
     <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
     <Compile Include="Mapping\Repository\PackageContentEntity.cs" />
     <Compile Include="Mapping\Repository\PackageNameEntity.cs" />
@@ -490,6 +493,11 @@
     <EmbeddedResource Include="Mapping\PackageNameEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\PackageSelectedDetailEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\PackageSelectedEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\DeliveryChargeEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\DeliveryChargeForExtraMilesEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\DeliveryCouponEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
