@@ -135,11 +135,22 @@
                 };
             }
 
+            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<HaiDiLaoShoppingCartModel>
+                {
+                    StatusCode = getShoppingCartExtraResult.StatusCode,
+                    Result = new HaiDiLaoShoppingCartModel()
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
+            var extra = getShoppingCartExtraResult.Result;
             return new ServicesResult<HaiDiLaoShoppingCartModel>
             {
                 Result = new HaiDiLaoShoppingCartModel
@@ -149,7 +160,8 @@
                     Supplier = supplier,
                     Customer = customer,
                     Order = order,
-                    Delivery = delivery
+                    Delivery = delivery,
+                    Extra = extra
                 }
             };
         }

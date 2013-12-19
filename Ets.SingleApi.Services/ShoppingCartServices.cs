@@ -404,7 +404,7 @@
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
-                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId);
+                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && p.Instruction.Trim() == shoppingCartItem.Instruction.Trim());
                 if (item == null)
                 {
                     shoppingList.Add(shoppingCartItem);
@@ -489,7 +489,7 @@
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
-                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId);
+                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && p.Instruction.Trim() == shoppingCartItem.Instruction.Trim());
                 if (item == null)
                 {
                     continue;

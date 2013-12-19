@@ -168,6 +168,7 @@
         public ShoppingCartItem()
         {
             this.CategoryIdList = new List<int>();
+            this.Instruction = string.Empty;
         }
     }
 }
