@@ -110,7 +110,7 @@
             var result = existResult.Result.Select(
                             p => new ExistResult
                                 {
-                                    Account = p.Account,
+                                    Account = p.Account ?? string.Empty,
                                     Exist = p.Exist,
                                     Login = p.Login
                                 }).ToList();
@@ -178,9 +178,9 @@
                     ProvinceId = customerAddress.ProvinceId,
                     RegionCode = (customerAddress.RegionCode ?? string.Empty),
                     Sex = customerAddress.Sex,
-                    AddressBuilding = customerAddress.AddressBuilding,
-                    AddressDetail = customerAddress.AddressDetail,
-                    AddressAlias = customerAddress.AddressAlias
+                    AddressBuilding = customerAddress.AddressBuilding ?? string.Empty,
+                    AddressDetail = customerAddress.AddressDetail ?? string.Empty,
+                    AddressAlias = customerAddress.AddressAlias ?? string.Empty
                 }).ToList();
 
             var result = new Customer
@@ -292,9 +292,9 @@
                 ProvinceId = saveCustomerAddressResult.Result.ProvinceId,
                 RegionCode = (saveCustomerAddressResult.Result.RegionCode ?? string.Empty),
                 Sex = saveCustomerAddressResult.Result.Sex,
-                AddressBuilding = saveCustomerAddressResult.Result.AddressBuilding,
-                AddressDetail = saveCustomerAddressResult.Result.AddressDetail,
-                AddressAlias = saveCustomerAddressResult.Result.AddressAlias
+                AddressBuilding = saveCustomerAddressResult.Result.AddressBuilding ?? string.Empty,
+                AddressDetail = saveCustomerAddressResult.Result.AddressDetail ?? string.Empty,
+                AddressAlias = saveCustomerAddressResult.Result.AddressAlias ?? string.Empty
             };
 
             return new Response<CustomerAddress>

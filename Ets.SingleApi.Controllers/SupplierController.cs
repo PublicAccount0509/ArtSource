@@ -134,9 +134,9 @@
                 FreeDeliveryLine = getSupplierResult.Result.FreeDeliveryLine ?? 0,
                 BaIduLat = getSupplierResult.Result.BaIduLat,
                 BaIduLong = getSupplierResult.Result.BaIduLong,
-                Fax = getSupplierResult.Result.Fax,
-                Email = getSupplierResult.Result.Email,
-                SupplierDiningPurpose = getSupplierResult.Result.SupplierDiningPurpose,
+                Fax = getSupplierResult.Result.Fax ?? string.Empty,
+                Email = getSupplierResult.Result.Email ?? string.Empty,
+                SupplierDiningPurpose = getSupplierResult.Result.SupplierDiningPurpose ?? string.Empty,
                 PackLadder = getSupplierResult.Result.PackLadder ?? 0,
                 TakeawaySpecialOffersSummary = getSupplierResult.Result.TakeawaySpecialOffersSummary ?? string.Empty,
                 PublicTransport = getSupplierResult.Result.PublicTransport ?? string.Empty,
@@ -144,7 +144,7 @@
                 {
                     SupplierFeatureId = q.SupplierFeatureId,
                     FeatureId = q.FeatureId,
-                    FeatureName = q.FeatureName
+                    FeatureName = q.FeatureName ?? string.Empty
                 }).ToList()
             };
 
@@ -207,7 +207,7 @@
                 {
                     SupplierFeatureId = q.SupplierFeatureId,
                     FeatureId = q.FeatureId,
-                    FeatureName = q.FeatureName
+                    FeatureName = q.FeatureName ?? string.Empty
                 }).ToList()
             }).ToList();
 
@@ -254,7 +254,7 @@
             {
                 SupplierFeatureId = p.SupplierFeatureId,
                 FeatureId = p.FeatureId,
-                FeatureName = p.FeatureName
+                FeatureName = p.FeatureName ?? string.Empty
             }).ToList();
 
             return new ListResponse<SupplierFeature>
@@ -410,10 +410,10 @@
             var result = list.Result.Select(p => new SupplierCuisineDetail
             {
                 CategoryId = p.CategoryId,
-                CategoryName = p.CategoryName,
+                CategoryName = p.CategoryName ?? string.Empty,
                 CategoryNo = p.CategoryNo ?? 0,
                 SupplierCategoryId = p.SupplierCategoryId,
-                CategoryDescription = p.CategoryDescription
+                CategoryDescription = p.CategoryDescription ?? string.Empty
             }).ToList();
 
             return new ListResponse<SupplierCuisineDetail>
@@ -458,10 +458,10 @@
             var result = new SupplierCuisineDetail
             {
                 CategoryId = list.Result.CategoryId,
-                CategoryName = list.Result.CategoryName,
+                CategoryName = list.Result.CategoryName ?? string.Empty,
                 CategoryNo = list.Result.CategoryNo ?? 0,
                 SupplierCategoryId = list.Result.SupplierCategoryId,
-                CategoryDescription = list.Result.CategoryDescription
+                CategoryDescription = list.Result.CategoryDescription ?? string.Empty
             };
 
             return new Response<SupplierCuisineDetail>
@@ -657,25 +657,25 @@
             var result = list.Result.Select(p => new SupplierDishDetail
             {
                 Price = p.Price,
-                ImagePath = p.ImagePath,
+                ImagePath = p.ImagePath ?? string.Empty,
                 SupplierDishId = p.SupplierDishId,
-                DishName = p.DishName,
-                DishDescription = p.DishDescription,
+                DishName = p.DishName ?? string.Empty,
+                DishDescription = p.DishDescription ?? string.Empty,
                 AverageRating = p.AverageRating,
                 IsCommission = p.IsCommission,
                 IsDiscount = p.IsDiscount,
-                Recipe = p.Recipe,
+                Recipe = p.Recipe ?? string.Empty,
                 Recommended = p.Recommended,
                 CategoryId = p.CategoryId,
-                CategoryName = p.CategoryName,
-                DishNo = p.DishNo,
+                CategoryName = p.CategoryName ?? string.Empty,
+                DishNo = p.DishNo ?? string.Empty,
                 HasNuts = p.HasNuts,
                 IsDel = p.IsDel,
                 IsSpecialOffer = p.IsSpecialOffer,
-                JianPin = p.JianPin,
+                JianPin = p.JianPin ?? string.Empty,
                 Online = p.Online,
                 PackagingFee = p.PackagingFee,
-                QuanPin = p.QuanPin,
+                QuanPin = p.QuanPin ?? string.Empty,
                 SpecialOfferNo = p.SpecialOfferNo,
                 SpicyLevel = p.SpicyLevel,
                 StockLevel = p.StockLevel,
@@ -726,25 +726,25 @@
             var result = new SupplierDishDetail
             {
                 Price = list.Result.Price,
-                ImagePath = list.Result.ImagePath,
+                ImagePath = list.Result.ImagePath ?? string.Empty,
                 SupplierDishId = list.Result.SupplierDishId,
-                DishName = list.Result.DishName,
-                DishDescription = list.Result.DishDescription,
+                DishName = list.Result.DishName ?? string.Empty,
+                DishDescription = list.Result.DishDescription ?? string.Empty,
                 AverageRating = list.Result.AverageRating,
                 IsCommission = list.Result.IsCommission,
                 IsDiscount = list.Result.IsDiscount,
-                Recipe = list.Result.Recipe,
+                Recipe = list.Result.Recipe ?? string.Empty,
                 Recommended = list.Result.Recommended,
                 CategoryId = list.Result.CategoryId,
-                CategoryName = list.Result.CategoryName,
-                DishNo = list.Result.DishNo,
+                CategoryName = list.Result.CategoryName ?? string.Empty,
+                DishNo = list.Result.DishNo ?? string.Empty,
                 HasNuts = list.Result.HasNuts,
                 IsDel = list.Result.IsDel,
                 IsSpecialOffer = list.Result.IsSpecialOffer,
-                JianPin = list.Result.JianPin,
+                JianPin = list.Result.JianPin ?? string.Empty,
                 Online = list.Result.Online,
                 PackagingFee = list.Result.PackagingFee,
-                QuanPin = list.Result.QuanPin,
+                QuanPin = list.Result.QuanPin ?? string.Empty,
                 SpecialOfferNo = list.Result.SpecialOfferNo,
                 SpicyLevel = list.Result.SpicyLevel,
                 StockLevel = list.Result.StockLevel,

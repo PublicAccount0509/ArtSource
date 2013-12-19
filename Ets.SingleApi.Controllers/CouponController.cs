@@ -99,7 +99,7 @@
                 {
                     SupplierCouponId = p.SupplierCouponId,
                     CouponTypeId = p.CouponTypeId,
-                    Description = p.Description,
+                    Description = p.Description ?? string.Empty,
                     Discount = p.Discount
                 }).ToList();
 

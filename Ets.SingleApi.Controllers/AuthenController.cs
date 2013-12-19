@@ -120,9 +120,9 @@
             var result = new LoginResult
                 {
                     UserId = loginResult.Result.UserId,
-                    AccessToken = loginResult.Result.AccessToken,
-                    RefreshToken = loginResult.Result.RefreshToken,
-                    TokenType = loginResult.Result.TokenType
+                    AccessToken = loginResult.Result.AccessToken ?? string.Empty,
+                    RefreshToken = loginResult.Result.RefreshToken ?? string.Empty,
+                    TokenType = loginResult.Result.TokenType ?? string.Empty
                 };
 
             return new Response<LoginResult>
@@ -212,9 +212,9 @@
             var result = new AuthLoginResult
             {
                 UserId = loginResult.Result.UserId,
-                AccessToken = loginResult.Result.AccessToken,
-                RefreshToken = loginResult.Result.RefreshToken,
-                TokenType = loginResult.Result.TokenType
+                AccessToken = loginResult.Result.AccessToken ?? string.Empty,
+                RefreshToken = loginResult.Result.RefreshToken ?? string.Empty,
+                TokenType = loginResult.Result.TokenType ?? string.Empty
             };
 
             return new Response<AuthLoginResult>
