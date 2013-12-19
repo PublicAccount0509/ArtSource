@@ -1,7 +1,9 @@
 ﻿namespace Ets.SingleApi.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
+    using System.Linq;
 
     public class ControllersCommon
     {
@@ -208,6 +210,25 @@
             get
             {
                 return (ConfigurationManager.AppSettings["UnkownSource"] ?? string.Empty).Trim();
+            }
+        }
+
+        /// <summary>
+        /// 开通城市列表
+        /// </summary>
+        /// <value>
+        /// 开通城市列表
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<string> OpenCityList
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["OpenCityList"] ?? string.Empty).Split(',').ToList();
             }
         }
     }

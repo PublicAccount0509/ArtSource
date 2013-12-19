@@ -67,6 +67,7 @@
     <Compile Include="CastleHttpControllerActivator.cs" />
     <Compile Include="CastleUtility.cs" />
     <Compile Include="CommonUtility.cs" />
+    <Compile Include="OpenCityConfiguration.cs" />
     <Compile Include="StatusCode.cs" />
     <Compile Include="StatusUtility.cs" />
     <Compile Include="Log4NetUtility.cs" />

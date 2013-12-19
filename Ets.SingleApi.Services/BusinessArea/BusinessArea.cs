@@ -1,6 +1,5 @@
 ﻿namespace Ets.SingleApi.Services
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -138,18 +137,13 @@
         /// ----------------------------------------------------------------------------------------
         private List<BusinessAreaModel> GetBusinessAreaDataByParentId(int? parentId, string parentCode, int depth)
         {
-            Func<RegionEntity, bool> express = entity =>
+            var queryable = this.regionEntityRepository.EntityQueryable.Where(p => p.Depth == depth);
+            if (parentId != null)
             {
-                var result = entity.Depth == depth;
-                if (parentId != null)
-                {
-                    result &= entity.F == parentId;
-                }
+                queryable = queryable.Where(p => p.F == parentId);
+            }
 
-                return result;
-            };
-
-            var list = this.regionEntityRepository.EntityQueryable.Where(express).Select(p => new BusinessAreaModel
+            var list = queryable.Select(p => new BusinessAreaModel
             {
                 Id = p.Id.ToString(),
                 Name = p.Name,

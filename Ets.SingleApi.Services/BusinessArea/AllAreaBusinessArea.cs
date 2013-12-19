@@ -155,18 +155,13 @@
         /// ----------------------------------------------------------------------------------------
         private List<BusinessAreaModel> GetBusinessAreaDataByParentId(int? parentId)
         {
-            Func<RegionEntity, bool> express = entity =>
+            var queryable = this.regionEntityRepository.EntityQueryable;
+            if (parentId != null)
             {
-                var result = true;
-                if (parentId != null)
-                {
-                    result &= (entity.F == parentId || entity.ProvinceId == parentId || entity.CityId == parentId);
-                }
+                queryable = queryable.Where(p => p.F == parentId || p.ProvinceId == parentId || p.CityId == parentId);
+            }
 
-                return result;
-            };
-
-            var list = this.regionEntityRepository.EntityQueryable.Where(express).Select(p => new BusinessAreaModel
+            var list = queryable.Select(p => new BusinessAreaModel
             {
                 Id = p.Id.ToString(),
                 Name = p.Name,

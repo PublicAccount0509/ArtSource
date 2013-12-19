@@ -93,7 +93,7 @@
         public LoginData Login(string source, string userName, string password)
         {
             var authCode = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthCodeCacheKey, userName));
-            if (password != (authCode == null ? string.Empty : authCode.ToString()))
+            if (password.IsEmptyOrNull() || password != (authCode == null ? string.Empty : authCode.ToString()))
             {
                 return new LoginData
                 {

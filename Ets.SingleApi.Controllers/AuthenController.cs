@@ -73,6 +73,30 @@
                     };
             }
 
+            if (requst.Telephone.IsEmptyOrNull() && requst.Email.IsEmptyOrNull())
+            {
+                return new Response<LoginResult>
+                {
+                    Result = new LoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                    }
+                };
+            }
+
+            if (requst.Password.IsEmptyOrNull())
+            {
+                return new Response<LoginResult>
+                {
+                    Result = new LoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidAuthCode
+                    }
+                };
+            }
+
             var loginResult = this.authenServices.Login(this.Source, new LoginParameter
                         {
                             Email = (requst.Email ?? string.Empty).Trim(),
@@ -138,6 +162,30 @@
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (requst.Telephone.IsEmptyOrNull())
+            {
+                return new Response<AuthLoginResult>
+                {
+                    Result = new AuthLoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                    }
+                };
+            }
+
+            if (requst.AuthCode.IsEmptyOrNull())
+            {
+                return new Response<AuthLoginResult>
+                {
+                    Result = new AuthLoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidAuthCode
                     }
                 };
             }

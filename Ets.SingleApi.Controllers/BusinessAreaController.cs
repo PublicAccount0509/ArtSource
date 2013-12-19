@@ -86,9 +86,56 @@
                     {
                         StatusCode = list.StatusCode
                     },
-                    ResultTotalCount = list.ResultTotalCount,
+                    ResultTotalCount = result.Count,
                     Result = result
                 };
+        }
+
+        /// <summary>
+        /// 获取区域和商圈信息列表
+        /// </summary>
+        /// <returns>
+        /// 返回区域和商圈信息列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/13 12:33
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<BusinessArea> OpenCityList(string parentCode = null)
+        {
+            var list = this.businessAreaServices.GetCityList(this.Source, (parentCode ?? string.Empty).Trim());
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<BusinessArea>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<BusinessArea>()
+                };
+            }
+
+            var result = list.Result.Where(p => ControllersCommon.OpenCityList.Any(q => p.Name.Contains(q))).Select(p => new BusinessArea
+            {
+                Id = (p.Id ?? string.Empty),
+                Name = (p.Name ?? string.Empty),
+                Code = (p.Code ?? string.Empty),
+                Depth = p.Depth,
+                ParentCode = (p.ParentCode ?? string.Empty)
+            }).OrderBy(p => p.Code).ToList();
+
+            return new ListResponse<BusinessArea>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                ResultTotalCount = result.Count,
+                Result = result
+            };
         }
     }
 }

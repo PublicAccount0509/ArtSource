@@ -507,6 +507,25 @@
         }
 
         /// <summary>
+        /// 直辖市标记
+        /// </summary>
+        /// <value>
+        /// 直辖市标记
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 17:09
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string MunicipalitySign
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["MunicipalitySign"] ?? string.Empty;
+            }
+        }
+
+        /// <summary>
         /// 易淘食短信验证码
         /// </summary>
         /// <value>
