@@ -266,19 +266,6 @@
                                        SuppllierDishDescription = entity.PackageNote,
                                    }).ToList();
 
-            var package = new SupplierCuisineModel
-                {
-                    CategoryName = ServicesCommon.HaiDiLaoPackageMenu,
-                    SupplierDishList = packageList.Select(p => new SupplierDishModel
-                        {
-                            Price = p.Price ?? 0,
-                            ImagePath = p.ImagePath,
-                            SupplierDishId = p.SupplierDishId,
-                            SupplierDishName = p.SupplierDishName,
-                            SuppllierDishDescription = p.SuppllierDishDescription,
-                        }).ToList()
-                };
-
             var resultList = new List<SupplierCuisineModel>();
             foreach (var name in ServicesCommon.HaiDiLaoFrontMenuList)
             {
@@ -307,7 +294,25 @@
                 resultList.Add(item);
             }
 
-            resultList.Add(package);
+            var packageItem = resultList.FirstOrDefault(p => string.Equals((p.CategoryName ?? string.Empty).Trim(), ServicesCommon.HaiDiLaoPackageMenu, StringComparison.OrdinalIgnoreCase));
+            if (packageItem == null)
+            {
+                return new ServicesResultList<SupplierCuisineModel>
+                {
+                    ResultTotalCount = resultList.Count,
+                    Result = resultList
+                };
+            }
+
+            packageItem.SupplierDishList = packageList.Select(p => new SupplierDishModel
+                                            {
+                                                Price = p.Price ?? 0,
+                                                ImagePath = p.ImagePath,
+                                                SupplierDishId = p.SupplierDishId,
+                                                SupplierDishName = p.SupplierDishName,
+                                                SuppllierDishDescription = p.SuppllierDishDescription,
+                                            }).ToList();
+
             return new ServicesResultList<SupplierCuisineModel>
             {
                 ResultTotalCount = resultList.Count,

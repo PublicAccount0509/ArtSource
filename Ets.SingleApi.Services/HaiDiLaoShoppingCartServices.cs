@@ -349,14 +349,24 @@
                 };
             }
 
+            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartExtraResult.StatusCode
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
+            var extra = getShoppingCartExtraResult.Result;
             var shoppingList = shoppingCartItemList;
             shoppingCart.ShoppingList = shoppingList;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
             order.CouponFee = 0;
-            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, extra, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -425,13 +435,23 @@
                 };
             }
 
+            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartExtraResult.StatusCode
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
+            var extra = getShoppingCartExtraResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
-                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId);
+                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && p.Instruction.Trim() == shoppingCartItem.Instruction.Trim());
                 if (item == null)
                 {
                     shoppingList.Add(shoppingCartItem);
@@ -449,7 +469,7 @@
             shoppingCart.ShoppingList = shoppingList;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
             order.CouponFee = 0;
-            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, extra, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -510,13 +530,23 @@
                 };
             }
 
+            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartExtraResult.StatusCode
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
+            var extra = getShoppingCartExtraResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
-                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId);
+                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && p.Instruction.Trim() == shoppingCartItem.Instruction.Trim());
                 if (item == null)
                 {
                     continue;
@@ -531,8 +561,9 @@
 
             shoppingCart.ShoppingList = shoppingList;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+
             order.CouponFee = 0;
-            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
+            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, extra, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -703,8 +734,18 @@
                 };
             }
 
+            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartExtraResult.StatusCode
+                };
+            }
+
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
+            var extra = getShoppingCartExtraResult.Result;
             var deliveryMethodId = shoppingCartOrder.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var now = DateTime.Now;
             var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
@@ -747,6 +788,8 @@
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
             var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
+            var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
+                 + extra.PanCount * ServicesCommon.PotDeposit;
             var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
 
             shoppingCartOrder.Id = order.Id;
@@ -754,6 +797,8 @@
             shoppingCartOrder.CanDelivery = order.CanDelivery;
             shoppingCartOrder.DeliveryDateTime = deliveryTime;
             shoppingCartOrder.DeliveryMethodId = deliveryMethodId;
+            shoppingCartOrder.IsSelfPan = order.IsSelfPan;
+            shoppingCartOrder.IsSelfDip = order.IsSelfDip;
             shoppingCartOrder.TotalPrice = shoppingPrice;
             shoppingCartOrder.FixedDeliveryFee = fixedDeliveryFee;
             shoppingCartOrder.PackagingFee = packagingFee;
@@ -762,6 +807,13 @@
             shoppingCartOrder.CustomerTotalFee = customerTotal;
             shoppingCartOrder.ServicesFee = servicesFee;
             shoppingCartOrder.CouponFee = coupon;
+            shoppingCartOrder.CookingFee = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? cookingFee : 0;
+
+            if (order.IsSelfPan)
+            {
+                shoppingCartOrder.CookingFee = 0;
+            }
+
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {
@@ -830,7 +882,36 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartExtra(string source, string id, ShoppingCartExtra shoppingCartExtra)
         {
-            return new ServicesResult<bool>();
+            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode
+                };
+            }
+
+            var order = getShoppingCartOrderResult.Result;
+            var cookingFee = shoppingCartExtra.CookingCount * ServicesCommon.CookingDeposit
+                             + shoppingCartExtra.PanCount * ServicesCommon.PotDeposit;
+
+            this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, shoppingCartExtra);
+            order.CookingFee = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? cookingFee : 0;
+            this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
+            return new ServicesResult<bool>
+            {
+                Result = true
+            };
         }
 
         /// <summary>
@@ -886,9 +967,19 @@
                 };
             }
 
+            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartExtraResult.StatusCode
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
+            var extra = getShoppingCartExtraResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
@@ -909,6 +1000,8 @@
             var coupon = order.CouponFee;
             var customerTotal = total - coupon;
             var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
+            var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
+                             + extra.PanCount * ServicesCommon.PotDeposit;
 
             order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
@@ -919,6 +1012,7 @@
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
             order.ServicesFee = servicesFee;
+            order.CookingFee = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? cookingFee : 0;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
             {
@@ -969,13 +1063,14 @@
         /// <param name="shoppingList">The shoppingList</param>
         /// <param name="supplier">The supplier</param>
         /// <param name="order">The order</param>
+        /// <param name="extra">The extra</param>
         /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
         /// 创建者：周超
         /// 创建日期：11/29/2013 11:17 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, HaiDiLaoShoppingCartOrder order, bool saveDeliveryMethodId)
+        private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra, bool saveDeliveryMethodId)
         {
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
@@ -996,6 +1091,9 @@
             var coupon = order.CouponFee;
             var customerTotal = total - coupon;
             var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
+            var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
+                             + extra.PanCount * ServicesCommon.PotDeposit;
+            order.CookingFee = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? cookingFee : 0;
 
             if (saveDeliveryMethodId)
             {
@@ -1004,6 +1102,18 @@
             else
             {
                 order.DeliveryMethodId = canDelivery ? ServicesCommon.DefaultDeliveryMethodId : ServicesCommon.PickUpDeliveryMethodId;
+            }
+
+
+            if (shoppingList.All(p => p.Type != 2) && shoppingList.All(p => p.Type != 3))
+            {
+                order.IsSelfPan = true;
+                order.CookingFee = 0;
+            }
+
+            if (shoppingList.All(p => p.Type != 1) && shoppingList.All(p => p.Type != 3))
+            {
+                order.IsSelfDip = true;
             }
 
             order.CanDelivery = canDelivery;
@@ -1015,6 +1125,7 @@
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
             order.ServicesFee = servicesFee;
+
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
         }
 

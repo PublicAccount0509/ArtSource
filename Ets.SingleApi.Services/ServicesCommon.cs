@@ -20,6 +20,58 @@
     public class ServicesCommon
     {
         /// <summary>
+        /// 单个锅的押金
+        /// </summary>
+        /// <value>
+        /// 单个锅的押金
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int PotDeposit
+        {
+            get
+            {
+                var potDeposit = ConfigurationManager.AppSettings["PotDeposit"] ?? "20";
+                int result;
+                if (!int.TryParse(potDeposit, out result))
+                {
+                    result = 20;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 单个电磁炉的押金
+        /// </summary>
+        /// <value>
+        /// 单个电磁炉的押金
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int CookingDeposit
+        {
+            get
+            {
+                var cookingDeposit = ConfigurationManager.AppSettings["CookingDeposit"] ?? "500";
+                int result;
+                if (!int.TryParse(cookingDeposit, out result))
+                {
+                    result = 500;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 优惠折扣类型Id
         /// </summary>
         /// <value>
