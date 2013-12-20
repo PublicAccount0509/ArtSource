@@ -98,6 +98,11 @@
     <Compile Include="OrderSourceType.cs" />
     <Compile Include="Services\CustomerSimpleModel.cs" />
     <Compile Include="Services\HtjUserModel.cs" />
+    <Compile Include="Controller\LightSupplier.cs" />
+    <Compile Include="Services\LightFeatureModel.cs" />
+    <Compile Include="Services\LightSupplierModel.cs" />
+    <Compile Include="Services\LightSupplierDetailModel.cs" />
+    <Compile Include="Services\LightSupplierTemplateModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />
@@ -114,6 +119,9 @@
     <Compile Include="Services\PackageCuisineModel.cs" />
     <Compile Include="Services\HaiDiLaoWaiMaiOrderDetailModel.cs" />
     <Compile Include="Services\HaiDiLaoWaiMaiOrderDishModel.cs" />
+    <Compile Include="Controller\LightFeature.cs" />
+    <Compile Include="Controller\LightSupplierDetail.cs" />
+    <Compile Include="Controller\LightSupplierTemplate.cs" />
     <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />

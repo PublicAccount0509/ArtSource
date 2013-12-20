@@ -86,6 +86,7 @@
     <Compile Include="IServices\IHtjExtendServices.cs" />
     <Compile Include="IServices\IHaiDiLaoShoppingCartServices.cs" />
     <Compile Include="IServices\IHaiDiLaoSupplierServices.cs" />
+    <Compile Include="IServices\IBaiDuLightServices.cs" />
     <Compile Include="OrdersController.cs" />
     <Compile Include="PaymentController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Wap\WeiXinWapHtjUserController.cs" />
     <Compile Include="HaiDiLaoShoppingCartController.cs" />
     <Compile Include="HaiDiLaoSupplierController.cs" />
+    <Compile Include="BaiDuLightController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">

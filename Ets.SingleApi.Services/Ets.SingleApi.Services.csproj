@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="HtjExtendServices.cs" />
     <Compile Include="HaiDiLaoShoppingCartServices.cs" />
+    <Compile Include="BaiDuLightServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">

@@ -58,6 +58,7 @@
   <item code="40023" message="购物车为空"></item>
   <item code="40024" message="无效的送餐方式"></item>
   <item code="40025" message="无效的套餐Id"></item>
+  <item code="40026" message="无效的百度轻应用程序Id"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>
