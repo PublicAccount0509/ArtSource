@@ -6,7 +6,9 @@
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -21,6 +23,16 @@
     /// ----------------------------------------------------------------------------------------
     public class ShoppingCartServices : IShoppingCartServices
     {
+        /// <summary>
+        /// 字段supplierEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/20/2013 3:40 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
+
         /// <summary>
         /// 字段shoppingCartProvider
         /// </summary>
@@ -44,6 +56,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartServices" /> class.
         /// </summary>
+        /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
         /// 创建者：周超
@@ -52,9 +65,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ShoppingCartServices(
+             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             IShoppingCartProvider shoppingCartProvider,
             List<ISupplierCouponProvider> supplierCouponProviderList)
         {
+            this.supplierEntityRepository = supplierEntityRepository;
             this.shoppingCartProvider = shoppingCartProvider;
             this.supplierCouponProviderList = supplierCouponProviderList;
         }
@@ -985,6 +1000,13 @@
         private decimal CalculateCoupon(decimal total, int supplierId, int deliveryMethodId, int? userId)
         {
             if (userId == null)
+            {
+                return 0;
+            }
+
+            if (this.supplierEntityRepository.EntityQueryable.Any(
+                    p =>
+                    p.SupplierId == supplierId && ServicesCommon.NoCouponSupplierGroupList.Contains(p.SupplierGroupId)))
             {
                 return 0;
             }

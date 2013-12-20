@@ -1251,6 +1251,38 @@
         }
 
         /// <summary>
+        /// 不参加优惠的餐厅群组Id
+        /// </summary>
+        /// <value>
+        /// 不参加优惠的餐厅群组Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int?> NoCouponSupplierGroupList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["NoCouponSupplierGroupList"] ?? string.Empty).Split(',').ToList();
+                var noCouponSupplierGroupList = new List<int?>();
+                foreach (var item in list)
+                {
+                    int itemId;
+                    if (!int.TryParse(item, out itemId))
+                    {
+                        continue;
+                    }
+
+                    noCouponSupplierGroupList.Add(itemId);
+                }
+
+                return noCouponSupplierGroupList;
+            }
+        }
+
+        /// <summary>
         /// 海底捞不能出现在菜单的类目
         /// </summary>
         /// <value>
