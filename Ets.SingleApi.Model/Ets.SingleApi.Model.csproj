@@ -76,6 +76,7 @@
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
     <Compile Include="IOrderDetailModel.cs" />
+    <Compile Include="Mapping\Repository\BaiDuAppLightEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
@@ -85,6 +86,11 @@
     <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierGroupAdvertisementEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierGroupFeatureEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierGroupLightEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierGroupLogoImageEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierGroupTemplateEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
@@ -500,6 +506,14 @@
     <EmbeddedResource Include="Mapping\DeliveryChargeEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\DeliveryChargeForExtraMilesEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\DeliveryCouponEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\BaiDuAppLightEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierGroupAdvertisementEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierGroupFeatureEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierGroupLightEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierGroupLogoImageEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierGroupTemplateEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

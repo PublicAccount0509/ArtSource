@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.BaiDuAppLightEntity, Ets.SingleApi.Model" table="BaiDuAppLight" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="LightApplicationId" column="LightApplicationId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="ApplicationId" column="ApplicationId" type="String" />
+		<property name="IsDelete" column="IsDelete" type="Boolean" />
+		<property name="CreateDate" column="CreateDate" type="Timestamp" />
+		<!--The foreign keys-->
+		<bag name="SupplierGroupLightList" cascade="none" lazy="true" table="SupplierGroupLight">
+			<key column="LightApplicationId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierGroupLightEntity, Ets.SingleApi.Model" />
+		</bag>
+		<bag name="SupplierGroupTemplateList" cascade="none" lazy="true" table="SupplierGroupTemplate">
+			<key column="LightApplicationId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierGroupTemplateEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

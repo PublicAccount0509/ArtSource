@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierGroupTemplateEntity, Ets.SingleApi.Model" table="SupplierGroupTemplate" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="SupplierGroupTemplateId" column="SupplierGroupTemplateId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="SupplierTypeId" column="SupplierTypeId" type="Int32" />
+		<property name="TemplateTypeId" column="TemplateTypeId" type="Int32" />
+		<property name="TemplateColorId" column="TemplateColorId" type="Int32" />
+		<property name="CreateDate" column="CreateDate" type="Timestamp" />
+		<!--The foreign keys-->
+		<many-to-one name="LightApplication" class="Ets.SingleApi.Model.Repository.BaiDuAppLightEntity, Ets.SingleApi.Model" column="LightApplicationId" />
+	</class>
+</hibernate-mapping>
