@@ -342,7 +342,8 @@
                                                     entity.TimeTableDisplayId
                                                 }).ToList();
 
-            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => DateTime.Now.DayOfWeek.ToString("d") == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
+            var day = DateTime.Now.GetDayOfWeek();
+            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => day == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
             if (timeTableDisplayIdList.Count == 0)
             {
                 return new ServicesResult<SupplierDetailModel>

@@ -607,7 +607,7 @@
             var dayList = new List<string>();
             for (var i = 0; i < days; i++)
             {
-                var day = startServiceDate.AddDays(i).DayOfWeek.ToString("d");
+                var day = startServiceDate.AddDays(i).GetDayOfWeek();
                 dayList.Add(day);
             }
 
@@ -628,7 +628,7 @@
             for (var i = 0; i < days; i++)
             {
                 var serviceDate = startServiceDate.AddDays(i);
-                var day = serviceDate.AddDays(i).DayOfWeek.ToString("d");
+                var day = serviceDate.AddDays(i).GetDayOfWeek();
                 var timeTableList = timeTableDisplayList.Where(p => p.Day != null && p.OpenTime != null && p.CloseTime != null)
                                     .Where(p => p.Day.Value.ToString() == day).ToList();
                 if (timeTableList.Count <= 0)
@@ -694,7 +694,7 @@
             var dayList = new List<string>();
             for (var i = 0; i < days; i++)
             {
-                var day = startDeliveryDate.AddDays(i).DayOfWeek.ToString("d");
+                var day = startDeliveryDate.AddDays(i).GetDayOfWeek();
                 dayList.Add(day);
             }
 
@@ -713,7 +713,7 @@
             for (var i = 0; i < days; i++)
             {
                 var deliveryDate = startDeliveryDate.AddDays(i);
-                var day = deliveryDate.AddDays(i).DayOfWeek.ToString("d");
+                var day = deliveryDate.AddDays(i).GetDayOfWeek();
                 var list = new List<string>();
                 var timeTableList = supplierTimeTableList.Where(p => p.Day.ToString() == day).ToList();
                 if (timeTableList.Count <= 0)

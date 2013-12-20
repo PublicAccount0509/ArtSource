@@ -8,6 +8,7 @@
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IRepository;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 接口名称：DeliverySupplierCouponProvider
@@ -121,7 +122,7 @@
         /// ----------------------------------------------------------------------------------------
         public List<SupplierCouponModel> CalculateCoupon(decimal total, int supplierId, DateTime now, int? userId)
         {
-            var day = Convert.ToInt32(DateTime.Now.DayOfWeek.ToString("d"));
+            var day = Convert.ToInt32(DateTime.Now.GetDayOfWeek());
             var list = (from couponEntity in this.supplierCouponEntityRepository.EntityQueryable
                         from couponTimeEntity in this.supplierCouponTimeEntityRepository.EntityQueryable
                         where couponEntity.Id == couponTimeEntity.SupplierCoupon.Id &&

@@ -207,8 +207,8 @@
                                                 entity.Day,
                                                 entity.TimeTableDisplayId
                                             }).ToList();
-
-            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => DateTime.Now.DayOfWeek.ToString("d") == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
+            var day = DateTime.Now.GetDayOfWeek();
+            var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => day == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
             if (timeTableDisplayIdList.Count == 0)
             {
                 shoppingCartSupplier.ServiceTime = string.Empty;
@@ -680,7 +680,7 @@
             }
 
             var deliveryDate = DateTime.Parse(deliveryTime.ToString("yyyy-MM-dd"));
-            var day = now.DayOfWeek.ToString("d");
+            var day = now.GetDayOfWeek();
             var supplierTimeTableList = (from entity in this.supplierTimeTableEntityRepository.EntityQueryable
                                          from timeTable in this.timeTableEntityRepository.EntityQueryable
                                          where entity.SupplierId == supplierId
@@ -776,7 +776,7 @@
             }
 
             var deliveryDate = DateTime.Parse(pickUpTime.ToString("yyyy-MM-dd"));
-            var day = now.DayOfWeek.ToString("d");
+            var day = now.GetDayOfWeek();
             var supplierTimeTableList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
                                          from timeTable in this.timeTableDisplayEntityRepository.EntityQueryable
                                          where entity.SupplierId == supplierId
