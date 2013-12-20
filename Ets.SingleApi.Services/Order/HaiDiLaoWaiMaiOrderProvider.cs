@@ -116,6 +116,26 @@
         private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
 
         /// <summary>
+        /// 字段packageSelectedEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/19/2013 11:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<PackageSelectedEntity> packageSelectedEntityRepository;
+
+        /// <summary>
+        /// 字段packageSelectedDetailEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/19/2013 11:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<PackageSelectedDetailEntity> packageSelectedDetailEntityRepository;
+
+        /// <summary>
         /// 字段orderNumberDcEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -143,7 +163,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartProvider shoppingCartProvider;
+        private readonly IHaiDiLaoShoppingCartProvider shoppingCartProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HaiDiLaoWaiMaiOrderProvider" /> class.
@@ -157,6 +177,8 @@
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
+        /// <param name="packageSelectedEntityRepository">The packageSelectedEntityRepository</param>
+        /// <param name="packageSelectedDetailEntityRepository">The packageSelectedDetailEntityRepository</param>
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="distance">The distance</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
@@ -175,9 +197,11 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
+            INHibernateRepository<PackageSelectedEntity> packageSelectedEntityRepository,
+            INHibernateRepository<PackageSelectedDetailEntity> packageSelectedDetailEntityRepository,
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             IDistance distance,
-            IShoppingCartProvider shoppingCartProvider)
+            IHaiDiLaoShoppingCartProvider shoppingCartProvider)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.sourcePathEntityRepository = sourcePathEntityRepository;
@@ -188,6 +212,8 @@
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
+            this.packageSelectedEntityRepository = packageSelectedEntityRepository;
+            this.packageSelectedDetailEntityRepository = packageSelectedDetailEntityRepository;
             this.orderNumberDcEntityRepository = orderNumberDcEntityRepository;
             this.distance = distance;
             this.shoppingCartProvider = shoppingCartProvider;
@@ -274,17 +300,19 @@
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
-                    Result = new WaiMaiOrderDetailModel()
+                    Result = new HaiDiLaoWaiMaiOrderDetailModel()
                 };
             }
 
-            var waiMaiOrderDishList = deliveryEntity.OrderList.Select(p => new WaiMaiOrderDishModel
+            var waiMaiOrderDishList = deliveryEntity.OrderList.Select(p => new HaiDiLaoWaiMaiOrderDishModel
             {
                 SupplierDishId = p.SupplierDishId,
                 SupplierDishName = p.SupplierDishName,
                 Instruction = p.SpecialInstruction,
                 Price = p.SupplierPrice,
-                Quantity = p.Quantity
+                Quantity = p.Quantity,
+                Type = 0,
+                ParentId = 0
             }).ToList();
 
             var supplierId = deliveryEntity.SupplierId;
@@ -294,8 +322,43 @@
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = new WaiMaiOrderDetailModel()
+                    Result = new HaiDiLaoWaiMaiOrderDetailModel()
                 };
+            }
+
+            var packageList = (from entity in this.packageSelectedEntityRepository.EntityQueryable
+                               where entity.Supplier.SupplierId == supplierId && entity.Delivery.DeliveryId == deliveryEntity.DeliveryId
+                               select new HaiDiLaoWaiMaiOrderDishModel
+                               {
+                                   SupplierDishId = entity.Package.PackageId,
+                                   SupplierDishName = entity.PackageName,
+                                   Instruction = entity.Comment,
+                                   Price = entity.PackagePrice,
+                                   Quantity = entity.PackageNum,
+                                   Type = 3,
+                                   ParentId = 0
+                               }).ToList();
+
+            if (packageList.Count > 0)
+            {
+                waiMaiOrderDishList.AddRange(packageList);
+            }
+
+            var packageDetailList = (from entity in this.packageSelectedDetailEntityRepository.EntityQueryable
+                                     where entity.DeliveryId == deliveryEntity.DeliveryId
+                                     select new HaiDiLaoWaiMaiOrderDishModel
+                                     {
+                                         SupplierDishName = entity.DishName,
+                                         Instruction = string.Empty,
+                                         Price = entity.DishPrice,
+                                         Quantity = entity.DishNum,
+                                         Type = 0,
+                                         ParentId = entity.PackageSelected.Package.PackageId
+                                     }).ToList();
+
+            if (packageDetailList.Count > 0)
+            {
+                waiMaiOrderDishList.AddRange(packageDetailList);
             }
 
             decimal baIduLat;
@@ -323,7 +386,7 @@
                 gender = "0";
             }
 
-            var result = new WaiMaiOrderDetailModel
+            var result = new HaiDiLaoWaiMaiOrderDetailModel
             {
                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
                 OrderTypeId = (int)OrderType.WaiMai,
@@ -351,9 +414,19 @@
                 DeliveryAddress = deliveryAddressEntity == null ? string.Empty : string.Format("{0}{1}", deliveryAddressEntity.Address1, deliveryAddressEntity.Address2),
                 DeliveryCustomerName = deliveryEntity.Contact.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Recipient) : deliveryEntity.Contact,
                 DeliveryCustomerTelphone = deliveryEntity.ContactPhone.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Telephone) : deliveryEntity.ContactPhone,
-                DeliveryCustomerGender = gender
+                DeliveryCustomerGender = gender,
+                ServicesFee = (deliveryEntity.ServiceFee ?? 0).ToString("#0.00"),
+                CookingCount = deliveryEntity.Stove ?? 0,
+                PanCount = deliveryEntity.Pot ?? 0,
+                DiningCount = deliveryEntity.NumOfPeople ?? 0,
+                IsSelfPan = (deliveryEntity.ZBGD ?? 0) == 1,
+                IsSelfDip = (deliveryEntity.ZBXL ?? 0) == 1
             };
 
+            var cookingFee = result.CookingCount * ServicesCommon.CookingDeposit
+                 + result.PanCount * ServicesCommon.PotDeposit;
+
+            result.CookingFee = cookingFee.ToString("#0.00");
             return new ServicesResult<IOrderDetailModel>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
@@ -438,10 +511,21 @@
                 };
             }
 
+            var getShoppingCartExtraResult = this.shoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = getShoppingCartExtraResult.StatusCode,
+                    Result = string.Empty
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
+            var extra = getShoppingCartExtraResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
             if (order.IsComplete)
             {
@@ -504,10 +588,11 @@
 
             var customerId = customer.CustomerId;
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
-                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order)
-                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
+                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order, extra)
+                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order, extra);
             this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
+            this.SavePackageEntity(supplier.SupplierId, deliveryId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId);
             order.IsComplete = true;
             order.OrderId = orderId;
@@ -557,6 +642,7 @@
         /// <param name="customerId">The customerId</param>
         /// <param name="delivery">The delivery</param>
         /// <param name="order">订单信息</param>
+        /// <param name="extra">The extra</param>
         /// <returns>
         /// 返回订单信息
         /// </returns>
@@ -565,7 +651,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
+        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra)
         {
             var userName = delivery.Name;
             var deliveryAddressEntity = new DeliveryAddressEntity
@@ -606,6 +692,12 @@
                 AreaId = order.AreaId,
                 IPAddress = delivery.IpAddress,
                 IsTakeInvoice = order.IsTakeInvoice,
+                ZBGD = order.IsSelfPan ? 1 : 0,
+                ZBXL = order.IsSelfDip ? 1 : 0,
+                ServiceFee = order.ServicesFee,
+                Pot = extra.PanCount,
+                Stove = extra.CookingCount,
+                NumOfPeople = extra.DiningCount,
                 DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
             };
 
@@ -621,6 +713,7 @@
         /// <param name="customerId">The customerId</param>
         /// <param name="delivery">The delivery</param>
         /// <param name="order">订单信息</param>
+        /// <param name="extra">The extra</param>
         /// <returns>
         /// 返回订单信息
         /// </returns>
@@ -629,7 +722,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
+        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra)
         {
             var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customerId);
             var deliveryAddressEntity = new DeliveryAddressEntity
@@ -678,6 +771,12 @@
                 AreaId = order.AreaId,
                 IPAddress = delivery.IpAddress,
                 IsTakeInvoice = order.IsTakeInvoice,
+                ZBGD = order.IsSelfPan ? 1 : 0,
+                ZBXL = order.IsSelfDip ? 1 : 0,
+                ServiceFee = order.ServicesFee,
+                Pot = extra.PanCount,
+                Stove = extra.CookingCount,
+                NumOfPeople = extra.DiningCount,
                 DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
             };
 
@@ -750,7 +849,8 @@
         /// ----------------------------------------------------------------------------------------
         private void SaveOrderEntity(int customerId, int deliveryId, IEnumerable<ShoppingCartItem> shoppingList)
         {
-            var orderList = (from dish in shoppingList
+            var typeList = new List<int> { 0, 1, 2 };
+            var orderList = (from dish in shoppingList.Where(p => typeList.Contains(p.Type) && p.ParentId == 0)
                              select new OrderEntity
                              {
                                  Delivery = new DeliveryEntity
@@ -768,6 +868,56 @@
                              }).ToList();
 
             this.orderEntityRepository.Save(orderList);
+        }
+
+        /// <summary>
+        /// 保存订单套餐信息
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryId">订单Id</param>
+        /// <param name="shoppingList">商品列表</param>
+        /// 创建者：周超
+        /// 创建日期：11/22/2013 5:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SavePackageEntity(int supplierId, int deliveryId, List<ShoppingCartItem> shoppingList)
+        {
+            var packageSelectedList = (from dish in shoppingList.Where(p => p.Type == 3)
+                                       select new PackageSelectedEntity
+                                       {
+                                           Delivery = new DeliveryEntity
+                                           {
+                                               DeliveryId = deliveryId
+                                           },
+                                           Package = new PackageNameEntity
+                                               {
+                                                   PackageId = dish.ItemId
+                                               },
+                                           Supplier = new SupplierEntity
+                                               {
+                                                   SupplierId = supplierId
+                                               },
+                                           PackageNum = dish.Quantity,
+                                           PackagePrice = dish.Price,
+                                           PackageName = dish.ItemName,
+                                           Comment = dish.Instruction
+                                       }).ToList();
+
+            this.packageSelectedEntityRepository.Save(packageSelectedList);
+
+            var typeList = new List<int> { 0, 1, 2 };
+            var packageSelectedDetailList = (from dish in shoppingList.Where(p => typeList.Contains(p.Type) && p.ParentId != 0)
+                                             select new PackageSelectedDetailEntity
+                                             {
+                                                 PackageSelected = packageSelectedList.FirstOrDefault(p => p.Package.PackageId == dish.ParentId),
+                                                 DeliveryId = deliveryId,
+                                                 DishNum = dish.Quantity,
+                                                 DishPrice = dish.Price,
+                                                 DishName = dish.ItemName,
+                                             }).ToList();
+
+            this.packageSelectedDetailEntityRepository.Save(packageSelectedDetailList);
         }
 
         /// <summary>

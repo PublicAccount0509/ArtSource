@@ -106,6 +106,8 @@
     <Compile Include="Services\UserToken.cs" />
     <Compile Include="Services\PackageDishModel.cs" />
     <Compile Include="Services\PackageCuisineModel.cs" />
+    <Compile Include="Services\HaiDiLaoWaiMaiOrderDetailModel.cs" />
+    <Compile Include="Services\HaiDiLaoWaiMaiOrderDishModel.cs" />
     <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
