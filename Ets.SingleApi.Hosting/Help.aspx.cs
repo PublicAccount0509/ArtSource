@@ -65,7 +65,8 @@
                     "Supplier",
                     "HaiDiLaoSupplier",
                     "WapSupplier", 
-                    "WeiXinWapHtjUser"
+                    "WeiXinWapHtjUser",
+                    "BaiDuLight"
                 };
             if (list.Length == 0)
             {
