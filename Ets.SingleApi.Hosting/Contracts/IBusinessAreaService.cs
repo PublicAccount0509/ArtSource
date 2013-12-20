@@ -33,5 +33,20 @@
         [OperationContract]
         [Description("方法功能：获取区域和商圈信息列表")]
         ListResponse<BusinessArea> BusinessAreaList(string parentCode);
+
+        /// <summary>
+        /// 获取已开通城市列表
+        /// </summary>
+        /// <returns>
+        /// 返回已开通城市列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/13 12:33
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取已开通城市列表")]
+        ListResponse<BusinessArea> OpenCityList(string parentCode = null);
     }
 }

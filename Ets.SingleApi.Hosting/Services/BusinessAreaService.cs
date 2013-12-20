@@ -36,5 +36,23 @@
         {
             return new ListResponse<BusinessArea>();
         }
+
+        /// <summary>
+        /// 获取已开通城市列表
+        /// </summary>
+        /// <param name="parentCode"></param>
+        /// <returns>
+        /// 返回已开通城市列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/13 12:33
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/OpenCityList?parentCode={parentCode}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<BusinessArea> OpenCityList(string parentCode)
+        {
+            return new ListResponse<BusinessArea>();
+        }
     }
 }
