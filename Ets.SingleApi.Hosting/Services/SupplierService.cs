@@ -60,6 +60,7 @@
         /// 获取餐厅分店信息
         /// </summary>
         /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="featureId">The featureId</param>
         /// <param name="pageSize">每页显示的数量</param>
         /// <param name="pageIndex">页码</param>
         /// <returns>
@@ -70,8 +71,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/GroupSupplierList?supplierGroupId={supplierGroupId}&pageSize={pageSize}&pageIndex={pageIndex}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize, string pageIndex)
+        [WebGet(UriTemplate = "/GroupSupplierList?supplierGroupId={supplierGroupId}&featureId={featureId}&pageSize={pageSize}&pageIndex={pageIndex}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int featureId, int pageSize, string pageIndex)
         {
             return new ListResponse<GroupSupplier>();
         }

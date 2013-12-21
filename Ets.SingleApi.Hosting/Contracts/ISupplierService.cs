@@ -55,6 +55,7 @@
         /// 获取餐厅分店信息
         /// </summary>
         /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="featureId">The featureId</param>
         /// <param name="pageSize">每页显示的数量</param>
         /// <param name="pageIndex">页码</param>
         /// <returns>
@@ -66,8 +67,8 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("方法功能：获取餐厅分店信息；参数说明：pageSize（默认值为10）")]
-        ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize, string pageIndex);
+        [Description("方法功能：获取餐厅分店信息；参数说明：featureId（-1 or null 所有 1 外卖 2 订台 9 堂食，默认为-1），pageSize（默认值为10）")]
+        ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int featureId, int pageSize, string pageIndex);
 
         /// <summary>
         /// 获取餐厅已经开通的功能列表
