@@ -205,6 +205,7 @@
                 Averageprice = p.Averageprice ?? 0,
                 ParkingInfo = p.ParkingInfo ?? string.Empty,
                 Telephone = p.Telephone ?? string.Empty,
+                LogoUrl = p.LogoUrl ?? string.Empty,
                 SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
                 {
                     SupplierFeatureId = q.SupplierFeatureId,
