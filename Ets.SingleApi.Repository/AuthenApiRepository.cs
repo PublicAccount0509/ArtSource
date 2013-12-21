@@ -1,6 +1,5 @@
 ﻿namespace Ets.SingleApi.Repository
 {
-    using System.Configuration;
     using Castle.Facilities.NHibernateIntegration;
 
     /// <summary>

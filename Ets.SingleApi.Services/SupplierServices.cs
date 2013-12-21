@@ -655,23 +655,48 @@
                 };
             }
 
-            var queryable = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
-                             where supplierEntity.SupplierGroupId == parameter.SupplierGroupId
-                             && supplierEntity.Login.IsEnabled
-                             select new
-                             {
-                                 supplierEntity.SupplierId,
-                                 supplierEntity.SupplierName,
-                                 supplierEntity.SupplierDescription,
-                                 Address = supplierEntity.Address1,
-                                 supplierEntity.Averageprice,
-                                 supplierEntity.ParkingInfo,
-                                 supplierEntity.Telephone,
-                                 supplierEntity.SupplierGroupId,
-                                 supplierEntity.DateJoined,
-                                 supplierEntity.IsOpenDoor,
-                                 supplierEntity.DefaultCuisineId
-                             });
+
+            var tempQueryable = this.supplierEntityRepository.EntityQueryable.Where(
+                    p => p.SupplierGroupId == parameter.SupplierGroupId && p.Login.IsEnabled);
+
+            if (parameter.FeatureId != null)
+            {
+                tempQueryable = tempQueryable.Where(q => q.SupplierFeatureList.Any(p => p.Feature.FeatureId == parameter.FeatureId));
+            }
+
+            var queryable = tempQueryable.Select(supplierEntity =>
+                        new
+                         {
+                             supplierEntity.SupplierId,
+                             supplierEntity.SupplierName,
+                             supplierEntity.SupplierDescription,
+                             Address = supplierEntity.Address1,
+                             supplierEntity.Averageprice,
+                             supplierEntity.ParkingInfo,
+                             supplierEntity.Telephone,
+                             supplierEntity.SupplierGroupId,
+                             supplierEntity.DateJoined,
+                             supplierEntity.IsOpenDoor,
+                             supplierEntity.DefaultCuisineId
+                         });
+            //var queryable =    (from supplierEntity in this.supplierEntityRepository.EntityQueryable
+            //                 where supplierEntity.SupplierGroupId == parameter.SupplierGroupId
+            //                 && supplierEntity.SupplierFeatureList.Any(p => p.Feature.FeatureId == parameter.FeatureId)
+            //                 && supplierEntity.Login.IsEnabled
+            //                 select new
+            //                 {
+            //                     supplierEntity.SupplierId,
+            //                     supplierEntity.SupplierName,
+            //                     supplierEntity.SupplierDescription,
+            //                     Address = supplierEntity.Address1,
+            //                     supplierEntity.Averageprice,
+            //                     supplierEntity.ParkingInfo,
+            //                     supplierEntity.Telephone,
+            //                     supplierEntity.SupplierGroupId,
+            //                     supplierEntity.DateJoined,
+            //                     supplierEntity.IsOpenDoor,
+            //                     supplierEntity.DefaultCuisineId
+            //                 });
 
             var tempSupplierList = parameter.PageIndex == null ? queryable.ToList() : queryable.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize).ToList();
             if (tempSupplierList.Count == 0)

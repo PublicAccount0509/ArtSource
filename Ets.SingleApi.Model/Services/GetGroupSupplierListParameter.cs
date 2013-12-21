@@ -13,6 +13,19 @@
     public class GetGroupSupplierListParameter
     {
         /// <summary>
+        /// Gets or sets the FeatureId of GetGroupSupplierListParameter
+        /// </summary>
+        /// <value>
+        /// The FeatureId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 11:41 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? FeatureId { get; set; }
+
+        /// <summary>
         /// Gets or sets the SupplierGroupId of GetGroupSupplierListParameter
         /// </summary>
         /// <value>

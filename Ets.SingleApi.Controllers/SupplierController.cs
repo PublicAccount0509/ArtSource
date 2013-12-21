@@ -162,6 +162,7 @@
         /// 获取餐厅分店信息
         /// </summary>
         /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="featureId">The featureId</param>
         /// <param name="pageSize">每页显示的数量</param>
         /// <param name="pageIndex">页码</param>
         /// <returns>
@@ -173,10 +174,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int pageSize = 10, int? pageIndex = null)
+        public ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int? featureId = -1, int pageSize = 10, int? pageIndex = null)
         {
             var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(this.Source, new GetGroupSupplierListParameter
             {
+                FeatureId = featureId == -1 ? null : featureId,
                 SupplierGroupId = supplierGroupId,
                 PageIndex = pageIndex,
                 PageSize = pageSize
