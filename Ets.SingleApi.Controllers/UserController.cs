@@ -308,6 +308,75 @@
         }
 
         /// <summary>
+        /// 取得用户地址
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="cityId">The cityId</param>
+        /// <returns>
+        /// The CustomerAddressResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:41
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        [TokenFilter]
+        public ListResponse<CustomerAddress> CustomerAddressList(int id, int? cityId = null)
+        {
+            if (!this.ValidateUserId(id))
+            {
+                return new ListResponse<CustomerAddress>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = new List<CustomerAddress>()
+                };
+            }
+
+            var list = this.usersServices.GetCustomerAddressList(this.Source, id, cityId);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<CustomerAddress>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<CustomerAddress>()
+                };
+            }
+
+            var customerAddressList = list.Result.Select(p => new CustomerAddress
+            {
+                CustomerAddressId = p.CustomerAddressId,
+                Address = (p.Address ?? string.Empty),
+                Name = (p.Name ?? string.Empty),
+                Telephone = (p.Telephone ?? string.Empty),
+                IsDefault = p.IsDefault ?? false,
+                CityId = p.CityId,
+                CountyId = p.CountyId,
+                ProvinceId = p.ProvinceId,
+                RegionCode = (p.RegionCode ?? string.Empty),
+                Sex = p.Sex,
+                AddressBuilding = p.AddressBuilding ?? string.Empty,
+                AddressDetail = p.AddressDetail ?? string.Empty,
+                AddressAlias = p.AddressAlias ?? string.Empty
+            }).ToList();
+
+            return new ListResponse<CustomerAddress>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode,
+                },
+                Result = customerAddressList
+            };
+        }
+
+        /// <summary>
         /// 保存用户地址
         /// </summary>
         /// <param name="id">用户Id</param>

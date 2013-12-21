@@ -96,6 +96,25 @@
         }
 
         /// <summary>
+        /// 取得用户地址列表
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="cityId">The cityId</param>
+        /// <returns>
+        /// The CustomerAddressResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:41
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+       [WebGet(UriTemplate = "/CustomerAddressList/{id}?cityId={cityId}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<CustomerAddress> CustomerAddressList(string id, int? cityId)
+        {
+            return new ListResponse<CustomerAddress>();
+        }
+
+        /// <summary>
         /// 保存用户地址
         /// </summary>
         /// <param name="id">用户Id</param>

@@ -65,6 +65,22 @@
         ServicesResult<CustomerAddressModel> GetCustomerAddress(string source, int userId, int customerAddressId);
 
         /// <summary>
+        /// 获取用户地址列表
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="userId">用户Id</param>
+        /// <param name="cityId">The cityId</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<CustomerAddressModel> GetCustomerAddressList(string source, int userId, int? cityId);
+
+        /// <summary>
         /// 管理用户地址
         /// </summary>
         /// <param name="source">The source</param>

@@ -427,6 +427,88 @@
         }
 
         /// <summary>
+        /// 获取用户地址列表
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="userId">用户Id</param>
+        /// <param name="cityId">The cityId</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<CustomerAddressModel> GetCustomerAddressList(string source, int userId, int? cityId)
+        {
+            var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
+            if (customerEntity == null)
+            {
+                return new ServicesResultList<CustomerAddressModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = new List<CustomerAddressModel>()
+                };
+            }
+
+            var tempQueryable = this.customerAddressEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerEntity.CustomerId);
+            if (cityId != null)
+            {
+                tempQueryable = tempQueryable.Where(p => p.CityId == cityId);
+            }
+
+            var customerAddressEntityList = tempQueryable.Select(customerAddress => new
+            {
+                customerAddress.CustomerAddressId,
+                customerAddress.Address1,
+                customerAddress.AddressBuilding,
+                customerAddress.AddressDetail,
+                customerAddress.AddressAlias,
+                Name = customerAddress.Recipient,
+                customerAddress.Telephone,
+                HomePhone = customerAddress.Plane,
+                customerAddress.IsDefault,
+                customerAddress.CityId,
+                customerAddress.CountyId,
+                ProvinceId = customerAddress.CountryId,
+                customerAddress.RegionCode,
+                customerAddress.Sex
+            }).ToList();
+
+            if (customerAddressEntityList.Count == 0)
+            {
+                return new ServicesResultList<CustomerAddressModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Empty,
+                    Result = new List<CustomerAddressModel>()
+                };
+            }
+
+            var result = customerAddressEntityList.Select(customerAddressEntity => new CustomerAddressModel
+            {
+                CustomerAddressId = customerAddressEntity.CustomerAddressId,
+                Address = customerAddressEntity.Address1,
+                AddressBuilding = customerAddressEntity.AddressBuilding,
+                AddressDetail = customerAddressEntity.AddressDetail,
+                AddressAlias = customerAddressEntity.AddressAlias,
+                Name = customerAddressEntity.Name,
+                Telephone = this.GetTelephone(customerAddressEntity.Telephone, customerAddressEntity.HomePhone),
+                IsDefault = customerAddressEntity.IsDefault,
+                CityId = customerAddressEntity.CityId,
+                CountyId = customerAddressEntity.CountyId,
+                ProvinceId = customerAddressEntity.ProvinceId,
+                RegionCode = customerAddressEntity.RegionCode,
+                Sex = customerAddressEntity.Sex
+            }).ToList();
+
+            return new ServicesResultList<CustomerAddressModel>
+            {
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 管理用户地址
         /// </summary>
         /// <param name="source">The source</param>

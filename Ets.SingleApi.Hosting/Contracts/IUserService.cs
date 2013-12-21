@@ -83,7 +83,24 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：取得用户地址")]
-        Response<CustomerAddress> GetCustomerAddress(string id,  int customerAddressId);
+        Response<CustomerAddress> GetCustomerAddress(string id, int customerAddressId);
+
+        /// <summary>
+        /// 取得用户地址列表
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="cityId">The cityId</param>
+        /// <returns>
+        /// The CustomerAddressResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:41
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：取得用户地址列表")]
+        ListResponse<CustomerAddress> CustomerAddressList(string id, int? cityId);
 
         /// <summary>
         /// 保存用户地址
@@ -100,7 +117,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：保存用户地址")]
-        Response<bool> SaveCustomerAddress(string id,  CustomerAddressRequst requst);
+        Response<bool> SaveCustomerAddress(string id, CustomerAddressRequst requst);
 
         /// <summary>
         /// 删除用户地址
@@ -117,7 +134,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：删除用户地址")]
-        Response<bool> DeleteCustomerAddress(string id,  List<int> customerAddressIdList);
+        Response<bool> DeleteCustomerAddress(string id, List<int> customerAddressIdList);
 
         /// <summary>
         /// 设置默认用户地址
@@ -134,7 +151,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：设置默认用户地址")]
-        Response<bool> SetDefaultCustomerAddress(string id,  int customerAddressId);
+        Response<bool> SetDefaultCustomerAddress(string id, int customerAddressId);
 
         /// <summary>
         /// 注册用户
@@ -183,7 +200,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：判定是否已经收藏餐厅")]
-        Response<bool> IsFollowerSupplier(string id,  int supplierId);
+        Response<bool> IsFollowerSupplier(string id, int supplierId);
 
         /// <summary>
         /// 收藏餐厅
@@ -200,7 +217,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：收藏餐厅")]
-        Response<bool> AddFollowerSupplier(string id,  List<int> supplierIdList);
+        Response<bool> AddFollowerSupplier(string id, List<int> supplierIdList);
 
         /// <summary>
         /// 取消收藏餐厅
@@ -217,7 +234,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：取消收藏餐厅")]
-        Response<bool> DeleteFollowerSupplier(string id,  List<int> supplierIdList);
+        Response<bool> DeleteFollowerSupplier(string id, List<int> supplierIdList);
 
         /// <summary>
         /// 用户订单列表
@@ -238,6 +255,6 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：用户订单列表；参数说明：orderType（-1 所有订单  0 外卖订单  1 堂食订单  2 订台订单）、pageSize（默认值为10）")]
-        ListResponse<UserOrder> UserOrderList(string id,  int orderType, string orderStatus, string paidStatus, int pageSize, string pageIndex);
+        ListResponse<UserOrder> UserOrderList(string id, int orderType, string orderStatus, string paidStatus, int pageSize, string pageIndex);
     }
 }
