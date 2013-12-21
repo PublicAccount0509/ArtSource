@@ -100,7 +100,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("方法功能：获取餐厅菜单")]
+        [Description("方法功能：获取餐厅菜单；参数说明：supplierMenuCategoryTypeId（1 外卖 2 堂食）")]
         ListResponse<SupplierCuisine> Menu(string id, int supplierMenuCategoryTypeId);
 
         /// <summary>
