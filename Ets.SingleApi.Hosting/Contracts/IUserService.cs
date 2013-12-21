@@ -100,7 +100,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：取得用户地址列表")]
-        ListResponse<CustomerAddress> CustomerAddressList(string id, int? cityId);
+        ListResponse<CustomerAddress> CustomerAddressList(string id, int cityId);
 
         /// <summary>
         /// 保存用户地址

@@ -1,7 +1,6 @@
 ﻿namespace Ets.SingleApi.Hosting.Services
 {
     using System.Collections.Generic;
-    using System.ServiceModel;
     using System.ServiceModel.Activation;
     using System.ServiceModel.Web;
 
@@ -109,7 +108,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
        [WebGet(UriTemplate = "/CustomerAddressList/{id}?cityId={cityId}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public ListResponse<CustomerAddress> CustomerAddressList(string id, int? cityId)
+        public ListResponse<CustomerAddress> CustomerAddressList(string id, int cityId)
         {
             return new ListResponse<CustomerAddress>();
         }
