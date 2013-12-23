@@ -78,6 +78,19 @@
         public string SupplierDishName { get; set; }
 
         /// <summary>
+        /// 设置或取得商品类型
+        /// </summary>
+        /// <value>
+        /// 商品类型 0 菜 1 小料 2 锅底 3 套餐 4 专人服务
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：12/23/2013 6:55 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int Type { get; set; }
+
+        /// <summary>
         /// Gets or sets the Price of PackageDish
         /// </summary>
         /// <value>

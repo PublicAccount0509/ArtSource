@@ -88,7 +88,8 @@
                     IsCommission = q.IsCommission,
                     IsDiscount = q.IsDiscount,
                     Recipe = q.Recipe ?? string.Empty,
-                    Recommended = q.Recommended
+                    Recommended = q.Recommended,
+                    Type = q.Type
                 }).ToList()
             }).ToList();
 
@@ -151,7 +152,8 @@
                     IsCommission = q.IsCommission,
                     IsDiscount = q.IsDiscount,
                     Recipe = q.Recipe ?? string.Empty,
-                    Recommended = q.Recommended
+                    Recommended = q.Recommended,
+                    Type = q.Type
                 }).ToList()
             }).ToList();
 

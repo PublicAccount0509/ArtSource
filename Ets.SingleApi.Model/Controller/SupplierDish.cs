@@ -1,7 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：SimpleSupplierDish
+    /// 类名称：SupplierDish
     /// 命名空间：Ets.SingleApi.Model.Services
     /// 类功能：菜品信息
     /// </summary>
@@ -13,7 +13,7 @@
     public class SupplierDish
     {
         /// <summary>
-        /// Gets or sets the SupplierDishId of SimpleSupplierDish
+        /// Gets or sets the SupplierDishId of SupplierDish
         /// </summary>
         /// <value>
         /// The SupplierDishId
@@ -26,7 +26,7 @@
         public int SupplierDishId { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDishName of SimpleSupplierDish
+        /// Gets or sets the SupplierDishName of SupplierDish
         /// </summary>
         /// <value>
         /// The Name
@@ -37,6 +37,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string SupplierDishName { get; set; }
+
+        /// <summary>
+        /// 设置或取得商品类型
+        /// </summary>
+        /// <value>
+        /// 商品类型 0 菜 1 小料 2 锅底 3 套餐 4 专人服务
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：12/23/2013 6:55 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int Type { get; set; }
 
         /// <summary>
         /// Gets or sets the Price of SupplierDish

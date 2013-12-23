@@ -266,6 +266,16 @@
                                        SuppllierDishDescription = entity.PackageNote,
                                    }).ToList();
 
+
+            var packageSupplierDishList = packageList.Select(p => new SupplierDishModel
+            {
+                Price = p.Price ?? 0,
+                ImagePath = p.ImagePath,
+                SupplierDishId = p.SupplierDishId,
+                SupplierDishName = p.SupplierDishName,
+                SuppllierDishDescription = p.SuppllierDishDescription,
+            }).ToList();
+
             var resultList = new List<SupplierCuisineModel>();
             foreach (var name in ServicesCommon.HaiDiLaoFrontMenuList)
             {
@@ -291,27 +301,23 @@
                     continue;
                 }
 
+                if (string.Equals(ServicesCommon.HaiDiLaoPackageMenu.Trim(), tempName, StringComparison.OrdinalIgnoreCase))
+                {
+                    item.SupplierDishList = packageSupplierDishList;
+                }
+
                 resultList.Add(item);
             }
 
-            var packageItem = resultList.FirstOrDefault(p => string.Equals((p.CategoryName ?? string.Empty).Trim(), ServicesCommon.HaiDiLaoPackageMenu, StringComparison.OrdinalIgnoreCase));
-            if (packageItem == null)
+            foreach (var item in resultList)
             {
-                return new ServicesResultList<SupplierCuisineModel>
+                var tempName = (item.CategoryName ?? string.Empty).Trim();
+                var type = ServicesCommon.MenuTypeList.Keys.Contains(tempName) ? ServicesCommon.MenuTypeList[tempName] : 0;
+                foreach (var dish in item.SupplierDishList)
                 {
-                    ResultTotalCount = resultList.Count,
-                    Result = resultList
-                };
+                    dish.Type = type;
+                }
             }
-
-            packageItem.SupplierDishList = packageList.Select(p => new SupplierDishModel
-                                            {
-                                                Price = p.Price ?? 0,
-                                                ImagePath = p.ImagePath,
-                                                SupplierDishId = p.SupplierDishId,
-                                                SupplierDishName = p.SupplierDishName,
-                                                SuppllierDishDescription = p.SuppllierDishDescription,
-                                            }).ToList();
 
             return new ServicesResultList<SupplierCuisineModel>
             {
@@ -453,6 +459,16 @@
                     IsChoose = supplierCategory.IsChoose,
                     PackageDishList = dishList
                 });
+            }
+
+            foreach (var item in list)
+            {
+                var tempName = (item.CategoryName ?? string.Empty).Trim();
+                var type = ServicesCommon.MenuTypeList.Keys.Contains(tempName) ? ServicesCommon.MenuTypeList[tempName] : 0;
+                foreach (var dish in item.PackageDishList)
+                {
+                    dish.Type = type;
+                }
             }
 
             return new ServicesResultList<PackageCuisineModel>

@@ -1340,6 +1340,43 @@
         }
 
         /// <summary>
+        /// 菜单类型列表（0 菜 1 小料 2 锅底 3 套餐 4 专人服务）
+        /// </summary>
+        /// <value>
+        /// 菜单类型列表（0 菜 1 小料 2 锅底 3 套餐 4 专人服务）
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 2:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static Dictionary<string, int> MenuTypeList
+        {
+            get
+            {
+                var typeList = (ConfigurationManager.AppSettings["MenuTypeList"] ?? string.Empty).Split(',').ToList();
+                var result = new Dictionary<string, int>();
+                foreach (var type in typeList)
+                {
+                    var list = type.Split(':').ToList();
+                    if (list.Count != 2)
+                    {
+                        continue;
+                    }
+
+                    int tempType;
+                    if (!int.TryParse(list[1], out tempType))
+                    {
+                        continue;
+                    }
+                    result.Add(list[0], tempType);
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 海底捞在菜单的套餐类目显示的名称
         /// </summary>
         /// <value>
