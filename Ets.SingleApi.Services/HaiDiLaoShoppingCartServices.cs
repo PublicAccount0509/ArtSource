@@ -451,7 +451,7 @@
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
-                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && p.Instruction.Trim() == shoppingCartItem.Instruction.Trim());
+                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && (p.Instruction ?? string.Empty).Trim() == (shoppingCartItem.Instruction ?? string.Empty).Trim());
                 if (item == null)
                 {
                     shoppingList.Add(shoppingCartItem);
@@ -464,6 +464,16 @@
                 }
 
                 item.Quantity += shoppingCartItem.Quantity;
+            }
+
+            foreach (var shoppingCartItem in shoppingList)
+            {
+                if (shoppingCartItem.CategoryIdList != null)
+                {
+                    continue;
+                }
+
+                shoppingCartItem.CategoryIdList = new List<int>();
             }
 
             shoppingCart.ShoppingList = shoppingList;
@@ -546,7 +556,7 @@
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
-                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && p.Instruction.Trim() == shoppingCartItem.Instruction.Trim());
+                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && (p.Instruction ?? string.Empty).Trim() == (shoppingCartItem.Instruction ?? string.Empty).Trim());
                 if (item == null)
                 {
                     continue;
@@ -557,6 +567,16 @@
                 {
                     shoppingList.Remove(item);
                 }
+            }
+
+            foreach (var shoppingCartItem in shoppingList)
+            {
+                if (shoppingCartItem.CategoryIdList != null)
+                {
+                    continue;
+                }
+
+                shoppingCartItem.CategoryIdList = new List<int>();
             }
 
             shoppingCart.ShoppingList = shoppingList;

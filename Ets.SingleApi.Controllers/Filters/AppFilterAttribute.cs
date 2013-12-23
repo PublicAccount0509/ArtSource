@@ -31,6 +31,9 @@
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             var controller = ((SingleApiController)actionContext.ControllerContext.Controller);
+            var source = actionContext.Request.Headers.Read("Source");
+            controller.Source = string.Format(
+                "singleapi_{0}", source.IsEmptyOrNull() ? ControllersCommon.UnkownSource : source);
             if (!ControllersCommon.ApplicationValidationEnabled)
             {
                 controller.AppKey = ControllersCommon.DefaultAppKey;

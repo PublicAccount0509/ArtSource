@@ -37,10 +37,6 @@
             }
 
             var controller = ((SingleApiController)actionContext.ControllerContext.Controller);
-            var source = actionContext.Request.Headers.Read("Source");
-            controller.Source = string.Format(
-                "singleapi_{0}", source.IsEmptyOrNull() ? ControllersCommon.UnkownSource : source);
-
             var token = actionContext.Request.Headers.Read("Token");
             if (token.IsEmptyOrNull())
             {
