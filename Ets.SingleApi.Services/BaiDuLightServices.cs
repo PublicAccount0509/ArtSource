@@ -205,7 +205,8 @@
                                                      LightApplicationId = entity.LightApplication.LightApplicationId,
                                                      SupplierTypeId = entity.SupplierTypeId,
                                                      TemplateColorId = entity.TemplateColorId,
-                                                     TemplateTypeId = entity.TemplateTypeId
+                                                     TemplateTypeId = entity.TemplateTypeId,
+                                                     TemplateStyleId = entity.TemplateStyleId
                                                  }).FirstOrDefault();
 
             if (supplierGroupTemplate == null)

@@ -138,7 +138,8 @@
                     LightApplicationId = getLightSupplierTemplateResult.Result.LightApplicationId,
                     SupplierTypeId = getLightSupplierTemplateResult.Result.SupplierTypeId,
                     TemplateColorId = getLightSupplierTemplateResult.Result.TemplateColorId,
-                    TemplateTypeId = getLightSupplierTemplateResult.Result.TemplateTypeId
+                    TemplateTypeId = getLightSupplierTemplateResult.Result.TemplateTypeId,
+                    TemplateStyleId = getLightSupplierTemplateResult.Result.TemplateStyleId
                 };
 
             return new Response<LightSupplierTemplate>

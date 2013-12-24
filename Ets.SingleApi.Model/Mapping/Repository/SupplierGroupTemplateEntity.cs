@@ -19,7 +19,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the SupplierGroupTemplateEntity table in the database.
     /// </summary>
     /// Creator:周超
-    /// Creation Date:2013/12/20 11:17:33
+    /// Creation Date:2013/12/24 17:05:46
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierGroupTemplateId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierTypeId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TemplateTypeId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -62,17 +62,27 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TemplateColorId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private int templateColorId;
 
 			/// <summary>
+		/// The TemplateStyleId
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/24 17:05:46
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		private int templateStyleId;
+
+			/// <summary>
 		/// The CreateDate
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -82,7 +92,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The LightApplicationId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -94,7 +104,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="SupplierGroupTemplateEntity"/> class.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -104,6 +114,7 @@ namespace Ets.SingleApi.Model.Repository
 			this.supplierTypeId = 0;
 			this.templateTypeId = 0;
 			this.templateColorId = 0;
+			this.templateStyleId = 0;
 			this.createDate = DateTime.Now;
 		}
 
@@ -113,7 +124,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierGroupTemplateId of SupplierGroupTemplateEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -134,7 +145,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierTypeId of SupplierGroupTemplateEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -155,7 +166,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TemplateTypeId of SupplierGroupTemplateEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -176,7 +187,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TemplateColorId of SupplierGroupTemplateEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -194,10 +205,31 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
+        /// Gets or sets a value mapping the TemplateStyleId of SupplierGroupTemplateEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/12/24 17:05:46
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual int TemplateStyleId
+		{
+            get
+            {
+                return this.templateStyleId;
+            }
+
+            set
+            {
+                this.templateStyleId = value;
+            }
+        }
+
+			/// <summary>
         /// Gets or sets a value mapping the CreateDate of SupplierGroupTemplateEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -218,7 +250,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the LightApplicationId of SupplierGroupTemplateEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -245,7 +277,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -267,7 +299,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/12/20 11:17:33
+        /// Creation Date:2013/12/24 17:05:46
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
