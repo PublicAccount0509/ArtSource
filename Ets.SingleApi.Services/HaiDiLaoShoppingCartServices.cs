@@ -791,7 +791,7 @@
 
             var shoppingCart = getShoppingCartResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
-            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
             var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
             {
                 PackagingFee = p.PackagingFee,
@@ -1007,7 +1007,7 @@
             var order = getShoppingCartOrderResult.Result;
             var extra = getShoppingCartExtraResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
-            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
             var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
             {
                 PackagingFee = p.PackagingFee,
@@ -1104,7 +1104,7 @@
         /// ----------------------------------------------------------------------------------------
         private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra, bool saveDeliveryMethodId)
         {
-            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
             var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
             {
                 PackagingFee = p.PackagingFee,
