@@ -1115,18 +1115,13 @@
                 order.DeliveryMethodId = canDelivery ? ServicesCommon.DefaultDeliveryMethodId : ServicesCommon.PickUpDeliveryMethodId;
             }
 
-
             if (shoppingList.All(p => p.Type != 2) && shoppingList.All(p => p.Type != 3))
             {
-                order.IsSelfPan = true;
                 order.CookingFee = 0;
             }
 
-            if (shoppingList.All(p => p.Type != 1) && shoppingList.All(p => p.Type != 3))
-            {
-                order.IsSelfDip = true;
-            }
-
+            order.IsSelfPan = shoppingList.All(p => p.Type != 2) && shoppingList.All(p => p.Type != 3);
+            order.IsSelfDip = shoppingList.All(p => p.Type != 1) && shoppingList.All(p => p.Type != 3);
             order.CanDelivery = canDelivery;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryFee;
