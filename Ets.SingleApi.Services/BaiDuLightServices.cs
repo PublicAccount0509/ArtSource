@@ -80,18 +80,9 @@
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<SupplierGroupAdvertisementEntity> supplierGroupAdvertisementEntityRepository;
 
-        /// <summary>
-        /// 字段featureEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：12/20/2013 1:40 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<FeatureEntity> featureEntityRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaiDuLightServices"/> class.
+        /// Initializes a new instance of the <see cref="BaiDuLightServices" /> class.
         /// </summary>
         /// <param name="baiDuAppLightEntityRepository">The baiDuAppLightEntityRepository</param>
         /// <param name="supplierGroupLightEntityRepository">The supplierGroupLightEntityRepository</param>
@@ -99,8 +90,6 @@
         /// <param name="supplierGroupLogoImageEntityRepository">The supplierGroupLogoImageEntityRepository</param>
         /// <param name="supplierGroupFeatureEntityRepository">The supplierGroupFeatureEntityRepository</param>
         /// <param name="supplierGroupAdvertisementEntityRepository">The supplierGroupAdvertisementEntityRepository</param>
-        /// <param name="featureEntityRepository">The featureEntityRepository</param>
-        /// <param name="?">The ?</param>
         /// 创建者：周超
         /// 创建日期：12/20/2013 12:17 PM
         /// 修改者：
@@ -112,8 +101,7 @@
             INHibernateRepository<SupplierGroupTemplateEntity> supplierGroupTemplateEntityRepository,
             INHibernateRepository<SupplierGroupLogoImageEntity> supplierGroupLogoImageEntityRepository,
             INHibernateRepository<SupplierGroupFeatureEntity> supplierGroupFeatureEntityRepository,
-            INHibernateRepository<SupplierGroupAdvertisementEntity> supplierGroupAdvertisementEntityRepository,
-            INHibernateRepository<FeatureEntity> featureEntityRepository)
+            INHibernateRepository<SupplierGroupAdvertisementEntity> supplierGroupAdvertisementEntityRepository)
         {
             this.baiDuAppLightEntityRepository = baiDuAppLightEntityRepository;
             this.supplierGroupLightEntityRepository = supplierGroupLightEntityRepository;
@@ -121,7 +109,6 @@
             this.supplierGroupLogoImageEntityRepository = supplierGroupLogoImageEntityRepository;
             this.supplierGroupFeatureEntityRepository = supplierGroupFeatureEntityRepository;
             this.supplierGroupAdvertisementEntityRepository = supplierGroupAdvertisementEntityRepository;
-            this.featureEntityRepository = featureEntityRepository;
         }
 
         /// <summary>
@@ -283,14 +270,12 @@
                                                        select string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.ImagePath)).ToList();
 
             supplierGroupLight.LightFeatureList = (from entity in this.supplierGroupFeatureEntityRepository.EntityQueryable
-                                                   from feature in this.featureEntityRepository.EntityQueryable
                                                    where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId
-                                                   && entity.FeatureId == feature.FeatureId
                                                    select new LightFeatureModel
                                                    {
                                                        SupplierGroupFeatureId = entity.Id,
-                                                       FeatureId = feature.FeatureId,
-                                                       FeatureName = feature.Feature
+                                                       FeatureId = entity.FeatureId,
+                                                       FeatureName = string.Empty
                                                    }).ToList();
 
             return new ServicesResult<LightSupplierModel>
@@ -368,14 +353,12 @@
                                                        select string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.ImagePath)).ToList();
 
             supplierGroupLight.LightFeatureList = (from entity in this.supplierGroupFeatureEntityRepository.EntityQueryable
-                                                   from feature in this.featureEntityRepository.EntityQueryable
                                                    where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId
-                                                   && entity.FeatureId == feature.FeatureId
                                                    select new LightFeatureModel
                                                    {
                                                        SupplierGroupFeatureId = entity.Id,
-                                                       FeatureId = feature.FeatureId,
-                                                       FeatureName = feature.Feature
+                                                       FeatureId = entity.FeatureId,
+                                                       FeatureName = string.Empty
                                                    }).ToList();
 
             return new ServicesResult<LightSupplierDetailModel>
