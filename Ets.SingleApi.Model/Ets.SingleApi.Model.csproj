@@ -77,15 +77,19 @@
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Mapping\Repository\BaiDuAppLightEntity.cs" />
+    <Compile Include="Mapping\Repository\CustomizationOptionEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
+    <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
     <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
     <Compile Include="Mapping\Repository\PackageContentEntity.cs" />
     <Compile Include="Mapping\Repository\PackageNameEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierDishCustomizationEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierDishGroupEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupAdvertisementEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupFeatureEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupLightEntity.cs" />
@@ -522,6 +526,12 @@
     <EmbeddedResource Include="Mapping\SupplierGroupLightEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\SupplierGroupLogoImageEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\SupplierGroupTemplateEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\CustomizationOptionEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\OptionGroupEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierDishCustomizationEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierDishGroupEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

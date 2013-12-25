@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SupplierDishGroupEntity, Ets.SingleApi.Model" table="SupplierDishGroup" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="SupplierDishGroupId" column="SupplierDishGroupId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="MainSupplierDish" column="MainSupplierDish" type="Int32" not-null="false" />
+		<property name="SubSupplierDish" column="SubSupplierDish" type="Int32" not-null="false" />
+	</class>
+</hibernate-mapping>
