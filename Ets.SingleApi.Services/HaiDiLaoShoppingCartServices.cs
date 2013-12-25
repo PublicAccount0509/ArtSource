@@ -792,24 +792,17 @@
             var shoppingCart = getShoppingCartResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
-            var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
-            {
-                PackagingFee = p.PackagingFee,
-                Price = p.Price,
-                Quantity = p.Quantity
-            }).ToList());
-
-            var totalfee = shoppingPrice + packagingFee;
+            var totalfee = shoppingPrice;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
-            var total = totalfee + fixedDeliveryFee;
-            var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
-            var customerTotal = total - coupon;
-            var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
+            var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                  + extra.PanCount * ServicesCommon.PotDeposit;
+            var total = totalfee + servicesFee + cookingFee + fixedDeliveryFee;
+            var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
+            var customerTotal = total - coupon;
             var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
 
             shoppingCartOrder.Id = order.Id;
@@ -821,7 +814,7 @@
             shoppingCartOrder.IsSelfDip = order.IsSelfDip;
             shoppingCartOrder.TotalPrice = shoppingPrice;
             shoppingCartOrder.FixedDeliveryFee = fixedDeliveryFee;
-            shoppingCartOrder.PackagingFee = packagingFee;
+            shoppingCartOrder.PackagingFee = 0;
             shoppingCartOrder.TotalQuantity = shoppingList.Where(p => p.Type == 0).Sum(p => p.Quantity);
             shoppingCartOrder.PanQuantity = shoppingList.Where(p => p.Type == 2 && p.ParentId == 0).Sum(p => p.Quantity);
             shoppingCartOrder.DipQuantity = shoppingList.Where(p => p.Type == 1 && p.ParentId == 0).Sum(p => p.Quantity);
@@ -1008,31 +1001,24 @@
             var extra = getShoppingCartExtraResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
-            var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
-            {
-                PackagingFee = p.PackagingFee,
-                Price = p.Price,
-                Quantity = p.Quantity
-            }).ToList());
-
             order.CouponFee = 0;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
 
-            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
-                        ? shoppingPrice + packagingFee + fixedDeliveryCharge
-                        : shoppingPrice + packagingFee;
-            var coupon = order.CouponFee;
-            var customerTotal = total - coupon;
-            var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
+            var servicesFee = Math.Round(shoppingPrice * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                              + extra.PanCount * ServicesCommon.PotDeposit;
+            var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                        ? shoppingPrice + servicesFee + cookingFee + fixedDeliveryCharge
+                        : shoppingPrice + servicesFee + cookingFee;
+            var coupon = order.CouponFee;
+            var customerTotal = total - coupon;
 
             order.DeliveryMethodId = deliveryMethodId;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
-            order.PackagingFee = packagingFee;
+            order.PackagingFee = 0;
             order.TotalQuantity = shoppingList.Where(p => p.Type == 0).Sum(p => p.Quantity);
             order.PanQuantity = shoppingList.Where(p => p.Type == 2 && p.ParentId == 0).Sum(p => p.Quantity);
             order.DipQuantity = shoppingList.Where(p => p.Type == 1 && p.ParentId == 0).Sum(p => p.Quantity);
@@ -1044,7 +1030,7 @@
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
             order.ServicesFee = servicesFee;
-            order.CookingFee = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? cookingFee : 0;
+            order.CookingFee = cookingFee;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
             {
@@ -1105,27 +1091,20 @@
         private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra, bool saveDeliveryMethodId)
         {
             var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
-            var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
-            {
-                PackagingFee = p.PackagingFee,
-                Price = p.Price,
-                Quantity = p.Quantity
-            }).ToList());
-
-            var totalfee = shoppingPrice + packagingFee;
+            var totalfee = shoppingPrice;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
             var canDelivery = totalfee >= supplier.DelMinOrderAmount;
             var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
-            var total = totalfee + fixedDeliveryFee;
+            var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount / 100, 0);
+            var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
+                 + extra.PanCount * ServicesCommon.PotDeposit;
+            var total = totalfee + fixedDeliveryFee + servicesFee + cookingFee;
             var coupon = order.CouponFee;
             var customerTotal = total - coupon;
-            var servicesFee = Math.Round(customerTotal * supplier.ConsumerAmount, 0);
-            var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
-                             + extra.PanCount * ServicesCommon.PotDeposit;
-            order.CookingFee = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? cookingFee : 0;
+            order.CookingFee = cookingFee;
 
             if (saveDeliveryMethodId)
             {
@@ -1151,7 +1130,7 @@
             order.CanDelivery = canDelivery;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryFee;
-            order.PackagingFee = packagingFee;
+            order.PackagingFee = 0;
             order.TotalQuantity = shoppingList.Where(p => p.Type == 0).Sum(p => p.Quantity);
             order.PanQuantity = shoppingList.Where(p => p.Type == 2 && p.ParentId == 0).Sum(p => p.Quantity);
             order.DipQuantity = shoppingList.Where(p => p.Type == 1 && p.ParentId == 0).Sum(p => p.Quantity);
