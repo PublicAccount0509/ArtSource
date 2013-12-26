@@ -59,6 +59,7 @@
     <Compile Include="ServicesInterceptor.cs" />
     <Compile Include="SmsExternalServicesInterceptor.cs" />
     <Compile Include="WapControllerInterceptor.cs" />
+    <Compile Include="CacheInterceptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">
