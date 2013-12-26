@@ -502,6 +502,7 @@
         /// <param name="id">购物车Id</param>
         /// <param name="requst">订单信息</param>
         /// <param name="isCalculateCoupon">是否计算优惠</param>
+        /// <param name="isValidateDeliveryTime">是否检测送餐时间</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -511,7 +512,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<HaiDiLaoShoppingCartModel> Order(string id, HaiDiLaoShoppingCartOrderRequst requst, bool isCalculateCoupon = false)
+        public Response<HaiDiLaoShoppingCartModel> Order(string id, HaiDiLaoShoppingCartOrderRequst requst, bool isCalculateCoupon = false, bool isValidateDeliveryTime = true)
         {
             if (requst == null)
             {
@@ -543,7 +544,7 @@
                     OrderNotes = requst.OrderNotes
                 };
 
-            var saveShoppingItemResult = this.haiDiLaoshoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon);
+            var saveShoppingItemResult = this.haiDiLaoshoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon, isValidateDeliveryTime);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<HaiDiLaoShoppingCartModel>

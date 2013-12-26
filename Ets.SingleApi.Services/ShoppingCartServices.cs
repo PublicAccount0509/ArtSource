@@ -664,6 +664,7 @@
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
         /// <param name="isCalculateCoupon">是否计算优惠</param>
+        /// <param name="isValidateDeliveryTime">是否检测送餐时间</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -672,7 +673,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder, bool isCalculateCoupon)
+        public ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder, bool isCalculateCoupon, bool isValidateDeliveryTime)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -714,28 +715,6 @@
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var deliveryMethodId = shoppingCartOrder.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
-            var now = DateTime.Now;
-            var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
-            DateTime deliveryTimeTemp;
-            if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, shoppingCartOrder.DeliveryTime), out deliveryTimeTemp))
-            {
-                deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
-            }
-
-            if (shoppingCartOrder.DeliveryType == ServicesCommon.QuickDeliveryType)
-            {
-                deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
-            }
-
-            var validateDeliveryTimeResult = this.shoppingCartProvider.ValidateDeliveryTime(source, supplier.SupplierId, deliveryTimeTemp, now);
-            if (!validateDeliveryTimeResult.Result)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = validateDeliveryTimeResult.StatusCode
-                };
-            }
-
             var shoppingCart = getShoppingCartResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
@@ -754,12 +733,37 @@
             var total = totalfee + fixedDeliveryFee;
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
-            var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
+            if (isValidateDeliveryTime)
+            {
+                var now = DateTime.Now;
+                var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
+                DateTime deliveryTimeTemp;
+                if (!DateTime.TryParse(string.Format("{0} {1}", deliveryDate, shoppingCartOrder.DeliveryTime), out deliveryTimeTemp))
+                {
+                    deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
+                }
 
+                if (shoppingCartOrder.DeliveryType == ServicesCommon.QuickDeliveryType)
+                {
+                    deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
+                }
+
+                var validateDeliveryTimeResult = this.shoppingCartProvider.ValidateDeliveryTime(source, supplier.SupplierId, deliveryTimeTemp, now);
+                if (!validateDeliveryTimeResult.Result)
+                {
+                    return new ServicesResult<bool>
+                    {
+                        StatusCode = validateDeliveryTimeResult.StatusCode
+                    };
+                }
+
+                var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
+                shoppingCartOrder.DeliveryDateTime = deliveryTime;
+            }
+            
             shoppingCartOrder.Id = order.Id;
             shoppingCartOrder.OrderId = order.OrderId;
             shoppingCartOrder.CanDelivery = order.CanDelivery;
-            shoppingCartOrder.DeliveryDateTime = deliveryTime;
             shoppingCartOrder.DeliveryMethodId = deliveryMethodId;
             shoppingCartOrder.TotalPrice = shoppingPrice;
             shoppingCartOrder.FixedDeliveryFee = fixedDeliveryFee;

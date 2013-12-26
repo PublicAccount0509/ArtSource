@@ -180,6 +180,7 @@
         /// <param name="id">购物车Id</param>
         /// <param name="requst">订单信息</param>
         /// <param name="isCalculateCoupon">是否计算优惠</param>
+        /// <param name="isValidateDeliveryTime">是否检测送餐时间</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -189,8 +190,8 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
-        [Description("方法功能：保存订单信息；参数说明：id（购物车Id），isCalculateCoupon（是否计算优惠，默认值false）；返回结果：购物车信息")]
-        Response<HaiDiLaoShoppingCartModel> Order(string id, HaiDiLaoShoppingCartOrderRequst requst, bool isCalculateCoupon);
+        [Description("方法功能：保存订单信息；参数说明：id（购物车Id），isCalculateCoupon（是否计算优惠，默认值false）, isValidateDeliveryTime（是否检测送餐时间，默认值true）；返回结果：购物车信息")]
+        Response<HaiDiLaoShoppingCartModel> Order(string id, HaiDiLaoShoppingCartOrderRequst requst, bool isCalculateCoupon, bool isValidateDeliveryTime);
 
         /// <summary>
         /// 保存送餐方式

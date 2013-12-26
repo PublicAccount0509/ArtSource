@@ -199,6 +199,7 @@
         /// <param name="id">购物车Id</param>
         /// <param name="requst">订单信息</param>
         /// <param name="isCalculateCoupon">是否计算优惠</param>
+        /// <param name="isValidateDeliveryTime">是否检测送餐时间</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -207,8 +208,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/Order/{id}?isCalculateCoupon={isCalculateCoupon}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<HaiDiLaoShoppingCartModel> Order(string id, HaiDiLaoShoppingCartOrderRequst requst, bool isCalculateCoupon)
+        [WebInvoke(UriTemplate = "/Order/{id}?isCalculateCoupon={isCalculateCoupon}&isValidateDeliveryTime={isValidateDeliveryTime}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<HaiDiLaoShoppingCartModel> Order(string id, HaiDiLaoShoppingCartOrderRequst requst, bool isCalculateCoupon, bool isValidateDeliveryTime)
         {
             return new Response<HaiDiLaoShoppingCartModel>();
         }

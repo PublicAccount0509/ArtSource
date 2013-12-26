@@ -132,12 +132,13 @@
         ServicesResult<bool> SaveShoppingCart(string source, string id, HaiDiLaoShoppingCartModel shoppingCart);
 
         /// <summary>
-        /// 保存订单信息
+        /// 保存用户信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
         /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
         /// <param name="isCalculateCoupon">是否计算优惠</param>
+        /// <param name="isValidateDeliveryTime">是否检测送餐时间</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -146,7 +147,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartOrder(string source, string id, HaiDiLaoShoppingCartOrder shoppingCartOrder, bool isCalculateCoupon);
+        ServicesResult<bool> SaveShoppingCartOrder(
+            string source,
+            string id,
+            HaiDiLaoShoppingCartOrder shoppingCartOrder,
+            bool isCalculateCoupon,
+            bool isValidateDeliveryTime);
 
         /// <summary>
         /// 保存订单配送信息
