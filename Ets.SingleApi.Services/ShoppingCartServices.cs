@@ -426,6 +426,12 @@
                     continue;
                 }
 
+                item.Quantity += shoppingCartItem.Quantity;
+                if (shoppingCartItem.CategoryIdList == null)
+                {
+                    continue;
+                }
+
                 foreach (var categoryId in shoppingCartItem.CategoryIdList.Where(categoryId => !item.CategoryIdList.Contains(categoryId)))
                 {
                     item.CategoryIdList.Add(categoryId);

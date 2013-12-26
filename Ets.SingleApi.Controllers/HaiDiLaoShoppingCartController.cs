@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Http;
 
     using Ets.SingleApi.Controllers.IServices;
@@ -420,7 +421,13 @@
                 };
             }
 
-            var saveShoppingItemResult = this.haiDiLaoshoppingCartServices.AddShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
+            var shoppingCartItemList = requst.ShoppingCartItemList;
+            foreach (var shoppingCartItem in shoppingCartItemList.Where(shoppingCartItem => shoppingCartItem.CategoryIdList == null))
+            {
+                shoppingCartItem.CategoryIdList = new List<int>();
+            }
+
+            var saveShoppingItemResult = this.haiDiLaoshoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<HaiDiLaoShoppingCartModel>
