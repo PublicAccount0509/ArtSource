@@ -201,6 +201,8 @@
                 SupplierId = p.SupplierId,
                 SupplierName = p.SupplierName ?? string.Empty,
                 SupplierDescription = p.SupplierDescription ?? string.Empty,
+                BaIduLat = p.BaIduLat ?? string.Empty,
+                BaIduLong = p.BaIduLong ?? string.Empty,
                 Address = p.Address ?? string.Empty,
                 Averageprice = p.Averageprice ?? 0,
                 ParkingInfo = p.ParkingInfo ?? string.Empty,

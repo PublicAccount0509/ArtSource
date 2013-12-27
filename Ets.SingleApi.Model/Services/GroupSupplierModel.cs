@@ -94,6 +94,32 @@
         public string SupplierDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets the BaIduLat of SupplierModel
+        /// </summary>
+        /// <value>
+        /// The BaIduLat
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/16 14:10
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string BaIduLat { get; set; }
+
+        /// <summary>
+        /// Gets or sets the BaIduLong of SupplierModel
+        /// </summary>
+        /// <value>
+        /// The BaIduLong
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/16 14:10
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string BaIduLong { get; set; }
+
+        /// <summary>
         /// Gets or sets the Averageprice of GroupSupplierModel
         /// </summary>
         /// <value>

@@ -452,12 +452,7 @@
                 };
             }
 
-            var tempQueryable = this.customerAddressEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerEntity.CustomerId);
-            if (cityId != null)
-            {
-                tempQueryable = tempQueryable.Where(p => p.CityId == cityId);
-            }
-
+            var tempQueryable = this.GetCustomerAddressQueryable(cityId, customerEntity.CustomerId);
             var customerAddressEntityList = tempQueryable.Select(customerAddress => new
             {
                 customerAddress.CustomerAddressId,
@@ -1257,6 +1252,45 @@
                            : homePhone;
 
             return phone.IsEmptyOrNull() ? telephone : phone;
+        }
+
+        /// <summary>
+        /// 取得CustomerAddress的查询Queryable
+        /// </summary>
+        /// <param name="cityId">The cityId</param>
+        /// <param name="customerId">The customerId</param>
+        /// <returns>
+        /// IQueryable{CustomerAddressEntity}
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/27/2013 9:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private IQueryable<CustomerAddressEntity> GetCustomerAddressQueryable(int? cityId, int customerId)
+        {
+            var queryable = this.customerAddressEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId);
+            if (cityId == null)
+            {
+                return queryable;
+            }
+
+            if (!this.regionEntityRepository.EntityQueryable.Any(p => p.Id == cityId && p.Depth == 2))
+            {
+                queryable = queryable.Where(p => p.CityId == cityId);
+                return queryable;
+
+            }
+
+            var regionEntityList = this.regionEntityRepository.FindByExpression(p => p.CityId == cityId && p.Depth == 3);
+            var list = regionEntityList.Select(p => (int?)p.Id).ToList();
+            if (list.Count == 0)
+            {
+                return queryable;
+            }
+
+            queryable = queryable.Where(p => list.Contains(p.CityId));
+            return queryable;
         }
     }
 }
