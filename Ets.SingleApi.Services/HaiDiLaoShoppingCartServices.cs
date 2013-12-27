@@ -787,6 +787,7 @@
             var total = totalfee + servicesFee + cookingFee + fixedDeliveryFee;
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
+            shoppingCartOrder.DeliveryDateTime = order.DeliveryDateTime;
             if (isValidateDeliveryTime)
             {
                 var now = DateTime.Now;
