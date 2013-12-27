@@ -781,7 +781,7 @@
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
-            var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount, 0);
+            var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                  + extra.PanCount * ServicesCommon.PotDeposit;
             var total = totalfee + servicesFee + cookingFee + fixedDeliveryFee;
