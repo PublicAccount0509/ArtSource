@@ -703,19 +703,14 @@
                 };
             }
 
-            var list = new List<string> { regionEntity.Code };
-            if (regionEntity.Depth == 2)
-            {
-                var regionEntityList = this.regionEntityRepository.FindByExpression(p => p.ProvinceId == parameter.CityId && p.Depth == 4);
-                list.AddRange(regionEntityList.Select(p => p.Code).ToList());
-            }
-
             var tempQueryable = (from entity in this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierGroupId == parameter.SupplierGroupId && p.Login.IsEnabled)
                                  from supplierBusiness in this.supplierBusinessAreaEntityRepository.EntityQueryable
                                  from addrBusinessArea in this.addrBusinessAreaEntityRepository.EntityQueryable
+                                 from region in this.regionEntityRepository.EntityQueryable
                                  where entity.SupplierId == supplierBusiness.SupplierId
                                  && supplierBusiness.BusinessAreaId == addrBusinessArea.BusinessAreaId
-                                 && list.Contains(addrBusinessArea.RegionCode)
+                                 && addrBusinessArea.RegionCode == region.Code
+                                 && (region.ProvinceId == parameter.CityId || regionEntity.CityId == parameter.CityId)
                                  select entity);
 
             if (parameter.FeatureId != null)

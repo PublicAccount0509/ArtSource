@@ -1269,27 +1269,13 @@
         /// ----------------------------------------------------------------------------------------
         private IQueryable<CustomerAddressEntity> GetCustomerAddressQueryable(int? cityId, int customerId)
         {
-            var queryable = this.customerAddressEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId);
+            var queryable = this.customerAddressEntityRepository.EntityQueryable.Where(p => p.CustomerId == customerId && p.IsDel == false);
             if (cityId == null)
             {
                 return queryable;
             }
 
-            if (!this.regionEntityRepository.EntityQueryable.Any(p => p.Id == cityId && p.Depth == 2))
-            {
-                queryable = queryable.Where(p => p.CityId == cityId);
-                return queryable;
-            }
-
-            var regionEntityList = this.regionEntityRepository.FindByExpression(p => p.CityId == cityId && p.Depth == 3);
-            var list = regionEntityList.Select(p => (int?)p.Id).ToList();
-            if (list.Count == 0)
-            {
-                return queryable;
-            }
-
-            queryable = queryable.Where(p => list.Contains(p.CityId));
-            return queryable;
+            return queryable.Where(p => p.CountryId == cityId || p.CityId == cityId);
         }
     }
 }

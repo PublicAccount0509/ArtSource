@@ -243,7 +243,10 @@
 
             var shoppingCartExtra = new ShoppingCartExtra
             {
-                Id = Guid.NewGuid().ToString()
+                Id = Guid.NewGuid().ToString(),
+                CookingCount = ServicesCommon.DefaultCookingCount,
+                DiningCount = ServicesCommon.DefaultDiningCount,
+                PanCount = ServicesCommon.DefaultPanCount
             };
             var shoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, shoppingCartExtra);
             if (shoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -850,12 +853,12 @@
             shoppingCartOrder.CustomerTotalFee = customerTotal;
             shoppingCartOrder.ServicesFee = servicesFee;
             shoppingCartOrder.CouponFee = coupon;
-            shoppingCartOrder.CookingFee = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? cookingFee : 0;
+            shoppingCartOrder.CookingFee = cookingFee;
 
-            if (order.IsSelfPan)
-            {
-                shoppingCartOrder.CookingFee = 0;
-            }
+            //if (order.IsSelfPan)
+            //{
+            //    shoppingCartOrder.CookingFee = 0;
+            //}
 
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
@@ -1161,10 +1164,10 @@
                 order.DeliveryMethodId = canDelivery ? ServicesCommon.DefaultDeliveryMethodId : ServicesCommon.PickUpDeliveryMethodId;
             }
 
-            if (shoppingList.All(p => p.Type != 2) && shoppingList.All(p => p.Type != 3))
-            {
-                order.CookingFee = 0;
-            }
+            //if (shoppingList.All(p => p.Type != 2) && shoppingList.All(p => p.Type != 3))
+            //{
+            //    order.CookingFee = 0;
+            //}
 
             order.IsSelfPan = shoppingList.Any(p => p.Type == 0) && shoppingList.All(p => p.Type != 2) && shoppingList.All(p => p.Type != 3);
             order.IsSelfDip = shoppingList.Any(p => p.Type == 0) && shoppingList.All(p => p.Type != 1) && shoppingList.All(p => p.Type != 3);

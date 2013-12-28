@@ -810,6 +810,84 @@
         }
 
         /// <summary>
+        /// 默认电磁炉数量
+        /// </summary>
+        /// <value>
+        /// 默认电磁炉数量
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultCookingCount
+        {
+            get
+            {
+                var defaultCookingCount = ConfigurationManager.AppSettings["DefaultCookingCount"] ?? "1";
+                int result;
+                if (!int.TryParse(defaultCookingCount, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 默认就餐人数
+        /// </summary>
+        /// <value>
+        /// 默认就餐人数
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultDiningCount
+        {
+            get
+            {
+                var defaultDiningCount = ConfigurationManager.AppSettings["DefaultDiningCount"] ?? "1";
+                int result;
+                if (!int.TryParse(defaultDiningCount, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 默认锅数量
+        /// </summary>
+        /// <value>
+        /// 默认锅数量
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultPanCount
+        {
+            get
+            {
+                var defaultPanCount = ConfigurationManager.AppSettings["DefaultPanCount"] ?? "1";
+                int result;
+                if (!int.TryParse(defaultPanCount, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 联动优势商户号
         /// </summary>
         /// <value>
