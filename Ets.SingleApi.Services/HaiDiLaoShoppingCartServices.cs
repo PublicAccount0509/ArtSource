@@ -782,6 +782,14 @@
 
             var shoppingCart = getShoppingCartResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
+            if (shoppingList.All(p => p.Type != 0))
+            {
+                return new ServicesResult<bool>
+                    {
+                        StatusCode = (int)StatusCode.Validate.EmptyShoppingCartCode
+                    };
+            }
+
             var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
             var totalfee = shoppingPrice;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
@@ -1139,8 +1147,8 @@
                 order.CookingFee = 0;
             }
 
-            order.IsSelfPan = shoppingList.All(p => p.Type != 2) && shoppingList.All(p => p.Type != 3);
-            order.IsSelfDip = shoppingList.All(p => p.Type != 1) && shoppingList.All(p => p.Type != 3);
+            order.IsSelfPan = shoppingList.Any(p => p.Type == 0) && shoppingList.All(p => p.Type != 2) && shoppingList.All(p => p.Type != 3);
+            order.IsSelfDip = shoppingList.Any(p => p.Type == 0) && shoppingList.All(p => p.Type != 1) && shoppingList.All(p => p.Type != 3);
             order.CanDelivery = canDelivery;
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryFee;
