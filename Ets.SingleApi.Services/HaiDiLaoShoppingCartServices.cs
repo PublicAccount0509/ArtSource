@@ -586,6 +586,13 @@
             shoppingCart.ShoppingList = shoppingList;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
 
+            if (shoppingList.Count == 0)
+            {
+                extra.CookingCount = 0;
+                extra.PanCount = 0;
+                this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, extra);
+            }
+
             order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, extra, saveDeliveryMethodId);
             return new ServicesResult<bool>
