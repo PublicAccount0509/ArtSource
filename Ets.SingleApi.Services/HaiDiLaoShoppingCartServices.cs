@@ -944,9 +944,28 @@
                 };
             }
 
+            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode
+                };
+            }
+
             var extra = getShoppingCartExtraResult.Result;
             shoppingCartExtra.Id = extra.Id;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, shoppingCartExtra);
+
+            var order = getShoppingCartOrderResult.Result;
+            var oldCookingFee = order.CookingFee;
+            var cookingFee = shoppingCartExtra.CookingCount * ServicesCommon.CookingDeposit
+                + shoppingCartExtra.PanCount * ServicesCommon.PotDeposit;
+            order.CookingFee = cookingFee;
+            order.TotalFee = order.TotalFee - oldCookingFee + cookingFee;
+            order.CustomerTotalFee = order.CustomerTotalFee - oldCookingFee + cookingFee;
+            this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
+
             return new ServicesResult<bool>
             {
                 Result = true
