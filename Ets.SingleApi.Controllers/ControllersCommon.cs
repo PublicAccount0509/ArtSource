@@ -138,6 +138,32 @@
         }
 
         /// <summary>
+        /// 查询餐厅群组默认城市Id
+        /// </summary>
+        /// <value>
+        /// 查询餐厅群组默认城市Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultSupplierGroupCityId
+        {
+            get
+            {
+                var defaultSupplierGroupCityId = ConfigurationManager.AppSettings["DefaultSupplierGroupCityId"] ?? "13";
+                int result;
+                if (!int.TryParse(defaultSupplierGroupCityId, out result))
+                {
+                    result = 13;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 是否开启权限验证
         /// </summary>
         /// <value>

@@ -1279,7 +1279,6 @@
             {
                 queryable = queryable.Where(p => p.CityId == cityId);
                 return queryable;
-
             }
 
             var regionEntityList = this.regionEntityRepository.FindByExpression(p => p.CityId == cityId && p.Depth == 3);

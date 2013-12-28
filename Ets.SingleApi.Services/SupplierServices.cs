@@ -145,6 +145,36 @@
         private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
 
         /// <summary>
+        /// 字段regionEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/28/2013 5:11 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<RegionEntity> regionEntityRepository;
+
+        /// <summary>
+        /// 字段supplierBusinessAreaEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/28/2013 5:13 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierBusinessAreaEntity> supplierBusinessAreaEntityRepository;
+
+        /// <summary>
+        /// 字段addrBusinessAreaEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/28/2013 6:30 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<AddrBusinessAreaEntity> addrBusinessAreaEntityRepository;
+
+        /// <summary>
         /// 字段supplierDetailServices
         /// </summary>
         /// 创建者：周超
@@ -169,6 +199,9 @@
         /// <param name="supplierDiningPurposeEntityRepository">The supplierDiningPurposeEntityRepository</param>
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
+        /// <param name="regionEntityRepository">The regionEntityRepository</param>
+        /// <param name="supplierBusinessAreaEntityRepository">The supplierBusinessAreaEntityRepository</param>
+        /// <param name="addrBusinessAreaEntityRepository">The addrBusinessAreaEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
@@ -188,6 +221,9 @@
             INHibernateRepository<SupplierDiningPurposeEntity> supplierDiningPurposeEntityRepository,
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
+            INHibernateRepository<RegionEntity> regionEntityRepository,
+            INHibernateRepository<SupplierBusinessAreaEntity> supplierBusinessAreaEntityRepository,
+            INHibernateRepository<AddrBusinessAreaEntity> addrBusinessAreaEntityRepository,
             ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
@@ -202,6 +238,9 @@
             this.supplierDiningPurposeEntityRepository = supplierDiningPurposeEntityRepository;
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
+            this.regionEntityRepository = regionEntityRepository;
+            this.supplierBusinessAreaEntityRepository = supplierBusinessAreaEntityRepository;
+            this.addrBusinessAreaEntityRepository = addrBusinessAreaEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
         }
 
@@ -655,9 +694,29 @@
                 };
             }
 
+            var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Id == parameter.CityId);
+            if (regionEntity == null)
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                {
+                    Result = new List<GroupSupplierModel>()
+                };
+            }
 
-            var tempQueryable = this.supplierEntityRepository.EntityQueryable.Where(
-                    p => p.SupplierGroupId == parameter.SupplierGroupId && p.Login.IsEnabled);
+            var list = new List<string> { regionEntity.Code };
+            if (regionEntity.Depth == 2)
+            {
+                var regionEntityList = this.regionEntityRepository.FindByExpression(p => p.ProvinceId == parameter.CityId && p.Depth == 4);
+                list.AddRange(regionEntityList.Select(p => p.Code).ToList());
+            }
+
+            var tempQueryable = (from entity in this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierGroupId == parameter.SupplierGroupId && p.Login.IsEnabled)
+                                 from supplierBusiness in this.supplierBusinessAreaEntityRepository.EntityQueryable
+                                 from addrBusinessArea in this.addrBusinessAreaEntityRepository.EntityQueryable
+                                 where entity.SupplierId == supplierBusiness.SupplierId
+                                 && supplierBusiness.BusinessAreaId == addrBusinessArea.BusinessAreaId
+                                 && list.Contains(addrBusinessArea.RegionCode)
+                                 select entity);
 
             if (parameter.FeatureId != null)
             {

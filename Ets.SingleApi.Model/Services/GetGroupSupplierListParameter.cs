@@ -26,6 +26,19 @@
         public int? FeatureId { get; set; }
 
         /// <summary>
+        /// Gets or sets the CityId of GetGroupSupplierListParameter
+        /// </summary>
+        /// <value>
+        /// The CityId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：12/28/2013 5:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int CityId { get; set; }
+
+        /// <summary>
         /// Gets or sets the SupplierGroupId of GetGroupSupplierListParameter
         /// </summary>
         /// <value>
