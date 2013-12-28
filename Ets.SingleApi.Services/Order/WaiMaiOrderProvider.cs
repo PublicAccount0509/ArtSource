@@ -336,6 +336,7 @@
                 Coupon = Math.Max(((deliveryEntity.Total ?? 0) - (deliveryEntity.CustomerTotal ?? 0)), 0).ToString("#0.00"),
                 Commission = "0.00",
                 RealSupplierType = deliveryEntity.RealSupplierType,
+                SupplierGroupId = supplierEntity.SupplierGroupId,
                 SupplierId = supplierEntity.SupplierId,
                 SupplierName = supplierEntity.SupplierName ?? string.Empty,
                 SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
