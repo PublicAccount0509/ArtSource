@@ -821,7 +821,7 @@
                     deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
                 }
 
-                var validateDeliveryTimeResult = this.haiDiLaoShoppingCartProvider.ValidateDeliveryTime(source, supplier.SupplierId, deliveryTimeTemp, now);
+                var validateDeliveryTimeResult = this.ValidateDeliveryTime(source, supplier.SupplierId, deliveryMethodId, deliveryTimeTemp, now);
                 if (!validateDeliveryTimeResult.Result)
                 {
                     return new ServicesResult<bool>
@@ -1225,6 +1225,32 @@
             }
 
             return ServicesCommon.CalculateCoupon(total, ServicesCommon.CalculateCouponWay, supplierCouponList);
+        }
+
+        /// <summary>
+        /// 验证送餐时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryMethodId">The deliveryMethodId</param>
+        /// <param name="deliveryTime">送餐时间</param>
+        /// <param name="now">当前时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 6:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private ServicesResult<bool> ValidateDeliveryTime(string source, int supplierId, int deliveryMethodId, DateTime deliveryTime, DateTime now)
+        {
+            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            {
+                return this.haiDiLaoShoppingCartProvider.ValidatePickUpTime(source, supplierId, deliveryTime, now);
+            }
+
+            return this.haiDiLaoShoppingCartProvider.ValidateDeliveryTime(source, supplierId, deliveryTime, now);
         }
     }
 }

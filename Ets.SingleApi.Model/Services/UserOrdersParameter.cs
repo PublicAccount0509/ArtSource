@@ -26,6 +26,32 @@
         public int CustomerId { get; set; }
 
         /// <summary>
+        /// Gets or sets the SupplierId of UserOrdersParameter
+        /// </summary>
+        /// <value>
+        /// The OrderStatus
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/12/2013 10:07 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? SupplierId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SupplierGroupId of UserOrdersParameter
+        /// </summary>
+        /// <value>
+        /// The OrderStatus
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/12/2013 10:07 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? SupplierGroupId { get; set; }
+
+        /// <summary>
         /// Gets or sets the OrderStatus of UserOrdersParameter
         /// </summary>
         /// <value>

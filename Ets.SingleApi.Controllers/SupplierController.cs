@@ -181,7 +181,7 @@
             {
                 FeatureId = featureId == -1 ? null : featureId,
                 SupplierGroupId = supplierGroupId,
-                CityId = cityId ?? ControllersCommon.DefaultSupplierGroupCityId,
+                CityId = cityId,
                 PageIndex = pageIndex,
                 PageSize = pageSize
             });

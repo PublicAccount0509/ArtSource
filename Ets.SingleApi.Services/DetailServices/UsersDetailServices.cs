@@ -161,7 +161,8 @@
                 DateJoined = DateTime.Now,
                 IsValId = false,
                 IsRegAllowed = true,
-                Source = parameter.SourceType.IsEmptyOrNull() ? null : this.sourceTypeEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType)
+                Source = parameter.SourceType.IsEmptyOrNull() ? null : this.sourceTypeEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType),
+                TemplateId = parameter.Template
             };
 
             this.customerEntityRepository.Save(customerEntity);
