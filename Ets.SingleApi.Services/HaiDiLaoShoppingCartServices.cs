@@ -803,7 +803,7 @@
             var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                  + extra.PanCount * ServicesCommon.PotDeposit;
-            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            if (deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 cookingFee = 0;
             }
@@ -970,7 +970,7 @@
             var oldCookingFee = order.CookingFee;
             var cookingFee = shoppingCartExtra.CookingCount * ServicesCommon.CookingDeposit
                 + shoppingCartExtra.PanCount * ServicesCommon.PotDeposit;
-            if (order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            if (order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 cookingFee = 0;
             }
@@ -1068,7 +1068,7 @@
             var servicesFee = Math.Round(shoppingPrice * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                              + extra.PanCount * ServicesCommon.PotDeposit;
-            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            if (deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 cookingFee = 0;
             }
@@ -1166,7 +1166,7 @@
             var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                  + extra.PanCount * ServicesCommon.PotDeposit;
-            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            if (deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 cookingFee = 0;
             }
