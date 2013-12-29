@@ -803,6 +803,11 @@
             var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                  + extra.PanCount * ServicesCommon.PotDeposit;
+            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            {
+                cookingFee = 0;
+            }
+
             var total = totalfee + servicesFee + cookingFee + fixedDeliveryFee;
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
@@ -965,6 +970,10 @@
             var oldCookingFee = order.CookingFee;
             var cookingFee = shoppingCartExtra.CookingCount * ServicesCommon.CookingDeposit
                 + shoppingCartExtra.PanCount * ServicesCommon.PotDeposit;
+            if (order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            {
+                cookingFee = 0;
+            }
             order.CookingFee = cookingFee;
             order.TotalFee = order.TotalFee - oldCookingFee + cookingFee;
             order.CustomerTotalFee = order.CustomerTotalFee - oldCookingFee + cookingFee;
@@ -1059,6 +1068,11 @@
             var servicesFee = Math.Round(shoppingPrice * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                              + extra.PanCount * ServicesCommon.PotDeposit;
+            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            {
+                cookingFee = 0;
+            }
+
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? shoppingPrice + servicesFee + cookingFee + fixedDeliveryCharge
                         : shoppingPrice + servicesFee + cookingFee;
@@ -1152,6 +1166,10 @@
             var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
                  + extra.PanCount * ServicesCommon.PotDeposit;
+            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            {
+                cookingFee = 0;
+            }
             var total = totalfee + fixedDeliveryFee + servicesFee + cookingFee;
             var coupon = order.CouponFee;
             var customerTotal = total - coupon;
