@@ -132,6 +132,19 @@
         public double? Averageprice { get; set; }
 
         /// <summary>
+        /// Gets or sets the Distance of GroupSupplier
+        /// </summary>
+        /// <value>
+        /// The Distance
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/16 14:30
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public double? Distance { get; set; }
+
+        /// <summary>
         /// Gets or sets the ParkingInfo of GroupSupplier
         /// </summary>
         /// <value>

@@ -1245,10 +1245,10 @@
         /// ----------------------------------------------------------------------------------------
         private ServicesResult<bool> ValidateDeliveryTime(string source, int supplierId, int deliveryMethodId, DateTime deliveryTime, DateTime now)
         {
-            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
-            {
-                return this.haiDiLaoShoppingCartProvider.ValidatePickUpTime(source, supplierId, deliveryTime, now);
-            }
+            //if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            //{
+            //    return this.haiDiLaoShoppingCartProvider.ValidatePickUpTime(source, supplierId, deliveryTime, now);
+            //}
 
             return this.haiDiLaoShoppingCartProvider.ValidateDeliveryTime(source, supplierId, deliveryTime, now);
         }

@@ -229,6 +229,83 @@
             };
         }
 
+
+        /// <summary>
+        /// 获取餐厅分店信息
+        /// </summary>
+        /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="userLat">The userLat</param>
+        /// <param name="userLong">The userLong</param>
+        /// <param name="featureId">The featureId</param>
+        /// <param name="cityId">The cityId</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<GroupSupplier> SearchGroupSupplierList(int supplierGroupId, int? userLat = null, int? userLong = null, int? featureId = -1, int? cityId = null, int pageSize = 10, int? pageIndex = null)
+        {
+            var getGroupSupplierListResult = this.supplierServices.GetSearchGroupSupplierList(this.Source, new GetSearchGroupSupplierListParameter
+            {
+                FeatureId = featureId == -1 ? null : featureId,
+                SupplierGroupId = supplierGroupId,
+                CityId = cityId,
+                UserLat = userLat ?? 0,
+                UserLong = userLong ?? 0,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            });
+
+            if (getGroupSupplierListResult.Result == null || getGroupSupplierListResult.Result.Count == 0)
+            {
+                return new ListResponse<GroupSupplier>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getGroupSupplierListResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getGroupSupplierListResult.StatusCode
+                    },
+                    Result = new List<GroupSupplier>()
+                };
+            }
+
+            var result = getGroupSupplierListResult.Result.Select(p => new GroupSupplier
+            {
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName ?? string.Empty,
+                SupplierDescription = p.SupplierDescription ?? string.Empty,
+                BaIduLat = p.BaIduLat ?? string.Empty,
+                BaIduLong = p.BaIduLong ?? string.Empty,
+                Address = p.Address ?? string.Empty,
+                Averageprice = p.Averageprice ?? 0,
+                ParkingInfo = p.ParkingInfo ?? string.Empty,
+                Telephone = p.Telephone ?? string.Empty,
+                LogoUrl = p.LogoUrl ?? string.Empty,
+                Distance = p.Distance ?? -1,
+                SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
+                {
+                    SupplierFeatureId = q.SupplierFeatureId,
+                    FeatureId = q.FeatureId,
+                    FeatureName = q.FeatureName ?? string.Empty
+                }).ToList()
+            }).ToList();
+
+            return new ListResponse<GroupSupplier>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getGroupSupplierListResult.StatusCode
+                },
+                ResultTotalCount = getGroupSupplierListResult.ResultTotalCount,
+                Result = result
+            };
+        }
+
         /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>

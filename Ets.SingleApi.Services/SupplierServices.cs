@@ -750,6 +750,66 @@
             };
         }
 
+        public ServicesResultList<GroupSupplierModel> GetSearchGroupSupplierList(string source, GetSearchGroupSupplierListParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                {
+                    Result = new List<GroupSupplierModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var list = this.supplierEntityRepository.NamedQuery("Pro_QuerySearchGroupSupplierList")
+                    .SetInt32("FeatureId", parameter.FeatureId ?? -1)
+                    .SetInt32("SupplierGroupId", parameter.SupplierGroupId ?? -1)
+                    .SetInt32("CityId", parameter.CityId ?? -1)
+                    .SetDouble("UserLat", parameter.UserLat)
+                    .SetDouble("UserLong", parameter.UserLong)
+                    .SetInt32("PageIndex", parameter.PageIndex ?? -1)
+                    .SetInt32("PageSize", parameter.PageSize).List();
+
+
+            var supplierList = (from object[] item in list
+                                select new GroupSupplierModel
+                                {
+                                    SupplierId = item[0].ObjectToInt(),
+                                    SupplierName = item[1].ObjectToString(),
+                                    Address = item[2].ObjectToString(),
+                                    Telephone = item[3].ObjectToString(),
+                                    Averageprice = item[4].ObjectToDouble(),
+                                    BaIduLat = item[5].ObjectToString(),
+                                    BaIduLong = item[6].ObjectToString(),
+                                    ParkingInfo = item[7].ObjectToString(),
+                                    DateJoined = item[8].ObjectToDateTime(),
+                                    IsOpenDoor = item[9].ObjectToBoolean(),
+                                    SupplierDescription = item[10].ObjectToString(),
+                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, item[11].ObjectToString()),
+                                    Distance = item[12].ObjectToDouble()
+                                }).ToList();
+
+            var supplierIdList = supplierList.Select(p => p.SupplierId).ToList();
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
+                    .Select(p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId }).ToList();
+
+            foreach (var supplier in supplierList)
+            {
+                supplier.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == supplier.SupplierId)
+                                       .Select(p =>
+                                           new SupplierFeatureModel
+                                               {
+                                                   FeatureId = p.FeatureId,
+                                                   FeatureName = p.Feature,
+                                                   SupplierFeatureId = p.SupplierFeatureId
+                                               }).ToList();
+            }
+            return new ServicesResultList<GroupSupplierModel>
+            {
+                Result = supplierList
+            };
+        }
+
         /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>

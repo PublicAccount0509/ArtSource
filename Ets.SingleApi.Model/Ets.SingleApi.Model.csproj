@@ -126,6 +126,7 @@
     <Compile Include="Controller\LightFeature.cs" />
     <Compile Include="Controller\LightSupplierDetail.cs" />
     <Compile Include="Controller\LightSupplierTemplate.cs" />
+    <Compile Include="Services\GetSearchGroupSupplierListParameter.cs" />
     <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
