@@ -785,7 +785,7 @@
 
             var shoppingCart = getShoppingCartResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
-            if (shoppingList.All(p => p.Type != 0))
+            if (shoppingList.Count(p => p.ParentId == 0) == 0)
             {
                 return new ServicesResult<bool>
                     {
