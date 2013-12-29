@@ -264,7 +264,8 @@
                                         supplierEntity.PublicTransport,
                                         supplierEntity.PackLadder,
                                         supplierEntity.Fax,
-                                        supplierEntity.Email
+                                        supplierEntity.Email,
+                                        supplierEntity.RegionCode
                                     }).FirstOrDefault();
 
             if (tempSupplier == null)
@@ -330,7 +331,8 @@
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
             {
-                supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled);
+                var code = (tempSupplier.RegionCode ?? string.Empty).Length < 3 ? tempSupplier.RegionCode : tempSupplier.RegionCode.Substring(0, 3);
+                supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled && p.RegionCode.Contains(code));
             }
 
             var tempDiningPurposeList = this.supplierDiningPurposeEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
