@@ -9,7 +9,6 @@
 		</id>
 		<!--The propertys-->
 		<property name="PackageClassificationId" column="PackageClassificationID" type="Int32" />
-		<property name="DefaultNum" column="DefaultNum" type="Int32" not-null="false" />
 		<property name="SelectNumber" column="SelectNumber" type="Int32" not-null="false" />
 		<!--The foreign keys-->
 		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />

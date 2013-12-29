@@ -387,7 +387,6 @@
                                           CategoryId = entity.PackageClassificationId,
                                           entity.PackageContentId,
                                           CanSelectCount = entity.SelectNumber,
-                                          entity.DefaultNum,
                                           entity.SupplierDish
                                       }).ToList();
 
@@ -399,7 +398,6 @@
                                         item.CategoryId,
                                         item.PackageContentId,
                                         item.CanSelectCount,
-                                        item.DefaultNum,
                                         supplierDishEntity.SupplierCategoryId,
                                         supplierDishEntity.DishNo,
                                         supplierDishEntity.Price,
@@ -437,7 +435,6 @@
                                 {
                                     PackageContentId = supplierDishEntity.PackageContentId,
                                     CanSelectCount = supplierDishEntity.CanSelectCount,
-                                    DefaultNum = supplierDishEntity.DefaultNum,
                                     Price = supplierDishEntity.Price,
                                     ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
                                     SupplierDishId = supplierDishEntity.SupplierDishId,
