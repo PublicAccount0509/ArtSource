@@ -78,6 +78,30 @@
         }
 
         /// <summary>
+        /// 获取餐厅分店信息
+        /// </summary>
+        /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="userLat">The userLat</param>
+        /// <param name="userLong">The userLong</param>
+        /// <param name="featureId">The featureId</param>
+        /// <param name="cityId">The cityId</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/SearchGroupSupplierList?supplierGroupId={supplierGroupId}&userLat={userLat}&userLong={userLong}&featureId={featureId}&cityId={cityId}&pageSize={pageSize}&pageIndex={pageIndex}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<GroupSupplier> SearchGroupSupplierList(int supplierGroupId, int userLat, int userLong, int featureId, int cityId, int pageSize, int pageIndex)
+        {
+            return new ListResponse<GroupSupplier>();
+        }
+
+        /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>
         /// <param name="id">餐厅Id</param>

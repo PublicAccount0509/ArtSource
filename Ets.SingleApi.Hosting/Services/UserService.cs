@@ -17,7 +17,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-   [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class UserService : IUserService
     {
         /// <summary>
@@ -107,7 +107,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-       [WebGet(UriTemplate = "/CustomerAddressList/{id}?cityId={cityId}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebGet(UriTemplate = "/CustomerAddressList/{id}?cityId={cityId}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         public ListResponse<CustomerAddress> CustomerAddressList(string id, int cityId)
         {
             return new ListResponse<CustomerAddress>();
@@ -268,6 +268,8 @@
         /// </summary>
         /// <param name="id">用户Id</param>
         /// <param name="orderType">订单类型</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
         /// <param name="orderStatus">订单状态</param>
         /// <param name="paidStatus">支付状态</param>
         /// <param name="pageSize">每页最大数量</param>
@@ -280,8 +282,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/UserOrderList/{id}?orderType={orderType}&orderStatus={orderStatus}&paidStatus={paidStatus}&pageSize={pageSize}&pageIndex={pageIndex}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public ListResponse<UserOrder> UserOrderList(string id, int orderType, string orderStatus, string paidStatus, int pageSize, string pageIndex)
+        [WebGet(UriTemplate = "/UserOrderList/{id}?orderType={orderType}&supplierId={supplierId}&supplierGroupId={supplierGroupId}&orderStatus={orderStatus}&paidStatus={paidStatus}&pageSize={pageSize}&pageIndex={pageIndex}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<UserOrder> UserOrderList(string id, int orderType, int supplierId, int supplierGroupId, string orderStatus, string paidStatus, int pageSize, string pageIndex)
         {
             return new ListResponse<UserOrder>();
         }

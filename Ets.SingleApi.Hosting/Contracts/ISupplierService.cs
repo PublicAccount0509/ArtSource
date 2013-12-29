@@ -71,6 +71,28 @@
         ListResponse<GroupSupplier> GroupSupplierList(int supplierGroupId, int featureId, int pageSize, string pageIndex);
 
         /// <summary>
+        /// 获取餐厅分店信息
+        /// </summary>
+        /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="userLat">The userLat</param>
+        /// <param name="userLong">The userLong</param>
+        /// <param name="featureId">The featureId</param>
+        /// <param name="cityId">The cityId</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取餐厅分店信息计算距离（如果传了用户坐标）；参数说明：featureId（-1 or null 所有 1 外卖 2 订台 9 堂食，默认为-1），pageSize（默认值为10）")]
+        ListResponse<GroupSupplier> SearchGroupSupplierList(int supplierGroupId, int userLat, int userLong, int featureId, int cityId, int pageSize, int pageIndex);
+
+        /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>
         /// <param name="id">餐厅Id</param>

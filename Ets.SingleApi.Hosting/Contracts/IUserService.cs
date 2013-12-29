@@ -241,6 +241,8 @@
         /// </summary>
         /// <param name="id">用户Id</param>
         /// <param name="orderType">订单类型</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
         /// <param name="orderStatus">订单状态</param>
         /// <param name="paidStatus">支付状态</param>
         /// <param name="pageSize">每页最大数量</param>
@@ -255,6 +257,6 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：用户订单列表；参数说明：orderType（-1 所有订单  0 外卖订单  1 堂食订单  2 订台订单）、pageSize（默认值为10）")]
-        ListResponse<UserOrder> UserOrderList(string id, int orderType, string orderStatus, string paidStatus, int pageSize, string pageIndex);
+        ListResponse<UserOrder> UserOrderList(string id, int orderType, int supplierId, int supplierGroupId, string orderStatus, string paidStatus, int pageSize, string pageIndex);
     }
 }
