@@ -647,7 +647,13 @@
                     AverageRating = p.AverageRating,
                     CuisineName = (p.CuisineName ?? string.Empty),
                     LogoUrl = (p.LogoUrl ?? string.Empty),
-                    Telephone = (p.Telephone ?? string.Empty)
+                    Telephone = (p.Telephone ?? string.Empty),
+                    SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
+                    {
+                        SupplierFeatureId = q.SupplierFeatureId,
+                        FeatureId = q.FeatureId,
+                        FeatureName = q.FeatureName ?? string.Empty
+                    }).ToList()
                 }).ToList();
 
             return new ListResponse<FollowerSupplier>

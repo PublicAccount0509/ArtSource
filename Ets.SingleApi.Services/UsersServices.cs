@@ -105,6 +105,16 @@
         private readonly INHibernateRepository<RegionEntity> regionEntityRepository;
 
         /// <summary>
+        /// 字段supplierFeatureEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/29/2013 10:36 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
+
+        /// <summary>
         /// 字段usersDetailServices
         /// </summary>
         /// 创建者：周超
@@ -165,6 +175,7 @@
         /// <param name="supplierCuisineEntityRepository">The supplierCuisineEntityRepository</param>
         /// <param name="supplierImageEntityRepository">The supplierImageEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
+        /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
         /// <param name="usersDetailServices">The usersDetailServices</param>
         /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="userOrdersList">The userOrdersList</param>
@@ -184,6 +195,7 @@
             INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository,
             INHibernateRepository<SupplierImageEntity> supplierImageEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository,
+            INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
             IUsersDetailServices usersDetailServices,
             ISmsDetailServices smsDetailServices,
             List<IUserOrders> userOrdersList,
@@ -198,6 +210,7 @@
             this.supplierCuisineEntityRepository = supplierCuisineEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
+            this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.usersDetailServices = usersDetailServices;
             this.smsDetailServices = smsDetailServices;
             this.userOrdersList = userOrdersList;
@@ -892,6 +905,10 @@
             }
 
             var supplierIdList = followerSupplierList.Select(p => p.SupplierId).ToList();
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                    p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
+                    .Select(p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId })
+                    .ToList();
             var supplierCuisineList = (from supplierCuisine in this.supplierCuisineEntityRepository.EntityQueryable
                                        where supplierIdList.Contains(supplierCuisine.Supplier.SupplierId)
                                        select new
@@ -921,6 +938,14 @@
 
                 var cuisineNameList = supplierCuisineList.Where(p => p.SupplierId == followerSupplier.SupplierId).Select(p => p.CuisineName).Where(p => !p.IsEmptyOrNull()).ToList();
                 followerSupplier.CuisineName = string.Join(",", cuisineNameList);
+
+                followerSupplier.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == followerSupplier.SupplierId)
+                                                                           .Select(p => new SupplierFeatureModel
+                                                                                   {
+                                                                                       FeatureId = p.FeatureId,
+                                                                                       FeatureName = p.Feature,
+                                                                                       SupplierFeatureId = p.SupplierFeatureId
+                                                                                   }).ToList();
             }
 
             return new ServicesResultList<FollowerSupplierModel>
