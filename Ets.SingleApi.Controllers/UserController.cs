@@ -806,6 +806,8 @@
         /// <param name="id">用户Id</param>
         /// <param name="orderType">订单类型</param>
         /// <param name="orderStatus">订单状态</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="supplierGroupId">餐厅群组Id</param>
         /// <param name="paidStatus">支付状态</param>
         /// <param name="pageSize">每页最大数量</param>
         /// <param name="pageIndex">页码</param>
@@ -819,7 +821,7 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public ListResponse<UserOrder> UserOrderList(int id, int orderType = -1, int? orderStatus = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null)
+        public ListResponse<UserOrder> UserOrderList(int id, int orderType = -1, int? orderStatus = null, int? supplierId = null, int? supplierGroupId = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null)
         {
             if (!this.ValidateUserId(id))
             {
@@ -837,6 +839,8 @@
                                                             {
                                                                 OrderStatus = orderStatus,
                                                                 PaidStatus = paidStatus,
+                                                                SupplierId = supplierId,
+                                                                SupplierGroupId = supplierGroupId,
                                                                 PageIndex = pageIndex,
                                                                 PageSize = pageSize
                                                             });

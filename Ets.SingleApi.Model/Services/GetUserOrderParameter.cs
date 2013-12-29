@@ -39,6 +39,32 @@
         public bool? PaidStatus { get; set; }
 
         /// <summary>
+        /// Gets or sets the SupplierId of GetUserOrderParameter
+        /// </summary>
+        /// <value>
+        /// The SupplierId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：12/29/2013 10:50 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? SupplierId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SupplierGroupId of GetUserOrderParameter
+        /// </summary>
+        /// <value>
+        /// The SupplierGroupId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：12/29/2013 10:50 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? SupplierGroupId { get; set; }
+
+        /// <summary>
         /// Gets or sets the size of the page.
         /// </summary>
         /// <value>

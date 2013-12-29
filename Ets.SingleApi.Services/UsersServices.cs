@@ -1150,6 +1150,8 @@
                     CustomerId = customerId,
                     OrderStatus = parameter.OrderStatus,
                     PaidStatus = parameter.PaidStatus,
+                    SupplierId = parameter.SupplierId,
+                    SupplierGroupId = parameter.SupplierGroupId,
                     PageIndex = parameter.PageIndex,
                     PageSize = parameter.PageSize
                 });

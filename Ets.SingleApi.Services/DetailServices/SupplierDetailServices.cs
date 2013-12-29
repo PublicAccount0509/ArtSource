@@ -643,7 +643,7 @@
                     var endDate = item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime);
                     while (startDate <= endDate)
                     {
-                        if (serviceDate.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") && DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate)) < DateTime.Now)
+                        if (serviceDate.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") && DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate)) < DateTime.Now.AddMinutes(ServicesCommon.BeginReadyTime))
                         {
                             startDate = startDate.AddMinutes(ServicesCommon.ServiceTimeInterval);
                             continue;
@@ -739,7 +739,7 @@
                     var endDate = item.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime);
                     while (startDate <= endDate)
                     {
-                        if (deliveryDate.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") && DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate)) < DateTime.Now)
+                        if (deliveryDate.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") && DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate)) < DateTime.Now.AddMinutes(ServicesCommon.BeginReadyTime))
                         {
                             startDate = startDate.AddMinutes(ServicesCommon.DeliveryTimeInterval);
                             continue;

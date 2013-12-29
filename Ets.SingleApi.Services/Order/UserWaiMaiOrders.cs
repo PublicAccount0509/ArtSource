@@ -174,6 +174,21 @@
         private List<WaiMaiOrderModel> GetWaiMaiOrderList(UserOrdersParameter parameter)
         {
             var queryableTemp = this.deliveryEntityRepository.EntityQueryable.Where(p => p.CustomerId == parameter.CustomerId && p.SupplierId != null);
+            if (parameter.SupplierGroupId != null)
+            {
+                queryableTemp = (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable.Where(p => p.CustomerId == parameter.CustomerId && p.SupplierId != null)
+                                 from entity in this.supplierEntityRepository.EntityQueryable
+                                 where deliveryEntity.SupplierId == entity.SupplierId
+                                 && entity.SupplierGroupId == parameter.SupplierGroupId
+                                 select deliveryEntity);
+
+            }
+
+            if (parameter.SupplierId != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.SupplierId == parameter.SupplierId);
+            }
+
             if (parameter.OrderStatus != null)
             {
                 queryableTemp = queryableTemp.Where(p => p.OrderStatusId == parameter.OrderStatus);
