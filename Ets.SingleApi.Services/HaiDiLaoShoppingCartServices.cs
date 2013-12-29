@@ -796,8 +796,9 @@
             var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
             var totalfee = shoppingPrice;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
-                                          ? 0
-                                         : supplier.FixedDeliveryCharge;
+                                        ? 0
+                                       : supplier.FixedDeliveryCharge;
+
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
@@ -1052,8 +1053,8 @@
             var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
             order.CouponFee = 0;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
-                                          ? 0
-                                         : supplier.FixedDeliveryCharge;
+                                        ? 0
+                                       : supplier.FixedDeliveryCharge;
 
             var servicesFee = Math.Round(shoppingPrice * supplier.ConsumerAmount / 100, 0);
             var cookingFee = extra.CookingCount * ServicesCommon.CookingDeposit
@@ -1142,8 +1143,9 @@
             var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
             var totalfee = shoppingPrice;
             var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
-                                          ? 0
-                                         : supplier.FixedDeliveryCharge;
+                                        ? 0
+                                       : supplier.FixedDeliveryCharge;
+
             var canDelivery = totalfee >= supplier.DelMinOrderAmount;
             var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;

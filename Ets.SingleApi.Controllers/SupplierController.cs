@@ -229,7 +229,6 @@
             };
         }
 
-
         /// <summary>
         /// 获取餐厅分店信息
         /// </summary>
@@ -256,8 +255,8 @@
                 FeatureId = featureId == -1 ? null : featureId,
                 SupplierGroupId = supplierGroupId,
                 CityId = cityId,
-                UserLat = userLat ?? 0,
-                UserLong = userLong ?? 0,
+                UserLat = userLat ?? -1,
+                UserLong = userLong ?? -1,
                 PageIndex = pageIndex,
                 PageSize = pageSize
             });

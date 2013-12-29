@@ -20,6 +20,25 @@
     public class ServicesCommon
     {
         /// <summary>
+        /// 是否取餐厅送餐费
+        /// </summary>
+        /// <value>
+        /// 是否取餐厅送餐费
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool CalculateDeliveryChargeEnable
+        {
+            get
+            {
+                return string.Equals(ConfigurationManager.AppSettings["CalculateDeliveryChargeEnable"], "true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
         /// 单个锅的押金
         /// </summary>
         /// <value>
