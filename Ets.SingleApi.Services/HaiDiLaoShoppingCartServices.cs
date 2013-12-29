@@ -843,7 +843,7 @@
             shoppingCartOrder.TotalPrice = shoppingPrice;
             shoppingCartOrder.FixedDeliveryFee = fixedDeliveryFee;
             shoppingCartOrder.PackagingFee = 0;
-            shoppingCartOrder.TotalQuantity = shoppingList.Where(p => p.Type == 0).Sum(p => p.Quantity);
+            shoppingCartOrder.TotalQuantity = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity);
             shoppingCartOrder.PanQuantity = shoppingList.Where(p => p.Type == 2 && p.ParentId == 0).Sum(p => p.Quantity);
             shoppingCartOrder.DipQuantity = shoppingList.Where(p => p.Type == 1 && p.ParentId == 0).Sum(p => p.Quantity);
             shoppingCartOrder.DishQuantity = shoppingList.Where(p => p.Type == 0 && p.ParentId == 0 && !p.IsPresent).Sum(p => p.Quantity);
@@ -1069,7 +1069,7 @@
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             order.PackagingFee = 0;
-            order.TotalQuantity = shoppingList.Where(p => p.Type == 0).Sum(p => p.Quantity);
+            order.TotalQuantity = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity);
             order.PanQuantity = shoppingList.Where(p => p.Type == 2 && p.ParentId == 0).Sum(p => p.Quantity);
             order.DipQuantity = shoppingList.Where(p => p.Type == 1 && p.ParentId == 0).Sum(p => p.Quantity);
             order.DishQuantity = shoppingList.Where(p => p.Type == 0 && p.ParentId == 0 && !p.IsPresent).Sum(p => p.Quantity);
@@ -1177,7 +1177,7 @@
             order.TotalPrice = shoppingPrice;
             order.FixedDeliveryFee = fixedDeliveryFee;
             order.PackagingFee = 0;
-            order.TotalQuantity = shoppingList.Where(p => p.Type == 0).Sum(p => p.Quantity);
+            order.TotalQuantity = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity);
             order.PanQuantity = shoppingList.Where(p => p.Type == 2 && p.ParentId == 0).Sum(p => p.Quantity);
             order.DipQuantity = shoppingList.Where(p => p.Type == 1 && p.ParentId == 0).Sum(p => p.Quantity);
             order.DishQuantity = shoppingList.Where(p => p.Type == 0 && p.ParentId == 0 && !p.IsPresent).Sum(p => p.Quantity);
