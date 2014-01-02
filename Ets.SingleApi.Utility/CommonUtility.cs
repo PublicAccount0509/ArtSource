@@ -92,6 +92,12 @@
             }
 
             log.Error(exception);
+            if (exception.InnerException == null)
+            {
+                return;
+            }
+
+            log.Error(exception.InnerException);
         }
 
         #endregion

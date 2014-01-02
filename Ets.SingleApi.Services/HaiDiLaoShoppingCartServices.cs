@@ -573,7 +573,15 @@
                 if (item.Quantity <= 0)
                 {
                     shoppingList.Remove(item);
+                    shoppingList.RemoveAll(p => p.ParentId == item.ItemId);
                 }
+            }
+
+            var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);
+            var totalfee = shoppingPrice;
+            if (totalfee < supplier.DelMinOrderAmount)
+            {
+                shoppingList.RemoveAll(p => p.IsPresent && p.Type == 0);
             }
 
             foreach (var shoppingCartItem in shoppingList)
@@ -1051,12 +1059,12 @@
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var extra = getShoppingCartExtraResult.Result;
-            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
-            {
-                extra.CookingCount = 0;
-                extra.PanCount = 0;
-                this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, extra);
-            }
+            //if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            //{
+            //    extra.CookingCount = 0;
+            //    extra.PanCount = 0;
+            //    this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, extra);
+            //}
 
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Where(p => p.ParentId == 0).Sum(p => p.Quantity * p.Price);

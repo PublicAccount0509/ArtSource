@@ -427,10 +427,6 @@
                 IsSelfDip = (deliveryEntity.ZBXL ?? 0) == 1
             };
 
-            var cookingFee = result.CookingCount * ServicesCommon.CookingDeposit
-                 + result.PanCount * ServicesCommon.PotDeposit;
-
-            result.CookingFee = cookingFee.ToString("#0.00");
             return new ServicesResult<IOrderDetailModel>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
