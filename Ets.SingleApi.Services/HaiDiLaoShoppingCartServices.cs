@@ -913,6 +913,7 @@
             shoppingCartOrder.ServicesFee = servicesFee;
             shoppingCartOrder.CouponFee = coupon;
             shoppingCartOrder.CookingFee = cookingFee;
+            shoppingCartOrder.CanSelectCooking = true;
 
             if (order.IsSelfPan)
             {
@@ -1148,6 +1149,7 @@
             order.CouponFee = coupon;
             order.ServicesFee = servicesFee;
             order.CookingFee = cookingFee;
+            order.CanSelectCooking = true;
 
             if (order.IsSelfPan)
             {
@@ -1272,6 +1274,7 @@
             order.CouponFee = coupon;
             order.ServicesFee = servicesFee;
             order.CookingFee = cookingFee;
+            order.CanSelectCooking = true;
 
             if (order.IsSelfPan)
             {
