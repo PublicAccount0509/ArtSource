@@ -436,8 +436,6 @@
                 {
                     item.CategoryIdList.Add(categoryId);
                 }
-
-                item.Quantity += shoppingCartItem.Quantity;
             }
 
             foreach (var shoppingCartItem in shoppingList)

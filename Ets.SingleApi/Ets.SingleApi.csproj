@@ -15,7 +15,7 @@
     <AssemblyName>Ets.SingleApi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -257,9 +257,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1565</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://htjapi.etaoshi.com/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://htjapi.etaoshi.com/</IISAppRootUrl>
+          <IISUrl>http://localhost:1565/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

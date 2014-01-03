@@ -841,7 +841,7 @@
                     if (onlyActive)
                     {
                         var date = startDate.ToString("yyyy-MM-dd");
-                        var tempStartDate = DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate));
+                        var tempStartDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate));
                         var tempEndDate = DateTime.Now.AddMinutes(beginReadyTime);
                         var tempDate = tempStartDate >= tempEndDate ? tempStartDate : tempEndDate;
                         startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
