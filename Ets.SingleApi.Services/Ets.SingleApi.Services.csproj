@@ -87,6 +87,10 @@
     <Compile Include="FilterServices.cs" />
     <Compile Include="FunctionServices.cs" />
     <Compile Include="HaiDiLaoSupplierServices.cs" />
+    <Compile Include="HuangTaiJiOrderServicesTemp.cs" />
+    <Compile Include="HuangTaiJiShoppingCartServices.cs" />
+    <Compile Include="HuangTaiJiSupplierServices.cs" />
+    <Compile Include="ICacheServices\IHuangTaiJiShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IHaiDiLaoShoppingCartCacheServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
@@ -99,6 +103,7 @@
     <Compile Include="OrderServicesTemp.cs" />
     <Compile Include="OrderNumber\IOrderNumber.cs" />
     <Compile Include="Order\DingTaiOrderProvider.cs" />
+    <Compile Include="Order\HuangTaiJiWaiMaiOrderProvider.cs" />
     <Compile Include="Order\IOrderProvider.cs" />
     <Compile Include="Order\IUserOrders.cs" />
     <Compile Include="OrderNumber\OrderNumberResult.cs" />
@@ -132,6 +137,8 @@
     <Compile Include="ServicesCommon.cs" />
     <Compile Include="DetailServices\SmsDetailServices.cs" />
     <Compile Include="ShoppingCartServices.cs" />
+    <Compile Include="ShoppingCart\HuangTaiJiShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\IHuangTaiJiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\ShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IHaiDiLaoShoppingCartProvider.cs" />

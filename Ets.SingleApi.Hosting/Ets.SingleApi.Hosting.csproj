@@ -88,6 +88,8 @@
     <Compile Include="Contracts\ICouponService.cs" />
     <Compile Include="Contracts\ICuisineService.cs" />
     <Compile Include="Contracts\IFunctionService.cs" />
+    <Compile Include="Contracts\IHuangTaiJiShoppingCartService.cs" />
+    <Compile Include="Contracts\IHuangTaiJiSupplierService.cs" />
     <Compile Include="Contracts\IOrdersService.cs" />
     <Compile Include="Contracts\IPaymentService.cs" />
     <Compile Include="Contracts\ISmsService.cs" />
@@ -117,6 +119,8 @@
     <Compile Include="Services\CouponService.cs" />
     <Compile Include="Services\CuisineService.cs" />
     <Compile Include="Services\FunctionService.cs" />
+    <Compile Include="Services\HuangTaiJiShoppingCartService.cs" />
+    <Compile Include="Services\HuangTaiJiSupplierService.cs" />
     <Compile Include="Services\OrdersService.cs" />
     <Compile Include="Services\PaymentService.cs" />
     <Compile Include="Services\SmsService.cs" />

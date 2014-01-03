@@ -44,6 +44,14 @@
     <Compile Include="CacheServices\CacheServicesListResult.cs" />
     <Compile Include="Controller\HtjRegisterUserRequest.cs" />
     <Compile Include="Controller\HtjUserExtendResult.cs" />
+    <Compile Include="Controller\HuangTaiJiShoppingCartRequst.cs" />
+    <Compile Include="Controller\HuangTaiJiShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\HuangTaiJiSupplierCuisine.cs" />
+    <Compile Include="Controller\HuangTaiJiSupplierDishCustomizationOption.cs" />
+    <Compile Include="Controller\HuangTaiJiSupplierDishDetail.cs" />
+    <Compile Include="Controller\HuangTaiJiSupplierDishOptionGroup.cs" />
+    <Compile Include="Controller\HuangTaiJiWaiMaiOrderDetail.cs" />
+    <Compile Include="Controller\HuangTaiJiWaiMaiOrderDish.cs" />
     <Compile Include="Controller\IsFollowerSupplierResult.cs" />
     <Compile Include="Controller\PackageCuisine.cs" />
     <Compile Include="Controller\PackageDish.cs" />
@@ -104,6 +112,9 @@
     <Compile Include="Services\CustomerSimpleModel.cs" />
     <Compile Include="Services\HtjUserModel.cs" />
     <Compile Include="Controller\LightSupplier.cs" />
+    <Compile Include="Services\HuangTaiJiShoppingCartModel.cs" />
+    <Compile Include="Services\HuangTaiJiWaiMaiOrderDetailModel.cs" />
+    <Compile Include="Services\HuangTaiJiWaiMaiOrderDishModel.cs" />
     <Compile Include="Services\LightFeatureModel.cs" />
     <Compile Include="Services\LightSupplierModel.cs" />
     <Compile Include="Services\LightSupplierDetailModel.cs" />
@@ -128,6 +139,10 @@
     <Compile Include="Controller\LightSupplierDetail.cs" />
     <Compile Include="Controller\LightSupplierTemplate.cs" />
     <Compile Include="Services\GetSearchGroupSupplierListParameter.cs" />
+    <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
+    <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
+    <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\HuangTaiJiShoppingCartOrder.cs" />
     <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />

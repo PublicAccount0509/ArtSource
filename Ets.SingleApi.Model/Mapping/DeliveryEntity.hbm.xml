@@ -73,6 +73,7 @@
     <property name="ZBXL" column="ZBXL" type="Int32" not-null="false" />
     <property name="PrintState" column="PrintState" type="Boolean" not-null="false" />
     <property name="CcName" column="CcName" type="String" not-null="false" />
+    <!--wx huangtaiji DeliveryDiscount-->
     <property name="Discount" column="Discount" type="Decimal" not-null="false" />
     <property name="ReprintState" column="ReprintState" type="Boolean" not-null="false" />
     <!--The foreign keys-->
