@@ -137,6 +137,16 @@
         private readonly INHibernateRepository<TimeTableEntity> timeTableEntityRepository;
 
         /// <summary>
+        /// 字段supplierDoNotSendTimeEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：1/3/2014 10:03 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierDoNotSendTimeEntity> supplierDoNotSendTimeEntityRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SupplierDetailServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
@@ -150,6 +160,7 @@
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// <param name="supplierTimeTableEntityRepository">The supplierTimeTableEntityRepository</param>
         /// <param name="timeTableEntityRepository">The timeTableEntityRepository</param>
+        /// <param name="supplierDoNotSendTimeEntityRepository">The supplierDoNotSendTimeEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：11/1/2013 5:03 PM
         /// 修改者：
@@ -166,7 +177,8 @@
             INHibernateRepository<SuppTimeTableDisplayEntity> suppTimeTableDisplayEntityRepository,
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository,
-            INHibernateRepository<TimeTableEntity> timeTableEntityRepository)
+            INHibernateRepository<TimeTableEntity> timeTableEntityRepository,
+            INHibernateRepository<SupplierDoNotSendTimeEntity> supplierDoNotSendTimeEntityRepository)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.categoryEntityRepository = categoryEntityRepository;
@@ -179,6 +191,7 @@
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
             this.supplierTimeTableEntityRepository = supplierTimeTableEntityRepository;
             this.timeTableEntityRepository = timeTableEntityRepository;
+            this.supplierDoNotSendTimeEntityRepository = supplierDoNotSendTimeEntityRepository;
         }
 
         /// <summary>
@@ -594,6 +607,8 @@
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="startServiceDate">开始日期</param>
         /// <param name="days">天数</param>
+        /// <param name="beginReadyTime">备餐时间</param>
+        /// <param name="onlyActive">是否只取有效的营业时间</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -602,7 +617,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DetailServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId, DateTime startServiceDate, int days)
+        public DetailServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId, DateTime startServiceDate, int days, int beginReadyTime, bool onlyActive)
         {
             var dayList = new List<string>();
             for (var i = 0; i < days; i++)
@@ -637,18 +652,23 @@
                 }
 
                 var list = new List<string>();
+                var tempDeliveryTimeList = new List<string>();
                 foreach (var item in timeTableList)
                 {
                     var startDate = item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime);
                     var endDate = item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime);
+                    if (onlyActive)
+                    {
+                        var date = startDate.ToString("yyyy-MM-dd");
+                        var tempStartDate = DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate));
+                        var tempEndDate = DateTime.Now.AddMinutes(beginReadyTime);
+                        var tempDate = tempStartDate >= tempEndDate ? tempStartDate : tempEndDate;
+                        startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
+                    }
+
+                    tempDeliveryTimeList.Add(string.Format("{0:t}-{1:t}", startDate, endDate));
                     while (startDate <= endDate)
                     {
-                        if (serviceDate.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") && DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate)) < DateTime.Now.AddMinutes(ServicesCommon.BeginReadyTime))
-                        {
-                            startDate = startDate.AddMinutes(ServicesCommon.ServiceTimeInterval);
-                            continue;
-                        }
-
                         list.Add(startDate.ToString("HH:mm"));
                         startDate = startDate.AddMinutes(ServicesCommon.ServiceTimeInterval);
                     }
@@ -663,7 +683,7 @@
                     {
                         SupplierId = supplierId,
                         ServiceDate = serviceDate.ToString("yyyy-MM-dd"),
-                        ServiceTime = timeTableList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime)),
+                        ServiceTime = string.Join(" ", tempDeliveryTimeList),
                         ServiceTimeList = list
                     });
             }
@@ -681,6 +701,8 @@
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="startDeliveryDate">开始日期</param>
         /// <param name="days">天数</param>
+        /// <param name="beginReadyTime">备餐时间</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -689,15 +711,19 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DetailServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(int supplierId, DateTime startDeliveryDate, int days)
+        public DetailServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(int supplierId, DateTime startDeliveryDate, int days, int beginReadyTime, bool onlyActive)
         {
+            var notSendDateList = new List<string>();
             var dayList = new List<string>();
             for (var i = 0; i < days; i++)
             {
-                var day = startDeliveryDate.AddDays(i).GetDayOfWeek();
+                var temp = startDeliveryDate.AddDays(i);
+                var day = temp.GetDayOfWeek();
                 dayList.Add(day);
+                notSendDateList.Add(temp.ToString("yyyy/MM/dd"));
             }
 
+            //送餐时间列表
             var supplierTimeTableList = (from entity in this.supplierTimeTableEntityRepository.EntityQueryable
                                          from timeTable in this.timeTableEntityRepository.EntityQueryable
                                          where entity.SupplierId == supplierId
@@ -709,12 +735,23 @@
                                              timeTable.CloseTime
                                          }).ToList();
 
+            //不送餐时间列表
+            var doNotSendTimeList = (from entity in this.supplierDoNotSendTimeEntityRepository.EntityQueryable
+                                     where entity.SupplierId == supplierId
+                                     && notSendDateList.Contains(entity.NotSendDate)
+                                     select new
+                                     {
+                                         entity.SupplierId,
+                                         entity.NotSendDate,
+                                         entity.NotSendTime
+                                     }).ToList();
+
             var result = new List<SupplierDeliveryTimeModel>();
             for (var i = 0; i < days; i++)
             {
                 var deliveryDate = startDeliveryDate.AddDays(i);
                 var day = deliveryDate.AddDays(i).GetDayOfWeek();
-                var list = new List<string>();
+                //取得当天的送餐时间列表
                 var timeTableList = supplierTimeTableList.Where(p => p.Day.ToString() == day).ToList();
                 if (timeTableList.Count <= 0)
                 {
@@ -733,18 +770,91 @@
                     }
                 }
 
+                //取得当天的不送餐时间列表
+                var tempList = doNotSendTimeList.Where(p => p.NotSendDate == deliveryDate.ToString("yyyy/MM/dd"))
+               .Select(p => p.NotSendTime).Where(p => p != null).Select(p => p ?? 0).OrderBy(p => p).ToList();
+
+                //分割时间段
+                var temptimeTableList = new List<dynamic>();
                 foreach (var item in timeTableList)
                 {
-                    var startDate = item.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime);
-                    var endDate = item.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime);
-                    while (startDate <= endDate)
+                    var startDate = item.OpenTime;
+                    var endDate = item.CloseTime;
+
+                    var startHours = startDate.Hour;
+                    var endHours = endDate.Hour;
+                    var noSendList = tempList.Where(p => p >= startHours && p <= endHours).ToList();
+                    if (noSendList.Count == 0)
                     {
-                        if (deliveryDate.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") && DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate)) < DateTime.Now.AddMinutes(ServicesCommon.BeginReadyTime))
+                        temptimeTableList.Add(new
+                               {
+                                   OpenTime = startDate,
+                                   CloseTime = endDate
+                               });
+                        continue;
+                    }
+
+                    var date = startDate.ToString("yyyy-MM-dd");
+                    foreach (var temp in noSendList)
+                    {
+                        if (temp == startHours)
                         {
-                            startDate = startDate.AddMinutes(ServicesCommon.DeliveryTimeInterval);
+                            startDate = DateTime.Parse(string.Format("{0} {1}:00", date, temp + 1));
+                            startHours = startDate.Hour;
                             continue;
                         }
 
+                        if (temp == endHours)
+                        {
+                            endDate = DateTime.Parse(string.Format("{0} {1}:59", date, temp - 1));
+                            endHours = endDate.Hour;
+                            continue;
+                        }
+
+                        temptimeTableList.Add(new
+                        {
+                            OpenTime = startDate,
+                            CloseTime = DateTime.Parse(string.Format("{0} {1}:59", date, temp - 1))
+                        });
+                        startDate = DateTime.Parse(string.Format("{0} {1}:00", date, temp + 1));
+                        startHours = startDate.Hour;
+                    }
+
+                    if (startDate >= endDate)
+                    {
+                        continue;
+                    }
+
+                    temptimeTableList.Add(new
+                    {
+                        OpenTime = startDate,
+                        CloseTime = endDate
+                    });
+                }
+
+                var list = new List<string>();
+                var tempDeliveryTimeList = new List<string>();
+                foreach (var item in temptimeTableList)
+                {
+                    var startDate = item.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime);
+                    var endDate = item.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime);
+                    if (onlyActive)
+                    {
+                        var date = startDate.ToString("yyyy-MM-dd");
+                        var tempStartDate = DateTime.Parse(string.Format("{0} {1:t}", DateTime.Now.ToString("yyyy-MM-dd"), startDate));
+                        var tempEndDate = DateTime.Now.AddMinutes(beginReadyTime);
+                        var tempDate = tempStartDate >= tempEndDate ? tempStartDate : tempEndDate;
+                        startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
+                    }
+
+                    if (startDate > endDate)
+                    {
+                        continue;
+                    }
+
+                    tempDeliveryTimeList.Add(string.Format("{0:t}-{1:t}", startDate, endDate));
+                    while (startDate <= endDate)
+                    {
                         list.Add(startDate.ToString("HH:mm"));
                         startDate = startDate.AddMinutes(ServicesCommon.DeliveryTimeInterval);
                     }
@@ -759,7 +869,7 @@
                 {
                     SupplierId = supplierId,
                     DeliveryDate = deliveryDate.ToString("yyyy-MM-dd"),
-                    DeliveryTime = timeTableList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime)),
+                    DeliveryTime = string.Join(" ", tempDeliveryTimeList),
                     DeliveryTimeList = list
                 });
             }

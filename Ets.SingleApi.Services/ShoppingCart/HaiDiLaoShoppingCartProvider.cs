@@ -700,21 +700,18 @@
             var timeTableList = supplierTimeTableList.Where(p => p.Day.ToString() == day).ToList();
             if (timeTableList.Count <= 0)
             {
-                if (timeTableList.Count <= 0)
+                foreach (var item in ServicesCommon.EmptyDeliveryTime.Split(' '))
                 {
-                    foreach (var item in ServicesCommon.EmptyDeliveryTime.Split(' '))
+                    var timeList = item.Split('-').ToList();
+                    if (timeList.Count != 2)
                     {
-                        var timeList = item.Split('-').ToList();
-                        if (timeList.Count != 2)
-                        {
-                            continue;
-                        }
-
-                        var itemDay = Convert.ToInt32(day);
-                        var itemOpenTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.First()));
-                        var itemCloseTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.Last()));
-                        timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
+                        continue;
                     }
+
+                    var itemDay = Convert.ToInt32(day);
+                    var itemOpenTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.First()));
+                    var itemCloseTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.Last()));
+                    timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
                 }
             }
 

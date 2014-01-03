@@ -1734,8 +1734,10 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
         /// <param name="startServiceDate">开始日期</param>
         /// <param name="days">天数</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -1744,9 +1746,15 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(string source, int supplierId, DateTime? startServiceDate, int? days)
+        public ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(string source, int supplierId, int deliveryMethodId, DateTime? startServiceDate, int? days, bool onlyActive)
         {
-            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
+            {
+                p.SupplierId,
+                p.DeliveryTime
+            }).FirstOrDefault();
+
+            if (supplier == null)
             {
                 return new ServicesResultList<SupplierServiceTimeModel>
                 {
@@ -1755,7 +1763,13 @@
                 };
             }
 
-            var result = this.supplierDetailServices.GetSupplierServiceTime(supplierId, startServiceDate ?? DateTime.Now, days ?? ServicesCommon.ServiceTimeDefaultDays);
+            int deliveryTime;
+            if (!int.TryParse(supplier.DeliveryTime, out deliveryTime))
+            {
+                deliveryTime = 45;
+            }
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.DeliveryTimeReadyTime : deliveryTime;
+            var result = this.supplierDetailServices.GetSupplierServiceTime(supplierId, startServiceDate ?? DateTime.Now, days ?? ServicesCommon.ServiceTimeDefaultDays, beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierServiceTimeModel>
             {
                 ResultTotalCount = result.ResultTotalCount,
@@ -1769,8 +1783,10 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
         /// <param name="startDeliveryDate">开始日期</param>
         /// <param name="days">天数</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -1779,9 +1795,15 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(string source, int supplierId, DateTime? startDeliveryDate, int? days)
+        public ServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(string source, int supplierId, int deliveryMethodId, DateTime? startDeliveryDate, int? days, bool onlyActive)
         {
-            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
+                {
+                    p.SupplierId,
+                    p.DeliveryTime
+                }).FirstOrDefault();
+
+            if (supplier == null)
             {
                 return new ServicesResultList<SupplierDeliveryTimeModel>
                 {
@@ -1790,7 +1812,13 @@
                 };
             }
 
-            var result = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, startDeliveryDate ?? DateTime.Now, days ?? ServicesCommon.DeliveryTimeDefaultDays);
+            int deliveryTime;
+            if (!int.TryParse(supplier.DeliveryTime, out deliveryTime))
+            {
+                deliveryTime = 45;
+            }
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.ServiceTimeReadyTime : deliveryTime;
+            var result = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, startDeliveryDate ?? DateTime.Now, days ?? ServicesCommon.DeliveryTimeDefaultDays, beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierDeliveryTimeModel>
             {
                 ResultTotalCount = result.ResultTotalCount,

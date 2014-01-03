@@ -107,6 +107,8 @@
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="startServiceDate">开始日期</param>
         /// <param name="days">天数</param>
+        /// <param name="beginReadyTime">备餐时间</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -116,7 +118,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         DetailServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(
-            int supplierId, DateTime startServiceDate, int days);
+            int supplierId, DateTime startServiceDate, int days, int beginReadyTime, bool onlyActive);
 
         /// <summary>
         /// 取得餐厅送餐时间
@@ -124,6 +126,8 @@
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="startDeliveryDate">开始日期</param>
         /// <param name="days">天数</param>
+        /// <param name="beginReadyTime">备餐时间</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -133,6 +137,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         DetailServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(
-            int supplierId, DateTime startDeliveryDate, int days);
+            int supplierId, DateTime startDeliveryDate, int days, int beginReadyTime, bool onlyActive);
     }
 }

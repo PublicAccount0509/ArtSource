@@ -90,6 +90,7 @@
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishCustomizationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishGroupEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierDoNotSendTimeEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupAdvertisementEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupFeatureEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupLightEntity.cs" />
@@ -533,6 +534,9 @@
     <EmbeddedResource Include="Mapping\OptionGroupEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\SupplierDishCustomizationEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\SupplierDishGroupEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\SupplierDoNotSendTimeEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

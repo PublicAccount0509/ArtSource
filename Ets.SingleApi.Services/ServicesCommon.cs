@@ -387,11 +387,37 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static int BeginReadyTime
+        public static int DeliveryTimeReadyTime
         {
             get
             {
-                var beginReadyTime = ConfigurationManager.AppSettings["BeginReadyTime"] ?? "0";
+                var beginReadyTime = ConfigurationManager.AppSettings["DeliveryTimeReadyTime"] ?? "0";
+                int result;
+                if (!int.TryParse(beginReadyTime, out result))
+                {
+                    result = 0;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 当前时间推迟时间（单位：分钟）
+        /// </summary>
+        /// <value>
+        /// 当前时间推迟时间（单位：分钟）
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int ServiceTimeReadyTime
+        {
+            get
+            {
+                var beginReadyTime = ConfigurationManager.AppSettings["ServiceTimeReadyTime"] ?? "0";
                 int result;
                 if (!int.TryParse(beginReadyTime, out result))
                 {

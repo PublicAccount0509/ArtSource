@@ -1019,8 +1019,10 @@
         /// 取得餐厅营业时间
         /// </summary>
         /// <param name="id">餐厅Id</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
         /// <param name="startDate">开始日期</param>
         /// <param name="days">天数</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -1030,9 +1032,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<SupplierServiceTime> SupplierServiceTime(int id, DateTime? startDate = null, int? days = null)
+        public ListResponse<SupplierServiceTime> SupplierServiceTime(int id, int? deliveryMethodId = null, DateTime? startDate = null, int? days = null, bool? onlyActive = true)
         {
-            var result = this.supplierServices.GetSupplierServiceTime(this.Source, id, startDate, days);
+            var result = this.supplierServices.GetSupplierServiceTime(this.Source, id, deliveryMethodId ?? -1, startDate, days, onlyActive ?? true);
             if (result == null)
             {
                 return new ListResponse<SupplierServiceTime>
@@ -1077,8 +1079,10 @@
         /// 取得餐厅营业时间
         /// </summary>
         /// <param name="id">餐厅Id</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
         /// <param name="startDate">开始日期</param>
         /// <param name="days">天数</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -1088,9 +1092,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<SupplierDeliveryTime> SupplierDeliveryTime(int id, DateTime? startDate = null, int? days = null)
+        public ListResponse<SupplierDeliveryTime> SupplierDeliveryTime(int id, int? deliveryMethodId = null, DateTime? startDate = null, int? days = null, bool? onlyActive = true)
         {
-            var result = this.supplierServices.GetSupplierDeliveryTime(this.Source, id, startDate, days);
+            var result = this.supplierServices.GetSupplierDeliveryTime(this.Source, id, deliveryMethodId ?? -1, startDate, days, onlyActive ?? true);
             if (result == null)
             {
                 return new ListResponse<SupplierDeliveryTime>
