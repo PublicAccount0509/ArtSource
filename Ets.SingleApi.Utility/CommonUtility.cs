@@ -525,7 +525,7 @@
         public static string GetDayOfWeek(this DateTime value)
         {
             var sunday = (ConfigurationManager.AppSettings["Sunday"] ?? string.Empty).Trim();
-            var day = DateTime.Now.DayOfWeek.ToString("d");
+            var day = value.DayOfWeek.ToString("d");
             if (day == "0")
             {
                 day = sunday.IsEmptyOrNull() ? "7" : sunday;
