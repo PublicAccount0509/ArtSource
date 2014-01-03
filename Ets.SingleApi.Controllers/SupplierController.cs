@@ -1076,7 +1076,7 @@
         }
 
         /// <summary>
-        /// 取得餐厅营业时间
+        /// 取得餐厅送餐时间
         /// </summary>
         /// <param name="id">餐厅Id</param>
         /// <param name="deliveryMethodId">送餐方式</param>
