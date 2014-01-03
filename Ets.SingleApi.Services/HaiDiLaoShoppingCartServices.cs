@@ -1024,18 +1024,18 @@
             shoppingCartExtra.Id = extra.Id;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, shoppingCartExtra);
 
-            //var order = getShoppingCartOrderResult.Result;
-            //var oldCookingFee = order.CookingFee;
-            //var cookingFee = shoppingCartExtra.CookingCount * ServicesCommon.CookingDeposit
-            //    + shoppingCartExtra.PanCount * ServicesCommon.PotDeposit;
-            //if (order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
-            //{
-            //    cookingFee = 0;
-            //}
-            //order.CookingFee = cookingFee;
-            //order.TotalFee = order.TotalFee - oldCookingFee + cookingFee;
-            //order.CustomerTotalFee = order.CustomerTotalFee - oldCookingFee + cookingFee;
-            //this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
+            var order = getShoppingCartOrderResult.Result;
+            var oldCookingFee = order.CookingFee;
+            var cookingFee = shoppingCartExtra.CookingCount * ServicesCommon.CookingDeposit
+                + shoppingCartExtra.PanCount * ServicesCommon.PotDeposit;
+            if (order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
+            {
+                cookingFee = 0;
+            }
+            order.CookingFee = cookingFee;
+            order.TotalFee = order.TotalFee - oldCookingFee + cookingFee;
+            order.CustomerTotalFee = order.CustomerTotalFee - oldCookingFee + cookingFee;
+            this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
 
             return new ServicesResult<bool>
             {
