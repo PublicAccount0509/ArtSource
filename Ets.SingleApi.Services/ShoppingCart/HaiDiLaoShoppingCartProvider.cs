@@ -199,11 +199,6 @@
                 };
             }
 
-            if (!ServicesCommon.CalculateDeliveryChargeEnable)
-            {
-                shoppingCartSupplier.FixedDeliveryCharge = 0;
-            }
-
             shoppingCartSupplier.IsPackLadder = this.supplierFeatureEntityRepository.EntityQueryable.Any(p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true && p.Feature.FeatureId == ServicesCommon.PackageFeatureId);
             var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
                                             where entity.SupplierId == supplierId
