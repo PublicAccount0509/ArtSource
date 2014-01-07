@@ -1766,9 +1766,10 @@
             int deliveryTime;
             if (!int.TryParse(supplier.DeliveryTime, out deliveryTime))
             {
-                deliveryTime = 45;
+                deliveryTime = ServicesCommon.DeliveryMethodReadyTime;
             }
-            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.DeliveryTimeReadyTime : deliveryTime;
+
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : deliveryTime;
             var result = this.supplierDetailServices.GetSupplierServiceTime(supplierId, startServiceDate ?? DateTime.Now, days ?? ServicesCommon.ServiceTimeDefaultDays, beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierServiceTimeModel>
             {
@@ -1815,9 +1816,10 @@
             int deliveryTime;
             if (!int.TryParse(supplier.DeliveryTime, out deliveryTime))
             {
-                deliveryTime = 45;
+                deliveryTime = ServicesCommon.DeliveryMethodReadyTime;
             }
-            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.ServiceTimeReadyTime : deliveryTime;
+
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : deliveryTime;
             var result = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, startDeliveryDate ?? DateTime.Now, days ?? ServicesCommon.DeliveryTimeDefaultDays, beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierDeliveryTimeModel>
             {

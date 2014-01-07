@@ -377,25 +377,25 @@
         }
 
         /// <summary>
-        /// 当前时间推迟时间（单位：分钟）
+        /// 送餐时的备餐时间（单位：分钟）
         /// </summary>
         /// <value>
-        /// 当前时间推迟时间（单位：分钟）
+        /// 送餐时的备餐时间（单位：分钟）
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/19 11:24
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static int DeliveryTimeReadyTime
+        public static int DeliveryMethodReadyTime
         {
             get
             {
-                var beginReadyTime = ConfigurationManager.AppSettings["DeliveryTimeReadyTime"] ?? "0";
+                var deliveryMethodReadyTime = ConfigurationManager.AppSettings["DeliveryMethodReadyTime"] ?? "120";
                 int result;
-                if (!int.TryParse(beginReadyTime, out result))
+                if (!int.TryParse(deliveryMethodReadyTime, out result))
                 {
-                    result = 0;
+                    result = 120;
                 }
 
                 return result;
@@ -403,25 +403,25 @@
         }
 
         /// <summary>
-        /// 当前时间推迟时间（单位：分钟）
+        /// 取餐时的备餐时间（单位：分钟）
         /// </summary>
         /// <value>
-        /// 当前时间推迟时间（单位：分钟）
+        /// 取餐时的备餐时间（单位：分钟）
         /// </value>
         /// 创建者：周超
         /// 创建日期：2013/10/19 11:24
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static int ServiceTimeReadyTime
+        public static int PickUpMethodReadyTime
         {
             get
             {
-                var beginReadyTime = ConfigurationManager.AppSettings["ServiceTimeReadyTime"] ?? "0";
+                var pickUpMethodReadyTime = ConfigurationManager.AppSettings["PickUpMethodReadyTime"] ?? "60";
                 int result;
-                if (!int.TryParse(beginReadyTime, out result))
+                if (!int.TryParse(pickUpMethodReadyTime, out result))
                 {
-                    result = 0;
+                    result = 60;
                 }
 
                 return result;

@@ -863,9 +863,10 @@
                 int supplierDeliveryTime;
                 if (!int.TryParse(supplier.DeliveryTime, out supplierDeliveryTime))
                 {
-                    supplierDeliveryTime = 45;
+                    supplierDeliveryTime = ServicesCommon.DeliveryMethodReadyTime;
                 }
-                var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.ServiceTimeReadyTime : supplierDeliveryTime;
+
+                var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : supplierDeliveryTime;
                 var now = DateTime.Now;
                 var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
                 DateTime deliveryTimeTemp;
@@ -878,7 +879,6 @@
                 {
                     deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now).AddMinutes(beginReadyTime);
                 }
-
 
                 var validateDeliveryTimeResult = this.ValidateDeliveryTime(source, supplier.SupplierId, deliveryMethodId, deliveryTimeTemp, beginReadyTime);
                 if (!validateDeliveryTimeResult.Result)
