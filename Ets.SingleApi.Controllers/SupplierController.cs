@@ -248,7 +248,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<GroupSupplier> SearchGroupSupplierList(int supplierGroupId, int? userLat = null, int? userLong = null, int? featureId = -1, int? cityId = null, int pageSize = 10, int? pageIndex = null)
+        public ListResponse<GroupSupplier> SearchGroupSupplierList(int supplierGroupId, double? userLat = null, double? userLong = null, int? featureId = -1, int? cityId = null, int pageSize = 10, int? pageIndex = null)
         {
             var getGroupSupplierListResult = this.supplierServices.GetSearchGroupSupplierList(this.Source, new GetSearchGroupSupplierListParameter
             {

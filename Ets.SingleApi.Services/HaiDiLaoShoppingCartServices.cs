@@ -1226,7 +1226,8 @@
             //                            ? 0
             //                           : supplier.FixedDeliveryCharge;
 
-            var canDelivery = totalfee >= (supplier.DelMinOrderAmount * panQuantity);
+            //var canDelivery = totalfee >= (supplier.DelMinOrderAmount * panQuantity);
+            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
             var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : (order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId);
             var fixedDeliveryFee = 0;
             var servicesFee = Math.Round(totalfee * supplier.ConsumerAmount / 100, 0);
