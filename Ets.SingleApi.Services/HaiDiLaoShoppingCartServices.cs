@@ -888,7 +888,7 @@
                         StatusCode = validateDeliveryTimeResult.StatusCode
                     };
                 }
-                var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
+                var deliveryTime = deliveryTimeTemp;
                 shoppingCartOrder.DeliveryDateTime = deliveryTime;
             }
 
@@ -1165,42 +1165,6 @@
             {
                 Result = true
             };
-        }
-
-        /// <summary>
-        /// 取得送餐时间
-        /// </summary>
-        /// <param name="deliveryMethodId">取餐方式</param>
-        /// <param name="deliveryType">送餐类型</param>
-        /// <param name="deliveryTime">送餐日期</param>
-        /// <param name="supplierDeliveryTime">餐厅默认送餐时间</param>
-        /// <returns>
-        /// 返回送餐时间
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/18/2013 12:15 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private DateTime GetDeliveryDate(int deliveryMethodId, int deliveryType, DateTime deliveryTime, string supplierDeliveryTime)
-        {
-            if (deliveryType == ServicesCommon.AssignDeliveryType)
-            {
-                return deliveryTime;
-            }
-
-            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
-            {
-                return deliveryTime.AddMinutes(ServicesCommon.DefaultPickUpTime);
-            }
-
-            int result;
-            if (!int.TryParse(supplierDeliveryTime, out result))
-            {
-                result = ServicesCommon.DefaultDeliveryTime;
-            }
-
-            return deliveryTime.AddMinutes(result);
         }
 
         /// <summary>
