@@ -123,7 +123,8 @@
                             Quantity = p.Quantity,
                             Price = p.Price == null ? 0 : p.Price.Value,
                             OrderParentId = p.OrderParentId,
-                            OrderId = p.OrderId
+                            OrderId = p.OrderId,
+                            SpecialInstruction = p.SpecialInstruction
                         }).ToList()
                 };
 

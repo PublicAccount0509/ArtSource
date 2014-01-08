@@ -54,5 +54,7 @@
         public int? OrderParentId { get; set;  }
 
         public int OrderId { get; set;  }
+
+        public string SpecialInstruction { get; set;  }
     }
 }
