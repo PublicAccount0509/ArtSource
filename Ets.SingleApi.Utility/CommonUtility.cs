@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.IO;
+    using System.Json;
     using System.Linq;
     using System.Net.Http.Headers;
     using System.Runtime.Serialization.Json;
@@ -662,6 +663,29 @@
             }
 
             return string.Concat(list);
+        }
+
+        /// <summary>
+        /// 将JsonValue类型转换为Int32
+        /// </summary>
+        /// <param name="obj">待转换的值</param>
+        /// <returns>
+        /// 返回转换后的值
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/18 21:39
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int? JsonValueToObjectInt(this JsonValue obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+
+            int? result = obj;
+            return result;
         }
 
         /// <summary>
