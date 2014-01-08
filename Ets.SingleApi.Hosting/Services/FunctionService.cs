@@ -39,5 +39,25 @@
         {
             return new Response<Location>();
         }
+
+        /// <summary>
+        /// 根据坐标取得对应地址
+        /// </summary>
+        /// <param name="userLat">The userLat</param>
+        /// <param name="userLong">The userLong</param>
+        /// <param name="type">定位类型</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/15/2013 1:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/Location?userLat={userLat}&userLong={userLong}&type={type}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<LocationCity> LocationCity(double userLat, double userLong, int type)
+        {
+            return new Response<LocationCity>();
+        }
     }
 }
