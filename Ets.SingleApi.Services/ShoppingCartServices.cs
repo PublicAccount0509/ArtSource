@@ -8,9 +8,7 @@ namespace Ets.SingleApi.Services
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
-    using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
-    using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -773,7 +771,7 @@ namespace Ets.SingleApi.Services
                 var deliveryTime = deliveryTimeTemp;
                 shoppingCartOrder.DeliveryDateTime = deliveryTime;
             }
-            
+
             shoppingCartOrder.Id = order.Id;
             shoppingCartOrder.OrderId = order.OrderId;
             shoppingCartOrder.CanDelivery = order.CanDelivery;
@@ -1078,7 +1076,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            if (getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            if (getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Ok && getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Empty)
             {
                 return new ServicesResult<bool>
                 {
@@ -1093,7 +1091,7 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<bool>
                 {
                     Result = false,
-                    StatusCode = getSupplierDeliveryTimeResult.StatusCode
+                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
                 };
             }
 

@@ -1350,7 +1350,7 @@
                 };
             }
 
-            if (getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            if (getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Ok && getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Empty)
             {
                 return new ServicesResult<bool>
                 {
@@ -1365,7 +1365,7 @@
                 return new ServicesResult<bool>
                 {
                     Result = false,
-                    StatusCode = getSupplierDeliveryTimeResult.StatusCode
+                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
                 };
             }
 
