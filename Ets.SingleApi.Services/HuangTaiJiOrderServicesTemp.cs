@@ -172,6 +172,7 @@
                 Price = p.SupplierPrice,
                 Quantity = p.Quantity,
                 OrderParentId = p.OrderSource,
+                SpecialInstruction = p.SpecialInstruction,
                 OrderId = p.OrderId
             }).ToList();
 
@@ -245,7 +246,7 @@
                         OrderId = p.OrderId,
                         SupplierDishId = p.SupplierDishId,
                         SupplierDishName = p.SupplierDishName,
-                        Instruction = p.SpecialInstruction,
+                        SpecialInstruction = p.SpecialInstruction,
                         Price = p.SupplierPrice,
                         Quantity = p.Quantity,
                         OrderParentId = p.OrderSource
