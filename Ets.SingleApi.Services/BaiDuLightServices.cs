@@ -250,7 +250,7 @@
                                       select new LightSupplierModel
                                       {
                                           LightApplicationId = entity.LightApplication.LightApplicationId,
-                                          LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                                          LogoUrl = entity.LogoUrl,
                                           Name = entity.Name,
                                           SupplierGroupLightId = entity.SupplierGroupLightId
                                       }).FirstOrDefault();
@@ -264,11 +264,23 @@
                 };
             }
 
-            var supplierGroupLightId = supplierGroupLight.SupplierGroupLightId;
-            supplierGroupLight.AdvertisementUrlList = (from entity in this.supplierGroupAdvertisementEntityRepository.EntityQueryable
-                                                       where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId && entity.IsDetele == false
-                                                       select string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.ImagePath)).ToList();
+            if (supplierGroupLight.LogoUrl.IsEmptyOrNull())
+            {
+                supplierGroupLight.LogoUrl = ServicesCommon.DefaultLogoFile;
+            }
 
+            supplierGroupLight.LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierGroupLight.LogoUrl.TrimStart('/', '\\'));
+            var supplierGroupLightId = supplierGroupLight.SupplierGroupLightId;
+            var advertisementUrlList = (from entity in this.supplierGroupAdvertisementEntityRepository.EntityQueryable
+                                        where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId
+                                            && entity.IsDetele == false
+                                        select entity.ImagePath).ToList();
+            if (advertisementUrlList.Count == 0)
+            {
+                advertisementUrlList.Add(ServicesCommon.DefaultAdvertisementFile);
+            }
+
+            supplierGroupLight.AdvertisementUrlList = advertisementUrlList.Select(p => string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, p.TrimStart('/', '\\'))).ToList();
             supplierGroupLight.LightFeatureList = (from entity in this.supplierGroupFeatureEntityRepository.EntityQueryable
                                                    where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId
                                                    select new LightFeatureModel
@@ -323,7 +335,7 @@
                                       select new LightSupplierDetailModel
                                       {
                                           LightApplicationId = entity.LightApplication.LightApplicationId,
-                                          LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                                          LogoUrl = entity.LogoUrl,
                                           Name = entity.Name,
                                           Description = entity.Description,
                                           BrandStory = entity.BrandStory,
@@ -343,15 +355,32 @@
                 };
             }
 
+            if (supplierGroupLight.LogoUrl.IsEmptyOrNull())
+            {
+                supplierGroupLight.LogoUrl = ServicesCommon.DefaultLogoFile;
+            }
+
+            supplierGroupLight.LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierGroupLight.LogoUrl.TrimStart('/', '\\'));
             var supplierGroupLightId = supplierGroupLight.SupplierGroupLightId;
-            supplierGroupLight.SupplierUrlList = (from entity in this.supplierGroupLogoImageEntityRepository.EntityQueryable
-                                                  where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId && entity.IsDelete == false
-                                                  select string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.ImagePath)).ToList();
+            var advertisementUrlList = (from entity in this.supplierGroupAdvertisementEntityRepository.EntityQueryable
+                                        where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId
+                                            && entity.IsDetele == false
+                                        select entity.ImagePath).ToList();
+            if (advertisementUrlList.Count == 0)
+            {
+                advertisementUrlList.Add(ServicesCommon.DefaultAdvertisementFile);
+            }
 
-            supplierGroupLight.AdvertisementUrlList = (from entity in this.supplierGroupAdvertisementEntityRepository.EntityQueryable
-                                                       where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId && entity.IsDetele == false
-                                                       select string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.ImagePath)).ToList();
+            supplierGroupLight.AdvertisementUrlList = advertisementUrlList.Select(p => string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, p.TrimStart('/', '\\'))).ToList();
+            var supplierUrlList = (from entity in this.supplierGroupLogoImageEntityRepository.EntityQueryable
+                                   where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId && entity.IsDelete == false
+                                   select entity.ImagePath).ToList();
+            if (supplierUrlList.Count == 0)
+            {
+                supplierUrlList.Add(ServicesCommon.DefaultAdvertisementFile);
+            }
 
+            supplierGroupLight.SupplierUrlList = supplierUrlList.Select(p => string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, p.TrimStart('/', '\\'))).ToList();
             supplierGroupLight.LightFeatureList = (from entity in this.supplierGroupFeatureEntityRepository.EntityQueryable
                                                    where entity.SupplierGroupLight.SupplierGroupLightId == supplierGroupLightId
                                                    select new LightFeatureModel
