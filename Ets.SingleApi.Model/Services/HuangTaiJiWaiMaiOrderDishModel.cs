@@ -53,7 +53,7 @@ namespace Ets.SingleApi.Model.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Instruction { get; set; }
+        public string SpecialInstruction { get; set; }
 
         /// <summary>
         /// 设置或取得菜数量
