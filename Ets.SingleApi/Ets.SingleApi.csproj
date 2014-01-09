@@ -235,7 +235,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\castle\components\caches.config" />
-    <None Include="Properties\PublishProfiles\SingleApi.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\htjsingle.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
