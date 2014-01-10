@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Services
 {
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Model.Services;
 
     /// <summary>
     /// 接口名称：IDistance
@@ -26,6 +27,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         LocationType LocationType { get; }
+
+        /// <summary>
+        /// 获取城市名称
+        /// </summary>
+        /// <param name="location">百度坐标</param>
+        /// <returns>
+        /// 城市名称
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 3:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        LocationCity GetLocationCity(Location location);
 
         /// <summary>
         /// 获取地址经纬度

@@ -87,5 +87,55 @@
                 Result = location ?? new Location()
             };
         }
+
+        /// <summary>
+        /// 根据坐标取得对应地址
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="userLat">The userLat</param>
+        /// <param name="userLong">The userLong</param>
+        /// <param name="type">定位类型</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/15/2013 1:20 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<LocationCityModel> GetLocationCity(string source, double userLat, double userLong, int type)
+        {
+            var distance = this.distanceList.FirstOrDefault(p => p.LocationType == (LocationType)type);
+            if (distance == null)
+            {
+                return new ServicesResult<LocationCityModel>
+                {
+                    StatusCode = (int)StatusCode.Location.InvalidLocationTypeCode,
+                    Result = new LocationCityModel()
+                };
+            }
+
+            var locationCity = distance.GetLocationCity(new Location { Lat = userLat, Lng = userLong });
+            if (locationCity == null)
+            {
+                return new ServicesResult<LocationCityModel>
+                    {
+                        StatusCode = (int)StatusCode.Location.LocationErrorCode,
+                        Result = new LocationCityModel()
+                    };
+            }
+
+            var result = new LocationCityModel
+                {
+                    Address = locationCity.Address,
+                    CityCode = string.Empty,
+                    CityName = locationCity.City
+                };
+            return new ServicesResult<LocationCityModel>
+            {
+                StatusCode = (int)StatusCode.Location.Ok,
+                Result = result
+            };
+        }
     }
 }

@@ -36,5 +36,23 @@
         [OperationContract]
         [Description("方法功能：根据地址取得对应坐标；参数说明：type（默认值为0 Baidu定位）")]
         Response<Location> Location(string address, string city, int type);
+
+        /// <summary>
+        /// 根据坐标取得对应地址
+        /// </summary>
+        /// <param name="userLat">The userLat</param>
+        /// <param name="userLong">The userLong</param>
+        /// <param name="type">定位类型</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/15/2013 1:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：根据坐标取得对应地址；参数说明：type（默认值为0 Baidu定位）")]
+        Response<LocationCity> LocationCity(double userLat, double userLong, int type);
     }
 }

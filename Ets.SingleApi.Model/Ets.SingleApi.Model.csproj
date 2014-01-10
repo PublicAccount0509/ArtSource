@@ -42,6 +42,7 @@
     <Compile Include="BusinessType.cs" />
     <Compile Include="CacheServices\CacheServicesResult.cs" />
     <Compile Include="CacheServices\CacheServicesListResult.cs" />
+    <Compile Include="Controller\LocationCity.cs" />
     <Compile Include="Controller\HtjRegisterUserRequest.cs" />
     <Compile Include="Controller\HtjUserExtendResult.cs" />
     <Compile Include="Controller\HuangTaiJiShoppingCartRequst.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Services\LightSupplierModel.cs" />
     <Compile Include="Services\LightSupplierDetailModel.cs" />
     <Compile Include="Services\LightSupplierTemplateModel.cs" />
+    <Compile Include="Services\LocationCity.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Controller\LightSupplierDetail.cs" />
     <Compile Include="Controller\LightSupplierTemplate.cs" />
     <Compile Include="Services\GetSearchGroupSupplierListParameter.cs" />
+    <Compile Include="Services\LocationCityModel.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />

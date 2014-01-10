@@ -31,5 +31,22 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<Location> GetLocation(string source, string address, string city, int type);
+
+        /// <summary>
+        /// 根据坐标取得对应地址
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="userLat">The userLat</param>
+        /// <param name="userLong">The userLong</param>
+        /// <param name="type">定位类型</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/15/2013 1:20 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<LocationCityModel> GetLocationCity(string source, double userLat, double userLong, int type);
     }
 }

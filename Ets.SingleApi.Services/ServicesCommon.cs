@@ -1052,7 +1052,7 @@
         {
             get
             {
-                return ConfigurationManager.AppSettings["ImageSiteUrl"] ?? string.Empty;
+                return (ConfigurationManager.AppSettings["ImageSiteUrl"] ?? string.Empty).TrimEnd('/', '\\');
             }
         }
 
@@ -1560,6 +1560,63 @@
             get
             {
                 return (ConfigurationManager.AppSettings["PresentMenu"] ?? string.Empty).Trim();
+            }
+        }
+
+        /// <summary>
+        /// 默认的logo图片
+        /// </summary>
+        /// <value>
+        /// 默认的logo图片
+        /// </value>
+        /// 创建者：单琪彬
+        /// 创建日期：12/24/2013 3:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string DefaultLogoFile
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["DefaultLogoFile"] ?? string.Empty).TrimStart('/', '\\');
+            }
+        }
+
+        /// <summary>
+        /// 默认的宣传图片
+        /// </summary>
+        /// <value>
+        /// 默认的宣传图片
+        /// </value>
+        /// 创建者：单琪彬
+        /// 创建日期：12/24/2013 3:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string DefaultFocusFile
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["DefaultFocusFile"] ?? string.Empty).TrimStart('/', '\\');
+            }
+        }
+
+        /// <summary>
+        /// 默认的广告图片
+        /// </summary>
+        /// <value>
+        /// 默认的广告图片
+        /// </value>
+        /// 创建者：单琪彬
+        /// 创建日期：12/24/2013 3:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string DefaultAdvertisementFile
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["DefaultAdvertisementFile"] ?? string.Empty).TrimStart('/', '\\');
             }
         }
 

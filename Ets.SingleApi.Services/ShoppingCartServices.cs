@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Services.IDetailServices;
+
+namespace Ets.SingleApi.Services
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +8,7 @@
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
-    using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
-    using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -24,14 +24,14 @@
     public class ShoppingCartServices : IShoppingCartServices
     {
         /// <summary>
-        /// 字段supplierEntityRepository
+        /// 字段supplierDetailServices
         /// </summary>
-        /// 创建者：周超
-        /// 创建日期：12/20/2013 3:40 PM
+        /// 创建者：单琪彬
+        /// 创建日期：1/9/2014 6:15 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
+        private readonly ISupplierDetailServices supplierDetailServices;
 
         /// <summary>
         /// 字段shoppingCartProvider
@@ -56,7 +56,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartServices" /> class.
         /// </summary>
-        /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
+        /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
         /// 创建者：周超
@@ -65,11 +65,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ShoppingCartServices(
-             INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            ISupplierDetailServices supplierDetailServices,
             IShoppingCartProvider shoppingCartProvider,
             List<ISupplierCouponProvider> supplierCouponProviderList)
         {
-            this.supplierEntityRepository = supplierEntityRepository;
+            this.supplierDetailServices = supplierDetailServices;
             this.shoppingCartProvider = shoppingCartProvider;
             this.supplierCouponProviderList = supplierCouponProviderList;
         }
@@ -737,8 +737,16 @@
             var total = totalfee + fixedDeliveryFee;
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
+            shoppingCartOrder.DeliveryDateTime = order.DeliveryDateTime;
             if (isValidateDeliveryTime)
             {
+                int supplierDeliveryTime;
+                if (!int.TryParse(supplier.DeliveryTime, out supplierDeliveryTime))
+                {
+                    supplierDeliveryTime = ServicesCommon.DeliveryMethodReadyTime;
+                }
+
+                var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : supplierDeliveryTime;
                 var now = DateTime.Now;
                 var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
                 DateTime deliveryTimeTemp;
@@ -749,10 +757,10 @@
 
                 if (shoppingCartOrder.DeliveryType == ServicesCommon.QuickDeliveryType)
                 {
-                    deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now);
+                    deliveryTimeTemp = (shoppingCartOrder.DeliveryDate ?? now).AddMinutes(beginReadyTime);
                 }
 
-                var validateDeliveryTimeResult = this.shoppingCartProvider.ValidateDeliveryTime(source, supplier.SupplierId, deliveryTimeTemp, now);
+                var validateDeliveryTimeResult = this.ValidateDeliveryTime(source, supplier.SupplierId, deliveryMethodId, deliveryTimeTemp, beginReadyTime);
                 if (!validateDeliveryTimeResult.Result)
                 {
                     return new ServicesResult<bool>
@@ -760,11 +768,10 @@
                         StatusCode = validateDeliveryTimeResult.StatusCode
                     };
                 }
-
-                var deliveryTime = this.GetDeliveryDate(deliveryMethodId, shoppingCartOrder.DeliveryType, deliveryTimeTemp, supplier.DeliveryTime);
+                var deliveryTime = deliveryTimeTemp;
                 shoppingCartOrder.DeliveryDateTime = deliveryTime;
             }
-            
+
             shoppingCartOrder.Id = order.Id;
             shoppingCartOrder.OrderId = order.OrderId;
             shoppingCartOrder.CanDelivery = order.CanDelivery;
@@ -921,42 +928,6 @@
         }
 
         /// <summary>
-        /// 取得送餐时间
-        /// </summary>
-        /// <param name="deliveryMethodId">取餐方式</param>
-        /// <param name="deliveryType">送餐类型</param>
-        /// <param name="deliveryTime">送餐日期</param>
-        /// <param name="supplierDeliveryTime">餐厅默认送餐时间</param>
-        /// <returns>
-        /// 返回送餐时间
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/18/2013 12:15 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private DateTime GetDeliveryDate(int deliveryMethodId, int deliveryType, DateTime deliveryTime, string supplierDeliveryTime)
-        {
-            if (deliveryType == ServicesCommon.AssignDeliveryType)
-            {
-                return deliveryTime;
-            }
-
-            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
-            {
-                return deliveryTime.AddMinutes(ServicesCommon.DefaultPickUpTime);
-            }
-
-            int result;
-            if (!int.TryParse(supplierDeliveryTime, out result))
-            {
-                result = ServicesCommon.DefaultDeliveryTime;
-            }
-
-            return deliveryTime.AddMinutes(result);
-        }
-
-        /// <summary>
         /// Saves the shopping cart order.
         /// </summary>
         /// <param name="source">The source</param>
@@ -1032,13 +1003,6 @@
                 return 0;
             }
 
-            if (this.supplierEntityRepository.EntityQueryable.Any(
-                    p =>
-                    p.SupplierId == supplierId && ServicesCommon.NoCouponSupplierGroupList.Contains(p.SupplierGroupId)))
-            {
-                return 0;
-            }
-
             var supplierCouponProvider = this.supplierCouponProviderList.FirstOrDefault(p => p.DeliveryMethodType == (DeliveryMethodType)deliveryMethodId);
             if (supplierCouponProvider == null)
             {
@@ -1052,6 +1016,111 @@
             }
 
             return ServicesCommon.CalculateCoupon(total, ServicesCommon.CalculateCouponWay, supplierCouponList);
+        }
+        /// <summary>
+        /// 验证送餐时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryMethodId">The deliveryMethodId</param>
+        /// <param name="deliveryTime">送餐时间</param>
+        /// <param name="beginReadyTime">备餐时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 6:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private ServicesResult<bool> ValidateDeliveryTime(string source, int supplierId, int deliveryMethodId, DateTime deliveryTime, int beginReadyTime)
+        {
+            if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
+            {
+                return this.ValidateSupplierDeliveryTime(source, supplierId, deliveryTime, beginReadyTime);
+            }
+
+            return this.ValidateSupplierDeliveryTime(source, supplierId, deliveryTime, beginReadyTime);
+        }
+        /// <summary>
+        /// 验证取餐时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="pickUpTime">取餐时间</param>
+        /// <param name="beginReadyTime">备餐时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 6:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> ValidateSupplierDeliveryTime(string source, int supplierId, DateTime pickUpTime, int beginReadyTime)
+        {
+            if (!ServicesCommon.ValidateDeliveryTimeEnabled)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = true
+                };
+            }
+
+            var getSupplierDeliveryTimeResult = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, pickUpTime, 1, beginReadyTime, true);
+            if (getSupplierDeliveryTimeResult == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+
+            if (getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Ok && getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Empty)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = getSupplierDeliveryTimeResult.StatusCode
+                };
+            }
+
+            var supplierDeliveryTime = (getSupplierDeliveryTimeResult.Result ?? new List<SupplierDeliveryTimeModel>()).FirstOrDefault();
+            if (supplierDeliveryTime == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                };
+            }
+
+            var tempDeliveryTime = DateTime.Parse(pickUpTime.ToString("yyyy-MM-dd HH:mm"));
+            foreach (var item in supplierDeliveryTime.DeliveryTime.Split(' '))
+            {
+                var tempList = item.Split('-').ToList();
+                if (tempList.Count != 2)
+                {
+                    continue;
+                }
+
+                var startDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.First()));
+                var endDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.Last()));
+                if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
+                {
+                    string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.DeliveryTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    return new ServicesResult<bool>
+                    {
+                        Result = true
+                    };
+                }
+            }
+
+            string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.DeliveryTime, "无效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+            };
         }
     }
 }
