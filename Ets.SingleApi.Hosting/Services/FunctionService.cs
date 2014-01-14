@@ -54,7 +54,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/Location?userLat={userLat}&userLong={userLong}&type={type}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebGet(UriTemplate = "/LocationCity?userLat={userLat}&userLong={userLong}&type={type}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         public Response<LocationCity> LocationCity(double userLat, double userLong, int type)
         {
             return new Response<LocationCity>();
