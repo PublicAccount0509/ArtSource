@@ -158,6 +158,19 @@
         public string SupplierAddress { get; set; }
 
         /// <summary>
+        /// 设置或取得餐厅送餐费
+        /// </summary>
+        /// <value>
+        /// 订单送餐费
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string SupplierFixedDeliveryFee { get; set; }
+
+        /// <summary>
         /// 设置或取得餐厅经度
         /// </summary>
         /// <value>
