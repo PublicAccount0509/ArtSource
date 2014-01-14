@@ -428,6 +428,11 @@
                 IsSelfDip = (deliveryEntity.ZBXL ?? 0) == 1
             };
 
+            if (result.InvoiceTitle.IsEmptyOrNull())
+            {
+                result.InvoiceTitle = ServicesCommon.EmptyInvoiceTitle;
+            }
+
             return new ServicesResult<IOrderDetailModel>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
