@@ -1057,6 +1057,25 @@
         }
 
         /// <summary>
+        /// 空发票显示信息
+        /// </summary>
+        /// <value>
+        /// 空发票显示信息
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string EmptyInvoiceTitle
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["EmptyInvoiceTitle"] ?? string.Empty).Trim();
+            }
+        }
+
+        /// <summary>
         /// 图片存储路径
         /// </summary>
         /// <value>

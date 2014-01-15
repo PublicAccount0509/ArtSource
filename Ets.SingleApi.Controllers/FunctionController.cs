@@ -150,6 +150,7 @@
 
             var businessArea = list.Result.FirstOrDefault(p => p.Name == result.CityName);
             result.CityCode = businessArea == null ? string.Empty : businessArea.Code;
+            result.CityId = businessArea == null ? string.Empty : businessArea.Id;
             return new Response<LocationCity>
             {
                 Message = new ApiMessage

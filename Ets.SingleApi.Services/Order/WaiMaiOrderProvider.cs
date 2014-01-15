@@ -341,6 +341,7 @@
                 SupplierName = supplierEntity.SupplierName ?? string.Empty,
                 SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
                 SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
+                SupplierFixedDeliveryFee = (supplierEntity.FixedDeliveryCharge ?? 0).ToString("#0.00"),
                 SupplierBaIduLat = baIduLat,
                 SupplierBaIduLong = baIduLong,
                 DeliveryMethodId = deliveryEntity.DeliveryMethodId,
@@ -354,6 +355,11 @@
                 DeliveryCustomerTelphone = deliveryEntity.ContactPhone.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Telephone) : deliveryEntity.ContactPhone,
                 DeliveryCustomerGender = gender
             };
+
+            if (result.InvoiceTitle.IsEmptyOrNull())
+            {
+                result.InvoiceTitle = ServicesCommon.EmptyInvoiceTitle;
+            }
 
             return new ServicesResult<IOrderDetailModel>
             {
