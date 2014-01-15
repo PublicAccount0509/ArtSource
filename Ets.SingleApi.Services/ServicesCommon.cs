@@ -298,6 +298,32 @@
             }
         }
 
+		/// <summary>
+        /// 皇太吉当前时间推迟时间（单位：分钟）
+        /// </summary>
+        /// <value>
+        /// 皇太吉当前时间推迟时间（单位：分钟）
+        /// </value>
+        /// 创建者：殷超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int HuangTaiJiServiceTimeReadyTime
+        {
+            get
+            {
+                var beginReadyTime = ConfigurationManager.AppSettings["HuangTaiJiServiceTimeReadyTime"] ?? "0";
+                int result;
+                if (!int.TryParse(beginReadyTime, out result))
+                {
+                    result = 0;
+                }
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// 打烊前准备时间
         /// </summary>
