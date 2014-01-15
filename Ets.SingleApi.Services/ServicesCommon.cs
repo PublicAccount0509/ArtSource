@@ -1400,6 +1400,38 @@
         }
 
         /// <summary>
+        /// 被屏蔽的餐厅群组Id
+        /// </summary>
+        /// <value>
+        /// 被屏蔽的餐厅群组Id
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> ShieldingSupplierGroupList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["ShieldingSupplierGroupList"] ?? string.Empty).Split(',').ToList();
+                var shieldingSupplierGroupList = new List<int>();
+                foreach (var item in list)
+                {
+                    int supplierGroupId;
+                    if (!int.TryParse(item, out supplierGroupId))
+                    {
+                        continue;
+                    }
+
+                    shieldingSupplierGroupList.Add(supplierGroupId);
+                }
+
+                return shieldingSupplierGroupList;
+            }
+        }
+
+        /// <summary>
         /// 货到付款支付类型
         /// </summary>
         /// <value>

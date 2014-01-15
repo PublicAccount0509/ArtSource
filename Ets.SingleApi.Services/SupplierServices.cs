@@ -569,12 +569,14 @@
                                         LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, item[10].ObjectToString()),
                                         IsOpenDoor = item[11].ObjectToBoolean(),
                                         Distance = item[12].ObjectToDouble(),
-                                        DateJoined = item[13].ObjectToDateTime()
+                                        DateJoined = item[13].ObjectToDateTime(),
+                                        SupplierGroupId = item[14].ObjectToInt()
                                     }).ToList();
 
+            var result = supplierList.Where(p => !ServicesCommon.ShieldingSupplierGroupList.Contains(p.SupplierGroupId)).ToList();
             return new ServicesResultList<SupplierModel>
             {
-                Result = supplierList
+                Result = result
             };
         }
 
@@ -629,12 +631,14 @@
                                     LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, item[10].ObjectToString()),
                                     IsOpenDoor = item[11].ObjectToBoolean(),
                                     Distance = item[12].ObjectToDouble(),
-                                    DateJoined = item[13].ObjectToDateTime()
+                                    DateJoined = item[13].ObjectToDateTime(),
+                                    SupplierGroupId = item[14].ObjectToInt()
                                 }).ToList();
 
+            var result = supplierList.Where(p => !ServicesCommon.ShieldingSupplierGroupList.Contains(p.SupplierGroupId)).ToList();
             return new ServicesResultList<SupplierModel>
             {
-                Result = supplierList
+                Result = result
             };
         }
 

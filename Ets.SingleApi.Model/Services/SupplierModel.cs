@@ -15,6 +15,19 @@
     public class SupplierModel
     {
         /// <summary>
+        /// Gets or sets the SupplierGroupId of SupplierModel
+        /// </summary>
+        /// <value>
+        /// The SupplierGroupId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/16 14:09
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int SupplierGroupId { get; set; }
+
+        /// <summary>
         /// Gets or sets the SupplierId of SupplierModel
         /// </summary>
         /// <value>

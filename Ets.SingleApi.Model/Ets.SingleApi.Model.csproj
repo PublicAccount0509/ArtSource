@@ -428,7 +428,9 @@
     <EmbeddedResource Include="Mapping\CustomerEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\CustomerFavoriteEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\CustomerPointEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\DeliveryEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\DeliveryEntity.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mapping\DiningPurposeEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\DishImageEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\FeatureEntity.hbm.xml" />
