@@ -260,6 +260,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
+    <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySupplierListDefault :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
   </sql-query>
 
@@ -278,6 +279,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
+    <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySupplierListSearchDefault :SupplierName,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:BuildingLat,:BuildingLong
   </sql-query>
 
@@ -296,6 +298,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
+    <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySupplierListNearest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
   </sql-query>
 
@@ -314,6 +317,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
+    <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySupplierListFarthest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
   </sql-query>
 
@@ -332,6 +336,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
+    <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySupplierListNewest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
   </sql-query>
 
@@ -350,6 +355,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
+    <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySupplierListCheapest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
   </sql-query>
 
@@ -368,6 +374,7 @@
     <return-scalar column="IsOpenDoor" type="Boolean" />
     <return-scalar column="Distance" type="Decimal" />
     <return-scalar column="DateJoined" type="DateTime" />
+    <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySupplierListExpensive :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
   </sql-query>
 
