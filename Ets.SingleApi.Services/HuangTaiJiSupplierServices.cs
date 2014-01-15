@@ -82,6 +82,16 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<SupplierDishGroupEntity> supplierDishGroupEntityRepository;
 
         /// <summary>
+        /// 字段supplierDetailServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 5:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISupplierDetailServices supplierDetailServices;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HuangTaiJiSupplierServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
@@ -109,7 +119,8 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<OptionGroupEntity> optionGroupEntityRepository,
             INHibernateRepository<CustomizationOptionEntity> customizationOptionEntityRepository,
             INHibernateRepository<SupplierDishCustomizationEntity> supplierDishCustomizationEntityRepository,
-            INHibernateRepository<SupplierDishGroupEntity> supplierDishGroupEntityRepository)
+            INHibernateRepository<SupplierDishGroupEntity> supplierDishGroupEntityRepository,
+            ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
@@ -121,6 +132,7 @@ namespace Ets.SingleApi.Services
             this.customizationOptionEntityRepository = customizationOptionEntityRepository;
             this.supplierDishCustomizationEntityRepository = supplierDishCustomizationEntityRepository;
             this.supplierDishGroupEntityRepository = supplierDishGroupEntityRepository;
+            this.supplierDetailServices = supplierDetailServices;
         }
 
 
@@ -405,6 +417,55 @@ namespace Ets.SingleApi.Services
             {
                 ResultTotalCount = result.Count,
                 Result = result
+            };
+        }
+
+        /// <summary>
+        /// 取得餐厅送餐时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
+        /// <param name="startDeliveryDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(string source, int supplierId, int deliveryMethodId, DateTime? startDeliveryDate, int? days, bool onlyActive)
+        {
+            var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
+            {
+                p.SupplierId,
+                p.DeliveryTime
+            }).FirstOrDefault();
+
+            if (supplier == null)
+            {
+                return new ServicesResultList<SupplierDeliveryTimeModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierDeliveryTimeModel>()
+                };
+            }
+
+            int deliveryTime;
+            if (!int.TryParse(supplier.DeliveryTime, out deliveryTime))
+            {
+                deliveryTime = 45;
+            }
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.HuangTaiJiServiceTimeReadyTime : deliveryTime;
+            var result = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, startDeliveryDate ?? DateTime.Now, days ?? ServicesCommon.DeliveryTimeDefaultDays, beginReadyTime, onlyActive);
+            return new ServicesResultList<SupplierDeliveryTimeModel>
+            {
+                ResultTotalCount = result.ResultTotalCount,
+                StatusCode = result.StatusCode,
+                Result = result.Result
             };
         }
 
