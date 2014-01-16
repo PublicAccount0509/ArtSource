@@ -148,6 +148,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
+        /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="isEtaoshi">是否为etaoshi内部网站</param>
         /// <returns>
         /// 返回收藏餐厅列表
         /// </returns>
@@ -156,7 +158,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId);
+        ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId, int? supplierGroupId, bool isEtaoshi);
 
         /// <summary>
         /// 判定是否已经收藏餐厅

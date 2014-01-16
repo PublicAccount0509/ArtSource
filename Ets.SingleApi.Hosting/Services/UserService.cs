@@ -192,6 +192,7 @@
         /// 获取用户收藏的餐厅列表
         /// </summary>
         /// <param name="id">用户Id</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
         /// <returns>
         /// The FollowerSupplierListResponse
         /// </returns>
@@ -200,8 +201,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/FollowerSupplierList/{id}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public ListResponse<FollowerSupplier> FollowerSupplierList(string id)
+        [WebGet(UriTemplate = "/FollowerSupplierList/{id}?supplierGroupId={supplierGroupId}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<FollowerSupplier> FollowerSupplierList(string id, int supplierGroupId)
         {
             return new ListResponse<FollowerSupplier>();
         }

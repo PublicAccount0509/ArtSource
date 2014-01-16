@@ -599,6 +599,7 @@
         /// 获取用户收藏的餐厅列表
         /// </summary>
         /// <param name="id">用户Id</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
         /// <returns>
         /// The FollowerSupplierListResponse
         /// </returns>
@@ -609,7 +610,7 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public ListResponse<FollowerSupplier> FollowerSupplierList(int id)
+        public ListResponse<FollowerSupplier> FollowerSupplierList(int id, int? supplierGroupId = null)
         {
             if (!this.ValidateUserId(id))
             {
@@ -623,8 +624,7 @@
                 };
             }
 
-            var list = this.usersServices.GetFollowerSupplierList(this.Source, id);
-
+            var list = this.usersServices.GetFollowerSupplierList(this.Source, id, supplierGroupId, this.IsEtaoshi);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<FollowerSupplier>
@@ -847,6 +847,7 @@
                                                                 PaidStatus = paidStatus,
                                                                 SupplierId = supplierId,
                                                                 SupplierGroupId = supplierGroupId,
+                                                                IsEtaoshi = this.IsEtaoshi,
                                                                 PageIndex = pageIndex,
                                                                 PageSize = pageSize
                                                             });

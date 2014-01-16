@@ -58,6 +58,19 @@
         public string Source { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsEtaoshi
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：1/16/2014 9:22 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsEtaoshi { get; set; }
+
+        /// <summary>
         /// 验证UserId的有效性
         /// </summary>
         /// <param name="userId">The userId</param>

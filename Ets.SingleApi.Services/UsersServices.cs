@@ -863,6 +863,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
+        /// <param name="supplierGroupId">集团Id</param>
+        /// <param name="isEtaoshi">是否为etaoshi内部网站</param>
         /// <returns>
         /// 返回收藏餐厅列表
         /// </returns>
@@ -871,25 +873,49 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId)
+        public ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId, int? supplierGroupId, bool isEtaoshi)
         {
-            var supplierList = (from customerFavorite in this.customerFavoriteEntityRepository.EntityQueryable
-                                where customerFavorite.Customer.LoginId == userId
-                                select new
-                                {
-                                    customerFavorite.Supplier,
-                                    customerFavorite.DateAdded
-                                }
-                                ).Where(p => p.Supplier != null).OrderByDescending(p => p.DateAdded).ToList();
+            if (supplierGroupId == 0)
+            {
+                supplierGroupId = null;
+            }
 
+            var shieldingSupplierGroupList = ServicesCommon.ShieldingSupplierGroupList.Select(temp => (int?)temp).ToList();
+            var queryableTemp = (from customerFavorite in this.customerFavoriteEntityRepository.EntityQueryable
+                                 from supplier in this.supplierEntityRepository.EntityQueryable
+                                 where customerFavorite.Supplier.SupplierId == supplier.SupplierId
+                                 && customerFavorite.Customer.LoginId == userId && supplier.Login.IsEnabled
+                                 select new
+                                         {
+                                             supplier.SupplierId,
+                                             supplier.SupplierName,
+                                             supplier.SupplierDescription,
+                                             Address = supplier.Address1,
+                                             supplier.Averageprice,
+                                             supplier.AverageRating,
+                                             supplier.Telephone,
+                                             customerFavorite.DateAdded,
+                                             supplier.SupplierGroupId
+                                         });
 
-            var followerSupplierList = (from supplier in supplierList.Select(p => p.Supplier)
+            if (supplierGroupId != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.SupplierGroupId == supplierGroupId);
+            }
+
+            if (isEtaoshi)
+            {
+                queryableTemp = queryableTemp.Where(p => !shieldingSupplierGroupList.Contains(p.SupplierGroupId));
+            }
+
+            var supplierList = queryableTemp.OrderByDescending(p => p.DateAdded).ToList();
+            var followerSupplierList = (from supplier in supplierList
                                         select new FollowerSupplierModel
                                             {
                                                 SupplierId = supplier.SupplierId,
                                                 SupplierName = supplier.SupplierName,
                                                 SupplierDescription = supplier.SupplierDescription,
-                                                Address = supplier.Address1,
+                                                Address = supplier.Address,
                                                 Averageprice = supplier.Averageprice,
                                                 AverageRating = supplier.AverageRating,
                                                 Telephone = supplier.Telephone,
@@ -1177,6 +1203,7 @@
                     PaidStatus = parameter.PaidStatus,
                     SupplierId = parameter.SupplierId,
                     SupplierGroupId = parameter.SupplierGroupId,
+                    IsEtaoshi = parameter.IsEtaoshi,
                     PageIndex = parameter.PageIndex,
                     PageSize = parameter.PageSize
                 });
