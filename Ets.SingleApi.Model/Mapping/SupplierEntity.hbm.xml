@@ -392,6 +392,7 @@
     <return-scalar column="SupplierDescription" type="String" />
     <return-scalar column="LogoUrl" type="String" />
     <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySearchGroupSupplierList :FeatureId,:SupplierGroupId,:CityId,:UserLat,:UserLong,:PageIndex,:PageSize
   </sql-query>
 </hibernate-mapping>
