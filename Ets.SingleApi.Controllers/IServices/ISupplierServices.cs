@@ -362,6 +362,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(
-            string source, int deliveryMethodId, int supplierId, DateTime? startDeliveryDate, int? days, bool onlyActive);
+            string source, int supplierId, int deliveryMethodId, DateTime? startDeliveryDate, int? days, bool onlyActive);
     }
 }

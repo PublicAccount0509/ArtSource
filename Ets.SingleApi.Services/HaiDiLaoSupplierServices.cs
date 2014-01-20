@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Services.IDetailServices;
+
+namespace Ets.SingleApi.Services
 {
     using System;
     using System.Collections.Generic;
@@ -103,6 +105,16 @@
         private readonly INHibernateRepository<PackageContentEntity> packageContentEntityRepository;
 
         /// <summary>
+        /// 字段supplierDetailServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/1/2013 5:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISupplierDetailServices supplierDetailServices;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HaiDiLaoSupplierServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
@@ -113,6 +125,7 @@
         /// <param name="packageNameEntityRepository">The packageNameEntityRepository</param>
         /// <param name="packageClassificationEntityRepository">The packageClassificationEntityRepository</param>
         /// <param name="packageContentEntityRepository">The packageContentEntityRepository</param>
+        /// <param name="supplierDetailServices"></param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
         /// 修改者：
@@ -126,7 +139,8 @@
             INHibernateRepository<SupplierMenuCategoryEntity> supplierMenuCategoryEntityRepository,
             INHibernateRepository<PackageNameEntity> packageNameEntityRepository,
             INHibernateRepository<PackageClassificationEntity> packageClassificationEntityRepository,
-            INHibernateRepository<PackageContentEntity> packageContentEntityRepository)
+            INHibernateRepository<PackageContentEntity> packageContentEntityRepository,
+            ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierDishEntityRepository = supplierDishEntityRepository;
@@ -136,6 +150,7 @@
             this.packageNameEntityRepository = packageNameEntityRepository;
             this.packageClassificationEntityRepository = packageClassificationEntityRepository;
             this.packageContentEntityRepository = packageContentEntityRepository;
+            this.supplierDetailServices = supplierDetailServices;
         }
 
         /// <summary>
@@ -472,6 +487,107 @@
             {
                 ResultTotalCount = list.Count,
                 Result = list
+            };
+        }
+
+
+        /// <summary>
+        /// 取得餐厅营业时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
+        /// <param name="startServiceDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：1/20/2014 1:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(string source, int supplierId, int deliveryMethodId, DateTime? startServiceDate, int? days, bool onlyActive)
+        {
+            var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
+            {
+                p.SupplierId,
+                p.DeliveryTime
+            }).FirstOrDefault();
+
+            if (supplier == null)
+            {
+                return new ServicesResultList<SupplierServiceTimeModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierServiceTimeModel>()
+                };
+            }
+
+            int deliveryTime;
+            if (!int.TryParse(supplier.DeliveryTime, out deliveryTime))
+            {
+                deliveryTime = ServicesCommon.DeliveryMethodReadyTime;
+            }
+
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : deliveryTime;
+            var result = this.supplierDetailServices.GetSupplierServiceTime(supplierId, startServiceDate ?? DateTime.Now, days ?? ServicesCommon.ServiceTimeDefaultDays, beginReadyTime, onlyActive);
+            return new ServicesResultList<SupplierServiceTimeModel>
+            {
+                ResultTotalCount = result.ResultTotalCount,
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 取得餐厅送餐时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="startDeliveryDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(string source, int supplierId, int deliveryMethodId, DateTime? startDeliveryDate, int? days, bool onlyActive)
+        {
+            var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
+            {
+                p.SupplierId,
+                p.DeliveryTime
+            }).FirstOrDefault();
+
+            if (supplier == null)
+            {
+                return new ServicesResultList<SupplierDeliveryTimeModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierDeliveryTimeModel>()
+                };
+            }
+
+            int deliveryTime;
+            if (!int.TryParse(supplier.DeliveryTime, out deliveryTime))
+            {
+                deliveryTime = ServicesCommon.DeliveryMethodReadyTime;
+            }
+
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : deliveryTime;
+            var result = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, startDeliveryDate ?? DateTime.Now, days ?? ServicesCommon.DeliveryTimeDefaultDays, beginReadyTime, onlyActive);
+            return new ServicesResultList<SupplierDeliveryTimeModel>
+            {
+                ResultTotalCount = result.ResultTotalCount,
+                StatusCode = result.StatusCode,
+                Result = result.Result
             };
         }
     }
