@@ -27,6 +27,7 @@
     <property name="Email" column="Email" type="String" not-null="false" />
     <property name="Commission" column="Commission" type="Decimal" />
     <property name="DeliveryTime" column="DeliveryTime" type="String" not-null="false" />
+    <property name="PickUpTime" column="DeliveryTime" type="String" not-null="false" />
     <property name="MenuPath" column="MenuPath" type="String" not-null="false" />
     <property name="MapPath" column="MapPath" type="String" not-null="false" />
     <property name="SupplierDescription" column="SupplierDescription" type="String" not-null="false" />
