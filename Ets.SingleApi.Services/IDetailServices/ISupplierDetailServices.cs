@@ -138,5 +138,20 @@
         /// ----------------------------------------------------------------------------------------
         DetailServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(
             int supplierId, DateTime startDeliveryDate, int days, int beginReadyTime, bool onlyActive);
+
+        /// <summary>
+        /// 根据百度坐标计算距离
+        /// </summary>
+        /// <param name="baidulat">The baidulat</param>
+        /// <param name="baidulong">The baidulong</param>
+        /// <returns>
+        /// Int32}
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：1/21/2014 11:23 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        dynamic CalculateSpaceLatLong(double baidulat, double baidulong);
     }
 }

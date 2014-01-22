@@ -52,6 +52,19 @@
         public int? SupplierGroupId { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether
+        /// </summary>
+        /// <value>
+        /// The IsEtaoshi
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：1/16/2014 9:22 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsEtaoshi { get; set; }
+
+        /// <summary>
         /// Gets or sets the OrderStatus of UserOrdersParameter
         /// </summary>
         /// <value>

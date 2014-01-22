@@ -173,6 +173,7 @@
         /// 获取用户收藏的餐厅列表
         /// </summary>
         /// <param name="id">用户Id</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
         /// <returns>
         /// The FollowerSupplierListResponse
         /// </returns>
@@ -183,7 +184,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：获取用户收藏的餐厅列表")]
-        ListResponse<FollowerSupplier> FollowerSupplierList(string id);
+        ListResponse<FollowerSupplier> FollowerSupplierList(string id, int supplierGroupId);
 
         /// <summary>
         /// 判定是否已经收藏餐厅

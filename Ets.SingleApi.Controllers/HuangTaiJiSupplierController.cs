@@ -112,6 +112,66 @@
         }
 
         /// <summary>
+        /// 取得餐厅送餐时间
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="deliveryMethodId">送餐方式</param>
+        /// <param name="startDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <param name="onlyActive">是否只取有效的送餐时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<SupplierDeliveryTime> SupplierDeliveryTime(int id, int? deliveryMethodId = null, DateTime? startDate = null, int? days = null, bool? onlyActive = true)
+        {
+            var result = this.huangTaiJiSupplierServices.GetSupplierDeliveryTime(this.Source, id, deliveryMethodId ?? -1, startDate, days, onlyActive ?? true);
+            if (result == null)
+            {
+                return new ListResponse<SupplierDeliveryTime>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Succeed.Empty
+                    },
+                    Result = new List<SupplierDeliveryTime>()
+                };
+            }
+
+            if (result.Result == null || result.Result.Count == 0)
+            {
+                return new ListResponse<SupplierDeliveryTime>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = result.StatusCode
+                    },
+                    Result = new List<SupplierDeliveryTime>()
+                };
+            }
+
+            return new ListResponse<SupplierDeliveryTime>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result.Select(p => new SupplierDeliveryTime
+                {
+                    SupplierId = p.SupplierId,
+                    DeliveryDate = p.DeliveryDate,
+                    DeliveryTime = p.DeliveryTime,
+                    DeliveryTimeList = p.DeliveryTimeList
+                }).ToList()
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅菜
         /// </summary>
         /// <param name="id">餐厅Id</param>

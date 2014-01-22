@@ -212,41 +212,45 @@
             if (parameter == null || parameter.CuisineList == null || parameter.CuisineList.Count == 0)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
+                    {
+                        StatusCode = (int) StatusCode.System.InvalidRequest
+                    };
             }
 
             var supplierMenuCategoryEntity = this.supplierMenuCategoryEntityRepository.FindSingleByExpression(
-                    p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId && p.SupplierId == parameter.SupplierId);
+                p =>
+                p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId &&
+                p.SupplierId == parameter.SupplierId);
             if (supplierMenuCategoryEntity == null)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                    };
             }
 
             var categoryTypeList = parameter.CuisineList.Select(p => p.CuisineType).Distinct().ToList();
-            var categoryTypeEntityList = this.categoryTypeEntityRepository.EntityQueryable.Where(p => categoryTypeList.Contains(p.CategoryType)).ToList();
+            var categoryTypeEntityList =
+                this.categoryTypeEntityRepository.EntityQueryable.Where(p => categoryTypeList.Contains(p.CategoryType))
+                    .ToList();
             var categoryEntityList = parameter.CuisineList.Select(p => new CategoryEntity
-                  {
-                      CategoryName = p.CuisineName,
-                      CategoryNo = p.CuisineNo,
-                      CategoryDescription = p.CuisineDescription,
-                      CategoryImage = p.CuisineImage,
-                      SupplierMenuCategoryId = supplierMenuCategoryEntity.SupplierMenuCategoryId,
-                      SupplierId = parameter.SupplierId,
-                      CategoryType = categoryTypeEntityList.FirstOrDefault(q => q.CategoryType == p.CuisineType)
-                  }).ToList();
+                {
+                    CategoryName = p.CuisineName,
+                    CategoryNo = p.CuisineNo,
+                    CategoryDescription = p.CuisineDescription,
+                    CategoryImage = p.CuisineImage,
+                    SupplierMenuCategoryId = supplierMenuCategoryEntity.SupplierMenuCategoryId,
+                    SupplierId = parameter.SupplierId,
+                    CategoryType = categoryTypeEntityList.FirstOrDefault(q => q.CategoryType == p.CuisineType)
+                }).ToList();
             this.categoryEntityRepository.Save(categoryEntityList);
 
             var supplierCategoryEntityList = categoryEntityList.Select(p => new SupplierCategoryEntity
-                        {
-                            SupplierId = parameter.SupplierId,
-                            Category = p,
-                            SupplierMenuCategoryId = supplierMenuCategoryEntity.SupplierMenuCategoryId
-                        }).ToList();
+                {
+                    SupplierId = parameter.SupplierId,
+                    Category = p,
+                    SupplierMenuCategoryId = supplierMenuCategoryEntity.SupplierMenuCategoryId
+                }).ToList();
             this.supplierCategoryEntityRepository.Save(supplierCategoryEntityList);
             return new DetailServicesResult<bool>
                 {
@@ -272,30 +276,36 @@
             if (parameter == null || parameter.CuisineList == null || parameter.CuisineList.Count == 0)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
+                    {
+                        StatusCode = (int) StatusCode.System.InvalidRequest
+                    };
             }
 
             var supplierMenuCategoryEntity = this.supplierMenuCategoryEntityRepository.FindSingleByExpression(
-                    p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId && p.SupplierId == parameter.SupplierId);
+                p =>
+                p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId &&
+                p.SupplierId == parameter.SupplierId);
             if (supplierMenuCategoryEntity == null)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                    };
             }
 
             var categoryIdList = parameter.CuisineList.Select(p => p.CategoryId).Distinct().ToList();
             var categoryEntityList = (from entity in this.supplierCategoryEntityRepository.EntityQueryable
                                       where entity.SupplierId == parameter.SupplierId
-                                      && entity.SupplierMenuCategoryId == supplierMenuCategoryEntity.SupplierMenuCategoryId
-                                      && categoryIdList.Contains(entity.Category.CategoryId)
+                                            &&
+                                            entity.SupplierMenuCategoryId ==
+                                            supplierMenuCategoryEntity.SupplierMenuCategoryId
+                                            && categoryIdList.Contains(entity.Category.CategoryId)
                                       select entity.Category).ToList();
 
             var categoryTypeList = parameter.CuisineList.Select(p => p.CuisineType).Distinct().ToList();
-            var categoryTypeEntityList = this.categoryTypeEntityRepository.EntityQueryable.Where(p => categoryTypeList.Contains(p.CategoryType)).ToList();
+            var categoryTypeEntityList =
+                this.categoryTypeEntityRepository.EntityQueryable.Where(p => categoryTypeList.Contains(p.CategoryType))
+                    .ToList();
             foreach (var cuisine in parameter.CuisineList)
             {
                 var category = categoryEntityList.FirstOrDefault(p => p.CategoryId == cuisine.CategoryId);
@@ -313,9 +323,9 @@
 
             this.categoryEntityRepository.Save(categoryEntityList);
             return new DetailServicesResult<bool>
-            {
-                Result = true
-            };
+                {
+                    Result = true
+                };
         }
 
         /// <summary>
@@ -336,33 +346,35 @@
             if (parameter == null || parameter.CategoryIdList == null || parameter.CategoryIdList.Count == 0)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
+                    {
+                        StatusCode = (int) StatusCode.System.InvalidRequest
+                    };
             }
 
             var supplierMenuCategoryEntity = this.supplierMenuCategoryEntityRepository.FindSingleByExpression(
-                    p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId && p.SupplierId == parameter.SupplierId);
+                p =>
+                p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId &&
+                p.SupplierId == parameter.SupplierId);
             if (supplierMenuCategoryEntity == null)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                    };
             }
 
             var supplierCategoryEntityList = this.supplierCategoryEntityRepository.EntityQueryable.Where(
-                                                p =>
-                                                p.SupplierId == parameter.SupplierId
-                                                && p.SupplierMenuCategoryId == supplierMenuCategoryEntity.SupplierMenuCategoryId
-                                                && parameter.CategoryIdList.Contains(p.Category.CategoryId)).ToList();
+                p =>
+                p.SupplierId == parameter.SupplierId
+                && p.SupplierMenuCategoryId == supplierMenuCategoryEntity.SupplierMenuCategoryId
+                && parameter.CategoryIdList.Contains(p.Category.CategoryId)).ToList();
             this.supplierCategoryEntityRepository.Remove(supplierCategoryEntityList);
 
             var categoryEntityList = this.categoryEntityRepository.EntityQueryable.Where(
-                                    p =>
-                                    p.SupplierId == parameter.SupplierId
-                                    && p.SupplierMenuCategoryId == supplierMenuCategoryEntity.SupplierMenuCategoryId
-                                    && parameter.CategoryIdList.Contains(p.CategoryId)).ToList();
+                p =>
+                p.SupplierId == parameter.SupplierId
+                && p.SupplierMenuCategoryId == supplierMenuCategoryEntity.SupplierMenuCategoryId
+                && parameter.CategoryIdList.Contains(p.CategoryId)).ToList();
             this.categoryEntityRepository.Remove(categoryEntityList);
             return new DetailServicesResult<bool>
                 {
@@ -388,60 +400,65 @@
             if (parameter == null || parameter.DishList == null || parameter.DishList.Count == 0)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
+                    {
+                        StatusCode = (int) StatusCode.System.InvalidRequest
+                    };
             }
 
-            var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == parameter.SupplierId);
+            var supplierEntity =
+                this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == parameter.SupplierId);
             if (supplierEntity == null)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                    };
             }
 
             var supplierMenuCategoryEntity = this.supplierMenuCategoryEntityRepository.FindSingleByExpression(
-                    p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId && p.SupplierId == parameter.SupplierId);
+                p =>
+                p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId &&
+                p.SupplierId == parameter.SupplierId);
             if (supplierMenuCategoryEntity == null)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                    };
             }
 
             var tempCategoryIdList = parameter.DishList.Select(p => p.CategoryId).ToList();
             var categoryIdList = (from entity in this.supplierCategoryEntityRepository.EntityQueryable
                                   where entity.SupplierId == parameter.SupplierId
-                                      && entity.SupplierMenuCategoryId == supplierMenuCategoryEntity.SupplierMenuCategoryId
-                                      && tempCategoryIdList.Contains(entity.Category.CategoryId)
+                                        &&
+                                        entity.SupplierMenuCategoryId ==
+                                        supplierMenuCategoryEntity.SupplierMenuCategoryId
+                                        && tempCategoryIdList.Contains(entity.Category.CategoryId)
                                   select entity.Category.CategoryId).ToList();
 
             foreach (var dish in parameter.DishList.Where(p => categoryIdList.Contains(p.CategoryId)).ToList())
             {
                 var supplierDishEntity = new SupplierDishEntity
-                   {
-                       SupplierDishName = dish.SupplierDishName,
-                       SuppllierDishDescription = dish.SuppllierDishDescription,
-                       DishNo = dish.SupplierDishNo == null ? null : dish.SupplierDishNo.Value.ToString(),
-                       Price = dish.Price,
-                       PackagingFee = dish.PackagingFee,
-                       IsCommission = dish.IsCommission,
-                       IsDiscount = dish.IsDiscount,
-                       Vegetarian = dish.IsVegetarian == true ? 1 : 0,
-                       SpicyLevel = dish.SpicyLevel,
-                       StockLevel = dish.StockLevel,
-                       Recipe = dish.Recipe,
-                       Recommended = dish.Recommended,
-                       IsDel = false,
-                       Online = true,
-                       Supplier = supplierEntity,
-                       SupplierCategoryId = dish.CategoryId,
-                       QuanPin = dish.SupplierDishName.ToFullSpell(),
-                       JianPin = dish.SupplierDishName.ToSimpleSpell()
-                   };
+                    {
+                        SupplierDishName = dish.SupplierDishName,
+                        SuppllierDishDescription = dish.SuppllierDishDescription,
+                        DishNo = dish.SupplierDishNo == null ? null : dish.SupplierDishNo.Value.ToString(),
+                        Price = dish.Price,
+                        PackagingFee = dish.PackagingFee,
+                        IsCommission = dish.IsCommission,
+                        IsDiscount = dish.IsDiscount,
+                        Vegetarian = dish.IsVegetarian == true ? 1 : 0,
+                        SpicyLevel = dish.SpicyLevel,
+                        StockLevel = dish.StockLevel,
+                        Recipe = dish.Recipe,
+                        Recommended = dish.Recommended,
+                        IsDel = false,
+                        Online = true,
+                        Supplier = supplierEntity,
+                        SupplierCategoryId = dish.CategoryId,
+                        QuanPin = dish.SupplierDishName.ToFullSpell(),
+                        JianPin = dish.SupplierDishName.ToSimpleSpell()
+                    };
 
                 this.supplierDishEntityRepository.Save(supplierDishEntity);
 
@@ -481,37 +498,45 @@
             if (parameter == null || parameter.DishList == null || parameter.DishList.Count == 0)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
+                    {
+                        StatusCode = (int) StatusCode.System.InvalidRequest
+                    };
             }
 
-            var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == parameter.SupplierId);
+            var supplierEntity =
+                this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == parameter.SupplierId);
             if (supplierEntity == null)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                    };
             }
 
             var supplierMenuCategoryEntity = this.supplierMenuCategoryEntityRepository.FindSingleByExpression(
-                    p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId && p.SupplierId == parameter.SupplierId);
+                p =>
+                p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId &&
+                p.SupplierId == parameter.SupplierId);
             if (supplierMenuCategoryEntity == null)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                    };
             }
 
             var supplierDishIdList = parameter.DishList.Select(p => p.SupplierDishId).ToList();
-            var supplierDishEntityList = this.supplierDishEntityRepository.FindByExpression(p => p.Supplier.SupplierId == parameter.SupplierId && supplierDishIdList.Contains(p.SupplierDishId)).ToList();
+            var supplierDishEntityList =
+                this.supplierDishEntityRepository.FindByExpression(
+                    p => p.Supplier.SupplierId == parameter.SupplierId && supplierDishIdList.Contains(p.SupplierDishId))
+                    .ToList();
             var tempCategoryIdList = parameter.DishList.Select(p => p.CategoryId).ToList();
             var categoryIdList = (from entity in this.supplierCategoryEntityRepository.EntityQueryable
                                   where entity.SupplierId == parameter.SupplierId
-                                      && entity.SupplierMenuCategoryId == supplierMenuCategoryEntity.SupplierMenuCategoryId
-                                      && tempCategoryIdList.Contains(entity.Category.CategoryId)
+                                        &&
+                                        entity.SupplierMenuCategoryId ==
+                                        supplierMenuCategoryEntity.SupplierMenuCategoryId
+                                        && tempCategoryIdList.Contains(entity.Category.CategoryId)
                                   select entity.Category.CategoryId).ToList();
 
             foreach (var supplierDishEntity in supplierDishEntityList)
@@ -534,17 +559,22 @@
                 supplierDishEntity.StockLevel = dish.StockLevel;
                 supplierDishEntity.Recipe = dish.Recipe;
                 supplierDishEntity.Recommended = dish.Recommended;
-                supplierDishEntity.SupplierCategoryId = categoryIdList.Any(p => p == dish.CategoryId) ? (int?)dish.CategoryId : null;
+                supplierDishEntity.SupplierCategoryId = categoryIdList.Any(p => p == dish.CategoryId)
+                                                            ? (int?) dish.CategoryId
+                                                            : null;
                 supplierDishEntity.QuanPin = dish.SupplierDishName.ToFullSpell();
                 supplierDishEntity.JianPin = dish.SupplierDishName.ToSimpleSpell();
             }
 
             this.supplierDishEntityRepository.Save(supplierDishEntityList);
 
-            var supplierDishImageEntityList = this.supplierDishImageEntityRepository.FindByExpression(p => supplierDishIdList.Contains(p.SupplierDishId) && p.Online == true).ToList();
+            var supplierDishImageEntityList =
+                this.supplierDishImageEntityRepository.FindByExpression(
+                    p => supplierDishIdList.Contains(p.SupplierDishId) && p.Online == true).ToList();
             foreach (var supplierDishImageEntity in supplierDishImageEntityList)
             {
-                var dish = parameter.DishList.FirstOrDefault(p => p.SupplierDishId == supplierDishImageEntity.SupplierDishId);
+                var dish =
+                    parameter.DishList.FirstOrDefault(p => p.SupplierDishId == supplierDishImageEntity.SupplierDishId);
                 if (dish == null)
                 {
                     continue;
@@ -578,15 +608,15 @@
             if (parameter == null || parameter.DishIdList == null || parameter.DishIdList.Count == 0)
             {
                 return new DetailServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
+                    {
+                        StatusCode = (int) StatusCode.System.InvalidRequest
+                    };
             }
 
             var supplierDishEntityList = this.supplierDishEntityRepository.EntityQueryable.Where(
-                                                p =>
-                                                p.Supplier.SupplierId == parameter.SupplierId
-                                                && parameter.DishIdList.Contains(p.SupplierDishId)).ToList();
+                p =>
+                p.Supplier.SupplierId == parameter.SupplierId
+                && parameter.DishIdList.Contains(p.SupplierDishId)).ToList();
 
             foreach (var supplierDishEntity in supplierDishEntityList)
             {
@@ -596,9 +626,9 @@
             this.supplierDishEntityRepository.Save(supplierDishEntityList);
 
             return new DetailServicesResult<bool>
-            {
-                Result = true
-            };
+                {
+                    Result = true
+                };
         }
 
         /// <summary>
@@ -617,7 +647,10 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DetailServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId, DateTime startServiceDate, int days, int beginReadyTime, bool onlyActive)
+        public DetailServicesResultList<SupplierServiceTimeModel> GetSupplierServiceTime(int supplierId,
+                                                                                         DateTime startServiceDate,
+                                                                                         int days, int beginReadyTime,
+                                                                                         bool onlyActive)
         {
             var dayList = new List<string>();
             for (var i = 0; i < days; i++)
@@ -629,23 +662,24 @@
             var timeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
                                         from timeTable in this.timeTableDisplayEntityRepository.EntityQueryable
                                         where entity.SupplierId == supplierId
-                                        && entity.TimeTableDisplayId == timeTable.TimeTableDisplayId
-                                        && timeTable.OpenTime != null
-                                        && timeTable.CloseTime != null
+                                              && entity.TimeTableDisplayId == timeTable.TimeTableDisplayId
+                                              && timeTable.OpenTime != null
+                                              && timeTable.CloseTime != null
                                         select new
-                                        {
-                                            entity.Day,
-                                            timeTable.OpenTime,
-                                            timeTable.CloseTime
-                                        }).ToList();
+                                            {
+                                                entity.Day,
+                                                timeTable.OpenTime,
+                                                timeTable.CloseTime
+                                            }).ToList();
 
             var result = new List<SupplierServiceTimeModel>();
             for (var i = 0; i < days; i++)
             {
                 var serviceDate = startServiceDate.AddDays(i);
                 var day = serviceDate.AddDays(i).GetDayOfWeek();
-                var timeTableList = timeTableDisplayList.Where(p => p.Day != null && p.OpenTime != null && p.CloseTime != null)
-                                    .Where(p => p.Day.Value.ToString() == day).ToList();
+                var timeTableList =
+                    timeTableDisplayList.Where(p => p.Day != null && p.OpenTime != null && p.CloseTime != null)
+                                        .Where(p => p.Day.Value.ToString() == day).ToList();
                 if (timeTableList.Count <= 0)
                 {
                     continue;
@@ -660,7 +694,8 @@
                     if (onlyActive)
                     {
                         var date = startDate.ToString("yyyy-MM-dd");
-                        var tempStartDate = DateTime.Parse(string.Format("{0} {1:t}", serviceDate.ToString("yyyy-MM-dd"), startDate));
+                        var tempStartDate =
+                            DateTime.Parse(string.Format("{0} {1:t}", serviceDate.ToString("yyyy-MM-dd"), startDate));
                         var tempEndDate = DateTime.Now.AddMinutes(beginReadyTime);
                         var tempDate = tempStartDate >= tempEndDate ? tempStartDate : tempEndDate;
                         startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
@@ -691,7 +726,7 @@
             return new DetailServicesResultList<SupplierServiceTimeModel>
                 {
                     Result = result,
-                    StatusCode = result.Count == 0 ? (int)StatusCode.Succeed.Empty : (int)StatusCode.Succeed.Ok
+                    StatusCode = result.Count == 0 ? (int) StatusCode.Succeed.Empty : (int) StatusCode.Succeed.Ok
                 };
         }
 
@@ -711,7 +746,10 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DetailServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(int supplierId, DateTime startDeliveryDate, int days, int beginReadyTime, bool onlyActive)
+        public DetailServicesResultList<SupplierDeliveryTimeModel> GetSupplierDeliveryTime(int supplierId,
+                                                                                           DateTime startDeliveryDate,
+                                                                                           int days, int beginReadyTime,
+                                                                                           bool onlyActive)
         {
             var notSendDateList = new List<string>();
             var dayList = new List<string>();
@@ -727,24 +765,24 @@
             var supplierTimeTableList = (from entity in this.supplierTimeTableEntityRepository.EntityQueryable
                                          from timeTable in this.timeTableEntityRepository.EntityQueryable
                                          where entity.SupplierId == supplierId
-                                         && entity.TimeTableId == timeTable.TimeTableId
+                                               && entity.TimeTableId == timeTable.TimeTableId
                                          select new
-                                         {
-                                             entity.Day,
-                                             timeTable.OpenTime,
-                                             timeTable.CloseTime
-                                         }).ToList();
+                                             {
+                                                 entity.Day,
+                                                 timeTable.OpenTime,
+                                                 timeTable.CloseTime
+                                             }).ToList();
 
             //不送餐时间列表
             var doNotSendTimeList = (from entity in this.supplierDoNotSendTimeEntityRepository.EntityQueryable
                                      where entity.SupplierId == supplierId
-                                     && notSendDateList.Contains(entity.NotSendDate)
+                                           && notSendDateList.Contains(entity.NotSendDate)
                                      select new
-                                     {
-                                         entity.SupplierId,
-                                         entity.NotSendDate,
-                                         entity.NotSendTime
-                                     }).ToList();
+                                         {
+                                             entity.SupplierId,
+                                             entity.NotSendDate,
+                                             entity.NotSendTime
+                                         }).ToList();
 
             var result = new List<SupplierDeliveryTimeModel>();
             for (var i = 0; i < days; i++)
@@ -764,15 +802,23 @@
                         }
 
                         var itemDay = Convert.ToInt32(day);
-                        var itemOpenTime = DateTime.Parse(string.Format("{0} {1}", startDeliveryDate.ToString("yyyy-MM-dd"), timeList.First()));
-                        var itemCloseTime = DateTime.Parse(string.Format("{0} {1}", startDeliveryDate.ToString("yyyy-MM-dd"), timeList.Last()));
-                        timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
+                        var itemOpenTime =
+                            DateTime.Parse(string.Format("{0} {1}", startDeliveryDate.ToString("yyyy-MM-dd"),
+                                                         timeList.First()));
+                        var itemCloseTime =
+                            DateTime.Parse(string.Format("{0} {1}", startDeliveryDate.ToString("yyyy-MM-dd"),
+                                                         timeList.Last()));
+                        timeTableList.Add(new {Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime});
                     }
                 }
 
                 //取得当天的不送餐时间列表
                 var tempList = doNotSendTimeList.Where(p => p.NotSendDate == deliveryDate.ToString("yyyy/MM/dd"))
-               .Select(p => p.NotSendTime).Where(p => p != null).Select(p => p ?? 0).OrderBy(p => p).ToList();
+                                                .Select(p => p.NotSendTime)
+                                                .Where(p => p != null)
+                                                .Select(p => p ?? 0)
+                                                .OrderBy(p => p)
+                                                .ToList();
 
                 //分割时间段
                 var temptimeTableList = new List<dynamic>();
@@ -787,10 +833,10 @@
                     if (noSendList.Count == 0)
                     {
                         temptimeTableList.Add(new
-                               {
-                                   OpenTime = startDate,
-                                   CloseTime = endDate
-                               });
+                            {
+                                OpenTime = startDate,
+                                CloseTime = endDate
+                            });
                         continue;
                     }
 
@@ -812,10 +858,10 @@
                         }
 
                         temptimeTableList.Add(new
-                        {
-                            OpenTime = startDate,
-                            CloseTime = DateTime.Parse(string.Format("{0} {1}:59", date, temp - 1))
-                        });
+                            {
+                                OpenTime = startDate,
+                                CloseTime = DateTime.Parse(string.Format("{0} {1}:59", date, temp - 1))
+                            });
                         startDate = DateTime.Parse(string.Format("{0} {1}:00", date, temp + 1));
                         startHours = startDate.Hour;
                     }
@@ -826,10 +872,10 @@
                     }
 
                     temptimeTableList.Add(new
-                    {
-                        OpenTime = startDate,
-                        CloseTime = endDate
-                    });
+                        {
+                            OpenTime = startDate,
+                            CloseTime = endDate
+                        });
                 }
 
                 var list = new List<string>();
@@ -841,7 +887,8 @@
                     if (onlyActive)
                     {
                         var date = startDate.ToString("yyyy-MM-dd");
-                        var tempStartDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate));
+                        var tempStartDate =
+                            DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate));
                         var tempEndDate = DateTime.Now.AddMinutes(beginReadyTime);
                         var tempDate = tempStartDate >= tempEndDate ? tempStartDate : tempEndDate;
                         startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
@@ -866,19 +913,42 @@
                 }
 
                 result.Add(new SupplierDeliveryTimeModel
-                {
-                    SupplierId = supplierId,
-                    DeliveryDate = deliveryDate.ToString("yyyy-MM-dd"),
-                    DeliveryTime = string.Join(" ", tempDeliveryTimeList),
-                    DeliveryTimeList = list
-                });
+                    {
+                        SupplierId = supplierId,
+                        DeliveryDate = deliveryDate.ToString("yyyy-MM-dd"),
+                        DeliveryTime = string.Join(" ", tempDeliveryTimeList),
+                        DeliveryTimeList = list
+                    });
             }
 
             return new DetailServicesResultList<SupplierDeliveryTimeModel>
-            {
-                Result = result,
-                StatusCode = result.Count == 0 ? (int)StatusCode.Succeed.Empty : (int)StatusCode.Succeed.Ok
-            };
+                {
+                    Result = result,
+                    StatusCode = result.Count == 0 ? (int) StatusCode.Succeed.Empty : (int) StatusCode.Succeed.Ok
+                };
+        }
+
+
+        /// <summary>
+        /// 根据百度坐标计算距离
+        /// </summary>
+        /// <param name="baidulat">The baidulat</param>
+        /// <param name="baidulong">The baidulong</param>
+        /// <returns>
+        /// dynamic
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：1/21/2014 11:23 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public dynamic CalculateSpaceLatLong(double baidulat, double baidulong)
+        {
+            var result = this.supplierEntityRepository.NamedQuery("Pro_CalculateSpaceLatLong")
+                             .SetDouble("BaiduLat", baidulat)
+                             .SetDouble("BaiduLong", baidulong).UniqueResult();
+
+            return result;
         }
     }
 }

@@ -32,6 +32,8 @@
         {
             var controller = ((SingleApiController)actionContext.ControllerContext.Controller);
             var source = actionContext.Request.Headers.Read("Source");
+            var isEtaoshi = actionContext.Request.Headers.Read("IsEtaoshi");
+            controller.IsEtaoshi = string.Equals(isEtaoshi, "true", StringComparison.OrdinalIgnoreCase);
             controller.Source = string.Format(
                 "singleapi_{0}", source.IsEmptyOrNull() ? ControllersCommon.UnkownSource : source);
             if (!ControllersCommon.ApplicationValidationEnabled)

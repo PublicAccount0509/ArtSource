@@ -1755,7 +1755,8 @@
             var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
             {
                 p.SupplierId,
-                p.DeliveryTime
+                p.DeliveryTime,
+                p.PickUpTime
             }).FirstOrDefault();
 
             if (supplier == null)
@@ -1773,7 +1774,13 @@
                 deliveryTime = ServicesCommon.DeliveryMethodReadyTime;
             }
 
-            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : deliveryTime;
+            int pickUpTime;
+            if (!int.TryParse(supplier.PickUpTime, out pickUpTime))
+            {
+                pickUpTime = ServicesCommon.PickUpMethodReadyTime;
+            }
+
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? pickUpTime : deliveryTime;
             var result = this.supplierDetailServices.GetSupplierServiceTime(supplierId, startServiceDate ?? DateTime.Now, days ?? ServicesCommon.ServiceTimeDefaultDays, beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierServiceTimeModel>
             {
@@ -1805,7 +1812,8 @@
             var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
                 {
                     p.SupplierId,
-                    p.DeliveryTime
+                    p.DeliveryTime,
+                    p.PickUpTime
                 }).FirstOrDefault();
 
             if (supplier == null)
@@ -1823,7 +1831,13 @@
                 deliveryTime = ServicesCommon.DeliveryMethodReadyTime;
             }
 
-            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : deliveryTime;
+            int pickUpTime;
+            if (!int.TryParse(supplier.PickUpTime, out pickUpTime))
+            {
+                pickUpTime = ServicesCommon.PickUpMethodReadyTime;
+            }
+
+            var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? pickUpTime : deliveryTime;
             var result = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, startDeliveryDate ?? DateTime.Now, days ?? ServicesCommon.DeliveryTimeDefaultDays, beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierDeliveryTimeModel>
             {

@@ -27,6 +27,7 @@
     <property name="Email" column="Email" type="String" not-null="false" />
     <property name="Commission" column="Commission" type="Decimal" />
     <property name="DeliveryTime" column="DeliveryTime" type="String" not-null="false" />
+    <property name="PickUpTime" column="PickUpTime" type="String" not-null="false" />
     <property name="MenuPath" column="MenuPath" type="String" not-null="false" />
     <property name="MapPath" column="MapPath" type="String" not-null="false" />
     <property name="SupplierDescription" column="SupplierDescription" type="String" not-null="false" />
@@ -353,7 +354,7 @@
     <return-scalar column="CuisineName" type="String" />
     <return-scalar column="LogoUrl" type="String" />
     <return-scalar column="IsOpenDoor" type="Boolean" />
-    <return-scalar column="Distance" type="Decimal" />
+    <return-scalar column="Distance" type="Decimal" />    
     <return-scalar column="DateJoined" type="DateTime" />
     <return-scalar column="SupplierGroupId" type="Int32" />
     exec Pro_QuerySupplierListCheapest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
@@ -393,5 +394,9 @@
     <return-scalar column="LogoUrl" type="String" />
     <return-scalar column="Distance" type="Decimal" />
     exec Pro_QuerySearchGroupSupplierList :FeatureId,:SupplierGroupId,:CityId,:UserLat,:UserLong,:PageIndex,:PageSize
+  </sql-query>
+  <sql-query name="Pro_CalculateSpaceLatLong">
+    <return-scalar column="SpaceLatLong" type="BinaryBlob" />
+    exec Pro_CalculateSpaceLatLong :UserLat,:UserLong
   </sql-query>
 </hibernate-mapping>

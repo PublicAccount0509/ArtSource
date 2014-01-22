@@ -56,5 +56,44 @@
         {
             return new ListResponse<PackageCuisine>();
         }
+        /// <summary>
+        /// 取得餐厅营业时间
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="startDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/SupplierServiceTime/{id}?startDate={startDate}&days={days}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<SupplierServiceTime> SupplierServiceTime(string id, string startDate, string days)
+        {
+            return new ListResponse<SupplierServiceTime>();
+        }
+
+        /// <summary>
+        /// 取得餐厅送餐时间
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="startDate">开始日期</param>
+        /// <param name="days">天数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：12/2/2013 11:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/SupplierDeliveryTime/{id}?startDate={startDate}&days={days}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<SupplierDeliveryTime> SupplierDeliveryTime(string id, string startDate, string days)
+        {
+            return new ListResponse<SupplierDeliveryTime>();
+        }
     }
 }

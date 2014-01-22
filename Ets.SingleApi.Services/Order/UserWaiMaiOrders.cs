@@ -173,15 +173,32 @@
         /// ----------------------------------------------------------------------------------------
         private List<WaiMaiOrderModel> GetWaiMaiOrderList(UserOrdersParameter parameter)
         {
-            var queryableTemp = this.deliveryEntityRepository.EntityQueryable.Where(p => p.CustomerId == parameter.CustomerId && p.SupplierId != null);
-            if (parameter.SupplierGroupId != null)
-            {
-                queryableTemp = (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable.Where(p => p.CustomerId == parameter.CustomerId && p.SupplierId != null)
+            var shieldingSupplierGroupList = ServicesCommon.ShieldingSupplierGroupList.Select(p => (int?)p).ToList();
+            var queryableTemp = (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
                                  from entity in this.supplierEntityRepository.EntityQueryable
                                  where deliveryEntity.SupplierId == entity.SupplierId
-                                 && entity.SupplierGroupId == parameter.SupplierGroupId
-                                 select deliveryEntity);
+                                 && deliveryEntity.CustomerId == parameter.CustomerId 
+                                 select new
+                                     {
+                                         deliveryEntity.OrderNumber,
+                                         deliveryEntity.SupplierId,
+                                         deliveryEntity.DateAdded,
+                                         deliveryEntity.CustomerTotal,
+                                         deliveryEntity.OrderStatusId,
+                                         deliveryEntity.DeliveryMethodId,
+                                         deliveryEntity.IsPaId,
+                                         entity.SupplierGroupId,
 
+                                     });
+
+            if (parameter.SupplierGroupId != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.SupplierGroupId == parameter.SupplierGroupId);
+            }
+
+            if (parameter.IsEtaoshi)
+            {
+                queryableTemp = queryableTemp.Where(p => !shieldingSupplierGroupList.Contains(p.SupplierGroupId));
             }
 
             if (parameter.SupplierId != null)
@@ -199,7 +216,13 @@
                 queryableTemp = queryableTemp.Where(p => p.IsPaId == parameter.PaidStatus);
             }
 
-            var queryable = queryableTemp.Select(p => new WaiMaiOrderModel
+            queryableTemp = queryableTemp.OrderByDescending(p => p.DateAdded);
+            if (parameter.PageIndex != null)
+            {
+                queryableTemp = queryableTemp.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize);
+            }
+
+            var result = queryableTemp.ToList().Select(p => new WaiMaiOrderModel
                                {
                                    OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
                                    SupplierId = p.SupplierId,
@@ -211,14 +234,9 @@
                                    OrderType = (int)this.OrderType,
                                    DeliveryMethodId = p.DeliveryMethodId,
                                    IsPaid = p.IsPaId
-                               }).OrderByDescending(p => p.DateReserved);
+                               }).ToList();
 
-            if (parameter.PageIndex == null)
-            {
-                return queryable.ToList();
-            }
-
-            return queryable.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize).ToList();
+            return result;
         }
     }
 }
