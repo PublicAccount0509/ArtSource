@@ -78,6 +78,16 @@
         public string DeliveryTime { get; set; }
 
         /// <summary>
+        /// 设置或取得自行取餐时间
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/10/13 14:01:30
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual string PickUpTime { get; set; }
+
+        /// <summary>
         /// 设置或取得餐厅阶梯打包费
         /// </summary>
         /// <value>
