@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using Ets.SingleApi.Controllers.IServices;
@@ -40,14 +41,14 @@
         private readonly INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository;
 
         /// <summary>
-        /// 字段supplierBusinessAreaEntityRepository
+        /// 字段supplierEntityRepository
         /// </summary>
         /// 创建者：周超
         /// 创建日期：11/25/2013 3:26 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<SupplierBusinessAreaEntity> supplierBusinessAreaEntityRepository;
+        private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
         /// 字段regionEntityRepository
@@ -64,7 +65,7 @@
         /// </summary>
         /// <param name="cuisineEntityRepository">The cuisineEntityRepository</param>
         /// <param name="supplierCuisineEntityRepository">The supplierCuisineEntityRepository</param>
-        /// <param name="supplierBusinessAreaEntityRepository">The supplierBusinessAreaEntityRepository</param>
+        /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：2013/10/13 15:23
@@ -74,12 +75,12 @@
         public CuisineServices(
             INHibernateRepository<CuisineEntity> cuisineEntityRepository,
             INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository,
-            INHibernateRepository<SupplierBusinessAreaEntity> supplierBusinessAreaEntityRepository,
+            INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository)
         {
             this.cuisineEntityRepository = cuisineEntityRepository;
             this.supplierCuisineEntityRepository = supplierCuisineEntityRepository;
-            this.supplierBusinessAreaEntityRepository = supplierBusinessAreaEntityRepository;
+            this.supplierEntityRepository = supplierEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
         }
 
@@ -132,13 +133,18 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResultList<CuisineModel> GetCityCuisineList(string source, int cityId)
         {
-            var cuisineList = (from regionEntity in this.regionEntityRepository.EntityQueryable
-                               from supplierBusinessArea in this.supplierBusinessAreaEntityRepository.EntityQueryable
+            var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Id == cityId);
+            if (regionEntity == null)
+            {
+                return new ServicesResultList<CuisineModel> { Result = new List<CuisineModel>() };
+            }
+
+            var cuisineList = (from supplier in this.supplierEntityRepository.EntityQueryable
                                from supplierCuisine in this.supplierCuisineEntityRepository.EntityQueryable
                                from cuisine in this.cuisineEntityRepository.EntityQueryable
-                               where (regionEntity.CityId == cityId || regionEntity.ProvinceId == cityId)
-                               && supplierBusinessArea.BusinessArea.RegionCode == regionEntity.Code
-                               && supplierCuisine.Supplier.SupplierId == supplierBusinessArea.Supplier.SupplierId
+                               where supplier.RegionCode.StartsWith(regionEntity.Code)
+                               && supplier.Login.IsEnabled
+                               && supplierCuisine.Supplier.SupplierId == supplier.SupplierId
                                && supplierCuisine.Cuisine.CuisineId == cuisine.CuisineId
                                select new
                                                   {
@@ -147,7 +153,6 @@
                                                       cuisine.CuisineNo,
                                                       supplierCuisine.Supplier.SupplierId
                                                   }).ToList();
-
 
             var cuisineIdList = cuisineList.Select(p => p.CuisineId).Distinct().ToList();
             var result = (from cuisineId in cuisineIdList
