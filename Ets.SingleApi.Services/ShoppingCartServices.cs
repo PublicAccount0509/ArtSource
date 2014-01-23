@@ -1049,8 +1049,9 @@ namespace Ets.SingleApi.Services
 
             return this.ValidateSupplierDeliveryTime(source, supplierId, deliveryTime, beginReadyTime);
         }
+
         /// <summary>
-        /// 验证取餐时间
+        /// 验证送餐时间
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
@@ -1113,14 +1114,14 @@ namespace Ets.SingleApi.Services
 
                 var startDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.First()));
                 var endDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.Last()));
-                if (startDate >= pickUpTime.AddMinutes(beginReadyTime))
+                if (startDate >= tempDeliveryTime)
                 {
                     return new ServicesResult<DateTime?>
                         {
-                            Result = startDate,
-                            StatusCode = (int) StatusCode.Validate.InvalidPickUpTimeCode
+                            Result = startDate
                         };
                 }
+
                 if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
                 {
                     string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.DeliveryTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
@@ -1203,14 +1204,14 @@ namespace Ets.SingleApi.Services
 
                 var startDate = DateTime.Parse(string.Format("{0} {1}", supplierServiceTime.ServiceDate, tempList.First()));
                 var endDate = DateTime.Parse(string.Format("{0} {1}", supplierServiceTime.ServiceDate, tempList.Last()));
-                if (startDate > pickUpTime.AddMinutes(beginReadyTime))
+                if (startDate > tempServiceTime)
                 {
                     return new ServicesResult<DateTime?>
                     {
-                        Result = startDate,
-                        StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                        Result = startDate
                     };
                 }
+
                 if (startDate <= tempServiceTime && endDate >= tempServiceTime)
                 {
                     string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempServiceTime, supplierServiceTime.ServiceTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
