@@ -515,7 +515,7 @@
                 : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
             this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
-            this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId);
+            this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
             order.IsComplete = true;
             order.OrderId = orderId;
             this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
@@ -783,12 +783,13 @@
         /// <param name="deliveryId">订单Id</param>
         /// <param name="customerTotal">支付总金额</param>
         /// <param name="paymentMethodId">支付方式</param>
+        /// <param name="payBank">The payBank</param>
         /// 创建者：周超
         /// 创建日期：11/23/2013 11:07 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId)
+        private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId, string payBank)
         {
             var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryId)
                                  ?? new PaymentEntity
@@ -809,6 +810,7 @@
             paymentEntity.Amount = customerTotal;
             paymentEntity.MethodChangeHistory = paymentEntity.PaymentMethodId.ToString();
             paymentEntity.PaymentMethodId = paymentMethodId;
+            paymentEntity.PayBank = payBank;
             this.paymentEntityRepository.Save(paymentEntity);
         }
 

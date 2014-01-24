@@ -1310,10 +1310,91 @@
         {
             if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
             {
-                return this.ValidateSupplierDeliveryTime(source, supplierId, deliveryTime, beginReadyTime);
+                return this.ValidateSupplierServiceTime(source, supplierId, deliveryTime, beginReadyTime);
             }
 
             return this.ValidateSupplierDeliveryTime(source, supplierId, deliveryTime, beginReadyTime);
+        }
+
+        /// <summary>
+        /// 验证送餐时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="pickUpTime">取餐时间</param>
+        /// <param name="beginReadyTime">备餐时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/2/2013 6:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> ValidateSupplierDeliveryTime(string source, int supplierId, DateTime pickUpTime, int beginReadyTime)
+        {
+            if (!ServicesCommon.ValidateDeliveryTimeEnabled)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = true
+                };
+            }
+
+            var getSupplierDeliveryTimeResult = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, pickUpTime, 1, beginReadyTime, true);
+            if (getSupplierDeliveryTimeResult == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+
+            if (getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Ok && getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Empty)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = getSupplierDeliveryTimeResult.StatusCode
+                };
+            }
+
+            var supplierDeliveryTime = (getSupplierDeliveryTimeResult.Result ?? new List<SupplierDeliveryTimeModel>()).FirstOrDefault();
+            if (supplierDeliveryTime == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+                };
+            }
+
+            var tempDeliveryTime = DateTime.Parse(pickUpTime.ToString("yyyy-MM-dd HH:mm"));
+            foreach (var item in supplierDeliveryTime.DeliveryTime.Split(' '))
+            {
+                var tempList = item.Split('-').ToList();
+                if (tempList.Count != 2)
+                {
+                    continue;
+                }
+
+                var startDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.First()));
+                var endDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.Last()));
+                if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
+                {
+                    string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.DeliveryTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    return new ServicesResult<bool>
+                    {
+                        Result = true
+                    };
+                }
+            }
+
+            string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.DeliveryTime, "无效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+            };
         }
 
         /// <summary>
@@ -1331,7 +1412,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> ValidateSupplierDeliveryTime(string source, int supplierId, DateTime pickUpTime, int beginReadyTime)
+        public ServicesResult<bool> ValidateSupplierServiceTime(string source, int supplierId, DateTime pickUpTime, int beginReadyTime)
         {
             if (!ServicesCommon.ValidateDeliveryTimeEnabled)
             {

@@ -54,7 +54,7 @@
   <item code="40019" message="无效的餐厅菜类别Id"></item>
   <item code="40020" message="无效的餐厅域名"></item>
   <item code="40021" message="该时间段不提供送餐"></item>
-  <item code="40022" message="店铺已打烊"></item>
+  <item code="40022" message="该时间段不提供取餐"></item>
   <item code="40023" message="购物车为空"></item>
   <item code="40024" message="无效的送餐方式"></item>
   <item code="40025" message="无效的套餐Id"></item>
