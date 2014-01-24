@@ -746,7 +746,13 @@ namespace Ets.SingleApi.Services
                     supplierDeliveryTime = ServicesCommon.DeliveryMethodReadyTime;
                 }
 
-                var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.PickUpMethodReadyTime : supplierDeliveryTime;
+                int pickUpTime;
+                if (!int.TryParse(supplier.PickUpTime, out pickUpTime))
+                {
+                    pickUpTime = ServicesCommon.PickUpMethodReadyTime;
+                }
+
+                var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? pickUpTime : supplierDeliveryTime;
                 var now = DateTime.Now;
                 var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");
                 DateTime deliveryTimeTemp;
@@ -761,14 +767,14 @@ namespace Ets.SingleApi.Services
                 }
 
                 var validateDeliveryTimeResult = this.ValidateDeliveryTime(source, supplier.SupplierId, deliveryMethodId, deliveryTimeTemp, beginReadyTime);
-                if (!validateDeliveryTimeResult.Result)
+                if (validateDeliveryTimeResult.Result == null)
                 {
                     return new ServicesResult<bool>
                     {
                         StatusCode = validateDeliveryTimeResult.StatusCode
                     };
                 }
-                var deliveryTime = deliveryTimeTemp;
+                var deliveryTime = validateDeliveryTimeResult.Result;
                 shoppingCartOrder.DeliveryDateTime = deliveryTime;
             }
 
@@ -1033,17 +1039,19 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private ServicesResult<bool> ValidateDeliveryTime(string source, int supplierId, int deliveryMethodId, DateTime deliveryTime, int beginReadyTime)
+        private ServicesResult<DateTime?> ValidateDeliveryTime(string source, int supplierId, int deliveryMethodId, DateTime deliveryTime, int beginReadyTime)
         {
             if (deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId)
             {
-                return this.ValidateSupplierDeliveryTime(source, supplierId, deliveryTime, beginReadyTime);
+                //return this.ValidateSupplierDeliveryTime(source, supplierId, deliveryTime, beginReadyTime);
+                return this.ValidateSupplierServiceTime(source, supplierId, deliveryTime, beginReadyTime);
             }
 
             return this.ValidateSupplierDeliveryTime(source, supplierId, deliveryTime, beginReadyTime);
         }
+
         /// <summary>
-        /// 验证取餐时间
+        /// 验证送餐时间
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
@@ -1057,30 +1065,30 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> ValidateSupplierDeliveryTime(string source, int supplierId, DateTime pickUpTime, int beginReadyTime)
+        public ServicesResult<DateTime?> ValidateSupplierDeliveryTime(string source, int supplierId, DateTime pickUpTime, int beginReadyTime)
         {
             if (!ServicesCommon.ValidateDeliveryTimeEnabled)
             {
-                return new ServicesResult<bool>
+                return new ServicesResult<DateTime?>
                 {
-                    Result = true
+                    Result = pickUpTime
                 };
             }
 
             var getSupplierDeliveryTimeResult = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, pickUpTime, 1, beginReadyTime, true);
             if (getSupplierDeliveryTimeResult == null)
             {
-                return new ServicesResult<bool>
+                return new ServicesResult<DateTime?>
                 {
-                    Result = false
+                    Result = null
                 };
             }
 
             if (getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Ok && getSupplierDeliveryTimeResult.StatusCode != (int)StatusCode.Succeed.Empty)
             {
-                return new ServicesResult<bool>
+                return new ServicesResult<DateTime?>
                 {
-                    Result = false,
+                    Result = null,
                     StatusCode = getSupplierDeliveryTimeResult.StatusCode
                 };
             }
@@ -1088,10 +1096,10 @@ namespace Ets.SingleApi.Services
             var supplierDeliveryTime = (getSupplierDeliveryTimeResult.Result ?? new List<SupplierDeliveryTimeModel>()).FirstOrDefault();
             if (supplierDeliveryTime == null)
             {
-                return new ServicesResult<bool>
+                return new ServicesResult<DateTime?>
                 {
-                    Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                    Result = null,
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
                 };
             }
 
@@ -1106,19 +1114,118 @@ namespace Ets.SingleApi.Services
 
                 var startDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.First()));
                 var endDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.Last()));
+                if (startDate >= tempDeliveryTime)
+                {
+                    return new ServicesResult<DateTime?>
+                        {
+                            Result = startDate
+                        };
+                }
+
                 if (startDate <= tempDeliveryTime && endDate >= tempDeliveryTime)
                 {
                     string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.DeliveryTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
-                    return new ServicesResult<bool>
+                    return new ServicesResult<DateTime?>
                     {
-                        Result = true
+                        Result = tempDeliveryTime
                     };
                 }
             }
 
             string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.DeliveryTime, "无效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
-            return new ServicesResult<bool>
+            return new ServicesResult<DateTime?>
             {
+                Result = null,
+                StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+            };
+        }
+
+        /// <summary>
+        /// 验证取餐时间
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="pickUpTime">取餐时间</param>
+        /// <param name="beginReadyTime">备餐时间</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：1/22/2014 11:14 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<DateTime?> ValidateSupplierServiceTime(string source, int supplierId, DateTime pickUpTime, int beginReadyTime)
+        {
+            if (!ServicesCommon.ValidateDeliveryTimeEnabled)
+            {
+                return new ServicesResult<DateTime?>
+                {
+                    Result = pickUpTime
+                };
+            }
+
+            var getSupplierServiceTimeResult = this.supplierDetailServices.GetSupplierServiceTime(supplierId, pickUpTime, 1, beginReadyTime, true);
+            if (getSupplierServiceTimeResult == null)
+            {
+                return new ServicesResult<DateTime?>
+                {
+                    Result = null
+                };
+            }
+
+            if (getSupplierServiceTimeResult.StatusCode != (int)StatusCode.Succeed.Ok && getSupplierServiceTimeResult.StatusCode != (int)StatusCode.Succeed.Empty)
+            {
+                return new ServicesResult<DateTime?>
+                {
+                    Result = null,
+                    StatusCode = getSupplierServiceTimeResult.StatusCode
+                };
+            }
+
+            var supplierServiceTime = (getSupplierServiceTimeResult.Result ?? new List<SupplierServiceTimeModel>()).FirstOrDefault();
+            if (supplierServiceTime == null)
+            {
+                return new ServicesResult<DateTime?>
+                {
+                    Result = null,
+                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                };
+            }
+
+            var tempServiceTime = DateTime.Parse(pickUpTime.ToString("yyyy-MM-dd HH:mm"));
+            foreach (var item in supplierServiceTime.ServiceTime.Split(' '))
+            {
+                var tempList = item.Split('-').ToList();
+                if (tempList.Count != 2)
+                {
+                    continue;
+                }
+
+                var startDate = DateTime.Parse(string.Format("{0} {1}", supplierServiceTime.ServiceDate, tempList.First()));
+                var endDate = DateTime.Parse(string.Format("{0} {1}", supplierServiceTime.ServiceDate, tempList.Last()));
+                if (startDate > tempServiceTime)
+                {
+                    return new ServicesResult<DateTime?>
+                    {
+                        Result = startDate
+                    };
+                }
+
+                if (startDate <= tempServiceTime && endDate >= tempServiceTime)
+                {
+                    string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempServiceTime, supplierServiceTime.ServiceTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    return new ServicesResult<DateTime?>
+                    {
+                        Result = tempServiceTime
+                    };
+                }
+            }
+
+            string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempServiceTime, supplierServiceTime.ServiceTime, "无效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+            return new ServicesResult<DateTime?>
+            {
+                Result = null,
                 StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
             };
         }

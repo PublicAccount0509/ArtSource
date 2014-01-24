@@ -557,7 +557,7 @@
             InvalidDeliveryTimeCode = 40021,
 
             /// <summary>
-            /// 店铺已打烊
+            /// 该时间段不提供取餐
             /// </summary>
             /// 创建者：周超
             /// 创建日期：11/13/2013 3:10 PM

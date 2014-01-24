@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Services
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// 类名称：SupplierModel
@@ -221,5 +222,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public DateTime? DateJoined { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SupplierFeatureList of GroupSupplierModel
+        /// </summary>
+        /// <value>
+        /// The SupplierFeatureList
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 11:36 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public List<SupplierFeatureModel> SupplierFeatureList { get; set; }
     }
 }

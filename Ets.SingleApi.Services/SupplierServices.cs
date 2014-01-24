@@ -574,6 +574,24 @@
                                     }).ToList();
 
             var result = supplierList.Where(p => !ServicesCommon.ShieldingSupplierGroupList.Contains(p.SupplierGroupId)).ToList();
+
+            var supplierIdList = result.Select(p => p.SupplierId).ToList();
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                    p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
+                    .Select(p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId })
+                    .ToList();
+
+            foreach (var item in result)
+            {
+                item.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
+                                       .Select(p => new SupplierFeatureModel
+                                       {
+                                           FeatureId = p.FeatureId,
+                                           FeatureName = p.Feature,
+                                           SupplierFeatureId = p.SupplierFeatureId
+                                       }).ToList();
+            }
+
             return new ServicesResultList<SupplierModel>
             {
                 Result = result
@@ -636,6 +654,23 @@
                                 }).ToList();
 
             var result = supplierList.Where(p => !ServicesCommon.ShieldingSupplierGroupList.Contains(p.SupplierGroupId)).ToList();
+            var supplierIdList = result.Select(p => p.SupplierId).ToList();
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                    p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
+                    .Select(p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId })
+                    .ToList();
+
+            foreach (var item in result)
+            {
+                item.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
+                                       .Select(p => new SupplierFeatureModel
+                                               {
+                                                   FeatureId = p.FeatureId,
+                                                   FeatureName = p.Feature,
+                                                   SupplierFeatureId = p.SupplierFeatureId
+                                               }).ToList();
+            }
+
             return new ServicesResultList<SupplierModel>
             {
                 Result = result
