@@ -1114,7 +1114,7 @@ namespace Ets.SingleApi.Services
 
                 var startDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.First()));
                 var endDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.Last()));
-                if (startDate >= tempDeliveryTime)
+                if (startDate > tempDeliveryTime)
                 {
                     string.Format("送餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", startDate, supplierDeliveryTime.DeliveryTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     return new ServicesResult<DateTime?>
