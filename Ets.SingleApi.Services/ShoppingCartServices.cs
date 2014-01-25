@@ -1116,7 +1116,7 @@ namespace Ets.SingleApi.Services
                 var endDate = DateTime.Parse(string.Format("{0} {1}", supplierDeliveryTime.DeliveryDate, tempList.Last()));
                 if (startDate >= tempDeliveryTime)
                 {
-                    string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", startDate, supplierDeliveryTime.DeliveryTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    string.Format("送餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", startDate, supplierDeliveryTime.DeliveryTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     return new ServicesResult<DateTime?>
                         {
                             Result = startDate
@@ -1207,7 +1207,7 @@ namespace Ets.SingleApi.Services
                 var endDate = DateTime.Parse(string.Format("{0} {1}", supplierServiceTime.ServiceDate, tempList.Last()));
                 if (startDate > tempServiceTime)
                 {
-                    string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", startDate, supplierServiceTime.ServiceTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    string.Format("送餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", startDate, supplierServiceTime.ServiceTime, "有效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     return new ServicesResult<DateTime?>
                     {
                         Result = startDate
