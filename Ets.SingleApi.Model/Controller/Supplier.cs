@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Model.Controller
+﻿using System.Collections.Generic;
+
+namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
     /// 类名称：SimpleSupplier
@@ -115,5 +117,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public double? Distance { get; set; }
+
+        /// <summary>
+        /// 餐厅已开通功能列表
+        /// </summary>
+        /// <value>
+        /// The supplier feature list.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-1-26 9:43
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public List<SupplierFeature> SupplierFeatureList { get; set; }
     }
 }

@@ -332,7 +332,13 @@
                     Averageprice = p.Averageprice ?? 0,
                     CuisineName = p.CuisineName ?? string.Empty,
                     Distance = p.Distance ?? 0,
-                    LogoUrl = p.LogoUrl ?? string.Empty
+                    LogoUrl = p.LogoUrl ?? string.Empty,
+                    SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
+                        {
+                            SupplierFeatureId = q.SupplierFeatureId,
+                            FeatureId = q.FeatureId,
+                            FeatureName = q.FeatureName ?? string.Empty
+                        }).ToList()
                 }).ToList();
 
             return new ListResponse<Supplier>
