@@ -187,5 +187,35 @@
                     Result = getOrderNumberResult.Result
                 };
         }
+
+        /// <summary>
+        /// 更改支付状态
+        /// </summary>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderId">The orderIdDefault documentation</param>
+        /// <param name="isPaId">The  isPaId indicates whether</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：1/26/2014 10:59 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Response<bool> SaveOrderPaId(int orderType, int orderId, bool isPaId, int orderSourceType = 0)
+        {
+
+            var saveOrderPaIdResult = this.orderServices.SaveOrderPaId(this.Source, orderType, orderSourceType, orderId, isPaId);
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveOrderPaIdResult.StatusCode
+                },
+                Result = saveOrderPaIdResult.Result
+            };
+        }
     }
 }

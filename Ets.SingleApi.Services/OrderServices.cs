@@ -179,5 +179,40 @@
                 Result = result.Result
             };
         }
+
+        /// <summary>
+        /// 更改支付状态
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <param name="orderId">The orderIdDefault documentation</param>
+        /// <param name="isPaId">The  isPaId indicates whether</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：1/26/2014 10:54 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveOrderPaId(string source, int orderType, int orderSourceType, int orderId, bool isPaId)
+        {
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
+            if (orderProvider == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var result = orderProvider.SaveOrderPaId(source, orderId, isPaId);
+            return new ServicesResult<bool>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
     }
 }

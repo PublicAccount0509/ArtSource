@@ -156,5 +156,28 @@
                     Result = orderNumber.ToString()
                 };
         }
+
+        /// <summary>
+        /// 更改支付状态
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderId"></param>
+        /// <param name="isPaId">The  isPaId indicates whether</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：1/26/2014 10:50 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveOrderPaId(string source, int orderId, bool isPaId)
+        {
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
     }
 }

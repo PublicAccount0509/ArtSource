@@ -81,5 +81,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<string> GetOrderNumber(string source, int orderType, int orderSourceType);
+
+        /// <summary>
+        /// 更改支付状态
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <param name="orderId">The orderIdDefault documentation</param>
+        /// <param name="isPaId">The  isPaId indicates whether</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：1/26/2014 10:54 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SaveOrderPaId(string source, int orderType, int orderSourceType, int orderId, bool isPaId);
     }
 }
