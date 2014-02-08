@@ -54,5 +54,23 @@
         {
             return new ListResponse<BusinessArea>();
         }
+
+        /// <summary>
+        /// 获取地区和商圈信息列表
+        /// </summary>
+        /// <param name="parentCode">父节点code</param>
+        /// <returns>
+        /// 返回地区和商圈信息列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/13 10:23
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/RegionBusinessAreaList?parentCode={parentCode}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public ListResponse<BusinessArea> RegionBusinessAreaList(string parentCode)
+        {
+            return new ListResponse<BusinessArea>();
+        }
     }
 }

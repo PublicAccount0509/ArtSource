@@ -160,5 +160,25 @@
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(parentCode);
             return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
         }
+
+        /// <summary>
+        /// 获取地区和商圈信息列表
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parentCode">父节点code</param>
+        /// <returns>
+        /// 返回地区和商圈信息列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/13 10:23
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<BusinessAreaModel> GetRegionBusinessAreaList(string source, string parentCode)
+        {
+            var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.RegionBusinessArea);
+            var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(parentCode);
+            return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
+        }
     }
 }
