@@ -162,5 +162,48 @@
                 Result = result.Result
             };
         }
+
+        [HttpPost]
+        [TokenFilter]
+        public Response<bool> BaiFuBaoPaymentState(UmPaymentStateRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+
+            var result = this.paymentServices.BaiFuBaoPaymentState(this.Source, new UmPaymentStateParameter
+            {
+                OrderId = requst.OrderId,
+                PayDate = System.DateTime.Now,
+                OrderType = requst.OrderType
+            });
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
     }
 }

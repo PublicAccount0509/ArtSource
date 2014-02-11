@@ -43,5 +43,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> UmPaymentState(string source, UmPaymentStateParameter parameter);
+
+        /// <summary>
+        /// 百付宝支付状态
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/11/2014 1:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> BaiFuBaoPaymentState(string source, UmPaymentStateParameter parameter);
     }
 }

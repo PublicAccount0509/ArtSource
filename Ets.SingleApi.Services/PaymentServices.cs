@@ -188,5 +188,55 @@
                 StatusCode = result.StatusCode
             };
         }
+
+        
+        public ServicesResult<bool> BaiFuBaoPaymentState(string source, UmPaymentStateParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.OrderNumber == parameter.OrderId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            var orderType = (OrderType)parameter.OrderType;
+            var payment = this.paymentList.FirstOrDefault(p => p.OrderType == orderType && p.PaymentType == PaymentType.BaiFuBaoPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var result = payment.QueryState(new UmPaymentQueryData
+            {
+                OrderId = parameter.OrderId,
+                PayDate = parameter.PayDate
+            });
+
+            if (result == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                Result = result.Result,
+                StatusCode = result.StatusCode
+            };
+        }
     }
 }
