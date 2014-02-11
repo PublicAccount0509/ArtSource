@@ -88,6 +88,11 @@
     <Compile Include="Exists\ExistsData.cs" />
     <Compile Include="Exists\TelephoneExists.cs" />
     <Compile Include="FilterServices.cs" />
+    <Compile Include="FilterSupplier\FilteredGroupIdFilterSupplier.cs" />
+    <Compile Include="FilterSupplier\IFilterSupplier.cs" />
+    <Compile Include="FilterSupplier\SupplierIdFilterSupplier.cs" />
+    <Compile Include="FilterSupplier\KeyWordFilterSupplier.cs" />
+    <Compile Include="FilterSupplier\RetentionGroupIdFilterSupplier.cs" />
     <Compile Include="FunctionServices.cs" />
     <Compile Include="HaiDiLaoSupplierServices.cs" />
     <Compile Include="HuangTaiJiOrderServicesTemp.cs" />

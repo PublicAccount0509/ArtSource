@@ -6,6 +6,7 @@
     using System.Linq;
 
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：ServicesCommon
@@ -298,7 +299,7 @@
             }
         }
 
-		/// <summary>
+        /// <summary>
         /// 皇太吉当前时间推迟时间（单位：分钟）
         /// </summary>
         /// <value>
@@ -1694,6 +1695,142 @@
             get
             {
                 return (ConfigurationManager.AppSettings["DefaultAdvertisementFile"] ?? string.Empty).TrimStart('/', '\\');
+            }
+        }
+
+        /// <summary>
+        /// 餐厅列表过滤集团的方式（true、过滤集团；false、保留集团）
+        /// </summary>
+        /// <value>
+        /// 餐厅列表过滤集团的方式（true、过滤集团；false、保留集团）
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-11 9:46
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool FilteredSupplierGroupWay
+        {
+            get
+            {
+                return string.Equals(ConfigurationManager.AppSettings["FilteredSupplierGroupWay"], "true",
+                                     StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// 要保留的集团Id
+        /// </summary>
+        /// <value>
+        /// 要保留的集团Id
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-10 11:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> RetentionSupplierGroupIdList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["RetentionSupplierGroupIdList"] ?? string.Empty).Split(',');
+                var retentionSupplierGroupIdList = new List<int>();
+                foreach (var item in list)
+                {
+                    int supplierGroupId;
+                    if (!int.TryParse(item, out supplierGroupId))
+                    {
+                        continue;
+                    }
+
+                    retentionSupplierGroupIdList.Add(supplierGroupId);
+                }
+
+                return retentionSupplierGroupIdList;
+            }
+        }
+
+        /// <summary>
+        /// 要过滤掉的集团Id
+        /// </summary>
+        /// <value>
+        /// 要过滤掉的集团Id
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-10 11:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> FilteredSupplierGroupIdList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["FilteredSupplierGroupIdList"] ?? string.Empty).Split(',');
+                var filteredSupplierGroupIdList = new List<int>();
+                foreach (var item in list)
+                {
+                    int supplierGroupId;
+                    if (!int.TryParse(item, out supplierGroupId))
+                    {
+                        continue;
+                    }
+
+                    filteredSupplierGroupIdList.Add(supplierGroupId);
+                }
+
+                return filteredSupplierGroupIdList;
+            }
+        }
+
+        /// <summary>
+        /// 要过滤掉的餐厅Id
+        /// </summary>
+        /// <value>
+        /// 要过滤掉的餐厅Id
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-10 11:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> FilteredSupplierIdList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["FilteredSupplierIdList"] ?? string.Empty).Split(',');
+                var filteredSupplierIdList = new List<int>();
+                foreach (var item in list)
+                {
+                    int supplierId;
+                    if (!int.TryParse(item, out supplierId))
+                    {
+                        continue;
+                    }
+
+                    filteredSupplierIdList.Add(supplierId);
+                }
+
+                return filteredSupplierIdList;
+            }
+        }
+
+        /// <summary>
+        /// 要过滤掉的餐厅名称关键字
+        /// </summary>
+        /// <value>
+        /// 要过滤掉的餐厅名称关键字
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-10 11:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<string> FilteredKeyWordList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["FilteredKeyWordList"] ?? string.Empty).Split(',');
+                return list.Where(item => !item.IsEmptyOrNull()).ToList();
             }
         }
 
