@@ -390,6 +390,7 @@
     <Compile Include="LoginWay.cs" />
     <Compile Include="ExistsType.cs" />
     <Compile Include="AccountType.cs" />
+    <Compile Include="FilteredSupplierWay.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\OrderSourceEntity.hbm.xml" />

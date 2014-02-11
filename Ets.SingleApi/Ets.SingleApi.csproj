@@ -225,7 +225,9 @@
     <Content Include="config\castle\components\controllers.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\services.config" />
+    <Content Include="config\castle\components\services.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\castle\components\externalservices.config" />

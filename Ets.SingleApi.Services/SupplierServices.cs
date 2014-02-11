@@ -164,6 +164,8 @@
         /// ----------------------------------------------------------------------------------------
         private readonly ISupplierDetailServices supplierDetailServices;
 
+        private readonly List<IFilterSupplier> filterSupplierList;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SupplierServices" /> class.
         /// </summary>
@@ -181,6 +183,7 @@
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
+        /// <param name="filterSupplierList">The filter supplier list.</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
         /// 修改者：
@@ -200,7 +203,8 @@
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository,
-            ISupplierDetailServices supplierDetailServices)
+            ISupplierDetailServices supplierDetailServices,
+            List<IFilterSupplier> filterSupplierList)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
@@ -216,6 +220,7 @@
             this.loginEntityRepository = loginEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
+            this.filterSupplierList = filterSupplierList;
         }
 
         /// <summary>
@@ -573,7 +578,15 @@
                                         SupplierGroupId = item[14].ObjectToInt()
                                     }).ToList();
 
-            var result = supplierList.Where(p => !ServicesCommon.ShieldingSupplierGroupList.Contains(p.SupplierGroupId)).ToList();
+            /*过滤餐厅列表*/
+            var filteredSupplierIdList = new List<int>();
+
+            foreach (var filterSupplier in filterSupplierList)
+            {
+                filteredSupplierIdList = filteredSupplierIdList.Union(filterSupplier.Filter(supplierList)).ToList();
+            }
+
+            var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
 
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
@@ -611,18 +624,21 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierModel> GetSearchSupplierList(string source, GetSearchSupplierListParameter parameter)
+        public ServicesResultList<SupplierModel> GetSearchSupplierList(string source,
+                                                                       GetSearchSupplierListParameter parameter)
         {
             if (parameter == null)
             {
                 return new ServicesResultList<SupplierModel>
-                {
-                    Result = new List<SupplierModel>(),
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
+                    {
+                        Result = new List<SupplierModel>(),
+                        StatusCode = (int) StatusCode.System.InvalidRequest
+                    };
             }
 
-            var list = this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}", OrderBy.Supplier.SearchDefault))
+            var list =
+                this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}",
+                                                                       OrderBy.Supplier.SearchDefault))
                     .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
                     .SetInt32("RegionId", parameter.RegionId)
                     .SetDouble("UserLat", parameter.UserLat)
@@ -635,46 +651,66 @@
 
             var supplierList = (from object[] item in list
                                 select new SupplierModel
-                                {
-                                    SupplierId = item[0].ObjectToInt(),
-                                    SupplierName = item[1].ObjectToString(),
-                                    Address = item[2].ObjectToString(),
-                                    Telephone = item[3].ObjectToString(),
-                                    BaIduLat = item[4].ObjectToString(),
-                                    BaIduLong = item[5].ObjectToString(),
-                                    SupplierDescription = item[6].ObjectToString(),
-                                    Averageprice = item[7].ObjectToDouble(),
-                                    ParkingInfo = item[8].ObjectToString(),
-                                    CuisineName = item[9].ObjectToString(),
-                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, item[10].ObjectToString()),
-                                    IsOpenDoor = item[11].ObjectToBoolean(),
-                                    Distance = item[12].ObjectToDouble(),
-                                    DateJoined = item[13].ObjectToDateTime(),
-                                    SupplierGroupId = item[14].ObjectToInt()
-                                }).ToList();
+                                    {
+                                        SupplierId = item[0].ObjectToInt(),
+                                        SupplierName = item[1].ObjectToString(),
+                                        Address = item[2].ObjectToString(),
+                                        Telephone = item[3].ObjectToString(),
+                                        BaIduLat = item[4].ObjectToString(),
+                                        BaIduLong = item[5].ObjectToString(),
+                                        SupplierDescription = item[6].ObjectToString(),
+                                        Averageprice = item[7].ObjectToDouble(),
+                                        ParkingInfo = item[8].ObjectToString(),
+                                        CuisineName = item[9].ObjectToString(),
+                                        LogoUrl =
+                                            string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                                          item[10].ObjectToString()),
+                                        IsOpenDoor = item[11].ObjectToBoolean(),
+                                        Distance = item[12].ObjectToDouble(),
+                                        DateJoined = item[13].ObjectToDateTime(),
+                                        SupplierGroupId = item[14].ObjectToInt()
+                                    }).ToList();
 
-            var result = supplierList.Where(p => !ServicesCommon.ShieldingSupplierGroupList.Contains(p.SupplierGroupId)).ToList();
+            /*过滤餐厅列表*/
+            var filteredSupplierIdList = new List<int>();
+
+            foreach (var filterSupplier in filterSupplierList)
+            {
+                filteredSupplierIdList = filteredSupplierIdList.Union(filterSupplier.Filter(supplierList)).ToList();
+            }
+
+            var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
+
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
+
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
-                    p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
-                    .Select(p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId })
-                    .ToList();
+                p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
+                                          .Select(
+                                              p =>
+                                              new
+                                                  {
+                                                      p.SupplierFeatureId,
+                                                      p.Supplier.SupplierId,
+                                                      p.Feature.Feature,
+                                                      p.Feature.FeatureId
+                                                  })
+                                          .ToList();
 
             foreach (var item in result)
             {
                 item.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
-                                       .Select(p => new SupplierFeatureModel
-                                               {
-                                                   FeatureId = p.FeatureId,
-                                                   FeatureName = p.Feature,
-                                                   SupplierFeatureId = p.SupplierFeatureId
-                                               }).ToList();
+                                                              .Select(p => new SupplierFeatureModel
+                                                                  {
+                                                                      FeatureId = p.FeatureId,
+                                                                      FeatureName = p.Feature,
+                                                                      SupplierFeatureId = p.SupplierFeatureId
+                                                                  }).ToList();
             }
 
             return new ServicesResultList<SupplierModel>
-            {
-                Result = result
-            };
+                {
+                    Result = result
+                };
         }
 
         /// <summary>
