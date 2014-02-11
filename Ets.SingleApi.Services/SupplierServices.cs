@@ -556,27 +556,27 @@
                     .SetDouble("UserLong", parameter.UserLong)
                     .SetDouble("Distance", !parameter.Distance.HasValue ? -1.0 : parameter.Distance.Value)
                     .SetInt32("PageIndex", !parameter.PageIndex.HasValue ? -1 : parameter.PageIndex.Value)
-                    .SetInt32("PageSize", parameter.PageSize).List();
+                    .SetInt32("PageSize", parameter.PageSize).List<SupplierModelEntity>();
 
-            var supplierList = (from object[] item in list
+            var supplierList = (from entity in list
                                 select new SupplierModel
-                                    {
-                                        SupplierId = item[0].ObjectToInt(),
-                                        SupplierName = item[1].ObjectToString(),
-                                        Address = item[2].ObjectToString(),
-                                        Telephone = item[3].ObjectToString(),
-                                        BaIduLat = item[4].ObjectToString(),
-                                        BaIduLong = item[5].ObjectToString(),
-                                        SupplierDescription = item[6].ObjectToString(),
-                                        Averageprice = item[7].ObjectToDouble(),
-                                        ParkingInfo = item[8].ObjectToString(),
-                                        CuisineName = item[9].ObjectToString(),
-                                        LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, item[10].ObjectToString()),
-                                        IsOpenDoor = item[11].ObjectToBoolean(),
-                                        Distance = item[12].ObjectToDouble(),
-                                        DateJoined = item[13].ObjectToDateTime(),
-                                        SupplierGroupId = item[14].ObjectToInt()
-                                    }).ToList();
+                                {
+                                    SupplierId = entity.SupplierId,
+                                    SupplierName = entity.SupplierName,
+                                    Address = entity.Address,
+                                    Telephone = entity.Telephone,
+                                    BaIduLat = entity.BaIduLat,
+                                    BaIduLong = entity.BaIduLong,
+                                    SupplierDescription = entity.SupplierDescription,
+                                    Averageprice = entity.Averageprice,
+                                    ParkingInfo = entity.ParkingInfo,
+                                    CuisineName = entity.CuisineName,
+                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                                    IsOpenDoor = entity.IsOpenDoor,
+                                    Distance = entity.Distance,
+                                    DateJoined = entity.DateJoined,
+                                    SupplierGroupId = entity.SupplierGroupId
+                                }).ToList();
 
             /*过滤餐厅列表*/
             var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
@@ -628,8 +628,7 @@
                     };
             }
 
-            var list = this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}",
-                                                                       OrderBy.Supplier.SearchDefault))
+            var list = this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}", OrderBy.Supplier.SearchDefault))
                     .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
                     .SetInt32("RegionId", parameter.RegionId)
                     .SetDouble("UserLat", parameter.UserLat)
@@ -638,28 +637,26 @@
                     .SetInt32("PageIndex", !parameter.PageIndex.HasValue ? -1 : parameter.PageIndex.Value)
                     .SetInt32("PageSize", parameter.PageSize)
                     .SetDouble("BuildingLat", parameter.BuildingLat)
-                    .SetDouble("BuildingLong", parameter.BuildingLong).List();
+                    .SetDouble("BuildingLong", parameter.BuildingLong).List<SupplierModelEntity>();
 
-            var supplierList = (from object[] item in list
+            var supplierList = (from entity in list
                                 select new SupplierModel
                                     {
-                                        SupplierId = item[0].ObjectToInt(),
-                                        SupplierName = item[1].ObjectToString(),
-                                        Address = item[2].ObjectToString(),
-                                        Telephone = item[3].ObjectToString(),
-                                        BaIduLat = item[4].ObjectToString(),
-                                        BaIduLong = item[5].ObjectToString(),
-                                        SupplierDescription = item[6].ObjectToString(),
-                                        Averageprice = item[7].ObjectToDouble(),
-                                        ParkingInfo = item[8].ObjectToString(),
-                                        CuisineName = item[9].ObjectToString(),
-                                        LogoUrl =
-                                            string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
-                                                          item[10].ObjectToString()),
-                                        IsOpenDoor = item[11].ObjectToBoolean(),
-                                        Distance = item[12].ObjectToDouble(),
-                                        DateJoined = item[13].ObjectToDateTime(),
-                                        SupplierGroupId = item[14].ObjectToInt()
+                                        SupplierId = entity.SupplierId,
+                                        SupplierName = entity.SupplierName,
+                                        Address = entity.Address,
+                                        Telephone = entity.Telephone,
+                                        BaIduLat = entity.BaIduLat,
+                                        BaIduLong = entity.BaIduLong,
+                                        SupplierDescription = entity.SupplierDescription,
+                                        Averageprice = entity.Averageprice,
+                                        ParkingInfo = entity.ParkingInfo,
+                                        CuisineName = entity.CuisineName,
+                                        LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                                        IsOpenDoor = entity.IsOpenDoor,
+                                        Distance = entity.Distance,
+                                        DateJoined = entity.DateJoined,
+                                        SupplierGroupId = entity.SupplierGroupId
                                     }).ToList();
 
             /*过滤餐厅列表*/
