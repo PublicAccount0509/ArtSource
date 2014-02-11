@@ -579,15 +579,8 @@
                                     }).ToList();
 
             /*过滤餐厅列表*/
-            var filteredSupplierIdList = new List<int>();
-
-            foreach (var filterSupplier in filterSupplierList)
-            {
-                filteredSupplierIdList = filteredSupplierIdList.Union(filterSupplier.Filter(supplierList)).ToList();
-            }
-
+            var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
             var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
-
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                     p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
@@ -624,20 +617,18 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierModel> GetSearchSupplierList(string source,
-                                                                       GetSearchSupplierListParameter parameter)
+        public ServicesResultList<SupplierModel> GetSearchSupplierList(string source, GetSearchSupplierListParameter parameter)
         {
             if (parameter == null)
             {
                 return new ServicesResultList<SupplierModel>
                     {
                         Result = new List<SupplierModel>(),
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
-            var list =
-                this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}",
+            var list = this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}",
                                                                        OrderBy.Supplier.SearchDefault))
                     .SetString("SupplierName", parameter.SupplierName.IsEmptyOrNull() ? "%" : parameter.SupplierName)
                     .SetInt32("RegionId", parameter.RegionId)
@@ -672,17 +663,9 @@
                                     }).ToList();
 
             /*过滤餐厅列表*/
-            var filteredSupplierIdList = new List<int>();
-
-            foreach (var filterSupplier in filterSupplierList)
-            {
-                filteredSupplierIdList = filteredSupplierIdList.Union(filterSupplier.Filter(supplierList)).ToList();
-            }
-
+            var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
             var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
-
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
-
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                 p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
                                           .Select(

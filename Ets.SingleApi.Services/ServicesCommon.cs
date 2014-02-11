@@ -6,6 +6,7 @@
     using System.Linq;
 
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：ServicesCommon
@@ -298,7 +299,7 @@
             }
         }
 
-		/// <summary>
+        /// <summary>
         /// 皇太吉当前时间推迟时间（单位：分钟）
         /// </summary>
         /// <value>
@@ -1732,8 +1733,7 @@
         {
             get
             {
-                var list = (ConfigurationManager.AppSettings["RetentionSupplierGroupIdList"] ?? string.Empty).Split(',')
-                                                                                                             .ToList();
+                var list = (ConfigurationManager.AppSettings["RetentionSupplierGroupIdList"] ?? string.Empty).Split(',');
                 var retentionSupplierGroupIdList = new List<int>();
                 foreach (var item in list)
                 {
@@ -1765,8 +1765,7 @@
         {
             get
             {
-                var list = (ConfigurationManager.AppSettings["FilteredSupplierGroupIdList"] ?? string.Empty).Split(',')
-                                                                                                            .ToList();
+                var list = (ConfigurationManager.AppSettings["FilteredSupplierGroupIdList"] ?? string.Empty).Split(',');
                 var filteredSupplierGroupIdList = new List<int>();
                 foreach (var item in list)
                 {
@@ -1798,8 +1797,7 @@
         {
             get
             {
-                var list = (ConfigurationManager.AppSettings["FilteredSupplierIdList"] ?? string.Empty).Split(',')
-                                                                                                       .ToList();
+                var list = (ConfigurationManager.AppSettings["FilteredSupplierIdList"] ?? string.Empty).Split(',');
                 var filteredSupplierIdList = new List<int>();
                 foreach (var item in list)
                 {
@@ -1831,10 +1829,8 @@
         {
             get
             {
-                var list = (ConfigurationManager.AppSettings["FilteredKeyWordList"] ?? string.Empty).Split(',')
-                                                                                                    .ToList();
-
-                return list.Where(item => !string.IsNullOrEmpty(item) && !string.IsNullOrWhiteSpace(item)).ToList();
+                var list = (ConfigurationManager.AppSettings["FilteredKeyWordList"] ?? string.Empty).Split(',');
+                return list.Where(item => !item.IsEmptyOrNull()).ToList();
             }
         }
 

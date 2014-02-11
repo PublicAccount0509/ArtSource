@@ -5,6 +5,8 @@ using Ets.SingleApi.Model.Services;
 
 namespace Ets.SingleApi.Services
 {
+    using System;
+
     /// <summary>
     /// 过虑餐厅名称关键字
     /// </summary>
@@ -26,11 +28,6 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        /// 创建者：苏建峰
-        /// 创建日期：2014-2-11 9:56
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
         public FilteredSupplierWay FilteredSupplierWay
         {
             get { return FilteredSupplierWay.FilteredKeyWord; }
@@ -48,18 +45,14 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        /// 创建者：苏建峰
-        /// 创建日期：2014-2-10 17:17
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
         public List<int> Filter(List<SupplierModel> supplierList)
         {
-            return
-                supplierList.Where(
-                    p =>
-                    ServicesCommon.FilteredKeyWordList.Any(
-                        t => p.SupplierName.IndexOf(t, System.StringComparison.Ordinal) != -1))
+            if (supplierList == null || supplierList.Count == 0)
+            {
+                return new List<int>();
+            }
+
+            return supplierList.Where(p => ServicesCommon.FilteredKeyWordList.Contains(p.SupplierName, StringComparer.OrdinalIgnoreCase))
                             .Select(p => p.SupplierId)
                             .ToList();
         }

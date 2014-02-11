@@ -26,11 +26,6 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        /// 创建者：苏建峰
-        /// 创建日期：2014-2-11 9:56
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
         public FilteredSupplierWay FilteredSupplierWay
         {
             get { return FilteredSupplierWay.FilteredSupplierId; }
@@ -48,13 +43,13 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        /// 创建者：苏建峰
-        /// 创建日期：2014-2-10 17:17
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
         public List<int> Filter(List<SupplierModel> supplierList)
         {
+            if (supplierList == null || supplierList.Count == 0)
+            {
+                return new List<int>();
+            }
+
             return supplierList.Where(p => ServicesCommon.FilteredSupplierIdList.Contains(p.SupplierId))
                                     .Select(p => p.SupplierId)
                                     .ToList();
