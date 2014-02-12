@@ -143,6 +143,7 @@
     <Compile Include="Services\GetSearchGroupSupplierListParameter.cs" />
     <Compile Include="Services\LocationCityModel.cs" />
     <Compile Include="Mapping\Repository\SupplierModelEntity.cs" />
+    <Compile Include="Mapping\Repository\GroupSupplierModelEntity.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
@@ -562,6 +563,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\SupplierModelEntity.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\GroupSupplierModelEntity.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

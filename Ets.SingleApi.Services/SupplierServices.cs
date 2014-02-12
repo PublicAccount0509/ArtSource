@@ -838,25 +838,25 @@
                     .SetDouble("UserLat", parameter.UserLat)
                     .SetDouble("UserLong", parameter.UserLong)
                     .SetInt32("PageIndex", parameter.PageIndex ?? -1)
-                    .SetInt32("PageSize", parameter.PageSize).List();
+                    .SetInt32("PageSize", parameter.PageSize).List<GroupSupplierModelEntity>();
 
 
-            var supplierList = (from object[] item in list
+            var supplierList = (from entity in list
                                 select new GroupSupplierModel
                                 {
-                                    SupplierId = item[0].ObjectToInt(),
-                                    SupplierName = item[1].ObjectToString(),
-                                    Address = item[2].ObjectToString(),
-                                    Telephone = item[3].ObjectToString(),
-                                    Averageprice = item[4].ObjectToDouble(),
-                                    BaIduLat = item[5].ObjectToString(),
-                                    BaIduLong = item[6].ObjectToString(),
-                                    ParkingInfo = item[7].ObjectToString(),
-                                    DateJoined = item[8].ObjectToDateTime(),
-                                    IsOpenDoor = item[9].ObjectToBoolean(),
-                                    SupplierDescription = item[10].ObjectToString(),
-                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, item[11].ObjectToString()),
-                                    Distance = item[12].ObjectToDouble()
+                                    SupplierId = entity.SupplierId,
+                                    SupplierName = entity.SupplierName,
+                                    Address = entity.Address,
+                                    Telephone = entity.Telephone,
+                                    BaIduLat = entity.BaIduLat,
+                                    BaIduLong = entity.BaIduLong,
+                                    SupplierDescription = entity.SupplierDescription,
+                                    Averageprice = entity.Averageprice,
+                                    ParkingInfo = entity.ParkingInfo,
+                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                                    IsOpenDoor = entity.IsOpenDoor,
+                                    Distance = entity.Distance,
+                                    DateJoined = entity.DateJoined,
                                 }).ToList();
 
             var supplierIdList = supplierList.Select(p => p.SupplierId).ToList();
