@@ -42,6 +42,7 @@
     <Compile Include="BusinessType.cs" />
     <Compile Include="CacheServices\CacheServicesResult.cs" />
     <Compile Include="CacheServices\CacheServicesListResult.cs" />
+    <Compile Include="Controller\DistanceResult.cs" />
     <Compile Include="Controller\LocationCity.cs" />
     <Compile Include="Controller\HtjRegisterUserRequest.cs" />
     <Compile Include="Controller\HtjUserExtendResult.cs" />
@@ -111,6 +112,8 @@
     <Compile Include="OrderProviderType.cs" />
     <Compile Include="OrderSourceType.cs" />
     <Compile Include="Services\CustomerSimpleModel.cs" />
+    <Compile Include="Services\DistanceModel.cs" />
+    <Compile Include="Services\DistanceParameter.cs" />
     <Compile Include="Services\HtjUserModel.cs" />
     <Compile Include="Controller\LightSupplier.cs" />
     <Compile Include="Services\HuangTaiJiShoppingCartModel.cs" />

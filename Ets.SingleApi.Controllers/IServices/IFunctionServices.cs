@@ -48,5 +48,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<LocationCityModel> GetLocationCity(string source, double userLat, double userLong, int type);
+
+        /// <summary>
+        /// 计算距离
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="parameter"></param>
+        /// <returns>
+        /// 距离
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/4/2013 3:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<DistanceModel> GetDistance(string source, DistanceParameter parameter);
     }
 }

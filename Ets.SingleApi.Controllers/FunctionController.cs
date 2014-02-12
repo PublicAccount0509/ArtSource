@@ -1,4 +1,7 @@
-﻿namespace Ets.SingleApi.Controllers
+﻿using System;
+using Ets.SingleApi.Model.Services;
+
+namespace Ets.SingleApi.Controllers
 {
     using System.Linq;
     using System.Web.Http;
@@ -39,12 +42,22 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly IBusinessAreaServices businessAreaServices;
+        /// <summary>
+        /// 字段supplierServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 17:57
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISupplierServices supplierServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionController" /> class.
         /// </summary>
         /// <param name="functionServices">The functionServices</param>
         /// <param name="businessAreaServices">The businessAreaServices</param>
+        /// <param name="supplierServices"></param>
         /// 创建者：周超
         /// 创建日期：11/15/2013 1:21 PM
         /// 修改者：
@@ -52,10 +65,12 @@
         /// ----------------------------------------------------------------------------------------
         public FunctionController(
             IFunctionServices functionServices,
-            IBusinessAreaServices businessAreaServices)
+            IBusinessAreaServices businessAreaServices,
+            ISupplierServices supplierServices)
         {
             this.functionServices = functionServices;
             this.businessAreaServices = businessAreaServices;
+            this.supplierServices = supplierServices;
         }
 
         /// <summary>
@@ -158,6 +173,77 @@
                     StatusCode = getLocationResult.StatusCode
                 },
                 Result = result
+            };
+        }
+
+        /// <summary>
+        /// 计算距离
+        /// </summary>
+        /// <param name="userLat"></param>
+        /// <param name="userLong"></param>
+        /// <param name="supplierId"></param>
+        /// <returns>
+        /// 距离
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 3:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<DistanceResult> GetDistance(double userLat, double userLong,int supplierId)
+        {
+            var supplier = this.supplierServices.GetSupplier(this.Source, supplierId);
+            if (supplier == null)
+            {
+                return new Response<DistanceResult>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Succeed.Empty
+                    },
+                    Result = new DistanceResult()
+                };
+            }
+            var locationA = new Location
+                {
+                    Lat = userLat,
+                    Lng = userLong
+                };
+            var locationB = new Location
+                {
+                    Lat = Convert.ToDouble(supplier.Result.BaIduLat),
+                    Lng = Convert.ToDouble(supplier.Result.BaIduLong)
+                };
+            var distanceParameter = new DistanceParameter
+                {
+                    LocationA = locationA,
+                    LocationB = locationB,
+                    Gs = GaussSphere.Beijing54
+                };
+            var distanceResult = this.functionServices.GetDistance(this.Source, distanceParameter);
+            if (distanceResult == null)
+            {
+                return new Response<DistanceResult>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Succeed.Empty
+                    },
+                    Result = new DistanceResult()
+                };
+            }
+
+            return new Response<DistanceResult>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok
+                },
+                Result = new DistanceResult
+                    {
+                        Distance = distanceResult.Result.Distance
+                    }
             };
         }
     }
