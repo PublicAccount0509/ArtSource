@@ -291,7 +291,7 @@
         /// ----------------------------------------------------------------------------------------
         private string AmountToString(decimal amount)
         {
-            var str = amount.ToString("C").TrimStart('¥');
+            var str = amount.ToString("C").TrimStart('¥').Replace(",", string.Empty);
             var n = str.IndexOf(".", StringComparison.Ordinal);
             var pre = str.Substring(0, n);
             var end = str.Substring(n, 3).Trim('.');
