@@ -108,7 +108,8 @@
                                            {
                                                OrderId = parameter.OrderId,
                                                Amount = parameter.Amount,
-                                               PayDate = parameter.PayDate
+                                               PayDate = parameter.PayDate,
+                                               ReturnUrl = parameter.ReturnUrl
                                            });
 
             if (result == null)

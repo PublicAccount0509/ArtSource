@@ -124,6 +124,7 @@
             ht.Add("order_id", umPaymentData.OrderId);  //订单号
             ht.Add("mer_date", umPaymentData.PayDate.ToString("yyyyMMdd")); //订单日期
             ht.Add("amount", AmountToString(umPaymentData.Amount)); //金额,格式为圆角分，例如:3456表示34圆5角6分
+            //ht.Add("amount", "1"); //金额,格式为圆角分，例如:3456表示34圆5角6分
             ht.Add("amt_type", "RMB"); //金额类型
             ht.Add("mer_priv", "delivery"); //商户私有信息
 
@@ -291,7 +292,7 @@
         /// ----------------------------------------------------------------------------------------
         private string AmountToString(decimal amount)
         {
-            var str = amount.ToString("C").TrimStart('¥');
+            var str = amount.ToString("C").TrimStart('¥').Replace(",", string.Empty);
             var n = str.IndexOf(".", StringComparison.Ordinal);
             var pre = str.Substring(0, n);
             var end = str.Substring(n, 3).Trim('.');
