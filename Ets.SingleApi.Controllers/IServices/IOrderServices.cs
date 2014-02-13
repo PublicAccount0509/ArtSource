@@ -99,5 +99,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveOrderPaId(string source, int orderType, int orderSourceType, int orderId, bool isPaId);
+
+        /// <summary>
+        /// 是否可以激活购物车信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns></returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 3:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> IsActivation(string source, int orderType, int orderSourceType, int orderId);
     }
 }

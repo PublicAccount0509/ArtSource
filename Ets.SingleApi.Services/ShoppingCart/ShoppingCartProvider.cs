@@ -111,6 +111,15 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly IShoppingCartCacheServices shoppingCartCacheServices;
+        /// <summary>
+        /// 字段shoppingCartCacheServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 11:08 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartProvider" /> class.
@@ -124,6 +133,7 @@
         /// <param name="supplierTimeTableEntityRepository">The supplierTimeTableEntityRepository</param>
         /// <param name="timeTableEntityRepository">The timeTableEntityRepository</param>
         /// <param name="shoppingCartCacheServices">The shoppingCartCacheServices</param>
+        /// <param name="shoppingCartAndOrderNoCacheServices"></param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
@@ -138,7 +148,8 @@
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository,
             INHibernateRepository<TimeTableEntity> timeTableEntityRepository,
-            IShoppingCartCacheServices shoppingCartCacheServices)
+            IShoppingCartCacheServices shoppingCartCacheServices,
+            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
@@ -149,6 +160,7 @@
             this.supplierTimeTableEntityRepository = supplierTimeTableEntityRepository;
             this.timeTableEntityRepository = timeTableEntityRepository;
             this.shoppingCartCacheServices = shoppingCartCacheServices;
+            this.shoppingCartAndOrderNoCacheServices = shoppingCartAndOrderNoCacheServices;
         }
 
         /// <summary>
@@ -793,6 +805,47 @@
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+            };
+        }
+
+        /// <summary>
+        /// 激活购物车
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// 返回是否激活成功
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 9:23 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// <exception cref="System.NotImplementedException"></exception>
+        public ServicesResult<bool> ActivationShoppingCart(string source, int orderId)
+        {
+            var idlinkresult = this.shoppingCartAndOrderNoCacheServices.GetShoppingCartIdByOrderId(source, orderId.ToString());
+            if (idlinkresult == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+            var shoppingcartId = idlinkresult.Result;
+            var shoppingcartresult = this.shoppingCartCacheServices.GetShoppingCart(source, shoppingcartId);
+            if (shoppingcartresult == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+            shoppingcartresult.Result.IsActive = true;
+            this.shoppingCartCacheServices.SaveShoppingCart(source,shoppingcartresult.Result);
+            return new ServicesResult<bool>
+            {
+                Result = true
             };
         }
     }

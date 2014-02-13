@@ -43,6 +43,7 @@
     <Compile Include="CacheServicesCommon.cs" />
     <Compile Include="HuangTaiJiShoppingCartCacheServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShoppingCartAndOrderNoCacheServices.cs" />
     <Compile Include="ShoppingCartCacheServices.cs" />
     <Compile Include="HaiDiLaoShoppingCartCacheServices.cs" />
   </ItemGroup>

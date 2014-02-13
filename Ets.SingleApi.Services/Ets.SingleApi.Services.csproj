@@ -99,6 +99,7 @@
     <Compile Include="HuangTaiJiShoppingCartServices.cs" />
     <Compile Include="HuangTaiJiSupplierServices.cs" />
     <Compile Include="ICacheServices\IHuangTaiJiShoppingCartCacheServices.cs" />
+    <Compile Include="ICacheServices\IShoppingCartAndOrderNoCacheServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IHaiDiLaoShoppingCartCacheServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="OrderNumber\WaiMaiOrderNumber.cs" />
     <Compile Include="Order\WaiMaiOrderProvider.cs" />
     <Compile Include="Order\HaiDiLaoWaiMaiOrderProvider.cs" />
+    <Compile Include="Order\ZhongCanWaiMaiOrderProvider.cs" />
     <Compile Include="PaymentServices.cs" />
     <Compile Include="Payment\IPayment.cs" />
     <Compile Include="Payment\IPaymentData.cs" />

@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Services.ICacheServices;
+
+namespace Ets.SingleApi.Services
 {
     using System;
     using System.Collections.Generic;
@@ -23,7 +25,7 @@
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
     [Transactional]
-    public class HaiDiLaoWaiMaiOrderProvider : IOrderProvider
+    public class HaiDiLaoWaiMaiOrderProvider : WaiMaiOrderProvider
     {
         /// <summary>
         /// 字段deliveryEntityRepository
@@ -136,16 +138,6 @@
         private readonly INHibernateRepository<PackageSelectedDetailEntity> packageSelectedDetailEntityRepository;
 
         /// <summary>
-        /// 字段orderNumberDcEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/23/2013 12:13 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository;
-
-        /// <summary>
         /// 字段distance
         /// </summary>
         /// 创建者：周超
@@ -164,6 +156,15 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly IHaiDiLaoShoppingCartProvider shoppingCartProvider;
+        /// <summary>
+        /// 字段shoppingCartCacheServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 11:08 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HaiDiLaoWaiMaiOrderProvider" /> class.
@@ -182,6 +183,7 @@
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="distance">The distance</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
+        /// <param name="shoppingCartAndOrderNoCacheServices"></param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -201,7 +203,9 @@
             INHibernateRepository<PackageSelectedDetailEntity> packageSelectedDetailEntityRepository,
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             IDistance distance,
-            IHaiDiLaoShoppingCartProvider shoppingCartProvider)
+            IHaiDiLaoShoppingCartProvider shoppingCartProvider,
+            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
+            : base(deliveryEntityRepository, orderNumberDcEntityRepository)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.sourcePathEntityRepository = sourcePathEntityRepository;
@@ -214,66 +218,9 @@
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
             this.packageSelectedEntityRepository = packageSelectedEntityRepository;
             this.packageSelectedDetailEntityRepository = packageSelectedDetailEntityRepository;
-            this.orderNumberDcEntityRepository = orderNumberDcEntityRepository;
             this.distance = distance;
             this.shoppingCartProvider = shoppingCartProvider;
-        }
-
-        /// <summary>
-        /// 取得订单类型
-        /// </summary>
-        /// <value>
-        /// 订单类型
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/20 16:01
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public OrderProviderType OrderProviderType
-        {
-            get
-            {
-                return new OrderProviderType
-                    {
-                        OrderType = OrderType.WaiMai,
-                        OrderSourceType = OrderSourceType.HaiDiLao
-                    };
-            }
-        }
-
-        /// <summary>
-        /// 取得订单是否存在以及支付支付状态
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">订单状态</param>
-        /// <returns>
-        /// 返回结果 0 不存在 1 支付 2 未支付
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 9:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<int> Exist(string source, int orderId)
-        {
-            var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
-                                  where entity.OrderNumber == orderId
-                                  select entity).FirstOrDefault();
-
-            if (deliveryEntity == null)
-            {
-                return new ServicesResult<int>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
-                };
-            }
-
-            return new ServicesResult<int>
-            {
-                StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = deliveryEntity.IsPaId == true ? 1 : 2
-            };
+            this.shoppingCartAndOrderNoCacheServices = shoppingCartAndOrderNoCacheServices;
         }
 
         /// <summary>
@@ -289,7 +236,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId)
+        public override ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId)
         {
             var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
                                   where entity.OrderNumber == orderId
@@ -454,7 +401,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [Transaction(TransactionMode.RequiresNew)]
-        public ServicesResult<string> SaveOrder(string source, string shoppingCartId)
+        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -603,6 +550,8 @@
             order.IsComplete = true;
             order.OrderId = orderId;
             this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
+            //把订单编号和购物车编号保存到缓存中
+            this.shoppingCartAndOrderNoCacheServices.SaveShoppingCartAndOrderNoLink(source, orderId.ToString(), shoppingCartId);
             return new ServicesResult<string>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
@@ -611,71 +560,20 @@
         }
 
         /// <summary>
-        /// 取得一个订单号
+        /// Gets the type of the order source.
         /// </summary>
-        /// <param name="source">The source</param>
         /// <returns>
-        /// 订单号
+        /// The OrderSourceType
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/25/2013 2:09 PM
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 3:06 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> GetOrderNumber(string source)
+        protected override OrderSourceType GetOrderSourceType()
         {
-            var orderId = this.GetOrderNumberId();
-            if (orderId <= 0)
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.General.OrderNumberNotFound,
-                    Result = string.Empty
-                };
-            }
-
-            return new ServicesResult<string>
-                {
-                    Result = orderId.ToString()
-                };
+            return OrderSourceType.HaiDiLao;
         }
-
-        /// <summary>
-        /// 更改支付状态
-        /// </summary>
-        /// <param name="source">The sourceDefault documentation</param>
-        /// <param name="orderId">The orderIdDefault documentation</param>
-        /// <param name="isPaId">The  isPaId indicates whether</param>
-        /// <returns>
-        /// Boolean}
-        /// </returns>
-        /// 创建者：王巍
-        /// 创建日期：1/26/2014 10:47 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveOrderPaId(string source,int orderId, bool isPaId)
-        {
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
-            if (deliveryEntity == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
-                    Result = false
-                };
-            }
-
-            deliveryEntity.IsPaId = true;
-            this.deliveryEntityRepository.Save(deliveryEntity);
-
-            return new ServicesResult<bool>
-            {
-                StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = true
-            };
-        }
-
         /// <summary>
         /// 保存自提订单详情
         /// </summary>
@@ -1002,30 +900,5 @@
             paymentEntity.PayBank = payBank;
             this.paymentEntityRepository.Save(paymentEntity);
         }
-
-        /// <summary>
-        /// 取得一个订单号
-        /// </summary>
-        /// <returns>
-        /// 订单号
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/25/2013 2:09 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private int GetOrderNumberId()
-        {
-            var entity = this.orderNumberDcEntityRepository.EntityQueryable.FirstOrDefault();
-            if (entity == null)
-            {
-                return 0;
-            }
-
-            var orderNumber = entity.OrderId;
-            this.orderNumberDcEntityRepository.Remove(entity);
-            return orderNumber;
-        }
-
     }
 }
