@@ -241,8 +241,7 @@ namespace Ets.SingleApi.Services
                 OrderId = parameter.OrderId.ToString(),
                 GoodsName = parameter.GoodsName,
                 Amount = parameter.Amount,
-                PageUrl = parameter.PageUrl,
-                ReturnUrl = parameter.ReturnUrl
+                PageUrl = parameter.PageUrl
             });
 
             if (result == null)

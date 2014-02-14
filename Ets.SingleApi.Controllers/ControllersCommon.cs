@@ -266,6 +266,25 @@
         }
 
         /// <summary>
+        /// 通过该地址百付宝可查询到通知是否收到
+        /// </summary>
+        /// <value>
+        /// The bai fu bao request URL.
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：2/14/2014 4:19 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string BaiFuBaoBackgroundNoticeUrl
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["BaiFuBaoBackgroundNoticeUrl"] ?? string.Empty).Trim().TrimEnd('/', '\\');
+            }
+        }
+
+        /// <summary>
         /// 按订单号查询支付结果接口
         /// </summary>
         public static string RequestForOrderURL = "https://wallet.baidu.com/api/0/query/0/pay_result_by_order_no";

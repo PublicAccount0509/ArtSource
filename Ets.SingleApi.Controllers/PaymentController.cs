@@ -197,8 +197,7 @@
                 GoodsName = requst.GoodsName,
                 Amount = requst.Amount,
                 OrderType = requst.OrderType,
-                PageUrl = requst.PageUrl,
-                ReturnUrl = requst.ReturnUrl
+                PageUrl = requst.PageUrl
             });
 
             return new Response<string>
