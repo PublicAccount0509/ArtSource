@@ -3,24 +3,22 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IDetailServices;
     using Ets.SingleApi.Utility;
-
     /// <summary>
-    /// 类名称：HaiDiLaoShoppingCartServices
+    /// 类名称：ShunFengShoppingCartServices
     /// 命名空间：Ets.SingleApi.Services
-    /// 类功能：购物车功能
+    /// 类功能：
     /// </summary>
-    /// 创建者：周超
-    /// 创建日期：11/21/2013 12:17 AM
+    /// 创建者：单琪彬
+    /// 创建日期：2/13/2014 5:34 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class HaiDiLaoShoppingCartServices : IHaiDiLaoShoppingCartServices
+    public class ShunFengShoppingCartServices : IShunFengShoppingCartServices
     {
         /// <summary>
         /// 字段supplierDetailServices
@@ -33,14 +31,14 @@
         private readonly ISupplierDetailServices supplierDetailServices;
 
         /// <summary>
-        /// 字段haiDiLaoShoppingCartProvider
+        /// 字段shunFengShoppingCartProvider
         /// </summary>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IHaiDiLaoShoppingCartProvider haiDiLaoShoppingCartProvider;
+        private readonly IShunFengShoppingCartProvider shunFengShoppingCartProvider;
 
         /// <summary>
         /// 字段supplierCouponProviderList
@@ -56,20 +54,20 @@
         /// Initializes a new instance of the <see cref="HaiDiLaoShoppingCartServices" /> class.
         /// </summary>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
-        /// <param name="haiDiLaoShoppingCartProvider">The haiDiLaoShoppingCartProvider</param>
+        /// <param name="shunFengShoppingCartProvider">The haiDiLaoShoppingCartProvider</param>
         /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public HaiDiLaoShoppingCartServices(
+        public ShunFengShoppingCartServices(
             ISupplierDetailServices supplierDetailServices,
-            IHaiDiLaoShoppingCartProvider haiDiLaoShoppingCartProvider,
+            IShunFengShoppingCartProvider shunFengShoppingCartProvider,
             List<ISupplierCouponProvider> supplierCouponProviderList)
         {
             this.supplierDetailServices = supplierDetailServices;
-            this.haiDiLaoShoppingCartProvider = haiDiLaoShoppingCartProvider;
+            this.shunFengShoppingCartProvider = shunFengShoppingCartProvider;
             this.supplierCouponProviderList = supplierCouponProviderList;
         }
 
@@ -81,14 +79,14 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<HaiDiLaoShoppingCartModel> GetShoppingCart(string source, string shoppingCartId)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<HaiDiLaoShoppingCartModel>
@@ -99,7 +97,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<HaiDiLaoShoppingCartModel>
@@ -109,7 +107,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shunFengShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<HaiDiLaoShoppingCartModel>
@@ -119,7 +117,7 @@
                 };
             }
 
-            var getShoppingCartCustomerResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
+            var getShoppingCartCustomerResult = this.shunFengShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<HaiDiLaoShoppingCartModel>
@@ -129,7 +127,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<HaiDiLaoShoppingCartModel>
@@ -139,7 +137,7 @@
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.shunFengShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<HaiDiLaoShoppingCartModel>
@@ -149,7 +147,7 @@
                 };
             }
 
-            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            var getShoppingCartExtraResult = this.shunFengShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
             if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<HaiDiLaoShoppingCartModel>
@@ -189,14 +187,14 @@
         /// <returns>
         /// 返回一个购物车
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, supplierId, userId);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, supplierId, userId);
             if (getShoppingCartLinkResult.StatusCode == (int)StatusCode.Succeed.Ok && getShoppingCartLinkResult.Result != null)
             {
                 return new ServicesResult<string>
@@ -205,7 +203,7 @@
                 };
             }
 
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, Guid.NewGuid().ToString());
+            var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -215,7 +213,7 @@
                     };
             }
 
-            var getShoppingCartSupplierResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartSupplier(source, supplierId);
+            var getShoppingCartSupplierResult = this.shunFengShoppingCartProvider.GetShoppingCartSupplier(source, supplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -232,7 +230,7 @@
                     DeliveryType = ServicesCommon.DefaultDeliveryType,
                     DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId
                 };
-            var saveShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
+            var saveShoppingCartOrderResult = this.shunFengShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -246,7 +244,7 @@
             {
                 Id = Guid.NewGuid().ToString()
             };
-            var shoppingCartDeliveryResult = this.haiDiLaoShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+            var shoppingCartDeliveryResult = this.shunFengShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
             if (shoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -263,7 +261,7 @@
                 DiningCount = ServicesCommon.DefaultDiningCount,
                 PanCount = ServicesCommon.DefaultPanCount
             };
-            var shoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, shoppingCartExtra);
+            var shoppingCartExtraResult = this.shunFengShoppingCartProvider.SaveShoppingCartExtra(source, shoppingCartExtra);
             if (shoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -288,7 +286,7 @@
             int tempUserId;
             if (!int.TryParse(userId, out tempUserId))
             {
-                this.haiDiLaoShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+                this.shunFengShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
                 return new ServicesResult<string>
                 {
                     Result = shoppingCartLinkId
@@ -296,8 +294,8 @@
             }
 
             shoppingCartLink.UserId = tempUserId;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
-            var getShoppingCartCustomerResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartCustomer(source, tempUserId);
+            this.shunFengShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+            var getShoppingCartCustomerResult = this.shunFengShoppingCartProvider.GetShoppingCartCustomer(source, tempUserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -323,14 +321,14 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -340,7 +338,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -349,7 +347,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shunFengShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -358,7 +356,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -367,7 +365,7 @@
                 };
             }
 
-            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            var getShoppingCartExtraResult = this.shunFengShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
             if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -382,7 +380,7 @@
             var extra = getShoppingCartExtraResult.Result;
             var shoppingList = shoppingCartItemList;
             shoppingCart.ShoppingList = shoppingList;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.shunFengShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
             order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, extra, saveDeliveryMethodId);
             return new ServicesResult<bool>
@@ -401,7 +399,7 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
@@ -416,7 +414,7 @@
                 };
             }
 
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -426,7 +424,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -435,7 +433,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shunFengShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -444,7 +442,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -453,7 +451,7 @@
                 };
             }
 
-            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            var getShoppingCartExtraResult = this.shunFengShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
             if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -502,11 +500,11 @@
             {
                 extra.CookingCount = 0;
                 extra.PanCount = 0;
-                this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, extra);
+                this.shunFengShoppingCartProvider.SaveShoppingCartExtra(source, extra);
             }
 
             shoppingCart.ShoppingList = shoppingList;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.shunFengShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
 
             order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, extra, saveDeliveryMethodId);
@@ -526,14 +524,14 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> DeleteShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -543,7 +541,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -552,7 +550,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shunFengShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -561,7 +559,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -570,7 +568,7 @@
                 };
             }
 
-            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            var getShoppingCartExtraResult = this.shunFengShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
             if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -621,11 +619,11 @@
             {
                 extra.CookingCount = 0;
                 extra.PanCount = 0;
-                this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, extra);
+                this.shunFengShoppingCartProvider.SaveShoppingCartExtra(source, extra);
             }
 
             shoppingCart.ShoppingList = shoppingList;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.shunFengShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
 
             order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, extra, saveDeliveryMethodId);
@@ -644,14 +642,14 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 7:48 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartCustomer(string source, string id, int userId)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -661,7 +659,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartCustomerResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartCustomer(source, userId);
+            var getShoppingCartCustomerResult = this.shunFengShoppingCartProvider.GetShoppingCartCustomer(source, userId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -672,7 +670,7 @@
 
             var customer = getShoppingCartCustomerResult.Result;
             shoppingCartLink.UserId = customer.UserId;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+            this.shunFengShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -688,14 +686,14 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 7:48 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCart(string source, string id, HaiDiLaoShoppingCartModel shoppingCart)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -705,7 +703,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -714,7 +712,7 @@
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.shunFengShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -723,7 +721,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -735,9 +733,9 @@
             shoppingCart.Delivery.Id = getShoppingCartDeliveryResult.Result.Id;
             shoppingCart.Order.Id = getShoppingCartOrderResult.Result.Id;
             shoppingCart.ShoppingCart.ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCart.Delivery);
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCart.Order);
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCart(source, shoppingCart.ShoppingCart);
+            this.shunFengShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCart.Delivery);
+            this.shunFengShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCart.Order);
+            this.shunFengShoppingCartProvider.SaveShoppingCart(source, shoppingCart.ShoppingCart);
 
             return new ServicesResult<bool>
             {
@@ -756,14 +754,14 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 7:48 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartOrder(string source, string id, HaiDiLaoShoppingCartOrder shoppingCartOrder, bool isCalculateCoupon, bool isValidateDeliveryTime)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -773,7 +771,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -782,7 +780,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shunFengShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -791,7 +789,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -800,7 +798,7 @@
                 };
             }
 
-            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            var getShoppingCartExtraResult = this.shunFengShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
             if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -921,10 +919,10 @@
                 shoppingCartOrder.CanSelectCooking = false;
                 extra.CookingCount = 0;
                 extra.PanCount = 0;
-                this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, extra);
+                this.shunFengShoppingCartProvider.SaveShoppingCartExtra(source, extra);
             }
 
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
+            this.shunFengShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -940,14 +938,14 @@
         /// <returns>
         /// Boolean}
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/27/2013 5:31 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartDelivery(string source, string id, ShoppingCartDelivery shoppingCartDelivery)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -957,7 +955,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartDeliveryResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.shunFengShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -967,7 +965,7 @@
             }
 
             shoppingCartDelivery.Id = getShoppingCartDeliveryResult.Result.Id;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+            this.shunFengShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
 
             return new ServicesResult<bool>
             {
@@ -985,14 +983,14 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 7:48 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartExtra(string source, string id, ShoppingCartExtra shoppingCartExtra)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -1002,7 +1000,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            var getShoppingCartExtraResult = this.shunFengShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
             if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -1011,7 +1009,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -1022,7 +1020,7 @@
 
             var extra = getShoppingCartExtraResult.Result;
             shoppingCartExtra.Id = extra.Id;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, shoppingCartExtra);
+            this.shunFengShoppingCartProvider.SaveShoppingCartExtra(source, shoppingCartExtra);
 
             var order = getShoppingCartOrderResult.Result;
             var oldCookingFee = order.CookingFee;
@@ -1035,7 +1033,7 @@
             order.CookingFee = cookingFee;
             order.TotalFee = order.TotalFee - oldCookingFee + cookingFee;
             order.CustomerTotalFee = order.CustomerTotalFee - oldCookingFee + cookingFee;
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
+            this.shunFengShoppingCartProvider.SaveShoppingCartOrder(source, order);
 
             return new ServicesResult<bool>
             {
@@ -1052,14 +1050,14 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string source, string id, int deliveryMethodId)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -1069,7 +1067,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -1078,7 +1076,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shunFengShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -1087,7 +1085,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -1096,7 +1094,7 @@
                 };
             }
 
-            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
+            var getShoppingCartExtraResult = this.shunFengShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
             if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -1157,10 +1155,10 @@
                 order.CanSelectCooking = false;
                 extra.CookingCount = 0;
                 extra.PanCount = 0;
-                this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, extra);
+                this.shunFengShoppingCartProvider.SaveShoppingCartExtra(source, extra);
             }
 
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
+            this.shunFengShoppingCartProvider.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -1176,7 +1174,7 @@
         /// <param name="order">The order</param>
         /// <param name="extra">The extra</param>
         /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/29/2013 11:17 AM
         /// 修改者：
         /// 修改时间：
@@ -1247,10 +1245,10 @@
                 order.CanSelectCooking = false;
                 extra.CookingCount = 0;
                 extra.PanCount = 0;
-                this.haiDiLaoShoppingCartProvider.SaveShoppingCartExtra(source, extra);
+                this.shunFengShoppingCartProvider.SaveShoppingCartExtra(source, extra);
             }
 
-            this.haiDiLaoShoppingCartProvider.SaveShoppingCartOrder(source, order);
+            this.shunFengShoppingCartProvider.SaveShoppingCartOrder(source, order);
         }
 
         /// <summary>
@@ -1263,7 +1261,7 @@
         /// <returns>
         /// 返回折扣
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/6/2013 5:25 PM
         /// 修改者：
         /// 修改时间：
@@ -1301,7 +1299,7 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/2/2013 6:35 PM
         /// 修改者：
         /// 修改时间：
@@ -1326,7 +1324,7 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/2/2013 6:35 PM
         /// 修改者：
         /// 修改时间：
@@ -1407,7 +1405,7 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/2/2013 6:35 PM
         /// 修改者：
         /// 修改时间：
@@ -1493,7 +1491,7 @@
         /// <exception cref="System.NotImplementedException"></exception>
         public ServicesResult<bool> ActivationShoppingCart(string source, int orderId)
         {
-            var result = this.haiDiLaoShoppingCartProvider.ActivationShoppingCart(source, orderId);
+            var result = this.shunFengShoppingCartProvider.ActivationShoppingCart(source, orderId);
             return result;
         }
     }

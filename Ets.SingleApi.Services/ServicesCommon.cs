@@ -1928,7 +1928,37 @@
                 return "find_password_code";
             }
         }
+        /// <summary>
+        /// 要过滤掉的集团Id
+        /// </summary>
+        /// <value>
+        /// 要过滤掉的集团Id
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-10 11:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> IsActivationOrderStatusIdList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["IsActivationOrderStatusIdList"] ?? string.Empty).Split(',');
+                var isActivationOrderStatusIdList = new List<int>();
+                foreach (var item in list)
+                {
+                    int orderstatusId;
+                    if (!int.TryParse(item, out orderstatusId))
+                    {
+                        continue;
+                    }
 
+                    isActivationOrderStatusIdList.Add(orderstatusId);
+                }
+
+                return isActivationOrderStatusIdList;
+            }
+        }
         /// <summary>
         /// 计算打包费
         /// </summary>

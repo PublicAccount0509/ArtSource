@@ -1,21 +1,19 @@
 ﻿namespace Ets.SingleApi.Controllers.IServices
 {
     using System.Collections.Generic;
-
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Services;
-
     /// <summary>
-    /// 接口名称：IShoppingCartServices
+    /// 接口名称：IShunFengShoppingCartServices
     /// 命名空间：Ets.SingleApi.Controllers.IServices
-    /// 接口功能：购物车服务
+    /// 接口功能：
     /// </summary>
-    /// 创建者：周超
-    /// 创建日期：11/20/2013 11:49 PM
+    /// 创建者：单琪彬
+    /// 创建日期：2/13/2014 5:30 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public interface IShoppingCartServices
+    public interface IShunFengShoppingCartServices
     {
         /// <summary>
         /// 取得购物车信息
@@ -25,12 +23,12 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartModel> GetShoppingCart(string source, string shoppingCartId);
+        ServicesResult<HaiDiLaoShoppingCartModel> GetShoppingCart(string source, string shoppingCartId);
 
         /// <summary>
         /// 创建一个购物车
@@ -41,7 +39,7 @@
         /// <returns>
         /// 返回一个购物车
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
@@ -58,7 +56,7 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
@@ -75,7 +73,7 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
@@ -92,7 +90,7 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
@@ -108,7 +106,7 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 7:48 PM
         /// 修改者：
         /// 修改时间：
@@ -124,12 +122,12 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 7:48 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCart(string source, string id, ShoppingCartModel shoppingCart);
+        ServicesResult<bool> SaveShoppingCart(string source, string id, HaiDiLaoShoppingCartModel shoppingCart);
 
         /// <summary>
         /// 保存用户信息
@@ -142,7 +140,7 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 7:48 PM
         /// 修改者：
         /// 修改时间：
@@ -150,7 +148,7 @@
         ServicesResult<bool> SaveShoppingCartOrder(
             string source,
             string id,
-            ShoppingCartOrder shoppingCartOrder,
+            HaiDiLaoShoppingCartOrder shoppingCartOrder,
             bool isCalculateCoupon,
             bool isValidateDeliveryTime);
 
@@ -159,16 +157,32 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
-        /// <param name="shoppingCartDelivery">The shoppingCartOrder</param>
+        /// <param name="shoppingCartDelivery">The shoppingCartDelivery</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 7:48 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveShoppingCartDelivery(string source, string id, ShoppingCartDelivery shoppingCartDelivery);
+
+        /// <summary>
+        /// 保存订单额外信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartExtra">The shoppingCartExtra</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SaveShoppingCartExtra(string source, string id, ShoppingCartExtra shoppingCartExtra);
 
         /// <summary>
         /// 更改购物车送餐方式
@@ -179,13 +193,12 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string source, string id, int deliveryMethodId);
-
         /// <summary>
         /// 激活购物车
         /// </summary>

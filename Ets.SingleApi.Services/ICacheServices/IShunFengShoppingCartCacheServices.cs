@@ -1,127 +1,123 @@
-﻿namespace Ets.SingleApi.Services
+﻿namespace Ets.SingleApi.Services.ICacheServices
 {
-    using System;
-
     using Ets.SingleApi.Model;
-    using Ets.SingleApi.Model.Services;
-
+    using Ets.SingleApi.Model.CacheServices;
     /// <summary>
-    /// 接口名称：IShoppingCartProvider
-    /// 命名空间：Ets.SingleApi.Services
-    /// 接口功能：购物车功能
+    /// 接口名称：IShunFengShoppingCartCacheServices
+    /// 命名空间：Ets.SingleApi.Services.ICacheServices
+    /// 接口功能：
     /// </summary>
-    /// 创建者：周超
-    /// 创建日期：11/21/2013 2:37 PM
+    /// 创建者：单琪彬
+    /// 创建日期：2/13/2014 5:22 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public interface IShoppingCartProvider
+    public interface IShunFengShoppingCartCacheServices
     {
         /// <summary>
-        /// 获取餐厅信息
+        /// 取得餐厅信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:07 PM
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(string source, int supplierId);
+        CacheServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(string source, int supplierId);
 
         /// <summary>
-        /// 获取购物车顾客信息
+        /// 保存餐厅信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplier">餐厅信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        CacheServicesResult<bool> SaveShoppingCartSupplier(string source, ShoppingCartSupplier supplier);
+
+        /// <summary>
+        /// 取得顾客信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="userId">用户Id</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(string source, int? userId);
+        CacheServicesResult<ShoppingCartCustomer> GetShoppingCartCustomer(string source, int userId);
 
         /// <summary>
-        /// 获取购物车信息
+        /// 保存顾客信息
         /// </summary>
         /// <param name="source">The source</param>
-        /// <param name="id">购物车唯一标识符</param>
+        /// <param name="customer">顾客信息</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCart> GetShoppingCart(string source, string id);
+        CacheServicesResult<bool> SaveShoppingCartCustomer(string source, ShoppingCartCustomer customer);
 
         /// <summary>
-        /// 获取订单信息
+        /// 取得海底捞订单信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="id">订单唯一标识符</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string source, string id);
+        CacheServicesResult<HaiDiLaoShoppingCartOrder> GetShoppingCartOrder(string source, string id);
 
         /// <summary>
-        /// 获取订单配送信息
+        /// 保存海底捞订单信息
         /// </summary>
         /// <param name="source">The source</param>
-        /// <param name="id">订单配送信息唯一标识符</param>
+        /// <param name="order">订单信息</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id);
+        CacheServicesResult<bool> SaveShoppingCartOrder(string source, HaiDiLaoShoppingCartOrder order);
 
         /// <summary>
-        /// 获取购物车关联信息
+        /// 取得购物车信息
         /// </summary>
         /// <param name="source">The source</param>
-        /// <param name="shoppingCartLinkId">购物车关联Id</param>
+        /// <param name="id">购物车唯一标识符</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId);
-
-        /// <summary>
-        /// 获取购物车关联信息
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="supplierId">餐厅Id</param>
-        /// <param name="anonymityId">匿名用户Id</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, int supplierId, string anonymityId);
+        CacheServicesResult<ShoppingCart> GetShoppingCart(string source, string id);
 
         /// <summary>
         /// 保存购物车信息
@@ -131,27 +127,27 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCart(string source, ShoppingCart shoppingCart);
+        CacheServicesResult<bool> SaveShoppingCart(string source, ShoppingCart shoppingCart);
 
         /// <summary>
-        /// 保存订单信息
+        /// 获取订单配送信息
         /// </summary>
         /// <param name="source">The source</param>
-        /// <param name="shoppingCartOrder">订单信息</param>
+        /// <param name="id">订单配送信息唯一标识符</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartOrder(string source, ShoppingCartOrder shoppingCartOrder);
+        CacheServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id);
 
         /// <summary>
         /// 保存订单配送信息
@@ -161,89 +157,71 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery);
+        CacheServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery);
 
         /// <summary>
-        /// 保存购物车关联信息
+        /// 获取海底捞购物车关联信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartLinkId">购物车关联Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        CacheServicesResult<HaiDiLaoShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId);
+
+        /// <summary>
+        /// 保存海底捞购物车关联信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartLink">购物车关联信息</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCartLink(string source, ShoppingCartLink shoppingCartLink);
+        CacheServicesResult<bool> SaveShoppingCartLink(string source, HaiDiLaoShoppingCartLink shoppingCartLink);
 
         /// <summary>
-        /// 将订单状态设置为完成状态
+        /// 获取购物车额外信息
         /// </summary>
         /// <param name="source">The source</param>
-        /// <param name="orderId">订单Id</param>
+        /// <param name="id">购物车额外信息Id</param>
         /// <returns>
         /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> CompleteShoppingCartOrder(string source, string orderId);
-
-        /// <summary>
-        /// 验证送餐时间
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="supplierId">餐厅Id</param>
-        /// <param name="deliveryTime">送餐时间</param>
-        /// <param name="now">当前时间</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：12/2/2013 6:35 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> ValidateDeliveryTime(string source, int supplierId, DateTime deliveryTime, DateTime now);
-
-        /// <summary>
-        /// 验证取餐时间
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="supplierId">餐厅Id</param>
-        /// <param name="pickUpTime">取餐时间</param>
-        /// <param name="now">当前时间</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：12/2/2013 6:35 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> ValidatePickUpTime(string source, int supplierId, DateTime pickUpTime, DateTime now);
-        /// <summary>
-        /// 激活购物车
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">The orderId</param>
-        /// <returns>
-        /// 返回是否激活成功
         /// </returns>
         /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 9:23 AM
+        /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> ActivationShoppingCart(string source, int orderId);
+        CacheServicesResult<ShoppingCartExtra> GetShoppingCartExtra(string source, string id);
+
+        /// <summary>
+        /// 保存购物车额外信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartExtra">购物车额外信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 11:06 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        CacheServicesResult<bool> SaveShoppingCartExtra(string source, ShoppingCartExtra shoppingCartExtra);
     }
 }

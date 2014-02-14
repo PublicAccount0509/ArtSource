@@ -217,5 +217,31 @@
                 Result = saveOrderPaIdResult.Result
             };
         }
+        /// <summary>
+        /// 是否可以激活购物车信息
+        /// </summary>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns></returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 4:10 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Response<bool> IsActivation(int orderType, int orderSourceType, int orderId)
+        {
+
+            var isActivationResult = this.orderServices.IsActivation(this.Source, orderType, orderSourceType, orderId);
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = isActivationResult.StatusCode
+                },
+                Result = isActivationResult.Result
+            };
+        }
     }
 }

@@ -3,47 +3,45 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
-
     /// <summary>
-    /// 类名称：ShoppingCartController
+    /// 类名称：ShunFengShoppingCartController
     /// 命名空间：Ets.SingleApi.Controllers
-    /// 类功能：购物车功能
+    /// 类功能：
     /// </summary>
-    /// 创建者：周超
-    /// 创建日期：11/20/2013 11:50 PM
+    /// 创建者：单琪彬
+    /// 创建日期：2/13/2014 5:54 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartController : SingleApiController
+    public class ShunFengShoppingCartController : SingleApiController
     {
         /// <summary>
-        /// 字段shoppingCartServices
+        /// 字段haiDiLaoshoppingCartServices
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartServices shoppingCartServices;
+        private readonly IShunFengShoppingCartServices shunFengshoppingCartServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartController"/> class.
         /// </summary>
-        /// <param name="shoppingCartServices">The shoppingCartServices</param>
-        /// 创建者：周超
+        /// <param name="shunFengshoppingCartServices"></param>
+        /// 创建者：单琪彬
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartController(IShoppingCartServices shoppingCartServices)
+        public ShunFengShoppingCartController(IShunFengShoppingCartServices shunFengshoppingCartServices)
         {
-            this.shoppingCartServices = shoppingCartServices;
+            this.shunFengshoppingCartServices = shunFengshoppingCartServices;
         }
 
         /// <summary>
@@ -53,28 +51,28 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<ShoppingCartModel> ShoppingCart(string id)
+        public Response<HaiDiLaoShoppingCartModel> ShoppingCart(string id)
         {
-            var getShoppingCartResult = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var getShoppingCartResult = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
             if (getShoppingCartResult.Result == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getShoppingCartResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            return new Response<ShoppingCartModel>
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -92,17 +90,17 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> ShoppingCart(string id, ShoppingCartRequst requst)
+        public Response<HaiDiLaoShoppingCartModel> ShoppingCart(string id, HaiDiLaoShoppingCartRequst requst)
         {
             if (requst == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -111,28 +109,28 @@
                 };
             }
 
-            var shoppingCartModel = new ShoppingCartModel
+            var haiDiLaoShoppingCartModel = new HaiDiLaoShoppingCartModel
                 {
                     Delivery = requst.Delivery,
                     Order = requst.Order,
                     ShoppingCart = requst.ShoppingCart
                 };
 
-            var getShoppingCartResult = this.shoppingCartServices.SaveShoppingCart(this.Source, id, shoppingCartModel);
+            var getShoppingCartResult = this.shunFengshoppingCartServices.SaveShoppingCart(this.Source, id, haiDiLaoShoppingCartModel);
             if (!getShoppingCartResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getShoppingCartResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -150,29 +148,29 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Create(int supplierId, string userId)
+        public Response<HaiDiLaoShoppingCartModel> Create(int supplierId, string userId)
         {
-            var createShoppingCartResult = this.shoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
+            var createShoppingCartResult = this.shunFengshoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
             if (createShoppingCartResult.Result.IsEmptyOrNull())
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = createShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : createShoppingCartResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
+            return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                         {
@@ -190,29 +188,29 @@
         /// <returns>
         /// The ShoppingCartResponse
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 9:29 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Customer(string id, int userId)
+        public Response<HaiDiLaoShoppingCartModel> Customer(string id, int userId)
         {
-            var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
+            var saveShoppingCartCustomerResult = this.shunFengshoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
             if (!saveShoppingCartCustomerResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingCartCustomerResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -230,17 +228,17 @@
         /// <returns>
         /// The ShoppingCartResponse
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 9:29 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Delivery(string id, ShoppingCartDeliveryRequst requst)
+        public Response<HaiDiLaoShoppingCartModel> Delivery(string id, HaiDiLaoShoppingCartDeliveryRequst requst)
         {
             if (requst == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -258,21 +256,79 @@
                     CustomerAddressId = requst.CustomerAddressId
                 };
 
-            var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
+            var saveShoppingCartCustomerResult = this.shunFengshoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
             if (!saveShoppingCartCustomerResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingCartCustomerResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存送餐信息
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The ShoppingCartResponse
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 9:29 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<HaiDiLaoShoppingCartModel> Extra(string id, HaiDiLaoShoppingCartExtraRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<HaiDiLaoShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var extra = new ShoppingCartExtra
+                {
+                    CookingCount = requst.CookingCount,
+                    PanCount = requst.PanCount,
+                    DiningCount = requst.DiningCount
+                };
+
+            var saveShoppingCartCustomerResult = this.shunFengshoppingCartServices.SaveShoppingCartExtra(this.Source, id, extra);
+            if (!saveShoppingCartCustomerResult.Result)
+            {
+                return new Response<HaiDiLaoShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingCartCustomerResult.StatusCode
+                    },
+                    Result = new HaiDiLaoShoppingCartModel()
+                };
+            }
+
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -291,17 +347,17 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 9:25 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Shopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
+        public Response<HaiDiLaoShoppingCartModel> Shopping(string id, HaiDiLaoShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -311,21 +367,21 @@
             }
 
             var shoppingCartItemList = requst.ShoppingCartItemList ?? new List<ShoppingCartItem>();
-            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.shunFengshoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -344,17 +400,17 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 9:25 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
+        public Response<HaiDiLaoShoppingCartModel> AddShopping(string id, HaiDiLaoShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -369,21 +425,21 @@
                 shoppingCartItem.CategoryIdList = new List<int>();
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.shunFengshoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -402,17 +458,17 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 9:25 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
+        public Response<HaiDiLaoShoppingCartModel> DeleteShopping(string id, HaiDiLaoShoppingCartShoppingRequst requst, bool saveDeliveryMethodId = true)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -421,21 +477,21 @@
                 };
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.shunFengshoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -455,17 +511,17 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 9:25 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> Order(string id, ShoppingCartOrderRequst requst, bool isCalculateCoupon = false, bool isValidateDeliveryTime = true)
+        public Response<HaiDiLaoShoppingCartModel> Order(string id, HaiDiLaoShoppingCartOrderRequst requst, bool isCalculateCoupon = false, bool isValidateDeliveryTime = true)
         {
             if (requst == null)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -474,7 +530,7 @@
                 };
             }
 
-            var order = new ShoppingCartOrder
+            var order = new HaiDiLaoShoppingCartOrder
                 {
                     Id = requst.Id,
                     AreaId = requst.AreaId,
@@ -493,21 +549,21 @@
                     OrderNotes = requst.OrderNotes
                 };
 
-            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon, isValidateDeliveryTime);
+            var saveShoppingItemResult = this.shunFengshoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon, isValidateDeliveryTime);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -525,29 +581,29 @@
         /// <returns>
         /// 返回购物车信息
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 9:25 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<ShoppingCartModel> SaveDeliveryMethod(string id, int deliveryMethodId)
+        public Response<HaiDiLaoShoppingCartModel> SaveDeliveryMethod(string id, int deliveryMethodId)
         {
-            var saveShoppingCartOrderDeliveryMethodResult = this.shoppingCartServices.SaveShoppingCartOrderDeliveryMethod(this.Source, id, deliveryMethodId);
+            var saveShoppingCartOrderDeliveryMethodResult = this.shunFengshoppingCartServices.SaveShoppingCartOrderDeliveryMethod(this.Source, id, deliveryMethodId);
             if (!saveShoppingCartOrderDeliveryMethodResult.Result)
             {
-                return new Response<ShoppingCartModel>
+                return new Response<HaiDiLaoShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingCartOrderDeliveryMethodResult.StatusCode
                     },
-                    Result = new ShoppingCartModel()
+                    Result = new HaiDiLaoShoppingCartModel()
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<ShoppingCartModel>
+            var result = this.shunFengshoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<HaiDiLaoShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -556,6 +612,7 @@
                 Result = result.Result
             };
         }
+
         /// <summary>
         /// 激活购物车
         /// </summary>
@@ -582,7 +639,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.ActivationShoppingCart(this.Source,id);
+            var result = this.shunFengshoppingCartServices.ActivationShoppingCart(this.Source, id);
             return new Response<bool>
             {
                 Message = new ApiMessage

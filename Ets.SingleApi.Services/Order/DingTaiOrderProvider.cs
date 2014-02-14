@@ -179,5 +179,24 @@
                 Result = true
             };
         }
+
+
+        /// <summary>
+        /// 判断是否可以激活购物车
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// 返回判断结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 11:55 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> IsActivation(string source, int orderId)
+        {
+            return new ServicesResult<bool>();
+        }
     }
 }

@@ -2,30 +2,28 @@
 {
     using System;
     using System.Linq;
-
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.ICacheServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
-
     /// <summary>
-    /// 类名称：ShoppingCartProvider
+    /// 类名称：ShunFengShoppingCartProvider
     /// 命名空间：Ets.SingleApi.Services
-    /// 类功能：购物车功能
+    /// 类功能：
     /// </summary>
-    /// 创建者：周超
-    /// 创建日期：11/21/2013 2:41 PM
+    /// 创建者：单琪彬
+    /// 创建日期：2/13/2014 5:45 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartProvider : IShoppingCartProvider
+    public class ShunFengShoppingCartProvider : IShunFengShoppingCartProvider
     {
         /// <summary>
         /// 字段loginEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/23/2013 11:22 AM
         /// 修改者：
         /// 修改时间：
@@ -35,7 +33,7 @@
         /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 12:16 PM
         /// 修改者：
         /// 修改时间：
@@ -45,7 +43,7 @@
         /// <summary>
         /// 字段supplierEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 6:41 PM
         /// 修改者：
         /// 修改时间：
@@ -55,7 +53,7 @@
         /// <summary>
         /// 字段supplierFeatureEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 6:41 PM
         /// 修改者：
         /// 修改时间：
@@ -65,7 +63,7 @@
         /// <summary>
         /// 字段suppTimeTableDisplayEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/27/2013 11:24 AM
         /// 修改者：
         /// 修改时间：
@@ -75,7 +73,7 @@
         /// <summary>
         /// 字段timeTableDisplayEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/27/2013 11:22 AM
         /// 修改者：
         /// 修改时间：
@@ -85,7 +83,7 @@
         /// <summary>
         /// 字段supplierTimeTableEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/11/2013 3:47 PM
         /// 修改者：
         /// 修改时间：
@@ -95,7 +93,7 @@
         /// <summary>
         /// 字段timeTableEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/11/2013 3:47 PM
         /// 修改者：
         /// 修改时间：
@@ -103,18 +101,18 @@
         private readonly INHibernateRepository<TimeTableEntity> timeTableEntityRepository;
 
         /// <summary>
-        /// 字段shoppingCartCacheServices
+        /// 字段shunFengShoppingCartCacheServices
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartCacheServices shoppingCartCacheServices;
+        private readonly IShunFengShoppingCartCacheServices shunFengShoppingCartCacheServices;
         /// <summary>
         /// 字段shoppingCartCacheServices
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
@@ -122,7 +120,7 @@
         private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartProvider" /> class.
+        /// Initializes a new instance of the <see cref="HaiDiLaoShoppingCartProvider" /> class.
         /// </summary>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -132,14 +130,14 @@
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// <param name="supplierTimeTableEntityRepository">The supplierTimeTableEntityRepository</param>
         /// <param name="timeTableEntityRepository">The timeTableEntityRepository</param>
-        /// <param name="shoppingCartCacheServices">The shoppingCartCacheServices</param>
+        /// <param name="shunFengShoppingCartCacheServices">The haiDiLaoShoppingCartCacheServices</param>
         /// <param name="shoppingCartAndOrderNoCacheServices"></param>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartProvider(
+        public ShunFengShoppingCartProvider(
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
@@ -148,7 +146,7 @@
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository,
             INHibernateRepository<TimeTableEntity> timeTableEntityRepository,
-            IShoppingCartCacheServices shoppingCartCacheServices,
+            IShunFengShoppingCartCacheServices shunFengShoppingCartCacheServices,
             IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
@@ -159,7 +157,7 @@
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
             this.supplierTimeTableEntityRepository = supplierTimeTableEntityRepository;
             this.timeTableEntityRepository = timeTableEntityRepository;
-            this.shoppingCartCacheServices = shoppingCartCacheServices;
+            this.shunFengShoppingCartCacheServices = shunFengShoppingCartCacheServices;
             this.shoppingCartAndOrderNoCacheServices = shoppingCartAndOrderNoCacheServices;
         }
 
@@ -171,14 +169,14 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:07 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(string source, int supplierId)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartSupplier(source, supplierId);
+            var shoppingCartCacheResult = this.shunFengShoppingCartCacheServices.GetShoppingCartSupplier(source, supplierId);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartSupplier>
@@ -198,7 +196,8 @@
                                             FixedDeliveryCharge = supplierEntity.FixedDeliveryCharge ?? 0,
                                             FreeDeliveryLine = supplierEntity.FreeDeliveryLine ?? 0,
                                             DelMinOrderAmount = supplierEntity.DelMinOrderAmount ?? 0,
-                                            PackLadder = supplierEntity.PackLadder ?? 0
+                                            PackLadder = supplierEntity.PackLadder ?? 0,
+                                            ConsumerAmount = supplierEntity.ConsumerAmount ?? 0
                                         }).FirstOrDefault();
 
             if (shoppingCartSupplier == null)
@@ -218,13 +217,12 @@
                                                 entity.Day,
                                                 entity.TimeTableDisplayId
                                             }).ToList();
-
             var day = DateTime.Now.GetDayOfWeek();
             var timeTableDisplayIdList = suppTimeTableDisplayList.Where(item => item.Day != null).Where(item => day == item.Day.ToString()).Select(p => p.TimeTableDisplayId).ToList();
             if (timeTableDisplayIdList.Count == 0)
             {
                 shoppingCartSupplier.ServiceTime = string.Empty;
-                this.shoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
+                this.shunFengShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
                 return new ServicesResult<ShoppingCartSupplier>
                 {
                     Result = shoppingCartSupplier
@@ -241,7 +239,7 @@
 
             var serviceTime = timeTableDisplayList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime));
             shoppingCartSupplier.ServiceTime = serviceTime.Trim();
-            this.shoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
+            this.shunFengShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
             return new ServicesResult<ShoppingCartSupplier>
             {
                 Result = shoppingCartSupplier
@@ -256,7 +254,7 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
@@ -271,7 +269,7 @@
                     };
             }
 
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartCustomer(source, userId.Value);
+            var shoppingCartCacheResult = this.shunFengShoppingCartCacheServices.GetShoppingCartCustomer(source, userId.Value);
             if (shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartCustomer>
@@ -328,7 +326,7 @@
                 Username = tempLogin.Username
             };
 
-            this.shoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
+            this.shunFengShoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
             return new ServicesResult<ShoppingCartCustomer>
             {
                 Result = customer
@@ -343,14 +341,14 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCart> GetShoppingCart(string source, string id)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCart(source, id);
+            var shoppingCartCacheResult = this.shunFengShoppingCartCacheServices.GetShoppingCart(source, id);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCart>
@@ -365,7 +363,7 @@
                 IsActive = true
             };
 
-            this.shoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
+            this.shunFengShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
             return new ServicesResult<ShoppingCart>
             {
                 Result = shoppingCart
@@ -373,25 +371,25 @@
         }
 
         /// <summary>
-        /// 获取订单信息
+        /// 获取海底捞订单信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="id">订单唯一标识符</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string source, string id)
+        public ServicesResult<HaiDiLaoShoppingCartOrder> GetShoppingCartOrder(string source, string id)
         {
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, id);
-            return new ServicesResult<ShoppingCartOrder>
+            var getHaiDiLaoShoppingCartOrderResult = this.shunFengShoppingCartCacheServices.GetShoppingCartOrder(source, id);
+            return new ServicesResult<HaiDiLaoShoppingCartOrder>
             {
-                StatusCode = getShoppingCartOrderResult.StatusCode,
-                Result = getShoppingCartOrderResult.Result ?? new ShoppingCartOrder()
+                StatusCode = getHaiDiLaoShoppingCartOrderResult.StatusCode,
+                Result = getHaiDiLaoShoppingCartOrderResult.Result ?? new HaiDiLaoShoppingCartOrder()
             };
         }
 
@@ -403,14 +401,14 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id)
         {
-            var shoppingCartDeliveryResult = this.shoppingCartCacheServices.GetShoppingCartDelivery(source, id);
+            var shoppingCartDeliveryResult = this.shunFengShoppingCartCacheServices.GetShoppingCartDelivery(source, id);
             return new ServicesResult<ShoppingCartDelivery>
             {
                 StatusCode = shoppingCartDeliveryResult.StatusCode,
@@ -419,71 +417,25 @@
         }
 
         /// <summary>
-        /// 保存购物车信息
+        /// 获取订单额外信息
         /// </summary>
         /// <param name="source">The source</param>
-        /// <param name="shoppingCart">购物车信息</param>
+        /// <param name="id">订单额外信息唯一标识符</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCart(string source, ShoppingCart shoppingCart)
+        public ServicesResult<ShoppingCartExtra> GetShoppingCartExtra(string source, string id)
         {
-            var saveShoppingCartResult = this.shoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
-            return new ServicesResult<bool>
+            var getShoppingCartExtraResult = this.shunFengShoppingCartCacheServices.GetShoppingCartExtra(source, id);
+            return new ServicesResult<ShoppingCartExtra>
             {
-                StatusCode = saveShoppingCartResult.StatusCode,
-                Result = saveShoppingCartResult.Result
-            };
-        }
-
-        /// <summary>
-        /// 保存订单信息
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="shoppingCartOrder">订单信息</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartOrder(string source, ShoppingCartOrder shoppingCartOrder)
-        {
-            var saveShoppingCartOrderResult = this.shoppingCartCacheServices.SaveShoppingCartOrder(source, shoppingCartOrder);
-            return new ServicesResult<bool>
-            {
-                StatusCode = saveShoppingCartOrderResult.StatusCode,
-                Result = saveShoppingCartOrderResult.Result
-            };
-        }
-
-        /// <summary>
-        /// 保存订单配送信息
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="shoppingCartDelivery">订单配送信息</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery)
-        {
-            var saveShoppingCartDeliveryResult = this.shoppingCartCacheServices.SaveShoppingCartDelivery(source, shoppingCartDelivery);
-            return new ServicesResult<bool>
-            {
-                StatusCode = saveShoppingCartDeliveryResult.StatusCode,
-                Result = saveShoppingCartDeliveryResult.Result
+                StatusCode = getShoppingCartExtraResult.StatusCode,
+                Result = getShoppingCartExtraResult.Result ?? new ShoppingCartExtra()
             };
         }
 
@@ -495,23 +447,23 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
+        public ServicesResult<HaiDiLaoShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(source, shoppingCartLinkId);
-            return new ServicesResult<ShoppingCartLink>
+            var getShoppingCartLinkResult = this.shunFengShoppingCartCacheServices.GetShoppingCartLink(source, shoppingCartLinkId);
+            return new ServicesResult<HaiDiLaoShoppingCartLink>
             {
                 StatusCode = getShoppingCartLinkResult.StatusCode,
-                Result = getShoppingCartLinkResult.Result ?? new ShoppingCartLink()
+                Result = getShoppingCartLinkResult.Result ?? new HaiDiLaoShoppingCartLink()
             };
         }
 
         /// <summary>
-        /// 获取购物车关联信息
+        /// 获取海底捞购物车关联信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
@@ -519,19 +471,19 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, int supplierId, string anonymityId)
+        public ServicesResult<HaiDiLaoShoppingCartLink> GetShoppingCartLink(string source, int supplierId, string anonymityId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(source, string.Format("{0}_{1}", anonymityId, supplierId));
-            var shoppingCartLink = getShoppingCartLinkResult.Result ?? new ShoppingCartLink();
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartLinkResult = this.shunFengShoppingCartCacheServices.GetShoppingCartLink(source, string.Format("{0}_{1}", anonymityId, supplierId));
+            var shoppingCartLink = getShoppingCartLinkResult.Result ?? new HaiDiLaoShoppingCartLink();
+            var getShoppingCartOrderResult = this.shunFengShoppingCartCacheServices.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<ShoppingCartLink>
+                return new ServicesResult<HaiDiLaoShoppingCartLink>
                 {
                     StatusCode = getShoppingCartLinkResult.StatusCode,
                     Result = null
@@ -540,36 +492,128 @@
 
             if (getShoppingCartOrderResult.Result.IsComplete)
             {
-                return new ServicesResult<ShoppingCartLink>
+                return new ServicesResult<HaiDiLaoShoppingCartLink>
                 {
                     StatusCode = getShoppingCartLinkResult.StatusCode,
                     Result = null
                 };
             }
 
-            return new ServicesResult<ShoppingCartLink>
+            return new ServicesResult<HaiDiLaoShoppingCartLink>
             {
                 StatusCode = getShoppingCartLinkResult.StatusCode,
-                Result = getShoppingCartLinkResult.Result ?? new ShoppingCartLink()
+                Result = getShoppingCartLinkResult.Result ?? new HaiDiLaoShoppingCartLink()
             };
         }
 
         /// <summary>
-        /// 保存购物车关联信息
+        /// 保存购物车信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCart">购物车信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCart(string source, ShoppingCart shoppingCart)
+        {
+            var saveShoppingCartResult = this.shunFengShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
+            return new ServicesResult<bool>
+            {
+                StatusCode = saveShoppingCartResult.StatusCode,
+                Result = saveShoppingCartResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存海底捞订单信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartOrder">订单信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCartOrder(string source, HaiDiLaoShoppingCartOrder shoppingCartOrder)
+        {
+            var saveHaiDiLaoShoppingCartOrderResult = this.shunFengShoppingCartCacheServices.SaveShoppingCartOrder(source, shoppingCartOrder);
+            return new ServicesResult<bool>
+            {
+                StatusCode = saveHaiDiLaoShoppingCartOrderResult.StatusCode,
+                Result = saveHaiDiLaoShoppingCartOrderResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存订单配送信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartDelivery">订单配送信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery)
+        {
+            var saveShoppingCartDeliveryResult = this.shunFengShoppingCartCacheServices.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+            return new ServicesResult<bool>
+            {
+                StatusCode = saveShoppingCartDeliveryResult.StatusCode,
+                Result = saveShoppingCartDeliveryResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存订单额外信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartExtra">订单额外信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCartExtra(string source, ShoppingCartExtra shoppingCartExtra)
+        {
+            var saveShoppingCartExtraResult = this.shunFengShoppingCartCacheServices.SaveShoppingCartExtra(source, shoppingCartExtra);
+            return new ServicesResult<bool>
+            {
+                StatusCode = saveShoppingCartExtraResult.StatusCode,
+                Result = saveShoppingCartExtraResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 保存海底捞购物车关联信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartLink">购物车关联信息</param>
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveShoppingCartLink(string source, ShoppingCartLink shoppingCartLink)
+        public ServicesResult<bool> SaveShoppingCartLink(string source, HaiDiLaoShoppingCartLink shoppingCartLink)
         {
-            var saveShoppingCartLinkResult = this.shoppingCartCacheServices.SaveShoppingCartLink(source, shoppingCartLink);
+            var saveShoppingCartLinkResult = this.shunFengShoppingCartCacheServices.SaveShoppingCartLink(source, shoppingCartLink);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartLinkResult.StatusCode,
@@ -585,14 +629,14 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：11/21/2013 2:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> CompleteShoppingCartOrder(string source, string orderId)
         {
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
+            var getShoppingCartOrderResult = this.shunFengShoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -603,7 +647,7 @@
 
             var order = getShoppingCartOrderResult.Result;
             order.IsComplete = true;
-            var saveShoppingCartOrderResult = this.shoppingCartCacheServices.SaveShoppingCartOrder(source, order);
+            var saveShoppingCartOrderResult = this.shunFengShoppingCartCacheServices.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartOrderResult.StatusCode,
@@ -621,7 +665,7 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/2/2013 6:35 PM
         /// 修改者：
         /// 修改时间：
@@ -661,21 +705,18 @@
             var timeTableList = supplierTimeTableList.Where(p => p.Day.ToString() == day).ToList();
             if (timeTableList.Count <= 0)
             {
-                if (timeTableList.Count <= 0)
+                foreach (var item in ServicesCommon.EmptyDeliveryTime.Split(' '))
                 {
-                    foreach (var item in ServicesCommon.EmptyDeliveryTime.Split(' '))
+                    var timeList = item.Split('-').ToList();
+                    if (timeList.Count != 2)
                     {
-                        var timeList = item.Split('-').ToList();
-                        if (timeList.Count != 2)
-                        {
-                            continue;
-                        }
-
-                        var itemDay = Convert.ToInt32(day);
-                        var itemOpenTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.First()));
-                        var itemCloseTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.Last()));
-                        timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
+                        continue;
                     }
+
+                    var itemDay = Convert.ToInt32(day);
+                    var itemOpenTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.First()));
+                    var itemCloseTime = DateTime.Parse(string.Format("{0} {1}", deliveryTime.ToString("yyyy-MM-dd"), timeList.Last()));
+                    timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
                 }
             }
 
@@ -717,7 +758,7 @@
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/2/2013 6:35 PM
         /// 修改者：
         /// 修改时间：
@@ -833,7 +874,7 @@
                 };
             }
             var shoppingcartId = idlinkresult.Result;
-            var shoppingcartresult = this.shoppingCartCacheServices.GetShoppingCart(source, shoppingcartId);
+            var shoppingcartresult = this.shunFengShoppingCartCacheServices.GetShoppingCart(source, shoppingcartId);
             if (shoppingcartresult == null)
             {
                 return new ServicesResult<bool>
@@ -842,7 +883,7 @@
                 };
             }
             shoppingcartresult.Result.IsActive = true;
-            this.shoppingCartCacheServices.SaveShoppingCart(source,shoppingcartresult.Result);
+            this.shunFengShoppingCartCacheServices.SaveShoppingCart(source, shoppingcartresult.Result);
             return new ServicesResult<bool>
             {
                 Result = true

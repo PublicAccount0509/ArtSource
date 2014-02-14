@@ -1,4 +1,5 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Services.ICacheServices;
+namespace Ets.SingleApi.Services.Order
 {
     using System;
     using System.Collections.Generic;
@@ -11,21 +12,19 @@
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
-    using NHibernate.Cfg;
-    using NHibernate;
 
     /// <summary>
-    /// 类名称：HuangTaiJiWaiMaiOrderProvider
+    /// 类名称：WaiMaiOrderProvider
     /// 命名空间：Ets.SingleApi.Services
-    /// 类功能：黄太极外卖订单
+    /// 类功能：外卖订单
     /// </summary>
-    /// 创建者：殷超
-    /// 创建日期：12/25/2013 3:25 PM
+    /// 创建者：周超
+    /// 创建日期：11/22/2013 3:25 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
     [Transactional]
-    public class HuangTaiJiWaiMaiOrderProvider : IOrderProvider
+    public class ZhongCanWaiMaiOrderProvider : WaiMaiOrderProvider
     {
         /// <summary>
         /// 字段deliveryEntityRepository
@@ -118,16 +117,6 @@
         private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
 
         /// <summary>
-        /// 字段orderNumberDcEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/23/2013 12:13 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository;
-
-        /// <summary>
         /// 字段distance
         /// </summary>
         /// 创建者：周超
@@ -145,10 +134,20 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IHuangTaiJiShoppingCartProvider huangTaiJiShoppingCartProvider;
+        private readonly IShoppingCartProvider shoppingCartProvider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HuangTaiJiWaiMaiOrderProvider" /> class.
+        /// 字段shoppingCartCacheServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 11:08 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="sourcePathEntityRepository">The sourcePathEntityRepository</param>
@@ -161,13 +160,14 @@
         /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="distance">The distance</param>
-        /// <param name="huangTaiJiShoppingCartProvider">The huangTaiJiShoppingCartProvider</param>
+        /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
+        /// <param name="shoppingCartAndOrderNoCacheServices"></param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public HuangTaiJiWaiMaiOrderProvider(
+        public ZhongCanWaiMaiOrderProvider(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<SourcePathEntity> sourcePathEntityRepository,
             INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
@@ -179,7 +179,9 @@
             INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             IDistance distance,
-            IHuangTaiJiShoppingCartProvider huangTaiJiShoppingCartProvider)
+            IShoppingCartProvider shoppingCartProvider,
+            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
+            : base(deliveryEntityRepository, orderNumberDcEntityRepository)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.sourcePathEntityRepository = sourcePathEntityRepository;
@@ -190,66 +192,9 @@
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
-            this.orderNumberDcEntityRepository = orderNumberDcEntityRepository;
             this.distance = distance;
-            this.huangTaiJiShoppingCartProvider = huangTaiJiShoppingCartProvider;
-        }
-
-        /// <summary>
-        /// 取得订单类型
-        /// </summary>
-        /// <value>
-        /// 订单类型
-        /// </value>
-        /// 创建者：殷超
-        /// 创建日期：2013/12/25 16:01
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public OrderProviderType OrderProviderType
-        {
-            get
-            {
-                return new OrderProviderType
-                {
-                    OrderType = OrderType.WaiMai,
-                    OrderSourceType = OrderSourceType.HuangTaiJi
-                };
-            }
-        }
-
-        /// <summary>
-        /// 取得订单是否存在以及支付支付状态
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">订单状态</param>
-        /// <returns>
-        /// 返回结果 0 不存在 1 支付 2 未支付
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 9:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<int> Exist(string source, int orderId)
-        {
-            var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
-                                  where entity.OrderNumber == orderId
-                                  select entity).FirstOrDefault();
-
-            if (deliveryEntity == null)
-            {
-                return new ServicesResult<int>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
-                };
-            }
-
-            return new ServicesResult<int>
-            {
-                StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = deliveryEntity.IsPaId == true ? 1 : 2
-            };
+            this.shoppingCartProvider = shoppingCartProvider;
+            this.shoppingCartAndOrderNoCacheServices = shoppingCartAndOrderNoCacheServices;
         }
 
         /// <summary>
@@ -265,7 +210,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId)
+        public override ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId)
         {
             var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
                                   where entity.OrderNumber == orderId
@@ -276,23 +221,18 @@
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
-                    Result = new HuangTaiJiWaiMaiOrderDetailModel()
+                    Result = new WaiMaiOrderDetailModel()
                 };
             }
 
-            // 查询出第一级主菜单和对应的配菜信息
-            var waiMaiOrderDishList = deliveryEntity.OrderList.Where(p => p.OrderSource==0).Select(p => new HuangTaiJiWaiMaiOrderDishModel
+            var waiMaiOrderDishList = deliveryEntity.OrderList.Select(p => new WaiMaiOrderDishModel
             {
-                OrderId = p.OrderId,
                 SupplierDishId = p.SupplierDishId,
                 SupplierDishName = p.SupplierDishName,
-                SpecialInstruction = p.SpecialInstruction,
+                Instruction = p.SpecialInstruction,
                 Price = p.SupplierPrice,
                 Quantity = p.Quantity
             }).ToList();
-
-            // 级联获取子order信息
-            getOrderInfoCascade(waiMaiOrderDishList, deliveryEntity);
 
             var supplierId = deliveryEntity.SupplierId;
             var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
@@ -330,7 +270,7 @@
                 gender = "0";
             }
 
-            var result = new HuangTaiJiWaiMaiOrderDetailModel()
+            var result = new WaiMaiOrderDetailModel
             {
                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
                 OrderTypeId = (int)OrderType.WaiMai,
@@ -343,10 +283,12 @@
                 Coupon = Math.Max(((deliveryEntity.Total ?? 0) - (deliveryEntity.CustomerTotal ?? 0)), 0).ToString("#0.00"),
                 Commission = "0.00",
                 RealSupplierType = deliveryEntity.RealSupplierType,
+                SupplierGroupId = supplierEntity.SupplierGroupId,
                 SupplierId = supplierEntity.SupplierId,
                 SupplierName = supplierEntity.SupplierName ?? string.Empty,
                 SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
                 SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
+                SupplierFixedDeliveryFee = (supplierEntity.FixedDeliveryCharge ?? 0).ToString("#0.00"),
                 SupplierBaIduLat = baIduLat,
                 SupplierBaIduLong = baIduLong,
                 DeliveryMethodId = deliveryEntity.DeliveryMethodId,
@@ -361,39 +303,16 @@
                 DeliveryCustomerGender = gender
             };
 
+            if (result.InvoiceTitle.IsEmptyOrNull())
+            {
+                result.InvoiceTitle = ServicesCommon.EmptyInvoiceTitle;
+            }
+
             return new ServicesResult<IOrderDetailModel>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
                 Result = result
             };
-        }
-
-        // 根据orderSource产生级联关系
-        private void getOrderInfoCascade(List<HuangTaiJiWaiMaiOrderDishModel> waiMaiOrderDishList, DeliveryEntity deliveryEntity)
-        {
-            // 根据一级订单ID，查询对应的子订单
-            if (waiMaiOrderDishList != null)
-            {
-                foreach (HuangTaiJiWaiMaiOrderDishModel model in waiMaiOrderDishList)
-                {
-                    // orderSource暂时被作为pid使用 TODO
-                    var childWaiMaiOrderDishList = deliveryEntity.OrderList.Where(p => p.OrderSource == model.OrderId).Select(p => new HuangTaiJiWaiMaiOrderDishModel
-                    {
-                        OrderId = p.OrderId,
-                        SupplierDishId = p.SupplierDishId,
-                        SupplierDishName = p.SupplierDishName,
-                        SpecialInstruction = p.SpecialInstruction,
-                        Price = p.SupplierPrice,
-                        Quantity = p.Quantity
-                    }).ToList();
-
-                    if (childWaiMaiOrderDishList != null && childWaiMaiOrderDishList.Count > 0)
-                    {
-                        getOrderInfoCascade(childWaiMaiOrderDishList, deliveryEntity);
-                        model.list = childWaiMaiOrderDishList;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -410,9 +329,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [Transaction(TransactionMode.RequiresNew)]
-        public ServicesResult<string> SaveOrder(string source, string shoppingCartId)
+        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId)
         {
-            var getShoppingCartLinkResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -423,7 +342,7 @@
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.huangTaiJiShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -433,7 +352,7 @@
                 };
             }
 
-            var getShoppingCartSupplierResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -443,7 +362,7 @@
                 };
             }
 
-            var getShoppingCartCustomerResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
+            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -453,7 +372,7 @@
                 };
             }
 
-            var getShoppingCartOrderResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -463,7 +382,7 @@
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -481,12 +400,12 @@
             if (order.IsComplete)
             {
                 return new ServicesResult<string>
-                {
-                    Result = order.OrderId.ToString()
-                };
+                    {
+                        Result = order.OrderId.ToString()
+                    };
             }
 
-            var shoppingList = shoppingCart.ShoppingList ?? new List<HuangTaiJiShoppingCartItem>();
+            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             if (shoppingList.Count == 0)
             {
                 return new ServicesResult<string>
@@ -542,11 +461,14 @@
                 ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order)
                 : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
             this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
-            this.SaveOrderEntity(customerId, deliveryId, shoppingList, 0);
-            this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId);
+            this.SaveOrderEntity(customerId, deliveryId, shoppingList);
+            this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
             order.IsComplete = true;
             order.OrderId = orderId;
-            this.huangTaiJiShoppingCartProvider.SaveShoppingCartOrder(source, order);
+            this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
+            //把订单编号和购物车编号保存到缓存中
+            this.shoppingCartAndOrderNoCacheServices.SaveShoppingCartAndOrderNoLink(source, orderId.ToString(), shoppingCartId);
+
             return new ServicesResult<string>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
@@ -555,69 +477,19 @@
         }
 
         /// <summary>
-        /// 取得一个订单号
+        /// Gets the type of the order source.
         /// </summary>
-        /// <param name="source">The source</param>
         /// <returns>
-        /// 订单号
+        /// The OrderSourceType
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/25/2013 2:09 PM
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 3:06 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> GetOrderNumber(string source)
+        protected override OrderSourceType GetOrderSourceType()
         {
-            var orderId = this.GetOrderNumberId();
-            if (orderId <= 0)
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.General.OrderNumberNotFound,
-                    Result = string.Empty
-                };
-            }
-
-            return new ServicesResult<string>
-            {
-                Result = orderId.ToString()
-            };
-        }
-
-        /// <summary>
-        /// 更改支付状态
-        /// </summary>
-        /// <param name="source">The sourceDefault documentation</param>
-        /// <param name="orderId"></param>
-        /// <param name="isPaId">The  isPaId indicates whether</param>
-        /// <returns>
-        /// Boolean}
-        /// </returns>
-        /// 创建者：王巍
-        /// 创建日期：1/26/2014 10:50 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveOrderPaId(string source, int orderId, bool isPaId)
-        {
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
-            if (deliveryEntity == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
-                    Result = false
-                };
-            }
-
-            deliveryEntity.IsPaId = true;
-            this.deliveryEntityRepository.Save(deliveryEntity);
-
-            return new ServicesResult<bool>
-            {
-                StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = true
-            };
+            return OrderSourceType.Default;
         }
 
         /// <summary>
@@ -636,7 +508,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, HuangTaiJiShoppingCartOrder order)
+        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
         {
             var userName = delivery.Name;
             var deliveryAddressEntity = new DeliveryAddressEntity
@@ -669,10 +541,10 @@
                 IsRating = false,
                 Cancelled = false,
                 DeliveryDate = order.DeliveryDateTime,
-                Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == "Wechat"),
+                Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Template),
                 InvoiceRequired = order.InvoiceRequired,
                 InvoiceTitle = order.InvoiceTitle,
-                Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == "WeiXin"),
+                Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path),
                 OrderNotes = order.OrderNotes,
                 AreaId = order.AreaId,
                 IPAddress = delivery.IpAddress,
@@ -700,7 +572,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, HuangTaiJiShoppingCartOrder order)
+        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
         {
             var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customerId);
             var deliveryAddressEntity = new DeliveryAddressEntity
@@ -741,10 +613,10 @@
                 IsRating = false,
                 Cancelled = false,
                 DeliveryDate = order.DeliveryDateTime,
-                Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == "Wechat"),
+                Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Template),
                 InvoiceRequired = order.InvoiceRequired,
                 InvoiceTitle = order.InvoiceTitle,
-                Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == "WeiXin"),
+                Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path),
                 OrderNotes = order.OrderNotes,
                 AreaId = order.AreaId,
                 IPAddress = delivery.IpAddress,
@@ -814,104 +686,31 @@
         /// <param name="customerId">顾客Id</param>
         /// <param name="deliveryId">订单Id</param>
         /// <param name="shoppingList">商品列表</param>
-        /// <param name="parentOrderId">父订单Id</param>
-        /// 创建者：殷超
+        /// 创建者：周超
         /// 创建日期：11/22/2013 5:26 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void SaveOrderEntity(int customerId, int deliveryId, IEnumerable<HuangTaiJiShoppingCartItem> shoppingList, int parentOrderId)
+        private void SaveOrderEntity(int customerId, int deliveryId, IEnumerable<ShoppingCartItem> shoppingList)
         {
-            // var orderList = new List<OrderEntity>();
-            //foreach (HuangTaiJiShoppingCartItem cartItem in shoppingList)
-            //{
-            //    // 主菜辅菜 -- 当作订单
-            //    foreach (var optionGroup in cartItem.SupplierDishOptionGroups)
-            //    {
-            //        foreach (var customizationOption in optionGroup.SupplierDishCustomizationOption)
-            //        {
-            //            if (customizationOption.SupplierDishPrice != 0 && customizationOption.SupplierDishQuantity != 0)
-            //            {
-            //                // 价格不为0，说明是一道辅菜，可以单独作为一个订单
-            //                OrderEntity entity = new OrderEntity
-            //                {
-            //                    Delivery = new DeliveryEntity
-            //                    {
-            //                        DeliveryId = deliveryId
-            //                    },
-            //                    CustomerId = customerId,
-            //                    SupplierDishId = optionGroup.SupplierDishId.HasValue ? optionGroup.SupplierDishId.Value : 0,
-            //                    Quantity = customizationOption.SupplierDishQuantity,
-            //                    SupplierPrice = customizationOption.SupplierDishPrice,
-            //                    SupplierDishName = customizationOption.SupplierDishOptionTitle,
-            //                    Total = (customizationOption.SupplierDishPrice.HasValue? customizationOption.SupplierDishPrice.Value:0m) * customizationOption.SupplierDishQuantity,
-            //                    SpecialInstruction = customizationOption.SpecialInstruction,
-            //                    OrderDate = DateTime.Now,
-            //                    OrderSource = parentOrderId
-            //                };
-            //                //orderList.Add(entity);
-            //                this.orderEntityRepository.Save(entity);
-            //            }
-            //        }
-            //    }
-            //}
-            
-            //得到订单ID，拆分子订单
-            foreach (HuangTaiJiShoppingCartItem cartItem in shoppingList)
-            {
-                OrderEntity entity = new OrderEntity
-                {
-                    Delivery = new DeliveryEntity
-                    {
-                        DeliveryId = deliveryId
-                    },
-                    CustomerId = customerId,
-                    SupplierDishId = cartItem.ItemId,
-                    Quantity = cartItem.Quantity,
-                    SupplierPrice = cartItem.Price,
-                    SupplierDishName = cartItem.ItemName,
-                    Total = cartItem.Price * cartItem.Quantity,
-                    SpecialInstruction = cartItem.Instruction,
-                    OrderDate = DateTime.Now,
-                    OrderSource = parentOrderId
-                };
-                this.orderEntityRepository.Save(entity);
+            var orderList = (from dish in shoppingList
+                             select new OrderEntity
+                             {
+                                 Delivery = new DeliveryEntity
+                                     {
+                                         DeliveryId = deliveryId
+                                     },
+                                 CustomerId = customerId,
+                                 SupplierDishId = dish.ItemId,
+                                 Quantity = dish.Quantity,
+                                 SupplierPrice = dish.Price,
+                                 SupplierDishName = dish.ItemName,
+                                 Total = dish.Price * dish.Quantity,
+                                 SpecialInstruction = dish.Instruction,
+                                 OrderDate = DateTime.Now
+                             }).ToList();
 
-                if (cartItem.SubSupplierDishDetail != null && cartItem.SubSupplierDishDetail.Count > 0)
-                {
-                    this.SaveOrderEntity(customerId, deliveryId, cartItem.SubSupplierDishDetail, entity.OrderId);
-                }
-
-                // 主菜辅菜 -- 当作订单
-                foreach (var optionGroup in cartItem.SupplierDishOptionGroups)
-                {
-                    foreach (var customizationOption in optionGroup.SupplierDishCustomizationOption)
-                    {
-                        if (customizationOption.SupplierDishPrice != 0 && customizationOption.SupplierDishQuantity != 0)
-                        {
-                            // 价格不为0，说明是一道辅菜，可以单独作为一个订单
-                            OrderEntity orderEntity = new OrderEntity
-                            {
-                                Delivery = new DeliveryEntity
-                                {
-                                    DeliveryId = deliveryId
-                                },
-                                CustomerId = customerId,
-                                SupplierDishId = optionGroup.SupplierDishId.HasValue ? optionGroup.SupplierDishId.Value : 0,
-                                Quantity = customizationOption.SupplierDishQuantity,
-                                SupplierPrice = customizationOption.SupplierDishPrice,
-                                SupplierDishName = customizationOption.SupplierDishOptionTitle,
-                                Total = (customizationOption.SupplierDishPrice.HasValue ? customizationOption.SupplierDishPrice.Value : 0m) * customizationOption.SupplierDishQuantity,
-                                SpecialInstruction = customizationOption.SpecialInstruction,
-                                OrderDate = DateTime.Now,
-                                OrderSource = entity.OrderId
-                            };
-                            //orderList.Add(entity);
-                            this.orderEntityRepository.Save(orderEntity);
-                        }
-                    }
-                }
-            }
+            this.orderEntityRepository.Save(orderList);
         }
 
         /// <summary>
@@ -920,12 +719,13 @@
         /// <param name="deliveryId">订单Id</param>
         /// <param name="customerTotal">支付总金额</param>
         /// <param name="paymentMethodId">支付方式</param>
+        /// <param name="payBank">The payBank</param>
         /// 创建者：周超
         /// 创建日期：11/23/2013 11:07 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId)
+        private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId, string payBank)
         {
             var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryId)
                                  ?? new PaymentEntity
@@ -946,50 +746,8 @@
             paymentEntity.Amount = customerTotal;
             paymentEntity.MethodChangeHistory = paymentEntity.PaymentMethodId.ToString();
             paymentEntity.PaymentMethodId = paymentMethodId;
+            paymentEntity.PayBank = payBank;
             this.paymentEntityRepository.Save(paymentEntity);
-        }
-
-        /// <summary>
-        /// 取得一个订单号
-        /// </summary>
-        /// <returns>
-        /// 订单号
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/25/2013 2:09 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private int GetOrderNumberId()
-        {
-            var entity = this.orderNumberDcEntityRepository.EntityQueryable.FirstOrDefault();
-            if (entity == null)
-            {
-                return 0;
-            }
-
-            var orderNumber = entity.OrderId;
-            this.orderNumberDcEntityRepository.Remove(entity);
-            return orderNumber;
-        }
-
-
-        /// <summary>
-        /// 判断是否可以激活购物车
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">The orderId</param>
-        /// <returns>
-        /// 返回判断结果
-        /// </returns>
-        /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 11:55 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> IsActivation(string source, int orderId)
-        {
-            return new ServicesResult<bool>();
         }
     }
 }
