@@ -1,5 +1,5 @@
 ﻿using Ets.SingleApi.Services.ICacheServices;
-namespace Ets.SingleApi.Services.Order
+namespace Ets.SingleApi.Services
 {
     using System;
     using System.Collections.Generic;
