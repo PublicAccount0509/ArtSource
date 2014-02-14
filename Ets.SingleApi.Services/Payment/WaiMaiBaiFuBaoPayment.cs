@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -107,7 +108,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public PaymentResult<string> Payment(IPaymentData parameter)
         {
-            var baiFuBaoPaymentQueryData = parameter as BaiFuBaoPaymentQueryData;
+            var baiFuBaoPaymentQueryData = parameter as BaiFuBaoPaymentData;
             if (baiFuBaoPaymentQueryData == null)
             {
                 return new PaymentResult<string> { Result = string.Empty, StatusCode = (int)StatusCode.System.InvalidPaymentRequest };
@@ -134,7 +135,8 @@ namespace Ets.SingleApi.Services
             subpara.extra = "ext";
             subpara.sp_no = ControllersCommon.BaiFuBaoMerchantAcctId;
 
-            var result = ControllersCommon.InstantToAccountURL_Wap_NotBaiDuLogin + "?" + BuildBaiFuBaoPaymentUrl(subpara, true) + "&sign=" + BuildBaiFuBaoSignature(BuildBaiFuBaoPaymentUrl(subpara));
+            const string sign_method = "1"; //加密规则 1 MID5，2 SHA1
+            var result = ControllersCommon.InstantToAccountURL_Wap_NotBaiDuLogin + "?" + BuildBaiFuBaoPaymentUrl(subpara, true) + "&sign=" + BuildBaiFuBaoSignature(BuildBaiFuBaoPaymentUrl(subpara), sign_method);
 
             return new PaymentResult<string> { Result = result, StatusCode = (int)StatusCode.Succeed.Ok };
         }
@@ -153,8 +155,8 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public PaymentResult<bool> QueryState(IPaymentData parameter)
         {
-            var umPaymentQueryData = parameter as UmPaymentQueryData;
-            if (umPaymentQueryData == null)
+            var baiFuBaoPaymentQueryData = parameter as BaiFuBaoPaymentQueryData;
+            if (baiFuBaoPaymentQueryData == null)
             {
                 return new PaymentResult<bool>
                     {
@@ -162,7 +164,31 @@ namespace Ets.SingleApi.Services
                     };
             }
 
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == umPaymentQueryData.OrderId);
+            //查询订单支付状态
+            var isdsd = false;
+            var orderInfo = SendGetInfo(baiFuBaoPaymentQueryData.OrderId.ToString(), ref isdsd);
+
+            if (!isdsd)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+                    Result = false
+                };
+            }
+
+            //pay_result：1 支付成功，2 等待支付；3 退款成功
+            if (orderInfo.pay_result != "1")
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+                    Result = false
+                };
+            }
+
+            //查询订单配送信息
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == baiFuBaoPaymentQueryData.OrderId);
             if (deliveryEntity == null)
             {
                 return new PaymentResult<bool>
@@ -171,6 +197,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
+            //更新订单支付状态为 已支付
             deliveryEntity.IsPaId = true;
             this.deliveryEntityRepository.Save(deliveryEntity);
 
@@ -217,13 +244,14 @@ namespace Ets.SingleApi.Services
             dictionary["unit_count"] = retrunData.unit_count;
             dictionary["version"] = retrunData.version;
 
-            var signature = BuildSignature(dictionary, retrunData.sign_method);
+            var signature = BuildBaiFuBaoSignature(dictionary, retrunData.sign_method);
+            //var signature = BuildSignature(dictionary, retrunData.sign_method);
 
             return System.String.Compare(retrunData.sign, signature, System.StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         /// <summary>
-        /// Sends the get information.
+        /// 百付宝查询订单支付状态
         /// </summary>
         /// <param name="_order_no">The _order_noDefault documentation</param>
         /// <param name="_verifyR">The  _verifyR indicates whether</param>
@@ -235,7 +263,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static BaiFuBaoSearchOrderInfo SendGetInfo(string _order_no, ref  bool _verifyR)
+        private static BaiFuBaoSearchOrderInfo SendGetInfo(string _order_no, ref  bool _verifyR)
         {
             var orderbdinfo = new BaiFuBaoSearchOrderInfo();
             var xmlDoc = new XmlDocument();
@@ -363,15 +391,7 @@ namespace Ets.SingleApi.Services
         /// <returns></returns>
         private static string BuildSignature(SortedList<string, string> dictionary, string sign_method)
         {
-            var buffer = new List<string>();
-
-            foreach (string key in dictionary.Keys)
-            {
-                var value = dictionary[key];
-
-                var segment = string.Format("{0}={1}", key, value);
-                buffer.Add(segment);
-            }
+            var buffer = (from key in dictionary.Keys let value = dictionary[key] select string.Format("{0}={1}", key, value)).ToList();
 
             buffer.Add(string.Format("key={0}", Controllers.ControllersCommon.BaiFuBaoSecretKey));
             var content = string.Join("&", buffer);
@@ -426,36 +446,16 @@ namespace Ets.SingleApi.Services
             return content;
         }
 
-        public static string BuildBaiFuBaoPaymentUrl(string goods_name, string order_no, string amount,
-                                                     string page_url, string return_url)
+        private static string BuildBaiFuBaoSignature(SortedList<string, string> dictionary, string sign_method)
         {
-            var subpara = new BaiFuBaoSubmitParameter();
-            subpara.goods_name = goods_name;
-            subpara.Order_no = order_no;
-            subpara.total_amount = amount;
-            subpara.transport_amount = "0";
-            subpara.unit_amount = amount;
-            subpara.unit_count = "1";
-            subpara.page_url = page_url;
-            subpara.return_url = return_url;
+            var strList = (from key in dictionary.Keys let value = dictionary[key] select string.Format("{0}={1}", key, value)).ToList();
+            var strUrl = string.Join("&", strList);
 
-            subpara.bank_no = "301";
-            subpara.expire_time = DateTime.Now.AddDays(2).ToString("yyyyMMddHHmmss");
-            subpara.order_create_time = DateTime.Now.ToString("yyyyMMddHHmmss");
-            subpara.goods_desc = "desc";
-            subpara.buyer_sp_username = "po";
-            subpara.pay_type = "2";
-            subpara.extra = "ext";
-            subpara.sp_no = Controllers.ControllersCommon.BaiFuBaoMerchantAcctId;
-
-            var result = Controllers.ControllersCommon.InstantToAccountURL_Wap_NotBaiDuLogin + "?" + BuildBaiFuBaoPaymentUrl(subpara, true) + "&sign=" + BuildBaiFuBaoSignature(BuildBaiFuBaoPaymentUrl(subpara));
-            return result;
-
+            return BuildBaiFuBaoSignature(strUrl, sign_method);
         }
-
-        private static string BuildBaiFuBaoSignature(string url)
+        private static string BuildBaiFuBaoSignature(string url, string sign_method)
         {
-            return ComputeHash(url + string.Format("&key={0}", Controllers.ControllersCommon.BaiFuBaoSecretKey), "1");
+            return ComputeHash(url + string.Format("&key={0}", Controllers.ControllersCommon.BaiFuBaoSecretKey), sign_method);
         }
 
         private static string BuildBaiFuBaoPaymentUrl(BaiFuBaoSubmitParameter baiFuBaoSubmitParameter, bool isEncode = false)

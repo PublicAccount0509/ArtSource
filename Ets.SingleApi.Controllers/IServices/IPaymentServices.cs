@@ -72,6 +72,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> BaiFuBaoPaymentState(string source, UmPaymentStateParameter parameter);
+        ServicesResult<bool> BaiFuBaoPaymentState(string source, BaiFuBaoPaymentStateParameter parameter);
     }
 }

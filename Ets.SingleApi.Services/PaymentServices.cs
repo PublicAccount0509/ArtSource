@@ -236,7 +236,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var result = payment.Payment(new BaiFuBaoPaymentQueryData
+            var result = payment.Payment(new BaiFuBaoPaymentData
             {
                 OrderId = parameter.OrderId.ToString(),
                 GoodsName = parameter.GoodsName,
@@ -261,7 +261,7 @@ namespace Ets.SingleApi.Services
             };
         }
 
-        public ServicesResult<bool> BaiFuBaoPaymentState(string source, UmPaymentStateParameter parameter)
+        public ServicesResult<bool> BaiFuBaoPaymentState(string source, BaiFuBaoPaymentStateParameter parameter)
         {
             if (parameter == null)
             {
@@ -289,10 +289,9 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var result = payment.QueryState(new UmPaymentQueryData
+            var result = payment.QueryState(new BaiFuBaoPaymentQueryData
             {
-                OrderId = parameter.OrderId,
-                PayDate = parameter.PayDate
+                OrderId = parameter.OrderId
             });
 
             if (result == null)

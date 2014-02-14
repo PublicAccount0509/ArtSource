@@ -236,10 +236,9 @@
                 };
             }
 
-            var result = this.paymentServices.BaiFuBaoPaymentState(this.Source, new UmPaymentStateParameter
+            var result = this.paymentServices.BaiFuBaoPaymentState(this.Source, new BaiFuBaoPaymentStateParameter
             {
                 OrderId = requst.OrderId,
-                PayDate = System.DateTime.Now,
                 OrderType = requst.OrderType
             });
 
