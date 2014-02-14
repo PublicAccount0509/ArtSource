@@ -124,6 +124,7 @@
     <Compile Include="Order\WaiMaiOrderProvider.cs" />
     <Compile Include="Order\HaiDiLaoWaiMaiOrderProvider.cs" />
     <Compile Include="PaymentServices.cs" />
+    <Compile Include="Payment\BaiFuBaoPaymentQueryData.cs" />
     <Compile Include="Payment\IPayment.cs" />
     <Compile Include="Payment\IPaymentData.cs" />
     <Compile Include="Payment\PaymentResult.cs" />

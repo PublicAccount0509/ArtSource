@@ -231,5 +231,63 @@
                 return (ConfigurationManager.AppSettings["OpenCityList"] ?? string.Empty).Split(',').ToList();
             }
         }
+
+        /// <summary>
+        /// 百付宝安全密钥
+        /// </summary>
+        /// <value>
+        /// 百付宝安全密钥
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：2/10/2014 3:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string BaiFuBaoSecretKey = "5QRFWZ97iQfJJfcQ8XJJSK2m5juKUVLX";
+
+        /// <summary>
+        /// 商户编号
+        /// </summary>
+        /// <value>
+        /// 商户编号
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：2/10/2014 3:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string BaiFuBaoMerchantAcctId
+        {
+            get
+            {
+                var result = (ConfigurationManager.AppSettings["BaiFuBaoMerchantAcctId"] ?? string.Empty).Trim();
+                return result.Length == 0 ? "9000100008" : result;
+            }
+        }
+
+        /// <summary>
+        /// 按订单号查询支付结果接口
+        /// </summary>
+        public static string RequestForOrderURL = "https://wallet.baidu.com/api/0/query/0/pay_result_by_order_no";
+
+        /// <summary>
+        /// 即时到账支付接口（不要求登录百度钱包）
+        /// </summary>
+        public const string InstantToAccountURL = "https://wallet.baidu.com/api/0/pay/0/direct";
+
+        /// <summary>
+        /// 即时到账支付接口（要求登录百度钱包）
+        /// </summary>
+        public static string InstantToAccountURL2 = "https://wallet.baidu.com/api/0/pay/0/direct/0";
+
+        /// <summary>
+        /// 移动端即时到账支付接口（要求登录百付宝）
+        /// </summary>
+        public static string InstantToAccountURL_Wap_BaiDuLogin = "https://www.baifubao.com/api/0/pay/0/wapdirect/0";
+
+        /// <summary>
+        /// 移动端即时到账支付接口（不要求登录百度钱包）
+        /// </summary>
+        public static string InstantToAccountURL_Wap_NotBaiDuLogin = "https://www.baifubao.com/api/0/pay/0/wapdirect";
     }
 }

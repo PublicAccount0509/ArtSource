@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Services.Payment;
+
+namespace Ets.SingleApi.Services
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -190,7 +192,75 @@
             };
         }
 
-        
+        /// <summary>
+        /// 获取百付宝支付请求Url
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// 百付宝支付请求Url
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/14/2014 9:55 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> BaiFuBaoPayment(string source, BaiFuBaoPaymentParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.deliveryEntityRepository.EntityQueryable.Any(p => p.OrderNumber == parameter.OrderId))
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            var orderType = (OrderType)parameter.OrderType;
+            var payment = this.paymentList.FirstOrDefault(p => p.OrderType == orderType && p.PaymentType == PaymentType.BaiFuBaoPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var result = payment.Payment(new BaiFuBaoPaymentQueryData
+            {
+                OrderId = parameter.OrderId.ToString(),
+                GoodsName = parameter.GoodsName,
+                Amount = parameter.Amount,
+                PageUrl = parameter.PageUrl,
+                ReturnUrl = parameter.ReturnUrl
+            });
+
+            if (result == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = result.Result,
+                StatusCode = result.StatusCode
+            };
+        }
+
         public ServicesResult<bool> BaiFuBaoPaymentState(string source, UmPaymentStateParameter parameter)
         {
             if (parameter == null)

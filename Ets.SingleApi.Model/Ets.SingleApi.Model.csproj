@@ -42,6 +42,7 @@
     <Compile Include="BusinessType.cs" />
     <Compile Include="CacheServices\CacheServicesResult.cs" />
     <Compile Include="CacheServices\CacheServicesListResult.cs" />
+    <Compile Include="Controller\BaiFuBaoPaymentRequst.cs" />
     <Compile Include="Controller\DistanceResult.cs" />
     <Compile Include="Controller\LocationCity.cs" />
     <Compile Include="Controller\HtjRegisterUserRequest.cs" />
@@ -111,6 +112,9 @@
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
     <Compile Include="OrderProviderType.cs" />
     <Compile Include="OrderSourceType.cs" />
+    <Compile Include="Services\BaiFuBaoPaymentParameter.cs" />
+    <Compile Include="Services\BaiFuBaoReturnParameter.cs" />
+    <Compile Include="Services\BaiFuBaoSubmitParameter.cs" />
     <Compile Include="Services\CustomerSimpleModel.cs" />
     <Compile Include="Services\DistanceModel.cs" />
     <Compile Include="Services\DistanceParameter.cs" />
@@ -124,6 +128,7 @@
     <Compile Include="Services\LightSupplierDetailModel.cs" />
     <Compile Include="Services\LightSupplierTemplateModel.cs" />
     <Compile Include="Services\LocationCity.cs" />
+    <Compile Include="Services\OrderBDInfo.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />

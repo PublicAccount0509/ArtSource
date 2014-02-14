@@ -165,6 +165,53 @@
 
         [HttpPost]
         [TokenFilter]
+        public Response<string> BaiFuBaoPayment(BaiFuBaoPaymentRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Result = string.Empty,
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = string.Empty
+                };
+            }
+
+            var baiFuBaoPaymentResult = this.paymentServices.BaiFuBaoPayment(this.Source, new BaiFuBaoPaymentParameter
+            {
+                OrderId = requst.OrderId,
+                GoodsName = requst.GoodsName,
+                Amount = requst.Amount,
+                OrderType = requst.OrderType,
+                PageUrl = requst.PageUrl,
+                ReturnUrl = requst.ReturnUrl
+            });
+
+            return new Response<string>
+            {
+                Result = baiFuBaoPaymentResult.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = baiFuBaoPaymentResult.StatusCode
+                }
+            };
+        }
+        [HttpPost]
+        [TokenFilter]
         public Response<bool> BaiFuBaoPaymentState(UmPaymentStateRequst requst)
         {
             if (requst == null)
