@@ -153,6 +153,7 @@
     <Compile Include="Services\LocationCityModel.cs" />
     <Compile Include="Mapping\Repository\SupplierModelEntity.cs" />
     <Compile Include="Mapping\Repository\GroupSupplierModelEntity.cs" />
+    <Compile Include="Services\RegisterUserOAuthParameter.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
