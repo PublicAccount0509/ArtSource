@@ -144,6 +144,21 @@
         ServicesResult<RegisterUserModel> Register(string source, RegisterUserParameter parameter);
 
         /// <summary>
+        /// 第三方登录注册用户
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// 返回注册结果
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/17/2014 5:58 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<RegisterUserModel> RegisterOAuth(string source, RegisterUserOAuthParameter parameter);
+
+        /// <summary>
         /// 获取收藏餐厅列表
         /// </summary>
         /// <param name="source">The source</param>

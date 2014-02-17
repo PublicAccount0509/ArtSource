@@ -859,6 +859,68 @@
         }
 
         /// <summary>
+        /// 第三方登录注册用户
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// 返回注册结果
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/17/2014 5:58 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<RegisterUserModel> RegisterOAuth(string source, RegisterUserOAuthParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<RegisterUserModel>
+                {
+                    Result = new RegisterUserModel(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            if (!this.appEntityRepository.EntityQueryable.Any(p => p.AppKey == parameter.AppKey))
+            {
+                return new ServicesResult<RegisterUserModel>
+                {
+                    Result = new RegisterUserModel(),
+                    StatusCode = (int)StatusCode.OAuth.InvalidClient
+                };
+            }
+            
+            var result = this.usersDetailServices.RegisterOAuth(parameter);
+            if (result.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<RegisterUserModel>
+                {
+                    StatusCode = result.StatusCode,
+                    Result = new RegisterUserModel
+                    {
+                        UserId = result.Result.UserId,
+                        AccessToken = result.Result.AccessToken,
+                        RefreshToken = result.Result.RefreshToken,
+                        TokenType = result.Result.TokenType
+                    }
+                };
+            }
+
+            return new ServicesResult<RegisterUserModel>
+            {
+                StatusCode = result.StatusCode,
+                Result = new RegisterUserModel
+                {
+                    UserId = result.Result.UserId,
+                    AccessToken = result.Result.AccessToken,
+                    RefreshToken = result.Result.RefreshToken,
+                    TokenType = result.Result.TokenType
+                }
+            };
+        }
+
+        /// <summary>
         /// 获取收藏餐厅列表
         /// </summary>
         /// <param name="source">The source</param>

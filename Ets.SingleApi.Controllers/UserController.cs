@@ -596,6 +596,71 @@
         }
 
         /// <summary>
+        /// 第三方登录注册用户
+        /// </summary>
+        /// <param name="requst">The requstDefault documentation</param>
+        /// <returns>
+        /// 返回注册结果
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/17/2014 5:57 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<RegisterUserResult> RegisterOAuth(RegisterUserOAuthParameter requst)
+        {
+            if (requst == null)
+            {
+                return new Response<RegisterUserResult>
+                {
+                    Result = new RegisterUserResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var registerResult = this.usersServices.RegisterOAuth(this.Source, new RegisterUserOAuthParameter
+            {
+                AppKey = (this.AppKey ?? string.Empty).Trim(),
+                SourceType = (requst.SourceType ?? string.Empty).Trim(),
+                JointLoginType = requst.JointLoginType,
+                KeyName = (requst.KeyName ?? string .Empty).Trim()
+            });
+
+            if (registerResult.Result == null)
+            {
+                return new Response<RegisterUserResult>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = registerResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : registerResult.StatusCode
+                    },
+                    Result = new RegisterUserResult()
+                };
+            }
+
+            var result = new RegisterUserResult
+            {
+                UserId = registerResult.Result.UserId,
+                AccessToken = (registerResult.Result.AccessToken ?? string.Empty),
+                RefreshToken = (registerResult.Result.RefreshToken ?? string.Empty),
+                TokenType = (registerResult.Result.TokenType ?? string.Empty)
+            };
+
+            return new Response<RegisterUserResult>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = registerResult.StatusCode
+                },
+                Result = result
+            };
+        }
+
+        /// <summary>
         /// 获取用户收藏的餐厅列表
         /// </summary>
         /// <param name="id">用户Id</param>

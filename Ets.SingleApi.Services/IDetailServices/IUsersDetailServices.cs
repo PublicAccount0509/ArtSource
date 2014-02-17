@@ -28,5 +28,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         DetailServicesResult<RegisterUserModel> Register(RegisterUserParameter parameter);
+
+        /// <summary>
+        /// 第三方登录注册用户
+        /// </summary>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// DetailServicesResult{RegisterUserModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/17/2014 4:36 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        DetailServicesResult<RegisterUserModel> RegisterOAuth(RegisterUserOAuthParameter parameter);
     }
 }
