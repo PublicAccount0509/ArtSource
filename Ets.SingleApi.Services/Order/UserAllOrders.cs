@@ -141,7 +141,9 @@
                         .SetInt32("OrderStatusID", parameter.OrderStatus ?? -1)
                         .SetInt32("PaidStatus", parameter.PaidStatus == null ? -1 : parameter.PaidStatus == true ? 1 : 0)
                         .SetInt32("PageIndex", parameter.PageIndex ?? -1)
-                        .SetInt32("PageSize", parameter.PageSize).List();
+                        .SetInt32("PageSize", parameter.PageSize)
+                        .SetString("SupplierGroupIdList", string.Join(",", ServicesCommon.RetentionSupplierGroupIdList))
+                        .SetString("SupplierIdList", string.Join(",", ServicesCommon.FilteredSupplierIdList)).List();
 
             var orderList = (from object[] item in list
                              select new AllOrderModel

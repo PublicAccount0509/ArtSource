@@ -556,31 +556,33 @@
                     .SetDouble("UserLong", parameter.UserLong)
                     .SetDouble("Distance", !parameter.Distance.HasValue ? -1.0 : parameter.Distance.Value)
                     .SetInt32("PageIndex", !parameter.PageIndex.HasValue ? -1 : parameter.PageIndex.Value)
-                    .SetInt32("PageSize", parameter.PageSize).List<SupplierModelEntity>();
+                    .SetInt32("PageSize", parameter.PageSize)
+                    .SetString("SupplierGroupIdList", string.Join(",", ServicesCommon.RetentionSupplierGroupIdList))
+                    .SetString("SupplierIdList", string.Join(",", ServicesCommon.FilteredSupplierIdList)).List<SupplierModelEntity>();
 
-            var supplierList = (from entity in list
-                                select new SupplierModel
-                                {
-                                    SupplierId = entity.SupplierId,
-                                    SupplierName = entity.SupplierName,
-                                    Address = entity.Address,
-                                    Telephone = entity.Telephone,
-                                    BaIduLat = entity.BaIduLat,
-                                    BaIduLong = entity.BaIduLong,
-                                    SupplierDescription = entity.SupplierDescription,
-                                    Averageprice = entity.Averageprice,
-                                    ParkingInfo = entity.ParkingInfo,
-                                    CuisineName = entity.CuisineName,
-                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
-                                    IsOpenDoor = entity.IsOpenDoor,
-                                    Distance = entity.Distance,
-                                    DateJoined = entity.DateJoined,
-                                    SupplierGroupId = entity.SupplierGroupId
-                                }).ToList();
+            var result = (from entity in list
+                          select new SupplierModel
+                          {
+                              SupplierId = entity.SupplierId,
+                              SupplierName = entity.SupplierName,
+                              Address = entity.Address,
+                              Telephone = entity.Telephone,
+                              BaIduLat = entity.BaIduLat,
+                              BaIduLong = entity.BaIduLong,
+                              SupplierDescription = entity.SupplierDescription,
+                              Averageprice = entity.Averageprice,
+                              ParkingInfo = entity.ParkingInfo,
+                              CuisineName = entity.CuisineName,
+                              LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                              IsOpenDoor = entity.IsOpenDoor,
+                              Distance = entity.Distance,
+                              DateJoined = entity.DateJoined,
+                              SupplierGroupId = entity.SupplierGroupId
+                          }).ToList();
 
             /*过滤餐厅列表*/
-            var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
-            var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
+            //var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
+            //var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                     p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
@@ -637,31 +639,33 @@
                     .SetInt32("PageIndex", !parameter.PageIndex.HasValue ? -1 : parameter.PageIndex.Value)
                     .SetInt32("PageSize", parameter.PageSize)
                     .SetDouble("BuildingLat", parameter.BuildingLat)
-                    .SetDouble("BuildingLong", parameter.BuildingLong).List<SupplierModelEntity>();
+                    .SetDouble("BuildingLong", parameter.BuildingLong)
+                    .SetString("SupplierGroupIdList", string.Join(",", ServicesCommon.RetentionSupplierGroupIdList))
+                    .SetString("SupplierIdList", string.Join(",", ServicesCommon.FilteredSupplierIdList)).List<SupplierModelEntity>();
 
-            var supplierList = (from entity in list
-                                select new SupplierModel
-                                    {
-                                        SupplierId = entity.SupplierId,
-                                        SupplierName = entity.SupplierName,
-                                        Address = entity.Address,
-                                        Telephone = entity.Telephone,
-                                        BaIduLat = entity.BaIduLat,
-                                        BaIduLong = entity.BaIduLong,
-                                        SupplierDescription = entity.SupplierDescription,
-                                        Averageprice = entity.Averageprice,
-                                        ParkingInfo = entity.ParkingInfo,
-                                        CuisineName = entity.CuisineName,
-                                        LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
-                                        IsOpenDoor = entity.IsOpenDoor,
-                                        Distance = entity.Distance,
-                                        DateJoined = entity.DateJoined,
-                                        SupplierGroupId = entity.SupplierGroupId
-                                    }).ToList();
+            var result = (from entity in list
+                          select new SupplierModel
+                              {
+                                  SupplierId = entity.SupplierId,
+                                  SupplierName = entity.SupplierName,
+                                  Address = entity.Address,
+                                  Telephone = entity.Telephone,
+                                  BaIduLat = entity.BaIduLat,
+                                  BaIduLong = entity.BaIduLong,
+                                  SupplierDescription = entity.SupplierDescription,
+                                  Averageprice = entity.Averageprice,
+                                  ParkingInfo = entity.ParkingInfo,
+                                  CuisineName = entity.CuisineName,
+                                  LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                                  IsOpenDoor = entity.IsOpenDoor,
+                                  Distance = entity.Distance,
+                                  DateJoined = entity.DateJoined,
+                                  SupplierGroupId = entity.SupplierGroupId
+                              }).ToList();
 
             /*过滤餐厅列表*/
-            var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
-            var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
+            //var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
+            //var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                 p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
@@ -838,7 +842,9 @@
                     .SetDouble("UserLat", parameter.UserLat)
                     .SetDouble("UserLong", parameter.UserLong)
                     .SetInt32("PageIndex", parameter.PageIndex ?? -1)
-                    .SetInt32("PageSize", parameter.PageSize).List<GroupSupplierModelEntity>();
+                    .SetInt32("PageSize", parameter.PageSize)
+                    .SetString("SupplierGroupIdList", string.Join(",", ServicesCommon.RetentionSupplierGroupIdList))
+                    .SetString("SupplierIdList", string.Join(",", ServicesCommon.FilteredSupplierIdList)).List<GroupSupplierModelEntity>();
 
 
             var supplierList = (from entity in list
