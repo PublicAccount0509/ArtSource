@@ -231,6 +231,73 @@
             };
         }
 
+        [HttpPost]
+        public Response<OAuthLoginResult> OAuthLogin(OAuthLoginRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<OAuthLoginResult>
+                {
+                    Result = new OAuthLoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (requst.KeyName.IsEmptyOrNull())
+            {
+                return new Response<OAuthLoginResult>
+                {
+                    Result = new OAuthLoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                    }
+                };
+            }
+
+            var loginResult = this.authenServices.OAuthLogin(this.Source, new OAuthLoginParameter
+            {
+                KeyName = (requst.KeyName ?? string.Empty).Trim(),
+                AppKey = (this.AppKey ?? string.Empty).Trim()
+            });
+
+            if (loginResult.Result == null)
+            {
+                return new Response<OAuthLoginResult>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = loginResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : loginResult.StatusCode
+                    },
+                    Result = new OAuthLoginResult()
+                };
+            }
+
+            var result = new OAuthLoginResult
+            {
+                UserId = loginResult.Result.UserId,
+                AccessToken = loginResult.Result.AccessToken ?? string.Empty,
+                RefreshToken = loginResult.Result.RefreshToken ?? string.Empty,
+                TokenType = loginResult.Result.TokenType ?? string.Empty
+            };
+
+            return new Response<OAuthLoginResult>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = loginResult.StatusCode
+                },
+                Result = result,
+                Cache = new ApiCache
+                {
+                    ExpiresIn = CommonUtility.GetTokenExpiresIn()
+                }
+            };
+        }
+
         /// <summary>
         /// 修改密码
         /// </summary>
@@ -430,74 +497,6 @@
                     StatusCode = result.StatusCode
                 },
                 Result = result.Result
-            };
-        }
-
-        [HttpPost]
-        public Response<OAuthLoginResult> OAuthLogin(OAuthLoginRequst requst)
-        {
-            if (requst == null)
-            {
-                return new Response<OAuthLoginResult>
-                {
-                    Result = new OAuthLoginResult(),
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
-                };
-            }
-
-            if (requst.KeyName.IsEmptyOrNull())
-            {
-                return new Response<OAuthLoginResult>
-                {
-                    Result = new OAuthLoginResult(),
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
-                    }
-                };
-            }
-
-            var loginResult = this.authenServices.AuthLogin(this.Source, new AuthLoginParameter
-            {
-                Telephone = (requst.KeyName ?? string.Empty).Trim(),
-                AuthCode = string.Empty,
-                AppKey = (this.AppKey ?? string.Empty).Trim()
-            });
-
-            if (loginResult.Result == null)
-            {
-                return new Response<OAuthLoginResult>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = loginResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : loginResult.StatusCode
-                    },
-                    Result = new OAuthLoginResult()
-                };
-            }
-
-            var result = new OAuthLoginResult
-            {
-                UserId = loginResult.Result.UserId,
-                AccessToken = loginResult.Result.AccessToken ?? string.Empty,
-                RefreshToken = loginResult.Result.RefreshToken ?? string.Empty,
-                TokenType = loginResult.Result.TokenType ?? string.Empty
-            };
-
-            return new Response<OAuthLoginResult>
-            {
-                Message = new ApiMessage
-                {
-                    StatusCode = loginResult.StatusCode
-                },
-                Result = result,
-                Cache = new ApiCache
-                {
-                    ExpiresIn = CommonUtility.GetTokenExpiresIn()
-                }
             };
         }
     }

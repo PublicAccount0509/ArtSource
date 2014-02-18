@@ -65,6 +65,19 @@
         public string KeyName { get; set; }
 
         /// <summary>
+        /// 第三方登录用户名
+        /// </summary>
+        /// <value>
+        /// The name of the key.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-18 16:42
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string UserName { get; set; }
+
+        /// <summary>
         /// 1 QQ,2 新浪微博,3 人人
         /// </summary>
         /// <value>

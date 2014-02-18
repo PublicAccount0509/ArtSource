@@ -627,7 +627,8 @@
                 AppKey = (this.AppKey ?? string.Empty).Trim(),
                 SourceType = (requst.SourceType ?? string.Empty).Trim(),
                 JointLoginType = requst.JointLoginType,
-                KeyName = (requst.KeyName ?? string.Empty).Trim()
+                KeyName = (requst.KeyName ?? string.Empty).Trim(),
+                UserName = (requst.UserName ?? string.Empty).Trim()
             });
 
             if (registerResult.Result == null)
