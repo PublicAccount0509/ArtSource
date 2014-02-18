@@ -1,63 +1,67 @@
-﻿namespace Ets.SingleApi.Model
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 用户登陆的方式
+    /// 类名称：AuthLoginResult
+    /// 命名空间：Ets.SingleApi.Model.Controller
+    /// 类功能：登陆返回值
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：2013/10/14 11:26
+    /// 创建日期：2013/10/17 0:03
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public enum LoginWay
+    public class OAuthLoginResult
     {
         /// <summary>
-        /// 字段UnKnow
+        /// Gets or sets the AccessToken of Login
         /// </summary>
+        /// <value>
+        /// The AccessToken
+        /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/17 10:38
+        /// 创建日期：2013/10/17 0:03
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        UnKnow = 0,
+        public string AccessToken { get; set; }
 
         /// <summary>
-        /// 手机号码登陆
+        /// Gets or sets the type of the token.
         /// </summary>
+        /// <value>
+        /// The type of the token.
+        /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/14 11:27
+        /// 创建日期：2013/10/17 0:06
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        Telephone = 1,
+        public string TokenType { get; set; }
 
         /// <summary>
-        /// 电子邮箱登陆
+        /// Gets or sets the RefreshToken of AuthLoginResult
         /// </summary>
+        /// <value>
+        /// The RefreshToken
+        /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/14 11:27
+        /// 创建日期：2013/10/17 0:06
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        Email = 2,
+        public string RefreshToken { get; set; }
 
         /// <summary>
-        /// 手机验证登陆
+        /// Gets or sets the UserId of AuthLoginResult
         /// </summary>
+        /// <value>
+        /// The UserId
+        /// </value>
         /// 创建者：周超
-        /// 创建日期：10/24/2013 4:10 PM
+        /// 创建日期：2013/10/17 0:06
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        AuthTele = 3,
-
-        /// <summary>
-        /// 第三方登录
-        /// </summary>
-        /// 创建者：王巍
-        /// 创建日期：2/18/2014 12:17 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        OAuth = 4
+        public int? UserId { get; set; }
     }
 }

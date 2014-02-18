@@ -627,7 +627,7 @@
                 AppKey = (this.AppKey ?? string.Empty).Trim(),
                 SourceType = (requst.SourceType ?? string.Empty).Trim(),
                 JointLoginType = requst.JointLoginType,
-                KeyName = (requst.KeyName ?? string .Empty).Trim()
+                KeyName = (requst.KeyName ?? string.Empty).Trim()
             });
 
             if (registerResult.Result == null)
@@ -910,8 +910,8 @@
                                                             {
                                                                 OrderStatus = orderStatus,
                                                                 PaidStatus = paidStatus,
-                                                                SupplierId = supplierId,
-                                                                SupplierGroupId = supplierGroupId,
+                                                                SupplierId = supplierId == 0 ? null : supplierId,
+                                                                SupplierGroupId = supplierGroupId == 0 ? null : supplierGroupId,
                                                                 IsEtaoshi = this.IsEtaoshi,
                                                                 PageIndex = pageIndex,
                                                                 PageSize = pageSize

@@ -108,6 +108,7 @@
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
     <Compile Include="IDetailServices\IHaiDiLaoSupplierDetailServices.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
+    <Compile Include="Login\OAuthLogin.cs" />
     <Compile Include="OrderNumber\DingTaiOrderNumber.cs" />
     <Compile Include="OrderNumber\TangShiOrderNumber.cs" />
     <Compile Include="OrderServicesTemp.cs" />
