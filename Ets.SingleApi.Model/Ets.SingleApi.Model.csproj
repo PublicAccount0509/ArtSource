@@ -83,6 +83,8 @@
     <Compile Include="Controller\HaiDiLaoShoppingCartExtraRequst.cs" />
     <Compile Include="Controller\WapGroupSupplier.cs" />
     <Compile Include="Controller\WapSupplierDetail.cs" />
+    <Compile Include="Controller\OAuthLoginResult.cs" />
+    <Compile Include="Controller\OAuthLoginRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
