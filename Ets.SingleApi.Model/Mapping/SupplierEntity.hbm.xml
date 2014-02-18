@@ -248,44 +248,44 @@
   </class>
   <sql-query name="Pro_QuerySupplierListDefault">
     <return class="Ets.SingleApi.Model.Repository.SupplierModelEntity,Ets.SingleApi.Model"/>
-    exec Pro_QuerySupplierListDefault :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListDefault :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:SupplierGroupIdList,:SupplierIdList
   </sql-query>
 
   <sql-query name="Pro_QuerySupplierListSearchDefault">
     <return class="Ets.SingleApi.Model.Repository.SupplierModelEntity,Ets.SingleApi.Model"/>
-    exec Pro_QuerySupplierListSearchDefault :SupplierName,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:BuildingLat,:BuildingLong
+    exec Pro_QuerySupplierListSearchDefault :SupplierName,:RegionId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:BuildingLat,:BuildingLong,:FeatureIdList,:SupplierGroupIdList,:SupplierIdList
   </sql-query>
 
   <sql-query name="Pro_QuerySupplierListNearest">
     <return class="Ets.SingleApi.Model.Repository.SupplierModelEntity,Ets.SingleApi.Model"/>
-    exec Pro_QuerySupplierListNearest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListNearest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:SupplierGroupIdList,:SupplierIdList
   </sql-query>
 
   <sql-query name="Pro_QuerySupplierListFarthest">
     <return class="Ets.SingleApi.Model.Repository.SupplierModelEntity,Ets.SingleApi.Model"/>
-    exec Pro_QuerySupplierListFarthest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListFarthest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:SupplierGroupIdList,:SupplierIdList
   </sql-query>
 
   <sql-query name="Pro_QuerySupplierListNewest">
     <return class="Ets.SingleApi.Model.Repository.SupplierModelEntity,Ets.SingleApi.Model"/>
-    exec Pro_QuerySupplierListNewest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListNewest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:SupplierGroupIdList,:SupplierIdList
   </sql-query>
 
   <sql-query name="Pro_QuerySupplierListCheapest">
     <return class="Ets.SingleApi.Model.Repository.SupplierModelEntity,Ets.SingleApi.Model"/>
-    exec Pro_QuerySupplierListCheapest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListCheapest :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:SupplierGroupIdList,:SupplierIdList
   </sql-query>
 
   <sql-query name="Pro_QuerySupplierListExpensive">
     <return class="Ets.SingleApi.Model.Repository.SupplierModelEntity,Ets.SingleApi.Model"/>
-    exec Pro_QuerySupplierListExpensive :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize
+    exec Pro_QuerySupplierListExpensive :FeatureID,:CuisineID,:RegionId,:BusinessAreaId,:UserLat,:UserLong,:Distance,:PageIndex,:PageSize,:SupplierGroupIdList,:SupplierIdList
   </sql-query>
 
   <sql-query name="Pro_QuerySearchGroupSupplierList">
     <return class="Ets.SingleApi.Model.Repository.GroupSupplierModelEntity,Ets.SingleApi.Model"/>
-    exec Pro_QuerySearchGroupSupplierList :FeatureId,:SupplierGroupId,:CityId,:UserLat,:UserLong,:PageIndex,:PageSize
+    exec Pro_QuerySearchGroupSupplierList :FeatureId,:SupplierGroupId,:CityId,:UserLat,:UserLong,:PageIndex,:PageSize,:FeatureIdList,:SupplierIdList
   </sql-query>
-  
+
   <sql-query name="Pro_CalculateSpaceLatLong">
     <return-scalar column="SpaceLatLong" type="BinaryBlob" />
     exec Pro_CalculateSpaceLatLong :UserLat,:UserLong

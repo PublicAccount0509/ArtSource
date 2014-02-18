@@ -75,6 +75,6 @@
     <return-scalar column="SupplierName" type="String" />
     <return-scalar column="DeliveryMethodId" type="String" />
     <return-scalar column="IsPaid" type="Boolean" />
-    exec Pro_QueryUserOrderList :CustomerID,:OrderStatusID,:PaidStatus,:PageIndex,:PageSize
+    exec Pro_QueryUserOrderList :CustomerID,:OrderStatusID,:PaidStatus,:PageIndex,:PageSize,:SupplierGroupIdList,:SupplierIdList
   </sql-query>
 </hibernate-mapping>

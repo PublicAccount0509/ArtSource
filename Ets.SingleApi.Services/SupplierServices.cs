@@ -640,6 +640,7 @@
                     .SetInt32("PageSize", parameter.PageSize)
                     .SetDouble("BuildingLat", parameter.BuildingLat)
                     .SetDouble("BuildingLong", parameter.BuildingLong)
+                    .SetString("FeatureIdList", string.Join(",", ServicesCommon.SupplierFeatures))
                     .SetString("SupplierGroupIdList", string.Join(",", ServicesCommon.RetentionSupplierGroupIdList))
                     .SetString("SupplierIdList", string.Join(",", ServicesCommon.FilteredSupplierIdList)).List<SupplierModelEntity>();
 
@@ -744,6 +745,12 @@
                 tempQueryable = tempQueryable.Where(q => q.SupplierFeatureList.Any(p => p.Feature.FeatureId == parameter.FeatureId));
             }
 
+            if (ServicesCommon.SupplierFeatures.Count > 0)
+            {
+                var supplierFeatures = ServicesCommon.SupplierFeatures.Select(p => (int?)p).ToList();
+                tempQueryable = tempQueryable.Where(q => q.SupplierFeatureList.Any(p => supplierFeatures.Any(t => t == p.Feature.FeatureId)));
+            }
+
             var queryable = tempQueryable.Select(supplierEntity =>
                         new
                          {
@@ -843,7 +850,7 @@
                     .SetDouble("UserLong", parameter.UserLong)
                     .SetInt32("PageIndex", parameter.PageIndex ?? -1)
                     .SetInt32("PageSize", parameter.PageSize)
-                    .SetString("SupplierGroupIdList", string.Join(",", ServicesCommon.RetentionSupplierGroupIdList))
+                    .SetString("FeatureIdList", string.Join(",", ServicesCommon.SupplierFeatures))
                     .SetString("SupplierIdList", string.Join(",", ServicesCommon.FilteredSupplierIdList)).List<GroupSupplierModelEntity>();
 
 

@@ -1427,6 +1427,38 @@
         }
 
         /// <summary>
+        /// 餐厅必须开通的业务
+        /// </summary>
+        /// <value>
+        /// 餐厅必须开通的业务
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> SupplierFeatures
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["SupplierFeatures"] ?? string.Empty).Split(',').ToList();
+                var supplierFeaturesList = new List<int>();
+                foreach (var item in list)
+                {
+                    int featureId;
+                    if (!int.TryParse(item, out featureId))
+                    {
+                        continue;
+                    }
+
+                    supplierFeaturesList.Add(featureId);
+                }
+
+                return supplierFeaturesList;
+            }
+        }
+
+        /// <summary>
         /// 被屏蔽的餐厅群组Id
         /// </summary>
         /// <value>
