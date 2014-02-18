@@ -87,6 +87,7 @@
     <Compile Include="Exists\IExists.cs" />
     <Compile Include="Exists\ExistsData.cs" />
     <Compile Include="Exists\TelephoneExists.cs" />
+    <Compile Include="Exists\SocialOAuthExists.cs" />
     <Compile Include="FilterServices.cs" />
     <Compile Include="FilterSupplier\FilteredGroupIdFilterSupplier.cs" />
     <Compile Include="FilterSupplier\IFilterSupplier.cs" />
