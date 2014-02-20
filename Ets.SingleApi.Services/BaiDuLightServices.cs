@@ -419,7 +419,7 @@
                     StatusCode = (int)StatusCode.System.InvalidRequest
                 };
             }
-            var supplierGroupLight = (from entity in this.supplierGroupLightEntityRepository.EntityQueryable
+            var result = (from entity in this.supplierGroupLightEntityRepository.EntityQueryable
                                       where entity.LightApplication.ApplicationId == applicationId && entity.LightApplication.IsDelete == false
                                       select new LightSupplierDetailModel
                                       {
@@ -434,7 +434,6 @@
                                           RecommendDishes = entity.RecommendDishes,
                                           SupplierGroupLightId = entity.SupplierGroupLightId
                                       }).FirstOrDefault();
-            var result = this.supplierGroupLightEntityRepository.FindSingleByExpression(p => p.TargetId == supplierGroupLight.TargetId);
             if (result == null)
             {
                 return new ServicesResult<string>
