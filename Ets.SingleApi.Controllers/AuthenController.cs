@@ -341,7 +341,10 @@
             {
                 OldPassword = (requst.OldPassword ?? string.Empty).Trim(),
                 NewPasswrod = (requst.NewPasswrod ?? string.Empty).Trim(),
-                IsSendSms = requst.IsSendSms
+                IsSendSms = requst.IsSendSms,
+                SmsSource = requst.SmsSource,
+                SupplierId = requst.SupplierId,
+                IsVoiceSms = requst.IsVoiceSms
             });
 
             return new Response<bool>
@@ -385,7 +388,10 @@
                 UserName = (requst.UserName ?? string.Empty).Trim(),
                 AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
                 NewPasswrod = (requst.NewPasswrod ?? string.Empty).Trim(),
-                IsSendSms = requst.IsSendSms
+                IsSendSms = requst.IsSendSms,
+                SmsSource = requst.SmsSource,
+                SupplierId = requst.SupplierId,
+                IsVoiceSms = requst.IsVoiceSms
             });
 
             return new Response<bool>
@@ -445,7 +451,10 @@
             var result = this.authenServices.FindPassword(this.Source, new FindPasswordParameter
             {
                 UserName = (requst.UserName ?? string.Empty).Trim(),
-                WayList = wayList
+                WayList = wayList,
+                SmsSource = requst.SmsSource,
+                SupplierId = requst.SupplierId,
+                IsVoiceSms = requst.IsVoiceSms
             });
 
             return new Response<bool>

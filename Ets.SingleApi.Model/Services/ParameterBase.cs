@@ -1,54 +1,54 @@
 ﻿namespace Ets.SingleApi.Model.Services
 {
     /// <summary>
-    /// 类名称：Password
+    /// 类名称：ParameterBase
     /// 命名空间：Ets.SingleApi.Model.Services
-    /// 类功能：修改密码参数
+    /// 类功能：
     /// </summary>
-    /// 创建者：周超
-    /// 创建日期：2013/10/19 9:30
+    /// 创建者：单琪彬
+    /// 创建日期：2/19/2014 5:29 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class PasswordParameter : ParameterBase
+    public class ParameterBase
     {
         /// <summary>
-        /// Gets or sets the OldPassword of PasswordParameter
+        /// 客户端应用名称 +业务场景。 如用户在眉州东坡找回密码时，可传值：眉州东坡web找回密码
         /// </summary>
         /// <value>
-        /// The OldPassword
+        /// The SmsSource
         /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/19 9:30
+        /// 创建者：单琪彬
+        /// 创建日期：2/19/2014 3:04 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string OldPassword { get; set; }
+        public string SmsSource { get; set; }
 
         /// <summary>
-        /// Gets or sets the NewPasswrod of PasswordParameter
+        /// 如果客户端调用时业务场景无餐厅概念（如用户注册），传入null即可
         /// </summary>
         /// <value>
-        /// The NewPasswrod
+        /// The SupplierId
         /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/19 9:30
+        /// 创建者：单琪彬
+        /// 创建日期：2/19/2014 3:04 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string NewPasswrod { get; set; }
+        public int? SupplierId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether
+        /// 是否要语音短信
         /// </summary>
         /// <value>
-        /// The IsSendSms
+        /// The IsVoiceSms
         /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/19 11:59
+        /// 创建者：单琪彬
+        /// 创建日期：2/19/2014 3:04 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public bool IsSendSms { get; set; }
+        public bool IsVoiceSms { get; set; }
     }
 }

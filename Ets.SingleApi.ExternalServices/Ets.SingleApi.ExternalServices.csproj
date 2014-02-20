@@ -73,10 +73,22 @@
     <None Include="Service References\SmsSoap\Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\SmsSoap\Ets.SingleApi.ExternalServices.SmsSoap.MsgSendSmsSaveLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\SmsSoap\Ets.SingleApi.ExternalServices.SmsSoap.SendSmsBaseResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\SmsSoap\Ets.SingleApi.ExternalServices.SmsSoap.SendSmsBaseSaveLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\SmsSoap\Ets.SingleApi.ExternalServices.SmsSoap.SendSmsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SmsSoap\Ets.SingleApi.ExternalServices.SmsSoap.SendSmsSaveLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SmsSoap\Ets.SingleApi.ExternalServices.SmsSoap.VoiceSendSmsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\SmsSoap\Sms.wsdl" />

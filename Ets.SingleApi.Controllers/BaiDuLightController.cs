@@ -288,5 +288,54 @@
                 Result = result
             };
         }
+        /// <summary>
+        /// 获取商户名称
+        /// </summary>
+        /// <param name="applicationId">百度应用程序Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/20/2014 12:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<string> GetSupplierNameByTargetId(string applicationId)
+        {
+            if (applicationId.IsEmptyOrNull())
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.General.InvalidRequest
+                    },
+                    Result = string.Empty
+                };
+            }
+
+            var getSupplierNameResult = this.baiDuLightServices.GetSupplierNameByTargetId(this.Source, applicationId);
+            if (getSupplierNameResult.Result == null)
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getSupplierNameResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getSupplierNameResult.StatusCode
+                    },
+                    Result = string.Empty
+                };
+            }
+
+            return new Response<string>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getSupplierNameResult.StatusCode
+                },
+                Result = getSupplierNameResult.Result
+            };
+        }
     }
 }

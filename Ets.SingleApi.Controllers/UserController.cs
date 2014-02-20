@@ -562,7 +562,10 @@
                     Password = (requst.Password ?? string.Empty).Trim(),
                     AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
                     AppKey = (this.AppKey ?? string.Empty).Trim(),
-                    SourceType = (requst.SourceType ?? string.Empty).Trim()
+                    SourceType = (requst.SourceType ?? string.Empty).Trim(),
+                    SmsSource = requst.SmsSource,
+                    SupplierId = requst.SupplierId,
+                    IsVoiceSms = requst.IsVoiceSms
                 });
 
             if (registerResult.Result == null)
