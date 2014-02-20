@@ -45,6 +45,19 @@
         ServicesResult<AuthLoginModel> AuthLogin(string source, AuthLoginParameter parameter);
 
         /// <summary>
+        /// Os the authentication login.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-18 16:28
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<AuthLoginModel> OAuthLogin(string source, OAuthLoginParameter parameter);
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="source">The source</param>

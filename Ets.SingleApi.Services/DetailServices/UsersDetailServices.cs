@@ -243,7 +243,7 @@
 
             var loginEntity = new LoginEntity
             {
-                Username = parameter.KeyName,
+                Username = parameter.UserName,
                 Password = CommonUtility.RandNum(6).Md5(),
                 Level = new LevelEntity
                 {
@@ -269,7 +269,7 @@
             var loginId = loginEntity.LoginId;
             var customerEntity = new CustomerEntity
             {
-                Mobile = parameter.KeyName,
+                Mobile = string.Empty,
                 Email = null,
                 LoginId = loginId,
                 Forename = string.Empty,

@@ -35,6 +35,16 @@
         private readonly INHibernateRepository<AppEntity> appEntityRepository;
 
         /// <summary>
+        /// The login entity repository
+        /// </summary>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-18 16:58
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
+
+        /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -168,6 +178,7 @@
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
         /// <param name="appEntityRepository">The appEntityRepository</param>
+        /// <param name="loginEntityRepository">The login entity repository.</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="customerFavoriteEntityRepository">The customerFavoriteEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
@@ -188,6 +199,7 @@
         /// ----------------------------------------------------------------------------------------
         public UsersServices(
             INHibernateRepository<AppEntity> appEntityRepository,
+            INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<CustomerFavoriteEntity> customerFavoriteEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
@@ -203,6 +215,7 @@
             List<IAccount> accountList)
         {
             this.appEntityRepository = appEntityRepository;
+            this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.customerFavoriteEntityRepository = customerFavoriteEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
@@ -233,13 +246,15 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<CustomerModel> GetUser(string source, int userId)
         {
+            var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == userId).Select(p => new { p.Username }).FirstOrDefault();
+
             var customerModel = (from customer in this.customerEntityRepository.EntityQueryable
                                  where customer.LoginId == userId
                                  select new CustomerModel
                                          {
                                              CustomerId = customer.CustomerId,
                                              UserId = customer.LoginId.Value,
-                                             UserName = customer.Mobile,
+                                             //UserName = loginEntity == null ? string.Empty : loginEntity.Username,
                                              Avatar = customer.Avatar,
                                              Email = customer.Email,
                                              Telephone = customer.Mobile
@@ -253,6 +268,7 @@
                 };
             }
 
+            customerModel.UserName = loginEntity == null ? string.Empty : loginEntity.Username;
             var supplierEntity = this.supplierEntityRepository.EntityQueryable.Where(p => p.Login.LoginId == userId).Select(p => new
                    {
                        p.SupplierId,
@@ -890,7 +906,7 @@
                     StatusCode = (int)StatusCode.OAuth.InvalidClient
                 };
             }
-            
+
             var result = this.usersDetailServices.RegisterOAuth(parameter);
             if (result.StatusCode != (int)StatusCode.Succeed.Ok)
             {

@@ -892,6 +892,7 @@
 
             shoppingCartOrder.Id = order.Id;
             shoppingCartOrder.OrderId = order.OrderId;
+            shoppingCartOrder.IsComplete = order.IsComplete;
             shoppingCartOrder.CanDelivery = order.CanDelivery;
             shoppingCartOrder.DeliveryMethodId = deliveryMethodId;
             shoppingCartOrder.IsSelfPan = order.IsSelfPan;

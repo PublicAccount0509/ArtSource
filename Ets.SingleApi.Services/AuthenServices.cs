@@ -305,6 +305,73 @@
             };
         }
 
+
+        public ServicesResult<AuthLoginModel> OAuthLogin(string source, OAuthLoginParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var login = this.loginList.FirstOrDefault(p => p.LoginWay == LoginWay.OAuth);
+            if (login == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    StatusCode = (int)StatusCode.General.UnknowError,
+                    Result = new AuthLoginModel()
+                };
+            }
+
+            var loginData = login.Login(source, parameter.KeyName, string.Empty);
+            if (loginData.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = loginData.StatusCode
+                };
+            }
+
+            var appEntity = this.appEntityRepository.EntityQueryable.FirstOrDefault(p => p.AppKey == parameter.AppKey);
+            if (appEntity == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = (int)StatusCode.OAuth.InvalidClient
+                };
+            }
+
+            var accessToken = Guid.NewGuid().ToString("N");
+            var refreshToken = Guid.NewGuid().ToString("N");
+            var tokenEntity = new TokenEntity
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                AppKey = appEntity,
+                CreatedTime = DateTime.Now,
+                UserId = loginData.LoginId
+            };
+
+            this.tokenEntityRepository.Save(tokenEntity);
+
+            return new ServicesResult<AuthLoginModel>
+            {
+                Result = new AuthLoginModel
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    UserId = loginData.LoginId,
+                    TokenType = CommonUtility.GetTokenType()
+                }
+            };
+        }
+
         /// <summary>
         /// 修改密码
         /// </summary>
@@ -352,10 +419,10 @@
             if (loginEntity == null)
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
-                        Result = false
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = false
+                };
             }
 
             var oldPassword = parameter.OldPassword;
@@ -396,6 +463,7 @@
                 StatusCode = result.StatusCode
             };
         }
+
 
         /// <summary>
         /// 设置密码
@@ -618,6 +686,7 @@
             };
         }
 
+        
         /// <summary>
         /// Gets the login way.
         /// </summary>
