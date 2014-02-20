@@ -278,9 +278,13 @@ namespace Ets.SingleApi.Services.Payment
             }
             if (!string.IsNullOrEmpty(baiFuBaoSubmitParameter.goods_desc))
             {
-                strUrlPart.Add(string.Format("goods_desc={0}", baiFuBaoSubmitParameter.goods_desc));
+                strUrlPart.Add(string.Format("goods_desc={0}", isEncode ?
+                                         HttpUtility.UrlEncode(
+                                         Encoding.Default.GetBytes(baiFuBaoSubmitParameter.goods_desc)) : baiFuBaoSubmitParameter.goods_desc));
             }
-            strUrlPart.Add(string.Format("goods_name={0}", baiFuBaoSubmitParameter.goods_name));
+            strUrlPart.Add(string.Format("goods_name={0}", isEncode ?
+                                         HttpUtility.UrlEncode(
+                                         Encoding.Default.GetBytes(baiFuBaoSubmitParameter.goods_name)) : baiFuBaoSubmitParameter.goods_name));
             if (!string.IsNullOrEmpty(baiFuBaoSubmitParameter.goods_url))
             {
                 strUrlPart.Add(string.Format("goods_url={0}", baiFuBaoSubmitParameter.goods_url));
