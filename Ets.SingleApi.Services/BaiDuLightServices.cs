@@ -396,5 +396,59 @@
                 StatusCode = (int)StatusCode.Succeed.Ok
             };
         }
+        /// <summary>
+        /// 获取轻应用程序Id
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="applicationId">百度应用程序Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/20/2013 12:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> GetSupplierNameByTargetId(string source, string applicationId)
+        {
+            if (applicationId.IsEmptyOrNull())
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+            var supplierGroupLight = (from entity in this.supplierGroupLightEntityRepository.EntityQueryable
+                                      where entity.LightApplication.ApplicationId == applicationId && entity.LightApplication.IsDelete == false
+                                      select new LightSupplierDetailModel
+                                      {
+                                          LightApplicationId = entity.LightApplication.LightApplicationId,
+                                          LogoUrl = entity.LogoUrl,
+                                          Name = entity.Name,
+                                          Description = entity.Description,
+                                          BrandStory = entity.BrandStory,
+                                          ServiceNote = entity.ServiceNote,
+                                          TargetId = entity.TargetId,
+                                          Telphone = entity.Telphone,
+                                          RecommendDishes = entity.RecommendDishes,
+                                          SupplierGroupLightId = entity.SupplierGroupLightId
+                                      }).FirstOrDefault();
+            var result = this.supplierGroupLightEntityRepository.FindSingleByExpression(p => p.TargetId == supplierGroupLight.TargetId);
+            if (result == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidApplicationId
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = result.Name,
+                StatusCode = (int)StatusCode.Succeed.Ok
+            };
+        }
     }
 }

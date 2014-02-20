@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SendAuthCodeParameter
+    public class SendAuthCodeParameter : ParameterBase
     {
         /// <summary>
         /// 设置或获取手机号

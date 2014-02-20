@@ -380,7 +380,7 @@
             }
 
             var content = string.Format(ServicesCommon.ModifyPasswordMessage, parameter.NewPasswrod);
-            var result = this.smsDetailServices.SendSms(loginEntity.Username, content);
+            var result = this.smsDetailServices.SendSms(loginEntity.Username, content,parameter.SmsSource,parameter.SupplierId,parameter.IsVoiceSms);
             if (result == null)
             {
                 return new ServicesResult<bool>
@@ -467,7 +467,7 @@
             }
 
             var content = string.Format(ServicesCommon.ModifyPasswordMessage, parameter.NewPasswrod);
-            var result = this.smsDetailServices.SendSms(loginEntity.Username, content);
+            var result = this.smsDetailServices.SendSms(loginEntity.Username, content,parameter.SmsSource,parameter.SupplierId,parameter.IsVoiceSms);
             if (result == null)
             {
                 return new ServicesResult<bool>
@@ -547,7 +547,7 @@
                 (from way in parameter.WayList
                  let sendPassword = this.sendPasswordList.FirstOrDefault(p => p.SendType == way.AccountType)
                  where sendPassword != null
-                 select sendPassword.Send(way.AccountNumber, code)).ToList();
+                 select sendPassword.Send(way.AccountNumber, code,parameter.SmsSource,parameter.SupplierId,parameter.IsVoiceSms)).ToList();
 
             var sendPasswordResult = sendPasswordResultList.FirstOrDefault(p => p.StatusCode != (int)StatusCode.Succeed.Ok) ?? new SendPasswordData
                 {

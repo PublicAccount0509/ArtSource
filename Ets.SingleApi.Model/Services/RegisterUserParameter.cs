@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class RegisterUserParameter
+    public class RegisterUserParameter : ParameterBase
     {
         /// <summary>
         /// Gets or sets the SourceType of RegisterUserRequst

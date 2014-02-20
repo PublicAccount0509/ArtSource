@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SetPasswordParameter
+    public class SetPasswordParameter : ParameterBase
     {
         /// <summary>
         /// Gets or sets the UserName of FindPasswordRequst

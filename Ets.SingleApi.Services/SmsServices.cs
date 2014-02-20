@@ -76,7 +76,7 @@
                 CacheUtility.GetInstance().Set(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthSecondCacheKey, parameter.Second), second, DateTime.Now.AddMinutes(ServicesCommon.AuthCodeExpiredTime));
             }
 
-            var result = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.AuthCodeMessage, code));
+            var result = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.AuthCodeMessage, code), parameter.SmsSource, parameter.SupplierId, parameter.IsVoiceSms);
             if (result == null)
             {
                 return new ServicesResult<SendAuthCodeModel>

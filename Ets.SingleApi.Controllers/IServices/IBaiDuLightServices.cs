@@ -73,5 +73,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<LightSupplierDetailModel> GetLightSupplierDetail(string source, string applicationId);
+        /// <summary>
+        /// 获取商户名称
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="applicationId">百度应用程序Id</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/20/2014 12:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> GetSupplierNameByTargetId(string source, string applicationId);
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
       <s:element name="SendSms">
@@ -17,12 +17,49 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="SendSmsBase">
+      <s:element name="SendSmsSaveLog">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsSource" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="supplierID" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="isVoiceSms" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSmsSaveLogResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSmsSaveLogResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VoiceSendSms">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsSource" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="supplierID" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VoiceSendSmsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VoiceSendSmsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSmsBaseSaveLog">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:SmsSendType" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsSource" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="supplierID" nillable="true" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -32,12 +69,47 @@
           <s:enumeration value="天下畅通" />
           <s:enumeration value="创世漫道" />
           <s:enumeration value="营销渠道" />
+          <s:enumeration value="天润融通" />
         </s:restriction>
       </s:simpleType>
+      <s:element name="SendSmsBaseSaveLogResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSmsBaseSaveLogResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSmsBase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:SmsSendType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="SendSmsBaseResponse">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="SendSmsBaseResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MsgSendSmsSaveLog">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:SmsSendType" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsSource" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="supplierID" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MsgSendSmsSaveLogResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MsgSendSmsSaveLogResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -64,11 +136,35 @@
   <wsdl:message name="SendSmsSoapOut">
     <wsdl:part name="parameters" element="tns:SendSmsResponse" />
   </wsdl:message>
+  <wsdl:message name="SendSmsSaveLogSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSmsSaveLog" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsSaveLogSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSmsSaveLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="VoiceSendSmsSoapIn">
+    <wsdl:part name="parameters" element="tns:VoiceSendSms" />
+  </wsdl:message>
+  <wsdl:message name="VoiceSendSmsSoapOut">
+    <wsdl:part name="parameters" element="tns:VoiceSendSmsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsBaseSaveLogSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSmsBaseSaveLog" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsBaseSaveLogSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSmsBaseSaveLogResponse" />
+  </wsdl:message>
   <wsdl:message name="SendSmsBaseSoapIn">
     <wsdl:part name="parameters" element="tns:SendSmsBase" />
   </wsdl:message>
   <wsdl:message name="SendSmsBaseSoapOut">
     <wsdl:part name="parameters" element="tns:SendSmsBaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="MsgSendSmsSaveLogSoapIn">
+    <wsdl:part name="parameters" element="tns:MsgSendSmsSaveLog" />
+  </wsdl:message>
+  <wsdl:message name="MsgSendSmsSaveLogSoapOut">
+    <wsdl:part name="parameters" element="tns:MsgSendSmsSaveLogResponse" />
   </wsdl:message>
   <wsdl:message name="MsgSendSmsSoapIn">
     <wsdl:part name="parameters" element="tns:MsgSendSms" />
@@ -81,9 +177,25 @@
       <wsdl:input message="tns:SendSmsSoapIn" />
       <wsdl:output message="tns:SendSmsSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="SendSmsSaveLog">
+      <wsdl:input message="tns:SendSmsSaveLogSoapIn" />
+      <wsdl:output message="tns:SendSmsSaveLogSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VoiceSendSms">
+      <wsdl:input message="tns:VoiceSendSmsSoapIn" />
+      <wsdl:output message="tns:VoiceSendSmsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsBaseSaveLog">
+      <wsdl:input message="tns:SendSmsBaseSaveLogSoapIn" />
+      <wsdl:output message="tns:SendSmsBaseSaveLogSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="SendSmsBase">
       <wsdl:input message="tns:SendSmsBaseSoapIn" />
       <wsdl:output message="tns:SendSmsBaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MsgSendSmsSaveLog">
+      <wsdl:input message="tns:MsgSendSmsSaveLogSoapIn" />
+      <wsdl:output message="tns:MsgSendSmsSaveLogSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="MsgSendSms">
       <wsdl:input message="tns:MsgSendSmsSoapIn" />
@@ -101,8 +213,44 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SendSmsSaveLog">
+      <soap:operation soapAction="http://tempuri.org/SendSmsSaveLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VoiceSendSms">
+      <soap:operation soapAction="http://tempuri.org/VoiceSendSms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsBaseSaveLog">
+      <soap:operation soapAction="http://tempuri.org/SendSmsBaseSaveLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="SendSmsBase">
       <soap:operation soapAction="http://tempuri.org/SendSmsBase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MsgSendSmsSaveLog">
+      <soap:operation soapAction="http://tempuri.org/MsgSendSmsSaveLog" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -131,8 +279,44 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SendSmsSaveLog">
+      <soap12:operation soapAction="http://tempuri.org/SendSmsSaveLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VoiceSendSms">
+      <soap12:operation soapAction="http://tempuri.org/VoiceSendSms" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsBaseSaveLog">
+      <soap12:operation soapAction="http://tempuri.org/SendSmsBaseSaveLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="SendSmsBase">
       <soap12:operation soapAction="http://tempuri.org/SendSmsBase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MsgSendSmsSaveLog">
+      <soap12:operation soapAction="http://tempuri.org/MsgSendSmsSaveLog" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

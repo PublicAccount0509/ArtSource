@@ -41,6 +41,9 @@
         /// </summary>
         /// <param name="account">账号</param>
         /// <param name="content">内容</param>
+        /// <param name="smsSource">客户端应用名称 +业务场景。 如用户在眉州东坡找回密码时，可传值：眉州东坡web找回密码</param>
+        /// <param name="supplierId">如果客户端调用时业务场景无餐厅概念（如用户注册），传入null即可</param>
+        /// <param name="isVoiceSms">是否要语音短信</param>
         /// <returns>
         /// 发送结果
         /// </returns>
@@ -49,7 +52,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public SendPasswordData Send(string account, string content)
+        public SendPasswordData Send(string account, string content, string smsSource, int? supplierId, bool isVoiceSms)
         {
             var mailContent = string.Format(ServicesCommon.EmailFindPasswordMessage, content);
             var mailSubject = ServicesCommon.EmailSubject;

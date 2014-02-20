@@ -132,6 +132,7 @@
     <Compile Include="Services\LightSupplierTemplateModel.cs" />
     <Compile Include="Services\LocationCity.cs" />
     <Compile Include="Services\OrderBDInfo.cs" />
+    <Compile Include="Services\ParameterBase.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />
