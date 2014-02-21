@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="LoginOAuthEntity.cs" company="Irdeto">
-//   Copyright @ 2013
+//   Copyright @ 2014
 // </copyright>
 // <summary>
 //   Class:LoginOAuthEntity
@@ -11,102 +11,113 @@
 
 namespace Ets.SingleApi.Model.Repository
 {
-	using System;
-		
+    using System;
+
     /// <summary>
     /// Class:LoginOAuthEntity
     /// Namespace:Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the LoginOAuthEntity table in the database.
     /// </summary>
     /// Creator:周超
-    /// Creation Date:2013/10/13 14:18:48
+    /// Creation Date:2014/2/21 13:53:22
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
     [Serializable]
     public class LoginOAuthEntity
     {
-		#region private member
+        #region private member
 
-			/// <summary>
-		/// The LOId
+        /// <summary>
+        /// The LOId
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:22
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int lOId;
+        private int lOId;
 
-			/// <summary>
-		/// The KeyName
+        /// <summary>
+        /// The KeyName
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string keyName;
+        private string keyName;
 
-			/// <summary>
-		/// The safeCode
+        /// <summary>
+        /// The safeCode
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string safeCode;
+        private string safeCode;
 
-			/// <summary>
-		/// The JointLoginType
+        /// <summary>
+        /// The JointLoginType
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? jointLoginType;
+        private int? jointLoginType;
 
-			/// <summary>
-		/// The LoginID
+        /// <summary>
+        /// The IsRegister
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private LoginEntity login;
+        private bool? isRegister;
 
-		#endregion
+        /// <summary>
+        /// The LoginID
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2014/2/21 13:53:23
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private LoginEntity login;
 
-		/// <summary>
+        #endregion
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LoginOAuthEntity"/> class.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
         public LoginOAuthEntity()
         {
-			this.lOId = 0;
-			this.keyName = string.Empty;
-			this.safeCode = string.Empty;
-		}
+            this.lOId = 0;
+            this.keyName = string.Empty;
+            this.safeCode = string.Empty;
+            this.isRegister = false;
+        }
 
-		#region public member
+        #region public member
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the LOId of LoginOAuthEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int LOId
-		{
+        public virtual int LOId
+        {
             get
             {
                 return this.lOId;
@@ -118,16 +129,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the KeyName of LoginOAuthEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string KeyName
-		{
+        public virtual string KeyName
+        {
             get
             {
                 return this.keyName;
@@ -139,16 +150,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the safeCode of LoginOAuthEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string SafeCode
-		{
+        public virtual string SafeCode
+        {
             get
             {
                 return this.safeCode;
@@ -160,16 +171,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the JointLoginType of LoginOAuthEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? JointLoginType
-		{
+        public virtual int? JointLoginType
+        {
             get
             {
                 return this.jointLoginType;
@@ -181,16 +192,37 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
-        /// Gets or sets a value mapping the LoginID of LoginOAuthEntity table in the database.
+        /// <summary>
+        /// Gets or sets a value indicating whether mapping the IsRegister of LoginOAuthEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual LoginEntity Login
-		{
+        public virtual bool? IsRegister
+        {
+            get
+            {
+                return this.isRegister;
+            }
+
+            set
+            {
+                this.isRegister = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value mapping the LoginID of LoginOAuthEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2014/2/21 13:53:23
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual LoginEntity Login
+        {
             get
             {
                 return this.login;
@@ -202,9 +234,9 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-		#endregion
+        #endregion
 
-			/// <summary>
+        /// <summary>
         /// Determines whether the specified is equal to this instance.
         /// </summary>
         /// <param name="obj">The to compare with this instance.</param>
@@ -212,7 +244,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -227,22 +259,22 @@ namespace Ets.SingleApi.Model.Repository
             return this.LOId == castObj.LOId;
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:18:48
+        /// Creation Date:2014/2/21 13:53:23
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public override int GetHashCode()
-		{
-			var hash = 57; 
-			hash = 27 * hash * this.LOId.GetHashCode();
-			return hash;
-		}
-	}
+        public override int GetHashCode()
+        {
+            var hash = 57;
+            hash = 27 * hash * this.LOId.GetHashCode();
+            return hash;
+        }
+    }
 }

@@ -11,6 +11,7 @@
 		<property name="KeyName" column="KeyName" type="String" />
 		<property name="SafeCode" column="safeCode" type="String" not-null="false" />
 		<property name="JointLoginType" column="JointLoginType" type="Int32" not-null="false" />
+		<property name="IsRegister" column="IsRegister" type="Boolean" not-null="false" />
 		<!--The foreign keys-->
 		<many-to-one name="Login" class="Ets.SingleApi.Model.Repository.LoginEntity, Ets.SingleApi.Model" column="LoginID" />
 	</class>
