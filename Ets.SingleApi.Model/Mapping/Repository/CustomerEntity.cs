@@ -453,7 +453,6 @@ namespace Ets.SingleApi.Model.Repository
 			this.postCode = string.Empty;
 			this.homeTelephone = string.Empty;
 			this.workTelephone = string.Empty;
-			this.mobile = string.Empty;
 			this.fax = string.Empty;
 			this.email = string.Empty;
 			this.homeCity = string.Empty;
