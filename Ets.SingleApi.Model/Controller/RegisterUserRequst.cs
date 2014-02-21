@@ -13,6 +13,19 @@
     public class RegisterUserRequst : ApiRequst
     {
         /// <summary>
+        /// Gets or sets the user identifier.
+        /// </summary>
+        /// <value>
+        /// The user identifier.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-21 17:55
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int? UserId { get; set; }
+
+        /// <summary>
         /// Gets or sets the Email of RegisterUserRequst
         /// </summary>
         /// <value>

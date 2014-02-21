@@ -12,6 +12,8 @@
     /// ----------------------------------------------------------------------------------------
     public class RegisterUserOAuthParameter
     {
+        public int UserId { get; set; }
+
         /// <summary>
         /// Gets or sets the SourceType of RegisterUserRequst
         /// </summary>
@@ -90,5 +92,25 @@
         /// ----------------------------------------------------------------------------------------
         public int JointLoginType { get; set; }
 
+        public string Email { get; set; }
+
+        public string Telephone { get; set; }
+
+        public string Password { get; set; }
+
+        public string AuthCode { get; set; }
+
+        /// <summary>
+        /// 第三方平台账号是否要在易淘食网站注册
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [be registered]; otherwise, <c>false</c>.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-21 16:19
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool BeRegistered { get; set; }
     }
 }

@@ -227,10 +227,14 @@
     <Content Include="config\castle\components\repository.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\interceptor.config" />
+    <Content Include="config\castle\components\interceptor.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\controllers.config" />
+    <Content Include="config\castle\components\controllers.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\castle\components\services.config">

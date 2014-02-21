@@ -63,5 +63,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int? UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [is register].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [is register]; otherwise, <c>false</c>.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-21 17:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool IsRegister { get; set; }
     }
 }
