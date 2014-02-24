@@ -889,5 +889,44 @@
                 Result = true
             };
         }
+
+        /// <summary>
+        /// 更改支付方式
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderId">The orderIdDefault documentation</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
+        /// <param name="payBank">The payBankDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 10:33 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> ModifyOrderPaymentMethod(string source, string orderId, int paymentMethodId, string payBank)
+        {
+            var getShoppingCartOrderResult = this.shunFengShoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode
+                };
+            }
+
+            var order = getShoppingCartOrderResult.Result;
+            order.PaymentMethodId = paymentMethodId;
+            order.PayBank = payBank;
+
+            var saveShoppingCartOrderResult = this.shunFengShoppingCartCacheServices.SaveShoppingCartOrder(source, order);
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = saveShoppingCartOrderResult.StatusCode,
+                Result = saveShoppingCartOrderResult.Result
+            };
+        }
     }
 }

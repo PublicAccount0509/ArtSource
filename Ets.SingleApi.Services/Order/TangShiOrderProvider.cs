@@ -195,5 +195,29 @@
         {
             return new ServicesResult<bool>();
         }
+
+        /// <summary>
+        /// 更新订单的支付方式
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
+        /// <param name="payBank">The payBankDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 9:26 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank)
+        {
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
     }
 }

@@ -198,6 +198,75 @@ namespace Ets.SingleApi.Services
         }
 
         /// <summary>
+        /// 更新订单的支付方式
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
+        /// <param name="payBank">The payBankDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 9:26 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public override ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank)
+        {
+            //获取ShoppingCartLink信息
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+
+            //获取 订单信息
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            //订单信息
+            var orderInfo = getShoppingCartOrderResult.Result;
+
+            //递送信息
+            var deliveryInfo = this.deliveryEntityRepository.FindSingleByExpression(c => c.OrderNumber == orderInfo.OrderId);
+
+            //修改 订单支付方式
+            this.SavePaymentEntity(deliveryInfo.DeliveryId, orderInfo.CustomerTotalFee, paymentMethodId, payBank);
+
+            //修改 缓存订单支付方式
+            var modifyOrderPaymentMethodResult = this.shoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.Id, paymentMethodId, payBank);
+            if (modifyOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = modifyOrderPaymentMethodResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
+
+
+        /// <summary>
         /// 取得订单详情
         /// </summary>
         /// <param name="source">The source</param>

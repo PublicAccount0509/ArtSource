@@ -209,12 +209,29 @@
             }
             return new ServicesResult<bool>
                 {
-                    StatusCode = (int) StatusCode.Succeed.Ok,
+                    StatusCode = (int)StatusCode.Succeed.Ok,
                     Result =
                         ServicesCommon.IsActivationOrderStatusIdList.Contains(deliveryEntity.OrderStatusId) &&
                         deliveryEntity.IsPaId != true
                 };
         }
+
+        /// <summary>
+        /// 更新订单的支付方式
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
+        /// <param name="payBank">The payBankDefault documentation</param>
+        /// <returns>
+        /// ServicesResult{System.Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 11:08 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public abstract ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank);
 
         /// <summary>
         /// 取得订单详情

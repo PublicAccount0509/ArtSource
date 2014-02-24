@@ -243,5 +243,36 @@
                 Result = isActivationResult.Result
             };
         }
+
+        /// <summary>
+        /// 更新订单的支付方式
+        /// </summary>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
+        /// <param name="payBank">The payBankDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/21/2014 5:57 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<bool> ModifyOrderPaymentMethod(string shoppingCartId, int paymentMethodId, string payBank, int orderType, int orderSourceType = 0)
+        {
+            var saveOrderPaIdResult = this.orderServices.ModifyOrderPaymentMethod(this.Source, shoppingCartId, paymentMethodId, payBank, orderType, orderSourceType);
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveOrderPaIdResult.StatusCode
+                },
+                Result = saveOrderPaIdResult.Result
+            };
+        }
     }
 }
