@@ -991,5 +991,95 @@
         {
             return new ServicesResult<bool>();
         }
+
+        public ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank)
+        {
+            //获取ShoppingCartLink信息
+            var getShoppingCartLinkResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+
+            //获取 订单信息
+            var getShoppingCartOrderResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            //订单信息
+            var orderInfo = getShoppingCartOrderResult.Result;
+
+            //递送信息
+            var deliveryInfo = this.deliveryEntityRepository.FindSingleByExpression(c => c.OrderNumber == orderInfo.OrderId);
+
+            //修改 订单支付方式
+            this.SavePaymentEntity(deliveryInfo.DeliveryId, orderInfo.CustomerTotalFee, paymentMethodId, payBank);
+
+            //修改 缓存订单支付方式
+            var modifyOrderPaymentMethodResult = this.huangTaiJiShoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.OrderId.ToString(), paymentMethodId, payBank);
+            if (modifyOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = modifyOrderPaymentMethodResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
+
+        /// <summary>
+        /// 保存支付信息
+        /// </summary>
+        /// <param name="deliveryId">订单Id</param>
+        /// <param name="customerTotal">支付总金额</param>
+        /// <param name="paymentMethodId">支付方式</param>
+        /// <param name="payBank">The payBank</param>
+        /// 创建者：周超
+        /// 创建日期：11/23/2013 11:07 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId, string payBank)
+        {
+            var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryId)
+                                 ?? new PaymentEntity
+                                 {
+                                     PaymentTypeId = 1,
+                                     Delivery = new DeliveryEntity { DeliveryId = deliveryId },
+                                     TransactionCode = string.Empty,
+                                     CardId = string.Empty,
+                                     Authorized = false,
+                                     CVV = 0,
+                                     AVS = string.Empty,
+                                     PC = 0,
+                                     AuthCode = string.Empty,
+                                     VoicePayResponse = string.Empty,
+                                     TransactionFee = 0
+                                 };
+
+            paymentEntity.Amount = customerTotal;
+            paymentEntity.MethodChangeHistory = paymentEntity.PaymentMethodId.ToString();
+            paymentEntity.PaymentMethodId = paymentMethodId;
+            paymentEntity.PayBank = payBank;
+            this.paymentEntityRepository.Save(paymentEntity);
+        }
     }
 }
