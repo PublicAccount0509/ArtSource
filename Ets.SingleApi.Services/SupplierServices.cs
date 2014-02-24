@@ -853,7 +853,6 @@
                     .SetString("FeatureIdList", string.Join(",", ServicesCommon.SupplierFeatures))
                     .SetString("SupplierIdList", string.Join(",", ServicesCommon.FilteredSupplierIdList)).List<GroupSupplierModelEntity>();
 
-
             var supplierList = (from entity in list
                                 select new GroupSupplierModel
                                 {

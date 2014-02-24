@@ -293,7 +293,7 @@
             var loginId = loginEntity.LoginId;
             var customerEntity = new CustomerEntity
             {
-                Mobile = string.Empty,
+                Mobile = null,
                 Email = null,
                 LoginId = loginId,
                 Forename = string.Empty,
