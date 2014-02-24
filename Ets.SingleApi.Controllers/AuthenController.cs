@@ -277,12 +277,13 @@
             }
 
             var result = new OAuthLoginResult
-            {
-                UserId = loginResult.Result.UserId,
-                AccessToken = loginResult.Result.AccessToken ?? string.Empty,
-                RefreshToken = loginResult.Result.RefreshToken ?? string.Empty,
-                TokenType = loginResult.Result.TokenType ?? string.Empty
-            };
+                {
+                    UserId = loginResult.Result.UserId,
+                    AccessToken = loginResult.Result.AccessToken ?? string.Empty,
+                    RefreshToken = loginResult.Result.RefreshToken ?? string.Empty,
+                    TokenType = loginResult.Result.TokenType ?? string.Empty,
+                    IsRegister = loginResult.Result.IsRegister
+                };
 
             return new Response<OAuthLoginResult>
             {

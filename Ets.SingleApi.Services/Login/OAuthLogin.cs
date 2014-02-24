@@ -106,7 +106,7 @@
             }
 
             //第三方登录表
-            var loginOAuth = this.loginOAuthEntityRepository.EntityQueryable.Where(p => p.KeyName == userName).Select(p => new { p.Login.LoginId }).FirstOrDefault();
+            var loginOAuth = this.loginOAuthEntityRepository.EntityQueryable.Where(p => p.KeyName == userName).Select(p => new { p.Login.LoginId,p.IsRegister }).FirstOrDefault();
 
             if (loginOAuth == null)
             {
@@ -147,7 +147,8 @@
 
             return new LoginData
                 {
-                    LoginId = loginEntity.LoginId
+                    LoginId = loginEntity.LoginId,
+                    IsRegister = loginOAuth.IsRegister ?? false
                 };
         }
     }

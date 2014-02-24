@@ -66,10 +66,10 @@
       <s:simpleType name="SmsSendType">
         <s:restriction base="s:string">
           <s:enumeration value="亿美软通" />
-          <s:enumeration value="天下畅通" />
-          <s:enumeration value="创世漫道" />
           <s:enumeration value="营销渠道" />
           <s:enumeration value="天润融通" />
+          <s:enumeration value="百分通联" />
+          <s:enumeration value="云信" />
         </s:restriction>
       </s:simpleType>
       <s:element name="SendSmsBaseSaveLogResponse">

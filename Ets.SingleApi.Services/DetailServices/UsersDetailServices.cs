@@ -193,6 +193,30 @@
 
             this.tokenEntityRepository.Save(tokenEntity);
 
+            if (parameter.UserId == null)
+            {
+                return new DetailServicesResult<RegisterUserModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = new RegisterUserModel
+                    {
+                        AccessToken = accessToken,
+                        RefreshToken = refreshToken,
+                        UserId = loginId,
+                        TokenType = CommonUtility.GetTokenType()
+                    }
+                };
+            }
+
+            var loginOAuth = loginOAuthEntityRepository.FindSingleByExpression(p => p.Login.LoginId == parameter.UserId);
+
+            if (loginOAuth != null)
+            {
+                loginOAuth.IsRegister = true;
+
+                loginOAuthEntityRepository.Save(loginOAuth);
+            }
+
             return new DetailServicesResult<RegisterUserModel>
                 {
                     StatusCode = (int)StatusCode.Succeed.Ok,

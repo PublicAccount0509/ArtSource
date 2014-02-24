@@ -557,6 +557,7 @@
 
             var registerResult = this.usersServices.Register(this.Source, new RegisterUserParameter
                 {
+                    UserId = requst.UserId,
                     Email = (requst.Email ?? string.Empty).Trim(),
                     Telephone = (requst.Telephone ?? string.Empty).Trim(),
                     Password = (requst.Password ?? string.Empty).Trim(),

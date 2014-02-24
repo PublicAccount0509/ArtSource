@@ -367,7 +367,8 @@
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
                     UserId = loginData.LoginId,
-                    TokenType = CommonUtility.GetTokenType()
+                    TokenType = CommonUtility.GetTokenType(),
+                    IsRegister = loginData.IsRegister
                 }
             };
         }

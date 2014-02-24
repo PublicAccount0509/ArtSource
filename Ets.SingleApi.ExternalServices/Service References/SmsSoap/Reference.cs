@@ -20,16 +20,16 @@ namespace Ets.SingleApi.ExternalServices.SmsSoap {
         亿美软通 = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        天下畅通 = 1,
+        营销渠道 = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        创世漫道 = 2,
+        天润融通 = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        营销渠道 = 3,
+        百分通联 = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        天润融通 = 4,
+        云信 = 4,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
