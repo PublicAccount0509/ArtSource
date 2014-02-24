@@ -274,5 +274,39 @@
                 Result = saveOrderPaIdResult.Result
             };
         }
+
+        /// <summary>
+        /// Gets the order is complete is paid by shopping cart identifier.
+        /// </summary>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 7:51 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Response<OrderIsCompleteIsPaidResult> GetOrderIsCompleteIsPaidByShoppingCartId(string shoppingCartId, int orderType,
+                                                                       int orderSourceType = 0)
+        {
+
+            var orderIsCompleteIsPaidResult = this.orderServices.GetOrderIsCompleteIsPaidByShoppingCartId(this.Source, shoppingCartId, orderType, orderSourceType);
+
+            return new Response<OrderIsCompleteIsPaidResult>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = orderIsCompleteIsPaidResult.StatusCode
+                },
+                Result = new OrderIsCompleteIsPaidResult
+                    {
+                        IsComplete = orderIsCompleteIsPaidResult.Result.IsComplete,
+                        IsPaid = orderIsCompleteIsPaidResult.Result.IsPaid
+                    }
+            };
+        }
     }
 }

@@ -292,6 +292,70 @@ namespace Ets.SingleApi.Services
         }
 
         /// <summary>
+        /// 查询订单是否完成，订单是否已支付
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <returns>
+        /// ServicesResult{OrderIsCompleteIsPaidModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 8:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public override ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId)
+        {
+            //获取ShoppingCartLink信息
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = new OrderIsCompleteIsPaidModel()
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+
+            //获取 订单信息
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = new OrderIsCompleteIsPaidModel()
+                };
+            }
+
+            // Delivery信息
+            var deliveryInfo =
+                this.deliveryEntityRepository.EntityQueryable.FirstOrDefault(
+                    c => c.OrderNumber == getShoppingCartOrderResult.Result.OrderId);
+
+            if (deliveryInfo == null)
+            {
+                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new OrderIsCompleteIsPaidModel()
+                };
+            }
+
+            return new ServicesResult<OrderIsCompleteIsPaidModel>
+            {
+                StatusCode = getShoppingCartOrderResult.StatusCode,
+                Result = new OrderIsCompleteIsPaidModel
+                {
+                    IsComplete = getShoppingCartOrderResult.Result.IsComplete,
+                    IsPaid = deliveryInfo.IsPaId ?? false
+                }
+            };
+        }
+
+        /// <summary>
         /// 取得订单详情
         /// </summary>
         /// <param name="source">The source</param>

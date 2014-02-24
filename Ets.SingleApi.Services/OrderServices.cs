@@ -283,5 +283,41 @@
                 Result = result.Result
             };
         }
+
+        /// <summary>
+        /// 查询订单是否完成，订单是否已支付
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <returns>
+        /// ServicesResult{OrderIsCompleteIsPaidModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 8:03 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId, int orderType,
+                                                                       int orderSourceType)
+        {
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
+            if (orderProvider == null)
+            {
+                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode,
+                    Result = new OrderIsCompleteIsPaidModel()
+                };
+            }
+
+            var result = orderProvider.GetOrderIsCompleteIsPaidByShoppingCartId(source, shoppingCartId);
+            return new ServicesResult<OrderIsCompleteIsPaidModel>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
     }
 }

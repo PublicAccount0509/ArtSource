@@ -222,5 +222,31 @@
                 Result = true
             };
         }
+
+        /// <summary>
+        /// 查询订单是否完成，订单是否已支付
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <returns>
+        /// ServicesResult{OrderIsCompleteIsPaidModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 8:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId)
+        {
+            return new ServicesResult<OrderIsCompleteIsPaidModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = new OrderIsCompleteIsPaidModel
+                        {
+                            IsComplete = true,
+                            IsPaid = true
+                        }
+                };
+        }
     }
 }
