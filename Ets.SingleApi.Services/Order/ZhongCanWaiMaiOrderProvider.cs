@@ -403,6 +403,26 @@ namespace Ets.SingleApi.Services
                 gender = "0";
             }
 
+            //获取ShoppingCartId
+            var shoppingCartIdByOrderIdResult = this.shoppingCartAndOrderNoCacheServices.GetShoppingCartIdByOrderId(source, orderId.ToString());
+            if (shoppingCartIdByOrderIdResult==null)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+            if (shoppingCartIdByOrderIdResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+            var shoppingCartId = shoppingCartIdByOrderIdResult.Result;
+
             var result = new WaiMaiOrderDetailModel
             {
                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
@@ -417,6 +437,7 @@ namespace Ets.SingleApi.Services
                 Commission = "0.00",
                 RealSupplierType = deliveryEntity.RealSupplierType,
                 SupplierGroupId = supplierEntity.SupplierGroupId,
+                ShoppingCartId = shoppingCartId,
                 SupplierId = supplierEntity.SupplierId,
                 SupplierName = supplierEntity.SupplierName ?? string.Empty,
                 SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
