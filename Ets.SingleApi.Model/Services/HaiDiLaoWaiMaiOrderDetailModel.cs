@@ -106,6 +106,19 @@
         public int? SupplierGroupId { get; set; }
 
         /// <summary>
+        /// 购物车Id
+        /// </summary>
+        /// <value>
+        /// The ShoppingCartId
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：2/25/2014 9:03 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string ShoppingCartId { get; set; }
+
+        /// <summary>
         /// 设置或取得餐厅Id
         /// </summary>
         /// <value>

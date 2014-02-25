@@ -265,6 +265,70 @@ namespace Ets.SingleApi.Services
             };
         }
 
+        /// <summary>
+        /// 查询订单是否完成，订单是否已支付
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>
+        /// <returns>
+        /// ServicesResult{OrderIsCompleteIsPaidModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/24/2014 8:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public override ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId)
+        {
+            //获取ShoppingCartLink信息
+            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result =new OrderIsCompleteIsPaidModel()
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+
+            //获取 订单信息
+            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = new OrderIsCompleteIsPaidModel()
+                };
+            }
+
+            // Delivery信息
+            var deliveryInfo =
+                this.deliveryEntityRepository.EntityQueryable.FirstOrDefault(
+                    c => c.OrderNumber == getShoppingCartOrderResult.Result.OrderId);
+
+            if (deliveryInfo == null)
+            {
+                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new OrderIsCompleteIsPaidModel()
+                };
+            }
+
+            return new ServicesResult<OrderIsCompleteIsPaidModel>
+            {
+                StatusCode = getShoppingCartOrderResult.StatusCode,
+                Result = new OrderIsCompleteIsPaidModel
+                    {
+                        IsComplete = getShoppingCartOrderResult.Result.IsComplete,
+                        IsPaid = deliveryInfo.IsPaId??false
+                    }
+            };
+        }
+
 
         /// <summary>
         /// 取得订单详情
@@ -339,6 +403,26 @@ namespace Ets.SingleApi.Services
                 gender = "0";
             }
 
+            //获取ShoppingCartId
+            var shoppingCartIdByOrderIdResult = this.shoppingCartAndOrderNoCacheServices.GetShoppingCartIdByOrderId(source, orderId.ToString());
+            if (shoppingCartIdByOrderIdResult==null)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+            if (shoppingCartIdByOrderIdResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+            var shoppingCartId = shoppingCartIdByOrderIdResult.Result;
+
             var result = new WaiMaiOrderDetailModel
             {
                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
@@ -353,6 +437,7 @@ namespace Ets.SingleApi.Services
                 Commission = "0.00",
                 RealSupplierType = deliveryEntity.RealSupplierType,
                 SupplierGroupId = supplierEntity.SupplierGroupId,
+                ShoppingCartId = shoppingCartId,
                 SupplierId = supplierEntity.SupplierId,
                 SupplierName = supplierEntity.SupplierName ?? string.Empty,
                 SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
