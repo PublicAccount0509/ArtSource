@@ -148,6 +148,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId);
+        ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId);
     }
 }

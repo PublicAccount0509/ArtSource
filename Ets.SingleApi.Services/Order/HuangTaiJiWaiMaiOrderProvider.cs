@@ -1058,16 +1058,16 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId)
+        public ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId)
         {
             //获取ShoppingCartLink信息
             var getShoppingCartLinkResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                return new ServicesResult<OrderShoppingCartStatusModel>
                 {
                     StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = new OrderIsCompleteIsPaidModel()
+                    Result = new OrderShoppingCartStatusModel()
                 };
             }
 
@@ -1077,10 +1077,10 @@
             var getShoppingCartOrderResult = this.huangTaiJiShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                return new ServicesResult<OrderShoppingCartStatusModel>
                 {
                     StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = new OrderIsCompleteIsPaidModel()
+                    Result = new OrderShoppingCartStatusModel()
                 };
             }
 
@@ -1091,20 +1091,21 @@
 
             if (deliveryInfo == null)
             {
-                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                return new ServicesResult<OrderShoppingCartStatusModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
-                    Result = new OrderIsCompleteIsPaidModel()
+                    Result = new OrderShoppingCartStatusModel()
                 };
             }
 
-            return new ServicesResult<OrderIsCompleteIsPaidModel>
+            return new ServicesResult<OrderShoppingCartStatusModel>
             {
                 StatusCode = getShoppingCartOrderResult.StatusCode,
-                Result = new OrderIsCompleteIsPaidModel
+                Result = new OrderShoppingCartStatusModel
                 {
                     IsComplete = getShoppingCartOrderResult.Result.IsComplete,
-                    IsPaid = deliveryInfo.IsPaId ?? false
+                    IsPaid = deliveryInfo.IsPaId ?? false,
+                    OrderStatusId = deliveryInfo.OrderStatusId
                 }
             };
         }

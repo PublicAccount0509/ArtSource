@@ -289,22 +289,23 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public Response<OrderIsCompleteIsPaidResult> GetOrderIsCompleteIsPaidByShoppingCartId(string shoppingCartId, int orderType,
+        public Response<OrderShoppingCartStatusResult> GetOrderShoppingCartStatus(string shoppingCartId, int orderType,
                                                                        int orderSourceType = 0)
         {
 
-            var orderIsCompleteIsPaidResult = this.orderServices.GetOrderIsCompleteIsPaidByShoppingCartId(this.Source, shoppingCartId, orderType, orderSourceType);
+            var orderShoppingCartStatusResult = this.orderServices.GetOrderShoppingCartStatus(this.Source, shoppingCartId, orderType, orderSourceType);
 
-            return new Response<OrderIsCompleteIsPaidResult>
+            return new Response<OrderShoppingCartStatusResult>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = orderIsCompleteIsPaidResult.StatusCode
+                    StatusCode = orderShoppingCartStatusResult.StatusCode
                 },
-                Result = new OrderIsCompleteIsPaidResult
+                Result = new OrderShoppingCartStatusResult
                     {
-                        IsComplete = orderIsCompleteIsPaidResult.Result.IsComplete,
-                        IsPaid = orderIsCompleteIsPaidResult.Result.IsPaid
+                        IsComplete = orderShoppingCartStatusResult.Result.IsComplete,
+                        IsPaid = orderShoppingCartStatusResult.Result.IsPaid,
+                        OrderStatusId = orderShoppingCartStatusResult.Result.OrderStatusId
                     }
             };
         }

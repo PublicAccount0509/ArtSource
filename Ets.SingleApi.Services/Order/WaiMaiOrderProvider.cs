@@ -246,7 +246,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public abstract ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId);
+        public abstract ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId);
 
 
         /// <summary>

@@ -299,21 +299,21 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId, int orderType,
+        public ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId, int orderType,
                                                                        int orderSourceType)
         {
             var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
             if (orderProvider == null)
             {
-                return new ServicesResult<OrderIsCompleteIsPaidModel>
+                return new ServicesResult<OrderShoppingCartStatusModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode,
-                    Result = new OrderIsCompleteIsPaidModel()
+                    Result = new OrderShoppingCartStatusModel()
                 };
             }
 
-            var result = orderProvider.GetOrderIsCompleteIsPaidByShoppingCartId(source, shoppingCartId);
-            return new ServicesResult<OrderIsCompleteIsPaidModel>
+            var result = orderProvider.GetOrderShoppingCartStatus(source, shoppingCartId);
+            return new ServicesResult<OrderShoppingCartStatusModel>
             {
                 StatusCode = result.StatusCode,
                 Result = result.Result

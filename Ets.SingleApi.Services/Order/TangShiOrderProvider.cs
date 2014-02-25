@@ -233,15 +233,16 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<OrderIsCompleteIsPaidModel> GetOrderIsCompleteIsPaidByShoppingCartId(string source, string shoppingCartId)
+        public ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId)
         {
-            return new ServicesResult<OrderIsCompleteIsPaidModel>
+            return new ServicesResult<OrderShoppingCartStatusModel>
                 {
                     StatusCode = (int) StatusCode.Succeed.Ok,
-                    Result = new OrderIsCompleteIsPaidModel
+                    Result = new OrderShoppingCartStatusModel
                         {
                             IsComplete = true,
-                            IsPaid = true
+                            IsPaid = true,
+                            OrderStatusId = 1
                         }
                 };
         }

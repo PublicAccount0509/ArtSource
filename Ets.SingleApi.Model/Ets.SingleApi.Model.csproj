@@ -85,7 +85,7 @@
     <Compile Include="Controller\WapSupplierDetail.cs" />
     <Compile Include="Controller\OAuthLoginResult.cs" />
     <Compile Include="Controller\OAuthLoginRequst.cs" />
-    <Compile Include="Controller\OrderIsCompleteIsPaidResult.cs" />
+    <Compile Include="Controller\OrderShoppingCartStatusResult.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -159,7 +159,7 @@
     <Compile Include="Mapping\Repository\GroupSupplierModelEntity.cs" />
     <Compile Include="Services\RegisterUserOAuthParameter.cs" />
     <Compile Include="Services\OAuthLoginParameter.cs" />
-    <Compile Include="Services\OrderIsCompleteIsPaidModel.cs" />
+    <Compile Include="Services\OrderShoppingCartStatusModel.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
