@@ -287,7 +287,7 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<OrderShoppingCartStatusModel>
                 {
                     StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result =new OrderShoppingCartStatusModel()
+                    Result = new OrderShoppingCartStatusModel()
                 };
             }
 
@@ -324,7 +324,7 @@ namespace Ets.SingleApi.Services
                 Result = new OrderShoppingCartStatusModel
                     {
                         IsComplete = getShoppingCartOrderResult.Result.IsComplete,
-                        IsPaid = deliveryInfo.IsPaId??false,
+                        IsPaid = deliveryInfo.IsPaId ?? false,
                         OrderStatusId = deliveryInfo.OrderStatusId
                     }
             };
@@ -406,7 +406,7 @@ namespace Ets.SingleApi.Services
 
             //获取ShoppingCartId
             var shoppingCartIdByOrderIdResult = this.shoppingCartAndOrderNoCacheServices.GetShoppingCartIdByOrderId(source, orderId.ToString());
-            if (shoppingCartIdByOrderIdResult==null)
+            if (shoppingCartIdByOrderIdResult == null)
             {
                 return new ServicesResult<IOrderDetailModel>
                 {
@@ -414,7 +414,7 @@ namespace Ets.SingleApi.Services
                     Result = new WaiMaiOrderDetailModel()
                 };
             }
-            if (shoppingCartIdByOrderIdResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (shoppingCartIdByOrderIdResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<IOrderDetailModel>
                 {
@@ -436,6 +436,8 @@ namespace Ets.SingleApi.Services
                 Total = (deliveryEntity.Total ?? 0).ToString("#0.00"),
                 Coupon = Math.Max(((deliveryEntity.Total ?? 0) - (deliveryEntity.CustomerTotal ?? 0)), 0).ToString("#0.00"),
                 Commission = "0.00",
+                PackagingFee = (deliveryEntity.PackagingFee ?? 0).ToString("#0.00"),
+                FixedDeliveryFee = (deliveryEntity.DeliverCharge ?? 0).ToString("#0.00"),
                 RealSupplierType = deliveryEntity.RealSupplierType,
                 SupplierGroupId = supplierEntity.SupplierGroupId,
                 ShoppingCartId = shoppingCartId,
