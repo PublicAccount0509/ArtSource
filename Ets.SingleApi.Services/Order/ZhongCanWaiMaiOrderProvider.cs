@@ -424,6 +424,22 @@ namespace Ets.SingleApi.Services
             }
             var shoppingCartId = shoppingCartIdByOrderIdResult.Result;
 
+            //灶具费
+            var cookingFee = (deliveryEntity.CustomerTotal ?? 0) - (deliveryEntity.RealSupplierPrice ?? 0) -
+                             (deliveryEntity.ServiceFee ?? 0) - (deliveryEntity.DeliverCharge ?? 0);
+            //送餐费
+            var fixedDeliveryFee = deliveryEntity.DeliverCharge ?? 0;
+            //服务费
+            var servicesFee = deliveryEntity.ServiceFee ?? 0;
+            //总价 未折扣
+            var total = deliveryEntity.Total ?? 0;
+            //总价 折扣后
+            var customerTotal = deliveryEntity.CustomerTotal ?? 0;
+            //折扣
+            var coupon = Math.Max(total - customerTotal, 0);
+            //打包费 = 总价(折扣后) - 送餐费 - 服务费 - 灶具费
+            var packageFee = customerTotal - fixedDeliveryFee - servicesFee - cookingFee;
+
             var result = new WaiMaiOrderDetailModel
             {
                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
@@ -432,9 +448,6 @@ namespace Ets.SingleApi.Services
                 DateReserved = deliveryEntity.DateAdded == null ? string.Empty : deliveryEntity.DateAdded.Value.ToString("yyyy-MM-dd HH:mm"),
                 DeliveryTime = deliveryEntity.DeliveryDate == null ? string.Empty : deliveryEntity.DeliveryDate.Value.ToString("yyyy-MM-dd HH:mm"),
                 DeliveryInstruction = deliveryEntity.DeliveryInstruction ?? string.Empty,
-                CustomerTotal = (deliveryEntity.CustomerTotal ?? 0).ToString("#0.00"),
-                Total = (deliveryEntity.Total ?? 0).ToString("#0.00"),
-                Coupon = Math.Max(((deliveryEntity.Total ?? 0) - (deliveryEntity.CustomerTotal ?? 0)), 0).ToString("#0.00"),
                 Commission = "0.00",
                 PackagingFee = (deliveryEntity.PackagingFee ?? 0).ToString("#0.00"),
                 FixedDeliveryFee = (deliveryEntity.DeliverCharge ?? 0).ToString("#0.00"),
@@ -457,7 +470,15 @@ namespace Ets.SingleApi.Services
                 DeliveryAddress = deliveryAddressEntity == null ? string.Empty : string.Format("{0}{1}", deliveryAddressEntity.Address1, deliveryAddressEntity.Address2),
                 DeliveryCustomerName = deliveryEntity.Contact.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Recipient) : deliveryEntity.Contact,
                 DeliveryCustomerTelphone = deliveryEntity.ContactPhone.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Telephone) : deliveryEntity.ContactPhone,
-                DeliveryCustomerGender = gender
+                DeliveryCustomerGender = gender,
+
+                CookingFee = cookingFee.ToString("#0.00"),//灶具费
+                PackageFee = packageFee.ToString("#0.00"),//打包费 = 总价(折扣后) - 送餐费 - 服务费 - 灶具费
+                FixedDeliveryFee = fixedDeliveryFee.ToString("#0.00"),//送餐费
+                ServicesFee = servicesFee.ToString("#0.00"),//服务费
+                Coupon = coupon.ToString("#0.00"),//折扣
+                CustomerTotal = customerTotal.ToString("#0.00"),//总价 折扣后
+                Total = total.ToString("#0.00")//总价 未折扣
             };
 
             if (result.InvoiceTitle.IsEmptyOrNull())
