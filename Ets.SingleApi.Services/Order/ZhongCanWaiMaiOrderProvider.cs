@@ -406,23 +406,7 @@ namespace Ets.SingleApi.Services
 
             //获取ShoppingCartId
             var shoppingCartIdByOrderIdResult = this.shoppingCartAndOrderNoCacheServices.GetShoppingCartIdByOrderId(source, orderId.ToString());
-            if (shoppingCartIdByOrderIdResult == null)
-            {
-                return new ServicesResult<IOrderDetailModel>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = new WaiMaiOrderDetailModel()
-                };
-            }
-            if (shoppingCartIdByOrderIdResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<IOrderDetailModel>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = new WaiMaiOrderDetailModel()
-                };
-            }
-            var shoppingCartId = shoppingCartIdByOrderIdResult.Result;
+            var shoppingCartId = shoppingCartIdByOrderIdResult == null ? string.Empty : shoppingCartIdByOrderIdResult.Result;
 
             //总价 未折扣
             var total = deliveryEntity.Total ?? 0;
