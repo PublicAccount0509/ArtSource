@@ -91,7 +91,8 @@
                                       Amount = requst.Amount,
                                       PayDate = System.DateTime.Now,
                                       OrderType = requst.OrderType,
-                                      ReturnUrl = requst.ReturnUrl
+                                      ReturnUrl = requst.ReturnUrl,
+                                      NotifyUrl = requst.NotifyUrl
                                   });
 
             return new Response<PaymentResult>

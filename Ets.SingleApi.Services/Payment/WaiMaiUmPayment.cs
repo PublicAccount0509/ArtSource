@@ -131,7 +131,7 @@
             if (!umPaymentData.ReturnUrl.IsEmptyOrNull())
             {
                 ht.Add("ret_url", umPaymentData.ReturnUrl); //页面返回地址
-                ht.Add("notify_url", umPaymentData.ReturnUrl); //结果通讯地址
+                ht.Add("notify_url", umPaymentData.NotifyUrl); //结果通讯地址
             }
 
             var reqData = com.umpay.api.paygate.v40.Mer2Plat_v40.ReqDataByGet(ht); //标准支付下单

@@ -111,7 +111,8 @@ namespace Ets.SingleApi.Services
                                                OrderId = parameter.OrderId,
                                                Amount = parameter.Amount,
                                                PayDate = parameter.PayDate,
-                                               ReturnUrl = parameter.ReturnUrl
+                                               ReturnUrl = parameter.ReturnUrl,
+                                               NotifyUrl = parameter.NotifyUrl
                                            });
 
             if (result == null)
