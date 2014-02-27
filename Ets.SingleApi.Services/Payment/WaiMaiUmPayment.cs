@@ -131,6 +131,9 @@
             if (!umPaymentData.ReturnUrl.IsEmptyOrNull())
             {
                 ht.Add("ret_url", umPaymentData.ReturnUrl); //页面返回地址
+            }
+            if (!umPaymentData.NotifyUrl.IsEmptyOrNull())
+            {
                 ht.Add("notify_url", umPaymentData.NotifyUrl); //结果通讯地址
             }
 
