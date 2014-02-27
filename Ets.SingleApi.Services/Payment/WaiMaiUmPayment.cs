@@ -232,7 +232,7 @@
             }
 
             var result = this.GetTradeState((req["trade_state"] ?? string.Empty).ToString());
-            if (result != StatusCode.UmPayment.Ok)
+            if (result != StatusCode.UmPayment.Ok && result != StatusCode.UmPayment.TradeSuccessCode)
             {
                 return new PaymentResult<bool>
                 {
