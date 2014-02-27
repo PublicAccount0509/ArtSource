@@ -274,7 +274,7 @@ namespace Ets.SingleApi.Services
             this.SavePaymentEntity(deliveryInfo.DeliveryId, orderInfo.CustomerTotalFee, paymentMethodId, payBank);
 
             //修改 缓存订单支付方式
-            var modifyOrderPaymentMethodResult = this.shoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.OrderId.ToString(), paymentMethodId, payBank);
+            var modifyOrderPaymentMethodResult = this.shoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.Id, paymentMethodId, payBank);
             if (modifyOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
