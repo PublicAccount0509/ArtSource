@@ -85,21 +85,15 @@ namespace Ets.SingleApi.Services.Payment
             string strUrl = Controllers.ControllersCommon.RequestForOrderURL + "?" + BuildRequestURL(dictionary);
             var myReq = (HttpWebRequest)WebRequest.Create(strUrl);
             myReq.Method = "get";
-            try
-            {
-                using (WebResponse response = myReq.GetResponse())
-                {
-                    var HttpWResp = (HttpWebResponse)myReq.GetResponse();
-                    var myStream = HttpWResp.GetResponseStream();
 
-                    //获取服务器返回信息
-                    var Reader = new XmlTextReader(myStream);
-                    xmlDoc.Load(Reader);
-                }
-            }
-            catch
+            using (WebResponse response = myReq.GetResponse())
             {
+                var HttpWResp = (HttpWebResponse)myReq.GetResponse();
+                var myStream = HttpWResp.GetResponseStream();
 
+                //获取服务器返回信息
+                var Reader = new XmlTextReader(myStream);
+                xmlDoc.Load(Reader);
             }
 
             dictionary.Clear();
