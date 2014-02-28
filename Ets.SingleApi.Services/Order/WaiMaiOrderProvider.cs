@@ -1,4 +1,7 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Model.ExternalServices;
+using Ets.SingleApi.Services.IExternalServices;
+
+namespace Ets.SingleApi.Services
 {
     using System.Linq;
     using Ets.SingleApi.Model;
@@ -39,6 +42,16 @@
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository;
 
+        ///// <summary>
+        ///// 字段singleApiOrdersExternalService
+        ///// </summary>
+        ///// 创建者：王巍
+        ///// 创建日期：12/13/2013 3:02 PM
+        ///// 修改者：
+        ///// 修改时间：
+        ///// ----------------------------------------------------------------------------------------
+        //private readonly ISingleApiOrdersExternalService singleApiOrdersExternalService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
@@ -51,10 +64,12 @@
         /// ----------------------------------------------------------------------------------------
         protected WaiMaiOrderProvider(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
-            INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository)
+            INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository
+            )
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.orderNumberDcEntityRepository = orderNumberDcEntityRepository;
+            //this.singleApiOrdersExternalService = singleApiOrdersExternalService;
         }
 
         /// <summary>
@@ -305,6 +320,17 @@
         /// ----------------------------------------------------------------------------------------
         protected int GetOrderNumberId()
         {
+            //var singleApiUrlParameter = new OrderNumberExternalUrlParameter
+            //{
+            //    OrderType = orderNumberParameter.OrderType,
+            //    OrderSourceType = orderNumberParameter.OrderSourceType
+            //};
+            //var postData = string.Empty;
+            //var singleApiAuthenParameter = new SingleApiExternalServiceAuthenParameter
+            //{
+            //};
+            //var OrderNo = singleApiOrdersExternalService.OrderNumber(singleApiUrlParameter, postData, singleApiAuthenParameter);
+
             var entity = this.orderNumberDcEntityRepository.EntityQueryable.FirstOrDefault();
             if (entity == null)
             {

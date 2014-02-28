@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -89,6 +90,10 @@
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
+    <Compile Include="ExternalServices\ExternalServiceResult.cs" />
+    <Compile Include="ExternalServices\IExternalUrlParameter.cs" />
+    <Compile Include="ExternalServices\OrderNumberExternalUrlParameter.cs" />
+    <Compile Include="ExternalServices\SingleApiExternalServiceAuthenParameter.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Mapping\Repository\BaiDuAppLightEntity.cs" />
     <Compile Include="Mapping\Repository\CustomizationOptionEntity.cs" />
