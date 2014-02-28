@@ -116,6 +116,7 @@
     <Compile Include="OrderNumber\IOrderNumber.cs" />
     <Compile Include="Order\DingTaiOrderProvider.cs" />
     <Compile Include="Order\HuangTaiJiWaiMaiOrderProvider.cs" />
+    <Compile Include="Order\IOrderBaseProvider.cs" />
     <Compile Include="Order\IOrderProvider.cs" />
     <Compile Include="Order\IUserOrders.cs" />
     <Compile Include="OrderNumber\OrderNumberResult.cs" />
