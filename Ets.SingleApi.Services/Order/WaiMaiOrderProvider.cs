@@ -1,7 +1,4 @@
-﻿using Ets.SingleApi.Model.ExternalServices;
-using Ets.SingleApi.Services.IExternalServices;
-
-namespace Ets.SingleApi.Services
+﻿namespace Ets.SingleApi.Services
 {
     using System.Linq;
     using Ets.SingleApi.Model;
@@ -9,6 +6,8 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
+    using Ets.SingleApi.Model.ExternalServices;
+    using Ets.SingleApi.Services.IExternalServices;
 
     /// <summary>
     /// 类名称：WaiMaiOrderProvider
@@ -320,17 +319,6 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         protected int GetOrderNumberId()
         {
-            //var singleApiUrlParameter = new OrderNumberExternalUrlParameter
-            //{
-            //    OrderType = orderNumberParameter.OrderType,
-            //    OrderSourceType = orderNumberParameter.OrderSourceType
-            //};
-            //var postData = string.Empty;
-            //var singleApiAuthenParameter = new SingleApiExternalServiceAuthenParameter
-            //{
-            //};
-            //var OrderNo = singleApiOrdersExternalService.OrderNumber(singleApiUrlParameter, postData, singleApiAuthenParameter);
-
             var entity = this.orderNumberDcEntityRepository.EntityQueryable.FirstOrDefault();
             if (entity == null)
             {
@@ -341,5 +329,19 @@ namespace Ets.SingleApi.Services
             this.orderNumberDcEntityRepository.Remove(entity);
             return orderNumber;
         }
+
+        //private int GetOrderNumber()
+        //{
+        //    var singleApiUrlParameter = new OrderNumberExternalUrlParameter
+        //    {
+        //        OrderType = (int)this.OrderProviderType.OrderType,
+        //        OrderSourceType = (int)this.GetOrderSourceType()
+        //    };
+        //    var postData = string.Empty;
+        //    var singleApiAuthenParameter = new SingleApiExternalServiceAuthenParameter
+        //    {
+        //    };
+        //    var OrderNo = singleApiOrdersExternalService.OrderNumber(singleApiUrlParameter, postData, singleApiAuthenParameter);
+        //}
     }
 }
