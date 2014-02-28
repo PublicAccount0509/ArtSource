@@ -136,6 +136,7 @@
     <Compile Include="Payment\BaiFuBaoPaymentCommon.cs" />
     <Compile Include="Payment\BaiFuBaoPaymentData.cs" />
     <Compile Include="Payment\BaiFuBaoPaymentQueryData.cs" />
+    <Compile Include="Payment\IOnlinePayment.cs" />
     <Compile Include="Payment\IPayment.cs" />
     <Compile Include="Payment\IPaymentData.cs" />
     <Compile Include="Payment\PaymentResult.cs" />
