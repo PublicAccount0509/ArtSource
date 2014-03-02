@@ -26,13 +26,7 @@ namespace Ets.SingleApi.Model.ExternalServices
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string AppKey
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["AppKey"] ?? string.Empty;
-            }
-        }
+        public string AppKey { get; set; }
 
         /// <summary>
         /// 取得AppPassword值
@@ -45,13 +39,7 @@ namespace Ets.SingleApi.Model.ExternalServices
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string AppPassword
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["AppPassword"] ?? string.Empty;
-            }
-        }
+        public string AppPassword { get; set; }
 
         /// <summary>
         /// 取得Source值
@@ -64,12 +52,6 @@ namespace Ets.SingleApi.Model.ExternalServices
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Source
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["Source"] ?? string.Empty;
-            }
-        }
+        public string Source { get; set; }
     }
 }

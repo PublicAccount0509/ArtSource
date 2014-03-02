@@ -61,6 +61,7 @@
   <item code="40026" message="无效的百度轻应用程序Id"></item>
   <item code="40027" message="未达到餐厅的最低消费，不能下单"></item>
   <item code="40028" message="无效的支付方式"></item>
+  <item code="40029" message="订单已经支付成功，请勿重复支付"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>

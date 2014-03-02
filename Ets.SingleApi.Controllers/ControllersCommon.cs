@@ -176,6 +176,25 @@
         }
 
         /// <summary>
+        /// 默认权限码密码
+        /// </summary>
+        /// <value>
+        /// 默认权限码密码
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string DefaultAppPassword
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["DefaultAppPassword"] ?? string.Empty).Trim();
+            }
+        }
+
+        /// <summary>
         /// 空发票显示信息
         /// </summary>
         /// <value>

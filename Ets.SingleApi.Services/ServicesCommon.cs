@@ -21,6 +21,25 @@
     public class ServicesCommon
     {
         /// <summary>
+        /// 是否从服务器获取订单号
+        /// </summary>
+        /// <value>
+        /// 是否从服务器获取订单号
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool FromServerEnable
+        {
+            get
+            {
+                return string.Equals(ConfigurationManager.AppSettings["FromServerEnable"], "true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
         /// 是否取餐厅送餐费
         /// </summary>
         /// <value>

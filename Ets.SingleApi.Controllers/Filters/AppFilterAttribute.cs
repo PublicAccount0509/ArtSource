@@ -39,6 +39,7 @@
             if (!ControllersCommon.ApplicationValidationEnabled)
             {
                 controller.AppKey = ControllersCommon.DefaultAppKey;
+                controller.AppPassword = ControllersCommon.DefaultAppPassword;
                 return;
             }
 
@@ -73,6 +74,7 @@
             }
 
             controller.AppKey = appKey;
+            controller.AppPassword = appPassword;
         }
     }
 }

@@ -165,7 +165,7 @@
         [HttpGet]
         public Response<string> OrderNumber(int orderType, int orderSourceType = 0)
         {
-            var getOrderNumberResult = this.orderServices.GetOrderNumber(this.Source, orderType, orderSourceType);
+            var getOrderNumberResult = this.orderServices.GetOrderNumber(this.Source, this.AppKey, this.AppPassword, orderType, orderSourceType);
             if (getOrderNumberResult.Result == null)
             {
                 return new Response<string>

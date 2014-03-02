@@ -69,6 +69,17 @@ namespace Ets.SingleApi.Services
             this.paymentEntityRepository = paymentEntityRepository;
         }
 
+        /// <summary>
+        /// 取得订单类型
+        /// </summary>
+        /// <value>
+        /// 订单类型
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2/28/2014 3:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public OrderType OrderType
         {
             get { return OrderType.WaiMai; }
