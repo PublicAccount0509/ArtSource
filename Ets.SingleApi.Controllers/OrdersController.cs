@@ -127,7 +127,7 @@
         [HttpPost]
         public Response<string> SaveOrder(string shoppingCartId, int orderType, int orderSourceType = 0)
         {
-            var getOrderResult = this.orderServices.SaveOrder(this.Source, shoppingCartId, orderType, orderSourceType);
+            var getOrderResult = this.orderServices.SaveOrder(this.Source, shoppingCartId, this.AppKey, this.AppPassword, orderType, orderSourceType);
             if (getOrderResult.Result == null)
             {
                 return new Response<string>

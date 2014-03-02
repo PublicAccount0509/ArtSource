@@ -7,6 +7,7 @@
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.ExternalServices;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.ICacheServices;
     using Ets.SingleApi.Services.IExternalServices;
     using Ets.SingleApi.Utility;
 
@@ -43,6 +44,16 @@
         private readonly List<IOrderBaseProvider> orderBaseProviderList;
 
         /// <summary>
+        /// 字段shoppingCartBaseCacheServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 7:27 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
+
+        /// <summary>
         /// 字段singleApiOrdersExternalService
         /// </summary>
         /// 创建者：周超
@@ -57,6 +68,7 @@
         /// </summary>
         /// <param name="orderProviderList">The orderProviderList</param>
         /// <param name="orderBaseProviderList">The orderBaseProviderList</param>
+        /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:30 PM
@@ -66,10 +78,12 @@
         public OrderServices(
             List<IOrderProvider> orderProviderList,
             List<IOrderBaseProvider> orderBaseProviderList,
+            IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
             ISingleApiOrdersExternalService singleApiOrdersExternalService)
         {
             this.orderProviderList = orderProviderList;
             this.orderBaseProviderList = orderBaseProviderList;
+            this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
             this.singleApiOrdersExternalService = singleApiOrdersExternalService;
         }
 
@@ -146,6 +160,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
@@ -156,7 +172,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> SaveOrder(string source, string shoppingCartId, int orderType, int orderSourceType)
+        public ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword, int orderType, int orderSourceType)
         {
             var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
             if (orderProvider == null)
@@ -167,7 +183,7 @@
                 };
             }
 
-            var result = orderProvider.SaveOrder(source, shoppingCartId);
+            var result = orderProvider.SaveOrder(source, shoppingCartId, appKey, appPassword);
             return new ServicesResult<string>
             {
                 StatusCode = result.StatusCode,
@@ -291,12 +307,48 @@
         public ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank,
                                                        int orderType, int orderSourceType)
         {
+            var shoppingCartBase = this.shoppingCartBaseCacheServices.GetShoppingCartBase(source, shoppingCartId);
+            if (shoppingCartBase.Result == null)
+            {
+                return new ServicesResult<bool>
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidShoppingCartIdCode
+                    };
+            }
+
+            if (shoppingCartBase.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = shoppingCartBase.StatusCode
+                };
+            }
+
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
             var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
             if (orderProvider == null)
             {
                 return new ServicesResult<bool>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var orderId = shoppingCartBase.Result.OrderNumber;
+            var saveOrderPaymentMethodResult = orderBaseProvider.SaveOrderPaymentMethod(source, orderId, paymentMethodId, payBank);
+            if (saveOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = saveOrderPaymentMethodResult.StatusCode
                 };
             }
 

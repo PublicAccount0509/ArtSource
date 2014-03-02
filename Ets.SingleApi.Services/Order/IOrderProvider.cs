@@ -63,6 +63,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -71,7 +73,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> SaveOrder(string source, string shoppingCartId);
+        ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword);
 
         /// <summary>
         /// 取得一个订单号

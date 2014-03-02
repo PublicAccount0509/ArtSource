@@ -41,21 +41,22 @@
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository;
 
-        ///// <summary>
-        ///// 字段singleApiOrdersExternalService
-        ///// </summary>
-        ///// 创建者：王巍
-        ///// 创建日期：12/13/2013 3:02 PM
-        ///// 修改者：
-        ///// 修改时间：
-        ///// ----------------------------------------------------------------------------------------
-        //private readonly ISingleApiOrdersExternalService singleApiOrdersExternalService;
+        /// <summary>
+        /// 字段singleApiOrdersExternalService
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 7:04 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISingleApiOrdersExternalService singleApiOrdersExternalService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
+        /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -63,12 +64,12 @@
         /// ----------------------------------------------------------------------------------------
         protected WaiMaiOrderProvider(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
-            INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository
-            )
+            INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
+            ISingleApiOrdersExternalService singleApiOrdersExternalService)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.orderNumberDcEntityRepository = orderNumberDcEntityRepository;
-            //this.singleApiOrdersExternalService = singleApiOrdersExternalService;
+            this.singleApiOrdersExternalService = singleApiOrdersExternalService;
         }
 
         /// <summary>
@@ -142,7 +143,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<string> GetOrderNumber(string source)
         {
-            var orderId = this.GetOrderNumberId();
+            var orderId = this.GetOrderNumberId(source, string.Empty, string.Empty);
             if (orderId <= 0)
             {
                 return new ServicesResult<string>
@@ -282,6 +283,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -290,7 +293,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public abstract ServicesResult<string> SaveOrder(string source, string shoppingCartId);
+        public abstract ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword);
 
         /// <summary>
         /// Gets the type of the order source.
@@ -316,7 +319,25 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        protected int GetOrderNumberId()
+        protected int GetOrderNumberId(string source, string appKey, string appPassword)
+        {
+            return ServicesCommon.FromServerEnable
+                       ? this.GetServerOrderNumber(source, appKey, appPassword)
+                       : this.GetLocalOrderNumber();
+        }
+
+        /// <summary>
+        /// 从本地获取订单号
+        /// </summary>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 11:33 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int GetLocalOrderNumber()
         {
             var entity = this.orderNumberDcEntityRepository.EntityQueryable.FirstOrDefault();
             if (entity == null)
@@ -329,18 +350,30 @@
             return orderNumber;
         }
 
-        //private int GetOrderNumber()
-        //{
-        //    var singleApiUrlParameter = new OrderNumberExternalUrlParameter
-        //    {
-        //        OrderType = (int)this.OrderProviderType.OrderType,
-        //        OrderSourceType = (int)this.GetOrderSourceType()
-        //    };
-        //    var postData = string.Empty;
-        //    var singleApiAuthenParameter = new SingleApiExternalServiceAuthenParameter
-        //    {
-        //    };
-        //    var OrderNo = singleApiOrdersExternalService.OrderNumber(singleApiUrlParameter, postData, singleApiAuthenParameter);
-        //}
+        /// <summary>
+        /// 从服务器获取订单号
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 11:34 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int GetServerOrderNumber(string source, string appKey, string appPassword)
+        {
+            var result = this.singleApiOrdersExternalService.OrderNumber(
+                  new OrderNumberExternalUrlParameter { OrderType = (int)this.OrderProviderType.OrderType },
+                  string.Empty,
+                  new SingleApiExternalServiceAuthenParameter { AppKey = appKey, AppPassword = appPassword, Source = source });
+
+            int orderNumber;
+            int.TryParse(result.Result, out orderNumber);
+            return orderNumber;
+        }
     }
 }

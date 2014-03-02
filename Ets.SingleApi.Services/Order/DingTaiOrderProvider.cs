@@ -109,6 +109,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -117,7 +119,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> SaveOrder(string source, string shoppingCartId)
+        public ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword)
         {
             return new ServicesResult<string>
             {

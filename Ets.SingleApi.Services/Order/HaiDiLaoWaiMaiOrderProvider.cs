@@ -11,6 +11,7 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.IExternalServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
@@ -183,7 +184,8 @@ namespace Ets.SingleApi.Services
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="distance">The distance</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
-        /// <param name="shoppingCartAndOrderNoCacheServices"></param>
+        /// <param name="shoppingCartAndOrderNoCacheServices">The shoppingCartAndOrderNoCacheServices</param>
+        /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -204,8 +206,9 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             IDistance distance,
             IHaiDiLaoShoppingCartProvider shoppingCartProvider,
-            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
-            : base(deliveryEntityRepository, orderNumberDcEntityRepository)
+            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices,
+            ISingleApiOrdersExternalService singleApiOrdersExternalService)
+            : base(deliveryEntityRepository, orderNumberDcEntityRepository, singleApiOrdersExternalService)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.sourcePathEntityRepository = sourcePathEntityRepository;
@@ -530,6 +533,8 @@ namespace Ets.SingleApi.Services
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -539,7 +544,7 @@ namespace Ets.SingleApi.Services
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [Transaction(TransactionMode.RequiresNew)]
-        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId)
+        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword)
         {
             var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -657,7 +662,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var orderId = this.GetOrderNumberId();
+            var orderId = this.GetOrderNumberId(source, appKey, appPassword);
             if (orderId <= 0)
             {
                 return new ServicesResult<string>
@@ -712,6 +717,7 @@ namespace Ets.SingleApi.Services
         {
             return OrderSourceType.HaiDiLao;
         }
+
         /// <summary>
         /// 保存自提订单详情
         /// </summary>

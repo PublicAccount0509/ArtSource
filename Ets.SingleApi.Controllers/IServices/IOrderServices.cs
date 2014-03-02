@@ -54,6 +54,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
@@ -64,7 +66,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> SaveOrder(string source, string shoppingCartId, int orderType, int orderSourceType);
+        ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword, int orderType, int orderSourceType);
 
         /// <summary>
         /// 获取订单号

@@ -9,6 +9,7 @@
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.IExternalServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
     using Ets.SingleApi.Services.ICacheServices;
@@ -162,6 +163,7 @@
         /// <param name="distance">The distance</param>
         /// <param name="zhongCanShoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
+        /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -180,8 +182,9 @@
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             IDistance distance,
             IZhongCanShoppingCartProvider zhongCanShoppingCartProvider,
-            IShoppingCartBaseCacheServices shoppingCartBaseCacheServices)
-            : base(deliveryEntityRepository, orderNumberDcEntityRepository)
+            IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
+            ISingleApiOrdersExternalService singleApiOrdersExternalService)
+            : base(deliveryEntityRepository, orderNumberDcEntityRepository, singleApiOrdersExternalService)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.sourcePathEntityRepository = sourcePathEntityRepository;
@@ -240,13 +243,6 @@
 
             //订单信息
             var orderInfo = getShoppingCartOrderResult.Result;
-
-            //递送信息
-            var deliveryInfo = this.deliveryEntityRepository.FindSingleByExpression(c => c.OrderNumber == orderInfo.OrderId);
-
-            //修改 订单支付方式
-            this.SavePaymentEntity(deliveryInfo.DeliveryId, orderInfo.CustomerTotalFee, paymentMethodId, payBank);
-
             //修改 缓存订单支付方式
             var modifyOrderPaymentMethodResult = this.zhongCanShoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.Id, paymentMethodId, payBank);
             if (modifyOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -329,7 +325,6 @@
                     }
             };
         }
-
 
         /// <summary>
         /// 取得订单详情
@@ -462,6 +457,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">购物车Id</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -471,7 +468,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [Transaction(TransactionMode.RequiresNew)]
-        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId)
+        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword)
         {
             var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -589,7 +586,7 @@
                 };
             }
 
-            var orderId = this.GetOrderNumberId();
+            var orderId = this.GetOrderNumberId(source, appKey, appPassword);
             if (orderId <= 0)
             {
                 return new ServicesResult<string>
