@@ -31,18 +31,31 @@
         private readonly List<IOrderProvider> orderProviderList;
 
         /// <summary>
+        /// 字段orderBaseProviderList
+        /// </summary>
+        /// 创建者：单琪彬
+        /// 创建日期：2/28/2014 4:53 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly List<IOrderBaseProvider> orderBaseProviderList;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrderServices" /> class.
         /// </summary>
         /// <param name="orderProviderList">The orderProviderList</param>
+        /// <param name="orderBaseProviderList"></param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:30 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public OrderServices(
-            List<IOrderProvider> orderProviderList)
+            List<IOrderProvider> orderProviderList,
+            List<IOrderBaseProvider> orderBaseProviderList)
         {
             this.orderProviderList = orderProviderList;
+            this.orderBaseProviderList = orderBaseProviderList;
         }
 
         /// <summary>
@@ -62,8 +75,8 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<int> Exist(string source, int orderId, int orderType, int orderSourceType)
         {
-            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
-            if (orderProvider == null)
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            if (orderBaseProvider == null)
             {
                 return new ServicesResult<int>
                 {
@@ -71,7 +84,7 @@
                 };
             }
 
-            var result = orderProvider.Exist(source, orderId);
+            var result = orderBaseProvider.Exist(source, orderId);
             return new ServicesResult<int>
             {
                 StatusCode = result.StatusCode,
@@ -163,8 +176,8 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<string> GetOrderNumber(string source, int orderType, int orderSourceType)
         {
-            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
-            if (orderProvider == null)
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            if (orderBaseProvider == null)
             {
                 return new ServicesResult<string>
                 {
@@ -172,7 +185,7 @@
                 };
             }
 
-            var result = orderProvider.GetOrderNumber(source);
+            var result = orderBaseProvider.GetOrderNumber(source);
             return new ServicesResult<string>
             {
                 StatusCode = result.StatusCode,

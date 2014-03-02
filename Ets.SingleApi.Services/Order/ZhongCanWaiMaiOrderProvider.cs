@@ -1,4 +1,6 @@
 ﻿using Ets.SingleApi.Services.ICacheServices;
+using Ets.SingleApi.Services.IExternalServices;
+
 namespace Ets.SingleApi.Services
 {
     using System;
@@ -145,7 +147,6 @@ namespace Ets.SingleApi.Services
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
