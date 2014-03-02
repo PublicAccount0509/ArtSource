@@ -5,7 +5,7 @@ using Ets.SingleApi.Model.Services;
 using Ets.SingleApi.Services.IRepository;
 using Ets.SingleApi.Utility;
 
-namespace Ets.SingleApi.Services.Order
+namespace Ets.SingleApi.Services
 {
     /// <summary>
     /// 类名称：TangShiOrderBaseProvider
