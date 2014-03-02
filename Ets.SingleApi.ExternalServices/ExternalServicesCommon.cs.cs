@@ -44,6 +44,7 @@ namespace Ets.SingleApi.ExternalServices
             client.Headers["Source"] = parameter.Source;
             return client;
         }
+
         /// <summary>
         /// SingleApi服务地址
         /// </summary>
@@ -60,24 +61,6 @@ namespace Ets.SingleApi.ExternalServices
             get
             {
                 return (ConfigurationManager.AppSettings["SingleApiServer"] ?? string.Empty).Trim('/', '\\');
-            }
-        }
-        /// <summary>
-        /// Gets the orders service.
-        /// </summary>
-        /// <value>
-        /// The orders service.
-        /// </value>
-        /// 创建者：单琪彬
-        /// 创建日期：12/5/2013 1:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public static string OrdersService
-        {
-            get
-            {
-                return (ConfigurationManager.AppSettings["OrdersService"] ?? string.Empty).Trim('/', '\\');
             }
         }
     }

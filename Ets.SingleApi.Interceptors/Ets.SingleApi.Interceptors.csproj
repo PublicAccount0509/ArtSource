@@ -57,7 +57,7 @@
     <Compile Include="InterceptorCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesInterceptor.cs" />
-    <Compile Include="SmsExternalServicesInterceptor.cs" />
+    <Compile Include="ExternalServicesInterceptor.cs" />
     <Compile Include="WapControllerInterceptor.cs" />
     <Compile Include="CacheInterceptor.cs" />
   </ItemGroup>

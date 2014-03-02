@@ -15,7 +15,6 @@ namespace Ets.SingleApi.ExternalServices
     /// ----------------------------------------------------------------------------------------
     public class SingleApiOrdersExternalService : ISingleApiOrdersExternalService
     {
-
         /// <summary>
         /// 获取订单号
         /// </summary>
@@ -37,10 +36,11 @@ namespace Ets.SingleApi.ExternalServices
             {
                 return new ExternalServiceResult();
             }
+
             using (var client = ExternalServicesCommon.CreateSingleApiWebClient(authenParameter))
             {
-                var url = string.Format("/OrderNumber?orderType={0}&orderSourceType={1}", parameter.OrderType, parameter.OrderSourceType);
-                var addrress = string.Format("{0}/{1}/{2}", ExternalServicesCommon.SingleApiServer, ExternalServicesCommon.OrdersService, url.Trim('/', '\\'));
+                var url = string.Format("Orders/OrderNumber?orderType={0}", parameter.OrderType);
+                var addrress = string.Format("{0}/{1}", ExternalServicesCommon.SingleApiServer, url.Trim('/', '\\'));
                 var result = client.DownloadString(addrress);
                 return new ExternalServiceResult
                 {

@@ -5,7 +5,9 @@
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Model.ExternalServices;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.IExternalServices;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -41,10 +43,21 @@
         private readonly List<IOrderBaseProvider> orderBaseProviderList;
 
         /// <summary>
+        /// 字段singleApiOrdersExternalService
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 11:10 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISingleApiOrdersExternalService singleApiOrdersExternalService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrderServices" /> class.
         /// </summary>
         /// <param name="orderProviderList">The orderProviderList</param>
-        /// <param name="orderBaseProviderList"></param>
+        /// <param name="orderBaseProviderList">The orderBaseProviderList</param>
+        /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:30 PM
         /// 修改者：
@@ -52,10 +65,12 @@
         /// ----------------------------------------------------------------------------------------
         public OrderServices(
             List<IOrderProvider> orderProviderList,
-            List<IOrderBaseProvider> orderBaseProviderList)
+            List<IOrderBaseProvider> orderBaseProviderList,
+            ISingleApiOrdersExternalService singleApiOrdersExternalService)
         {
             this.orderProviderList = orderProviderList;
             this.orderBaseProviderList = orderBaseProviderList;
+            this.singleApiOrdersExternalService = singleApiOrdersExternalService;
         }
 
         /// <summary>
@@ -164,6 +179,8 @@
         /// 获取订单号
         /// </summary>
         /// <param name="source">The source</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
         /// <returns>
@@ -174,18 +191,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> GetOrderNumber(string source, int orderType, int orderSourceType)
+        public ServicesResult<string> GetOrderNumber(string source, string appKey, string appPassword, int orderType, int orderSourceType)
         {
-            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
-            if (orderBaseProvider == null)
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
-                };
-            }
+            var result = ServicesCommon.FromServerEnable
+                       ? this.GetServerOrderNumber(source, appKey, appPassword, orderType)
+                       : this.GetLocalOrderNumber(source, orderType);
 
-            var result = orderBaseProvider.GetOrderNumber(source);
             return new ServicesResult<string>
             {
                 StatusCode = result.StatusCode,
@@ -312,8 +323,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId, int orderType,
-                                                                       int orderSourceType)
+        public ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId, int orderType, int orderSourceType)
         {
             var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
             if (orderProvider == null)
@@ -327,6 +337,67 @@
 
             var result = orderProvider.GetOrderShoppingCartStatus(source, shoppingCartId);
             return new ServicesResult<OrderShoppingCartStatusModel>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 从本地获取订单号
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 11:33 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private ServicesResult<string> GetLocalOrderNumber(string source, int orderType)
+        {
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var result = orderBaseProvider.GetOrderNumber(source);
+            return new ServicesResult<string>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 从服务器获取订单号
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 11:34 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private ServicesResult<string> GetServerOrderNumber(string source, string appKey, string appPassword, int orderType)
+        {
+            var result = this.singleApiOrdersExternalService.OrderNumber(
+                  new OrderNumberExternalUrlParameter { OrderType = orderType },
+                  string.Empty,
+                  new SingleApiExternalServiceAuthenParameter { AppKey = appKey, AppPassword = appPassword, Source = source });
+
+            return new ServicesResult<string>
             {
                 StatusCode = result.StatusCode,
                 Result = result.Result

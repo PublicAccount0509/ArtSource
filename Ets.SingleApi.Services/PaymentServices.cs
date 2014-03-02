@@ -105,6 +105,15 @@ namespace Ets.SingleApi.Services
                 };
             }
 
+            if (existResult.Result == 1)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.DoublePayment
+                };
+            }
+
             var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.UmPayment);
             if (payment == null)
             {
@@ -267,6 +276,15 @@ namespace Ets.SingleApi.Services
                 {
                     Result = string.Empty,
                     StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            if (existResult.Result == 1)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.DoublePayment
                 };
             }
 

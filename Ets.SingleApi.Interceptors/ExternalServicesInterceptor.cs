@@ -18,7 +18,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SmsExternalServicesInterceptor : IInterceptor
+    public class ExternalServicesInterceptor : IInterceptor
     {
         /// <summary>
         /// 记录日志的名称
@@ -35,7 +35,7 @@
         {
             get
             {
-                return "Ets.SingleApi.SmsExternalServices";
+                return "Ets.SingleApi.ExternalServices";
             }
         }
 
