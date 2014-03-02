@@ -125,8 +125,8 @@ namespace Ets.SingleApi.Services
             subpara.extra = "ext";
             subpara.sp_no = ControllersCommon.BaiFuBaoMerchantAcctId;
 
-            const string sign_method = "1"; //加密规则 1 MID5，2 SHA1
-            var result = ControllersCommon.InstantToAccountUrlWapNotBaiDuLogin + "?" + BaiFuBaoPaymentCommon.BuildBaiFuBaoPaymentUrl(subpara, true) + "&sign=" + BaiFuBaoPaymentCommon.BuildBaiFuBaoSignature(BaiFuBaoPaymentCommon.BuildBaiFuBaoPaymentUrl(subpara), sign_method);
+            const string signMethod = "1"; //加密规则 1 MID5，2 SHA1
+            var result = ControllersCommon.InstantToAccountUrlWapNotBaiDuLogin + "?" + BaiFuBaoPaymentCommon.BuildBaiFuBaoPaymentUrl(subpara, true) + "&sign=" + BaiFuBaoPaymentCommon.BuildBaiFuBaoSignature(BaiFuBaoPaymentCommon.BuildBaiFuBaoPaymentUrl(subpara), signMethod);
 
             return new PaymentResult<string> { Result = result, StatusCode = (int)StatusCode.Succeed.Ok };
         }
