@@ -287,26 +287,26 @@
         /// <summary>
         /// 按订单号查询支付结果接口
         /// </summary>
-        public static string RequestForOrderURL = "https://wallet.baidu.com/api/0/query/0/pay_result_by_order_no";
+        public static string RequestForOrderUrl = "https://wallet.baidu.com/api/0/query/0/pay_result_by_order_no";
 
         /// <summary>
         /// 即时到账支付接口（不要求登录百度钱包）
         /// </summary>
-        public const string InstantToAccountURL = "https://wallet.baidu.com/api/0/pay/0/direct";
+        public const string InstantToAccountUrl = "https://wallet.baidu.com/api/0/pay/0/direct";
 
         /// <summary>
         /// 即时到账支付接口（要求登录百度钱包）
         /// </summary>
-        public static string InstantToAccountURL2 = "https://wallet.baidu.com/api/0/pay/0/direct/0";
+        public static string InstantToAccountUrl2 = "https://wallet.baidu.com/api/0/pay/0/direct/0";
 
         /// <summary>
         /// 移动端即时到账支付接口（要求登录百付宝）
         /// </summary>
-        public static string InstantToAccountURL_Wap_BaiDuLogin = "https://www.baifubao.com/api/0/pay/0/wapdirect/0";
+        public static string InstantToAccountUrlWapBaiDuLogin = "https://www.baifubao.com/api/0/pay/0/wapdirect/0";
 
         /// <summary>
         /// 移动端即时到账支付接口（不要求登录百度钱包）
         /// </summary>
-        public static string InstantToAccountURL_Wap_NotBaiDuLogin = "https://www.baifubao.com/api/0/pay/0/wapdirect";
+        public static string InstantToAccountUrlWapNotBaiDuLogin = "https://www.baifubao.com/api/0/pay/0/wapdirect";
     }
 }
