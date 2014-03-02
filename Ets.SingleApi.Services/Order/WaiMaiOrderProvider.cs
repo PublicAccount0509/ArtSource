@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System.Json;
     using System.Linq;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
@@ -371,8 +372,20 @@
                   string.Empty,
                   new SingleApiExternalServiceAuthenParameter { AppKey = appKey, AppPassword = appPassword, Source = source });
 
+            var data = result.Result;
+            var jsonValue = JsonValue.Parse(data);
+            if (jsonValue == null || jsonValue["Message"] == null)
+            {
+                return 0;
+            }
+
+            if (jsonValue["Message"]["StatusCode"] != (int)StatusCode.Succeed.Ok)
+            {
+                return 0;
+            }
+
             int orderNumber;
-            int.TryParse(result.Result, out orderNumber);
+            int.TryParse(jsonValue["Result"]["OrderNumber"], out orderNumber);
             return orderNumber;
         }
     }
