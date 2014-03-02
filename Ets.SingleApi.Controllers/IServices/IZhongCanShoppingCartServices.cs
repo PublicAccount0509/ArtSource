@@ -15,7 +15,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public interface IShoppingCartServices
+    public interface IZhongCanShoppingCartServices
     {
         /// <summary>
         /// 取得购物车信息

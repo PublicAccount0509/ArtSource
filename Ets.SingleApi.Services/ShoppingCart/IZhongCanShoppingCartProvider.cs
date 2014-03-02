@@ -6,7 +6,7 @@
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
-    /// 接口名称：IShoppingCartProvider
+    /// 接口名称：IZhongCanShoppingCartProvider
     /// 命名空间：Ets.SingleApi.Services
     /// 接口功能：购物车功能
     /// </summary>
@@ -15,7 +15,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public interface IShoppingCartProvider
+    public interface IZhongCanShoppingCartProvider
     {
         /// <summary>
         /// 获取餐厅信息
@@ -184,21 +184,6 @@
         ServicesResult<bool> SaveShoppingCartLink(string source, ShoppingCartLink shoppingCartLink);
 
         /// <summary>
-        /// 将订单状态设置为完成状态
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">订单Id</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> CompleteShoppingCartOrder(string source, string orderId);
-
-        /// <summary>
         /// 验证送餐时间
         /// </summary>
         /// <param name="source">The source</param>
@@ -231,20 +216,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> ValidatePickUpTime(string source, int supplierId, DateTime pickUpTime, DateTime now);
-        /// <summary>
-        /// 激活购物车
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">The orderId</param>
-        /// <returns>
-        /// 返回是否激活成功
-        /// </returns>
-        /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 9:23 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> ActivationShoppingCart(string source, int orderId);
+
         /// <summary>
         /// 更改支付方式
         /// </summary>

@@ -83,7 +83,7 @@
     <Compile Include="IServices\IHuangTaiJiSupplierServices.cs" />
     <Compile Include="IServices\IOrderServices.cs" />
     <Compile Include="IServices\IPaymentServices.cs" />
-    <Compile Include="IServices\IShoppingCartServices.cs" />
+    <Compile Include="IServices\IZhongCanShoppingCartServices.cs" />
     <Compile Include="IServices\IShunFengShoppingCartServices.cs" />
     <Compile Include="IServices\ISmsServices.cs" />
     <Compile Include="IServices\IUsersServices.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="OrdersController.cs" />
     <Compile Include="PaymentController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShoppingCartController.cs" />
+    <Compile Include="ZhongCanShoppingCartController.cs" />
     <Compile Include="ShunFengShoppingCartController.cs" />
     <Compile Include="SingleApiController.cs" />
     <Compile Include="SmsController.cs" />

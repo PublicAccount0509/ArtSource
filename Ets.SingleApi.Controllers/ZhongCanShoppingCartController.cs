@@ -20,7 +20,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartController : SingleApiController
+    public class ZhongCanShoppingCartController : SingleApiController
     {
         /// <summary>
         /// 字段shoppingCartServices
@@ -30,20 +30,20 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartServices shoppingCartServices;
+        private readonly IZhongCanShoppingCartServices zhongCanShoppingCartServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartController"/> class.
+        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartController"/> class.
         /// </summary>
-        /// <param name="shoppingCartServices">The shoppingCartServices</param>
+        /// <param name="zhongCanShoppingCartServices">The shoppingCartServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartController(IShoppingCartServices shoppingCartServices)
+        public ZhongCanShoppingCartController(IZhongCanShoppingCartServices zhongCanShoppingCartServices)
         {
-            this.shoppingCartServices = shoppingCartServices;
+            this.zhongCanShoppingCartServices = zhongCanShoppingCartServices;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@
         [HttpGet]
         public Response<ShoppingCartModel> ShoppingCart(string id)
         {
-            var getShoppingCartResult = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var getShoppingCartResult = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             if (getShoppingCartResult.Result == null)
             {
                 return new Response<ShoppingCartModel>
@@ -118,7 +118,7 @@
                     ShoppingCart = requst.ShoppingCart
                 };
 
-            var getShoppingCartResult = this.shoppingCartServices.SaveShoppingCart(this.Source, id, shoppingCartModel);
+            var getShoppingCartResult = this.zhongCanShoppingCartServices.SaveShoppingCart(this.Source, id, shoppingCartModel);
             if (!getShoppingCartResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -131,7 +131,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -158,7 +158,7 @@
         [HttpPost]
         public Response<ShoppingCartModel> Create(int supplierId, string userId)
         {
-            var createShoppingCartResult = this.shoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
+            var createShoppingCartResult = this.zhongCanShoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
             if (createShoppingCartResult.Result.IsEmptyOrNull())
             {
                 return new Response<ShoppingCartModel>
@@ -171,7 +171,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
             return new Response<ShoppingCartModel>
                 {
                     Message = new ApiMessage
@@ -198,7 +198,7 @@
         [HttpPost]
         public Response<ShoppingCartModel> Customer(string id, int userId)
         {
-            var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
+            var saveShoppingCartCustomerResult = this.zhongCanShoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
             if (!saveShoppingCartCustomerResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -211,7 +211,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -258,7 +258,7 @@
                     CustomerAddressId = requst.CustomerAddressId
                 };
 
-            var saveShoppingCartCustomerResult = this.shoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
+            var saveShoppingCartCustomerResult = this.zhongCanShoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
             if (!saveShoppingCartCustomerResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -271,7 +271,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -311,7 +311,7 @@
             }
 
             var shoppingCartItemList = requst.ShoppingCartItemList ?? new List<ShoppingCartItem>();
-            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.zhongCanShoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -324,7 +324,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -369,7 +369,7 @@
                 shoppingCartItem.CategoryIdList = new List<int>();
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.zhongCanShoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -382,7 +382,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -421,7 +421,7 @@
                 };
             }
 
-            var saveShoppingItemResult = this.shoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
+            var saveShoppingItemResult = this.zhongCanShoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList, saveDeliveryMethodId);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -434,7 +434,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -493,7 +493,7 @@
                     OrderNotes = requst.OrderNotes
                 };
 
-            var saveShoppingItemResult = this.shoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon, isValidateDeliveryTime);
+            var saveShoppingItemResult = this.zhongCanShoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon, isValidateDeliveryTime);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -506,7 +506,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -533,7 +533,7 @@
         [HttpPost]
         public Response<ShoppingCartModel> SaveDeliveryMethod(string id, int deliveryMethodId)
         {
-            var saveShoppingCartOrderDeliveryMethodResult = this.shoppingCartServices.SaveShoppingCartOrderDeliveryMethod(this.Source, id, deliveryMethodId);
+            var saveShoppingCartOrderDeliveryMethodResult = this.zhongCanShoppingCartServices.SaveShoppingCartOrderDeliveryMethod(this.Source, id, deliveryMethodId);
             if (!saveShoppingCartOrderDeliveryMethodResult.Result)
             {
                 return new Response<ShoppingCartModel>
@@ -546,7 +546,7 @@
                 };
             }
 
-            var result = this.shoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.zhongCanShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<ShoppingCartModel>
             {
                 Message = new ApiMessage

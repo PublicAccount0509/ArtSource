@@ -13,7 +13,7 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：ShoppingCartServices
+    /// 类名称：ZhongCanShoppingCartServices
     /// 命名空间：Ets.SingleApi.Services
     /// 类功能：购物车功能
     /// </summary>
@@ -22,7 +22,7 @@ namespace Ets.SingleApi.Services
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartServices : IShoppingCartServices
+    public class ZhongCanShoppingCartServices : IZhongCanShoppingCartServices
     {
         /// <summary>
         /// 字段supplierDetailServices
@@ -42,7 +42,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartProvider shoppingCartProvider;
+        private readonly IZhongCanShoppingCartProvider zhongCanShoppingCartProvider;
 
         /// <summary>
         /// 字段supplierCouponProviderList
@@ -65,10 +65,10 @@ namespace Ets.SingleApi.Services
         private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartServices" /> class.
+        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartServices" /> class.
         /// </summary>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
-        /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
+        /// <param name="zhongCanShoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
         /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// 创建者：周超
@@ -76,14 +76,14 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartServices(
+        public ZhongCanShoppingCartServices(
             ISupplierDetailServices supplierDetailServices,
-            IShoppingCartProvider shoppingCartProvider,
+            IZhongCanShoppingCartProvider zhongCanShoppingCartProvider,
             List<ISupplierCouponProvider> supplierCouponProviderList,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices)
         {
             this.supplierDetailServices = supplierDetailServices;
-            this.shoppingCartProvider = shoppingCartProvider;
+            this.zhongCanShoppingCartProvider = zhongCanShoppingCartProvider;
             this.supplierCouponProviderList = supplierCouponProviderList;
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
@@ -103,7 +103,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartModel> GetShoppingCart(string source, string shoppingCartId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -114,7 +114,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.zhongCanShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -124,7 +124,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.zhongCanShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -134,7 +134,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
+            var getShoppingCartCustomerResult = this.zhongCanShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -144,7 +144,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -154,7 +154,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.zhongCanShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartModel>
@@ -209,7 +209,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLinkId = bindShoppingCartResult.Result.ShoppingCartId;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, Guid.NewGuid().ToString());
+            var getShoppingCartResult = this.zhongCanShoppingCartProvider.GetShoppingCart(source, Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -219,7 +219,7 @@ namespace Ets.SingleApi.Services
                     };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, supplierId);
+            var getShoppingCartSupplierResult = this.zhongCanShoppingCartProvider.GetShoppingCartSupplier(source, supplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -235,7 +235,7 @@ namespace Ets.SingleApi.Services
                     DeliveryType = ServicesCommon.DefaultDeliveryType,
                     DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId
                 };
-            var saveShoppingCartOrderResult = this.shoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
+            var saveShoppingCartOrderResult = this.zhongCanShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -250,7 +250,7 @@ namespace Ets.SingleApi.Services
                 Id = Guid.NewGuid().ToString()
             };
 
-            var shoppingCartDeliveryResult = this.shoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+            var shoppingCartDeliveryResult = this.zhongCanShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
             if (shoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -273,7 +273,7 @@ namespace Ets.SingleApi.Services
             int tempUserId;
             if (!int.TryParse(userId, out tempUserId))
             {
-                this.shoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+                this.zhongCanShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
                 return new ServicesResult<string>
                 {
                     Result = shoppingCartLinkId
@@ -281,8 +281,8 @@ namespace Ets.SingleApi.Services
             }
 
             shoppingCartLink.UserId = tempUserId;
-            this.shoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(source, tempUserId);
+            this.zhongCanShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+            var getShoppingCartCustomerResult = this.zhongCanShoppingCartProvider.GetShoppingCartCustomer(source, tempUserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -315,7 +315,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -325,7 +325,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.zhongCanShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -334,7 +334,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.zhongCanShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -343,7 +343,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -357,7 +357,7 @@ namespace Ets.SingleApi.Services
             var order = getShoppingCartOrderResult.Result;
             var shoppingList = shoppingCartItemList;
             shoppingCart.ShoppingList = shoppingList;
-            this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.zhongCanShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
             order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
@@ -391,7 +391,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -401,7 +401,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.zhongCanShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -410,7 +410,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.zhongCanShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -419,7 +419,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -464,7 +464,7 @@ namespace Ets.SingleApi.Services
             }
 
             shoppingCart.ShoppingList = shoppingList;
-            this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.zhongCanShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
             order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
@@ -490,7 +490,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> DeleteShoppingItem(string source, string id, List<ShoppingCartItem> shoppingCartItemList, bool saveDeliveryMethodId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -500,7 +500,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.zhongCanShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -509,7 +509,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.zhongCanShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -518,7 +518,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -557,7 +557,7 @@ namespace Ets.SingleApi.Services
             }
 
             shoppingCart.ShoppingList = shoppingList;
-            this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart);
+            this.zhongCanShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
             order.CouponFee = 0;
             this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
@@ -582,7 +582,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartCustomer(string source, string id, int userId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -592,7 +592,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartCustomerResult = this.shoppingCartProvider.GetShoppingCartCustomer(source, userId);
+            var getShoppingCartCustomerResult = this.zhongCanShoppingCartProvider.GetShoppingCartCustomer(source, userId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -603,7 +603,7 @@ namespace Ets.SingleApi.Services
 
             var customer = getShoppingCartCustomerResult.Result;
             shoppingCartLink.UserId = customer.UserId;
-            this.shoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+            this.zhongCanShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -626,7 +626,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCart(string source, string id, ShoppingCartModel shoppingCart)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -636,7 +636,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.zhongCanShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -645,7 +645,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.zhongCanShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -654,7 +654,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -666,9 +666,9 @@ namespace Ets.SingleApi.Services
             shoppingCart.Delivery.Id = getShoppingCartDeliveryResult.Result.Id;
             shoppingCart.Order.Id = getShoppingCartOrderResult.Result.Id;
             shoppingCart.ShoppingCart.ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId;
-            this.shoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCart.Delivery);
-            this.shoppingCartProvider.SaveShoppingCartOrder(source, shoppingCart.Order);
-            this.shoppingCartProvider.SaveShoppingCart(source, shoppingCart.ShoppingCart);
+            this.zhongCanShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCart.Delivery);
+            this.zhongCanShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCart.Order);
+            this.zhongCanShoppingCartProvider.SaveShoppingCart(source, shoppingCart.ShoppingCart);
 
             return new ServicesResult<bool>
             {
@@ -694,7 +694,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartOrder(string source, string id, ShoppingCartOrder shoppingCartOrder, bool isCalculateCoupon, bool isValidateDeliveryTime)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -704,7 +704,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.zhongCanShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -713,7 +713,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.zhongCanShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -722,7 +722,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -805,7 +805,7 @@ namespace Ets.SingleApi.Services
             shoppingCartOrder.TotalFee = total;
             shoppingCartOrder.CustomerTotalFee = customerTotal;
             shoppingCartOrder.CouponFee = coupon;
-            this.shoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
+            this.zhongCanShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -828,7 +828,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartDelivery(string source, string id, ShoppingCartDelivery shoppingCartDelivery)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -838,7 +838,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartDeliveryResult = this.shoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.zhongCanShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -848,7 +848,7 @@ namespace Ets.SingleApi.Services
             }
 
             shoppingCartDelivery.Id = getShoppingCartDeliveryResult.Result.Id;
-            this.shoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+            this.zhongCanShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
 
             return new ServicesResult<bool>
             {
@@ -873,7 +873,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string source, string id, int deliveryMethodId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, id);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartProvider.GetShoppingCartLink(source, id);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -883,7 +883,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.zhongCanShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -892,7 +892,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartSupplierResult = this.shoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.zhongCanShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -901,7 +901,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartOrderResult = this.shoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -942,7 +942,7 @@ namespace Ets.SingleApi.Services
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
 
-            this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
+            this.zhongCanShoppingCartProvider.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -1000,7 +1000,7 @@ namespace Ets.SingleApi.Services
             order.TotalFee = total;
             order.CustomerTotalFee = customerTotal;
             order.CouponFee = coupon;
-            this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
+            this.zhongCanShoppingCartProvider.SaveShoppingCartOrder(source, order);
         }
 
         /// <summary>

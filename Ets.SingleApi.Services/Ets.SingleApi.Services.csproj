@@ -101,7 +101,7 @@
     <Compile Include="HuangTaiJiSupplierServices.cs" />
     <Compile Include="ICacheServices\IHuangTaiJiShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartAndOrderNoCacheServices.cs" />
-    <Compile Include="ICacheServices\IShoppingCartCacheServices.cs" />
+    <Compile Include="ICacheServices\IZhongCanShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IHaiDiLaoShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IShunFengShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartBaseCacheServices.cs" />
@@ -160,12 +160,12 @@
     <Compile Include="SendPassword\TelephoneSendPassword.cs" />
     <Compile Include="ServicesCommon.cs" />
     <Compile Include="DetailServices\SmsDetailServices.cs" />
-    <Compile Include="ShoppingCartServices.cs" />
+    <Compile Include="ZhongCanShoppingCartServices.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IHuangTaiJiShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\IShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\IZhongCanShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IShunFengShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\ZhongCanShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IHaiDiLaoShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\HaiDiLaoShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\ShunFengShoppingCartProvider.cs" />

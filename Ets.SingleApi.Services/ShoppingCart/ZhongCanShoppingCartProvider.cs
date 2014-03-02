@@ -11,7 +11,7 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：ShoppingCartProvider
+    /// 类名称：ZhongCanShoppingCartProvider
     /// 命名空间：Ets.SingleApi.Services
     /// 类功能：购物车功能
     /// </summary>
@@ -20,7 +20,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartProvider : IShoppingCartProvider
+    public class ZhongCanShoppingCartProvider : IZhongCanShoppingCartProvider
     {
         /// <summary>
         /// 字段loginEntityRepository
@@ -110,19 +110,10 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartCacheServices shoppingCartCacheServices;
-        /// <summary>
-        /// 字段shoppingCartCacheServices
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 11:08 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
+        private readonly IZhongCanShoppingCartCacheServices zhongCanShoppingCartCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartProvider" /> class.
+        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartProvider" /> class.
         /// </summary>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -132,14 +123,13 @@
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// <param name="supplierTimeTableEntityRepository">The supplierTimeTableEntityRepository</param>
         /// <param name="timeTableEntityRepository">The timeTableEntityRepository</param>
-        /// <param name="shoppingCartCacheServices">The shoppingCartCacheServices</param>
-        /// <param name="shoppingCartAndOrderNoCacheServices"></param>
+        /// <param name="zhongCanShoppingCartCacheServices">The shoppingCartCacheServices</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartProvider(
+        public ZhongCanShoppingCartProvider(
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
@@ -148,8 +138,7 @@
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository,
             INHibernateRepository<TimeTableEntity> timeTableEntityRepository,
-            IShoppingCartCacheServices shoppingCartCacheServices,
-            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
+            IZhongCanShoppingCartCacheServices zhongCanShoppingCartCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
@@ -159,8 +148,7 @@
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
             this.supplierTimeTableEntityRepository = supplierTimeTableEntityRepository;
             this.timeTableEntityRepository = timeTableEntityRepository;
-            this.shoppingCartCacheServices = shoppingCartCacheServices;
-            this.shoppingCartAndOrderNoCacheServices = shoppingCartAndOrderNoCacheServices;
+            this.zhongCanShoppingCartCacheServices = zhongCanShoppingCartCacheServices;
         }
 
         /// <summary>
@@ -178,7 +166,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(string source, int supplierId)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartSupplier(source, supplierId);
+            var shoppingCartCacheResult = this.zhongCanShoppingCartCacheServices.GetShoppingCartSupplier(source, supplierId);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartSupplier>
@@ -224,7 +212,7 @@
             if (timeTableDisplayIdList.Count == 0)
             {
                 shoppingCartSupplier.ServiceTime = string.Empty;
-                this.shoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
+                this.zhongCanShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
                 return new ServicesResult<ShoppingCartSupplier>
                 {
                     Result = shoppingCartSupplier
@@ -241,7 +229,7 @@
 
             var serviceTime = timeTableDisplayList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime));
             shoppingCartSupplier.ServiceTime = serviceTime.Trim();
-            this.shoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
+            this.zhongCanShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
             return new ServicesResult<ShoppingCartSupplier>
             {
                 Result = shoppingCartSupplier
@@ -271,7 +259,7 @@
                     };
             }
 
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCartCustomer(source, userId.Value);
+            var shoppingCartCacheResult = this.zhongCanShoppingCartCacheServices.GetShoppingCartCustomer(source, userId.Value);
             if (shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartCustomer>
@@ -328,7 +316,7 @@
                 Username = tempLogin.Username
             };
 
-            this.shoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
+            this.zhongCanShoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
             return new ServicesResult<ShoppingCartCustomer>
             {
                 Result = customer
@@ -350,7 +338,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCart> GetShoppingCart(string source, string id)
         {
-            var shoppingCartCacheResult = this.shoppingCartCacheServices.GetShoppingCart(source, id);
+            var shoppingCartCacheResult = this.zhongCanShoppingCartCacheServices.GetShoppingCart(source, id);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCart>
@@ -365,7 +353,7 @@
                 IsActive = true
             };
 
-            this.shoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
+            this.zhongCanShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
             return new ServicesResult<ShoppingCart>
             {
                 Result = shoppingCart
@@ -387,7 +375,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartOrder> GetShoppingCartOrder(string source, string id)
         {
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, id);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartCacheServices.GetShoppingCartOrder(source, id);
             return new ServicesResult<ShoppingCartOrder>
             {
                 StatusCode = getShoppingCartOrderResult.StatusCode,
@@ -410,7 +398,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id)
         {
-            var shoppingCartDeliveryResult = this.shoppingCartCacheServices.GetShoppingCartDelivery(source, id);
+            var shoppingCartDeliveryResult = this.zhongCanShoppingCartCacheServices.GetShoppingCartDelivery(source, id);
             return new ServicesResult<ShoppingCartDelivery>
             {
                 StatusCode = shoppingCartDeliveryResult.StatusCode,
@@ -433,7 +421,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCart(string source, ShoppingCart shoppingCart)
         {
-            var saveShoppingCartResult = this.shoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
+            var saveShoppingCartResult = this.zhongCanShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartResult.StatusCode,
@@ -456,7 +444,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartOrder(string source, ShoppingCartOrder shoppingCartOrder)
         {
-            var saveShoppingCartOrderResult = this.shoppingCartCacheServices.SaveShoppingCartOrder(source, shoppingCartOrder);
+            var saveShoppingCartOrderResult = this.zhongCanShoppingCartCacheServices.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartOrderResult.StatusCode,
@@ -479,7 +467,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery)
         {
-            var saveShoppingCartDeliveryResult = this.shoppingCartCacheServices.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+            var saveShoppingCartDeliveryResult = this.zhongCanShoppingCartCacheServices.SaveShoppingCartDelivery(source, shoppingCartDelivery);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartDeliveryResult.StatusCode,
@@ -502,7 +490,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(source, shoppingCartLinkId);
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartCacheServices.GetShoppingCartLink(source, shoppingCartLinkId);
             return new ServicesResult<ShoppingCartLink>
             {
                 StatusCode = getShoppingCartLinkResult.StatusCode,
@@ -526,9 +514,9 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartLink> GetShoppingCartLink(string source, int supplierId, string anonymityId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartCacheServices.GetShoppingCartLink(source, string.Format("{0}_{1}", anonymityId, supplierId));
+            var getShoppingCartLinkResult = this.zhongCanShoppingCartCacheServices.GetShoppingCartLink(source, string.Format("{0}_{1}", anonymityId, supplierId));
             var shoppingCartLink = getShoppingCartLinkResult.Result ?? new ShoppingCartLink();
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartCacheServices.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartLink>
@@ -569,45 +557,11 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartLink(string source, ShoppingCartLink shoppingCartLink)
         {
-            var saveShoppingCartLinkResult = this.shoppingCartCacheServices.SaveShoppingCartLink(source, shoppingCartLink);
+            var saveShoppingCartLinkResult = this.zhongCanShoppingCartCacheServices.SaveShoppingCartLink(source, shoppingCartLink);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartLinkResult.StatusCode,
                 Result = saveShoppingCartLinkResult.Result
-            };
-        }
-
-        /// <summary>
-        /// 将订单状态设置为完成状态
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">订单Id</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> CompleteShoppingCartOrder(string source, string orderId)
-        {
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
-            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = getShoppingCartOrderResult.StatusCode
-                };
-            }
-
-            var order = getShoppingCartOrderResult.Result;
-            order.IsComplete = true;
-            var saveShoppingCartOrderResult = this.shoppingCartCacheServices.SaveShoppingCartOrder(source, order);
-            return new ServicesResult<bool>
-            {
-                StatusCode = saveShoppingCartOrderResult.StatusCode,
-                Result = saveShoppingCartOrderResult.Result
             };
         }
 
@@ -809,47 +763,6 @@
         }
 
         /// <summary>
-        /// 激活购物车
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">The orderId</param>
-        /// <returns>
-        /// 返回是否激活成功
-        /// </returns>
-        /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 9:23 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        /// <exception cref="System.NotImplementedException"></exception>
-        public ServicesResult<bool> ActivationShoppingCart(string source, int orderId)
-        {
-            var idlinkresult = this.shoppingCartAndOrderNoCacheServices.GetShoppingCartIdByOrderId(source, orderId.ToString());
-            if (idlinkresult == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false
-                };
-            }
-            var shoppingcartId = idlinkresult.Result;
-            var shoppingcartresult = this.shoppingCartCacheServices.GetShoppingCart(source, shoppingcartId);
-            if (shoppingcartresult == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false
-                };
-            }
-            shoppingcartresult.Result.IsActive = true;
-            this.shoppingCartCacheServices.SaveShoppingCart(source,shoppingcartresult.Result);
-            return new ServicesResult<bool>
-            {
-                Result = true
-            };
-        }
-
-        /// <summary>
         /// 更改支付方式
         /// </summary>
         /// <param name="source">The sourceDefault documentation</param>
@@ -866,7 +779,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> ModifyOrderPaymentMethod(string source, string orderId, int paymentMethodId, string payBank)
         {
-            var getShoppingCartOrderResult = this.shoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
+            var getShoppingCartOrderResult = this.zhongCanShoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -879,7 +792,7 @@
             order.PaymentMethodId = paymentMethodId;
             order.PayBank = payBank;
 
-            var saveShoppingCartOrderResult = this.shoppingCartCacheServices.SaveShoppingCartOrder(source, order);
+            var saveShoppingCartOrderResult = this.zhongCanShoppingCartCacheServices.SaveShoppingCartOrder(source, order);
 
             return new ServicesResult<bool>
             {

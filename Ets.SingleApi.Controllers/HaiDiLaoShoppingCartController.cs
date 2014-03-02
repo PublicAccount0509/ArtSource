@@ -33,7 +33,7 @@
         private readonly IHaiDiLaoShoppingCartServices haiDiLaoshoppingCartServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartController"/> class.
+        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartController"/> class.
         /// </summary>
         /// <param name="haiDiLaoshoppingCartServices">The haiDiLaoshoppingCartServices</param>
         /// 创建者：周超

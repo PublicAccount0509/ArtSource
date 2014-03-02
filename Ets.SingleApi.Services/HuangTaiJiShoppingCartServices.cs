@@ -55,7 +55,7 @@
         private readonly List<ISupplierCouponProvider> supplierCouponProviderList;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartServices" /> class.
+        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>

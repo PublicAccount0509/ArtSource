@@ -13,7 +13,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public interface IShoppingCartCacheServices
+    public interface IZhongCanShoppingCartCacheServices
     {
         /// <summary>
         /// 取得餐厅信息

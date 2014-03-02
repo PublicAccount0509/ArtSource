@@ -8,7 +8,7 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：ShoppingCartCacheServices
+    /// 类名称：ZhongCanShoppingCartCacheServices
     /// 命名空间：Ets.SingleApi.Caches
     /// 类功能：购物车缓存
     /// </summary>
@@ -17,7 +17,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class ShoppingCartCacheServices : IShoppingCartCacheServices
+    public class ZhongCanShoppingCartCacheServices : IZhongCanShoppingCartCacheServices
     {
         /// <summary>
         /// 取得餐厅信息

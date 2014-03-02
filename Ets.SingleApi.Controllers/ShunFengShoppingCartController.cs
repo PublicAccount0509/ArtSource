@@ -31,7 +31,7 @@
         private readonly IShunFengShoppingCartServices shunFengshoppingCartServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShoppingCartController"/> class.
+        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartController"/> class.
         /// </summary>
         /// <param name="shunFengshoppingCartServices"></param>
         /// 创建者：单琪彬
