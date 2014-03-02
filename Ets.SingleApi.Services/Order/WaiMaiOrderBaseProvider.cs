@@ -59,7 +59,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        protected WaiMaiOrderBaseProvider(
+        public WaiMaiOrderBaseProvider(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             INHibernateRepository<PaymentEntity> paymentEntityRepository)

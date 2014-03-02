@@ -212,7 +212,7 @@
         }
         [HttpPost]
         [TokenFilter]
-        public Response<bool> BaiFuBaoPaymentState(UmPaymentStateRequst requst)
+        public Response<bool> BaiFuBaoPaymentState(BaiFuBaoPaymentStateRequst requst)
         {
             if (requst == null)
             {

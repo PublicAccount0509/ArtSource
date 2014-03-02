@@ -348,7 +348,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.UmPayment);
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.BaiFuBaoPayment);
             if (payment == null)
             {
                 return new ServicesResult<bool>
