@@ -262,7 +262,6 @@
         /// ----------------------------------------------------------------------------------------
         public abstract ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId);
 
-
         /// <summary>
         /// 取得订单详情
         /// </summary>

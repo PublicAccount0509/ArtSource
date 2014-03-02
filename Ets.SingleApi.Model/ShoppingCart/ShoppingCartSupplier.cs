@@ -85,7 +85,7 @@
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public virtual string PickUpTime { get; set; }
+        public string PickUpTime { get; set; }
 
         /// <summary>
         /// 设置或取得餐厅阶梯打包费

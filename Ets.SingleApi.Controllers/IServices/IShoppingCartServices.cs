@@ -185,20 +185,5 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveShoppingCartOrderDeliveryMethod(string source, string id, int deliveryMethodId);
-
-        /// <summary>
-        /// 激活购物车
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">The orderId</param>
-        /// <returns>
-        /// 返回是否激活成功
-        /// </returns>
-        /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 9:23 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> ActivationShoppingCart(string source, int orderId);
     }
 }

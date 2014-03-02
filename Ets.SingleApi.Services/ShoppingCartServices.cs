@@ -53,15 +53,16 @@ namespace Ets.SingleApi.Services
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly List<ISupplierCouponProvider> supplierCouponProviderList;
+
         /// <summary>
-        /// 字段shoppingCartCacheServices
+        /// 字段shoppingCartBaseCacheServices
         /// </summary>
         /// 创建者：周超
-        /// 创建日期：11/21/2013 11:08 AM
+        /// 创建日期：3/2/2014 3:27 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
+        private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartServices" /> class.
@@ -69,7 +70,7 @@ namespace Ets.SingleApi.Services
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
-        /// <param name="shoppingCartAndOrderNoCacheServices"></param>
+        /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
@@ -79,12 +80,12 @@ namespace Ets.SingleApi.Services
             ISupplierDetailServices supplierDetailServices,
             IShoppingCartProvider shoppingCartProvider,
             List<ISupplierCouponProvider> supplierCouponProviderList,
-            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
+            IShoppingCartBaseCacheServices shoppingCartBaseCacheServices)
         {
             this.supplierDetailServices = supplierDetailServices;
             this.shoppingCartProvider = shoppingCartProvider;
             this.supplierCouponProviderList = supplierCouponProviderList;
-            this.shoppingCartAndOrderNoCacheServices = shoppingCartAndOrderNoCacheServices;
+            this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
 
         /// <summary>
@@ -198,15 +199,16 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId)
         {
-            var getShoppingCartLinkResult = this.shoppingCartProvider.GetShoppingCartLink(source, supplierId, userId);
-            if (getShoppingCartLinkResult.StatusCode == (int)StatusCode.Succeed.Ok && getShoppingCartLinkResult.Result != null)
+            var bindShoppingCartResult = this.shoppingCartBaseCacheServices.BindShoppingCartId(source, supplierId.ToString(), userId);
+            if (bindShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok && !bindShoppingCartResult.Result.IsNew)
             {
                 return new ServicesResult<string>
                 {
-                    Result = getShoppingCartLinkResult.Result.ShoppingCartLinkId
+                    Result = bindShoppingCartResult.Result.ShoppingCartId
                 };
             }
 
+            var shoppingCartLinkId = bindShoppingCartResult.Result.ShoppingCartId;
             var getShoppingCartResult = this.shoppingCartProvider.GetShoppingCart(source, Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
@@ -247,6 +249,7 @@ namespace Ets.SingleApi.Services
             {
                 Id = Guid.NewGuid().ToString()
             };
+
             var shoppingCartDeliveryResult = this.shoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
             if (shoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
@@ -257,7 +260,6 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var shoppingCartLinkId = Guid.NewGuid().ToString();
             var shoppingCartLink = new ShoppingCartLink
                 {
                     ShoppingCartLinkId = shoppingCartLinkId,
@@ -1244,26 +1246,6 @@ namespace Ets.SingleApi.Services
                 Result = null,
                 StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
             };
-        }
-
-        /// <summary>
-        /// 激活购物车
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">The orderId</param>
-        /// <returns>
-        /// 返回是否激活成功
-        /// </returns>
-        /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 9:23 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        /// <exception cref="System.NotImplementedException"></exception>
-        public ServicesResult<bool> ActivationShoppingCart(string source, int orderId)
-        {
-            var result = this.shoppingCartProvider.ActivationShoppingCart(source, orderId);
-            return result;
         }
     }
 }

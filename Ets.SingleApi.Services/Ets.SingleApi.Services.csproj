@@ -104,6 +104,7 @@
     <Compile Include="ICacheServices\IShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IHaiDiLaoShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IShunFengShoppingCartCacheServices.cs" />
+    <Compile Include="ICacheServices\IShoppingCartBaseCacheServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />

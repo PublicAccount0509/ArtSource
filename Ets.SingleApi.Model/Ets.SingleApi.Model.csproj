@@ -303,6 +303,8 @@
     <Compile Include="ShoppingCart\ShoppingCartDelivery.cs" />
     <Compile Include="ShoppingCart\HaiDiLaoShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\HaiDiLaoShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartBase.cs" />
+    <Compile Include="ShoppingCart\BindShoppingCartResult.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

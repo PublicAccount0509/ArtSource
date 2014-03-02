@@ -78,6 +78,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string ReturnUrl { get; set; }
+
         public string NotifyUrl { get; set; }
     }
 }

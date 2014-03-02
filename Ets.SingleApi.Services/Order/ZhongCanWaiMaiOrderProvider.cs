@@ -1,7 +1,4 @@
-﻿using Ets.SingleApi.Services.ICacheServices;
-using Ets.SingleApi.Services.IExternalServices;
-
-namespace Ets.SingleApi.Services
+﻿namespace Ets.SingleApi.Services
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +11,7 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
+    using Ets.SingleApi.Services.ICacheServices;
 
     /// <summary>
     /// 类名称：WaiMaiOrderProvider
@@ -139,14 +137,15 @@ namespace Ets.SingleApi.Services
         private readonly IShoppingCartProvider shoppingCartProvider;
 
         /// <summary>
-        /// 字段shoppingCartCacheServices
+        /// 字段shoppingCartBaseCacheServices
         /// </summary>
         /// 创建者：周超
-        /// 创建日期：11/21/2013 11:08 AM
+        /// 创建日期：3/2/2014 4:14 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
+        private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
@@ -162,7 +161,7 @@ namespace Ets.SingleApi.Services
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="distance">The distance</param>
         /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
-        /// <param name="shoppingCartAndOrderNoCacheServices"></param>
+        /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -181,7 +180,7 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             IDistance distance,
             IShoppingCartProvider shoppingCartProvider,
-            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
+            IShoppingCartBaseCacheServices shoppingCartBaseCacheServices)
             : base(deliveryEntityRepository, orderNumberDcEntityRepository)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
@@ -195,7 +194,7 @@ namespace Ets.SingleApi.Services
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
             this.distance = distance;
             this.shoppingCartProvider = shoppingCartProvider;
-            this.shoppingCartAndOrderNoCacheServices = shoppingCartAndOrderNoCacheServices;
+            this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
 
         /// <summary>
@@ -405,10 +404,6 @@ namespace Ets.SingleApi.Services
                 gender = "0";
             }
 
-            //获取ShoppingCartId
-            var shoppingCartIdByOrderIdResult = this.shoppingCartAndOrderNoCacheServices.GetShoppingCartIdByOrderId(source, orderId.ToString());
-            var shoppingCartId = shoppingCartIdByOrderIdResult == null ? string.Empty : shoppingCartIdByOrderIdResult.Result;
-
             //总价 未折扣
             var total = deliveryEntity.Total ?? 0;
             //总价 折扣后
@@ -428,7 +423,6 @@ namespace Ets.SingleApi.Services
                 FixedDeliveryFee = (deliveryEntity.DeliverCharge ?? 0).ToString("#0.00"),
                 RealSupplierType = deliveryEntity.RealSupplierType,
                 SupplierGroupId = supplierEntity.SupplierGroupId,
-                ShoppingCartId = shoppingCartId,
                 SupplierId = supplierEntity.SupplierId,
                 SupplierName = supplierEntity.SupplierName ?? string.Empty,
                 SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
@@ -545,11 +539,22 @@ namespace Ets.SingleApi.Services
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
-            if (order.IsComplete)
+            var deliveryTime = order.DeliveryDateTime;
+            if (deliveryTime <= DateTime.Now)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode,
+                    Result = string.Empty
+                };
+            }
+
+            var shoppingCartBase = this.shoppingCartBaseCacheServices.GetShoppingCartBase(source, shoppingCartId);
+            if (shoppingCartBase.Result.IsComplete)
             {
                 return new ServicesResult<string>
                     {
-                        Result = order.OrderId.ToString()
+                        Result = shoppingCartBase.Result.OrderNumber.ToString()
                     };
             }
 
@@ -594,16 +599,6 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var deliveryTime = order.DeliveryDateTime;
-            if (deliveryTime <= DateTime.Now)
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode,
-                    Result = string.Empty
-                };
-            }
-
             var customerId = customer.CustomerId;
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
                 ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order)
@@ -611,11 +606,9 @@ namespace Ets.SingleApi.Services
             this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
-            order.IsComplete = true;
-            order.OrderId = orderId;
-            this.shoppingCartProvider.SaveShoppingCartOrder(source, order);
-            //把订单编号和购物车编号保存到缓存中
-            this.shoppingCartAndOrderNoCacheServices.SaveShoppingCartAndOrderNoLink(source, orderId.ToString(), shoppingCartId);
+
+            this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
+            this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
 
             return new ServicesResult<string>
             {

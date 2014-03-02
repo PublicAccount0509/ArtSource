@@ -217,6 +217,7 @@
                 Result = saveOrderPaIdResult.Result
             };
         }
+
         /// <summary>
         /// 是否可以激活购物车信息
         /// </summary>
@@ -231,9 +232,7 @@
         /// ----------------------------------------------------------------------------------------
         public Response<bool> IsActivation(int orderType, int orderSourceType, int orderId)
         {
-
             var isActivationResult = this.orderServices.IsActivation(this.Source, orderType, orderSourceType, orderId);
-
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -289,7 +288,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public Response<OrderShoppingCartStatusResult> GetOrderShoppingCartStatus(string shoppingCartId, int orderType,
+        public Response<OrderShoppingCartStatusResult> GetShoppingCartStatus(string shoppingCartId, int orderType,
                                                                        int orderSourceType = 0)
         {
 

@@ -612,42 +612,5 @@
                 Result = result.Result
             };
         }
-
-        /// <summary>
-        /// 激活购物车
-        /// </summary>
-        /// <param name="id">订单Id</param>
-        /// <returns>
-        /// 返回是否激活成功
-        /// </returns>
-        /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 11:16 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [HttpPost]
-        public Response<bool> ActivationShoppingCart(int id)
-        {
-            if (!this.ValidateUserId(id))
-            {
-                return new Response<bool>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    }
-                };
-            }
-
-            var result = this.shunFengshoppingCartServices.ActivationShoppingCart(this.Source, id);
-            return new Response<bool>
-            {
-                Message = new ApiMessage
-                {
-                    StatusCode = result.StatusCode
-                },
-                Result = result.Result
-            };
-        }
     }
 }
