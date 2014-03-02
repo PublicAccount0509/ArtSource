@@ -3,15 +3,13 @@ namespace Ets.SingleApi.Services
 {
     using System;
     using Ets.SingleApi.Model;
-    using Ets.SingleApi.Model.Repository;
-    using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
     using Ets.SingleApi.Controllers;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.Payment;
 
     /// <summary>
-    /// 类名称：WaiMaiUmPayment
+    /// 类名称：BaiFuBaoPayment
     /// 命名空间：Ets.SingleApi.Services
     /// 类功能：百付宝支付
     /// </summary>
@@ -20,33 +18,8 @@ namespace Ets.SingleApi.Services
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class WaiMaiBaiFuBaoPayment : IPayment
+    public class BaiFuBaoPayment : IPayment
     {
-        /// <summary>
-        /// 字段deliveryEntityRepository
-        /// </summary>
-        /// 创建者：王巍
-        /// 创建日期：02/10/2014 4:36 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<DeliveryEntity> deliveryEntityRepository;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WaiMaiUmPayment"/> class.
-        /// </summary>
-        /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
-        /// 创建者：王巍
-        /// 创建日期：02/10/2014 4:36 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public WaiMaiBaiFuBaoPayment(
-            INHibernateRepository<DeliveryEntity> deliveryEntityRepository)
-        {
-            this.deliveryEntityRepository = deliveryEntityRepository;
-        }
-
         /// <summary>
         /// 取得支付方式
         /// </summary>
@@ -63,25 +36,6 @@ namespace Ets.SingleApi.Services
             get
             {
                 return PaymentType.BaiFuBaoPayment;
-            }
-        }
-
-        /// <summary>
-        /// 取得订单类型
-        /// </summary>
-        /// <value>
-        /// 订单类型
-        /// </value>
-        /// 创建者：王巍
-        /// 创建日期：02/10/2014 3:14 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public OrderType OrderType
-        {
-            get
-            {
-                return OrderType.WaiMai;
             }
         }
 
@@ -176,20 +130,6 @@ namespace Ets.SingleApi.Services
                     Result = false
                 };
             }
-
-            //查询订单配送信息
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == baiFuBaoPaymentQueryData.OrderId);
-            if (deliveryEntity == null)
-            {
-                return new PaymentResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
-                };
-            }
-
-            //更新订单支付状态为 已支付
-            deliveryEntity.IsPaId = true;
-            this.deliveryEntityRepository.Save(deliveryEntity);
 
             return new PaymentResult<bool>
             {

@@ -28,19 +28,6 @@
         PaymentType PaymentType { get; }
 
         /// <summary>
-        /// 取得订单类型
-        /// </summary>
-        /// <value>
-        /// 订单类型
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：10/28/2013 3:14 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        OrderType OrderType { get; }
-
-        /// <summary>
         /// 支付功能
         /// </summary>
         /// <param name="parameter">支付参数</param>

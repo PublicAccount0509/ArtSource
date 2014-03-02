@@ -141,8 +141,8 @@
     <Compile Include="Payment\IPayment.cs" />
     <Compile Include="Payment\IPaymentData.cs" />
     <Compile Include="Payment\PaymentResult.cs" />
-    <Compile Include="Payment\WaiMaiBaiFuBaoPayment.cs" />
-    <Compile Include="Payment\WaiMaiUmPayment.cs" />
+    <Compile Include="Payment\BaiFuBaoPayment.cs" />
+    <Compile Include="Payment\UmPayment.cs" />
     <Compile Include="Payment\UmPaymentData.cs" />
     <Compile Include="Payment\UmPaymentQueryData.cs" />
     <Compile Include="SendPassword\EmailSendPassword.cs" />

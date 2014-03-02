@@ -4,12 +4,10 @@
     using System.Collections;
 
     using Ets.SingleApi.Model;
-    using Ets.SingleApi.Model.Repository;
-    using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：WaiMaiUmPayment
+    /// 类名称：UmPayment
     /// 命名空间：Ets.SingleApi.Services
     /// 类功能：联动优势支付
     /// </summary>
@@ -18,33 +16,8 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class WaiMaiUmPayment : IPayment
+    public class UmPayment : IPayment
     {
-        /// <summary>
-        /// 字段deliveryEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：10/28/2013 4:36 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<DeliveryEntity> deliveryEntityRepository;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WaiMaiUmPayment"/> class.
-        /// </summary>
-        /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
-        /// 创建者：周超
-        /// 创建日期：10/28/2013 4:36 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public WaiMaiUmPayment(
-            INHibernateRepository<DeliveryEntity> deliveryEntityRepository)
-        {
-            this.deliveryEntityRepository = deliveryEntityRepository;
-        }
-
         /// <summary>
         /// 取得支付方式
         /// </summary>
@@ -61,25 +34,6 @@
             get
             {
                 return PaymentType.UmPayment;
-            }
-        }
-
-        /// <summary>
-        /// 取得订单类型
-        /// </summary>
-        /// <value>
-        /// 订单类型
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：10/28/2013 3:14 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public OrderType OrderType
-        {
-            get
-            {
-                return OrderType.WaiMai;
             }
         }
 
@@ -103,15 +57,6 @@
                 return new PaymentResult<string>
                     {
                         StatusCode = (int)StatusCode.System.InvalidPaymentRequest
-                    };
-            }
-
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == umPaymentData.OrderId);
-            if (deliveryEntity == null)
-            {
-                return new PaymentResult<string>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
                     };
             }
 
@@ -187,15 +132,6 @@
                     };
             }
 
-            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == umPaymentQueryData.OrderId);
-            if (deliveryEntity == null)
-            {
-                return new PaymentResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
-                };
-            }
-
             var ht = new Hashtable();
             ht.Add("service", "query_order"); // 接口名称 pay_req:一般支付请求 pay_req_ivr_call:IVR支付方式下单 pay_req_ivr_tcall:IVR转呼方式下单
             ht.Add("charset", "UTF-8"); // 字符编码
@@ -239,9 +175,6 @@
                     StatusCode = (int)this.GetTradeState((req["trade_state"] ?? string.Empty).ToString())
                 };
             }
-
-            deliveryEntity.IsPaId = true;
-            this.deliveryEntityRepository.Save(deliveryEntity);
 
             return new PaymentResult<bool>
             {
