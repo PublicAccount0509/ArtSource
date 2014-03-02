@@ -47,6 +47,7 @@
         /// </summary>
         /// <param name="id">购物车Id</param>
         /// <param name="complete">The  complete indicates whether</param>
+        /// <param name="orderId">The orderId</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -56,9 +57,16 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<bool> SaveShoppingCartComplete(string id, bool complete)
+        public Response<bool> SaveShoppingCartComplete(string id, bool complete, int orderId = 0)
         {
-            var getShoppingCartResult = this.shoppingCartServices.SaveShoppingCartComplete(this.Source, id, complete);
+            var shoppingCartId = id;
+            if (shoppingCartId.IsEmptyOrNull())
+            {
+                var getShoppingCartIdResult = this.shoppingCartServices.GetShoppingCartId(this.Source, orderId);
+                shoppingCartId = getShoppingCartIdResult.Result;
+            }
+
+            var getShoppingCartResult = this.shoppingCartServices.SaveShoppingCartComplete(this.Source, shoppingCartId, complete);
             return new Response<bool>
             {
                 Message = new ApiMessage
