@@ -48,6 +48,7 @@
     <Compile Include="HaiDiLaoShoppingCartCacheServices.cs" />
     <Compile Include="ShunFengShoppingCartCacheServices.cs" />
     <Compile Include="ShoppingCartBaseCacheServices.cs" />
+    <Compile Include="EtsWapShoppingCartCacheServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">
