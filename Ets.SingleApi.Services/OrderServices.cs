@@ -468,7 +468,7 @@
             return new ServicesResult<string>
             {
                 StatusCode = result.StatusCode,
-                Result = jsonValue["Result"]["OrderNumber"]
+                Result = jsonValue["Result"]
             };
         }
     }

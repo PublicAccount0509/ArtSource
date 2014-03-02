@@ -385,7 +385,7 @@
             }
 
             int orderNumber;
-            int.TryParse(jsonValue["Result"]["OrderNumber"], out orderNumber);
+            int.TryParse(jsonValue["Result"], out orderNumber);
             return orderNumber;
         }
     }
