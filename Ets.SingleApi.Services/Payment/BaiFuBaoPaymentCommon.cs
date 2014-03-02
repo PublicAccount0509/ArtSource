@@ -82,7 +82,7 @@ namespace Ets.SingleApi.Services.Payment
             dictionary["version"] = "2";
             string signature = BuildSignature(dictionary, "1");
             dictionary["sign"] = signature;
-            string strUrl = Controllers.ControllersCommon.RequestForOrderURL + "?" + BuildRequestURL(dictionary);
+            string strUrl = Controllers.ControllersCommon.RequestForOrderUrl + "?" + BuildRequestURL(dictionary);
             var myReq = (HttpWebRequest)WebRequest.Create(strUrl);
             myReq.Method = "get";
 
