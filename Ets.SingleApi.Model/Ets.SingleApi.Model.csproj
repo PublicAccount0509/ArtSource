@@ -87,6 +87,7 @@
     <Compile Include="Controller\OAuthLoginResult.cs" />
     <Compile Include="Controller\OAuthLoginRequst.cs" />
     <Compile Include="Controller\OrderShoppingCartStatusResult.cs" />
+    <Compile Include="Controller\BaiFuBaoPaymentStateRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
