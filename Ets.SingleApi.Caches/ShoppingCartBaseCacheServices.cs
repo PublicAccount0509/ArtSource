@@ -137,7 +137,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<string> GetShoppingCartId(string source, string orderId)
+        public CacheServicesResult<string> GetShoppingCartId(string source, int orderId)
         {
             var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "base_shoppingcart_Id", orderId)) as string;
             if (result.IsEmptyOrNull())

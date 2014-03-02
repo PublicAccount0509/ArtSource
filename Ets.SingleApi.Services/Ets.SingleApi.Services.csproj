@@ -184,6 +184,7 @@
     <Compile Include="HaiDiLaoShoppingCartServices.cs" />
     <Compile Include="BaiDuLightServices.cs" />
     <Compile Include="EtsWapShoppingCartServices.cs" />
+    <Compile Include="ShoppingCartServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">

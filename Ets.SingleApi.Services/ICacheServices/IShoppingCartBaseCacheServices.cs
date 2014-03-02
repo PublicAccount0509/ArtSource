@@ -32,7 +32,7 @@
         CacheServicesResult<bool> SaveShoppingCartId(string source, int orderId, string shoppingCartId);
 
         /// <summary>
-        /// 更改订单状态
+        /// 更改购物车状态
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="shoppingCartId">The shoppingCartId</param>
@@ -75,7 +75,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<string> GetShoppingCartId(string source, string orderId);
+        CacheServicesResult<string> GetShoppingCartId(string source, int orderId);
 
         /// <summary>
         /// 绑定一个购物车编号

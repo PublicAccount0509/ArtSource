@@ -94,6 +94,7 @@
     <Compile Include="IServices\IHaiDiLaoSupplierServices.cs" />
     <Compile Include="IServices\IBaiDuLightServices.cs" />
     <Compile Include="IServices\IEtsWapShoppingCartServices.cs" />
+    <Compile Include="IServices\IShoppingCartServices.cs" />
     <Compile Include="OrdersController.cs" />
     <Compile Include="PaymentController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="HaiDiLaoSupplierController.cs" />
     <Compile Include="BaiDuLightController.cs" />
     <Compile Include="EtsWapShoppingCartController.cs" />
+    <Compile Include="ShoppingCartController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">
