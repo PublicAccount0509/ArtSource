@@ -479,16 +479,22 @@
             }
 
             var result = list.Result.Select(p => new Supplier
-            {
-                SupplierId = p.SupplierId,
-                SupplierName = p.SupplierName ?? string.Empty,
-                Address = p.Address ?? string.Empty,
-                Telephone = p.Telephone ?? string.Empty,
-                Averageprice = p.Averageprice ?? 0,
-                CuisineName = p.CuisineName ?? string.Empty,
-                Distance = p.Distance ?? 0,
-                LogoUrl = p.LogoUrl ?? string.Empty
-            }).ToList();
+                {
+                    SupplierId = p.SupplierId,
+                    SupplierName = p.SupplierName ?? string.Empty,
+                    Address = p.Address ?? string.Empty,
+                    Telephone = p.Telephone ?? string.Empty,
+                    Averageprice = p.Averageprice ?? 0,
+                    CuisineName = p.CuisineName ?? string.Empty,
+                    Distance = p.Distance ?? 0,
+                    LogoUrl = p.LogoUrl ?? string.Empty,
+                    SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
+                        {
+                            SupplierFeatureId = q.SupplierFeatureId,
+                            FeatureId = q.FeatureId,
+                            FeatureName = q.FeatureName ?? string.Empty
+                        }).ToList()
+                }).ToList();
 
             return new ListResponse<Supplier>
             {
