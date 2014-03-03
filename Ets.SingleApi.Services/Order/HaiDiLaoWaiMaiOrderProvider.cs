@@ -463,8 +463,11 @@ namespace Ets.SingleApi.Services
                 gender = "0";
             }
 
+            var shoppingCartResult = this.shoppingCartBaseCacheServices.GetShoppingCartId(source, orderId);
+            var shoppingCartId = shoppingCartResult == null ? string.Empty : shoppingCartResult.Result;
             var result = new HaiDiLaoWaiMaiOrderDetailModel
             {
+                ShoppingCartId = shoppingCartId,
                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
                 OrderTypeId = (int)OrderType.WaiMai,
                 OrderStatusId = deliveryEntity.OrderStatusId,
