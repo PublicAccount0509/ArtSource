@@ -116,7 +116,7 @@
         {
             return new Response<string>
                 {
-                    Result = "Hello World!"
+                    Result = string.Format("Welcome to {0}.", this.ControllerContext.ControllerDescriptor.ControllerName)
                 };
         }
     }

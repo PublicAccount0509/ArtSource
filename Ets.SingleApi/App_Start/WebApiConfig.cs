@@ -34,9 +34,17 @@
 
             //搜索、修改、删除、创建资源
             config.Routes.MapHttpRoute(
-                 "GET/PUT/DELETE",
+                 "DefaultRoute",
                  "api/{controller}/{action}/{id}",
-                 new { id = RouteParameter.Optional, httpMethod = new HttpMethodConstraint("GET", "PUT", "DELETE", "POST") });
+                 new { id = RouteParameter.Optional, httpMethod = new HttpMethodConstraint("GET", "PUT", "DELETE", "POST") },
+                 new { controller = new ControllerConstraint() });
+
+            //搜索、修改、删除、创建资源
+            config.Routes.MapHttpRoute(
+                 "ShoppingCartRoute",
+                 "api/{shoppingcart}/{controller}/{action}/{id}",
+                 new { id = RouteParameter.Optional, httpMethod = new HttpMethodConstraint("GET", "PUT", "DELETE", "POST") },
+                 new { shoppingcart = new ShoppingCartConstraint() });
         }
     }
 }
