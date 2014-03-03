@@ -612,12 +612,23 @@ namespace Ets.SingleApi.Services
             var order = getShoppingCartOrderResult.Result;
             var extra = getShoppingCartExtraResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
-            if (order.IsComplete)
+            var deliveryTime = order.DeliveryDateTime;
+            if (deliveryTime <= DateTime.Now)
             {
                 return new ServicesResult<string>
-                    {
-                        Result = order.OrderId.ToString()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode,
+                    Result = string.Empty
+                };
+            }
+
+            var shoppingCartBase = this.shoppingCartBaseCacheServices.GetShoppingCartBase(source, shoppingCartId);
+            if (shoppingCartBase.Result.IsComplete)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = shoppingCartBase.Result.OrderNumber.ToString()
+                };
             }
 
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
@@ -657,16 +668,6 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<string>
                 {
                     StatusCode = (int)StatusCode.General.OrderNumberNotFound,
-                    Result = string.Empty
-                };
-            }
-
-            var deliveryTime = order.DeliveryDateTime;
-            if (deliveryTime <= DateTime.Now)
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode,
                     Result = string.Empty
                 };
             }
