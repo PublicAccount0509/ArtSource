@@ -16,5 +16,6 @@
     <property name="SupplierDescription" type="String" />
     <property name="LogoUrl" type="String" />
     <property name="Distance" type="Double" />
+    <property name="CuisineName" type="String" />
   </class>
 </hibernate-mapping>
