@@ -233,7 +233,8 @@ namespace Ets.SingleApi.Services
                 {
                     Id = Guid.NewGuid().ToString(),
                     DeliveryType = ServicesCommon.DefaultDeliveryType,
-                    DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId
+                    DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId,
+                    PaymentMethodId = ServicesCommon.DefaultPaymentMethodId
                 };
             var saveShoppingCartOrderResult = this.zhongCanShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)

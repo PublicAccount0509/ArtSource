@@ -6,6 +6,7 @@
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.ICacheServices;
     using Ets.SingleApi.Services.IDetailServices;
     using Ets.SingleApi.Utility;
     /// <summary>
@@ -51,11 +52,22 @@
         private readonly List<ISupplierCouponProvider> supplierCouponProviderList;
 
         /// <summary>
+        /// 字段shoppingCartBaseCacheServices
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/3/2014 4:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HaiDiLaoShoppingCartServices" /> class.
         /// </summary>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// <param name="shunFengShoppingCartProvider">The haiDiLaoShoppingCartProvider</param>
         /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
+        /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
@@ -64,11 +76,13 @@
         public ShunFengShoppingCartServices(
             ISupplierDetailServices supplierDetailServices,
             IShunFengShoppingCartProvider shunFengShoppingCartProvider,
-            List<ISupplierCouponProvider> supplierCouponProviderList)
+            List<ISupplierCouponProvider> supplierCouponProviderList,
+            IShoppingCartBaseCacheServices shoppingCartBaseCacheServices)
         {
             this.supplierDetailServices = supplierDetailServices;
             this.shunFengShoppingCartProvider = shunFengShoppingCartProvider;
             this.supplierCouponProviderList = supplierCouponProviderList;
+            this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
 
         /// <summary>
@@ -194,15 +208,16 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId)
         {
-            var getShoppingCartLinkResult = this.shunFengShoppingCartProvider.GetShoppingCartLink(source, supplierId, userId);
-            if (getShoppingCartLinkResult.StatusCode == (int)StatusCode.Succeed.Ok && getShoppingCartLinkResult.Result != null)
+            var bindShoppingCartResult = this.shoppingCartBaseCacheServices.BindShoppingCartId(source, supplierId.ToString(), userId);
+            if (bindShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok && !bindShoppingCartResult.Result.IsNew)
             {
                 return new ServicesResult<string>
                 {
-                    Result = getShoppingCartLinkResult.Result.ShoppingCartLinkId
+                    Result = bindShoppingCartResult.Result.ShoppingCartId
                 };
             }
 
+            var shoppingCartLinkId = bindShoppingCartResult.Result.ShoppingCartId;
             var getShoppingCartResult = this.shunFengShoppingCartProvider.GetShoppingCart(source, Guid.NewGuid().ToString());
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
@@ -228,7 +243,8 @@
                     Id = Guid.NewGuid().ToString(),
                     CanSelectCooking = true,
                     DeliveryType = ServicesCommon.DefaultDeliveryType,
-                    DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId
+                    DeliveryMethodId = ServicesCommon.DefaultDeliveryMethodId,
+                    PaymentMethodId = ServicesCommon.DefaultPaymentMethodId
                 };
             var saveShoppingCartOrderResult = this.shunFengShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -271,7 +287,6 @@
                 };
             }
 
-            var shoppingCartLinkId = Guid.NewGuid().ToString();
             var shoppingCartLink = new HaiDiLaoShoppingCartLink
                 {
                     ShoppingCartLinkId = shoppingCartLinkId,
