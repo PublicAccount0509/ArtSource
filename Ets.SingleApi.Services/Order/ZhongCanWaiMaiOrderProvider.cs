@@ -864,6 +864,11 @@
         /// ----------------------------------------------------------------------------------------
         private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId, string payBank)
         {
+            if (paymentMethodId == -1)
+            {
+                return;
+            }
+
             var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryId)
                                  ?? new PaymentEntity
                                  {

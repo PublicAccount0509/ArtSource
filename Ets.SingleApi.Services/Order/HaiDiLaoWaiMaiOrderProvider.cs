@@ -270,13 +270,6 @@ namespace Ets.SingleApi.Services
 
             //订单信息
             var orderInfo = getShoppingCartOrderResult.Result;
-
-            //递送信息
-            var deliveryInfo = this.deliveryEntityRepository.FindSingleByExpression(c => c.OrderNumber == orderInfo.OrderId);
-
-            //修改 订单支付方式
-            this.SavePaymentEntity(deliveryInfo.DeliveryId, orderInfo.CustomerTotalFee, paymentMethodId, payBank);
-
             //修改 缓存订单支付方式
             var modifyOrderPaymentMethodResult = this.haiDiLaoShoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.Id, paymentMethodId, payBank);
             if (modifyOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -1016,6 +1009,11 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId, string payBank)
         {
+            if (paymentMethodId == -1)
+            {
+                return;
+            }
+
             var paymentEntity = this.paymentEntityRepository.EntityQueryable.FirstOrDefault(p => p.Delivery.DeliveryId == deliveryId)
                                  ?? new PaymentEntity
                                  {

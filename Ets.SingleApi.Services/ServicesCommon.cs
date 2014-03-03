@@ -927,6 +927,32 @@
         }
 
         /// <summary>
+        /// 默认支付方式
+        /// </summary>
+        /// <value>
+        /// 默认支付方式
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultPaymentMethodId
+        {
+            get
+            {
+                var paymentMethodId = ConfigurationManager.AppSettings["DefaultPaymentMethodId"] ?? "-1";
+                int result;
+                if (!int.TryParse(paymentMethodId, out result))
+                {
+                    result = -1;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 默认电磁炉数量
         /// </summary>
         /// <value>
