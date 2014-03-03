@@ -606,7 +606,6 @@
 
             this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
             this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
-
             return new ServicesResult<string>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,

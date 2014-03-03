@@ -111,15 +111,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         private readonly IHaiDiLaoShoppingCartCacheServices haiDiLaoShoppingCartCacheServices;
-        /// <summary>
-        /// 字段shoppingCartCacheServices
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 11:08 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HaiDiLaoShoppingCartProvider" /> class.
@@ -133,7 +124,6 @@
         /// <param name="supplierTimeTableEntityRepository">The supplierTimeTableEntityRepository</param>
         /// <param name="timeTableEntityRepository">The timeTableEntityRepository</param>
         /// <param name="haiDiLaoShoppingCartCacheServices">The haiDiLaoShoppingCartCacheServices</param>
-        /// <param name="shoppingCartAndOrderNoCacheServices"></param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
@@ -148,8 +138,7 @@
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<SupplierTimeTableEntity> supplierTimeTableEntityRepository,
             INHibernateRepository<TimeTableEntity> timeTableEntityRepository,
-            IHaiDiLaoShoppingCartCacheServices haiDiLaoShoppingCartCacheServices,
-            IShoppingCartAndOrderNoCacheServices shoppingCartAndOrderNoCacheServices)
+            IHaiDiLaoShoppingCartCacheServices haiDiLaoShoppingCartCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
@@ -160,7 +149,6 @@
             this.supplierTimeTableEntityRepository = supplierTimeTableEntityRepository;
             this.timeTableEntityRepository = timeTableEntityRepository;
             this.haiDiLaoShoppingCartCacheServices = haiDiLaoShoppingCartCacheServices;
-            this.shoppingCartAndOrderNoCacheServices = shoppingCartAndOrderNoCacheServices;
         }
 
         /// <summary>
@@ -624,40 +612,6 @@
         }
 
         /// <summary>
-        /// 将订单状态设置为完成状态
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">订单Id</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 2:08 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> CompleteShoppingCartOrder(string source, string orderId)
-        {
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
-            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = getShoppingCartOrderResult.StatusCode
-                };
-            }
-
-            var order = getShoppingCartOrderResult.Result;
-            order.IsComplete = true;
-            var saveShoppingCartOrderResult = this.haiDiLaoShoppingCartCacheServices.SaveShoppingCartOrder(source, order);
-            return new ServicesResult<bool>
-            {
-                StatusCode = saveShoppingCartOrderResult.StatusCode,
-                Result = saveShoppingCartOrderResult.Result
-            };
-        }
-
-        /// <summary>
         /// 验证送餐时间
         /// </summary>
         /// <param name="source">The source</param>
@@ -848,47 +802,6 @@
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
-            };
-        }
-
-        /// <summary>
-        /// 激活购物车
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">The orderId</param>
-        /// <returns>
-        /// 返回是否激活成功
-        /// </returns>
-        /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 9:23 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        /// <exception cref="System.NotImplementedException"></exception>
-        public ServicesResult<bool> ActivationShoppingCart(string source, int orderId)
-        {
-            var idlinkresult = this.shoppingCartAndOrderNoCacheServices.GetShoppingCartIdByOrderId(source, orderId.ToString());
-            if (idlinkresult == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false
-                };
-            }
-            var shoppingcartId = idlinkresult.Result;
-            var shoppingcartresult = this.haiDiLaoShoppingCartCacheServices.GetShoppingCart(source, shoppingcartId);
-            if (shoppingcartresult == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false
-                };
-            }
-            shoppingcartresult.Result.IsActive = true;
-            this.haiDiLaoShoppingCartCacheServices.SaveShoppingCart(source, shoppingcartresult.Result);
-            return new ServicesResult<bool>
-            {
-                Result = true
             };
         }
 
