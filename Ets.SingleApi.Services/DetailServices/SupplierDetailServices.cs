@@ -691,6 +691,8 @@
                 {
                     var startDate = item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime);
                     var endDate = item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime);
+                    string.Format("原始营业时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", serviceDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    
                     if (onlyActive)
                     {
                         var date = startDate.ToString("yyyy-MM-dd");
@@ -706,12 +708,12 @@
                         startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
                     }
 
+                    string.Format("处理后营业时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", serviceDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     if (startDate > endDate)
                     {
                         continue;
                     }
 
-                    string.Format("营业时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", serviceDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     tempDeliveryTimeList.Add(string.Format("{0:t}-{1:t}", startDate, endDate));
                     while (startDate <= endDate)
                     {
@@ -893,8 +895,10 @@
                 var tempDeliveryTimeList = new List<string>();
                 foreach (var item in temptimeTableList)
                 {
-                    var startDate = item.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime);
-                    var endDate = item.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime);
+                    DateTime startDate = item.OpenTime.AddMinutes(ServicesCommon.DeliveryTimeBeginReadyTime);
+                    DateTime endDate = item.CloseTime.AddMinutes(ServicesCommon.DeliveryTimeEndReadyTime);
+
+                    string.Format("原始送餐时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     if (onlyActive)
                     {
                         var date = startDate.ToString("yyyy-MM-dd");
@@ -910,12 +914,12 @@
                         startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
                     }
 
+                    string.Format("处理后送餐时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     if (startDate > endDate)
                     {
                         continue;
                     }
 
-                    string.Format("送餐时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     tempDeliveryTimeList.Add(string.Format("{0:t}-{1:t}", startDate, endDate));
                     while (startDate <= endDate)
                     {
