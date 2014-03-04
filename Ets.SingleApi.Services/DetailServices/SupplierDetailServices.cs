@@ -213,7 +213,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -225,7 +225,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -277,7 +277,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -289,7 +289,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -347,7 +347,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -359,7 +359,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -401,7 +401,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -411,7 +411,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -423,7 +423,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -499,7 +499,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -509,7 +509,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -521,7 +521,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -560,7 +560,7 @@
                 supplierDishEntity.Recipe = dish.Recipe;
                 supplierDishEntity.Recommended = dish.Recommended;
                 supplierDishEntity.SupplierCategoryId = categoryIdList.Any(p => p == dish.CategoryId)
-                                                            ? (int?) dish.CategoryId
+                                                            ? (int?)dish.CategoryId
                                                             : null;
                 supplierDishEntity.QuanPin = dish.SupplierDishName.ToFullSpell();
                 supplierDishEntity.JianPin = dish.SupplierDishName.ToSimpleSpell();
@@ -609,7 +609,7 @@
             {
                 return new DetailServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -694,10 +694,15 @@
                     if (onlyActive)
                     {
                         var date = startDate.ToString("yyyy-MM-dd");
-                        var tempStartDate =
-                            DateTime.Parse(string.Format("{0} {1:t}", serviceDate.ToString("yyyy-MM-dd"), startDate));
-                        var tempEndDate = DateTime.Now.AddMinutes(beginReadyTime);
-                        var tempDate = tempStartDate >= tempEndDate ? tempStartDate : tempEndDate;
+                        var tempStartDate = DateTime.Parse(string.Format("{0} {1:t}", serviceDate.ToString("yyyy-MM-dd"), startDate));
+                        var tempEndDate = DateTime.Parse(string.Format("{0} {1:t}", serviceDate.ToString("yyyy-MM-dd"), endDate));
+                        var tempNowEndDate = DateTime.Now.AddMinutes(beginReadyTime);
+                        if (tempNowEndDate >= tempEndDate)
+                        {
+                            continue;
+                        }
+
+                        var tempDate = tempStartDate >= tempNowEndDate ? tempStartDate : tempNowEndDate;
                         startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
                     }
 
@@ -726,7 +731,7 @@
             return new DetailServicesResultList<SupplierServiceTimeModel>
                 {
                     Result = result,
-                    StatusCode = result.Count == 0 ? (int) StatusCode.Succeed.Empty : (int) StatusCode.Succeed.Ok
+                    StatusCode = result.Count == 0 ? (int)StatusCode.Succeed.Empty : (int)StatusCode.Succeed.Ok
                 };
         }
 
@@ -808,7 +813,7 @@
                         var itemCloseTime =
                             DateTime.Parse(string.Format("{0} {1}", startDeliveryDate.ToString("yyyy-MM-dd"),
                                                          timeList.Last()));
-                        timeTableList.Add(new {Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime});
+                        timeTableList.Add(new { Day = itemDay, OpenTime = itemOpenTime, CloseTime = itemCloseTime });
                     }
                 }
 
@@ -887,10 +892,15 @@
                     if (onlyActive)
                     {
                         var date = startDate.ToString("yyyy-MM-dd");
-                        var tempStartDate =
-                            DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate));
-                        var tempEndDate = DateTime.Now.AddMinutes(beginReadyTime);
-                        var tempDate = tempStartDate >= tempEndDate ? tempStartDate : tempEndDate;
+                        var tempStartDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate));
+                        var tempEndDate = DateTime.Parse(string.Format("{0} {1:t}", deliveryDate.ToString("yyyy-MM-dd"), endDate));
+                        var tempNowEndDate = DateTime.Now.AddMinutes(beginReadyTime);
+                        if (tempNowEndDate >= tempEndDate)
+                        {
+                            continue;
+                        }
+
+                        var tempDate = tempStartDate >= tempNowEndDate ? tempStartDate : tempNowEndDate;
                         startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
                     }
 
@@ -924,7 +934,7 @@
             return new DetailServicesResultList<SupplierDeliveryTimeModel>
                 {
                     Result = result,
-                    StatusCode = result.Count == 0 ? (int) StatusCode.Succeed.Empty : (int) StatusCode.Succeed.Ok
+                    StatusCode = result.Count == 0 ? (int)StatusCode.Succeed.Empty : (int)StatusCode.Succeed.Ok
                 };
         }
 
