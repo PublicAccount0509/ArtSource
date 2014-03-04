@@ -706,6 +706,12 @@
                         startDate = DateTime.Parse(string.Format("{0} {1:t}", date, tempDate));
                     }
 
+                    if (startDate > endDate)
+                    {
+                        continue;
+                    }
+
+                    string.Format("营业时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", serviceDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     tempDeliveryTimeList.Add(string.Format("{0:t}-{1:t}", startDate, endDate));
                     while (startDate <= endDate)
                     {
@@ -909,6 +915,7 @@
                         continue;
                     }
 
+                    string.Format("送餐时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", deliveryDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                     tempDeliveryTimeList.Add(string.Format("{0:t}-{1:t}", startDate, endDate));
                     while (startDate <= endDate)
                     {

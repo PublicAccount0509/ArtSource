@@ -733,8 +733,7 @@
                 this.customerAddressEntityRepository.Save(customerAddressEntity);
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdListCode,
-                    Result = false
+                    Result = true
                 };
             }
 
@@ -860,7 +859,7 @@
             }
 
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, ServicesCommon.AuthCodeCacheKey, parameter.Telephone));
-            var sendSmsResult = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.FirstRegisterMessage, code),parameter.SmsSource,parameter.SupplierId,parameter.IsVoiceSms);
+            var sendSmsResult = this.smsDetailServices.SendSms(parameter.Telephone, string.Format(ServicesCommon.FirstRegisterMessage, code), parameter.SmsSource, parameter.SupplierId, parameter.IsVoiceSms);
             return new ServicesResult<RegisterUserModel>
             {
                 StatusCode = sendSmsResult.StatusCode,
