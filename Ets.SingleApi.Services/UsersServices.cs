@@ -665,8 +665,7 @@
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdListCode,
-                    Result = false
+                    Result = true
                 };
             }
 
