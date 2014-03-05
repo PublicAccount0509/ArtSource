@@ -164,8 +164,6 @@
         /// ----------------------------------------------------------------------------------------
         private readonly ISupplierDetailServices supplierDetailServices;
 
-        private readonly List<IFilterSupplier> filterSupplierList;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SupplierServices" /> class.
         /// </summary>
@@ -183,7 +181,6 @@
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
-        /// <param name="filterSupplierList">The filter supplier list.</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
         /// 修改者：
@@ -203,8 +200,7 @@
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository,
-            ISupplierDetailServices supplierDetailServices,
-            List<IFilterSupplier> filterSupplierList)
+            ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
@@ -220,7 +216,6 @@
             this.loginEntityRepository = loginEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
-            this.filterSupplierList = filterSupplierList;
         }
 
         /// <summary>
