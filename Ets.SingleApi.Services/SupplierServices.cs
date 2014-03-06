@@ -331,8 +331,31 @@
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
             {
-                var code = (tempSupplier.RegionCode ?? string.Empty).Length < 3 ? tempSupplier.RegionCode : tempSupplier.RegionCode.Substring(0, 3);
-                supplier.ChainCount = this.supplierEntityRepository.EntityQueryable.Count(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled && p.RegionCode.Contains(code));
+                var regionCode = tempSupplier.RegionCode ?? string.Empty;
+                var code = regionCode;
+                if (regionCode.Length >= 3)
+                {
+                    code = tempSupplier.RegionCode.Substring(0, 3);
+                }
+
+                var tempSupplierIdList = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled && p.RegionCode.Contains(code)).Select(p => p.SupplierId).ToList();
+                var tempSupplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(p => p.IsEnabled == true && tempSupplierIdList.Contains(p.Supplier.SupplierId)).Select(p => new { p.Supplier.SupplierId, p.Feature.FeatureId }).ToList();
+
+                var supplierIdList = new List<int>();
+                foreach (var item in tempSupplierIdList)
+                {
+                    var list = tempSupplierFeatureList.Where(p => p.SupplierId == item).ToList();
+                    var tempCooperationWaimaiList = ServicesCommon.CooperationWaimaiFeatures.Select(p => list.Any(q => q.FeatureId == p)).ToList();
+                    var tempCooperationTangshiList = ServicesCommon.CooperationTangshiFeatures.Select(p => list.Any(q => q.FeatureId == p)).ToList();
+                    if (tempCooperationWaimaiList.Any(p => !p) && tempCooperationTangshiList.Any(p => !p))
+                    {
+                        continue;
+                    }
+
+                    supplierIdList.Add(item);
+                }
+
+                supplier.ChainCount = supplierIdList.Count;
             }
 
             var tempDiningPurposeList = this.supplierDiningPurposeEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
