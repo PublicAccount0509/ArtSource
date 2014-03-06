@@ -338,7 +338,7 @@
                     code = tempSupplier.RegionCode.Substring(0, 3);
                 }
 
-                var tempSupplierIdList = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled && p.RegionCode.Contains(code)).Select(p => p.SupplierId).ToList();
+                var tempSupplierIdList = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled && p.RegionCode.StartsWith(code)).Select(p => p.SupplierId).ToList();
                 var tempSupplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(p => p.IsEnabled == true && tempSupplierIdList.Contains(p.Supplier.SupplierId)).Select(p => new { p.Supplier.SupplierId, p.Feature.FeatureId }).ToList();
 
                 var supplierIdList = new List<int>();
