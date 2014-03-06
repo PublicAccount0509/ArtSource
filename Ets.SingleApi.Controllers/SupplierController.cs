@@ -161,6 +161,61 @@ namespace Ets.SingleApi.Controllers
         }
 
         /// <summary>
+        /// 获取餐厅基本信息
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<SupplierSimple> SupplierSimple(int id)
+        {
+            var getSupplierSimpleResult = this.supplierServices.GetSupplierSimple(this.Source, id);
+            if (getSupplierSimpleResult.Result == null)
+            {
+                return new Response<SupplierSimple>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getSupplierSimpleResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getSupplierSimpleResult.StatusCode
+                    },
+                    Result = new SupplierSimple()
+                };
+            }
+
+            var supplier = new SupplierSimple
+            {
+                SupplierId = getSupplierSimpleResult.Result.SupplierId,
+                SupplierName = getSupplierSimpleResult.Result.SupplierName ?? string.Empty,
+                SupplierDescription = getSupplierSimpleResult.Result.SupplierDescription ?? string.Empty,
+                Address = getSupplierSimpleResult.Result.Address ?? string.Empty,
+                Averageprice = getSupplierSimpleResult.Result.Averageprice ?? 0,
+                Telephone = getSupplierSimpleResult.Result.Telephone ?? string.Empty,
+                SupplierGroupId = getSupplierSimpleResult.Result.SupplierGroupId,
+                PackagingFee = getSupplierSimpleResult.Result.PackagingFee ?? 0,
+                FixedDeliveryCharge = getSupplierSimpleResult.Result.FixedDeliveryCharge ?? 0,
+                DelMinOrderAmount = getSupplierSimpleResult.Result.DelMinOrderAmount ?? 0,
+                FreeDeliveryLine = getSupplierSimpleResult.Result.FreeDeliveryLine ?? 0,
+                BaIduLat = getSupplierSimpleResult.Result.BaIduLat,
+                BaIduLong = getSupplierSimpleResult.Result.BaIduLong
+            };
+
+            return new Response<SupplierSimple>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getSupplierSimpleResult.StatusCode
+                },
+                Result = supplier
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅分店信息
         /// </summary>
         /// <param name="supplierGroupId">集团Id</param>

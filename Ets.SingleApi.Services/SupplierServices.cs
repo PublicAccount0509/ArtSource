@@ -408,6 +408,93 @@
         }
 
         /// <summary>
+        /// 获取餐厅基本信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <returns>
+        /// 返回餐厅信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<SupplierSimpleModel> GetSupplierSimple(string source, int supplierId)
+        {
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResult<SupplierSimpleModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierSimpleModel()
+                };
+            }
+
+            var tempSupplier = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
+                                where supplierEntity.SupplierId == supplierId
+                                select new
+                                {
+                                    supplierEntity.SupplierId,
+                                    supplierEntity.SupplierName,
+                                    supplierEntity.SupplierDescription,
+                                    Address = supplierEntity.Address1,
+                                    supplierEntity.Averageprice,
+                                    supplierEntity.ParkingInfo,
+                                    supplierEntity.Telephone,
+                                    supplierEntity.SupplierGroupId,
+                                    supplierEntity.PackagingFee,
+                                    supplierEntity.FixedDeliveryCharge,
+                                    supplierEntity.FreeDeliveryLine,
+                                    supplierEntity.DelMinOrderAmount,
+                                    supplierEntity.BaIduLat,
+                                    supplierEntity.BaIduLong,
+                                    supplierEntity.TakeawaySpecialOffersSummary,
+                                    supplierEntity.PublicTransport,
+                                    supplierEntity.PackLadder,
+                                    supplierEntity.Fax,
+                                    supplierEntity.Email,
+                                    supplierEntity.RegionCode
+                                }).FirstOrDefault();
+
+            if (tempSupplier == null)
+            {
+                return new ServicesResult<SupplierSimpleModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierSimpleModel()
+                };
+            }
+
+            decimal baIduLat;
+            decimal.TryParse(tempSupplier.BaIduLat, out baIduLat);
+            decimal baIduLong;
+            decimal.TryParse(tempSupplier.BaIduLong, out baIduLong);
+
+            var supplier = new SupplierSimpleModel
+            {
+                SupplierId = tempSupplier.SupplierId,
+                SupplierName = tempSupplier.SupplierName,
+                SupplierDescription = tempSupplier.SupplierDescription,
+                Address = tempSupplier.Address,
+                Averageprice = tempSupplier.Averageprice,
+                Telephone = tempSupplier.Telephone,
+                SupplierGroupId = tempSupplier.SupplierGroupId,
+                PackagingFee = tempSupplier.PackagingFee,
+                FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge,
+                FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
+                DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
+                BaIduLat = baIduLat,
+                BaIduLong = baIduLong
+            };
+
+            return new ServicesResult<SupplierSimpleModel>
+            {
+                Result = supplier
+            };
+        }
+
+        /// <summary>
         /// 根据餐厅域名获取餐厅信息
         /// </summary>
         /// <param name="source">The source</param>
