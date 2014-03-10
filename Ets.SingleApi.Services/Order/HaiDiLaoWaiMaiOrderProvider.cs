@@ -1013,7 +1013,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId, string payBank)
         {
-            if (paymentMethodId == -1)
+            if (paymentMethodId <= 0)
             {
                 return;
             }

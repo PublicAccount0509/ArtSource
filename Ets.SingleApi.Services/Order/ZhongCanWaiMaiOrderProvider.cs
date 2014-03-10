@@ -405,10 +405,10 @@
             var customerTotal = deliveryEntity.CustomerTotal ?? 0;
             //折扣
             var coupon = Math.Max(total - customerTotal, 0);
-            
+
             var shoppingCartResult = this.shoppingCartBaseCacheServices.GetShoppingCartId(source, orderId);
             var shoppingCartId = shoppingCartResult == null ? string.Empty : shoppingCartResult.Result;
-            
+
             var result = new WaiMaiOrderDetailModel
             {
                 ShoppingCartId = shoppingCartId,
@@ -869,7 +869,7 @@
         /// ----------------------------------------------------------------------------------------
         private void SavePaymentEntity(int deliveryId, decimal customerTotal, int paymentMethodId, string payBank)
         {
-            if (paymentMethodId == -1)
+            if (paymentMethodId <= 0)
             {
                 return;
             }
