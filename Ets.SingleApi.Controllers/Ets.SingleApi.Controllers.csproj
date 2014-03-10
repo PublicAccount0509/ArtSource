@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenController.cs" />
+    <Compile Include="BaiDuActivitiesController.cs" />
     <Compile Include="BusinessAreaController.cs" />
     <Compile Include="ControllersCommon.cs" />
     <Compile Include="CuisineController.cs" />
