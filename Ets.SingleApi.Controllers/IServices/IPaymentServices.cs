@@ -73,5 +73,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> BaiFuBaoPaymentState(string source, BaiFuBaoPaymentStateParameter parameter);
+
+        /// <summary>
+        /// 微信支付状态
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：3/10/2014 5:58 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> WeChatPayMentState(string source, UmPaymentStateParameter parameter);
     }
 }
