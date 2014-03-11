@@ -1116,7 +1116,7 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<DateTime?>
                 {
                     Result = null,
-                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
                 };
             }
 
@@ -1154,7 +1154,7 @@ namespace Ets.SingleApi.Services
             return new ServicesResult<DateTime?>
             {
                 Result = null,
-                StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
             };
         }
 

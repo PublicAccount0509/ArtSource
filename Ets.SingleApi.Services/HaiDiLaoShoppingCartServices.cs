@@ -1381,7 +1381,7 @@
                 return new ServicesResult<bool>
                 {
                     Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
                 };
             }
 
@@ -1409,7 +1409,7 @@
             string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.ServiceTime, "无效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
             return new ServicesResult<bool>
             {
-                StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
+                StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
             };
         }
 
@@ -1462,7 +1462,7 @@
                 return new ServicesResult<bool>
                 {
                     Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
                 };
             }
 
@@ -1490,7 +1490,7 @@
             string.Format("取餐时间：{0}，餐厅送餐时间：{1}，是否为有效时间：{2}", tempDeliveryTime, supplierDeliveryTime.DeliveryTime, "无效").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
             return new ServicesResult<bool>
             {
-                StatusCode = (int)StatusCode.Validate.InvalidPickUpTimeCode
+                StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode
             };
         }
     }
