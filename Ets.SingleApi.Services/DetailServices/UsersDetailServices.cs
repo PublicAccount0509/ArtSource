@@ -67,14 +67,14 @@
         private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
 
         /// <summary>
-        /// 字段sourceTypeEntityRepository
+        /// 字段sourcePathEntityRepository
         /// </summary>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:13 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository;
+        private readonly INHibernateRepository<SourcePathEntity> sourcePathEntityRepository;
 
         /// <summary>
         /// 字段loginOAuthEntityRepository
@@ -93,7 +93,7 @@
         /// <param name="tokenEntityRepository">The tokenEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
-        /// <param name="sourceTypeEntityRepository">The sourceTypeEntityRepository</param>
+        /// <param name="sourcePathEntityRepository">The sourcePathEntityRepository</param>
         /// <param name="loginOAuthEntityRepository"></param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 16:35
@@ -105,14 +105,14 @@
             INHibernateRepository<TokenEntity> tokenEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
-            INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
+            INHibernateRepository<SourcePathEntity> sourcePathEntityRepository,
             INHibernateRepository<LoginOAuthEntity> loginOAuthEntityRepository)
         {
             this.appEntityRepository = appEntityRepository;
             this.tokenEntityRepository = tokenEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
-            this.sourceTypeEntityRepository = sourceTypeEntityRepository;
+            this.sourcePathEntityRepository = sourcePathEntityRepository;
             this.loginOAuthEntityRepository = loginOAuthEntityRepository;
         }
 
@@ -174,7 +174,7 @@
                 DateJoined = DateTime.Now,
                 IsValId = false,
                 IsRegAllowed = true,
-                Source = parameter.SourceType.IsEmptyOrNull() ? null : this.sourceTypeEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType),
+                Path = parameter.SourceType.IsEmptyOrNull() ? null : this.sourcePathEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType),
                 TemplateId = parameter.Template
             };
 
@@ -300,7 +300,7 @@
                 DateJoined = DateTime.Now,
                 IsValId = false,
                 IsRegAllowed = true,
-                Source = parameter.SourceType.IsEmptyOrNull() ? null : this.sourceTypeEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType),
+                Path = parameter.SourceType.IsEmptyOrNull() ? null : this.sourcePathEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType),
                 TemplateId = parameter.Template
             };
 

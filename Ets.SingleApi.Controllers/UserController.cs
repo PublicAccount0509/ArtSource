@@ -564,6 +564,7 @@
                     AuthCode = (requst.AuthCode ?? string.Empty).Trim(),
                     AppKey = (this.AppKey ?? string.Empty).Trim(),
                     SourceType = (requst.SourceType ?? string.Empty).Trim(),
+                    Template = (requst.Template ?? string.Empty).Trim(),
                     SmsSource = requst.SmsSource,
                     SupplierId = requst.SupplierId,
                     IsVoiceSms = requst.IsVoiceSms
@@ -630,6 +631,7 @@
             {
                 AppKey = (this.AppKey ?? string.Empty).Trim(),
                 SourceType = (requst.SourceType ?? string.Empty).Trim(),
+                Template = (requst.Template ?? string.Empty).Trim(),
                 JointLoginType = requst.JointLoginType,
                 KeyName = (requst.KeyName ?? string.Empty).Trim(),
                 UserName = (requst.UserName ?? string.Empty).Trim()
