@@ -1,12 +1,11 @@
 ﻿namespace Ets.SingleApi.Controllers
 {
-    using System.Web.Http;
-
     using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System.Web.Http;
 
     /// <summary>
     /// 类名称：PaymentController
@@ -251,5 +250,50 @@
                 Result = result.Result
             };
         }
+
+        [HttpPost]
+        [TokenFilter]
+        public Response<bool> WeChatPayMentState(UmPaymentStateRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+
+            var result = this.paymentServices.UmPaymentState(this.Source, new UmPaymentStateParameter
+            {
+                OrderId = requst.OrderId,
+                PayDate = System.DateTime.Now,
+                OrderType = requst.OrderType
+            });
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+
     }
 }

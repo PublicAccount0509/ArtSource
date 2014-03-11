@@ -405,5 +405,69 @@ namespace Ets.SingleApi.Services
                 StatusCode = saveOrderPaidResult.StatusCode
             };
         }
+
+
+        /// <summary>
+        /// 微信 支付状态
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回支付状态
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：3/10/2014 6:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> WeChatPayMentState(string source, UmPaymentStateParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var orderType = (OrderType)parameter.OrderType;
+
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var existResult = orderBaseProvider.Exist(source, parameter.OrderId);
+            if (existResult == null || existResult.Result == 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.WeChatPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, parameter.OrderId, true);
+            return new ServicesResult<bool>
+            {
+                Result = saveOrderPaidResult.Result,
+                StatusCode = saveOrderPaidResult.StatusCode
+            };
+        }
     }
 }
