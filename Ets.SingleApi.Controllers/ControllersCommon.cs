@@ -327,5 +327,72 @@
         /// 移动端即时到账支付接口（不要求登录百度钱包）
         /// </summary>
         public static string InstantToAccountUrlWapNotBaiDuLogin = "https://www.baifubao.com/api/0/pay/0/wapdirect";
+
+        /// <summary>
+        /// 支付宝合作身份者ID
+        /// </summary>
+        /// <value>
+        /// 合作身份者ID
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：3/10/2014 6:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string AlipayPartnerId
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["AlipayPartnerId"] ?? string.Empty).Trim().TrimEnd('/', '\\');
+            }
+        }
+        /// <summary>
+        /// 支付宝key
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：3/10/2014 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string AlipayKey = "x308rxivwttfzs431i4ogeme1mt1n5jz";
+
+        /// <summary>
+        /// 字符编码格式(目前支持 utf-8)
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：3/10/2014 5:52 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string AlipayInputCharSet = "utf-8";
+
+        /// <summary>
+        /// 签名方式(MD5)
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：3/10/2014 5:52 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string AlipaySignType = "MD5";
+
+        /// <summary>
+        /// 支付宝后台通知Url地址
+        /// </summary>
+        /// <value>
+        /// 支付宝后台通知Url地址
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：3/10/2014 6:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string AlipayBackgroundNoticeUrl
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["AlipayBackgroundNoticeUrl"] ?? string.Empty).Trim().TrimEnd('/', '\\');
+            }
+        }
     }
 }
