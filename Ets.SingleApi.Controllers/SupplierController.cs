@@ -157,7 +157,12 @@ namespace Ets.SingleApi.Controllers
                         SupplierDishId = p.SupplierDishId,
                         SupplierDishName = p.SupplierDishName,
                         Price = p.Price,
-                        ImagePath = p.ImagePath
+                        ImagePath = p.ImagePath,
+                        SupplierCatogryId = p.SupplierCatogryId,
+                        SupplierMenuCategoryId = p.SupplierMenuCategoryId,
+                        Type = p.Type,
+                        Recipe = p.Recipe,
+                        PackagingFee = p.PackagingFee
                     }).ToList()
             };
 
