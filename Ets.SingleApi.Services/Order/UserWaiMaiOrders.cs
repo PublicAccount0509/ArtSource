@@ -262,7 +262,7 @@
                                      OrderType = (int)this.OrderType,
                                      DeliveryMethodId = p.DeliveryMethodId,
                                      IsPaid = p.IsPaId,
-                                     DishNames = string.Join(",", orderList.Where(q => q.DeliveryId == p.DeliveryId).Select(c => c.SupplierDishName).ToList())
+                                     DishNames = string.Join("，", orderList.Where(q => q.DeliveryId == p.DeliveryId).Select(c => c.SupplierDishName).ToList())
                                  }).ToList();
             //菜品名称（菜品1,菜品2,菜品3)
 
