@@ -956,7 +956,7 @@
                 supplierGroupId = null;
             }
 
-            var shieldingSupplierGroupList = ServicesCommon.ShieldingSupplierGroupList.Select(temp => (int?)temp).ToList();
+            var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(temp => (int?)temp).ToList();
             var queryableTemp = (from customerFavorite in this.customerFavoriteEntityRepository.EntityQueryable
                                  from supplier in this.supplierEntityRepository.EntityQueryable
                                  where customerFavorite.Supplier.SupplierId == supplier.SupplierId
@@ -981,7 +981,7 @@
 
             if (isEtaoshi)
             {
-                queryableTemp = queryableTemp.Where(p => !shieldingSupplierGroupList.Contains(p.SupplierGroupId));
+                queryableTemp = queryableTemp.Where(p => retentionSupplierGroupIdList.Contains(p.SupplierGroupId));
             }
 
             var supplierList = queryableTemp.OrderByDescending(p => p.DateAdded).ToList();

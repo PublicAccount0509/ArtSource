@@ -173,11 +173,11 @@
         /// ----------------------------------------------------------------------------------------
         private List<WaiMaiOrderModel> GetWaiMaiOrderList(UserOrdersParameter parameter)
         {
-            var shieldingSupplierGroupList = ServicesCommon.ShieldingSupplierGroupList.Select(p => (int?)p).ToList();
+            var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
             var queryableTemp = (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
                                  from entity in this.supplierEntityRepository.EntityQueryable
                                  where deliveryEntity.SupplierId == entity.SupplierId
-                                 && deliveryEntity.CustomerId == parameter.CustomerId 
+                                 && deliveryEntity.CustomerId == parameter.CustomerId
                                  select new
                                      {
                                          deliveryEntity.OrderNumber,
@@ -198,7 +198,7 @@
 
             if (parameter.IsEtaoshi)
             {
-                queryableTemp = queryableTemp.Where(p => !shieldingSupplierGroupList.Contains(p.SupplierGroupId));
+                queryableTemp = queryableTemp.Where(p => retentionSupplierGroupIdList.Contains(p.SupplierGroupId));
             }
 
             if (parameter.SupplierId != null)

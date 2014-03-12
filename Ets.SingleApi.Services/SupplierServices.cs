@@ -685,9 +685,6 @@
                               SupplierGroupId = entity.SupplierGroupId
                           }).ToList();
 
-            /*过滤餐厅列表*/
-            //var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
-            //var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                     p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
@@ -769,9 +766,6 @@
                                   SupplierGroupId = entity.SupplierGroupId
                               }).ToList();
 
-            /*过滤餐厅列表*/
-            //var filteredSupplierIdList = filterSupplierList.SelectMany(item => item.Filter(supplierList)).ToList();
-            //var result = supplierList.Where(p => !filteredSupplierIdList.Contains(p.SupplierId)).ToList();
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                 p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
