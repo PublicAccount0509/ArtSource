@@ -320,7 +320,8 @@
                             p => p.Supplier.SupplierId == supplierId && p.Online == true)
                             .Select(p => p.ImagePath)
                             .FirstOrDefault()),
-                    SupplierFeatureList = supplierFeatureList
+                    SupplierFeatureList = supplierFeatureList,
+                    RecommendedDishList = new List<SupplierRecommendedDishModel>()
                 };
 
             var cooperationWaimaiList = ServicesCommon.CooperationWaimaiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p)).ToList();
@@ -2094,7 +2095,7 @@
         }
 
         /// <summary>
-        /// 获取 餐厅推荐菜品列表
+        /// 获取 餐厅推荐菜品(外卖)列表
         /// </summary>
         /// <param name="supplierId">The supplierIdDefault documentation</param>
         /// <returns>
@@ -2112,6 +2113,7 @@
                                             where supplierCategoryEntity.SupplierId == supplierId
                                             && supplierMenu.SupplierMenuCategoryId == supplierCategoryEntity.SupplierMenuCategoryId
                                             && supplierMenu.SupplierId == supplierCategoryEntity.SupplierId
+                                            && supplierMenu.SupplierMenuCategoryId == 1
                                             select new
                                             {
                                                 supplierCategoryEntity.Category,

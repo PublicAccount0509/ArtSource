@@ -116,7 +116,7 @@ namespace Ets.SingleApi.Controllers
             var supplierFeatureList = getSupplierResult.Result.SupplierFeatureList;
 
             //餐厅推荐菜品列表
-            var recommendedDishList = getSupplierResult.Result.RecommendedDishList;
+            var recommendedDishList = getSupplierResult.Result.RecommendedDishList??new List<SupplierRecommendedDishModel>();
 
             var supplier = new SupplierDetail
             {
