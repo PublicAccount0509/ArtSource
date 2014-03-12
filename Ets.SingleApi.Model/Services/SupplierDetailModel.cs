@@ -377,6 +377,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public List<SupplierDishModel> RecommendedDishList { get; set; }
+        public List<SupplierRecommendedDishModel> RecommendedDishList { get; set; }
     }
 }
