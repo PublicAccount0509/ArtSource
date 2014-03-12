@@ -291,6 +291,83 @@
                                                 FeatureId = p.Feature.FeatureId
                                             }).ToList();
 
+            //餐厅推荐菜品列表
+
+            ////var supplierMenuCategoryId = this.supplierMenuCategoryEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId && p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == supplierMenuCategoryTypeId).Select(p => p.SupplierMenuCategoryId).FirstOrDefault();
+            ////var tempSupplierCategoryList = (from supplierCategoryEntity in this.supplierCategoryEntityRepository.EntityQueryable
+            ////                                where supplierCategoryEntity.SupplierId == supplierId && supplierCategoryEntity.SupplierMenuCategoryId == supplierMenuCategoryId
+            ////                                select new
+            ////                                {
+            ////                                    supplierCategoryEntity.Category,
+            ////                                    supplierCategoryEntity.SupplierId,
+            ////                                    supplierCategoryEntity.SupplierCategoryId
+            ////                                }).ToList();
+
+            ////if (tempSupplierCategoryList.Count == 0)
+            ////{
+            ////    return new ServicesResult<SupplierDetailModel>
+            ////    {
+            ////        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+            ////        Result = new SupplierDetailModel()
+            ////    };
+            ////}
+
+            ////var supplierCategoryList = (from entity in tempSupplierCategoryList
+            ////                            where entity.Category != null
+            ////                            select new
+            ////                            {
+            ////                                entity.Category.CategoryId,
+            ////                                entity.Category.CategoryName,
+            ////                                entity.Category.CategoryNo,
+            ////                                entity.SupplierId,
+            ////                                entity.SupplierCategoryId
+            ////                            }).OrderBy(p => p.CategoryNo).ToList();
+
+            ////var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
+            //var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
+            //                        where supplierDishEntity.Supplier.SupplierId == supplierId
+            //                        && supplierDishEntity.Online && supplierDishEntity.IsDel == false && supplierDishEntity.Recommended == true
+            //                        select new
+            //                        {
+            //                            supplierDishEntity.SupplierCategoryId,
+            //                            supplierDishEntity.DishNo,
+            //                            supplierDishEntity.Price,
+            //                            supplierDishEntity.SupplierDishId,
+            //                            supplierDishEntity.SupplierDishName,
+            //                            supplierDishEntity.SuppllierDishDescription,
+            //                            supplierDishEntity.SpicyLevel,
+            //                            supplierDishEntity.AverageRating,
+            //                            supplierDishEntity.IsCommission,
+            //                            supplierDishEntity.IsDiscount,
+            //                            supplierDishEntity.Recipe,
+            //                            supplierDishEntity.Recommended,
+            //                            supplierDishEntity.PackagingFee,
+            //                            SupplierId = supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+            //                            ImagePath = string.Empty
+            //                        }).OrderBy(p => p.DishNo).ToList();
+
+            //var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
+            //var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
+            //                             where supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
+            //                             select new { entity.SupplierDishId, entity.ImagePath }).ToList();
+
+            var recommendDishList =
+                this.supplierDishEntityRepository.EntityQueryable.Where(
+                    p => p.Supplier.SupplierId == supplierId && p.Online && p.IsDel == false && p.Recommended == true)
+                    .Select(p => new SupplierDishModel
+                        {
+                            SupplierDishId = p.SupplierDishId,
+                            SupplierDishName = p.SupplierDishName,
+                            Price = p.Price,
+                            ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                                                  this.supplierDishImageEntityRepository.EntityQueryable
+                                                                      .Where(
+                                                                          s =>
+                                                                          s.SupplierDishId == p.SupplierDishId &&
+                                                                          s.Online == true)
+                                                                      .Select(s => s.ImagePath).FirstOrDefault())
+                        }).ToList();
+
             var supplier = new SupplierDetailModel
                 {
                     SupplierId = tempSupplier.SupplierId,
@@ -319,7 +396,8 @@
                             p => p.Supplier.SupplierId == supplierId && p.Online == true)
                             .Select(p => p.ImagePath)
                             .FirstOrDefault()),
-                    SupplierFeatureList = supplierFeatureList
+                    SupplierFeatureList = supplierFeatureList,
+                    RecommendedDishList = recommendDishList
                 };
 
             var cooperationWaimaiList = ServicesCommon.CooperationWaimaiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p)).ToList();
