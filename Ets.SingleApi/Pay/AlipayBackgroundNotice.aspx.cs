@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Ets.SingleApi.Services;
 using Ets.SingleApi.Utility;
 
 namespace Ets.SingleApi.Pay
@@ -74,6 +75,8 @@ namespace Ets.SingleApi.Pay
                             //该种交易状态只在两种情况下出现
                             //1、开通了普通即时到账，买家付款成功后。
                             //2、开通了高级即时到账，从该笔交易成功时间算起，过了签约时的可退款时限（如：三个月以内可退款、一年以内可退款等）后。
+
+                            //var payment = CastleUtility.GetInstance().Container.Resolve<IPayment>("")
 
                             Response.Write("success");  //请不要修改或删除
                         }
