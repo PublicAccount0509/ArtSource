@@ -405,8 +405,7 @@ namespace Ets.SingleApi.Services
                 StatusCode = saveOrderPaidResult.StatusCode
             };
         }
-
-
+        
         /// <summary>
         /// 微信 支付状态
         /// </summary>
@@ -463,6 +462,185 @@ namespace Ets.SingleApi.Services
             }
 
             var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, parameter.OrderId, true);
+            return new ServicesResult<bool>
+            {
+                Result = saveOrderPaidResult.Result,
+                StatusCode = saveOrderPaidResult.StatusCode
+            };
+        }
+
+        /// <summary>
+        /// 获取支付宝支付请求Url
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// 百付宝支付请求Url
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/14/2014 9:55 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> AlipayPayment(string source, AlipayPaymentParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var orderType = (OrderType)parameter.OrderType;
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var existResult = orderBaseProvider.Exist(source, parameter.OrderId);
+            if (existResult == null || existResult.Result == 0)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            if (existResult.Result == 1)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.DoublePayment
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.AlipayPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            var result = payment.Payment(new AlipayPaymentData(
+                parameter.OrderId.ToString(),
+                parameter.OrderName,
+                parameter.Amount,
+                parameter.CallBackUrl,
+                parameter.MerchantUrl));
+
+            if (result == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = result.Result,
+                StatusCode = result.StatusCode
+            };
+        }
+
+        /// <summary>
+        /// 支付宝支付状态
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/11/2014 1:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> AlipayPaymentState(string source, AlipayPaymentStateParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var orderType = (OrderType)parameter.OrderType;
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.AlipayPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            //验证签名，订单状态为支付
+            var result = payment.QueryState(new AlipayPaymentQueryData
+            {
+                NotSign = parameter.NotSign,
+                Sign = parameter.Sign,
+                OrderId = parameter.OrderId,
+                Result = parameter.Result
+            });
+
+            if (result == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            if (result.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = result.Result,
+                    StatusCode = result.StatusCode
+                };
+            }
+
+            //订单是否存在
+            var orderId = int.Parse(parameter.OrderId);
+            var existResult = orderBaseProvider.Exist(source, orderId);
+            if (existResult == null || existResult.Result == 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            //保存订单支付完成
+            var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, orderId, true);
+
             return new ServicesResult<bool>
             {
                 Result = saveOrderPaidResult.Result,

@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AlipayBackgroundNotice.aspx.cs" Inherits="Ets.SingleApi.Pay.AlipayBackgroundNotice" %>

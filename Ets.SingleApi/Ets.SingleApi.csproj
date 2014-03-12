@@ -160,6 +160,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Pay\AlipayBackgroundNotice.aspx.cs">
+      <DependentUpon>AlipayBackgroundNotice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pay\AlipayBackgroundNotice.aspx.designer.cs">
+      <DependentUpon>AlipayBackgroundNotice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pay\BaiFuBaoBackgroundNotice.aspx.cs">
       <DependentUpon>BaiFuBaoBackgroundNotice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -178,6 +185,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="Pay\AlipayBackgroundNotice.aspx" />
     <Content Include="Pay\BaiFuBaoBackgroundNotice.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
