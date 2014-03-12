@@ -688,6 +688,21 @@
             var customer = getShoppingCartCustomerResult.Result;
             shoppingCartLink.UserId = customer.UserId;
             this.haiDiLaoShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+
+            var getShoppingCartDeliveryResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeliveryResult.StatusCode
+                };
+            }
+
+            var shoppingCartDelivery = getShoppingCartDeliveryResult.Result;
+            shoppingCartDelivery.Telephone = customer.Telephone;
+            shoppingCartDelivery.Name = customer.Name;
+            shoppingCartDelivery.Gender = customer.Gender;
+            this.haiDiLaoShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
             return new ServicesResult<bool>
             {
                 Result = true
