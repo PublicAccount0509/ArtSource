@@ -52,6 +52,16 @@
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
+        /// 支付信息
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：3/13/2014 1:54 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<PaymentEntity> paymentEntityRepository;
+
+        /// <summary>
         /// 取得订单类型
         /// </summary>
         /// <value>
@@ -76,6 +86,7 @@
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="orderEntityRepository">The orderEntityRepositoryDefault documentation</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
+        /// <param name="paymentEntityRepository">The paymentEntityRepositoryDefault documentation</param>
         /// 创建者：周超
         /// 创建日期：2013/10/20 16:04
         /// 修改者：
@@ -84,11 +95,13 @@
         public UserWaiMaiOrders(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<OrderEntity> orderEntityRepository,
-            INHibernateRepository<SupplierEntity> supplierEntityRepository)
+            INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<PaymentEntity> paymentEntityRepository)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.orderEntityRepository = orderEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
+            this.paymentEntityRepository = paymentEntityRepository;
         }
 
         /// <summary>
@@ -169,7 +182,8 @@
                     OrderType = p.OrderType,
                     DeliveryMethodId = p.DeliveryMethodId,
                     IsPaid = p.IsPaid,
-                    DishNames = p.DishNames
+                    DishNames = p.DishNames,
+                    PaymentMethodId = p.PaymentMethodId
                 }).ToList();
         }
 
@@ -262,9 +276,10 @@
                                      OrderType = (int)this.OrderType,
                                      DeliveryMethodId = p.DeliveryMethodId,
                                      IsPaid = p.IsPaId,
-                                     DishNames = string.Join("，", orderList.Where(q => q.DeliveryId == p.DeliveryId).Select(c => c.SupplierDishName).ToList())
+                                     DishNames = string.Join("，", orderList.Where(q => q.DeliveryId == p.DeliveryId).Select(c => c.SupplierDishName).ToList()),
+                                     //支付方式
+                                     PaymentMethodId = this.paymentEntityRepository.EntityQueryable.Where(pay=>pay.Delivery.DeliveryId == p.DeliveryId).Select(pay=>pay.PaymentMethodId).FirstOrDefault()
                                  }).ToList();
-            //菜品名称（菜品1,菜品2,菜品3)
 
             return result;
         }

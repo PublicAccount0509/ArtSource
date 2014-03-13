@@ -58,9 +58,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<WapSupplierDetail> Supplier(int id)
+        public Response<WapSupplierDetail> Supplier(int id, string cityCode = null)
         {
-            var getSupplierResult = this.supplierServices.GetSupplier(this.Source, id);
+            var getSupplierResult = this.supplierServices.GetSupplier(this.Source, id, cityCode);
             if (getSupplierResult.Result == null)
             {
                 return new Response<WapSupplierDetail>
