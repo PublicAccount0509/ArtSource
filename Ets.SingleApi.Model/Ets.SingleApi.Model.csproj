@@ -105,11 +105,13 @@
     <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
+    <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
     <Compile Include="Mapping\Repository\PackageContentEntity.cs" />
     <Compile Include="Mapping\Repository\PackageNameEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
+    <Compile Include="Mapping\Repository\PaymentRecordEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishCustomizationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishGroupEntity.cs" />
@@ -601,6 +603,10 @@
     <EmbeddedResource Include="Mapping\GroupSupplierModelEntity.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\OrderDetailEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\PaymentRecordEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
