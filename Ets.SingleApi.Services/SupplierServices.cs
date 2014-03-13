@@ -2148,7 +2148,7 @@
                                             where supplierCategoryEntity.SupplierId == supplierId
                                             && supplierMenu.SupplierMenuCategoryId == supplierCategoryEntity.SupplierMenuCategoryId
                                             && supplierMenu.SupplierId == supplierCategoryEntity.SupplierId
-                                            && supplierMenu.SupplierMenuCategoryId == 1
+                                            && supplierMenu.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == 1
                                             select new
                                             {
                                                 supplierCategoryEntity.Category,
