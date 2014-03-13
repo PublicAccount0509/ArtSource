@@ -191,9 +191,9 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<DistanceResult> GetDistance(double userLat, double userLong,int supplierId)
+        public Response<DistanceResult> GetDistance(double userLat, double userLong, int supplierId)
         {
-            var supplier = this.supplierServices.GetSupplier(this.Source, supplierId);
+            var supplier = this.supplierServices.GetSupplier(this.Source, supplierId, null);
             if (supplier == null)
             {
                 return new Response<DistanceResult>

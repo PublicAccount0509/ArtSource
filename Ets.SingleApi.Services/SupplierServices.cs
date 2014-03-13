@@ -223,6 +223,7 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
+        /// <param name="cityCode">城市Code</param>
         /// <returns>
         /// 返回餐厅信息
         /// </returns>
@@ -231,7 +232,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<SupplierDetailModel> GetSupplier(string source, int supplierId)
+        public ServicesResult<SupplierDetailModel> GetSupplier(string source, int supplierId, string cityCode = null)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -333,14 +334,10 @@
 
             if (supplier.SupplierGroupId != null && !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
             {
-                var regionCode = tempSupplier.RegionCode ?? string.Empty;
-                var code = regionCode;
-                if (regionCode.Length >= 3)
-                {
-                    code = tempSupplier.RegionCode.Substring(0, 3);
-                }
+                //地区Code前缀=cityCode 
+                var startRegionCode = cityCode ?? string.Empty;
 
-                var tempSupplierIdList = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled && p.RegionCode.StartsWith(code)).Select(p => p.SupplierId).ToList();
+                var tempSupplierIdList = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierGroupId == supplier.SupplierGroupId && p.Login.IsEnabled && p.RegionCode.StartsWith(startRegionCode)).Select(p => p.SupplierId).ToList();
                 var tempSupplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(p => p.IsEnabled == true && tempSupplierIdList.Contains(p.Supplier.SupplierId)).Select(p => new { p.Supplier.SupplierId, p.Feature.FeatureId }).ToList();
 
                 var supplierIdList = new List<int>();

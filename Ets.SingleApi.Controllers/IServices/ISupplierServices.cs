@@ -22,6 +22,7 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
+        /// <param name="cityCode">城市Code</param>
         /// <returns>
         /// 返回餐厅信息
         /// </returns>
@@ -30,7 +31,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<SupplierDetailModel> GetSupplier(string source, int supplierId);
+        ServicesResult<SupplierDetailModel> GetSupplier(string source, int supplierId, string cityCode);
 
         /// <summary>
         /// 获取餐厅基本信息
