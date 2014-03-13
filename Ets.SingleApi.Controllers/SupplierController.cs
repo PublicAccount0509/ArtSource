@@ -855,6 +855,7 @@ namespace Ets.SingleApi.Controllers
         /// </summary>
         /// <param name="id">餐厅Id</param>
         /// <param name="supplierDishId">餐厅菜Id</param>
+        /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型Id（1：外卖菜单、2：订台堂食菜单）</param>
         /// <returns>
         /// 返回餐厅菜
         /// </returns>
@@ -864,59 +865,62 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<SupplierDishDetail> SupplierDish(int id, int supplierDishId)
+        public Response<SupplierDishDetail> SupplierDish(int id, int supplierDishId, int supplierMenuCategoryTypeId)
         {
-            var list = this.supplierServices.GetSupplierDish(this.Source, id, supplierDishId);
+            var list = this.supplierServices.GetSupplierDish(this.Source, id, supplierDishId, supplierMenuCategoryTypeId);
             if (list.Result == null)
             {
                 return new Response<SupplierDishDetail>
-                {
-                    Message = new ApiMessage
                     {
-                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
-                    },
-                    Result = new SupplierDishDetail()
-                };
+                        Message = new ApiMessage
+                            {
+                                StatusCode =
+                                    list.StatusCode == (int) StatusCode.Succeed.Ok
+                                        ? (int) StatusCode.Succeed.Empty
+                                        : list.StatusCode
+                            },
+                        Result = new SupplierDishDetail()
+                    };
             }
 
             var result = new SupplierDishDetail
-            {
-                Price = list.Result.Price,
-                ImagePath = list.Result.ImagePath ?? string.Empty,
-                SupplierDishId = list.Result.SupplierDishId,
-                DishName = list.Result.DishName ?? string.Empty,
-                DishDescription = list.Result.DishDescription ?? string.Empty,
-                AverageRating = list.Result.AverageRating,
-                IsCommission = list.Result.IsCommission,
-                IsDiscount = list.Result.IsDiscount,
-                Recipe = list.Result.Recipe ?? string.Empty,
-                Recommended = list.Result.Recommended,
-                CategoryId = list.Result.CategoryId,
-                CategoryName = list.Result.CategoryName ?? string.Empty,
-                DishNo = list.Result.DishNo ?? string.Empty,
-                HasNuts = list.Result.HasNuts,
-                IsDel = list.Result.IsDel,
-                IsSpecialOffer = list.Result.IsSpecialOffer,
-                JianPin = list.Result.JianPin ?? string.Empty,
-                Online = list.Result.Online,
-                PackagingFee = list.Result.PackagingFee,
-                QuanPin = list.Result.QuanPin ?? string.Empty,
-                SpecialOfferNo = list.Result.SpecialOfferNo,
-                SpicyLevel = list.Result.SpicyLevel,
-                StockLevel = list.Result.StockLevel,
-                SupplierCategoryId = list.Result.SupplierCategoryId,
-                SupplierId = list.Result.SupplierId,
-                Vegetarian = list.Result.Vegetarian
-            };
+                {
+                    Price = list.Result.Price,
+                    ImagePath = list.Result.ImagePath ?? string.Empty,
+                    SupplierDishId = list.Result.SupplierDishId,
+                    DishName = list.Result.DishName ?? string.Empty,
+                    DishDescription = list.Result.DishDescription ?? string.Empty,
+                    AverageRating = list.Result.AverageRating,
+                    IsCommission = list.Result.IsCommission,
+                    IsDiscount = list.Result.IsDiscount,
+                    Recipe = list.Result.Recipe ?? string.Empty,
+                    Recommended = list.Result.Recommended,
+                    CategoryId = list.Result.CategoryId,
+                    CategoryName = list.Result.CategoryName ?? string.Empty,
+                    DishNo = list.Result.DishNo ?? string.Empty,
+                    HasNuts = list.Result.HasNuts,
+                    IsDel = list.Result.IsDel,
+                    IsSpecialOffer = list.Result.IsSpecialOffer,
+                    JianPin = list.Result.JianPin ?? string.Empty,
+                    Online = list.Result.Online,
+                    PackagingFee = list.Result.PackagingFee,
+                    QuanPin = list.Result.QuanPin ?? string.Empty,
+                    SpecialOfferNo = list.Result.SpecialOfferNo,
+                    SpicyLevel = list.Result.SpicyLevel,
+                    StockLevel = list.Result.StockLevel,
+                    SupplierCategoryId = list.Result.SupplierCategoryId,
+                    SupplierId = list.Result.SupplierId,
+                    Vegetarian = list.Result.Vegetarian
+                };
 
             return new Response<SupplierDishDetail>
-            {
-                Message = new ApiMessage
                 {
-                    StatusCode = list.StatusCode
-                },
-                Result = result
-            };
+                    Message = new ApiMessage
+                        {
+                            StatusCode = list.StatusCode
+                        },
+                    Result = result
+                };
         }
 
         /// <summary>
