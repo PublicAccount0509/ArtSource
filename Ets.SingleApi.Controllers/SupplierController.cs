@@ -89,6 +89,7 @@ namespace Ets.SingleApi.Controllers
         /// 获取餐厅信息
         /// </summary>
         /// <param name="id">餐厅Id</param>
+        /// <param name="cityCode">城市Code</param>
         /// <returns>
         /// The GetSupplierResponse
         /// </returns>
@@ -98,9 +99,9 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<SupplierDetail> Supplier(int id)
+        public Response<SupplierDetail> Supplier(int id, string cityCode = null)
         {
-            var getSupplierResult = this.supplierServices.GetSupplier(this.Source, id);
+            var getSupplierResult = this.supplierServices.GetSupplier(this.Source, id, cityCode);
             if (getSupplierResult.Result == null)
             {
                 return new Response<SupplierDetail>
@@ -116,7 +117,7 @@ namespace Ets.SingleApi.Controllers
             var supplierFeatureList = getSupplierResult.Result.SupplierFeatureList;
 
             //餐厅推荐菜品列表
-            var recommendedDishList = getSupplierResult.Result.RecommendedDishList??new List<SupplierRecommendedDishModel>();
+            var recommendedDishList = getSupplierResult.Result.RecommendedDishList ?? new List<SupplierRecommendedDishModel>();
 
             var supplier = new SupplierDetail
             {
@@ -152,7 +153,7 @@ namespace Ets.SingleApi.Controllers
                     FeatureId = q.FeatureId,
                     FeatureName = q.FeatureName ?? string.Empty
                 }).ToList(),
-                RecommendedDishList = recommendedDishList.Select(p=>new SupplierDish
+                RecommendedDishList = recommendedDishList.Select(p => new SupplierDish
                     {
                         SupplierDishId = p.SupplierDishId,
                         SupplierDishName = p.SupplierDishName,
@@ -1226,9 +1227,9 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<DistanceResult> GetDistance(int id,double userLat, double userLong)
+        public Response<DistanceResult> GetDistance(int id, double userLat, double userLong)
         {
-            var supplier = this.supplierServices.GetSupplier(this.Source, id);
+            var supplier = this.supplierServices.GetSupplier(this.Source, id, null);
             if (supplier == null)
             {
                 return new Response<DistanceResult>

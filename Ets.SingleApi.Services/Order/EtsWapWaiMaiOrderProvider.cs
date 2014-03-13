@@ -1,6 +1,4 @@
-﻿using Ets.SingleApi.Services.ICacheServices;
-
-namespace Ets.SingleApi.Services
+﻿namespace Ets.SingleApi.Services
 {
     using System;
     using System.Collections.Generic;
@@ -14,11 +12,12 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Services.IExternalServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
+    using Ets.SingleApi.Services.ICacheServices;
 
     /// <summary>
-    /// 类名称：HaiDiLaoWaiMaiOrderProvider
+    /// 类名称：WaiMaiOrderProvider
     /// 命名空间：Ets.SingleApi.Services
-    /// 类功能：海底捞外卖订单
+    /// 类功能：外卖订单
     /// </summary>
     /// 创建者：周超
     /// 创建日期：11/22/2013 3:25 PM
@@ -26,7 +25,7 @@ namespace Ets.SingleApi.Services
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
     [Transactional]
-    public class HaiDiLaoWaiMaiOrderProvider : WaiMaiOrderProvider
+    public class EtsWapWaiMaiOrderProvider : WaiMaiOrderProvider
     {
         /// <summary>
         /// 字段deliveryEntityRepository
@@ -119,26 +118,6 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
 
         /// <summary>
-        /// 字段packageSelectedEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：12/19/2013 11:12 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<PackageSelectedEntity> packageSelectedEntityRepository;
-
-        /// <summary>
-        /// 字段packageSelectedDetailEntityRepository
-        /// </summary>
-        /// 创建者：周超
-        /// 创建日期：12/19/2013 11:12 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<PackageSelectedDetailEntity> packageSelectedDetailEntityRepository;
-
-        /// <summary>
         /// 字段distance
         /// </summary>
         /// 创建者：周超
@@ -149,14 +128,14 @@ namespace Ets.SingleApi.Services
         private readonly IDistance distance;
 
         /// <summary>
-        /// 字段shoppingCartProvider
+        /// 字段etsWapShoppingCartProvider
         /// </summary>
         /// 创建者：周超
         /// 创建日期：11/22/2013 3:26 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IHaiDiLaoShoppingCartProvider haiDiLaoShoppingCartProvider;
+        private readonly IEtsWapShoppingCartProvider etsWapShoppingCartProvider;
 
         /// <summary>
         /// 字段shoppingCartBaseCacheServices
@@ -169,7 +148,7 @@ namespace Ets.SingleApi.Services
         private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HaiDiLaoWaiMaiOrderProvider" /> class.
+        /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="sourcePathEntityRepository">The sourcePathEntityRepository</param>
@@ -180,11 +159,9 @@ namespace Ets.SingleApi.Services
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerAddressEntityRepository">The customerAddressEntityRepository</param>
         /// <param name="deliveryAddressEntityRepository">The deliveryAddressEntityRepository</param>
-        /// <param name="packageSelectedEntityRepository">The packageSelectedEntityRepository</param>
-        /// <param name="packageSelectedDetailEntityRepository">The packageSelectedDetailEntityRepository</param>
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="distance">The distance</param>
-        /// <param name="shoppingCartProvider">The shoppingCartProvider</param>
+        /// <param name="etsWapShoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
         /// 创建者：周超
@@ -192,7 +169,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public HaiDiLaoWaiMaiOrderProvider(
+        public EtsWapWaiMaiOrderProvider(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<SourcePathEntity> sourcePathEntityRepository,
             INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
@@ -202,11 +179,9 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
             INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
-            INHibernateRepository<PackageSelectedEntity> packageSelectedEntityRepository,
-            INHibernateRepository<PackageSelectedDetailEntity> packageSelectedDetailEntityRepository,
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             IDistance distance,
-            IHaiDiLaoShoppingCartProvider shoppingCartProvider,
+            IEtsWapShoppingCartProvider etsWapShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
             ISingleApiOrdersExternalService singleApiOrdersExternalService)
             : base(deliveryEntityRepository, orderNumberDcEntityRepository, singleApiOrdersExternalService)
@@ -220,10 +195,8 @@ namespace Ets.SingleApi.Services
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
             this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
-            this.packageSelectedEntityRepository = packageSelectedEntityRepository;
-            this.packageSelectedDetailEntityRepository = packageSelectedDetailEntityRepository;
             this.distance = distance;
-            this.haiDiLaoShoppingCartProvider = shoppingCartProvider;
+            this.etsWapShoppingCartProvider = etsWapShoppingCartProvider;
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
 
@@ -245,7 +218,7 @@ namespace Ets.SingleApi.Services
         public override ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank)
         {
             //获取ShoppingCartLink信息
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            var getShoppingCartLinkResult = this.etsWapShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -258,7 +231,7 @@ namespace Ets.SingleApi.Services
             var shoppingCartLink = getShoppingCartLinkResult.Result;
 
             //获取 订单信息
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -271,7 +244,7 @@ namespace Ets.SingleApi.Services
             //订单信息
             var orderInfo = getShoppingCartOrderResult.Result;
             //修改 缓存订单支付方式
-            var modifyOrderPaymentMethodResult = this.haiDiLaoShoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.Id, paymentMethodId, payBank);
+            var modifyOrderPaymentMethodResult = this.etsWapShoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.Id, paymentMethodId, payBank);
             if (modifyOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -304,7 +277,7 @@ namespace Ets.SingleApi.Services
         public override ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId)
         {
             //获取ShoppingCartLink信息
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            var getShoppingCartLinkResult = this.etsWapShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<OrderShoppingCartStatusModel>
@@ -317,7 +290,7 @@ namespace Ets.SingleApi.Services
             var shoppingCartLink = getShoppingCartLinkResult.Result;
 
             //获取 订单信息
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<OrderShoppingCartStatusModel>
@@ -345,11 +318,11 @@ namespace Ets.SingleApi.Services
             {
                 StatusCode = getShoppingCartOrderResult.StatusCode,
                 Result = new OrderShoppingCartStatusModel
-                {
-                    IsComplete = getShoppingCartOrderResult.Result.IsComplete,
-                    IsPaid = deliveryInfo.IsPaId ?? false,
-                    OrderStatusId = deliveryInfo.OrderStatusId
-                }
+                    {
+                        IsComplete = getShoppingCartOrderResult.Result.IsComplete,
+                        IsPaid = deliveryInfo.IsPaId ?? false,
+                        OrderStatusId = deliveryInfo.OrderStatusId
+                    }
             };
         }
 
@@ -377,19 +350,17 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
-                    Result = new HaiDiLaoWaiMaiOrderDetailModel()
+                    Result = new WaiMaiOrderDetailModel()
                 };
             }
 
-            var waiMaiOrderDishList = deliveryEntity.OrderList.Select(p => new HaiDiLaoWaiMaiOrderDishModel
+            var waiMaiOrderDishList = deliveryEntity.OrderList.Select(p => new WaiMaiOrderDishModel
             {
                 SupplierDishId = p.SupplierDishId,
                 SupplierDishName = p.SupplierDishName,
                 Instruction = p.SpecialInstruction,
                 Price = p.SupplierPrice,
-                Quantity = p.Quantity,
-                Type = 0,
-                ParentId = 0
+                Quantity = p.Quantity
             }).ToList();
 
             var supplierId = deliveryEntity.SupplierId;
@@ -399,43 +370,8 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = new HaiDiLaoWaiMaiOrderDetailModel()
+                    Result = new WaiMaiOrderDetailModel()
                 };
-            }
-
-            var packageList = (from entity in this.packageSelectedEntityRepository.EntityQueryable
-                               where entity.Supplier.SupplierId == supplierId && entity.Delivery.DeliveryId == deliveryEntity.DeliveryId
-                               select new HaiDiLaoWaiMaiOrderDishModel
-                               {
-                                   SupplierDishId = entity.Package.PackageId,
-                                   SupplierDishName = entity.PackageName,
-                                   Instruction = entity.Comment,
-                                   Price = entity.PackagePrice,
-                                   Quantity = entity.PackageNum,
-                                   Type = 3,
-                                   ParentId = 0
-                               }).ToList();
-
-            if (packageList.Count > 0)
-            {
-                waiMaiOrderDishList.AddRange(packageList);
-            }
-
-            var packageDetailList = (from entity in this.packageSelectedDetailEntityRepository.EntityQueryable
-                                     where entity.DeliveryId == deliveryEntity.DeliveryId
-                                     select new HaiDiLaoWaiMaiOrderDishModel
-                                     {
-                                         SupplierDishName = entity.DishName,
-                                         Instruction = string.Empty,
-                                         Price = entity.DishPrice,
-                                         Quantity = entity.DishNum,
-                                         Type = 0,
-                                         ParentId = entity.PackageSelected.Package.PackageId
-                                     }).ToList();
-
-            if (packageDetailList.Count > 0)
-            {
-                waiMaiOrderDishList.AddRange(packageDetailList);
             }
 
             decimal baIduLat;
@@ -463,9 +399,17 @@ namespace Ets.SingleApi.Services
                 gender = "0";
             }
 
+            //总价 未折扣
+            var total = deliveryEntity.Total ?? 0;
+            //总价 折扣后
+            var customerTotal = deliveryEntity.CustomerTotal ?? 0;
+            //折扣
+            var coupon = Math.Max(total - customerTotal, 0);
+
             var shoppingCartResult = this.shoppingCartBaseCacheServices.GetShoppingCartId(source, orderId);
             var shoppingCartId = shoppingCartResult == null ? string.Empty : shoppingCartResult.Result;
-            var result = new HaiDiLaoWaiMaiOrderDetailModel
+
+            var result = new WaiMaiOrderDetailModel
             {
                 ShoppingCartId = shoppingCartId,
                 OrderId = deliveryEntity.OrderNumber.HasValue ? deliveryEntity.OrderNumber.Value : 0,
@@ -474,12 +418,9 @@ namespace Ets.SingleApi.Services
                 DateReserved = deliveryEntity.DateAdded == null ? string.Empty : deliveryEntity.DateAdded.Value.ToString("yyyy-MM-dd HH:mm"),
                 DeliveryTime = deliveryEntity.DeliveryDate == null ? string.Empty : deliveryEntity.DeliveryDate.Value.ToString("yyyy-MM-dd HH:mm"),
                 DeliveryInstruction = deliveryEntity.DeliveryInstruction ?? string.Empty,
-                CustomerTotal = (deliveryEntity.ReceivablePrice ?? 0).ToString("#0.00"),
-                Total = (deliveryEntity.CustomerTotal ?? 0).ToString("#0.00"),
-                DishTotal = (deliveryEntity.RealSupplierPrice ?? 0).ToString("#0.00"),
-                CookingFee = ((deliveryEntity.CustomerTotal ?? 0) - (deliveryEntity.RealSupplierPrice ?? 0) - (deliveryEntity.ServiceFee ?? 0) - (deliveryEntity.DeliverCharge ?? 0)).ToString("#0.00"),
-                Coupon = Math.Max(((deliveryEntity.CustomerTotal ?? 0) - (deliveryEntity.ReceivablePrice ?? 0)), 0).ToString("#0.00"),
                 Commission = "0.00",
+                PackagingFee = (deliveryEntity.PackagingFee ?? 0).ToString("#0.00"),
+                FixedDeliveryFee = (deliveryEntity.DeliverCharge ?? 0).ToString("#0.00"),
                 RealSupplierType = deliveryEntity.RealSupplierType,
                 SupplierGroupId = supplierEntity.SupplierGroupId,
                 SupplierId = supplierEntity.SupplierId,
@@ -499,13 +440,9 @@ namespace Ets.SingleApi.Services
                 DeliveryCustomerName = deliveryEntity.Contact.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Recipient) : deliveryEntity.Contact,
                 DeliveryCustomerTelphone = deliveryEntity.ContactPhone.IsEmptyOrNull() ? (deliveryAddressEntity == null ? string.Empty : deliveryAddressEntity.Telephone) : deliveryEntity.ContactPhone,
                 DeliveryCustomerGender = gender,
-                ServicesFee = (deliveryEntity.ServiceFee ?? 0).ToString("#0.00"),
-                FixedDeliveryFee = (deliveryEntity.DeliverCharge ?? 0).ToString("#0.00"),
-                CookingCount = deliveryEntity.Stove ?? 0,
-                PanCount = deliveryEntity.Pot ?? 0,
-                DiningCount = deliveryEntity.NumOfPeople ?? 0,
-                IsSelfPan = (deliveryEntity.ZBGD ?? 0) == 1,
-                IsSelfDip = (deliveryEntity.ZBXL ?? 0) == 1
+                Coupon = coupon.ToString("#0.00"),//折扣
+                CustomerTotal = customerTotal.ToString("#0.00"),//总价 折扣后
+                Total = total.ToString("#0.00")//总价 未折扣
             };
 
             if (result.InvoiceTitle.IsEmptyOrNull())
@@ -538,7 +475,7 @@ namespace Ets.SingleApi.Services
         [Transaction(TransactionMode.RequiresNew)]
         public override ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword)
         {
-            var getShoppingCartLinkResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            var getShoppingCartLinkResult = this.etsWapShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
             if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -549,7 +486,7 @@ namespace Ets.SingleApi.Services
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.haiDiLaoShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            var getShoppingCartResult = this.etsWapShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
             if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -559,7 +496,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartSupplierResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            var getShoppingCartSupplierResult = this.etsWapShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
             if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -569,7 +506,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartCustomerResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
+            var getShoppingCartCustomerResult = this.etsWapShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
             if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -579,7 +516,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartOrderResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -589,7 +526,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartDeliveryResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            var getShoppingCartDeliveryResult = this.etsWapShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
@@ -599,21 +536,10 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var getShoppingCartExtraResult = this.haiDiLaoShoppingCartProvider.GetShoppingCartExtra(source, shoppingCartLink.ExtraId);
-            if (getShoppingCartExtraResult.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartExtraResult.StatusCode,
-                    Result = string.Empty
-                };
-            }
-
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
-            var extra = getShoppingCartExtraResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
             var deliveryTime = order.DeliveryDateTime;
             if (deliveryTime <= DateTime.Now)
@@ -629,9 +555,9 @@ namespace Ets.SingleApi.Services
             if (shoppingCartBase.Result.IsComplete)
             {
                 return new ServicesResult<string>
-                {
-                    Result = shoppingCartBase.Result.OrderNumber.ToString()
-                };
+                    {
+                        Result = shoppingCartBase.Result.OrderNumber.ToString()
+                    };
             }
 
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
@@ -677,13 +603,12 @@ namespace Ets.SingleApi.Services
 
             var customerId = customer.CustomerId;
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
-                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order, extra)
-                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order, extra);
-            
+                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order)
+                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
+
             var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
             this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
-            this.SavePackageEntity(supplier.SupplierId, deliveryId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
 
             this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
@@ -708,7 +633,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         protected override OrderSourceType GetOrderSourceType()
         {
-            return OrderSourceType.HaiDiLao;
+            return OrderSourceType.EtsWap;
         }
 
         /// <summary>
@@ -719,7 +644,6 @@ namespace Ets.SingleApi.Services
         /// <param name="customerId">The customerId</param>
         /// <param name="delivery">The delivery</param>
         /// <param name="order">订单信息</param>
-        /// <param name="extra">The extra</param>
         /// <returns>
         /// 返回订单信息
         /// </returns>
@@ -728,7 +652,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra)
+        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
         {
             var userName = delivery.Name;
             var deliveryAddressEntity = new DeliveryAddressEntity
@@ -748,10 +672,8 @@ namespace Ets.SingleApi.Services
                 OrderNumber = orderId,
                 DeliveryMethodId = order.DeliveryMethodId,
                 DeliveryInstruction = order.DeliveryInstruction,
-                CustomerTotal = order.TotalFee,
-                ReceivablePrice = order.CustomerTotalFee,
-                Total = order.TotalPrice,
-                RealSupplierPrice = order.TotalPrice - order.CouponFee,
+                CustomerTotal = order.CustomerTotalFee,
+                Total = order.TotalFee,
                 OrderStatusId = 1,
                 DateAdded = DateTime.Now,
                 PackagingFee = order.PackagingFee,
@@ -771,12 +693,6 @@ namespace Ets.SingleApi.Services
                 AreaId = order.AreaId,
                 IPAddress = delivery.IpAddress,
                 IsTakeInvoice = order.IsTakeInvoice,
-                ZBGD = order.IsSelfPan ? 1 : 0,
-                ZBXL = order.IsSelfDip ? 1 : 0,
-                ServiceFee = order.ServicesFee,
-                Pot = extra.PanCount,
-                Stove = extra.CookingCount,
-                NumOfPeople = extra.DiningCount,
                 DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
             };
 
@@ -792,7 +708,6 @@ namespace Ets.SingleApi.Services
         /// <param name="customerId">The customerId</param>
         /// <param name="delivery">The delivery</param>
         /// <param name="order">订单信息</param>
-        /// <param name="extra">The extra</param>
         /// <returns>
         /// 返回订单信息
         /// </returns>
@@ -801,7 +716,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra)
+        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
         {
             var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customerId);
             var deliveryAddressEntity = new DeliveryAddressEntity
@@ -829,10 +744,8 @@ namespace Ets.SingleApi.Services
                 OrderNumber = orderId,
                 DeliveryMethodId = order.DeliveryMethodId,
                 DeliveryInstruction = order.DeliveryInstruction,
-                CustomerTotal = order.TotalFee,
-                ReceivablePrice = order.CustomerTotalFee,
-                Total = order.TotalPrice,
-                RealSupplierPrice = order.TotalPrice - order.CouponFee,
+                CustomerTotal = order.CustomerTotalFee,
+                Total = order.TotalFee,
                 OrderStatusId = 1,
                 DateAdded = DateTime.Now,
                 PackagingFee = order.PackagingFee,
@@ -852,12 +765,6 @@ namespace Ets.SingleApi.Services
                 AreaId = order.AreaId,
                 IPAddress = delivery.IpAddress,
                 IsTakeInvoice = order.IsTakeInvoice,
-                ZBGD = order.IsSelfPan ? 1 : 0,
-                ZBXL = order.IsSelfDip ? 1 : 0,
-                ServiceFee = order.ServicesFee,
-                Pot = extra.PanCount,
-                Stove = extra.CookingCount,
-                NumOfPeople = extra.DiningCount,
                 DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
             };
 
@@ -930,8 +837,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private void SaveOrderEntity(int customerId, int deliveryId, IEnumerable<ShoppingCartItem> shoppingList)
         {
-            var typeList = new List<int> { 0, 1, 2 };
-            var orderList = (from dish in shoppingList.Where(p => typeList.Contains(p.Type) && p.ParentId == 0)
+            var orderList = (from dish in shoppingList
                              select new OrderEntity
                              {
                                  Delivery = new DeliveryEntity
@@ -949,56 +855,6 @@ namespace Ets.SingleApi.Services
                              }).ToList();
 
             this.orderEntityRepository.Save(orderList);
-        }
-
-        /// <summary>
-        /// 保存订单套餐信息
-        /// </summary>
-        /// <param name="supplierId">餐厅Id</param>
-        /// <param name="deliveryId">订单Id</param>
-        /// <param name="shoppingList">商品列表</param>
-        /// 创建者：周超
-        /// 创建日期：11/22/2013 5:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private void SavePackageEntity(int supplierId, int deliveryId, List<ShoppingCartItem> shoppingList)
-        {
-            var packageSelectedList = (from dish in shoppingList.Where(p => p.Type == 3)
-                                       select new PackageSelectedEntity
-                                       {
-                                           Delivery = new DeliveryEntity
-                                           {
-                                               DeliveryId = deliveryId
-                                           },
-                                           Package = new PackageNameEntity
-                                               {
-                                                   PackageId = dish.ItemId
-                                               },
-                                           Supplier = new SupplierEntity
-                                               {
-                                                   SupplierId = supplierId
-                                               },
-                                           PackageNum = dish.Quantity,
-                                           PackagePrice = dish.Price,
-                                           PackageName = dish.ItemName,
-                                           Comment = dish.Instruction
-                                       }).ToList();
-
-            this.packageSelectedEntityRepository.Save(packageSelectedList);
-
-            var typeList = new List<int> { 0, 1, 2 };
-            var packageSelectedDetailList = (from dish in shoppingList.Where(p => typeList.Contains(p.Type) && p.ParentId != 0)
-                                             select new PackageSelectedDetailEntity
-                                             {
-                                                 PackageSelected = packageSelectedList.FirstOrDefault(p => p.Package.PackageId == dish.ParentId),
-                                                 DeliveryId = deliveryId,
-                                                 DishNum = dish.Quantity,
-                                                 DishPrice = dish.Price,
-                                                 DishName = dish.ItemName,
-                                             }).ToList();
-
-            this.packageSelectedDetailEntityRepository.Save(packageSelectedDetailList);
         }
 
         /// <summary>
