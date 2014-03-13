@@ -114,6 +114,10 @@ namespace Ets.SingleApi.Controllers
             }
 
             var supplierFeatureList = getSupplierResult.Result.SupplierFeatureList;
+
+            //餐厅推荐菜品列表
+            var recommendedDishList = getSupplierResult.Result.RecommendedDishList??new List<SupplierRecommendedDishModel>();
+
             var supplier = new SupplierDetail
             {
                 SupplierId = getSupplierResult.Result.SupplierId,
@@ -147,7 +151,19 @@ namespace Ets.SingleApi.Controllers
                     SupplierFeatureId = q.SupplierFeatureId,
                     FeatureId = q.FeatureId,
                     FeatureName = q.FeatureName ?? string.Empty
-                }).ToList()
+                }).ToList(),
+                RecommendedDishList = recommendedDishList.Select(p=>new SupplierDish
+                    {
+                        SupplierDishId = p.SupplierDishId,
+                        SupplierDishName = p.SupplierDishName,
+                        Price = p.Price,
+                        ImagePath = p.ImagePath,
+                        SupplierCatogryId = p.SupplierCatogryId,
+                        SupplierMenuCategoryId = p.SupplierMenuCategoryId,
+                        Type = p.Type,
+                        Recipe = p.Recipe,
+                        PackagingFee = p.PackagingFee
+                    }).ToList()
             };
 
             return new Response<SupplierDetail>

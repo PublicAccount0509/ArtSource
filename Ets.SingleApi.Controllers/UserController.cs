@@ -948,7 +948,8 @@
                 OrderType = p.OrderType,
                 DineNumber = p.DineNumber ?? 0,
                 DeliveryMethodId = p.DeliveryMethodId,
-                IsPaid = p.IsPaid ?? false
+                IsPaid = p.IsPaid ?? false,
+                DishNames = p.DishNames
             }).ToList();
 
             return new ListResponse<UserOrder>

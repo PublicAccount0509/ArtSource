@@ -43,6 +43,8 @@
     <Compile Include="BusinessType.cs" />
     <Compile Include="CacheServices\CacheServicesResult.cs" />
     <Compile Include="CacheServices\CacheServicesListResult.cs" />
+    <Compile Include="Controller\AlipayPaymentRequst.cs" />
+    <Compile Include="Controller\AlipayPaymentStateRequst.cs" />
     <Compile Include="Controller\BaiFuBaoPaymentRequst.cs" />
     <Compile Include="Controller\DistanceResult.cs" />
     <Compile Include="Controller\LocationCity.cs" />
@@ -122,6 +124,8 @@
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
     <Compile Include="OrderProviderType.cs" />
     <Compile Include="OrderSourceType.cs" />
+    <Compile Include="Services\AlipayPaymentParameter.cs" />
+    <Compile Include="Services\AlipayPaymentStateParameter.cs" />
     <Compile Include="Services\BaiFuBaoPaymentParameter.cs" />
     <Compile Include="Services\BaiFuBaoPaymentStateParameter.cs" />
     <Compile Include="Services\BaiFuBaoReturnParameter.cs" />
@@ -168,6 +172,7 @@
     <Compile Include="Services\RegisterUserOAuthParameter.cs" />
     <Compile Include="Services\OAuthLoginParameter.cs" />
     <Compile Include="Services\OrderShoppingCartStatusModel.cs" />
+    <Compile Include="Services\SupplierRecommendedDishModel.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />

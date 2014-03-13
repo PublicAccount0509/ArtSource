@@ -32,6 +32,16 @@
         private readonly INHibernateRepository<DeliveryEntity> deliveryEntityRepository;
 
         /// <summary>
+        /// 字段orderEntityRepository
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：3/12/2014 6:52 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<OrderEntity> orderEntityRepository;
+
+        /// <summary>
         /// 字段supplierEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -64,6 +74,7 @@
         /// Initializes a new instance of the <see cref="UserWaiMaiOrders" /> class.
         /// </summary>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
+        /// <param name="orderEntityRepository">The orderEntityRepositoryDefault documentation</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：2013/10/20 16:04
@@ -72,9 +83,11 @@
         /// ----------------------------------------------------------------------------------------
         public UserWaiMaiOrders(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
+            INHibernateRepository<OrderEntity> orderEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
+            this.orderEntityRepository = orderEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
         }
 
@@ -155,7 +168,8 @@
                     OrderStatus = p.OrderStatus,
                     OrderType = p.OrderType,
                     DeliveryMethodId = p.DeliveryMethodId,
-                    IsPaid = p.IsPaid
+                    IsPaid = p.IsPaid,
+                    DishNames = p.DishNames
                 }).ToList();
         }
 
@@ -174,12 +188,14 @@
         private List<WaiMaiOrderModel> GetWaiMaiOrderList(UserOrdersParameter parameter)
         {
             var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
+
             var queryableTemp = (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
                                  from entity in this.supplierEntityRepository.EntityQueryable
                                  where deliveryEntity.SupplierId == entity.SupplierId
                                  && deliveryEntity.CustomerId == parameter.CustomerId
                                  select new
                                      {
+                                         deliveryEntity.DeliveryId,
                                          deliveryEntity.OrderNumber,
                                          deliveryEntity.SupplierId,
                                          deliveryEntity.DateAdded,
@@ -187,8 +203,7 @@
                                          deliveryEntity.OrderStatusId,
                                          deliveryEntity.DeliveryMethodId,
                                          deliveryEntity.IsPaId,
-                                         entity.SupplierGroupId,
-
+                                         entity.SupplierGroupId
                                      });
 
             if (parameter.SupplierGroupId != null)
@@ -222,19 +237,34 @@
                 queryableTemp = queryableTemp.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize);
             }
 
-            var result = queryableTemp.ToList().Select(p => new WaiMaiOrderModel
-                               {
-                                   OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
-                                   SupplierId = p.SupplierId,
-                                   SupplierName = string.Empty,
-                                   DateReserved = p.DateAdded,
-                                   CustomerTotal = p.CustomerTotal,
-                                   OrderStatusId = p.OrderStatusId,
-                                   OrderStatus = string.Empty,
-                                   OrderType = (int)this.OrderType,
-                                   DeliveryMethodId = p.DeliveryMethodId,
-                                   IsPaid = p.IsPaId
-                               }).ToList();
+            //菜品名称（菜品1,菜品2,菜品3)
+            var deliveryList = queryableTemp.ToList();
+            var deliveryIdList = deliveryList.Select(p => p.DeliveryId).ToList();
+
+            var orderList = (from order in this.orderEntityRepository.EntityQueryable
+                             where deliveryIdList.Contains(order.Delivery.DeliveryId)
+                             select new
+                                 {
+                                     order.SupplierDishName,
+                                     order.Delivery.DeliveryId
+                                 }
+               ).ToList();
+
+            var result = deliveryList.Select(p => new WaiMaiOrderModel
+                                 {
+                                     OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
+                                     SupplierId = p.SupplierId,
+                                     SupplierName = string.Empty,
+                                     DateReserved = p.DateAdded,
+                                     CustomerTotal = p.CustomerTotal,
+                                     OrderStatusId = p.OrderStatusId,
+                                     OrderStatus = string.Empty,
+                                     OrderType = (int)this.OrderType,
+                                     DeliveryMethodId = p.DeliveryMethodId,
+                                     IsPaid = p.IsPaId,
+                                     DishNames = string.Join("，", orderList.Where(q => q.DeliveryId == p.DeliveryId).Select(c => c.SupplierDishName).ToList())
+                                 }).ToList();
+            //菜品名称（菜品1,菜品2,菜品3)
 
             return result;
         }

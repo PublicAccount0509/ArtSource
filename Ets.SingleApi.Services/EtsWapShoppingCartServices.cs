@@ -605,6 +605,22 @@ namespace Ets.SingleApi.Services
             var customer = getShoppingCartCustomerResult.Result;
             shoppingCartLink.UserId = customer.UserId;
             this.etsWapShoppingCartProvider.SaveShoppingCartLink(source, shoppingCartLink);
+
+            var getShoppingCartDeliveryResult = this.etsWapShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeliveryResult.StatusCode
+                };
+            }
+
+            var shoppingCartDelivery = getShoppingCartDeliveryResult.Result;
+            shoppingCartDelivery.Telephone = customer.Telephone;
+            shoppingCartDelivery.Name = customer.Name;
+            shoppingCartDelivery.Gender = customer.Gender;
+            this.etsWapShoppingCartProvider.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+
             return new ServicesResult<bool>
             {
                 Result = true

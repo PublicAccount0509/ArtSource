@@ -291,6 +291,7 @@
                                                 FeatureId = p.Feature.FeatureId
                                             }).ToList();
 
+
             var supplier = new SupplierDetailModel
                 {
                     SupplierId = tempSupplier.SupplierId,
@@ -319,7 +320,8 @@
                             p => p.Supplier.SupplierId == supplierId && p.Online == true)
                             .Select(p => p.ImagePath)
                             .FirstOrDefault()),
-                    SupplierFeatureList = supplierFeatureList
+                    SupplierFeatureList = supplierFeatureList,
+                    RecommendedDishList = new List<SupplierRecommendedDishModel>()
                 };
 
             var cooperationWaimaiList = ServicesCommon.CooperationWaimaiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p)).ToList();
@@ -389,6 +391,17 @@
                     Result = supplier
                 };
             }
+
+            //餐厅推荐菜品列表
+            var recommendedDishList = GetRecommendedDish(supplierId);
+            if (recommendedDishList.Count == 0)
+            {
+                return new ServicesResult<SupplierDetailModel>
+                {
+                    Result = supplier
+                };
+            }
+            supplier.RecommendedDishList = recommendedDishList;
 
             var timeTableDisplayList = (from entity in this.timeTableDisplayEntityRepository.EntityQueryable
                                         where timeTableDisplayIdList.Contains(entity.TimeTableDisplayId)
@@ -2079,6 +2092,99 @@
         private double Rad(double d)
         {
             return d * Math.PI / 180.0;
+        }
+
+        /// <summary>
+        /// 获取 餐厅推荐菜品(外卖)列表
+        /// </summary>
+        /// <param name="supplierId">The supplierIdDefault documentation</param>
+        /// <returns>
+        /// List{SupplierRecommendedDishModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：3/12/2014 8:14 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private List<SupplierRecommendedDishModel> GetRecommendedDish(int supplierId)
+        {
+            var tempSupplierCategoryList = (from supplierMenu in this.supplierMenuCategoryEntityRepository.EntityQueryable
+                                            from supplierCategoryEntity in this.supplierCategoryEntityRepository.EntityQueryable
+                                            where supplierCategoryEntity.SupplierId == supplierId
+                                            && supplierMenu.SupplierMenuCategoryId == supplierCategoryEntity.SupplierMenuCategoryId
+                                            && supplierMenu.SupplierId == supplierCategoryEntity.SupplierId
+                                            && supplierMenu.SupplierMenuCategoryId == 1
+                                            select new
+                                            {
+                                                supplierCategoryEntity.Category,
+                                                supplierCategoryEntity.SupplierId,
+                                                supplierCategoryEntity.SupplierCategoryId,
+                                                supplierMenu.SupplierMenuCategoryId
+                                            }).ToList();
+
+            if (tempSupplierCategoryList.Count == 0)
+            {
+                return new List<SupplierRecommendedDishModel>();
+            }
+
+            var supplierCategoryList = (from entity in tempSupplierCategoryList
+                                        where entity.Category != null
+                                        select new
+                                        {
+                                            entity.Category.CategoryId,
+                                            entity.Category.CategoryName,
+                                            entity.Category.CategoryNo,
+                                            entity.SupplierId,
+                                            entity.SupplierCategoryId,
+                                            entity.SupplierMenuCategoryId
+                                        }).OrderBy(p => p.CategoryNo).ToList();
+
+            var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
+            var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
+                                    where supplierDishEntity.Supplier.SupplierId == supplierId
+                                    && supplierDishEntity.Online && supplierDishEntity.IsDel == false && supplierDishEntity.Recommended == true
+                                    && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
+                                    select new
+                                    {
+                                        supplierDishEntity.SupplierCategoryId,
+                                        supplierDishEntity.DishNo,
+                                        supplierDishEntity.Price,
+                                        supplierDishEntity.SupplierDishId,
+                                        supplierDishEntity.SupplierDishName,
+                                        supplierDishEntity.SuppllierDishDescription,
+                                        supplierDishEntity.SpicyLevel,
+                                        supplierDishEntity.AverageRating,
+                                        supplierDishEntity.IsCommission,
+                                        supplierDishEntity.IsDiscount,
+                                        supplierDishEntity.Recipe,
+                                        supplierDishEntity.Recommended,
+                                        supplierDishEntity.PackagingFee,
+                                        SupplierId = supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+                                        ImagePath = string.Empty
+                                    }).OrderBy(p => p.DishNo).ToList();
+
+            var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
+            var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
+                                         where supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
+                                         select new { entity.SupplierDishId, entity.ImagePath }).ToList();
+
+            var recommendDishList = (from supplierDish in supplierDishList
+                                     let supplierDishImage = supplierDishImageList.FirstOrDefault(p => p.SupplierDishId == supplierDish.SupplierDishId)
+                                     let supplierCategory = supplierCategoryList.FirstOrDefault(p => p.CategoryId == supplierDish.SupplierCategoryId)
+                                     select new SupplierRecommendedDishModel
+                                     {
+                                         Price = supplierDish.Price,
+                                         ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
+                                         SupplierDishId = supplierDish.SupplierDishId,
+                                         SupplierDishName = supplierDish.SupplierDishName,
+                                         SupplierCatogryId = supplierDish.SupplierCategoryId,
+                                         SupplierMenuCategoryId = supplierCategory == null ? null : (int?)supplierCategory.SupplierMenuCategoryId,
+                                         Type = 0,//0 菜 1 小料 2 锅底 3 套餐 4 专人服务
+                                         Recipe = supplierDish.Recipe,
+                                         PackagingFee = supplierDish.PackagingFee
+                                     }).ToList();
+
+            return recommendDishList;
         }
     }
 }
