@@ -605,7 +605,9 @@
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
                 ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order)
                 : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
-            this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
+
+            var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
+            this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
 
@@ -816,7 +818,7 @@
                 Total = totalFee,
                 Canncelled = false,
                 DateAdded = DateTime.Now,
-                Commission = 0
+                Commission = totalFee * (supplierEntity.CashCommisionFee ?? 0)
             };
 
             this.supplierCommissionEntityRepository.Save(supplierCommissionEntity);

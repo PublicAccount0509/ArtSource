@@ -679,7 +679,9 @@ namespace Ets.SingleApi.Services
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
                 ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order, extra)
                 : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order, extra);
-            this.SaveSupplierCommission(deliveryId, order.TotalFee, supplierEntity);
+            
+            var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
+            this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
             this.SavePackageEntity(supplier.SupplierId, deliveryId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
@@ -909,7 +911,7 @@ namespace Ets.SingleApi.Services
                 Total = totalFee,
                 Canncelled = false,
                 DateAdded = DateTime.Now,
-                Commission = 0
+                Commission = totalFee * (supplierEntity.CashCommisionFee ?? 0)
             };
 
             this.supplierCommissionEntityRepository.Save(supplierCommissionEntity);
