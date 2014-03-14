@@ -58,6 +58,16 @@
         public string AppPassword { get; set; }
 
         /// <summary>
+        /// 字段source
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/14/2014 2:24 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private string source = string.Empty;
+
+        /// <summary>
         /// Gets or sets the Source of SingleApiController
         /// </summary>
         /// <value>
@@ -68,7 +78,36 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return string.Format("{0}{1}", this.PreFix, this.source);
+            }
+            set
+            {
+                this.source = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the PreFix of SingleApiController
+        /// </summary>
+        /// <value>
+        /// The PreFix
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：3/14/2014 2:18 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        protected virtual string PreFix
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether

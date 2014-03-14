@@ -101,6 +101,7 @@
     <Compile Include="ICacheServices\IShunFengShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartBaseCacheServices.cs" />
     <Compile Include="ICacheServices\IEtsWapShoppingCartCacheServices.cs" />
+    <Compile Include="ICacheServices\IEtsWapTangShiShoppingCartCacheServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
@@ -163,6 +164,8 @@
     <Compile Include="DetailServices\SmsDetailServices.cs" />
     <Compile Include="ShoppingCart\IEtsWapShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\EtsWapShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\IEtsWapTangShiShoppingCartProvider.cs" />
     <Compile Include="ZhongCanShoppingCartServices.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IHuangTaiJiShoppingCartProvider.cs" />
@@ -185,6 +188,7 @@
     <Compile Include="BaiDuLightServices.cs" />
     <Compile Include="EtsWapShoppingCartServices.cs" />
     <Compile Include="ShoppingCartServices.cs" />
+    <Compile Include="EtsWapTangShiShoppingCartServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">
