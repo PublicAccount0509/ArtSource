@@ -315,6 +315,12 @@
     <Compile Include="ShoppingCart\HaiDiLaoShoppingCartOrder.cs" />
     <Compile Include="ShoppingCart\ShoppingCartBase.cs" />
     <Compile Include="ShoppingCart\BindShoppingCartResult.cs" />
+    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCart.cs" />
+    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\EtsWapShoppingCart.cs" />
+    <Compile Include="ShoppingCart\EtsWapShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\EtsWapShoppingCartOrder.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
