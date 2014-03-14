@@ -22,6 +22,7 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
+        /// <param name="cityCode">城市Code</param>
         /// <returns>
         /// 返回餐厅信息
         /// </returns>
@@ -30,7 +31,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<SupplierDetailModel> GetSupplier(string source, int supplierId);
+        ServicesResult<SupplierDetailModel> GetSupplier(string source, int supplierId, string cityCode);
 
         /// <summary>
         /// 获取餐厅基本信息
@@ -283,7 +284,8 @@
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
-        /// <param name="supplierDishId">The supplierDishId</param>
+        /// <param name="supplierDishId">菜品Id</param>
+        /// <param name="supplierMenuCategoryTypeId">餐厅菜单类型Id（1：外卖菜单、2：订台堂食菜单）</param>
         /// <returns>
         /// 返回餐厅菜单信息
         /// </returns>
@@ -292,7 +294,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<SupplierDishDetailModel> GetSupplierDish(string source, int supplierId, int supplierDishId);
+        ServicesResult<SupplierDishDetailModel> GetSupplierDish(string source, int supplierId, int supplierDishId, int supplierMenuCategoryTypeId);
 
         /// <summary>
         /// 添加餐厅菜信息

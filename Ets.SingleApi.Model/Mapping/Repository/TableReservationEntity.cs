@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TableReservationEntity.cs" company="Irdeto">
-//   Copyright @ 2013
+//   Copyright @ 2014
 // </copyright>
 // <summary>
 //   Class:TableReservationEntity
@@ -19,7 +19,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the TableReservationEntity table in the database.
     /// </summary>
     /// Creator:周超
-    /// Creation Date:2013/10/13 14:01:31
+    /// Creation Date:2014/3/13 19:30:08
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TableReservationID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TableID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The CustomerID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Templateid
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The NumberOfPeople
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ContactName
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ContactNumber
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ReservationTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DateReserved
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -122,7 +122,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The BookInstruction
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -132,7 +132,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The PaymentID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Cancelled
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Refunded
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -162,7 +162,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsRating
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The BookSource
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -182,7 +182,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The EndOccupancyTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -192,7 +192,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The OrderNotes
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -202,7 +202,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The OperatorID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -212,7 +212,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Sitcondition
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -222,7 +222,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Roomprice
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -232,7 +232,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Contactsex
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -242,7 +242,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsTableForOther
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -252,7 +252,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TableForOtherName
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -262,7 +262,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TableForOtherType
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -272,7 +272,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Notes
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -282,7 +282,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ForOthers
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -292,7 +292,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DinerName
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -302,7 +302,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DinerTypeID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -312,7 +312,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SeatRequirementID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -322,7 +322,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The RoomTypeID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -332,7 +332,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The RealPeople
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -342,7 +342,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The RealSpendMoney
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -352,7 +352,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TableStatus
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -362,7 +362,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The OrderNumber
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -372,7 +372,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ActualFinishTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -382,7 +382,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Total
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -392,7 +392,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The CustomerTotal
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -402,7 +402,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsPaid
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -412,7 +412,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The InvoiceRequired
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -422,7 +422,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The InvoiceTitle
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -432,7 +432,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DineNumber
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -442,7 +442,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TabelNo
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -452,7 +452,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ServerNo
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -462,7 +462,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ValidateType
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -472,7 +472,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ValidateCode
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -482,7 +482,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The InvoiceType
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -492,7 +492,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Type
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -502,7 +502,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ModifyDate
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -512,7 +512,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ArravieTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -522,7 +522,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The LeavelTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -532,7 +532,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsReminder
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -542,7 +542,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsDeal
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -552,7 +552,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsService
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -562,7 +562,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsAdd
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -572,7 +572,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The AddTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -582,7 +582,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The OrderPwd
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -592,7 +592,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The ConsumerAmount
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -602,7 +602,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TeaBitFee
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -612,7 +612,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsupdateAmount
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -622,7 +622,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The PointCouponsNumber
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -632,7 +632,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsOnTime
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -642,7 +642,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DirectPointCouponsNumber
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -652,7 +652,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The OrderTableName
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -662,7 +662,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Path
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -672,17 +672,27 @@ namespace Ets.SingleApi.Model.Repository
 		/// The UserStatus
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private int? userStatus;
 
 			/// <summary>
+		/// The CouponCode
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2014/3/13 19:30:08
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		private string couponCode;
+
+			/// <summary>
 		/// The SupplierID
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -694,7 +704,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="TableReservationEntity"/> class.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -727,6 +737,7 @@ namespace Ets.SingleApi.Model.Repository
 			this.isOnTime = false;
 			this.orderTableName = string.Empty;
 			this.path = @"Other";
+			this.couponCode = string.Empty;
 		}
 
 		#region public member
@@ -735,7 +746,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TableReservationID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -756,7 +767,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TableID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -777,7 +788,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CustomerID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -798,7 +809,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Templateid of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -819,7 +830,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the NumberOfPeople of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -840,7 +851,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ContactName of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -861,7 +872,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ContactNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -882,7 +893,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ReservationTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -903,7 +914,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DateReserved of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -924,7 +935,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the BookInstruction of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -945,7 +956,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the PaymentID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -966,7 +977,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the Cancelled of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -987,7 +998,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the Refunded of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1008,7 +1019,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsRating of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1029,7 +1040,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the BookSource of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1050,7 +1061,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the EndOccupancyTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1071,7 +1082,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OrderNotes of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1092,7 +1103,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OperatorID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1113,7 +1124,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Sitcondition of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1134,7 +1145,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Roomprice of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1155,7 +1166,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Contactsex of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1176,7 +1187,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsTableForOther of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1197,7 +1208,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TableForOtherName of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1218,7 +1229,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TableForOtherType of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1239,7 +1250,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Notes of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1260,7 +1271,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the ForOthers of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1281,7 +1292,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DinerName of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1302,7 +1313,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DinerTypeID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1323,7 +1334,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SeatRequirementID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1344,7 +1355,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RoomTypeID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1365,7 +1376,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RealPeople of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1386,7 +1397,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RealSpendMoney of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1407,7 +1418,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TableStatus of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1428,7 +1439,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OrderNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1449,7 +1460,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ActualFinishTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1470,7 +1481,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Total of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1491,7 +1502,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CustomerTotal of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1512,7 +1523,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsPaid of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1533,7 +1544,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the InvoiceRequired of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1554,7 +1565,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the InvoiceTitle of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1575,7 +1586,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DineNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1596,7 +1607,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TabelNo of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1617,7 +1628,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ServerNo of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1638,7 +1649,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ValidateType of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1659,7 +1670,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ValidateCode of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1680,7 +1691,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the InvoiceType of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1701,7 +1712,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Type of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1722,7 +1733,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ModifyDate of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1743,7 +1754,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ArravieTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1764,7 +1775,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the LeavelTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1785,7 +1796,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsReminder of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1806,7 +1817,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsDeal of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1827,7 +1838,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsService of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1848,7 +1859,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsAdd of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1869,7 +1880,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the AddTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1890,7 +1901,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OrderPwd of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1911,7 +1922,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the ConsumerAmount of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1932,7 +1943,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TeaBitFee of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1953,7 +1964,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsupdateAmount of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1974,7 +1985,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the PointCouponsNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -1995,7 +2006,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsOnTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -2016,7 +2027,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DirectPointCouponsNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -2037,7 +2048,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OrderTableName of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -2058,7 +2069,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Path of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -2079,7 +2090,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the UserStatus of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -2097,10 +2108,31 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
+        /// Gets or sets a value mapping the CouponCode of TableReservationEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2014/3/13 19:30:08
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual string CouponCode
+		{
+            get
+            {
+                return this.couponCode;
+            }
+
+            set
+            {
+                this.couponCode = value;
+            }
+        }
+
+			/// <summary>
         /// Gets or sets a value mapping the SupplierID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -2127,7 +2159,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -2149,7 +2181,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:周超
-        /// Creation Date:2013/10/13 14:01:31
+        /// Creation Date:2014/3/13 19:30:08
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.OrderDetailEntity, Ets.SingleApi.Model" table="OrderDetail" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="OrderDetailId" column="OrderDetailId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="OrderId" column="OrderId" type="Int32" not-null="false" />
+		<property name="OrderType" column="OrderType" type="Int32" not-null="false" />
+		<property name="CustomerId" column="CustomerId" type="Int32" not-null="false" />
+		<property name="SupplierDishId" column="SupplierDishId" type="Int32" not-null="false" />
+		<property name="Quantity" column="Quantity" type="Int32" not-null="false" />
+		<property name="SupplierPrice" column="SupplierPrice" type="Decimal" not-null="false" />
+		<property name="Total" column="Total" type="Decimal" not-null="false" />
+		<property name="SpecialInstruction" column="SpecialInstruction" type="String" not-null="false" />
+		<property name="OrderDate" column="OrderDate" type="Timestamp" not-null="false" />
+		<property name="IsAdd" column="IsAdd" type="Boolean" not-null="false" />
+		<property name="Status" column="Status" type="Int32" not-null="false" />
+		<property name="SupplierDishName" column="SupplierDishName" type="String" not-null="false" />
+		<property name="Note" column="Note" type="String" not-null="false" />
+	</class>
+</hibernate-mapping>

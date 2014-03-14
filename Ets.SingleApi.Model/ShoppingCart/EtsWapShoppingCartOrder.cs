@@ -1,382 +1,381 @@
-﻿namespace Ets.SingleApi.Model.Controller
+﻿namespace Ets.SingleApi.Model
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
-    /// 类名称：SupplierDetail
-    /// 命名空间：Ets.SingleApi.Model.Services
-    /// 类功能：餐厅列表
+    /// 类名称：EtsWapShoppingCartOrder
+    /// 命名空间：Ets.SingleApi.Model
+    /// 类功能：易淘食外卖购物车订单信息
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：2013/10/15 17:51
+    /// 创建日期：11/20/2013 11:10 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SupplierDetail
+    public class EtsWapShoppingCartOrder
     {
         /// <summary>
-        /// Gets or sets the SupplierId of SupplierDetail
+        /// 设置或取得订单唯一标识符
         /// </summary>
         /// <value>
-        /// The SupplierId
+        /// 订单唯一标识符
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:09
+        /// 创建日期：10/22/2013 5:46 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int SupplierId { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierGroupId of SupplierDetailModel
+        /// 设置或取得订单Id
         /// </summary>
         /// <value>
-        /// The SupplierGroupId
+        /// 订单Id
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/22 9:37
+        /// 创建日期：10/22/2013 5:46 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int? SupplierGroupId { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the supplier.
+        /// 设置或取得取餐方式
         /// </summary>
         /// <value>
-        /// The name of the supplier.
+        /// 取餐方式
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:09
+        /// 创建日期：10/22/2013 5:46 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string SupplierName { get; set; }
+        public int? DeliveryMethodId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Address of SupplierDetail
+        /// 设置或取得订单备注信息
         /// </summary>
         /// <value>
-        /// The Address
+        /// 订单备注信息
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:10
+        /// 创建日期：10/22/2013 10:02 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Address { get; set; }
+        public string DeliveryInstruction { get; set; }
 
         /// <summary>
-        /// Gets or sets the Telephone of SupplierDetail
+        /// 设置或取得订单模板信息
         /// </summary>
         /// <value>
-        /// The Telephone
+        /// 订单模板信息
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:10
+        /// 创建日期：10/22/2013 10:05 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Telephone { get; set; }
+        public string Template { get; set; }
 
         /// <summary>
-        /// Gets or sets the SupplierDescription of SupplierDetail
+        /// 设置或取得订单路径信息
         /// </summary>
         /// <value>
-        /// The SupplierDescription
+        /// 订单路径信息
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:10
+        /// 创建日期：11/9/2013 10:40 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string SupplierDescription { get; set; }
+        public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets the Averageprice of SupplierDetail
+        /// 设置或取得是否开发票
         /// </summary>
         /// <value>
-        /// The Averageprice
+        /// 是否开发票
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:10
+        /// 创建日期：11/9/2013 10:39 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public double? Averageprice { get; set; }
+        public bool InvoiceRequired { get; set; }
 
         /// <summary>
-        /// Gets or sets the ParkingInfo of SupplierDetail
+        /// 设置或取得发票标题
         /// </summary>
         /// <value>
-        /// The ParkingInfo
+        /// 发票标题
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:10
+        /// 创建日期：11/9/2013 10:40 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string ParkingInfo { get; set; }
+        public string InvoiceTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the cuisine.
+        /// 设置或取得发票类型
         /// </summary>
         /// <value>
-        /// The name of the cuisine.
+        /// 发票类型 0 个人  1 公司
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:10
+        /// 创建日期：11/9/2013 10:39 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string CuisineName { get; set; }
+        public string InvoiceType { get; set; }
 
         /// <summary>
-        /// Gets or sets the LogoUrl of SupplierDetail
+        /// 设置或取得订单说明
         /// </summary>
         /// <value>
-        /// The LogoUrl
+        /// 订单说明
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:10
+        /// 创建日期：11/9/2013 10:40 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string LogoUrl { get; set; }
+        public string OrderNotes { get; set; }
 
         /// <summary>
-        /// Gets or sets the IsOpenDoor of SupplierDetail
+        /// 设置或取得订单所属区域Id
         /// </summary>
         /// <value>
-        /// The IsOpenDoor
+        /// 订单所属区域Id
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/16 14:11
+        /// 创建日期：11/9/2013 10:40 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public bool? IsOpenDoor { get; set; }
+        public int? AreaId { get; set; }
 
         /// <summary>
-        /// Gets or sets the DateJoined of SupplierDetail
+        /// 设置或取得是否开发票
         /// </summary>
         /// <value>
-        /// The DateJoined
+        /// 是否开发票
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/18 21:52
+        /// 创建日期：11/9/2013 10:39 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime? DateJoined { get; set; }
+        public bool IsTakeInvoice { get; set; }
 
         /// <summary>
-        /// Gets or sets the ServiceTime of SupplierDetail
+        /// 设置或取得是送餐日期
         /// </summary>
         /// <value>
-        /// The ServiceTime
+        /// 送餐日期
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/19 23:31
+        /// 创建日期：11/9/2013 10:39 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string ServiceTime { get; set; }
+        public DateTime? DeliveryDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the ChainCount of SupplierModel
+        /// 设置或取得是送餐时间部分
         /// </summary>
         /// <value>
-        /// The ChainCount
+        /// 送餐时间部分
         /// </value>
         /// 创建者：周超
-        /// 创建日期：2013/10/20 9:08
+        /// 创建日期：11/9/2013 10:39 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int ChainCount { get; set; }
+        public string DeliveryTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the PackagingFee of SupplierDetail
+        /// 设置或取得是送餐时间
         /// </summary>
         /// <value>
-        /// The PackagingFee
+        /// 送餐时间
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/22/2013 4:36 PM
+        /// 创建日期：11/9/2013 10:39 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DateTime? DeliveryDateTime { get; set; }
+
+        /// <summary>
+        /// 设置或取得是送餐时间类型
+        /// </summary>
+        /// <value>
+        /// 送餐时间类型
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：11/9/2013 10:39 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int DeliveryType { get; set; }
+
+        /// <summary>
+        /// 设置或取得支付方式
+        /// </summary>
+        /// <value>
+        /// 支付方式
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int PaymentMethodId { get; set; }
+
+        /// <summary>
+        /// 设置或取得支付银行
+        /// </summary>
+        /// <value>
+        /// 支付银行
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string PayBank { get; set; }
+
+        /// <summary>
+        /// 设置或取得商品总数量
+        /// </summary>
+        /// <value>
+        /// 商品总数量
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int TotalQuantity { get; set; }
+
+        /// <summary>
+        /// 设置或取得商品总价格
+        /// </summary>
+        /// <value>
+        /// 商品总价格
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal TotalPrice { get; set; }
+
+        /// <summary>
+        /// 设置或取得送餐费
+        /// </summary>
+        /// <value>
+        /// 送餐费
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal FixedDeliveryFee { get; set; }
+
+        /// <summary>
+        /// 设置或取得支付方式
+        /// </summary>
+        /// <value>
+        /// 支付方式
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 5:49 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public decimal PackagingFee { get; set; }
 
         /// <summary>
-        /// Gets or sets the FixedDeliveryCharge of SupplierDetail
+        /// 设置或取得订单总金额
         /// </summary>
         /// <value>
-        /// The FixedDeliveryCharge
+        /// 订单总金额
         /// </value>
         /// 创建者：周超
-        /// 创建日期：10/22/2013 4:36 PM
+        /// 创建日期：10/23/2013 5:49 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int FixedDeliveryCharge { get; set; }
+        public decimal TotalFee { get; set; }
 
         /// <summary>
-        /// Gets or sets the FreeDeliveryLine of SupplierDetail
+        /// 设置或取得应付金额
         /// </summary>
         /// <value>
-        /// The FreeDeliveryLine
+        /// 应付金额
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/11/2013 11:00 AM
+        /// 创建日期：10/23/2013 5:49 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal FreeDeliveryLine { get; set; }
+        public decimal CustomerTotalFee { get; set; }
 
         /// <summary>
-        /// Gets or sets the DelMinOrderAmount of SupplierDetail
+        /// 设置或取得订单优惠金额
         /// </summary>
         /// <value>
-        /// The DelMinOrderAmount
+        /// 订单优惠金额
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/11/2013 11:01 AM
+        /// 创建日期：10/23/2013 5:49 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int DelMinOrderAmount { get; set; }
+        public decimal CouponFee { get; set; }
 
         /// <summary>
-        /// Gets or sets the BaIduLat of SupplierDetail
+        /// 设置或取得订单优惠码
         /// </summary>
         /// <value>
-        /// The BaIduLat
+        /// 订单优惠码
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/12/2013 4:01 PM
+        /// 创建日期：10/23/2013 5:49 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal BaIduLat { get; set; }
+        public string CouponCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the BaIduLong of SupplierDetail
+        /// 设置或取得订单是否完成
         /// </summary>
         /// <value>
-        /// The BaIduLong
+        /// 订单是否完成
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/12/2013 4:01 PM
+        /// 创建日期：11/20/2013 10:35 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal BaIduLong { get; set; }
+        public bool IsComplete { get; set; }
 
         /// <summary>
-        /// Gets or sets the Fax of SupplierDetail
+        /// 设置或取得是否可以送餐
         /// </summary>
         /// <value>
-        /// The Fax
+        /// 是否可以送餐
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 2:46 PM
+        /// 创建日期：11/20/2013 10:35 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Fax { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Email of SupplierDetail
-        /// </summary>
-        /// <value>
-        /// The Email
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 2:46 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or sets the TakeawaySpecialOffersSummary of SupplierDetail
-        /// </summary>
-        /// <value>
-        /// The TakeawaySpecialOffersSummary
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 2:46 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string TakeawaySpecialOffersSummary { get; set; }
-
-        /// <summary>
-        /// Gets or sets the PublicTransport of SupplierDetail
-        /// </summary>
-        /// <value>
-        /// The PublicTransport
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 2:46 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string PublicTransport { get; set; }
-
-        /// <summary>
-        /// Gets or sets the SupplierDiningPurpose of SupplierDetail
-        /// </summary>
-        /// <value>
-        /// The SupplierDiningPurpose
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 4:20 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public string SupplierDiningPurpose { get; set; }
-
-        /// <summary>
-        /// Gets or sets the PackLadder of SupplierDetail
-        /// </summary>
-        /// <value>
-        /// The PackLadder
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：11/20/2013 2:46 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public decimal PackLadder { get; set; }
-
-        /// <summary>
-        /// Gets or sets the SupplierFeatureList of SupplierDetail
-        /// </summary>
-        /// <value>
-        /// The SupplierFeatureList
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：12/16/2013 11:06 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public List<SupplierFeature> SupplierFeatureList { get; set; }
-
-        /// <summary>
-        /// 餐厅推荐菜品列表
-        /// </summary>
-        /// <value>
-        /// 餐厅推荐菜品列表
-        /// </value>
-        /// 创建者：王巍
-        /// 创建日期：3/12/2014 4:36 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public List<SupplierDish> RecommendedDishList { get; set; } 
+        public bool CanDelivery { get; set; }
     }
 }

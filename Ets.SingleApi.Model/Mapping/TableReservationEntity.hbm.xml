@@ -72,6 +72,7 @@
 		<property name="OrderTableName" column="OrderTableName" type="String" not-null="false" />
 		<property name="Path" column="Path" type="String" not-null="false" />
 		<property name="UserStatus" column="UserStatus" type="Int32" not-null="false" />
+		<property name="CouponCode" column="CouponCode" type="String" not-null="false" />
 		<!--The foreign keys-->
 		<many-to-one name="Supplier" class="Ets.SingleApi.Model.Repository.SupplierEntity, Ets.SingleApi.Model" column="SupplierID" />
 	</class>

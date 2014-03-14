@@ -105,11 +105,13 @@
     <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
+    <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
     <Compile Include="Mapping\Repository\PackageContentEntity.cs" />
     <Compile Include="Mapping\Repository\PackageNameEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
+    <Compile Include="Mapping\Repository\PaymentRecordEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishCustomizationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishGroupEntity.cs" />
@@ -172,6 +174,7 @@
     <Compile Include="Services\RegisterUserOAuthParameter.cs" />
     <Compile Include="Services\OAuthLoginParameter.cs" />
     <Compile Include="Services\OrderShoppingCartStatusModel.cs" />
+    <Compile Include="Services\SupplierRecommendedDishModel.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
@@ -312,6 +315,12 @@
     <Compile Include="ShoppingCart\HaiDiLaoShoppingCartOrder.cs" />
     <Compile Include="ShoppingCart\ShoppingCartBase.cs" />
     <Compile Include="ShoppingCart\BindShoppingCartResult.cs" />
+    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCart.cs" />
+    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\EtsWapShoppingCart.cs" />
+    <Compile Include="ShoppingCart\EtsWapShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\EtsWapShoppingCartOrder.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -600,6 +609,10 @@
     <EmbeddedResource Include="Mapping\GroupSupplierModelEntity.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\OrderDetailEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\PaymentRecordEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
