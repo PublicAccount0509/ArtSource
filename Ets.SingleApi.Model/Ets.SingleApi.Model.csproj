@@ -91,6 +91,10 @@
     <Compile Include="Controller\OrderShoppingCartStatusResult.cs" />
     <Compile Include="Controller\BaiFuBaoPaymentStateRequst.cs" />
     <Compile Include="Controller\SupplierSimple.cs" />
+    <Compile Include="Controller\EtsWapTangShiShoppingCartDeliveryRequst.cs" />
+    <Compile Include="Controller\EtsWapTangShiShoppingCartOrderRequst.cs" />
+    <Compile Include="Controller\EtsWapTangShiShoppingCartRequst.cs" />
+    <Compile Include="Controller\EtsWapTangShiShoppingCartShoppingRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -175,6 +179,7 @@
     <Compile Include="Services\OAuthLoginParameter.cs" />
     <Compile Include="Services\OrderShoppingCartStatusModel.cs" />
     <Compile Include="Services\SupplierRecommendedDishModel.cs" />
+    <Compile Include="Services\EtsWapShoppingCartModel.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
@@ -613,6 +618,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Mapping\OrderDetailEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\PaymentRecordEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Services\EtsWapTangShiShoppingCartModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
