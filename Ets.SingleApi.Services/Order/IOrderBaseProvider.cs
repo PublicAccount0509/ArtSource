@@ -89,5 +89,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveOrderPaymentMethod(string source, int orderId, int paymentMethodId, string payBank);
+
+        /// <summary>
+        /// 当前订单是否可以修改
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// 返回结果，true可以修改；false，不可修改。
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 11:55 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> GetOrderEditFlag(string source, int orderId);
     }
 }

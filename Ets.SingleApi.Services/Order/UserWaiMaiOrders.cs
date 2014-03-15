@@ -207,6 +207,7 @@
                                  from entity in this.supplierEntityRepository.EntityQueryable
                                  where deliveryEntity.SupplierId == entity.SupplierId
                                  && deliveryEntity.CustomerId == parameter.CustomerId
+                                 && deliveryEntity.Cancelled == parameter.Cancelled
                                  select new
                                      {
                                          deliveryEntity.DeliveryId,
@@ -278,7 +279,7 @@
                                      IsPaid = p.IsPaId,
                                      DishNames = string.Join("，", orderList.Where(q => q.DeliveryId == p.DeliveryId).Select(c => c.SupplierDishName).ToList()),
                                      //支付方式
-                                     PaymentMethodId = this.paymentEntityRepository.EntityQueryable.Where(pay=>pay.Delivery.DeliveryId == p.DeliveryId).Select(pay=>pay.PaymentMethodId).FirstOrDefault()
+                                     PaymentMethodId = this.paymentEntityRepository.EntityQueryable.Where(pay => pay.Delivery.DeliveryId == p.DeliveryId).Select(pay => pay.PaymentMethodId).FirstOrDefault()
                                  }).ToList();
 
             return result;

@@ -1281,8 +1281,10 @@
                     SupplierGroupId = parameter.SupplierGroupId,
                     IsEtaoshi = parameter.IsEtaoshi,
                     PageIndex = parameter.PageIndex,
-                    PageSize = parameter.PageSize
+                    PageSize = parameter.PageSize,
+                    Cancelled = parameter.Cancelled
                 });
+
             if (userOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResultList<UserOrderModel>

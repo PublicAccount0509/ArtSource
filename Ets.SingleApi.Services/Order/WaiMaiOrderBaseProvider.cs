@@ -241,5 +241,40 @@ namespace Ets.SingleApi.Services
                 Result = true
             };
         }
+
+        /// <summary>
+        /// 当前订单是否可以修改
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// 返回结果，true可以修改；false，不可修改。
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/15/2014 2:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> GetOrderEditFlag(string source, int orderId)
+        {
+            var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
+                                  where entity.OrderNumber == orderId
+                                  select entity).FirstOrDefault();
+            if (deliveryEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = false
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = ServicesCommon.OrderEditStatusIdList.Contains(deliveryEntity.OrderStatusId) &&
+                    deliveryEntity.IsPaId != true
+            };
+        }
     }
 }

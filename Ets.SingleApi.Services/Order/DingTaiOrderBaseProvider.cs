@@ -7,6 +7,8 @@ using Ets.SingleApi.Utility;
 
 namespace Ets.SingleApi.Services
 {
+    using System;
+
     /// <summary>
     /// 类名称：DingTaiOrderBaseProvider
     /// 命名空间：Ets.SingleApi.Services.Order
@@ -20,6 +22,16 @@ namespace Ets.SingleApi.Services
     public class DingTaiOrderBaseProvider : IOrderBaseProvider
     {
         /// <summary>
+        /// 字段tableReservationEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/15/2014 2:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TableReservationEntity> tableReservationEntityRepository;
+
+        /// <summary>
         /// 字段orderNumberDtEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -30,18 +42,34 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DingTaiOrderBaseProvider"/> class.
+        /// 字段paymentRecordEntityRepository
         /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/15/2014 2:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DingTaiOrderBaseProvider" /> class.
+        /// </summary>
+        /// <param name="tableReservationEntityRepository">The tableReservationEntityRepository</param>
         /// <param name="orderNumberDtEntityRepository">The orderNumberDtEntityRepository</param>
+        /// <param name="paymentRecordEntityRepository">The paymentRecordEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：10/25/2013 2:14 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public DingTaiOrderBaseProvider(
-            INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository)
+            INHibernateRepository<TableReservationEntity> tableReservationEntityRepository,
+            INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
+            INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository)
         {
+            this.tableReservationEntityRepository = tableReservationEntityRepository;
             this.orderNumberDtEntityRepository = orderNumberDtEntityRepository;
+            this.paymentRecordEntityRepository = paymentRecordEntityRepository;
         }
 
         /// <summary>
@@ -107,9 +135,24 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<int> Exist(string source, int orderId)
         {
-            return new ServicesResult<int>();
-        }
+            var tableReservationEntity = (from entity in this.tableReservationEntityRepository.EntityQueryable
+                                          where entity.OrderNumber == orderId
+                                          select entity).FirstOrDefault();
 
+            if (tableReservationEntity == null)
+            {
+                return new ServicesResult<int>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            return new ServicesResult<int>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = tableReservationEntity.IsPaId == true ? 1 : 2
+            };
+        }
 
         /// <summary>
         /// 保存支付状态
@@ -121,13 +164,30 @@ namespace Ets.SingleApi.Services
         /// 返回结果
         /// </returns>
         /// 创建者：单琪彬
-        /// 创建日期：2/28/2014 4:24 PM
+        /// 创建日期：2/28/2014 4:15 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveOrderPaid(string source, int orderId, bool isPaid)
         {
-            return new ServicesResult<bool>();
+            var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
+            if (tableReservationEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = false
+                };
+            }
+
+            tableReservationEntity.IsPaId = true;
+            this.tableReservationEntityRepository.Save(tableReservationEntity);
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
         }
 
         /// <summary>
@@ -141,13 +201,76 @@ namespace Ets.SingleApi.Services
         /// 返回结果
         /// </returns>
         /// 创建者：单琪彬
-        /// 创建日期：2/28/2014 4:24 PM
+        /// 创建日期：2/28/2014 4:15 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveOrderPaymentMethod(string source, int orderId, int paymentMethodId, string payBank)
         {
-            return new ServicesResult<bool>();
+            var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
+            if (tableReservationEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = false
+                };
+            }
+
+            var tableReservationId = tableReservationEntity.TableReservationId.ToString();
+            var paymentRecordEntity = this.paymentRecordEntityRepository.EntityQueryable.FirstOrDefault(p => p.OrderId == tableReservationId)
+                                 ?? new PaymentRecordEntity
+                                 {
+                                     PaymentTypeId = 1,
+                                     OrderId = tableReservationId,
+                                     PaymentDate = DateTime.Now
+                                 };
+
+            paymentRecordEntity.Amount = tableReservationEntity.CustomerTotal ?? 0;
+            paymentRecordEntity.OrderTypeId = 2; //订台 2 堂食 1
+            paymentRecordEntity.PaymentMethodId = paymentMethodId;
+            paymentRecordEntity.PayBank = payBank;
+            this.paymentRecordEntityRepository.Save(paymentRecordEntity);
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
+
+        /// <summary>
+        /// 当前订单是否可以修改
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// 返回结果，true可以修改；false，不可修改。
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/15/2014 2:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> GetOrderEditFlag(string source, int orderId)
+        {
+            var tableReservationEntity = (from entity in this.tableReservationEntityRepository.EntityQueryable
+                                          where entity.OrderNumber == orderId
+                                          select entity).FirstOrDefault();
+            if (tableReservationEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = false
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = ServicesCommon.OrderEditStatusIdList.Contains(tableReservationEntity.TableStatus ?? -1) &&
+                    tableReservationEntity.IsPaId != true
+            };
         }
     }
 }

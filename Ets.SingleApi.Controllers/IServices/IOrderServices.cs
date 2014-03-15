@@ -105,19 +105,21 @@
         ServicesResult<bool> SaveOrderPaId(string source, int orderType, int orderSourceType, int orderId, bool isPaId);
 
         /// <summary>
-        /// 是否可以激活购物车信息
+        /// 当前订单是否可以修改
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="orderType">Type of the order.</param>
         /// <param name="orderSourceType">Type of the order source.</param>
         /// <param name="orderId">The orderId</param>
-        /// <returns></returns>
+        /// <returns>
+        /// 返回结果，true可以修改；false，不可修改。
+        /// </returns>
         /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 3:59 PM
+        /// 创建日期：2/13/2014 11:55 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> IsActivation(string source, int orderType, int orderSourceType, int orderId);
+        ServicesResult<bool> GetOrderEditFlag(string source, int orderType, int orderSourceType, int orderId);
 
         /// <summary>
         /// 更新订单的支付方式

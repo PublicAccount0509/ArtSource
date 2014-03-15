@@ -203,6 +203,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [HttpGet]
         public Response<bool> SaveOrderPaId(int orderType, int orderId, bool isPaId, int orderSourceType = 0)
         {
 
@@ -219,20 +220,23 @@
         }
 
         /// <summary>
-        /// 是否可以激活购物车信息
+        /// 当前订单是否可以修改
         /// </summary>
         /// <param name="orderType">Type of the order.</param>
         /// <param name="orderSourceType">Type of the order source.</param>
         /// <param name="orderId">The orderId</param>
-        /// <returns></returns>
+        /// <returns>
+        /// 返回结果，true可以修改；false，不可修改。
+        /// </returns>
         /// 创建者：单琪彬
         /// 创建日期：2/13/2014 4:10 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public Response<bool> IsActivation(int orderType, int orderSourceType, int orderId)
+        [HttpGet]
+        public Response<bool> GetOrderEditFlag(int orderType, int orderSourceType, int orderId)
         {
-            var isActivationResult = this.orderServices.IsActivation(this.Source, orderType, orderSourceType, orderId);
+            var isActivationResult = this.orderServices.GetOrderEditFlag(this.Source, orderType, orderSourceType, orderId);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -288,8 +292,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public Response<OrderShoppingCartStatusResult> GetShoppingCartStatus(string shoppingCartId, int orderType,
-                                                                       int orderSourceType = 0)
+        [HttpGet]
+        public Response<OrderShoppingCartStatusResult> GetShoppingCartStatus(string shoppingCartId, int orderType, int orderSourceType = 0)
         {
 
             var orderShoppingCartStatusResult = this.orderServices.GetOrderShoppingCartStatus(this.Source, shoppingCartId, orderType, orderSourceType);

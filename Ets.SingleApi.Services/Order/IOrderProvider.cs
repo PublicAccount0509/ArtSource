@@ -29,21 +29,6 @@
         OrderProviderType OrderProviderType { get; }
 
         /// <summary>
-        /// 取得订单是否存在以及支付支付状态
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">订单状态</param>
-        /// <returns>
-        /// 返回结果 0 不存在 1 支付 2 未支付
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 9:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<int> Exist(string source, int orderId);
-
-        /// <summary>
         /// 取得订单详情
         /// </summary>
         /// <param name="source">The source</param>
@@ -74,51 +59,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword);
-
-        /// <summary>
-        /// 取得一个订单号
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <returns>
-        /// 订单号
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/25/2013 2:09 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> GetOrderNumber(string source);
-
-        /// <summary>
-        /// 更改支付状态
-        /// </summary>
-        /// <param name="source">The sourceDefault documentation</param>
-        /// <param name="orderId"></param>
-        /// <param name="isPaId">The  isPaId indicates whether</param>
-        /// <returns>
-        /// Boolean}
-        /// </returns>
-        /// 创建者：王巍
-        /// 创建日期：1/26/2014 10:50 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveOrderPaId(string source, int orderId, bool isPaId);
-
-        /// <summary>
-        /// 判断是否可以激活购物车
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="orderId">The orderId</param>
-        /// <returns>
-        /// 返回判断结果
-        /// </returns>
-        /// 创建者：单琪彬
-        /// 创建日期：2/13/2014 11:55 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> IsActivation(string source, int orderId);
 
         /// <summary>
         /// 更新订单的支付方式

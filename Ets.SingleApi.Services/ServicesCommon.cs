@@ -6,7 +6,6 @@
     using System.Linq;
 
     using Ets.SingleApi.Model.Services;
-    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：ServicesCommon
@@ -1934,22 +1933,22 @@
             }
         }
         /// <summary>
-        /// 要过滤掉的集团Id
+        /// 订单可编辑的状态列表
         /// </summary>
         /// <value>
-        /// 要过滤掉的集团Id
+        /// 订单可编辑的状态列表
         /// </value>
         /// 创建者：苏建峰
         /// 创建日期：2014-2-10 11:59
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static List<int> IsActivationOrderStatusIdList
+        public static List<int> OrderEditStatusIdList
         {
             get
             {
-                var list = (ConfigurationManager.AppSettings["IsActivationOrderStatusIdList"] ?? string.Empty).Split(',');
-                var isActivationOrderStatusIdList = new List<int>();
+                var list = (ConfigurationManager.AppSettings["OrderEditStatusIdList"] ?? string.Empty).Split(',');
+                var orderEditStatusIdList = new List<int>();
                 foreach (var item in list)
                 {
                     int orderstatusId;
@@ -1958,10 +1957,10 @@
                         continue;
                     }
 
-                    isActivationOrderStatusIdList.Add(orderstatusId);
+                    orderEditStatusIdList.Add(orderstatusId);
                 }
 
-                return isActivationOrderStatusIdList;
+                return orderEditStatusIdList;
             }
         }
         /// <summary>

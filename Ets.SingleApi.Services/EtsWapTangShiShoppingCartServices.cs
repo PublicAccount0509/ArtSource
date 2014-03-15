@@ -847,7 +847,7 @@ namespace Ets.SingleApi.Services
                 return 0;
             }
 
-            var supplierCouponProvider = this.supplierCouponProviderList.FirstOrDefault(p => p.DeliveryMethodType == DeliveryMethodType.PickUp);
+            var supplierCouponProvider = this.supplierCouponProviderList.FirstOrDefault(p => p.DeliveryMethodType == DeliveryMethodType.TangShi);
             if (supplierCouponProvider == null)
             {
                 return 0;

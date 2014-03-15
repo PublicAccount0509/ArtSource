@@ -889,6 +889,7 @@
         /// <param name="paidStatus">支付状态</param>
         /// <param name="pageSize">每页最大数量</param>
         /// <param name="pageIndex">页码</param>
+        /// <param name="cancelled">The  cancelled indicates whether</param>
         /// <returns>
         /// UserOrderListResponse
         /// </returns>
@@ -899,7 +900,7 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public ListResponse<UserOrder> UserOrderList(int id, int orderType = -1, int? orderStatus = null, int? supplierId = null, int? supplierGroupId = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null)
+        public ListResponse<UserOrder> UserOrderList(int id, int orderType = -1, int? orderStatus = null, int? supplierId = null, int? supplierGroupId = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null, bool cancelled = false)
         {
             if (!this.ValidateUserId(id))
             {
@@ -921,7 +922,8 @@
                                                                 SupplierGroupId = supplierGroupId == 0 ? null : supplierGroupId,
                                                                 IsEtaoshi = this.IsEtaoshi,
                                                                 PageIndex = pageIndex,
-                                                                PageSize = pageSize
+                                                                PageSize = pageSize,
+                                                                Cancelled = cancelled
                                                             });
 
             if (list.Result == null || list.Result.Count == 0)

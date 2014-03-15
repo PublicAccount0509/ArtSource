@@ -184,7 +184,7 @@
             IZhongCanShoppingCartProvider zhongCanShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
             ISingleApiOrdersExternalService singleApiOrdersExternalService)
-            : base(deliveryEntityRepository, orderNumberDcEntityRepository, singleApiOrdersExternalService)
+            : base(orderNumberDcEntityRepository, singleApiOrdersExternalService)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.sourcePathEntityRepository = sourcePathEntityRepository;
