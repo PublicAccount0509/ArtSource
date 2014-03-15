@@ -506,7 +506,86 @@
                 Result = result
             };
         }
+        /// <summary>
+        /// 获取点菜餐厅列表
+        /// </summary>
+        /// <param name="cuisineId">菜品</param>
+        /// <param name="businessAreaId">商圈Id</param>
+        /// <param name="regionId">省、市、区Id</param>
+        /// <param name="userLat">经度</param>
+        /// <param name="userLong">纬度</param>
+        /// <param name="distance">距离</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="orderByType">排序规则</param>
+        /// <returns>
+        /// 返回订台餐厅列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/15 17:49
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<Supplier> DianCaiSupplierList(int? cuisineId = null, int? regionId = null, string businessAreaId = null, double? userLat = null, double? userLong = null, double? distance = null, int pageSize = 10, int? pageIndex = null, int orderByType = 0)
+        {
+            var featureId = ControllersCommon.TangShiFeatureId;
+            var list = this.supplierServices.GetSupplierList(this.Source, new GetSupplierListParameter
+            {
+                SupplierName = string.Empty,
+                FeatureId = featureId,
+                CuisineId = cuisineId ?? -1,
+                BusinessAreaId = (businessAreaId ?? string.Empty).Trim(),
+                RegionId = regionId ?? -1,
+                UserLat = userLat ?? 0,
+                UserLong = userLong ?? 0,
+                Distance = (userLat == null || userLong == null) ? -1 : (distance ?? -1),
+                PageSize = pageSize,
+                PageIndex = pageIndex,
+                OrderByType = orderByType,
+                IsBuilding = false
+            });
 
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<Supplier>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                    },
+                    Result = new List<Supplier>()
+                };
+            }
+
+            var result = list.Result.Select(p => new Supplier
+            {
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName ?? string.Empty,
+                Address = p.Address ?? string.Empty,
+                Telephone = p.Telephone ?? string.Empty,
+                Averageprice = p.Averageprice ?? 0,
+                CuisineName = p.CuisineName ?? string.Empty,
+                Distance = p.Distance ?? 0,
+                LogoUrl = p.LogoUrl ?? string.Empty,
+                SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
+                {
+                    SupplierFeatureId = q.SupplierFeatureId,
+                    FeatureId = q.FeatureId,
+                    FeatureName = q.FeatureName ?? string.Empty
+                }).ToList()
+            }).ToList();
+
+            return new ListResponse<Supplier>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                ResultTotalCount = list.ResultTotalCount,
+                Result = result
+            };
+        }
         /// <summary>
         /// 获取订台餐厅列表
         /// </summary>
@@ -568,7 +647,13 @@
                 Averageprice = p.Averageprice ?? 0,
                 CuisineName = p.CuisineName ?? string.Empty,
                 Distance = p.Distance ?? 0,
-                LogoUrl = p.LogoUrl ?? string.Empty
+                LogoUrl = p.LogoUrl ?? string.Empty,
+                SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
+                {
+                    SupplierFeatureId = q.SupplierFeatureId,
+                    FeatureId = q.FeatureId,
+                    FeatureName = q.FeatureName ?? string.Empty
+                }).ToList()
             }).ToList();
 
             return new ListResponse<Supplier>
