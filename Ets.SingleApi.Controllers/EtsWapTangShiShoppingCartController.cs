@@ -505,7 +505,8 @@
                     PaymentMethodId = requst.PaymentMethodId,
                     Template = requst.Template,
                     Path = requst.Path,
-                    OrderNotes = requst.OrderNotes
+                    OrderNotes = requst.OrderNotes,
+                    CouponCode = requst.CouponCode
                 };
 
             var saveShoppingItemResult = this.etsWapShoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon);
