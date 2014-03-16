@@ -23,27 +23,27 @@
     public class EtsWapTangShiShoppingCartController : SingleApiController
     {
         /// <summary>
-        /// 字段etsWapShoppingCartServices
+        /// 字段etsWapTangShiShoppingCartServices
         /// </summary>
         /// 创建者：周超
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IEtsWapTangShiShoppingCartServices etsWapShoppingCartServices;
+        private readonly IEtsWapTangShiShoppingCartServices etsWapTangShiShoppingCartServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtsWapTangShiShoppingCartController"/> class.
+        /// Initializes a new instance of the <see cref="EtsWapTangShiShoppingCartController" /> class.
         /// </summary>
-        /// <param name="etsWapShoppingCartServices">The etsWapShoppingCartServices</param>
+        /// <param name="etsWapTangShiShoppingCartServices">The ets wap tang shi shopping cart services.</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public EtsWapTangShiShoppingCartController(IEtsWapTangShiShoppingCartServices etsWapShoppingCartServices)
+        public EtsWapTangShiShoppingCartController(IEtsWapTangShiShoppingCartServices etsWapTangShiShoppingCartServices)
         {
-            this.etsWapShoppingCartServices = etsWapShoppingCartServices;
+            this.etsWapTangShiShoppingCartServices = etsWapTangShiShoppingCartServices;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@
         [HttpGet]
         public Response<EtsWapTangShiShoppingCartModel> ShoppingCart(string id)
         {
-            var getShoppingCartResult = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, id);
+            var getShoppingCartResult = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
             if (getShoppingCartResult.Result == null)
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -137,7 +137,7 @@
                     ShoppingCart = requst.ShoppingCart
                 };
 
-            var getShoppingCartResult = this.etsWapShoppingCartServices.SaveShoppingCart(this.Source, id, shoppingCartModel);
+            var getShoppingCartResult = this.etsWapTangShiShoppingCartServices.SaveShoppingCart(this.Source, id, shoppingCartModel);
             if (!getShoppingCartResult.Result)
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -150,7 +150,7 @@
                 };
             }
 
-            var result = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<EtsWapTangShiShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -177,7 +177,7 @@
         [HttpPost]
         public Response<EtsWapTangShiShoppingCartModel> Create(int supplierId, string userId)
         {
-            var createShoppingCartResult = this.etsWapShoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
+            var createShoppingCartResult = this.etsWapTangShiShoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
             if (createShoppingCartResult.Result.IsEmptyOrNull())
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -190,7 +190,7 @@
                 };
             }
 
-            var result = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
+            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
             return new Response<EtsWapTangShiShoppingCartModel>
                 {
                     Message = new ApiMessage
@@ -217,7 +217,7 @@
         [HttpPost]
         public Response<EtsWapTangShiShoppingCartModel> Customer(string id, int userId)
         {
-            var saveShoppingCartCustomerResult = this.etsWapShoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
+            var saveShoppingCartCustomerResult = this.etsWapTangShiShoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
             if (!saveShoppingCartCustomerResult.Result)
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -230,7 +230,7 @@
                 };
             }
 
-            var result = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<EtsWapTangShiShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -277,7 +277,7 @@
                     CustomerAddressId = requst.CustomerAddressId
                 };
 
-            var saveShoppingCartCustomerResult = this.etsWapShoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
+            var saveShoppingCartCustomerResult = this.etsWapTangShiShoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
             if (!saveShoppingCartCustomerResult.Result)
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -290,7 +290,7 @@
                 };
             }
 
-            var result = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<EtsWapTangShiShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -329,7 +329,7 @@
             }
 
             var shoppingCartItemList = requst.ShoppingCartItemList ?? new List<ShoppingCartItem>();
-            var saveShoppingItemResult = this.etsWapShoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList);
+            var saveShoppingItemResult = this.etsWapTangShiShoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -342,7 +342,7 @@
                 };
             }
 
-            var result = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<EtsWapTangShiShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -386,7 +386,7 @@
                 shoppingCartItem.CategoryIdList = new List<int>();
             }
 
-            var saveShoppingItemResult = this.etsWapShoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList);
+            var saveShoppingItemResult = this.etsWapTangShiShoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -399,7 +399,7 @@
                 };
             }
 
-            var result = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<EtsWapTangShiShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -437,7 +437,7 @@
                 };
             }
 
-            var saveShoppingItemResult = this.etsWapShoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList);
+            var saveShoppingItemResult = this.etsWapTangShiShoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -450,7 +450,7 @@
                 };
             }
 
-            var result = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<EtsWapTangShiShoppingCartModel>
             {
                 Message = new ApiMessage
@@ -509,7 +509,7 @@
                     CouponCode = requst.CouponCode
                 };
 
-            var saveShoppingItemResult = this.etsWapShoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon);
+            var saveShoppingItemResult = this.etsWapTangShiShoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon);
             if (!saveShoppingItemResult.Result)
             {
                 return new Response<EtsWapTangShiShoppingCartModel>
@@ -522,7 +522,7 @@
                 };
             }
 
-            var result = this.etsWapShoppingCartServices.GetShoppingCart(this.Source, id);
+            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
             return new Response<EtsWapTangShiShoppingCartModel>
             {
                 Message = new ApiMessage
