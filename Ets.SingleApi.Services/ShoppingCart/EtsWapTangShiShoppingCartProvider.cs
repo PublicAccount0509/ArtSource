@@ -60,7 +60,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IEtsWapTangShiShoppingCartCacheServices etsWapShoppingCartCacheServices;
+        private readonly IEtsWapTangShiShoppingCartCacheServices etsWapTangShiShoppingCartCacheServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EtsWapTangShiShoppingCartProvider" /> class.
@@ -68,7 +68,7 @@
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
-        /// <param name="etsWapShoppingCartCacheServices">The shoppingCartCacheServices</param>
+        /// <param name="etsWapTangShiShoppingCartCacheServices">The ets wap tang shi shopping cart cache services.</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
         /// 修改者：
@@ -78,12 +78,12 @@
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
-            IEtsWapTangShiShoppingCartCacheServices etsWapShoppingCartCacheServices)
+            IEtsWapTangShiShoppingCartCacheServices etsWapTangShiShoppingCartCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
-            this.etsWapShoppingCartCacheServices = etsWapShoppingCartCacheServices;
+            this.etsWapTangShiShoppingCartCacheServices = etsWapTangShiShoppingCartCacheServices;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartSupplier> GetShoppingCartSupplier(string source, int supplierId)
         {
-            var shoppingCartCacheResult = this.etsWapShoppingCartCacheServices.GetShoppingCartSupplier(source, supplierId);
+            var shoppingCartCacheResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCartSupplier(source, supplierId);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartSupplier>
@@ -133,7 +133,7 @@
                 };
             }
 
-            this.etsWapShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
+            this.etsWapTangShiShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
             return new ServicesResult<ShoppingCartSupplier>
             {
                 Result = shoppingCartSupplier
@@ -163,7 +163,7 @@
                     };
             }
 
-            var shoppingCartCacheResult = this.etsWapShoppingCartCacheServices.GetShoppingCartCustomer(source, userId.Value);
+            var shoppingCartCacheResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCartCustomer(source, userId.Value);
             if (shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<ShoppingCartCustomer>
@@ -220,7 +220,7 @@
                 Username = tempLogin.Username
             };
 
-            this.etsWapShoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
+            this.etsWapTangShiShoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
             return new ServicesResult<ShoppingCartCustomer>
             {
                 Result = customer
@@ -242,7 +242,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<EtsWapTangShiShoppingCart> GetShoppingCart(string source, string id)
         {
-            var shoppingCartCacheResult = this.etsWapShoppingCartCacheServices.GetShoppingCart(source, id);
+            var shoppingCartCacheResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCart(source, id);
             if (shoppingCartCacheResult != null && shoppingCartCacheResult.StatusCode == (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapTangShiShoppingCart>
@@ -257,7 +257,7 @@
                 IsActive = true
             };
 
-            this.etsWapShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
+            this.etsWapTangShiShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
             return new ServicesResult<EtsWapTangShiShoppingCart>
             {
                 Result = shoppingCart
@@ -279,7 +279,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<EtsWapTangShiShoppingCartOrder> GetShoppingCartOrder(string source, string id)
         {
-            var getShoppingCartOrderResult = this.etsWapShoppingCartCacheServices.GetShoppingCartOrder(source, id);
+            var getShoppingCartOrderResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCartOrder(source, id);
             return new ServicesResult<EtsWapTangShiShoppingCartOrder>
             {
                 StatusCode = getShoppingCartOrderResult.StatusCode,
@@ -302,7 +302,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id)
         {
-            var shoppingCartDeliveryResult = this.etsWapShoppingCartCacheServices.GetShoppingCartDelivery(source, id);
+            var shoppingCartDeliveryResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCartDelivery(source, id);
             return new ServicesResult<ShoppingCartDelivery>
             {
                 StatusCode = shoppingCartDeliveryResult.StatusCode,
@@ -325,7 +325,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCart(string source, EtsWapTangShiShoppingCart shoppingCart)
         {
-            var saveShoppingCartResult = this.etsWapShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
+            var saveShoppingCartResult = this.etsWapTangShiShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartResult.StatusCode,
@@ -348,7 +348,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartOrder(string source, EtsWapTangShiShoppingCartOrder shoppingCartOrder)
         {
-            var saveShoppingCartOrderResult = this.etsWapShoppingCartCacheServices.SaveShoppingCartOrder(source, shoppingCartOrder);
+            var saveShoppingCartOrderResult = this.etsWapTangShiShoppingCartCacheServices.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartOrderResult.StatusCode,
@@ -371,7 +371,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery)
         {
-            var saveShoppingCartDeliveryResult = this.etsWapShoppingCartCacheServices.SaveShoppingCartDelivery(source, shoppingCartDelivery);
+            var saveShoppingCartDeliveryResult = this.etsWapTangShiShoppingCartCacheServices.SaveShoppingCartDelivery(source, shoppingCartDelivery);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartDeliveryResult.StatusCode,
@@ -394,7 +394,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<EtsWapTangShiShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
         {
-            var getShoppingCartLinkResult = this.etsWapShoppingCartCacheServices.GetShoppingCartLink(source, shoppingCartLinkId);
+            var getShoppingCartLinkResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCartLink(source, shoppingCartLinkId);
             return new ServicesResult<EtsWapTangShiShoppingCartLink>
             {
                 StatusCode = getShoppingCartLinkResult.StatusCode,
@@ -418,9 +418,9 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<EtsWapTangShiShoppingCartLink> GetShoppingCartLink(string source, int supplierId, string anonymityId)
         {
-            var getShoppingCartLinkResult = this.etsWapShoppingCartCacheServices.GetShoppingCartLink(source, string.Format("{0}_{1}", anonymityId, supplierId));
+            var getShoppingCartLinkResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCartLink(source, string.Format("{0}_{1}", anonymityId, supplierId));
             var shoppingCartLink = getShoppingCartLinkResult.Result ?? new EtsWapTangShiShoppingCartLink();
-            var getShoppingCartOrderResult = this.etsWapShoppingCartCacheServices.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            var getShoppingCartOrderResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapTangShiShoppingCartLink>
@@ -461,7 +461,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveShoppingCartLink(string source, EtsWapTangShiShoppingCartLink shoppingCartLink)
         {
-            var saveShoppingCartLinkResult = this.etsWapShoppingCartCacheServices.SaveShoppingCartLink(source, shoppingCartLink);
+            var saveShoppingCartLinkResult = this.etsWapTangShiShoppingCartCacheServices.SaveShoppingCartLink(source, shoppingCartLink);
             return new ServicesResult<bool>
             {
                 StatusCode = saveShoppingCartLinkResult.StatusCode,
@@ -486,7 +486,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> ModifyOrderPaymentMethod(string source, string orderId, int paymentMethodId, string payBank)
         {
-            var getShoppingCartOrderResult = this.etsWapShoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
+            var getShoppingCartOrderResult = this.etsWapTangShiShoppingCartCacheServices.GetShoppingCartOrder(source, orderId);
             if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
@@ -499,7 +499,7 @@
             order.PaymentMethodId = paymentMethodId;
             order.PayBank = payBank;
 
-            var saveShoppingCartOrderResult = this.etsWapShoppingCartCacheServices.SaveShoppingCartOrder(source, order);
+            var saveShoppingCartOrderResult = this.etsWapTangShiShoppingCartCacheServices.SaveShoppingCartOrder(source, order);
 
             return new ServicesResult<bool>
             {
