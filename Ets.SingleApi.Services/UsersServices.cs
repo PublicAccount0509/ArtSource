@@ -1240,24 +1240,24 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<UserOrderModel> GetUserOrderList(string source, int userId, OrderType orderType, GetUserOrderParameter parameter)
+        public ServicesResultList<IOrderModel> GetUserOrderList(string source, int userId, OrderType orderType, GetUserOrderParameter parameter)
         {
             if (parameter == null)
             {
-                return new ServicesResultList<UserOrderModel>
+                return new ServicesResultList<IOrderModel>
                 {
                     StatusCode = (int)StatusCode.System.InvalidRequest,
-                    Result = new List<UserOrderModel>()
+                    Result = new List<IOrderModel>()
                 };
             }
 
             var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
             if (customerEntity == null)
             {
-                return new ServicesResultList<UserOrderModel>
+                return new ServicesResultList<IOrderModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
-                    Result = new List<UserOrderModel>()
+                    Result = new List<IOrderModel>()
                 };
             }
 
@@ -1265,10 +1265,10 @@
             var userOrder = this.userOrdersList.FirstOrDefault(p => p.OrderType == orderType);
             if (userOrder == null)
             {
-                return new ServicesResultList<UserOrderModel>
+                return new ServicesResultList<IOrderModel>
                     {
                         StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode,
-                        Result = new List<UserOrderModel>()
+                        Result = new List<IOrderModel>()
                     };
             }
 
@@ -1287,28 +1287,18 @@
 
             if (userOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new ServicesResultList<UserOrderModel>
+                return new ServicesResultList<IOrderModel>
                 {
                     StatusCode = userOrderResult.StatusCode,
-                    Result = new List<UserOrderModel>()
+                    Result = new List<IOrderModel>()
                 };
             }
 
-            var list = userOrder.Convert(userOrderResult.OrderList);
-            if (list == null || list.Count == 0)
-            {
-                return new ServicesResultList<UserOrderModel>
-                    {
-                        StatusCode = (int)StatusCode.Succeed.Empty,
-                        Result = new List<UserOrderModel>()
-                    };
-            }
-
-            return new ServicesResultList<UserOrderModel>
+            return new ServicesResultList<IOrderModel>
                 {
                     StatusCode = userOrderResult.StatusCode,
                     ResultTotalCount = userOrderResult.ResultTotalCount,
-                    Result = list
+                    Result = userOrderResult.Result ?? new List<IOrderModel>()
                 };
         }
 

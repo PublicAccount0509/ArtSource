@@ -483,7 +483,7 @@
                 };
             }
 
-            var orderId = this.GetOrderNumberId(source, appKey, appPassword);
+            var orderId = shoppingCartBase.Result.OrderNumber <= 0 ? this.GetOrderNumberId(source, appKey, appPassword) : shoppingCartBase.Result.OrderNumber;
             if (orderId <= 0)
             {
                 return new ServicesResult<string>
@@ -541,7 +541,7 @@
         /// ----------------------------------------------------------------------------------------
         private int SaveTableReservationEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, EtsWapTangShiShoppingCartOrder order)
         {
-            var tableReservationEntity = new TableReservationEntity
+            var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new TableReservationEntity
             {
                 Supplier = new SupplierEntity
                     {
@@ -549,31 +549,33 @@
                     },
                 CustomerId = customerId,
                 OrderNumber = orderId,
-                OrderNotes = order.OrderInstruction,
-                CustomerTotal = order.CustomerTotalFee,
-                Total = order.TotalFee,
-                ConsumerAmount = order.ServiceFee,
-                TeaBitFee = order.TeaBitFee,
                 TableStatus = 1,
                 DateReserved = DateTime.Now,
-                ModifyDate = DateTime.Now,
-                NumberOfPeople = order.DinnerNumber,
-                CouponCode = order.CouponCode,
-                ContactNumber = delivery.Telephone,
-                Contactsex = delivery.Gender,
-                ContactName = delivery.Name,
                 IsPaId = false,
                 IsRating = false,
                 Cancelled = false,
-                InvoiceRequired = order.InvoiceRequired,
-                InvoiceTitle = order.InvoiceTitle,
-                Path = order.Path,
-                TemplateId = order.Template,
                 IsAdd = false,
                 IsDeal = true,
                 IsReminder = true,
                 IsService = true
             };
+
+            tableReservationEntity.OrderNotes = order.OrderInstruction;
+            tableReservationEntity.CustomerTotal = order.CustomerTotalFee;
+            tableReservationEntity.Total = order.TotalFee;
+            tableReservationEntity.ConsumerAmount = order.ServiceFee;
+            tableReservationEntity.TeaBitFee = order.TeaBitFee;
+            tableReservationEntity.ModifyDate = DateTime.Now;
+            tableReservationEntity.NumberOfPeople = order.DinnerNumber;
+            tableReservationEntity.TabelNo = order.SeatNumber;
+            tableReservationEntity.CouponCode = order.CouponCode;
+            tableReservationEntity.ContactNumber = delivery.Telephone;
+            tableReservationEntity.Contactsex = delivery.Gender;
+            tableReservationEntity.ContactName = delivery.Name;
+            tableReservationEntity.InvoiceRequired = order.InvoiceRequired;
+            tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
+            tableReservationEntity.Path = order.Path;
+            tableReservationEntity.TemplateId = order.Template;
 
             this.tableReservationEntityRepository.Save(tableReservationEntity);
             return tableReservationEntity.TableReservationId;
@@ -592,6 +594,9 @@
         /// ----------------------------------------------------------------------------------------
         private void SaveOrderDetailEntity(int customerId, int orderId, IEnumerable<ShoppingCartItem> shoppingList)
         {
+            var removeOrderList = this.orderDetailEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.OrderId == orderId).ToList();
+            this.orderDetailEntityRepository.Remove(removeOrderList);
+
             var orderList = (from dish in shoppingList
                              select new OrderDetailEntity
                              {

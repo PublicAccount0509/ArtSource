@@ -273,7 +273,7 @@ namespace Ets.SingleApi.Services
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
                 Result = ServicesCommon.OrderEditStatusIdList.Contains(deliveryEntity.OrderStatusId) &&
-                    deliveryEntity.IsPaId != true
+                    deliveryEntity.IsPaId != true && deliveryEntity.Cancelled != true
             };
         }
     }
