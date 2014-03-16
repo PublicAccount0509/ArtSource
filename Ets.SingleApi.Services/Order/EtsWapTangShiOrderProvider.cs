@@ -567,6 +567,7 @@
             tableReservationEntity.TeaBitFee = order.TeaBitFee;
             tableReservationEntity.ModifyDate = DateTime.Now;
             tableReservationEntity.NumberOfPeople = order.DinnerNumber;
+            tableReservationEntity.TabelNo = order.SeatNumber;
             tableReservationEntity.CouponCode = order.CouponCode;
             tableReservationEntity.ContactNumber = delivery.Telephone;
             tableReservationEntity.Contactsex = delivery.Gender;
