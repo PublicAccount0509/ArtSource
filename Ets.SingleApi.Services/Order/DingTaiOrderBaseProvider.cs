@@ -269,7 +269,7 @@ namespace Ets.SingleApi.Services
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
                 Result = ServicesCommon.OrderEditStatusIdList.Contains(tableReservationEntity.TableStatus ?? -1) &&
-                    tableReservationEntity.IsPaId != true
+                    tableReservationEntity.IsPaId != true && tableReservationEntity.Cancelled != true
             };
         }
     }

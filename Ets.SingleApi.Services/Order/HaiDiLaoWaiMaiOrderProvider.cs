@@ -665,7 +665,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var orderId = this.GetOrderNumberId(source, appKey, appPassword);
+            var orderId = shoppingCartBase.Result.OrderNumber <= 0 ? this.GetOrderNumberId(source, appKey, appPassword) : shoppingCartBase.Result.OrderNumber;
             if (orderId <= 0)
             {
                 return new ServicesResult<string>
@@ -730,56 +730,59 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra)
         {
-            var userName = delivery.Name;
-            var deliveryAddressEntity = new DeliveryAddressEntity
-            {
-                Recipient = userName.IsEmptyOrNull() ? delivery.Name : userName,
-                Telephone = delivery.Telephone,
-                Sex = string.Equals(delivery.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) || delivery.Gender == "1" ? 1 : 0,
-                CustomerId = customerId,
-                IsDel = false
-            };
-            this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
-
-            var deliveryEntity = new DeliveryEntity
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new DeliveryEntity
             {
                 SupplierId = supplierId,
                 CustomerId = customerId,
                 OrderNumber = orderId,
-                DeliveryMethodId = order.DeliveryMethodId,
-                DeliveryInstruction = order.DeliveryInstruction,
-                CustomerTotal = order.TotalFee,
-                ReceivablePrice = order.CustomerTotalFee,
-                Total = order.TotalPrice,
-                RealSupplierPrice = order.TotalPrice - order.CouponFee,
                 OrderStatusId = 1,
                 DateAdded = DateTime.Now,
-                PackagingFee = order.PackagingFee,
-                DeliverCharge = order.FixedDeliveryFee,
-                ContactPhone = deliveryAddressEntity.Telephone,
-                Gender = (deliveryAddressEntity.Sex ?? ServicesCommon.DefaultGender).ToString(),
-                Contact = deliveryAddressEntity.Recipient,
                 IsPaId = false,
                 IsRating = false,
-                Cancelled = false,
-                DeliveryDate = order.DeliveryDateTime,
-                Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Template),
-                InvoiceRequired = order.InvoiceRequired,
-                InvoiceTitle = order.InvoiceTitle,
-                Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path),
-                OrderNotes = order.OrderNotes,
-                AreaId = order.AreaId,
-                IPAddress = delivery.IpAddress,
-                IsTakeInvoice = order.IsTakeInvoice,
-                ZBGD = order.IsSelfPan ? 1 : 0,
-                ZBXL = order.IsSelfDip ? 1 : 0,
-                ServiceFee = order.ServicesFee,
-                Pot = extra.PanCount,
-                Stove = extra.CookingCount,
-                NumOfPeople = extra.DiningCount,
-                DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
+                Cancelled = false
             };
 
+            var userName = delivery.Name;
+            var deliveryAddressEntity = this.deliveryAddressEntityRepository.FindSingleByExpression(p => p.DeliveryAddressId == deliveryEntity.DeliveryAddressId && p.IsDel == false) ?? new DeliveryAddressEntity
+            {
+                CustomerId = customerId,
+                IsDel = false
+            };
+
+            var gender = string.Equals(delivery.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase);
+            deliveryAddressEntity.Recipient = userName.IsEmptyOrNull() ? delivery.Name : userName;
+            deliveryAddressEntity.Telephone = delivery.Telephone;
+            deliveryAddressEntity.Sex = (gender || delivery.Gender == "1") ? 1 : 0;
+            this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
+
+            deliveryEntity.DeliveryMethodId = order.DeliveryMethodId;
+            deliveryEntity.DeliveryInstruction = order.DeliveryInstruction;
+            deliveryEntity.CustomerTotal = order.TotalFee;
+            deliveryEntity.ReceivablePrice = order.CustomerTotalFee;
+            deliveryEntity.Total = order.TotalPrice;
+            deliveryEntity.RealSupplierPrice = order.TotalPrice - order.CouponFee;
+            deliveryEntity.PackagingFee = order.PackagingFee;
+            deliveryEntity.DeliverCharge = order.FixedDeliveryFee;
+            deliveryEntity.ContactPhone = deliveryAddressEntity.Telephone;
+            deliveryEntity.Gender = deliveryAddressEntity.Sex.ToString();
+            deliveryEntity.Contact = deliveryAddressEntity.Recipient;
+            deliveryEntity.DeliveryDate = order.DeliveryDateTime;
+            deliveryEntity.Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Template);
+            deliveryEntity.InvoiceRequired = order.InvoiceRequired;
+            deliveryEntity.InvoiceTitle = order.InvoiceTitle;
+            deliveryEntity.Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path);
+            deliveryEntity.OrderNotes = order.OrderNotes;
+            deliveryEntity.AreaId = order.AreaId;
+            deliveryEntity.IPAddress = delivery.IpAddress;
+            deliveryEntity.IsTakeInvoice = order.IsTakeInvoice;
+            deliveryEntity.ZBGD = order.IsSelfPan ? 1 : 0;
+            deliveryEntity.ZBXL = order.IsSelfDip ? 1 : 0;
+            deliveryEntity.ServiceFee = order.ServicesFee;
+            deliveryEntity.Pot = extra.PanCount;
+            deliveryEntity.Stove = extra.CookingCount;
+            deliveryEntity.NumOfPeople = extra.DiningCount;
+            deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
+          
             this.deliveryEntityRepository.Save(deliveryEntity);
             return deliveryEntity.DeliveryId;
         }
@@ -803,63 +806,65 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, HaiDiLaoShoppingCartOrder order, ShoppingCartExtra extra)
         {
-            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customerId);
-            var deliveryAddressEntity = new DeliveryAddressEntity
-            {
-                Recipient = customerAddressEntity.Recipient,
-                AddressAlias = customerAddressEntity.AddressAlias,
-                Address1 = customerAddressEntity.Address1,
-                AddressBuilding = customerAddressEntity.AddressBuilding,
-                AddressDetail = customerAddressEntity.AddressDetail,
-                Address2 = customerAddressEntity.Address2,
-                CityId = customerAddressEntity.CityId,
-                CountyId = customerAddressEntity.CountyId,
-                CountryId = customerAddressEntity.CountryId,
-                Telephone = customerAddressEntity.Telephone,
-                Sex = customerAddressEntity.Sex,
-                CustomerId = customerId,
-                IsDel = false
-            };
-            this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
-
-            var deliveryEntity = new DeliveryEntity
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new DeliveryEntity
             {
                 SupplierId = supplierId,
                 CustomerId = customerId,
                 OrderNumber = orderId,
-                DeliveryMethodId = order.DeliveryMethodId,
-                DeliveryInstruction = order.DeliveryInstruction,
-                CustomerTotal = order.TotalFee,
-                ReceivablePrice = order.CustomerTotalFee,
-                Total = order.TotalPrice,
-                RealSupplierPrice = order.TotalPrice - order.CouponFee,
                 OrderStatusId = 1,
                 DateAdded = DateTime.Now,
-                PackagingFee = order.PackagingFee,
-                DeliverCharge = order.FixedDeliveryFee,
-                ContactPhone = deliveryAddressEntity.Telephone,
-                Gender = (deliveryAddressEntity.Sex ?? ServicesCommon.DefaultGender).ToString(),
-                Contact = deliveryAddressEntity.Recipient,
                 IsPaId = false,
                 IsRating = false,
-                Cancelled = false,
-                DeliveryDate = order.DeliveryDateTime,
-                Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Template),
-                InvoiceRequired = order.InvoiceRequired,
-                InvoiceTitle = order.InvoiceTitle,
-                Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path),
-                OrderNotes = order.OrderNotes,
-                AreaId = order.AreaId,
-                IPAddress = delivery.IpAddress,
-                IsTakeInvoice = order.IsTakeInvoice,
-                ZBGD = order.IsSelfPan ? 1 : 0,
-                ZBXL = order.IsSelfDip ? 1 : 0,
-                ServiceFee = order.ServicesFee,
-                Pot = extra.PanCount,
-                Stove = extra.CookingCount,
-                NumOfPeople = extra.DiningCount,
-                DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId
+                Cancelled = false
             };
+
+            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customerId);
+            var deliveryAddressEntity = this.deliveryAddressEntityRepository.FindSingleByExpression(p => p.DeliveryAddressId == deliveryEntity.DeliveryAddressId && p.IsDel == false) ?? new DeliveryAddressEntity
+            {
+                CustomerId = customerId,
+                IsDel = false
+            };
+
+            deliveryAddressEntity.Recipient = customerAddressEntity.Recipient;
+            deliveryAddressEntity.AddressAlias = customerAddressEntity.AddressAlias;
+            deliveryAddressEntity.Address1 = customerAddressEntity.Address1;
+            deliveryAddressEntity.AddressBuilding = customerAddressEntity.AddressBuilding;
+            deliveryAddressEntity.AddressDetail = customerAddressEntity.AddressDetail;
+            deliveryAddressEntity.Address2 = customerAddressEntity.Address2;
+            deliveryAddressEntity.CityId = customerAddressEntity.CityId;
+            deliveryAddressEntity.CountyId = customerAddressEntity.CountyId;
+            deliveryAddressEntity.CountryId = customerAddressEntity.CountryId;
+            deliveryAddressEntity.Telephone = customerAddressEntity.Telephone;
+            deliveryAddressEntity.Sex = customerAddressEntity.Sex;
+            this.deliveryAddressEntityRepository.Save(deliveryAddressEntity);
+
+            deliveryEntity.DeliveryMethodId = order.DeliveryMethodId;
+            deliveryEntity.DeliveryInstruction = order.DeliveryInstruction;
+            deliveryEntity.CustomerTotal = order.TotalFee;
+            deliveryEntity.ReceivablePrice = order.CustomerTotalFee;
+            deliveryEntity.Total = order.TotalPrice;
+            deliveryEntity.RealSupplierPrice = order.TotalPrice - order.CouponFee;
+            deliveryEntity.PackagingFee = order.PackagingFee;
+            deliveryEntity.DeliverCharge = order.FixedDeliveryFee;
+            deliveryEntity.ContactPhone = deliveryAddressEntity.Telephone;
+            deliveryEntity.Gender = deliveryAddressEntity.Sex.ToString();
+            deliveryEntity.Contact = deliveryAddressEntity.Recipient;
+            deliveryEntity.DeliveryDate = order.DeliveryDateTime;
+            deliveryEntity.Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Template);
+            deliveryEntity.InvoiceRequired = order.InvoiceRequired;
+            deliveryEntity.InvoiceTitle = order.InvoiceTitle;
+            deliveryEntity.Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Path);
+            deliveryEntity.OrderNotes = order.OrderNotes;
+            deliveryEntity.AreaId = order.AreaId;
+            deliveryEntity.IPAddress = delivery.IpAddress;
+            deliveryEntity.IsTakeInvoice = order.IsTakeInvoice;
+            deliveryEntity.ZBGD = order.IsSelfPan ? 1 : 0;
+            deliveryEntity.ZBXL = order.IsSelfDip ? 1 : 0;
+            deliveryEntity.ServiceFee = order.ServicesFee;
+            deliveryEntity.Pot = extra.PanCount;
+            deliveryEntity.Stove = extra.CookingCount;
+            deliveryEntity.NumOfPeople = extra.DiningCount;
+            deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
 
             //计算送餐距离
             var supplierLocation = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
@@ -904,16 +909,16 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private void SaveSupplierCommission(int deliveryId, decimal totalFee, SupplierEntity supplierEntity)
         {
-            var supplierCommissionEntity = new SupplierCommissionEntity
+            var supplierCommissionEntity = this.supplierCommissionEntityRepository.FindSingleByExpression(p => p.Supplier.SupplierId == supplierEntity.SupplierId && p.DeliveryId == deliveryId) ?? new SupplierCommissionEntity
             {
                 Supplier = supplierEntity,
                 DeliveryId = deliveryId,
-                Total = totalFee,
                 Canncelled = false,
-                DateAdded = DateTime.Now,
-                Commission = totalFee * (supplierEntity.CashCommisionFee ?? 0)
+                DateAdded = DateTime.Now
             };
 
+            supplierCommissionEntity.Total = totalFee;
+            supplierCommissionEntity.Commission = totalFee * (supplierEntity.CashCommisionFee ?? 0);
             this.supplierCommissionEntityRepository.Save(supplierCommissionEntity);
         }
 
@@ -930,6 +935,9 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private void SaveOrderEntity(int customerId, int deliveryId, IEnumerable<ShoppingCartItem> shoppingList)
         {
+            var removeOrderList = this.orderEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.Delivery.DeliveryId == deliveryId).ToList();
+            this.orderEntityRepository.Remove(removeOrderList);
+
             var typeList = new List<int> { 0, 1, 2 };
             var orderList = (from dish in shoppingList.Where(p => typeList.Contains(p.Type) && p.ParentId == 0)
                              select new OrderEntity
@@ -964,6 +972,12 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private void SavePackageEntity(int supplierId, int deliveryId, List<ShoppingCartItem> shoppingList)
         {
+            var removePackageSelectedDetailList = this.packageSelectedDetailEntityRepository.FindByExpression(p => p.DeliveryId == deliveryId).ToList();
+            this.packageSelectedDetailEntityRepository.Remove(removePackageSelectedDetailList);
+
+            var removePackageSelectedList = this.packageSelectedEntityRepository.FindByExpression(p => p.Delivery.DeliveryId == deliveryId).ToList();
+            this.packageSelectedEntityRepository.Remove(removePackageSelectedList);
+
             var packageSelectedList = (from dish in shoppingList.Where(p => p.Type == 3)
                                        select new PackageSelectedEntity
                                        {
