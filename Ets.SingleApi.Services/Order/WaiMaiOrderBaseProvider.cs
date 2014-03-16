@@ -248,14 +248,75 @@ namespace Ets.SingleApi.Services
         /// <param name="source">The source</param>
         /// <param name="orderId">The orderId</param>
         /// <returns>
-        /// 返回结果，true可以修改；false，不可修改。
+        /// 返回结果，空字串可以修改；否则，不可修改。
         /// </returns>
         /// 创建者：周超
         /// 创建日期：3/15/2014 2:00 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> GetOrderEditFlag(string source, int orderId)
+        public ServicesResult<string> GetOrderEditFlag(string source, int orderId)
+        {
+            var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
+                                  where entity.OrderNumber == orderId
+                                  select entity).FirstOrDefault();
+            if (deliveryEntity == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = string.Empty
+                };
+            }
+
+            if (!ServicesCommon.OrderEditStatusIdList.Contains(deliveryEntity.OrderStatusId))
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = "订单已接受，无法修改"
+                };
+            }
+
+            if (deliveryEntity.IsPaId == true)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = "订单已支付，无法修改"
+                };
+            }
+
+            if (deliveryEntity.Cancelled == true)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = "订单已取消，无法修改"
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = string.Empty
+            };
+        }
+
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// 返回结果，true取消成功；false取消失败。
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/15/2014 2:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CancelOrder(string source, int orderId)
         {
             var deliveryEntity = (from entity in this.deliveryEntityRepository.EntityQueryable
                                   where entity.OrderNumber == orderId
@@ -269,11 +330,12 @@ namespace Ets.SingleApi.Services
                 };
             }
 
+            deliveryEntity.Cancelled = true;
+            this.deliveryEntityRepository.Save(deliveryEntity);
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = ServicesCommon.OrderEditStatusIdList.Contains(deliveryEntity.OrderStatusId) &&
-                    deliveryEntity.IsPaId != true && deliveryEntity.Cancelled != true
+                Result = true
             };
         }
     }

@@ -264,14 +264,49 @@
         /// <param name="orderSourceType">Type of the order source.</param>
         /// <param name="orderId">The orderId</param>
         /// <returns>
-        /// 返回结果，true可以修改；false，不可修改。
+        /// 返回结果，空字串可以修改；否则，不可修改。
         /// </returns>
         /// 创建者：单琪彬
         /// 创建日期：2/13/2014 11:55 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> GetOrderEditFlag(string source, int orderType, int orderSourceType, int orderId)
+        public ServicesResult<string> GetOrderEditFlag(string source, int orderType, int orderSourceType, int orderId)
+        {
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode,
+                    Result = string.Empty
+                };
+            }
+
+            var result = orderBaseProvider.GetOrderEditFlag(source, orderId);
+            return new ServicesResult<string>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// 返回结果，true取消成功；false取消失败。
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/15/2014 2:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CancelOrder(string source, int orderType, int orderSourceType, int orderId)
         {
             var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
             if (orderBaseProvider == null)
@@ -282,11 +317,22 @@
                 };
             }
 
-            var result = orderBaseProvider.GetOrderEditFlag(source, orderId);
+            var cancelOrderResult = orderBaseProvider.CancelOrder(source, orderId);
+            if (cancelOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = cancelOrderResult.StatusCode
+                };
+            }
+
+            var getShoppingCartIdResult = this.shoppingCartBaseCacheServices.GetShoppingCartId(source, orderId);
+            var shoppingCartId = getShoppingCartIdResult == null ? string.Empty : getShoppingCartIdResult.Result;
+            this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
             return new ServicesResult<bool>
             {
-                StatusCode = result.StatusCode,
-                Result = result.Result
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
             };
         }
 

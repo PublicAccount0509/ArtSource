@@ -222,11 +222,11 @@
         /// <summary>
         /// 当前订单是否可以修改
         /// </summary>
+        /// <param name="id">The id</param>
         /// <param name="orderType">Type of the order.</param>
         /// <param name="orderSourceType">Type of the order source.</param>
-        /// <param name="orderId">The orderId</param>
         /// <returns>
-        /// 返回结果，true可以修改；false，不可修改。
+        /// 返回结果，空字串可以修改；否则，不可修改。
         /// </returns>
         /// 创建者：单琪彬
         /// 创建日期：2/13/2014 4:10 PM
@@ -234,16 +234,44 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<bool> GetOrderEditFlag(int orderType, int orderSourceType, int orderId)
+        public Response<string> GetOrderEditFlag(int id, int orderType, int orderSourceType = 0)
         {
-            var isActivationResult = this.orderServices.GetOrderEditFlag(this.Source, orderType, orderSourceType, orderId);
+            var getOrderEditFlagResult = this.orderServices.GetOrderEditFlag(this.Source, orderType, orderSourceType, id);
+            return new Response<string>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderEditFlagResult.StatusCode
+                },
+                Result = getOrderEditFlagResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <returns>
+        /// 返回结果，true取消成功；false取消失败。
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/15/2014 2:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<bool> CancelOrder(int id, int orderType, int orderSourceType = 0)
+        {
+            var cancelOrderResult = this.orderServices.CancelOrder(this.Source, orderType, orderSourceType, id);
             return new Response<bool>
             {
                 Message = new ApiMessage
                 {
-                    StatusCode = isActivationResult.StatusCode
+                    StatusCode = cancelOrderResult.StatusCode
                 },
-                Result = isActivationResult.Result
+                Result = cancelOrderResult.Result
             };
         }
 
