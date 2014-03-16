@@ -64,7 +64,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime? DateReserved { get; set; }
+        public string DateReserved { get; set; }
 
         /// <summary>
         /// 设置或取得订单类型
@@ -181,6 +181,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int PaymentMethodId { get; set; }
+        public int? PaymentMethodId { get; set; }
     }
 }

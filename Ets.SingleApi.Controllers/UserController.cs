@@ -900,17 +900,17 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public ListResponse<UserOrder> UserOrderList(int id, int orderType = -1, int? orderStatus = null, int? supplierId = null, int? supplierGroupId = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null, bool cancelled = false)
+        public ListResponse<IOrderModel> UserOrderList(int id, int orderType = -1, int? orderStatus = null, int? supplierId = null, int? supplierGroupId = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null, bool cancelled = false)
         {
             if (!this.ValidateUserId(id))
             {
-                return new ListResponse<UserOrder>
+                return new ListResponse<IOrderModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.OAuth.AccessDenied
                     },
-                    Result = new List<UserOrder>()
+                    Result = new List<IOrderModel>()
                 };
             }
 
@@ -928,34 +928,35 @@
 
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new ListResponse<UserOrder>
+                return new ListResponse<IOrderModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
                     },
-                    Result = new List<UserOrder>()
+                    Result = new List<IOrderModel>()
                 };
             }
 
-            var result = list.Result.Select(p => new UserOrder
-            {
-                OrderId = p.OrderId,
-                SupplierId = p.SupplierId ?? 0,
-                SupplierName = (p.SupplierName ?? string.Empty),
-                DateReserved = p.DateReserved == null ? string.Empty : p.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
-                CustomerTotal = p.CustomerTotal ?? 0,
-                OrderStatusId = p.OrderStatusId ?? 0,
-                OrderStatus = (p.OrderStatus ?? string.Empty),
-                OrderType = p.OrderType,
-                DineNumber = p.DineNumber ?? 0,
-                DeliveryMethodId = p.DeliveryMethodId,
-                IsPaid = p.IsPaid ?? false,
-                DishNames = p.DishNames,
-                PaymentMethodId = p.PaymentMethodId
-            }).ToList();
+            //var result = list.Result.Select(p => new UserOrder
+            //{
+            //    OrderId = p.OrderId,
+            //    SupplierId = p.SupplierId ?? 0,
+            //    SupplierName = (p.SupplierName ?? string.Empty),
+            //    DateReserved = p.DateReserved == null ? string.Empty : p.DateReserved.Value.ToString("yyyy-MM-dd HH:mm"),
+            //    CustomerTotal = p.CustomerTotal ?? 0,
+            //    OrderStatusId = p.OrderStatusId ?? 0,
+            //    OrderStatus = (p.OrderStatus ?? string.Empty),
+            //    OrderType = p.OrderType,
+            //    DineNumber = p.DineNumber ?? 0,
+            //    DeliveryMethodId = p.DeliveryMethodId,
+            //    IsPaid = p.IsPaid ?? false,
+            //    DishNames = p.DishNames,
+            //    PaymentMethodId = p.PaymentMethodId ?? -1
+            //}).ToList();
 
-            return new ListResponse<UserOrder>
+            var result = list.Result;
+            return new ListResponse<IOrderModel>
             {
                 Message = new ApiMessage
                 {

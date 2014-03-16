@@ -238,7 +238,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<UserOrderModel> GetUserOrderList(string source, int userId, OrderType orderType, GetUserOrderParameter parameter);
+        ServicesResultList<IOrderModel> GetUserOrderList(string source, int userId, OrderType orderType, GetUserOrderParameter parameter);
 
         /// <summary>
         /// 验证用户是否存在

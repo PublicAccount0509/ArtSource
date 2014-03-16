@@ -10,7 +10,7 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：UserDingTaiOrders
+    /// 类名称：UserTangShiOrders
     /// 命名空间：Ets.SingleApi.Services
     /// 类功能：订台订单
     /// </summary>
@@ -19,7 +19,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class UserDingTaiOrders : IUserOrders
+    public class UserTangShiOrders : IUserOrders
     {
         /// <summary>
         /// 字段tableReservationEntityRepository
@@ -81,7 +81,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserDingTaiOrders(
+        public UserTangShiOrders(
             INHibernateRepository<TableReservationEntity> tableReservationEntityRepository,
             INHibernateRepository<OrderDetailEntity> orderDetailEntityRepository,
             INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository)
@@ -114,11 +114,11 @@
                 };
             }
 
-            var orderList = this.GetDingTaiOrderList(parameter);
+            var orderList = this.GetTangShiOrderList(parameter);
             return new ServicesResultList<IOrderModel>
-            {
-                Result = orderList.Cast<IOrderModel>().ToList()
-            };
+                {
+                    Result = orderList.Cast<IOrderModel>().ToList()
+                };
         }
 
         /// <summary>
@@ -133,9 +133,10 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private IEnumerable<DingTaiOrderModel> GetDingTaiOrderList(UserOrdersParameter parameter)
+        private IEnumerable<TangShiOrderModel> GetTangShiOrderList(UserOrdersParameter parameter)
         {
             var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
+
             var queryableTemp = (from tableReservationEntity in this.tableReservationEntityRepository.EntityQueryable
                                  where tableReservationEntity.CustomerId == parameter.CustomerId
                                  && tableReservationEntity.Cancelled == parameter.Cancelled
@@ -205,7 +206,7 @@
                                    payment.OrderId
                                }).ToList();
 
-            var result = tableReservationList.Select(p => new DingTaiOrderModel
+            var result = tableReservationList.Select(p => new TangShiOrderModel
             {
                 OrderId = p.OrderNumber ?? 0,
                 SupplierId = p.SupplierId,

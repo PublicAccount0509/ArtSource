@@ -116,75 +116,22 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public UserOrdersResult GetUserOrderList(UserOrdersParameter parameter)
+        public ServicesResultList<IOrderModel> GetUserOrderList(UserOrdersParameter parameter)
         {
             if (parameter == null)
             {
-                return new UserOrdersResult
+                return new ServicesResultList<IOrderModel>
                 {
                     StatusCode = (int)StatusCode.System.InvalidRequest,
-                    OrderList = new List<IOrderModel>()
+                    Result = new List<IOrderModel>()
                 };
             }
 
             var waiMaiOrderList = this.GetWaiMaiOrderList(parameter);
-            var supplierIdList = waiMaiOrderList.Select(p => p.SupplierId).ToList();
-            var supplierList = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
-                                where supplierIdList.Contains(supplierEntity.SupplierId)
-                                select new { supplierEntity.SupplierId, supplierEntity.SupplierName }).ToList();
-
-            foreach (var order in waiMaiOrderList)
-            {
-                var supplier = supplierList.FirstOrDefault(p => p.SupplierId == order.SupplierId);
-                order.SupplierName = supplier == null ? string.Empty : supplier.SupplierName;
-            }
-
-            return new UserOrdersResult
+            return new ServicesResultList<IOrderModel>
                 {
-                    OrderList = waiMaiOrderList.Cast<IOrderModel>().ToList()
+                    Result = waiMaiOrderList.Cast<IOrderModel>().ToList()
                 };
-        }
-
-        /// <summary>
-        /// 转换为用户订单
-        /// </summary>
-        /// <param name="orderModelList">The orderModelList</param>
-        /// <returns>
-        /// 返回用户订单列表
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：2013/10/21 13:55
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public List<UserOrderModel> Convert(List<IOrderModel> orderModelList)
-        {
-            if (orderModelList == null)
-            {
-                return new List<UserOrderModel>();
-            }
-
-            var list = orderModelList.Cast<WaiMaiOrderModel>().ToList();
-            if (list.Count == 0)
-            {
-                return new List<UserOrderModel>();
-            }
-
-            return list.Select(p => new UserOrderModel
-                {
-                    OrderId = p.OrderId,
-                    SupplierId = p.SupplierId,
-                    SupplierName = p.SupplierName,
-                    DateReserved = p.DateReserved,
-                    CustomerTotal = p.CustomerTotal,
-                    OrderStatusId = p.OrderStatusId,
-                    OrderStatus = p.OrderStatus,
-                    OrderType = p.OrderType,
-                    DeliveryMethodId = p.DeliveryMethodId,
-                    IsPaid = p.IsPaid,
-                    DishNames = p.DishNames,
-                    PaymentMethodId = p.PaymentMethodId
-                }).ToList();
         }
 
         /// <summary>
@@ -199,7 +146,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private List<WaiMaiOrderModel> GetWaiMaiOrderList(UserOrdersParameter parameter)
+        private IEnumerable<WaiMaiOrderModel> GetWaiMaiOrderList(UserOrdersParameter parameter)
         {
             var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
 
@@ -218,7 +165,8 @@
                                          deliveryEntity.OrderStatusId,
                                          deliveryEntity.DeliveryMethodId,
                                          deliveryEntity.IsPaId,
-                                         entity.SupplierGroupId
+                                         entity.SupplierGroupId,
+                                         entity.SupplierName
                                      });
 
             if (parameter.SupplierGroupId != null)
@@ -262,24 +210,31 @@
                                  {
                                      order.SupplierDishName,
                                      order.Delivery.DeliveryId
-                                 }
-               ).ToList();
+                                 }).ToList();
+
+            var paymentList = (from payment in this.paymentEntityRepository.EntityQueryable
+                               where deliveryIdList.Contains(payment.Delivery.DeliveryId)
+                               select new
+                               {
+                                   payment.PaymentMethodId,
+                                   payment.Delivery.DeliveryId
+                               }).ToList();
 
             var result = deliveryList.Select(p => new WaiMaiOrderModel
                                  {
                                      OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
-                                     SupplierId = p.SupplierId,
-                                     SupplierName = string.Empty,
-                                     DateReserved = p.DateAdded,
-                                     CustomerTotal = p.CustomerTotal,
+                                     SupplierId = p.SupplierId ?? 0,
+                                     SupplierName = p.SupplierName ?? string.Empty,
+                                     DateReserved = p.DateAdded == null ? string.Empty : p.DateAdded.Value.ToString("yyyy-MM-dd HH:mm"),
+                                     CustomerTotal = p.CustomerTotal ?? 0,
                                      OrderStatusId = p.OrderStatusId,
                                      OrderStatus = string.Empty,
                                      OrderType = (int)this.OrderType,
-                                     DeliveryMethodId = p.DeliveryMethodId,
-                                     IsPaid = p.IsPaId,
+                                     DeliveryMethodId = p.DeliveryMethodId ?? 0,
+                                     IsPaid = p.IsPaId ?? false,
                                      DishNames = string.Join("，", orderList.Where(q => q.DeliveryId == p.DeliveryId).Select(c => c.SupplierDishName).ToList()),
                                      //支付方式
-                                     PaymentMethodId = this.paymentEntityRepository.EntityQueryable.Where(pay => pay.Delivery.DeliveryId == p.DeliveryId).Select(pay => pay.PaymentMethodId).FirstOrDefault()
+                                     PaymentMethodId = paymentList.Where(q => q.DeliveryId == p.DeliveryId).Select(q => q.PaymentMethodId).FirstOrDefault()
                                  }).ToList();
 
             return result;
