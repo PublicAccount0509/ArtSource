@@ -60,7 +60,7 @@
         [HttpGet]
         public Response<int> Exist(int id, int orderType, int orderSourceType = 0)
         {
-            var getOrderResult = this.orderServices.Exist(this.Source, id, orderType, orderSourceType);
+            var getOrderResult = this.orderServices.Exist(this.GetSource(orderType), id, orderType, orderSourceType);
             return new Response<int>
             {
                 Message = new ApiMessage
@@ -88,7 +88,7 @@
         [HttpGet]
         public Response<IOrderDetailModel> GetOrder(int id, int orderType, int orderSourceType = 0)
         {
-            var getOrderResult = this.orderServices.GetOrder(this.Source, id, orderType, orderSourceType);
+            var getOrderResult = this.orderServices.GetOrder(this.GetSource(orderType), id, orderType, orderSourceType);
             if (getOrderResult.Result == null)
             {
                 return new Response<IOrderDetailModel>
@@ -127,7 +127,7 @@
         [HttpPost]
         public Response<string> SaveOrder(string shoppingCartId, int orderType, int orderSourceType = 0)
         {
-            var getOrderResult = this.orderServices.SaveOrder(this.Source, shoppingCartId, this.AppKey, this.AppPassword, orderType, orderSourceType);
+            var getOrderResult = this.orderServices.SaveOrder(this.GetSource(orderType), shoppingCartId, this.AppKey, this.AppPassword, orderType, orderSourceType);
             if (getOrderResult.Result == null)
             {
                 return new Response<string>
@@ -165,7 +165,7 @@
         [HttpGet]
         public Response<string> OrderNumber(int orderType, int orderSourceType = 0)
         {
-            var getOrderNumberResult = this.orderServices.GetOrderNumber(this.Source, this.AppKey, this.AppPassword, orderType, orderSourceType);
+            var getOrderNumberResult = this.orderServices.GetOrderNumber(this.GetSource(orderType), this.AppKey, this.AppPassword, orderType, orderSourceType);
             if (getOrderNumberResult.Result == null)
             {
                 return new Response<string>
@@ -206,9 +206,7 @@
         [HttpGet]
         public Response<bool> SaveOrderPaId(int orderType, int orderId, bool isPaId, int orderSourceType = 0)
         {
-
-            var saveOrderPaIdResult = this.orderServices.SaveOrderPaId(this.Source, orderType, orderSourceType, orderId, isPaId);
-
+            var saveOrderPaIdResult = this.orderServices.SaveOrderPaId(this.GetSource(orderType), orderType, orderSourceType, orderId, isPaId);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -236,7 +234,7 @@
         [HttpGet]
         public Response<string> GetOrderEditFlag(int id, int orderType, int orderSourceType = 0)
         {
-            var getOrderEditFlagResult = this.orderServices.GetOrderEditFlag(this.Source, orderType, orderSourceType, id);
+            var getOrderEditFlagResult = this.orderServices.GetOrderEditFlag(this.GetSource(orderType), orderType, orderSourceType, id);
             return new Response<string>
             {
                 Message = new ApiMessage
@@ -264,7 +262,7 @@
         [HttpPost]
         public Response<bool> CancelOrder(int id, int orderType, int orderSourceType = 0)
         {
-            var cancelOrderResult = this.orderServices.CancelOrder(this.Source, orderType, orderSourceType, id);
+            var cancelOrderResult = this.orderServices.CancelOrder(this.GetSource(orderType), orderType, orderSourceType, id);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -294,8 +292,7 @@
         [HttpGet]
         public Response<bool> ModifyOrderPaymentMethod(string shoppingCartId, int paymentMethodId, string payBank, int orderType, int orderSourceType = 0)
         {
-            var saveOrderPaIdResult = this.orderServices.ModifyOrderPaymentMethod(this.Source, shoppingCartId, paymentMethodId, payBank, orderType, orderSourceType);
-
+            var saveOrderPaIdResult = this.orderServices.ModifyOrderPaymentMethod(this.GetSource(orderType), shoppingCartId, paymentMethodId, payBank, orderType, orderSourceType);
             return new Response<bool>
             {
                 Message = new ApiMessage
@@ -323,9 +320,7 @@
         [HttpGet]
         public Response<OrderShoppingCartStatusResult> GetShoppingCartStatus(string shoppingCartId, int orderType, int orderSourceType = 0)
         {
-
-            var orderShoppingCartStatusResult = this.orderServices.GetOrderShoppingCartStatus(this.Source, shoppingCartId, orderType, orderSourceType);
-
+            var orderShoppingCartStatusResult = this.orderServices.GetOrderShoppingCartStatus(this.GetSource(orderType), shoppingCartId, orderType, orderSourceType);
             return new Response<OrderShoppingCartStatusResult>
             {
                 Message = new ApiMessage
@@ -339,6 +334,24 @@
                         OrderStatusId = orderShoppingCartStatusResult.Result.OrderStatusId
                     }
             };
+        }
+
+        /// <summary>
+        /// 取得来源信息
+        /// </summary>
+        /// <param name="orderType">Type of the order.</param>
+        /// <returns>
+        /// 返回来源信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/16/2014 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private string GetSource(int orderType)
+        {
+            var preFix = ((OrderType)orderType).ToString();
+            return string.Format("{0}{1}", preFix, this.Source);
         }
     }
 }

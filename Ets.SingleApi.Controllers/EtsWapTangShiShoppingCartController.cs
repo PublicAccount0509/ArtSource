@@ -61,7 +61,7 @@
         {
             get
             {
-                return base.PreFix + "TangShi";
+                return base.PreFix + OrderType.TangShi.ToString();
             }
         }
 

@@ -47,6 +47,25 @@
         }
 
         /// <summary>
+        /// Gets or sets the PreFix of SingleApiController
+        /// </summary>
+        /// <value>
+        /// The PreFix
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：3/14/2014 2:18 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        protected override string PreFix
+        {
+            get
+            {
+                return base.PreFix + OrderType.WaiMai.ToString();
+            }
+        }
+
+        /// <summary>
         /// 根据购物车Id获取购物车信息
         /// </summary>
         /// <param name="id">购物车Id</param>
