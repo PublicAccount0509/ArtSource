@@ -366,6 +366,19 @@
         public string Contactsex { get; set; }
 
         /// <summary>
+        /// 餐桌编号
+        /// </summary>
+        /// <value>
+        /// The TabelNo
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：3/17/2014 10:46 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string TabelNo { get; set; }
+
+        /// <summary>
         /// 茶水费
         /// </summary>
         /// <value>

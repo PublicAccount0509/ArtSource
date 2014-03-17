@@ -330,7 +330,7 @@
             {
                 ShoppingCartId = shoppingCartId,
                 OrderId = tableReservationEntity.OrderNumber.HasValue ? tableReservationEntity.OrderNumber.Value : 0,
-                OrderTypeId = (int)OrderType.WaiMai,
+                OrderTypeId = (int)OrderType.TangShi,
                 OrderStatusId = tableReservationEntity.TableStatus,
                 DateReserved = tableReservationEntity.DateReserved.ToString("yyyy-MM-dd HH:mm"),
                 Description = tableReservationEntity.OrderNotes ?? string.Empty,
@@ -349,6 +349,7 @@
                 ContactName = tableReservationEntity.ContactName,
                 ContactNumber = tableReservationEntity.ContactNumber,
                 Contactsex = gender,
+                TabelNo =tableReservationEntity.TabelNo,
                 TeaBitFee = (tableReservationEntity.TeaBitFee ?? 0).ToString("#0.00"),
                 ServiceFee = (tableReservationEntity.ConsumerAmount ?? 0).ToString("#0.00"),
                 Coupon = coupon.ToString("#0.00"),//折扣
