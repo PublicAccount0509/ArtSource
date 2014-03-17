@@ -200,6 +200,7 @@
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
+        /// <param name="orderId">The orderId</param>
         /// <returns>
         /// 返回一个购物车
         /// </returns>
@@ -208,9 +209,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId)
+        public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId, int orderId)
         {
-            var bindShoppingCartResult = this.shoppingCartBaseCacheServices.BindShoppingCartId(source, supplierId.ToString(), userId);
+            var bindShoppingCartResult = this.shoppingCartBaseCacheServices.BindShoppingCartId(source, supplierId.ToString(), userId, orderId);
             if (bindShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok && !bindShoppingCartResult.Result.IsNew)
             {
                 return new ServicesResult<string>

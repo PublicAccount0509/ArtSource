@@ -164,6 +164,7 @@
         /// </summary>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
+        /// <param name="orderId">The orderId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -173,9 +174,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<HaiDiLaoShoppingCartModel> Create(int supplierId, string userId)
+        public Response<HaiDiLaoShoppingCartModel> Create(int supplierId, string userId, int orderId = 0)
         {
-            var createShoppingCartResult = this.shunFengshoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId);
+            var createShoppingCartResult = this.shunFengshoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId, orderId);
             if (createShoppingCartResult.Result.IsEmptyOrNull())
             {
                 return new Response<HaiDiLaoShoppingCartModel>

@@ -83,6 +83,7 @@
         /// <param name="source">The source</param>
         /// <param name="supplierId">The supplierId</param>
         /// <param name="userId">The userId</param>
+        /// <param name="orderId">The orderId</param>
         /// <returns>
         /// 返回购物车编号
         /// </returns>
@@ -91,6 +92,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<BindShoppingCartResult> BindShoppingCartId(string source, string supplierId, string userId);
+        CacheServicesResult<BindShoppingCartResult> BindShoppingCartId(string source, string supplierId, string userId, int orderId);
     }
 }

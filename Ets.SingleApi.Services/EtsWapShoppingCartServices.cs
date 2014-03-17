@@ -189,6 +189,7 @@ namespace Ets.SingleApi.Services
         /// <param name="source">The source</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
+        /// <param name="orderId">The orderId</param>
         /// <returns>
         /// 返回一个购物车
         /// </returns>
@@ -197,9 +198,9 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId)
+        public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId, int orderId)
         {
-            var bindShoppingCartResult = this.shoppingCartBaseCacheServices.BindShoppingCartId(source, supplierId.ToString(), userId);
+            var bindShoppingCartResult = this.shoppingCartBaseCacheServices.BindShoppingCartId(source, supplierId.ToString(), userId, orderId);
             if (bindShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok && !bindShoppingCartResult.Result.IsNew)
             {
                 return new ServicesResult<string>
@@ -433,6 +434,11 @@ namespace Ets.SingleApi.Services
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
+            if (shoppingList.Count == 0)
+            {
+                saveDeliveryMethodId = false;
+            }
+
             foreach (var shoppingCartItem in shoppingCartItemList)
             {
                 var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && (p.Instruction ?? string.Empty).Trim() == (shoppingCartItem.Instruction ?? string.Empty).Trim());
