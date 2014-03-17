@@ -548,6 +548,7 @@
                     {
                         SupplierId = supplierId
                     },
+
                 CustomerId = customerId,
                 OrderNumber = orderId,
                 TableStatus = 1,
@@ -557,6 +558,7 @@
                 Cancelled = false,
                 IsAdd = false,
                 IsDeal = true,
+                Type = 1,
                 IsReminder = true,
                 IsService = true
             };
