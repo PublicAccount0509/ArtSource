@@ -1,5 +1,6 @@
 ﻿
 using Ets.SingleApi.Model;
+using Ets.SingleApi.Utility;
 
 namespace Ets.SingleApi.Services.Payment
 {
@@ -46,11 +47,24 @@ namespace Ets.SingleApi.Services.Payment
         /// ----------------------------------------------------------------------------------------
         public PaymentResult<string> Payment(IPaymentData parameter)
         {
-            throw new System.NotImplementedException();
+            var paymentData = parameter as WechatPaymentData;
+
+            if (paymentData == null)
+            {
+                return new PaymentResult<string> { Result = string.Empty, StatusCode = (int)StatusCode.System.InvalidPaymentRequest };
+            }
+
+            var packAge = new WechatPaymentCommon.PackAgeEntity(paymentData.Body, paymentData.Attach, paymentData.OrderId, paymentData.Amount, paymentData.NotifyUrl, paymentData.SpbillCreateIp, null, null, null, null);
+            string package = packAge.BuildPackAge();
+            var brandWcPayRequest = new WechatPaymentCommon.BrandWcPayRequest(package);
+
+            string requestPaymentJsonStr = brandWcPayRequest.ToWxpaymentJsonString();
+            return new PaymentResult<string> { Result = requestPaymentJsonStr, StatusCode = (int)StatusCode.Succeed.Ok };
         }
 
         public PaymentResult<bool> QueryState(IPaymentData parameter)
         {
+            //是修改了数据库状态？ 还是去支付方查询了支付是否成功？
             throw new System.NotImplementedException();
         }
     }

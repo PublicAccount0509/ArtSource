@@ -394,5 +394,55 @@
                 return (ConfigurationManager.AppSettings["AlipayBackgroundNoticeUrl"] ?? string.Empty).Trim().TrimEnd('/', '\\');
             }
         }
+
+
+        /// <summary>
+        /// 微信AppId
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/3/14 20:06
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string ConstWechatPaymentAppId = "wx3207ade26406c657";
+
+        /// <summary>
+        /// 微信AppSecret
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/3/14 20:07
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string ConstWechatPaymentAppSecret = "53102510efe4fb577b1cd8250fe386c9";
+
+        /// <summary>
+        /// 微信PaySignKey 在支付的时候很蛋疼的叫AppKey
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/3/14 20:08
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string ConstWechatPaymentPaySignKey = "UxYlsn744dzUA4CmCV7j0rJf32RGfamsv96Khs77tWMQNc1bTSgR7NnpB1S0t3SNWejZudTfstT2saYEjyjIEsU4e6YwTD6DFHoWIAXWPCLAAv4FR9aknn0UgUeXj6mK";
+
+        /// <summary>
+        /// 微信分配财付通PartnerKey
+        /// </summary>
+        /// 创建者：孟祺宙 创建日期：2014/3/14 20:08
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string ConstWechatPaymentPartnerKey = "0fdc444bcd4d9e700abb12e1871e183c";
+
+        /// <summary>
+        /// 微信分配财付通PartnerId
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/3/14 20:09
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string ConstWechatPaymentPartnerId = "1218067401";
     }
 }

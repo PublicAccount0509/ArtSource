@@ -149,6 +149,7 @@
     <Compile Include="Payment\UmPaymentData.cs" />
     <Compile Include="Payment\UmPaymentQueryData.cs" />
     <Compile Include="Payment\WechatPayment.cs" />
+    <Compile Include="Payment\WechatPaymentCommon.cs" />
     <Compile Include="Payment\WechatPaymentData.cs" />
     <Compile Include="SendPassword\EmailSendPassword.cs" />
     <Compile Include="SendPassword\ISendPassword.cs" />
