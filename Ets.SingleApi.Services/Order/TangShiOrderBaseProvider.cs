@@ -85,7 +85,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public OrderType OrderType
         {
-            get { return OrderType.DingTai; }
+            get { return OrderType.TangShi; }
         }
 
         /// <summary>
