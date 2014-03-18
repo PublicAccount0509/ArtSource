@@ -182,6 +182,7 @@
     <Compile Include="Services\EtsWapShoppingCartModel.cs" />
     <Compile Include="Services\TangShiOrderDetailModel.cs" />
     <Compile Include="Services\TangShiOrderDishModel.cs" />
+    <Compile Include="Services\EtsWapDingTaiShoppingCartModel.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
