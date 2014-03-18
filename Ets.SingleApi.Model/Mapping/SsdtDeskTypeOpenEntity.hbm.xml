@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.SsdtDeskTypeOpenEntity, Ets.SingleApi.Model" table="SsdtDeskTypeOpen" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="DeskTypeId" column="DeskTypeId" type="Int32" />
+		<property name="BeginTime" column="BeginTime" type="String" />
+		<property name="EndTime" column="EndTime" type="String" />
+		<property name="SupplierId" column="SupplierId" type="Int32" />
+		<property name="UpdateTime" column="UpdateTime" type="Timestamp" />
+		<property name="IsDel" column="IsDel" type="Boolean" />
+		<property name="IsEnable" column="IsEnable" type="Boolean" />
+		<property name="Description" column="Description" type="String" not-null="false" />
+	</class>
+</hibernate-mapping>
