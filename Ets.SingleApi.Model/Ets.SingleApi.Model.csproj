@@ -328,6 +328,9 @@
     <Compile Include="ShoppingCart\EtsWapShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
+    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
