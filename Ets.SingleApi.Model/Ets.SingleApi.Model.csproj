@@ -95,6 +95,7 @@
     <Compile Include="Controller\EtsWapTangShiShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\EtsWapTangShiShoppingCartRequst.cs" />
     <Compile Include="Controller\EtsWapTangShiShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\DingTaiDesk.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -185,6 +186,8 @@
     <Compile Include="Services\TangShiOrderDetailModel.cs" />
     <Compile Include="Services\TangShiOrderDishModel.cs" />
     <Compile Include="Services\EtsWapDingTaiShoppingCartModel.cs" />
+    <Compile Include="Services\DingTaiDeskModel.cs" />
+    <Compile Include="Services\DingTaiGetDeskListParameter.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
