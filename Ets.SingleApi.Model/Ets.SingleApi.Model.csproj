@@ -113,13 +113,13 @@
     <Compile Include="ExternalServices\OrderNumberExternalUrlParameter.cs" />
     <Compile Include="ExternalServices\SingleApiExternalServiceAuthenParameter.cs" />
     <Compile Include="IOrderDetailModel.cs" />
+    <Compile Include="Mapping\Repository\DeskTypeEntity.cs" />
     <Compile Include="Mapping\Repository\BaiDuAppLightEntity.cs" />
     <Compile Include="Mapping\Repository\CustomizationOptionEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
     <Compile Include="Mapping\Repository\DeskBookingEntity.cs" />
-    <Compile Include="Mapping\Repository\DeskTypeEntity.cs" />
     <Compile Include="Mapping\Repository\DeskTypeLockLogEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
     <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />

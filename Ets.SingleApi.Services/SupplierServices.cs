@@ -165,6 +165,25 @@
         private readonly INHibernateRepository<SupplierDeskTimeEntity> supplierDeskTimeEntityRepository;
 
         /// <summary>
+        /// 台位类型锁定表
+        /// </summary>
+        /// 创建者：苏建峰
+        /// 创建日期：3/19/2014 11:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeskTypeLockLogEntity> deskTypeLockLogEntityRepository;
+
+        /// <summary>
+        /// 台位类型表
+        /// </summary>
+        /// 创建者：苏建峰
+        /// 创建日期：3/19/2014 2:50 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository; 
+        /// <summary>
         /// 字段supplierDetailServices
         /// </summary>
         /// 创建者：周超
@@ -2253,27 +2272,82 @@
             if (parameter == null)
             {
                 return new ServicesResultList<DingTaiDeskModel>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = new List<DingTaiDeskModel>()
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        Result = new List<DingTaiDeskModel>()
+                    };
             }
 
+            /*判断餐厅Id是否存在*/
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
             {
                 return new ServicesResultList<DingTaiDeskModel>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = new List<DingTaiDeskModel>()
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        Result = new List<DingTaiDeskModel>()
+                    };
             }
 
-            
-            return new ServicesResultList<DingTaiDeskModel>
+            /*早晚市开放时间*/
+            //BeginTime和EndTime时间格式为（07:00、22:00）
+            var supplierDeskTime = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
+                                    where supplierDeskTimeEntity.SupplierId == parameter.SupplierId
+                                          &&
+                                          string.Compare(supplierDeskTimeEntity.BeginTime, parameter.BookingTime,
+                                                         System.StringComparison.OrdinalIgnoreCase) < 0
+                                          &&
+                                          string.Compare(supplierDeskTimeEntity.EndTime, parameter.BookingTime,
+                                                         System.StringComparison.OrdinalIgnoreCase) > 0
+                                    select new
+                                        {
+                                            supplierDeskTimeEntity.Id
+                                        }).FirstOrDefault();
+
+            if (supplierDeskTime == null)
             {
-                StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                Result = new List<DingTaiDeskModel>()
-            };
+                return new ServicesResultList<DingTaiDeskModel>
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        Result = new List<DingTaiDeskModel>()
+                    };
+            }
+
+            /*在给定的预定日期和预定时间内，被锁定的台位类型*/
+            var lockedDeskTypeId =
+                this.deskTypeLockLogEntityRepository.EntityQueryable.Where(p => p.SupplierId == parameter.SupplierId
+                                                                                && p.LockDate == parameter.BookingDate
+                                                                                &&
+                                                                                p.SupplierDeskTime.Id ==
+                                                                                supplierDeskTime.Id
+                                                                                && p.IsDel == false)
+                    .Select(p => p.DeskTypeId)
+                    .ToList();
+
+
+            /*可以预定的台位列表*/
+            var deskTypeList = (from deskTypeEntity in this.deskTypeEntityRepository.EntityQueryable
+                                where deskTypeEntity.SupplierId == parameter.SupplierId
+                                      && !lockedDeskTypeId.Contains(deskTypeEntity.Id)
+                                select new DingTaiDeskModel
+                                    {
+                                        RoomType = deskTypeEntity.RoomType,
+                                        TableType = new TableTypeModel
+                                            {
+                                                Id = deskTypeEntity.TableType.Id,
+                                                TblTypeName = deskTypeEntity.TableType.TblTypeName
+                                            },
+                                        MaxNumber = deskTypeEntity.MaxNumber,
+                                        MinNumber = deskTypeEntity.MinNumber,
+                                        DepositAmount = deskTypeEntity.DepositAmount,
+                                        LowCost = deskTypeEntity.LowCost
+
+                                    }).ToList();
+
+            return new ServicesResultList<DingTaiDeskModel>
+                {
+                    StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = deskTypeList
+                };
         }
     }
 }

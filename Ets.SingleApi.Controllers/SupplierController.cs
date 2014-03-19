@@ -1347,6 +1347,7 @@ namespace Ets.SingleApi.Controllers
         /// 获取订台台位列表
         /// </summary>
         /// <param name="id">餐厅Id</param>
+        /// <param name="bookingDate">预订日期</param>
         /// <param name="bookingTime">预订时间</param>
         /// <param name="peopleCount">预定人数</param>
         /// <returns></returns>
@@ -1356,11 +1357,12 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<DingTaiDesk> DeskList(int id, DateTime bookingTime, int peopleCount)
+        public ListResponse<DingTaiDesk> DeskList(int id, DateTime bookingDate, string bookingTime, int peopleCount)
         {
             var dingTaiGetDeskListParameter = new DingTaiGetDeskListParameter
                 {
                     SupplierId = id,
+                    BookingDate = bookingDate,
                     BookingTime = bookingTime,
                     PeopleCount = peopleCount
                 };
@@ -1384,7 +1386,16 @@ namespace Ets.SingleApi.Controllers
 
             var result = getDeskListResult.Result.Select(p => new DingTaiDesk
                 {
-
+                    RoomType = p.RoomType ?? 0,
+                    TableType = new TableType
+                        {
+                            Id = p.TableType.Id,
+                            TblTypeName = p.TableType.TblTypeName
+                        },
+                    MaxNumber = p.MaxNumber,
+                    MinNumber = p.MinNumber,
+                    DepositAmount = p.DepositAmount ?? 0,
+                    LowCost = p.LowCost ?? 0
                 }).ToList();
 
             return new ListResponse<DingTaiDesk>

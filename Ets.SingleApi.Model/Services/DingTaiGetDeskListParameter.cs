@@ -28,7 +28,7 @@ namespace Ets.SingleApi.Model.Services
         public int SupplierId { get; set; }
 
         /// <summary>
-        /// 预订时间
+        /// 预订日期
         /// </summary>
         /// <value>
         /// The supplier identifier.
@@ -38,7 +38,20 @@ namespace Ets.SingleApi.Model.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime BookingTime { get; set; }
+        public DateTime BookingDate { get; set; }
+
+        /// <summary>
+        /// 预订时间
+        /// </summary>
+        /// <value>
+        /// The booking time.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/19/2014 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string BookingTime { get; set; }
 
         /// <summary>
         /// 预订人数
