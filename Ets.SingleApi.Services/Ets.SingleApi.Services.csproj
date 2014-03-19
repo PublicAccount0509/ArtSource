@@ -103,6 +103,7 @@
     <Compile Include="ICacheServices\IEtsWapShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IEtsWapTangShiShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IEtsWapDingTaiShoppingCartCacheServices.cs" />
+    <Compile Include="ICacheServices\IEtsWapPaiDuiShoppingCartCacheServices.cs" />
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
@@ -174,6 +175,8 @@
     <Compile Include="ShoppingCart\IEtsWapTangShiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapDingTaiShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\IEtsWapPaiDuiShoppingCartProvider.cs" />
     <Compile Include="ZhongCanShoppingCartServices.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IHuangTaiJiShoppingCartProvider.cs" />

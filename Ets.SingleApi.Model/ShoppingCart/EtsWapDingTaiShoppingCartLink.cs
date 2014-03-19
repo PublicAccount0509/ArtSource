@@ -1,7 +1,7 @@
 ﻿namespace Ets.SingleApi.Model
 {
     /// <summary>
-    /// 类名称：EtsWapTangShiShoppingCartLink
+    /// 类名称：EtsWapDingTaiShoppingCartLink
     /// 命名空间：Ets.SingleApi.Model
     /// 类功能：易淘食堂食购物车关联信息
     /// </summary>

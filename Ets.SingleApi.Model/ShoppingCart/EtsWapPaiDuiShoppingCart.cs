@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// 类名称：EtsWapDingTaiShoppingCart
+    /// 类名称：EtsWapPaiDuiShoppingCart
     /// 命名空间：Ets.SingleApi.Model
     /// 类功能：易淘食堂食购物车
     /// </summary>
@@ -12,7 +12,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class EtsWapDingTaiShoppingCart
+    public class EtsWapPaiDuiShoppingCart
     {
         /// <summary>
         /// 设置或取得购物车Id

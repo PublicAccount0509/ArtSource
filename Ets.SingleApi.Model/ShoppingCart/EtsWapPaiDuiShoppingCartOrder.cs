@@ -1,7 +1,7 @@
 ﻿namespace Ets.SingleApi.Model
 {
     /// <summary>
-    /// 类名称：EtsWapDingTaiShoppingCartOrder
+    /// 类名称：EtsWapPaiDuiShoppingCartOrder
     /// 命名空间：Ets.SingleApi.Model
     /// 类功能：易淘食堂食购物车订单信息
     /// </summary>
@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class EtsWapDingTaiShoppingCartOrder
+    public class EtsWapPaiDuiShoppingCartOrder
     {
         /// <summary>
         /// 设置或取得订单唯一标识符

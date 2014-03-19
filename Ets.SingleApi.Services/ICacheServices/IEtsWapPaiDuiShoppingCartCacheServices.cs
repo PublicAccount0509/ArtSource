@@ -4,7 +4,7 @@
     using Ets.SingleApi.Model.CacheServices;
 
     /// <summary>
-    /// 接口名称：IEtsWapDingTaiShoppingCartCacheServices
+    /// 接口名称：IEtsWapPaiDuiShoppingCartCacheServices
     /// 命名空间：Ets.SingleApi.Services.ICacheServices
     /// 接口功能：购物车缓存信息
     /// </summary>
@@ -13,7 +13,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public interface IEtsWapDingTaiShoppingCartCacheServices
+    public interface IEtsWapPaiDuiShoppingCartCacheServices
     {
         /// <summary>
         /// 取得餐厅信息
@@ -88,7 +88,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<EtsWapDingTaiShoppingCartOrder> GetShoppingCartOrder(string source, string id);
+        CacheServicesResult<EtsWapPaiDuiShoppingCartOrder> GetShoppingCartOrder(string source, string id);
 
         /// <summary>
         /// 保存订单信息
@@ -103,7 +103,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartOrder(string source, EtsWapDingTaiShoppingCartOrder order);
+        CacheServicesResult<bool> SaveShoppingCartOrder(string source, EtsWapPaiDuiShoppingCartOrder order);
 
         /// <summary>
         /// 取得购物车信息
@@ -118,7 +118,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<EtsWapDingTaiShoppingCart> GetShoppingCart(string source, string id);
+        CacheServicesResult<EtsWapPaiDuiShoppingCart> GetShoppingCart(string source, string id);
 
         /// <summary>
         /// 保存购物车信息
@@ -133,7 +133,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCart(string source, EtsWapDingTaiShoppingCart shoppingCart);
+        CacheServicesResult<bool> SaveShoppingCart(string source, EtsWapPaiDuiShoppingCart shoppingCart);
 
         /// <summary>
         /// 获取订单配送信息
@@ -178,7 +178,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<EtsWapDingTaiShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId);
+        CacheServicesResult<EtsWapPaiDuiShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId);
 
         /// <summary>
         /// 保存购物车关联信息
@@ -193,6 +193,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        CacheServicesResult<bool> SaveShoppingCartLink(string source, EtsWapDingTaiShoppingCartLink shoppingCartLink);
+        CacheServicesResult<bool> SaveShoppingCartLink(string source, EtsWapPaiDuiShoppingCartLink shoppingCartLink);
     }
 }

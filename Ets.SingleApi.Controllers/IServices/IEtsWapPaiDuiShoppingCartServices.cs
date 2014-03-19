@@ -6,7 +6,7 @@
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
-    /// 接口名称：IEtsWapDingTaiShoppingCartProvider
+    /// 接口名称：IEtsWapPaiDuiShoppingCartProvider
     /// 命名空间：Ets.SingleApi.Controllers.IServices
     /// 接口功能：易淘食堂食购物车服务
     /// </summary>
@@ -15,7 +15,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public interface IEtsWapDingTaiShoppingCartServices
+    public interface IEtsWapPaiDuiShoppingCartServices
     {
         /// <summary>
         /// 取得购物车信息
@@ -30,7 +30,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<EtsWapDingTaiShoppingCartModel> GetShoppingCart(string source, string shoppingCartId);
+        ServicesResult<EtsWapPaiDuiShoppingCartModel> GetShoppingCart(string source, string shoppingCartId);
 
         /// <summary>
         /// 创建一个购物车
@@ -127,7 +127,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveShoppingCart(string source, string id, EtsWapDingTaiShoppingCartModel shoppingCart);
+        ServicesResult<bool> SaveShoppingCart(string source, string id, EtsWapPaiDuiShoppingCartModel shoppingCart);
 
         /// <summary>
         /// 保存用户订单信息
@@ -147,7 +147,7 @@
         ServicesResult<bool> SaveShoppingCartOrder(
             string source,
             string id,
-            EtsWapDingTaiShoppingCartOrder shoppingCartOrder,
+            EtsWapPaiDuiShoppingCartOrder shoppingCartOrder,
             bool isCalculateCoupon);
 
         /// <summary>

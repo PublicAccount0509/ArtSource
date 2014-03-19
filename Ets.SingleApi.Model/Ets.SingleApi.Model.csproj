@@ -100,6 +100,10 @@
     <Compile Include="Controller\EtsWapDingTaiShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\DingTaiDesk.cs" />
+    <Compile Include="Controller\EtsWapPaiDuiShoppingCartDeliveryRequst.cs" />
+    <Compile Include="Controller\EtsWapPaiDuiShoppingCartOrderRequst.cs" />
+    <Compile Include="Controller\EtsWapPaiDuiShoppingCartRequst.cs" />
+    <Compile Include="Controller\EtsWapPaiDuiShoppingCartShoppingRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -192,6 +196,7 @@
     <Compile Include="Services\EtsWapDingTaiShoppingCartModel.cs" />
     <Compile Include="Services\DingTaiDeskModel.cs" />
     <Compile Include="Services\DingTaiGetDeskListParameter.cs" />
+    <Compile Include="Services\EtsWapPaiDuiShoppingCartModel.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
@@ -341,6 +346,9 @@
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCart.cs" />
+    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartOrder.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

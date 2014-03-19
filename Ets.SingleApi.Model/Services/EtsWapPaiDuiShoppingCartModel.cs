@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class EtsWapDingTaiShoppingCartModel
+    public class EtsWapPaiDuiShoppingCartModel
     {
         /// <summary>
         /// 设置或取得唯一标识符
@@ -36,7 +36,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public EtsWapDingTaiShoppingCart ShoppingCart { get; set; }
+        public EtsWapPaiDuiShoppingCart ShoppingCart { get; set; }
 
         /// <summary>
         /// 设置或取得购物车对应的顾客信息
@@ -62,7 +62,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public EtsWapDingTaiShoppingCartOrder Order { get; set; }
+        public EtsWapPaiDuiShoppingCartOrder Order { get; set; }
 
         /// <summary>
         /// 设置或取得当前餐厅信息
@@ -91,18 +91,18 @@
         public ShoppingCartDelivery Delivery { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtsWapDingTaiShoppingCartModel"/> class.
+        /// Initializes a new instance of the <see cref="EtsWapPaiDuiShoppingCartModel"/> class.
         /// </summary>
         /// 创建者：周超
         /// 创建日期：11/20/2013 10:41 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public EtsWapDingTaiShoppingCartModel()
+        public EtsWapPaiDuiShoppingCartModel()
         {
-            this.ShoppingCart = new EtsWapDingTaiShoppingCart();
+            this.ShoppingCart = new EtsWapPaiDuiShoppingCart();
             this.Customer = new ShoppingCartCustomer();
-            this.Order = new EtsWapDingTaiShoppingCartOrder();
+            this.Order = new EtsWapPaiDuiShoppingCartOrder();
             this.Supplier = new ShoppingCartSupplier();
             this.Delivery = new ShoppingCartDelivery();
         }

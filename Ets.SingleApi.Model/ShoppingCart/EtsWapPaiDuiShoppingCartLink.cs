@@ -1,110 +1,106 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model
 {
     /// <summary>
-    /// 类名称：ShoppingCartModel
+    /// 类名称：EtsWapPaiDuiShoppingCartLink
     /// 命名空间：Ets.SingleApi.Model
-    /// 类功能：购物车
+    /// 类功能：易淘食堂食购物车关联信息
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：11/20/2013 10:35 PM
+    /// 创建日期：11/21/2013 3:11 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class EtsWapDingTaiShoppingCartModel
+    public class EtsWapPaiDuiShoppingCartLink
     {
         /// <summary>
-        /// 设置或取得唯一标识符
+        /// 设置或取得购物车唯一标识
         /// </summary>
         /// <value>
-        /// 唯一标识符
+        /// 购物车唯一标识
         /// </value>
         /// 创建者：周超
         /// 创建日期：11/20/2013 10:35 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Id { get; set; }
+        public string ShoppingCartLinkId { get; set; }
 
         /// <summary>
-        /// 设置或取得购物车信息
+        /// 设置或取得购物车Id
         /// </summary>
         /// <value>
-        /// 购物车信息
+        /// 购物车Id
         /// </value>
         /// 创建者：周超
         /// 创建日期：11/20/2013 10:35 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public EtsWapDingTaiShoppingCart ShoppingCart { get; set; }
+        public string ShoppingCartId { get; set; }
 
         /// <summary>
-        /// 设置或取得购物车对应的顾客信息
+        /// 设置或取得供应商Id
         /// </summary>
         /// <value>
-        /// 购物车对应的顾客信息
+        /// 供应商Id
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 11:32 PM
+        /// 创建日期：11/20/2013 10:57 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartCustomer Customer { get; set; }
+        public int SupplierId { get; set; }
 
         /// <summary>
-        /// 设置或取得购物车对应的订单信息
+        /// 设置或取得用户Id
         /// </summary>
         /// <value>
-        /// 购物车对应的订单信息
+        /// 用户Id
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 10:37 PM
+        /// 创建日期：10/23/2013 5:49 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public EtsWapDingTaiShoppingCartOrder Order { get; set; }
+        public int? UserId { get; set; }
 
         /// <summary>
-        /// 设置或取得当前餐厅信息
+        /// 设置或取得订单唯一标识符
         /// </summary>
         /// <value>
-        /// 当前餐厅信息
+        /// 订单唯一标识符
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 10:38 PM
+        /// 创建日期：10/22/2013 5:46 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartSupplier Supplier { get; set; }
+        public string OrderId { get; set; }
 
         /// <summary>
-        /// 设置或取得当前订单配送信息
+        /// 设置或取得订单配送信息唯一标识符
         /// </summary>
         /// <value>
-        /// 当前订单配送信息
+        /// 订单配送信息唯一标识符
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 10:38 PM
+        /// 创建日期：10/22/2013 5:46 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ShoppingCartDelivery Delivery { get; set; }
+        public string DeliveryId { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtsWapDingTaiShoppingCartModel"/> class.
+        /// 设置或取得匿名用户Id
         /// </summary>
+        /// <value>
+        /// 匿名用户Id
+        /// </value>
         /// 创建者：周超
-        /// 创建日期：11/20/2013 10:41 PM
+        /// 创建日期：10/23/2013 5:49 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public EtsWapDingTaiShoppingCartModel()
-        {
-            this.ShoppingCart = new EtsWapDingTaiShoppingCart();
-            this.Customer = new ShoppingCartCustomer();
-            this.Order = new EtsWapDingTaiShoppingCartOrder();
-            this.Supplier = new ShoppingCartSupplier();
-            this.Delivery = new ShoppingCartDelivery();
-        }
+        public string AnonymityId { get; set; }
     }
 }

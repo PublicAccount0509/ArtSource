@@ -4,7 +4,7 @@
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
-    /// 接口名称：IEtsWapTangShiShoppingCartProvider
+    /// 接口名称：IEtsWapDingTaiShoppingCartProvider
     /// 命名空间：Ets.SingleApi.Services
     /// 接口功能：购物车功能
     /// </summary>

@@ -8,7 +8,7 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：EtsWapDingTaiShoppingCartCacheServices
+    /// 类名称：EtsWapPaiDuiShoppingCartCacheServices
     /// 命名空间：Ets.SingleApi.Caches
     /// 类功能：购物车缓存
     /// </summary>
@@ -17,7 +17,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class EtsWapDingTaiShoppingCartCacheServices : IEtsWapDingTaiShoppingCartCacheServices
+    public class EtsWapPaiDuiShoppingCartCacheServices : IEtsWapPaiDuiShoppingCartCacheServices
     {
         /// <summary>
         /// 取得餐厅信息
@@ -140,20 +140,20 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<EtsWapDingTaiShoppingCartOrder> GetShoppingCartOrder(string source, string id)
+        public CacheServicesResult<EtsWapPaiDuiShoppingCartOrder> GetShoppingCartOrder(string source, string id)
         {
             var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart_order", id)) as string;
             if (result.IsEmptyOrNull())
             {
-                return new CacheServicesResult<EtsWapDingTaiShoppingCartOrder>
+                return new CacheServicesResult<EtsWapPaiDuiShoppingCartOrder>
                 {
                     StatusCode = (int)StatusCode.Succeed.Empty
                 };
             }
 
-            return new CacheServicesResult<EtsWapDingTaiShoppingCartOrder>
+            return new CacheServicesResult<EtsWapPaiDuiShoppingCartOrder>
             {
-                Result = result.Deserialize<EtsWapDingTaiShoppingCartOrder>()
+                Result = result.Deserialize<EtsWapPaiDuiShoppingCartOrder>()
             };
         }
 
@@ -170,7 +170,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCartOrder(string source, EtsWapDingTaiShoppingCartOrder order)
+        public CacheServicesResult<bool> SaveShoppingCartOrder(string source, EtsWapPaiDuiShoppingCartOrder order)
         {
             var id = order.Id;
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_order", id));
@@ -194,20 +194,20 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<EtsWapDingTaiShoppingCart> GetShoppingCart(string source, string id)
+        public CacheServicesResult<EtsWapPaiDuiShoppingCart> GetShoppingCart(string source, string id)
         {
             var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart", id)) as string;
             if (result.IsEmptyOrNull())
             {
-                return new CacheServicesResult<EtsWapDingTaiShoppingCart>
+                return new CacheServicesResult<EtsWapPaiDuiShoppingCart>
                 {
                     StatusCode = (int)StatusCode.Succeed.Empty
                 };
             }
 
-            return new CacheServicesResult<EtsWapDingTaiShoppingCart>
+            return new CacheServicesResult<EtsWapPaiDuiShoppingCart>
             {
-                Result = result.Deserialize<EtsWapDingTaiShoppingCart>()
+                Result = result.Deserialize<EtsWapPaiDuiShoppingCart>()
             };
         }
 
@@ -224,7 +224,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCart(string source, EtsWapDingTaiShoppingCart shoppingCart)
+        public CacheServicesResult<bool> SaveShoppingCart(string source, EtsWapPaiDuiShoppingCart shoppingCart)
         {
             var shoppingCartId = shoppingCart.ShoppingCartId;
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart", shoppingCartId));
@@ -301,20 +301,20 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<EtsWapDingTaiShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
+        public CacheServicesResult<EtsWapPaiDuiShoppingCartLink> GetShoppingCartLink(string source, string shoppingCartLinkId)
         {
             var result = CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart_link", shoppingCartLinkId)) as string;
             if (result.IsEmptyOrNull())
             {
-                return new CacheServicesResult<EtsWapDingTaiShoppingCartLink>
+                return new CacheServicesResult<EtsWapPaiDuiShoppingCartLink>
                 {
                     StatusCode = (int)StatusCode.Succeed.Empty
                 };
             }
 
-            return new CacheServicesResult<EtsWapDingTaiShoppingCartLink>
+            return new CacheServicesResult<EtsWapPaiDuiShoppingCartLink>
             {
-                Result = result.Deserialize<EtsWapDingTaiShoppingCartLink>()
+                Result = result.Deserialize<EtsWapPaiDuiShoppingCartLink>()
             };
         }
 
@@ -331,7 +331,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public CacheServicesResult<bool> SaveShoppingCartLink(string source, EtsWapDingTaiShoppingCartLink shoppingCartLink)
+        public CacheServicesResult<bool> SaveShoppingCartLink(string source, EtsWapPaiDuiShoppingCartLink shoppingCartLink)
         {
             var shoppingCartLinkId = shoppingCartLink.ShoppingCartLinkId;
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_link", shoppingCartLinkId));
