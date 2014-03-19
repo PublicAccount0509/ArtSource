@@ -2221,5 +2221,32 @@
 
             return recommendDishList;
         }
+
+        public ServicesResultList<DingTaiDeskModel> GetDeskList(string source, DingTaiGetDeskListParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResultList<DingTaiDeskModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<DingTaiDeskModel>()
+                };
+            }
+
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
+            {
+                return new ServicesResultList<DingTaiDeskModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<DingTaiDeskModel>()
+                };
+            }
+
+            return new ServicesResultList<DingTaiDeskModel>
+            {
+                StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                Result = new List<DingTaiDeskModel>()
+            };
+        }
     }
 }
