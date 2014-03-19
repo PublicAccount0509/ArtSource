@@ -113,6 +113,9 @@
     <Compile Include="Mapping\Repository\DeliveryChargeEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
+    <Compile Include="Mapping\Repository\DeskBookingEntity.cs" />
+    <Compile Include="Mapping\Repository\DeskTypeEntity.cs" />
+    <Compile Include="Mapping\Repository\DeskTypeLockLogEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
     <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
@@ -121,7 +124,11 @@
     <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
     <Compile Include="Mapping\Repository\PaymentRecordEntity.cs" />
+    <Compile Include="Mapping\Repository\QueueDeskTypeLockLogEntity.cs" />
+    <Compile Include="Mapping\Repository\QueueEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierDeskEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierDeskTimeEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishCustomizationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishGroupEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDoNotSendTimeEntity.cs" />
@@ -131,6 +138,7 @@
     <Compile Include="Mapping\Repository\SupplierGroupLogoImageEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupTemplateEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
+    <Compile Include="Mapping\Repository\TableTypeEntity.cs" />
     <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
     <Compile Include="OrderProviderType.cs" />
@@ -634,6 +642,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\EtsWapTangShiShoppingCartModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mapping\DeskBookingEntity.hbm.xml" />
+    <Content Include="Mapping\DeskTypeEntity.hbm.xml" />
+    <Content Include="Mapping\DeskTypeLockLogEntity.hbm.xml" />
+    <Content Include="Mapping\QueueDeskTypeLockLogEntity.hbm.xml" />
+    <Content Include="Mapping\QueueEntity.hbm.xml" />
+    <Content Include="Mapping\SupplierDeskEntity.hbm.xml" />
+    <Content Include="Mapping\SupplierDeskTimeEntity.hbm.xml" />
+    <Content Include="Mapping\TableTypeEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

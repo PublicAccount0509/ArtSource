@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.DeskTypeEntity, Ets.SingleApi.Model.Repository" table="DeskType" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="DeskTypeName" column="DeskTypeName" type="String" />
+		<property name="RoomType" column="RoomType" type="Boolean" />
+		<property name="MaxNumber" column="MaxNumber" type="Int32" />
+		<property name="MinNumber" column="MinNumber" type="Int32" />
+		<property name="LowCost" column="LowCost" type="String" not-null="false" />
+		<property name="IsLock" column="IsLock" type="Boolean" />
+		<property name="IsDel" column="IsDel" type="Boolean" />
+		<property name="SupplierId" column="SupplierId" type="Int32" />
+		<property name="CreateTime" column="CreateTime" type="Timestamp" />
+		<property name="UpdateTime" column="UpdateTime" type="Timestamp" />
+		<property name="Description" column="Description" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="SupplierDeskList" cascade="none" lazy="true" table="SupplierDesk">
+			<key column="DeskTypeId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierDeskEntity, Ets.SingleApi.Model.Repository" />
+		</bag>
+		<many-to-one name="TableType" class="Ets.SingleApi.Model.Repository.TableTypeEntity, Ets.SingleApi.Model.Repository" column="TableTypeId" />
+	</class>
+</hibernate-mapping>
