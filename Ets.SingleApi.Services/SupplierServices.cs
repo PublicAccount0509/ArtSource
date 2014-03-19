@@ -2301,22 +2301,30 @@
             //BeginTime和EndTime时间格式为（07:00、22:00）
             var supplierDeskTime = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
                                     where supplierDeskTimeEntity.SupplierId == parameter.SupplierId
-                                          &&
-                                          string.Compare(supplierDeskTimeEntity.BeginTime, parameter.BookingTime,
-                                                         System.StringComparison.OrdinalIgnoreCase) < 0
-                                          &&
-                                          string.Compare(supplierDeskTimeEntity.EndTime, parameter.BookingTime,
-                                                         System.StringComparison.OrdinalIgnoreCase) > 0
+                                    //&& supplierDeskTimeEntity.BeginTime <= parameter.BookingTime 
+                                    //string.Compare(supplierDeskTimeEntity.BeginTime, parameter.BookingTime,
+                                    //               System.StringComparison.OrdinalIgnoreCase) < 0
+                                    //&&
+                                    //string.Compare(supplierDeskTimeEntity.EndTime, parameter.BookingTime,
+                                    //               System.StringComparison.OrdinalIgnoreCase) > 0
                                     select new
                                         {
-                                            supplierDeskTimeEntity.Id
-                                        }).FirstOrDefault();
+                                            supplierDeskTimeEntity.Id,
+                                            supplierDeskTimeEntity.BeginTime,
+                                            supplierDeskTimeEntity.EndTime
+                                        }).ToList()
+                                          .FirstOrDefault(p => string.Compare(p.BeginTime, parameter.BookingTime,
+                                                                              System.StringComparison.OrdinalIgnoreCase) <
+                                                               0
+                                                               && string.Compare(p.EndTime, parameter.BookingTime,
+                                                                                 System.StringComparison
+                                                                                       .OrdinalIgnoreCase) > 0);
 
             if (supplierDeskTime == null)
             {
                 return new ServicesResultList<DingTaiDeskModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidBookingTimeCode,
                         Result = new List<DingTaiDeskModel>()
                     };
             }
@@ -2351,12 +2359,11 @@
                                         MinNumber = deskTypeEntity.MinNumber,
                                         DepositAmount = deskTypeEntity.DepositAmount,
                                         LowCost = deskTypeEntity.LowCost
-
                                     }).ToList();
 
             return new ServicesResultList<DingTaiDeskModel>
                 {
-                    StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                    ResultTotalCount = deskTypeList.Count,
                     Result = deskTypeList
                 };
         }
