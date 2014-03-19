@@ -2222,6 +2222,22 @@
             return recommendDishList;
         }
 
+        /// <summary>
+        /// 获取订台台位列表
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/18/2014 6:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// 创建者：苏建峰
+        /// 创建日期：3/19/2014 11:35 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public ServicesResultList<DingTaiDeskModel> GetDeskList(string source, DingTaiGetDeskListParameter parameter)
         {
             if (parameter == null)
