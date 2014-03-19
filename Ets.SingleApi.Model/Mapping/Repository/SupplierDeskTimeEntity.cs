@@ -1,30 +1,31 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SsdtDeskTypeOpenEntity.cs" company="Irdeto">
+// <copyright file="SupplierDeskTimeEntity.cs" company="Irdeto">
 //   Copyright @ 2014
 // </copyright>
 // <summary>
-//   Class:SsdtDeskTypeOpenEntity
+//   Class:SupplierDeskTimeEntity
 //   Namespace:Ets.SingleApi.Model.Repository
-//   Class Funtion:Represent the class mapping the SsdtDeskTypeOpenEntity table in the database.
+//   Class Funtion:Represent the class mapping the SupplierDeskTimeEntity table in the database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Ets.SingleApi.Model.Repository
 {
 	using System;
+	using System.Collections.Generic;
 		
     /// <summary>
-    /// Class:SsdtDeskTypeOpenEntity
+    /// Class:SupplierDeskTimeEntity
     /// Namespace:Ets.SingleApi.Model.Repository
-    /// Class Funtion:Represent the class mapping the SsdtDeskTypeOpenEntity table in the database.
+    /// Class Funtion:Represent the class mapping the SupplierDeskTimeEntity table in the database.
     /// </summary>
     /// Creator:ww
-    /// Creation Date:2014-3-18 16:25:58
+    /// Creation Date:2014-3-19 10:43:05
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
     [Serializable]
-    public class SsdtDeskTypeOpenEntity
+    public class SupplierDeskTimeEntity
     {
 		#region private member
 
@@ -32,27 +33,27 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Id
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private int id;
 
 			/// <summary>
-		/// The DeskTypeId
+		/// The TimeName
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int deskTypeId;
+		private string timeName;
 
 			/// <summary>
 		/// The BeginTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -62,7 +63,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The EndTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -72,82 +73,81 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private int supplierId;
 
 			/// <summary>
+		/// The CreateTime
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-19 10:43:05
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		private DateTime createTime;
+
+			/// <summary>
 		/// The UpdateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private DateTime updateTime;
 
 			/// <summary>
-		/// The IsDel
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		private bool isDel;
-
-			/// <summary>
-		/// The IsEnable
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		private bool isEnable;
-
-			/// <summary>
 		/// The Description
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private string description;
 
-		#endregion
-
-		/// <summary>
-        /// Initializes a new instance of the <see cref="SsdtDeskTypeOpenEntity"/> class.
+			/// <summary>
+		/// The DeskTypeLockLogList
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-        public SsdtDeskTypeOpenEntity()
+		private IList<DeskTypeLockLogEntity> deskTypeLockLogList;
+
+		#endregion
+
+		/// <summary>
+        /// Initializes a new instance of the <see cref="SupplierDeskTimeEntity"/> class.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-19 10:43:05
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public SupplierDeskTimeEntity()
         {
 			this.id = 0;
-			this.deskTypeId = 0;
+			this.timeName = string.Empty;
 			this.beginTime = string.Empty;
 			this.endTime = string.Empty;
 			this.supplierId = 0;
+			this.createTime = DateTime.Now;
 			this.updateTime = DateTime.Now;
-			this.isDel = false;
-			this.isEnable = false;
 			this.description = string.Empty;
 		}
 
 		#region public member
 
 			/// <summary>
-        /// Gets or sets a value mapping the Id of SsdtDeskTypeOpenEntity table in the database.
+        /// Gets or sets a value mapping the Id of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -165,31 +165,31 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
-        /// Gets or sets a value mapping the DeskTypeId of SsdtDeskTypeOpenEntity table in the database.
+        /// Gets or sets a value mapping the TimeName of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int DeskTypeId
+		public virtual string TimeName
 		{
             get
             {
-                return this.deskTypeId;
+                return this.timeName;
             }
 
             set
             {
-                this.deskTypeId = value;
+                this.timeName = value;
             }
         }
 
 			/// <summary>
-        /// Gets or sets a value mapping the BeginTime of SsdtDeskTypeOpenEntity table in the database.
+        /// Gets or sets a value mapping the BeginTime of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -207,10 +207,10 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
-        /// Gets or sets a value mapping the EndTime of SsdtDeskTypeOpenEntity table in the database.
+        /// Gets or sets a value mapping the EndTime of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -228,10 +228,10 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
-        /// Gets or sets a value mapping the SupplierId of SsdtDeskTypeOpenEntity table in the database.
+        /// Gets or sets a value mapping the SupplierId of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -249,10 +249,31 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
-        /// Gets or sets a value mapping the UpdateTime of SsdtDeskTypeOpenEntity table in the database.
+        /// Gets or sets a value mapping the CreateTime of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual DateTime CreateTime
+		{
+            get
+            {
+                return this.createTime;
+            }
+
+            set
+            {
+                this.createTime = value;
+            }
+        }
+
+			/// <summary>
+        /// Gets or sets a value mapping the UpdateTime of SupplierDeskTimeEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -270,52 +291,10 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
-        /// Gets or sets a value indicating whether mapping the IsDel of SsdtDeskTypeOpenEntity table in the database.
+        /// Gets or sets a value mapping the Description of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		public virtual bool IsDel
-		{
-            get
-            {
-                return this.isDel;
-            }
-
-            set
-            {
-                this.isDel = value;
-            }
-        }
-
-			/// <summary>
-        /// Gets or sets a value indicating whether mapping the IsEnable of SsdtDeskTypeOpenEntity table in the database.
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		public virtual bool IsEnable
-		{
-            get
-            {
-                return this.isEnable;
-            }
-
-            set
-            {
-                this.isEnable = value;
-            }
-        }
-
-			/// <summary>
-        /// Gets or sets a value mapping the Description of SsdtDeskTypeOpenEntity table in the database.
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -332,6 +311,27 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
+			/// <summary>
+        /// Gets or sets a value mapping the DeskTypeLockLogList of SupplierDeskTimeEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-19 10:43:05
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual IList<DeskTypeLockLogEntity> DeskTypeLockLogList
+		{
+            get
+            {
+                return this.deskTypeLockLogList;
+            }
+
+            set
+            {
+                this.deskTypeLockLogList = value;
+            }
+        }
+
 		#endregion
 
 			/// <summary>
@@ -342,7 +342,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -353,7 +353,7 @@ namespace Ets.SingleApi.Model.Repository
                 return false;
             }
 
-            var castObj = (SsdtDeskTypeOpenEntity)obj;
+            var castObj = (SupplierDeskTimeEntity)obj;
             return this.Id == castObj.Id;
         }
 
@@ -364,7 +364,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-18 16:25:58
+        /// Creation Date:2014-3-19 10:43:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

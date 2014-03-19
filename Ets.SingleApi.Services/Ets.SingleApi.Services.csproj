@@ -137,6 +137,9 @@
     <Compile Include="Order\EtsWapTangShiOrderProvider.cs" />
     <Compile Include="Order\UserTangShiOrders.cs" />
     <Compile Include="Order\EtsWapDingTaiOrderProvider.cs" />
+    <Compile Include="Order\PaiDuiOrderBaseProvider.cs" />
+    <Compile Include="Order\PaiDuiOrderProvider.cs" />
+    <Compile Include="Order\EtsWapPaiDuiOrderProvider.cs" />
     <Compile Include="PaymentServices.cs" />
     <Compile Include="Payment\AlipayPayment.cs" />
     <Compile Include="Payment\AlipayPaymentCommon.cs" />

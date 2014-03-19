@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.TableTypeEntity, Ets.SingleApi.Model.Repository" table="TableType" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="Id" column="Id" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="TblTypeName" column="TblTypeName" type="String" />
+		<property name="SupplierId" column="SupplierId" type="Int32" />
+		<property name="Description" column="Description" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="DeskTypeList" cascade="none" lazy="true" table="DeskType">
+			<key column="TableTypeId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.DeskTypeEntity, Ets.SingleApi.Model.Repository" />
+		</bag>
+	</class>
+</hibernate-mapping>
