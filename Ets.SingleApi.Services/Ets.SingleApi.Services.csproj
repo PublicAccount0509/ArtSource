@@ -171,6 +171,8 @@
     <Compile Include="ShoppingCart\EtsWapShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapTangShiShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartProvider.cs" />
+    <Compile Include="ShoppingCart\IEtsWapDingTaiShoppingCartProvider.cs" />
     <Compile Include="ZhongCanShoppingCartServices.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IHuangTaiJiShoppingCartProvider.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="EtsWapShoppingCartServices.cs" />
     <Compile Include="ShoppingCartServices.cs" />
     <Compile Include="EtsWapTangShiShoppingCartServices.cs" />
+    <Compile Include="EtsWapDingTaiShoppingCartServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">

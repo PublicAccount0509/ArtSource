@@ -11,7 +11,7 @@
     using Ets.SingleApi.Utility;
 
     /// <summary>
-    /// 类名称：EtsWapTangShiShoppingCartController
+    /// 类名称：EtsWapDingTaiShoppingCartController
     /// 命名空间：Ets.SingleApi.Controllers
     /// 类功能：购物车功能
     /// </summary>
@@ -23,27 +23,27 @@
     public class EtsWapDingTaiShoppingCartController : SingleApiController
     {
         /// <summary>
-        /// 字段etsWapTangShiShoppingCartServices
+        /// 字段etsWapDingTaiShoppingCartServices
         /// </summary>
         /// 创建者：周超
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly IEtsWapTangShiShoppingCartServices etsWapTangShiShoppingCartServices;
+        private readonly IEtsWapDingTaiShoppingCartServices etsWapDingTaiShoppingCartServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtsWapTangShiShoppingCartController" /> class.
+        /// Initializes a new instance of the <see cref="EtsWapDingTaiShoppingCartController" /> class.
         /// </summary>
-        /// <param name="etsWapTangShiShoppingCartServices">The ets wap tang shi shopping cart services.</param>
+        /// <param name="etsWapDingTaiShoppingCartServices">The ets wap tang shi shopping cart services.</param>
         /// 创建者：周超
         /// 创建日期：2013/10/17 22:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public EtsWapDingTaiShoppingCartController(IEtsWapTangShiShoppingCartServices etsWapTangShiShoppingCartServices)
+        public EtsWapDingTaiShoppingCartController(IEtsWapDingTaiShoppingCartServices etsWapDingTaiShoppingCartServices)
         {
-            this.etsWapTangShiShoppingCartServices = etsWapTangShiShoppingCartServices;
+            this.etsWapDingTaiShoppingCartServices = etsWapDingTaiShoppingCartServices;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@
         {
             get
             {
-                return base.PreFix + OrderType.TangShi.ToString();
+                return base.PreFix + OrderType.DingTai.ToString();
             }
         }
 
@@ -78,22 +78,22 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<EtsWapTangShiShoppingCartModel> ShoppingCart(string id)
+        public Response<EtsWapDingTaiShoppingCartModel> ShoppingCart(string id)
         {
-            var getShoppingCartResult = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
+            var getShoppingCartResult = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
             if (getShoppingCartResult.Result == null)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getShoppingCartResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            return new Response<EtsWapTangShiShoppingCartModel>
+            return new Response<EtsWapDingTaiShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -117,11 +117,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> ShoppingCart(string id, EtsWapTangShiShoppingCartRequst requst)
+        public Response<EtsWapDingTaiShoppingCartModel> ShoppingCart(string id, EtsWapDingTaiShoppingCartRequst requst)
         {
             if (requst == null)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -130,28 +130,28 @@
                 };
             }
 
-            var shoppingCartModel = new EtsWapTangShiShoppingCartModel
+            var shoppingCartModel = new EtsWapDingTaiShoppingCartModel
                 {
                     Delivery = requst.Delivery,
                     Order = requst.Order,
                     ShoppingCart = requst.ShoppingCart
                 };
 
-            var getShoppingCartResult = this.etsWapTangShiShoppingCartServices.SaveShoppingCart(this.Source, id, shoppingCartModel);
+            var getShoppingCartResult = this.etsWapDingTaiShoppingCartServices.SaveShoppingCart(this.Source, id, shoppingCartModel);
             if (!getShoppingCartResult.Result)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getShoppingCartResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<EtsWapTangShiShoppingCartModel>
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -176,23 +176,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> Create(int supplierId, string userId, int orderId = 0)
+        public Response<EtsWapDingTaiShoppingCartModel> Create(int supplierId, string userId, int orderId = 0)
         {
-            var createShoppingCartResult = this.etsWapTangShiShoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId, orderId);
+            var createShoppingCartResult = this.etsWapDingTaiShoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId, orderId);
             if (createShoppingCartResult.Result.IsEmptyOrNull())
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = createShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : createShoppingCartResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
-            return new Response<EtsWapTangShiShoppingCartModel>
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, createShoppingCartResult.Result);
+            return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                         {
@@ -216,23 +216,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> Customer(string id, int userId)
+        public Response<EtsWapDingTaiShoppingCartModel> Customer(string id, int userId)
         {
-            var saveShoppingCartCustomerResult = this.etsWapTangShiShoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
+            var saveShoppingCartCustomerResult = this.etsWapDingTaiShoppingCartServices.SaveShoppingCartCustomer(this.Source, id, userId);
             if (!saveShoppingCartCustomerResult.Result)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingCartCustomerResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<EtsWapTangShiShoppingCartModel>
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -256,11 +256,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> Delivery(string id, EtsWapTangShiShoppingCartDeliveryRequst requst)
+        public Response<EtsWapDingTaiShoppingCartModel> Delivery(string id, EtsWapDingTaiShoppingCartDeliveryRequst requst)
         {
             if (requst == null)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -278,21 +278,21 @@
                     CustomerAddressId = requst.CustomerAddressId
                 };
 
-            var saveShoppingCartCustomerResult = this.etsWapTangShiShoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
+            var saveShoppingCartCustomerResult = this.etsWapDingTaiShoppingCartServices.SaveShoppingCartDelivery(this.Source, id, delivery);
             if (!saveShoppingCartCustomerResult.Result)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingCartCustomerResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<EtsWapTangShiShoppingCartModel>
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -316,11 +316,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> Shopping(string id, EtsWapTangShiShoppingCartShoppingRequst requst)
+        public Response<EtsWapDingTaiShoppingCartModel> Shopping(string id, EtsWapDingTaiShoppingCartShoppingRequst requst)
         {
             if (requst == null)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -330,21 +330,21 @@
             }
 
             var shoppingCartItemList = requst.ShoppingCartItemList ?? new List<ShoppingCartItem>();
-            var saveShoppingItemResult = this.etsWapTangShiShoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList);
+            var saveShoppingItemResult = this.etsWapDingTaiShoppingCartServices.SaveShoppingItem(this.Source, id, shoppingCartItemList);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<EtsWapTangShiShoppingCartModel>
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -368,11 +368,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst)
+        public Response<EtsWapDingTaiShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -387,21 +387,21 @@
                 shoppingCartItem.CategoryIdList = new List<int>();
             }
 
-            var saveShoppingItemResult = this.etsWapTangShiShoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList);
+            var saveShoppingItemResult = this.etsWapDingTaiShoppingCartServices.AddShoppingItem(this.Source, id, shoppingCartItemList);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<EtsWapTangShiShoppingCartModel>
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -425,11 +425,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst)
+        public Response<EtsWapDingTaiShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -438,21 +438,21 @@
                 };
             }
 
-            var saveShoppingItemResult = this.etsWapTangShiShoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList);
+            var saveShoppingItemResult = this.etsWapDingTaiShoppingCartServices.DeleteShoppingItem(this.Source, id, requst.ShoppingCartItemList);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<EtsWapTangShiShoppingCartModel>
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
             {
                 Message = new ApiMessage
                 {
@@ -477,11 +477,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> Order(string id, EtsWapTangShiShoppingCartOrderRequst requst, bool isCalculateCoupon = false)
+        public Response<EtsWapDingTaiShoppingCartModel> Order(string id, EtsWapDingTaiShoppingCartOrderRequst requst, bool isCalculateCoupon = false)
         {
             if (requst == null)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
@@ -490,7 +490,7 @@
                 };
             }
 
-            var order = new EtsWapTangShiShoppingCartOrder
+            var order = new EtsWapDingTaiShoppingCartOrder
                 {
                     Id = requst.Id,
                     OrderInstruction = requst.OrderInstruction,
@@ -510,21 +510,21 @@
                     CouponCode = requst.CouponCode
                 };
 
-            var saveShoppingItemResult = this.etsWapTangShiShoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon);
+            var saveShoppingItemResult = this.etsWapDingTaiShoppingCartServices.SaveShoppingCartOrder(this.Source, id, order, isCalculateCoupon);
             if (!saveShoppingItemResult.Result)
             {
-                return new Response<EtsWapTangShiShoppingCartModel>
+                return new Response<EtsWapDingTaiShoppingCartModel>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = saveShoppingItemResult.StatusCode
                     },
-                    Result = new EtsWapTangShiShoppingCartModel()
+                    Result = new EtsWapDingTaiShoppingCartModel()
                 };
             }
 
-            var result = this.etsWapTangShiShoppingCartServices.GetShoppingCart(this.Source, id);
-            return new Response<EtsWapTangShiShoppingCartModel>
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
             {
                 Message = new ApiMessage
                 {

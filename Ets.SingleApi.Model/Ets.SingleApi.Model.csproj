@@ -95,6 +95,10 @@
     <Compile Include="Controller\EtsWapTangShiShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\EtsWapTangShiShoppingCartRequst.cs" />
     <Compile Include="Controller\EtsWapTangShiShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartDeliveryRequst.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartRequst.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
