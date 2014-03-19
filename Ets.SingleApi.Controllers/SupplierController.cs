@@ -1399,6 +1399,7 @@ namespace Ets.SingleApi.Controllers
 
             var result = getDeskListResult.Result.Select(p => new DingTaiDesk
                 {
+                    Id=p.Id,
                     RoomType = p.RoomType ?? 0,
                     TblTypeId = p.TblTypeId,
                     TblTypeName = p.TblTypeName,

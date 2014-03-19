@@ -2349,6 +2349,7 @@
                                       && deskTypeEntity.MaxNumber >= parameter.PeopleCount
                                 select new DingTaiDeskModel
                                     {
+                                        Id=deskTypeEntity.Id,
                                         RoomType = deskTypeEntity.RoomType,
                                         TblTypeId = deskTypeEntity.TableType.Id,
                                         TblTypeName = deskTypeEntity.TableType.TblTypeName,
