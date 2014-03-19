@@ -209,6 +209,9 @@
         /// <param name="timeTableDisplayEntityRepository">The timeTableDisplayEntityRepository</param>
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
+        /// <param name="supplierDeskTimeEntityRepository">The supplier desk time entity repository.</param>
+        /// <param name="deskTypeLockLogEntityRepository">The desk type lock log entity repository.</param>
+        /// <param name="deskTypeEntityRepository">The desk type entity repository.</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
@@ -229,6 +232,9 @@
             INHibernateRepository<TimeTableDisplayEntity> timeTableDisplayEntityRepository,
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository,
+            INHibernateRepository<SupplierDeskTimeEntity> supplierDeskTimeEntityRepository,
+            INHibernateRepository<DeskTypeLockLogEntity> deskTypeLockLogEntityRepository,
+            INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
@@ -244,6 +250,9 @@
             this.timeTableDisplayEntityRepository = timeTableDisplayEntityRepository;
             this.loginEntityRepository = loginEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
+            this.supplierDeskTimeEntityRepository = supplierDeskTimeEntityRepository;
+            this.deskTypeLockLogEntityRepository = deskTypeLockLogEntityRepository;
+            this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
         }
 
@@ -2328,6 +2337,8 @@
             var deskTypeList = (from deskTypeEntity in this.deskTypeEntityRepository.EntityQueryable
                                 where deskTypeEntity.SupplierId == parameter.SupplierId
                                       && !lockedDeskTypeId.Contains(deskTypeEntity.Id)
+                                      && deskTypeEntity.MinNumber <= parameter.PeopleCount
+                                      && deskTypeEntity.MaxNumber >= parameter.PeopleCount
                                 select new DingTaiDeskModel
                                     {
                                         RoomType = deskTypeEntity.RoomType,
