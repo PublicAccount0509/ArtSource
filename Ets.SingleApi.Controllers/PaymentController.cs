@@ -468,6 +468,74 @@
             };
         }
 
+        [HttpPost]
+        [TokenFilter]
+        public Response<bool> WechatPaymentDeliveryNotify(WechatPaymentStateRequest requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+            var result = this.paymentServices.WechatPaymentDeliveryNotify(this.Source, new WechatPaymentStateParameter
+                {
+                    OrderId = requst.OrderId,
+                    OrderType = requst.OrderType,
+                    sign_type = requst.sign_type,
+                    service_version = requst.service_version,
+                    input_charset = requst.input_charset,
+                    sign = requst.sign,
+                    sign_key_index = requst.sign_key_index,
+                    trade_mode = requst.trade_mode,
+                    trade_state = requst.trade_state,
+                    pay_info = requst.pay_info,
+                    partner = requst.partner,
+                    bank_type = requst.bank_type,
+                    bank_billno = requst.bank_billno,
+                    total_fee = requst.total_fee,
+                    fee_type = requst.fee_type,
+                    notify_id = requst.notify_id,
+                    transaction_id = requst.transaction_id,
+                    out_trade_no = requst.out_trade_no,
+                    attach = requst.attach,
+                    time_end = requst.time_end,
+                    transport_fee = requst.transport_fee,
+                    product_fee = requst.product_fee,
+                    discount = requst.discount,
+                    buyer_alias = requst.buyer_alias,
+                    OpenId = requst.OpenId,
+                    AppId = requst.AppId,
+                    IsSubscribe = requst.IsSubscribe,
+                    TimeStamp = requst.TimeStamp,
+                    NonceStr = requst.NonceStr,
+                    AppSignature = requst.AppSignature,
+                    SignMethod = requst.SignMethod
+                });
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
 
     }
 }

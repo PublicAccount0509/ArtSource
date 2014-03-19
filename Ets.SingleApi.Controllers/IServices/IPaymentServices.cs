@@ -137,5 +137,19 @@
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> WeChatPaymentState(string source, WechatPaymentStateParameter parameter);
 
+        /// <summary>
+        /// Wechats the payment delivery notify.
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：孟祺宙 创建日期：2014/3/19 15:16
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> WechatPaymentDeliveryNotify(string source, WechatPaymentStateParameter parameter);
+
     }
 }

@@ -3,6 +3,7 @@
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Services.Payment;
     using Ets.SingleApi.Utility;
+    using System.Threading.Tasks;
 
 
     /// <summary>
@@ -99,7 +100,6 @@
                     Result = true
                 };
         }
-
 
     }
 }

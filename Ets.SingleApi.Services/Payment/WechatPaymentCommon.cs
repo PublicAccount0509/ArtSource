@@ -503,7 +503,7 @@ namespace Ets.SingleApi.Services.Payment
                                         "\", \"sign_method\":\"sha1\" }";
                 string access_token = GetAccessToken();
 
-                string.Format("\r\n===============================\r\n THE QueryState Call Wechat {0} \r\n {1}\r\n===============================\r\n", access_token, postJsonString).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                string.Format("\r\n===============================\r\n THE QueryState Call Wechat OrderQuery BEGIN \r\n {0} \r\n {1}\r\n===============================\r\n", access_token, postJsonString).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
 
                 string resultJson = HttpRequestPost(postJsonString,
                                                     string.Format(
@@ -518,10 +518,56 @@ namespace Ets.SingleApi.Services.Payment
                 string ret_code = jsonObject["order_info"]["ret_code"].ToString();
                 string trade_state = jsonObject["order_info"]["trade_state"].ToString();
 
-   
+                string.Format("\r\n===============================\r\n THE QueryState Call Wechat OrderQuery END \r\n {0} \r\n \r\n===============================\r\n", resultJson).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+
+
                 return ret_code == "0" && trade_state == "0";
 
             }
+
+
+            /// <summary>
+            /// 通知微信已经确认订单
+            /// 收到支付通知发货后，一定调用发货通知接口，否则可能影响商户信誉和资金结算
+            /// </summary>
+            /// <param name="out_trade_no">系统内部订单号</param>
+            /// <param name="transid">微信内部订单号</param>
+            /// <param name="openid">wechatId</param>
+            /// <returns>
+            /// Boolean
+            /// </returns>
+            /// 创建者：孟祺宙 创建日期：2014/3/19 10:31
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public static bool DeliveryNotify(string out_trade_no, string transid, string openid)
+            {
+                var dic = new Dictionary<string, string>
+                {
+                    {"appid", ControllersCommon.ConstWechatPaymentAppId },
+                    {"appkey", ControllersCommon.ConstWechatPaymentPaySignKey },
+                    {"openid",openid},
+                    {"transid",transid},
+                    {"out_trade_no",out_trade_no},
+                    {"deliver_timestamp",WinDateToLinuxDate(DateTime.Now).ToString()},
+                    {"deliver_status","1"},
+                    {"deliver_msg","ok"}
+                };
+                string string1 = BrandWechatPaySign.AsciiOrderAscKeyToLower(dic);
+                string app_signature = BrandWechatPaySign.Sha1String1(string1);
+                string template = "{ \"appid\":\"$appid$\", \"openid\":\"$openid$\", \"transid\":\"$transid$\", \"out_trade_no\":\"$out_trade_no$\", \"deliver_timestamp\":\"$deliver_timestamp$\", \"deliver_status\":\"$deliver_status$\", \"deliver_msg\":\"$deliver_msg$\", \"app_signature\":\"$app_signature$\", \"sign_method\":\"sha1\" }";
+                string postJsonString = template.Replace("$appid$", dic["appid"]).Replace("$openid$", dic["openid"]).Replace("$transid$", dic["transid"]).Replace("$out_trade_no$", dic["out_trade_no"]).Replace("$deliver_timestamp$", dic["deliver_timestamp"]).Replace("$deliver_status$", dic["deliver_status"]).Replace("$deliver_msg$", dic["deliver_msg"]).Replace("$app_signature$", app_signature);
+
+                string access_token = GetAccessToken();
+
+                string resultJson = HttpRequestPost(postJsonString, string.Format("https://api.weixin.qq.com/pay/delivernotify?access_token={0}", access_token), (ex) => string.Format("===============================\r\n THE DeliveryNotify _HTTP_POST_EX \r\n {0} \r\n {1} \r\n===============================", ex.Message, ex.ToString(), ex.StackTrace).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info));
+
+                string.Format("===============================\r\n THE DeliveryNotify _HTTP_POST_END \r\n {0} \r\n===============================", resultJson).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);//==
+
+                JObject jObject = JObject.Parse(resultJson);
+                return jObject["errcode"].ToString() == "0";
+            }
+
 
             /// <summary>
             /// 获取微信OAUTH2 access_token
@@ -646,14 +692,22 @@ namespace Ets.SingleApi.Services.Payment
                 return res;
             }
 
+            /// <summary>
+            /// URLs the encode UTF8.
+            /// </summary>
+            /// <param name="pstBase">The pstBase</param>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙 创建日期：2014/3/19 10:19
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
             private static string UrlEncodeUtf8(string pstBase)
             {
                 return HttpUtility.UrlEncode(pstBase, Encoding.UTF8);
             }
-            private static string UrlDecodeUtf8(string pstBase)
-            {
-                return HttpUtility.UrlDecode(pstBase, Encoding.UTF8);
-            }
+
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// 类名称：PaymentServices
@@ -693,7 +694,6 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> WeChatPaymentState(string source, WechatPaymentStateParameter parameter)
         {
-
             if (parameter == null)
             {
                 return new ServicesResult<bool>
@@ -795,12 +795,59 @@ namespace Ets.SingleApi.Services
             //保存订单支付完成
             var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, orderId, true);
             string.Format("===============================\r\n THE WeChatPaymentState Success \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+
             return new ServicesResult<bool>
             {
                 Result = saveOrderPaidResult.Result,
                 StatusCode = saveOrderPaidResult.StatusCode
             };
+        }
 
+
+
+        /// <summary>
+        /// 在收到支付通知发货后，一定调用发货通知接口，否则可能影响商户信誉和资金结算。
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：孟祺宙 创建日期：2014/3/19 15:16
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// 创建者：孟祺宙 创建日期：2014/3/19 15:22
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> WechatPaymentDeliveryNotify(string source, WechatPaymentStateParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+            string out_trade_no = parameter.out_trade_no,
+                   transaction_id = parameter.transaction_id,
+                   openId = parameter.OpenId;
+            var isNotify = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.DeliveryNotify(out_trade_no, transaction_id, openId);
+
+            if (!isNotify)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+                    Result = false
+                };
+            }
+            return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = true
+                };
         }
 
     }
