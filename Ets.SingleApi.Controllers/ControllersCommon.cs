@@ -84,7 +84,31 @@
                 return result;
             }
         }
+        /// <summary>
+        /// 排队FeatureId
+        /// </summary>
+        /// <value>
+        /// 排队FeatureId
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int PaiDuiFeatureId
+        {
+            get
+            {
+                var paiDuiFeatureId = ConfigurationManager.AppSettings["PaiDuiFeatureId"] ?? "9";
+                int result;
+                if (!int.TryParse(paiDuiFeatureId, out result))
+                {
+                    result = 9;
+                }
 
+                return result;
+            }
+        }
         /// <summary>
         /// 立即送餐
         /// </summary>
