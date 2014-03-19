@@ -26,17 +26,30 @@
         public int? RoomType { get; set; }
 
         /// <summary>
-        /// 桌位类型
+        /// 桌位类型Id
         /// </summary>
         /// <value>
-        /// The type of the table.
+        /// The type of the room.
         /// </value>
         /// 创建者：苏建峰
-        /// 创建日期：3/19/2014 11:34 AM
+        /// 创建日期：3/19/2014 11:27 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public TableTypeModel TableType { get; set; }
+        public int TblTypeId { get; set; }
+
+        /// <summary>
+        /// 桌位类型名称（大中小桌）
+        /// </summary>
+        /// <value>
+        /// The type of the room.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/19/2014 11:27 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string TblTypeName { get; set; }
 
         /// <summary>
         /// 最多人数

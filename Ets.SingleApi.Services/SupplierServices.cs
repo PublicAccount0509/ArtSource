@@ -2350,11 +2350,8 @@
                                 select new DingTaiDeskModel
                                     {
                                         RoomType = deskTypeEntity.RoomType,
-                                        TableType = new TableTypeModel
-                                            {
-                                                Id = deskTypeEntity.TableType.Id,
-                                                TblTypeName = deskTypeEntity.TableType.TblTypeName
-                                            },
+                                        TblTypeId = deskTypeEntity.TableType.Id,
+                                        TblTypeName = deskTypeEntity.TableType.TblTypeName,
                                         MaxNumber = deskTypeEntity.MaxNumber,
                                         MinNumber = deskTypeEntity.MinNumber,
                                         DepositAmount = deskTypeEntity.DepositAmount,

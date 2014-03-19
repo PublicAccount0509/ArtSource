@@ -1357,12 +1357,25 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<DingTaiDesk> DeskList(int id, DateTime bookingDate, string bookingTime, int peopleCount)
+        public ListResponse<DingTaiDesk> DeskList(int id, DateTime? bookingDate, string bookingTime, int peopleCount)
         {
+            if (bookingDate == null)
+            {
+                return new ListResponse<DingTaiDesk>
+                    {
+                        Message = new ApiMessage
+                            {
+                                StatusCode =
+                                    (int) StatusCode.System.InvalidRequest
+                            },
+                        Result = new List<DingTaiDesk>()
+                    };
+            }
+
             var dingTaiGetDeskListParameter = new DingTaiGetDeskListParameter
                 {
                     SupplierId = id,
-                    BookingDate = bookingDate,
+                    BookingDate = bookingDate.Value,
                     BookingTime = bookingTime,
                     PeopleCount = peopleCount
                 };
@@ -1387,11 +1400,8 @@ namespace Ets.SingleApi.Controllers
             var result = getDeskListResult.Result.Select(p => new DingTaiDesk
                 {
                     RoomType = p.RoomType ?? 0,
-                    TableType = new TableType
-                        {
-                            Id = p.TableType.Id,
-                            TblTypeName = p.TableType.TblTypeName
-                        },
+                    TblTypeId = p.TblTypeId,
+                    TblTypeName = p.TblTypeName,
                     MaxNumber = p.MaxNumber,
                     MinNumber = p.MinNumber,
                     DepositAmount = p.DepositAmount ?? 0,
