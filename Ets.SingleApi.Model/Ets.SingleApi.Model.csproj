@@ -121,8 +121,6 @@
     <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
     <Compile Include="Mapping\Repository\PaymentRecordEntity.cs" />
-    <Compile Include="Mapping\Repository\SsdtDeskTypeOpenEntity.cs" />
-    <Compile Include="Mapping\Repository\SsdtRoomTypeEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishCustomizationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierDishGroupEntity.cs" />
@@ -636,10 +634,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\EtsWapTangShiShoppingCartModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Mapping\SsdtDeskTypeOpenEntity.hbm.xml" />
-    <Content Include="Mapping\SsdtRoomTypeEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
