@@ -155,6 +155,16 @@
         private readonly INHibernateRepository<RegionEntity> regionEntityRepository;
 
         /// <summary>
+        /// 早晚市时间
+        /// </summary>
+        /// 创建者：苏建峰
+        /// 创建日期：3/19/2014 11:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierDeskTimeEntity> supplierDeskTimeEntityRepository;
+
+        /// <summary>
         /// 字段supplierDetailServices
         /// </summary>
         /// 创建者：周超
@@ -2258,6 +2268,7 @@
                 };
             }
 
+            
             return new ServicesResultList<DingTaiDeskModel>
             {
                 StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,

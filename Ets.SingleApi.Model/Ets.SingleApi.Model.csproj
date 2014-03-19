@@ -204,6 +204,7 @@
     <Compile Include="Services\DingTaiDeskModel.cs" />
     <Compile Include="Services\DingTaiGetDeskListParameter.cs" />
     <Compile Include="Services\EtsWapPaiDuiShoppingCartModel.cs" />
+    <Compile Include="Services\TableTypeModel.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
