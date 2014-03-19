@@ -174,6 +174,13 @@
     <Compile Include="Pay\BaiFuBaoBackgroundNotice.aspx.designer.cs">
       <DependentUpon>BaiFuBaoBackgroundNotice.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pay\WechatPaymentNotice.aspx.cs">
+      <DependentUpon>WechatPaymentNotice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pay\WechatPaymentNotice.aspx.designer.cs">
+      <DependentUpon>WechatPaymentNotice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestHandler.cs" />
     <Compile Include="ShoppingCartConstraint.cs" />
@@ -187,6 +194,7 @@
     <Content Include="Global.asax" />
     <Content Include="Pay\AlipayBackgroundNotice.aspx" />
     <Content Include="Pay\BaiFuBaoBackgroundNotice.aspx" />
+    <Content Include="Pay\WechatPaymentNotice.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -261,7 +269,7 @@
     <Content Include="config\castle\components\caches.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\htjsingle.pubxml" />
+    <None Include="Properties\PublishProfiles\wechat.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

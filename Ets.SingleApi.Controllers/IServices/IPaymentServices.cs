@@ -74,20 +74,7 @@
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> BaiFuBaoPaymentState(string source, BaiFuBaoPaymentStateParameter parameter);
 
-        /// <summary>
-        /// 微信支付状态
-        /// </summary>
-        /// <param name="source">The sourceDefault documentation</param>
-        /// <param name="parameter">The parameterDefault documentation</param>
-        /// <returns>
-        /// The Boolean}
-        /// </returns>
-        /// 创建者：孟祺宙
-        /// 创建日期：3/10/2014 5:58 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> WeChatPayMentState(string source, UmPaymentStateParameter parameter);
+
 
         /// <summary>
         /// 获取支付宝支付请求Url
@@ -118,5 +105,37 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> AlipayPaymentState(string source, AlipayPaymentStateParameter parameter);
+
+
+        /// <summary>
+        ///微信支付请求JSON参数
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/3/17 10:40
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> WechatPayment(string source, WechatPaymentParameter parameter);
+
+        /// <summary>
+        /// 微信支付状态
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：3/10/2014 5:58 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> WeChatPaymentState(string source, WechatPaymentStateParameter parameter);
+
     }
 }

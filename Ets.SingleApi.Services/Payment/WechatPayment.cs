@@ -1,9 +1,9 @@
-﻿
-using Ets.SingleApi.Model;
-using Ets.SingleApi.Utility;
-
-namespace Ets.SingleApi.Services.Payment
+﻿namespace Ets.SingleApi.Services
 {
+    using Ets.SingleApi.Model;
+    using Ets.SingleApi.Services.Payment;
+    using Ets.SingleApi.Utility;
+
 
     /// <summary>
     /// 类名称：WechatPayment
@@ -31,7 +31,7 @@ namespace Ets.SingleApi.Services.Payment
         /// ----------------------------------------------------------------------------------------
         public PaymentType PaymentType
         {
-            get { return PaymentType.WeChatPayment; }
+            get { return PaymentType.WechatPayment; }
         }
 
         /// <summary>
@@ -55,17 +55,51 @@ namespace Ets.SingleApi.Services.Payment
             }
 
             var packAge = new WechatPaymentCommon.PackAgeEntity(paymentData.Body, paymentData.Attach, paymentData.OrderId, paymentData.Amount, paymentData.NotifyUrl, paymentData.SpbillCreateIp, null, null, null, null);
+
             string package = packAge.BuildPackAge();
             var brandWcPayRequest = new WechatPaymentCommon.BrandWcPayRequest(package);
 
             string requestPaymentJsonStr = brandWcPayRequest.ToWxpaymentJsonString();
+
             return new PaymentResult<string> { Result = requestPaymentJsonStr, StatusCode = (int)StatusCode.Succeed.Ok };
         }
 
         public PaymentResult<bool> QueryState(IPaymentData parameter)
         {
-            //是修改了数据库状态？ 还是去支付方查询了支付是否成功？
-            throw new System.NotImplementedException();
+            var wechatPaymentQueryData = parameter as WechatPaymentQueryData;
+            if (wechatPaymentQueryData == null)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest
+                };
+            }
+            var isdsd = WechatPaymentCommon.BrandWechatPayCallBack.ValidateAppSignature(wechatPaymentQueryData);
+
+            if (!isdsd)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+                    Result = false
+                };
+            }
+            var isPayment = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.OrderQuery(wechatPaymentQueryData.out_trade_no);
+            if (!isPayment)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+                    Result = false
+                };
+            }
+            return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.Ok,
+                    Result = true
+                };
         }
+
+
     }
 }

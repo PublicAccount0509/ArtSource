@@ -1,10 +1,17 @@
 ﻿
+using Ets.SingleApi.Controllers;
+using Ets.SingleApi.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Json;
 using System.Linq;
+using System.Net;
+using System.Net.Security;
 using System.Security.Cryptography;
 using System.Text;
-using Ets.SingleApi.Controllers;
+using System.Web;
 
 namespace Ets.SingleApi.Services.Payment
 {
@@ -25,8 +32,8 @@ namespace Ets.SingleApi.Services.Payment
         {
             public BrandWcPayRequest(string _package)
             {
-                this.appKey = ControllersCommon.ConstWechatPaymentPaySignKey; 
-                this.appId = ControllersCommon.ConstWechatPaymentAppId ;
+                this.appKey = ControllersCommon.ConstWechatPaymentPaySignKey;
+                this.appId = ControllersCommon.ConstWechatPaymentAppId;
                 this.timeStamp = (DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds.ToString("#");
                 this.nonceStr = Guid.NewGuid().ToString("N");
                 this.package = _package;
@@ -73,8 +80,8 @@ namespace Ets.SingleApi.Services.Payment
 
             private string BuildPaySign()
             {
-                string string1 = BrandWcPaySign.AsciiOrderAscKeyToLower(SourceDic);
-                return BrandWcPaySign.Sha1String1(string1);
+                string string1 = BrandWechatPaySign.AsciiOrderAscKeyToLower(SourceDic);
+                return BrandWechatPaySign.Sha1String1(string1);
             }
             private Dictionary<string, string> SourceDic
             {
@@ -115,7 +122,7 @@ namespace Ets.SingleApi.Services.Payment
         public class PackAgeEntity
         {
             private readonly string fstPaternerKey;
-            public PackAgeEntity(string _body, string _attach, string _out_trade_no, decimal _total_fee, string _notify_url, string _spbill_create_ip, DateTime? _time_start, DateTime? _time_expire, decimal? _transport_fee, decimal? _product_fee, string _goods_tag = "")
+            public PackAgeEntity(string _body, string _attach, int _out_trade_no, decimal _total_fee, string _notify_url, string _spbill_create_ip, DateTime? _time_start, DateTime? _time_expire, decimal? _transport_fee, decimal? _product_fee, string _goods_tag = "")
             {
                 this.fstPaternerKey = ControllersCommon.ConstWechatPaymentPartnerKey;
                 this.bank_type = "WX";
@@ -162,16 +169,7 @@ namespace Ets.SingleApi.Services.Payment
             /// <summary>
             /// 商户系统内部的订单号,32 个字符内、 可包含字母,确保在商 户系统唯一。参数取值范围：32 字节以下
             /// </summary>
-            private string _out_trade_no;
-            public string out_trade_no
-            {
-                get { return _out_trade_no; }
-                private set
-                {
-                    if (value.Length > 32) throw new ArgumentOutOfRangeException("out_trade_no max length 32");
-                    _out_trade_no = value;
-                }
-            }
+            public int out_trade_no { get; private set; }
             /// <summary>
             /// 订单总金额，单位为分
             /// </summary>
@@ -242,9 +240,10 @@ namespace Ets.SingleApi.Services.Payment
 
             public string BuildPackAge()
             {
-                string string1 = BrandWcPaySign.AsciiOrderAsc(SourceDic);
-                string signValue = BrandWcPaySign.Md5ColumnParamsAndPaternerKey(string1, fstPaternerKey);
-                string string2 = BrandWcPaySign.UrlencodeParamsValue(SourceDic);
+
+                string string1 = BrandWechatPaySign.AsciiOrderAsc(SourceDic);
+                string signValue = BrandWechatPaySign.Md5ColumnParamsAndPaternerKey(string1, fstPaternerKey);
+                string string2 = BrandWechatPaySign.UrlencodeParamsValue(SourceDic);
 
                 return string.Format("{0}&sign={1}", string2, signValue);
             }
@@ -258,7 +257,7 @@ namespace Ets.SingleApi.Services.Payment
                  {"body",body}, 
                  {"attach",attach}, 
                  {"partner",partner}, 
-                 {"out_trade_no",out_trade_no}, 
+                 {"out_trade_no",out_trade_no.ToString()}, 
                  {"total_fee",total_fee}, 
                  {"fee_type",fee_type}, 
                  {"notify_url",notify_url}, 
@@ -299,7 +298,7 @@ namespace Ets.SingleApi.Services.Payment
         /// <summary>
         /// Js Api 支付签名
         /// </summary>
-        public class BrandWcPaySign
+        public class BrandWechatPaySign
         {
 
             /// <summary>
@@ -353,7 +352,6 @@ namespace Ets.SingleApi.Services.Payment
                 byte[] stringSignTempByte = md5.ComputeHash(Encoding.UTF8.GetBytes(stringSignTemp));
                 return BitConverter.ToString(stringSignTempByte).Replace("-", "");
             }
-
             /// <summary>
             /// b.1 对string1 进行SHA1 小写
             /// </summary>
@@ -427,6 +425,252 @@ namespace Ets.SingleApi.Services.Payment
                 return keys.ToDictionary(item => item, item => func != null ? func(sourceDic[item]) : sourceDic[item]);
                 //return sourceDic.Keys.ToDictionary(item => item, item => (int)Encoding.UTF8.GetBytes(item)[0]).OrderBy(item => item.Value).ToDictionary(item => item.Key, item => func != null ? func(sourceDic[item.Key]) : sourceDic[item.Key]);
             }
+        }
+
+
+
+        //=============回传验证
+
+        public class BrandWechatPayCallBack
+        {
+
+            /// <summary>
+            /// Validates the application signature.
+            /// </summary>
+            /// <param name="entity">The entity</param>
+            /// <returns>
+            /// Boolean
+            /// </returns>
+            /// 创建者：孟祺宙 创建日期：2014/3/17 16:49
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public static bool ValidateAppSignature(WechatPaymentQueryData entity)
+            {
+                string expect = entity.AppSignature;
+
+                string string1 = BrandWechatPaySign.AsciiOrderAscKeyToLower(new Dictionary<string, string> { 
+                { "appid", entity.AppId },
+                { "appkey", ControllersCommon.ConstWechatPaymentPaySignKey },
+                { "timestamp", entity.TimeStamp.ToString() },
+                { "noncestr", entity.NonceStr },
+                { "openid", entity.OpenId },
+                { "issubscribe", entity.IsSubscribe.ToString() }
+            });
+                string actual = BrandWechatPaySign.Sha1String1(string1);
+                return expect == actual;
+            }
+        }
+
+
+        public class BrandWechatPayCallBackQueryOrNotify
+        {
+
+            /// <summary>
+            /// 查询订单支付状态
+            /// </summary>
+            /// <param name="out_trade_no">The out_trade_no</param>
+            /// <returns>
+            /// 是否已经支付 True 已经支付 False 未支付
+            /// </returns>
+            /// 创建者：孟祺宙 创建日期：2014/3/17 18:37
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public static bool OrderQuery(string out_trade_no)
+            {
+                string string1 = BrandWechatPaySign.AsciiOrderAsc(new Dictionary<string, string> { { "out_trade_no", out_trade_no }, { "partner", ControllersCommon.ConstWechatPaymentPartnerId } });
+                string querySign = BrandWechatPaySign.Md5ColumnParamsAndPaternerKey(string1, ControllersCommon.ConstWechatPaymentPartnerKey);
+                string package = string.Format("out_trade_no={0}&partner={1}&sign={2}", out_trade_no, ControllersCommon.ConstWechatPaymentPartnerId, querySign);
+
+
+                string timestamp = WinDateToLinuxDate(DateTime.Now).ToString();//linux时间戳 10位
+
+                var dicSha1 =
+                    BrandWechatPaySign.AsciiOrderAsc(new Dictionary<string, string>
+                            {
+                                {"appid", ControllersCommon.ConstWechatPaymentAppId},
+                                {"appkey", ControllersCommon.ConstWechatPaymentPaySignKey},
+                                {"package", package},
+                                {"timestamp", timestamp}
+                            });
+                string app_signature = BrandWechatPaySign.Sha1String1(dicSha1);
+
+                string postJsonString = "{ \"appid\":\"" + ControllersCommon.ConstWechatPaymentAppId +
+                                        "\", \"package\":\"" + package +
+                                        "\", \"timestamp\":\"" + timestamp + "\", \"app_signature\":\"" +
+                                        app_signature +
+                                        "\", \"sign_method\":\"sha1\" }";
+                string access_token = GetAccessToken();
+
+                string.Format("\r\n===============================\r\n THE QueryState Call Wechat {0} \r\n {1}\r\n===============================\r\n", access_token, postJsonString).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+
+                string resultJson = HttpRequestPost(postJsonString,
+                                                    string.Format(
+                                                        "https://api.weixin.qq.com/pay/orderquery?access_token={0}",
+                                                        access_token), (ex) => string.Format("===============================\r\n THE 003_HTTP_POST_EX \r\n {0} \r\n {1} \r\n===============================", ex.Message, ex.ToString(), ex.StackTrace).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info));
+
+                JObject jsonObject = JObject.Parse(resultJson);
+
+
+                if (jsonObject["errcode"].ToString() != "0") return false;
+
+                string ret_code = jsonObject["order_info"]["ret_code"].ToString();
+                string trade_state = jsonObject["order_info"]["trade_state"].ToString();
+
+   
+                return ret_code == "0" && trade_state == "0";
+
+            }
+
+            /// <summary>
+            /// 获取微信OAUTH2 access_token
+            /// </summary>
+            /// <returns>
+            /// access_token
+            /// </returns>
+            /// 创建者：孟祺宙 创建日期：2014/3/17 17:14
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            private static string GetAccessToken()
+            {
+                string retJson = HttpRequestGetRetString(string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", ControllersCommon.ConstWechatPaymentAppId, ControllersCommon.ConstWechatPaymentAppSecret), (content) => content);
+                JsonValue jsonValue = JsonValue.Parse(retJson);
+                return jsonValue["access_token"];
+            }
+
+            /// <summary>
+            /// HTTPs the request get ret string.
+            /// </summary>
+            /// <param name="pstUrl">The pstUrl</param>
+            /// <param name="callback">The callback</param>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙 创建日期：2014/3/17 17:14
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            private static string HttpRequestGetRetString(string pstUrl, Func<string, string> callback)
+            {
+                string content = string.Empty;
+                HttpWebRequest request;
+                if (pstUrl.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                    request = WebRequest.Create(pstUrl) as HttpWebRequest;
+                    request.ProtocolVersion = HttpVersion.Version10;
+                }
+                else
+                {
+                    request = (HttpWebRequest)WebRequest.Create(pstUrl);
+                }
+                using (var response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        content = callback(reader.ReadToEnd());
+                    }
+                }
+                return content;
+            }
+            /// <summary>
+            /// Checks the validation result.
+            /// </summary>
+            /// <param name="sender">The sender</param>
+            /// <param name="certificate">The certificate</param>
+            /// <param name="chain">The chain</param>
+            /// <param name="sslPolicyErrors">The sslPolicyErrors</param>
+            /// <returns>
+            /// Boolean
+            /// </returns>
+            /// 创建者：孟祺宙 创建日期：2014/3/17 17:14
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            private static bool CheckValidationResult(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            {
+                return true; //总是接受  
+            }
+            /// <summary>
+            /// 发送HTTP POST
+            /// </summary>
+            /// <param name="pstUrlParams">The pstUrlParams</param>
+            /// <param name="pstSenUrl">The pstSenUrl</param>
+            /// <param name="callBack">The callBack</param>
+            /// <param name="pobHeaders">The pobHeaders</param>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙 创建日期：2014/3/17 17:15
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            private static string HttpRequestPost(string pstUrlParams, string pstSenUrl, Action<Exception> callBack, Dictionary<string, string> pobHeaders = null)
+            {
+                var res = string.Empty;
+                HttpWebRequest request;
+                try
+                {
+                    request = (HttpWebRequest)WebRequest.Create(pstSenUrl);
+                    request.Method = "POST";
+                    byte[] sendData = Encoding.UTF8.GetBytes(pstUrlParams);
+                    request.ContentLength = sendData.Length;
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.UserAgent = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.162 Safari/535.19";
+
+                    if (pobHeaders != null)
+                    {
+                        foreach (var item in pobHeaders)
+                        {
+                            request.Headers.Add(item.Key, UrlEncodeUtf8(item.Value));
+                        }
+                    }
+                    using (var stream = request.GetRequestStream())
+                    {
+                        stream.Write(sendData, 0, sendData.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    callBack(ex); return res;//!!!
+                }
+                using (var response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        res = reader.ReadToEnd();
+                    }
+                }
+                return res;
+            }
+
+            private static string UrlEncodeUtf8(string pstBase)
+            {
+                return HttpUtility.UrlEncode(pstBase, Encoding.UTF8);
+            }
+            private static string UrlDecodeUtf8(string pstBase)
+            {
+                return HttpUtility.UrlDecode(pstBase, Encoding.UTF8);
+            }
+        }
+
+        /// <summary>
+        /// DateTime时间格式转换为Unix时间戳格式
+        /// </summary>
+        /// <param name="time">The time</param>
+        /// <returns>
+        /// Int32
+        /// </returns>
+        /// 创建者：孟祺宙 创建日期：2014/3/17 17:05
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int WinDateToLinuxDate(System.DateTime time)
+        {
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            return (int)(time - startTime).TotalSeconds;
         }
     }
 }

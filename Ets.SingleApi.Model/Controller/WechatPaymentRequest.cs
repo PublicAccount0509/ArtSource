@@ -1,19 +1,31 @@
 ﻿
-namespace Ets.SingleApi.Services.Payment
+namespace Ets.SingleApi.Model.Controller
 {
-
-    /// <summary>
-    /// 类名称：WechatPaymentData
-    /// 命名空间：Ets.SingleApi.Services.Payment
-    /// 类功能：支付请求参数类
-    /// </summary>
-    /// 创建者：孟祺宙 
-    /// 创建日期：2014/3/14 18:20
-    /// 修改者：
-    /// 修改时间：
-    /// ----------------------------------------------------------------------------------------
-    public class WechatPaymentData : IPaymentData
+    public class WechatPaymentRequest : ApiRequst
     {
+        /// <summary>
+        /// Gets or sets the type of the order.
+        /// </summary>
+        /// <value>
+        /// The type of the order.
+        /// </value>
+        /// 创建者：孟祺宙 创建日期：2014/3/17 10:45
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int OrderType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the UserId of WechatPaymentPostData
+        /// </summary>
+        /// <value>
+        /// The UserId
+        /// </value>
+        /// 创建者：孟祺宙 创建日期：2014/3/14 21:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int UserId { get; set; }
 
         /// <summary>
         /// 商品描述。参数长度：128 字节以下
@@ -100,7 +112,5 @@ namespace Ets.SingleApi.Services.Payment
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string SpbillCreateIp { get; set; }
-
-
     }
 }
