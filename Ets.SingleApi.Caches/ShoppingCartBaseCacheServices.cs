@@ -237,9 +237,14 @@
                     }
 
                     var itemShoppingCartBase = itemResult.Deserialize<ShoppingCartBase>();
-                    itemShoppingCartBase.IsComplete = false;
+                    if (itemShoppingCartBase.IsComplete)
+                    {
+                        continue;
+                    }
+
+                    itemShoppingCartBase.IsComplete = true;
                     CacheUtility.GetInstance().Delete(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", item));
-                    CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", item), shoppingCartBase.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+                    CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", item), itemShoppingCartBase.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
                 }
 
                 shoppingCartIdDictionary[lastShoppingCartId] = false;

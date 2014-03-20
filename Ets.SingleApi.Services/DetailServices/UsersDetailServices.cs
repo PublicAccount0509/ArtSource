@@ -175,7 +175,7 @@
                 IsValId = false,
                 IsRegAllowed = true,
                 Path = parameter.SourceType.IsEmptyOrNull() ? null : this.sourcePathEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType),
-                TemplateId = parameter.Template
+                Source = parameter.Template
             };
 
             this.customerEntityRepository.Save(customerEntity);
@@ -301,7 +301,7 @@
                 IsValId = false,
                 IsRegAllowed = true,
                 Path = parameter.SourceType.IsEmptyOrNull() ? null : this.sourcePathEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType),
-                TemplateId = parameter.Template
+                Source = parameter.Template
             };
 
             //保存Customer

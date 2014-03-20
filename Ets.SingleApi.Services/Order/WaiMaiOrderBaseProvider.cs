@@ -269,7 +269,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            if (!ServicesCommon.OrderEditStatusIdList.Contains(deliveryEntity.OrderStatusId))
+            if (!ServicesCommon.WaiMaiOrderEditStatusIdList.Contains(deliveryEntity.OrderStatusId))
             {
                 return new ServicesResult<string>
                 {

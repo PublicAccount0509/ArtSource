@@ -33,6 +33,10 @@
     <Reference Include="Castle.Services.Transaction">
       <HintPath>..\lib\Castle.Services.Transaction.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\lib\NHibernate.dll</HintPath>
     </Reference>
@@ -157,6 +161,7 @@
     <Compile Include="Payment\UmPaymentData.cs" />
     <Compile Include="Payment\UmPaymentQueryData.cs" />
     <Compile Include="Payment\WechatPayment.cs" />
+    <Compile Include="Payment\WechatPaymentCommon.cs" />
     <Compile Include="Payment\WechatPaymentData.cs" />
     <Compile Include="SendPassword\EmailSendPassword.cs" />
     <Compile Include="SendPassword\ISendPassword.cs" />
@@ -176,10 +181,14 @@
     <Compile Include="ShoppingCart\EtsWapShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapTangShiShoppingCartProvider.cs" />
+<<<<<<< HEAD
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapDingTaiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapPaiDuiShoppingCartProvider.cs" />
+=======
+    <Compile Include="WechatPaymentQueryData.cs" />
+>>>>>>> origin/developer_DianCai
     <Compile Include="ZhongCanShoppingCartServices.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IHuangTaiJiShoppingCartProvider.cs" />
