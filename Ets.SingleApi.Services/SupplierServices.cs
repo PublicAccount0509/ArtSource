@@ -2297,15 +2297,6 @@
                     };
             }
 
-            var e = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
-                     where supplierDeskTimeEntity.SupplierId == parameter.SupplierId
-                     select new
-                         {
-                             supplierDeskTimeEntity.Id,
-                             supplierDeskTimeEntity.BeginTime,
-                             supplierDeskTimeEntity.EndTime
-                         }).ToList();
-
             /*早晚市开放时间*/
             //BeginTime和EndTime时间格式为（07:00、22:00）
             var supplierDeskTime = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
