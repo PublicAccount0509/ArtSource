@@ -1958,22 +1958,23 @@
                 return "find_password_code";
             }
         }
+
         /// <summary>
-        /// 订单可编辑的状态列表
+        /// 外卖订单可编辑的状态列表
         /// </summary>
         /// <value>
-        /// 订单可编辑的状态列表
+        /// 外卖订单可编辑的状态列表
         /// </value>
         /// 创建者：苏建峰
         /// 创建日期：2014-2-10 11:59
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static List<int> OrderEditStatusIdList
+        public static List<int> WaiMaiOrderEditStatusIdList
         {
             get
             {
-                var list = (ConfigurationManager.AppSettings["OrderEditStatusIdList"] ?? string.Empty).Split(',');
+                var list = (ConfigurationManager.AppSettings["WaiMaiOrderEditStatusIdList"] ?? string.Empty).Split(',');
                 var orderEditStatusIdList = new List<int>();
                 foreach (var item in list)
                 {
@@ -1989,6 +1990,103 @@
                 return orderEditStatusIdList;
             }
         }
+
+        /// <summary>
+        /// 订台订单可编辑的状态列表
+        /// </summary>
+        /// <value>
+        /// 订台订单可编辑的状态列表
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-10 11:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> DingTaiOrderEditStatusIdList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["DingTaiOrderEditStatusIdList"] ?? string.Empty).Split(',');
+                var orderEditStatusIdList = new List<int>();
+                foreach (var item in list)
+                {
+                    int orderstatusId;
+                    if (!int.TryParse(item, out orderstatusId))
+                    {
+                        continue;
+                    }
+
+                    orderEditStatusIdList.Add(orderstatusId);
+                }
+
+                return orderEditStatusIdList;
+            }
+        }
+
+        /// <summary>
+        /// 堂食订单可编辑的状态列表
+        /// </summary>
+        /// <value>
+        /// 堂食订单可编辑的状态列表
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-10 11:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> TangShiOrderEditStatusIdList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["TangShiOrderEditStatusIdList"] ?? string.Empty).Split(',');
+                var orderEditStatusIdList = new List<int>();
+                foreach (var item in list)
+                {
+                    int orderstatusId;
+                    if (!int.TryParse(item, out orderstatusId))
+                    {
+                        continue;
+                    }
+
+                    orderEditStatusIdList.Add(orderstatusId);
+                }
+
+                return orderEditStatusIdList;
+            }
+        }
+
+        /// <summary>
+        /// 排队订单可编辑的状态列表
+        /// </summary>
+        /// <value>
+        /// 排队订单可编辑的状态列表
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：2014-2-10 11:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> TangPaiDuiEditStatusIdList
+        {
+            get
+            {
+                var list = (ConfigurationManager.AppSettings["TangPaiDuiEditStatusIdList"] ?? string.Empty).Split(',');
+                var orderEditStatusIdList = new List<int>();
+                foreach (var item in list)
+                {
+                    int orderstatusId;
+                    if (!int.TryParse(item, out orderstatusId))
+                    {
+                        continue;
+                    }
+
+                    orderEditStatusIdList.Add(orderstatusId);
+                }
+
+                return orderEditStatusIdList;
+            }
+        }
+
         /// <summary>
         /// 计算打包费
         /// </summary>
