@@ -40,6 +40,7 @@
     <property name="CreateDate" column="CreateDate" type="Timestamp" not-null="false" />
     <property name="IsRegAllowed" column="IsRegAllowed" type="Boolean" not-null="false" />
     <property name="Avatar" column="Avatar" type="String" not-null="false" />
+    <property name="Source" column="Source" type="String" not-null="false" />
     <!--The foreign keys-->
     <bag name="CardList" cascade="none" lazy="true" table="Card">
       <key column="CustomerID" />
@@ -62,7 +63,6 @@
       <one-to-many class="Ets.SingleApi.Model.Repository.SupplierCommentEntity, Ets.SingleApi.Model" />
     </bag>
     <many-to-one name="Path" class="Ets.SingleApi.Model.Repository.SourcePathEntity, Ets.SingleApi.Model" column="Path" />
-    <many-to-one name="Source" class="Ets.SingleApi.Model.Repository.SourceTypeEntity, Ets.SingleApi.Model" column="Source" />
   </class>
   <sql-query name="Pro_QueryUserOrderList">
     <return-scalar column="OrderId" type="Int32" />

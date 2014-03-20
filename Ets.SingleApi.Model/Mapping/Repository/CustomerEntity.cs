@@ -427,7 +427,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private SourceTypeEntity source;
+		private string source;
 
 		#endregion
 
@@ -457,7 +457,6 @@ namespace Ets.SingleApi.Model.Repository
 			this.homeCity = string.Empty;
 			this.addrCityId = string.Empty;
 			this.addrProvinceId = string.Empty;
-			this.templateId = string.Empty;
 			this.avatar = string.Empty;
 		}
 
@@ -1290,7 +1289,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual SourceTypeEntity Source
+		public virtual string Source
 		{
             get
             {
