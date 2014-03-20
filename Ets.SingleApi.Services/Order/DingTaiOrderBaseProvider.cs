@@ -265,7 +265,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            if (!ServicesCommon.OrderEditStatusIdList.Contains(tableReservationEntity.TableStatus ?? 0))
+            if (!ServicesCommon.DingTaiOrderEditStatusIdList.Contains(tableReservationEntity.TableStatus ?? 0))
             {
                 return new ServicesResult<string>
                 {
