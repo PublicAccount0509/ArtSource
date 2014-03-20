@@ -78,6 +78,7 @@
         /// <param name="loginEntityRepository">The loginEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
+        /// <param name="deskTypeEntityRepository">The deskTypeEntityRepositoryDefault documentation</param>
         /// <param name="etsWapDingTaiShoppingCartCacheServices">The ets wap tang shi shopping cart cache services.</param>
         /// 创建者：周超
         /// 创建日期：11/21/2013 11:08 AM
@@ -88,11 +89,13 @@
             INHibernateRepository<LoginEntity> loginEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             IEtsWapDingTaiShoppingCartCacheServices etsWapDingTaiShoppingCartCacheServices)
         {
             this.loginEntityRepository = loginEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
+            this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.etsWapDingTaiShoppingCartCacheServices = etsWapDingTaiShoppingCartCacheServices;
         }
 

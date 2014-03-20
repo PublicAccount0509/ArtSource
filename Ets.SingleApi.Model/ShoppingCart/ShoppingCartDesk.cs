@@ -140,7 +140,7 @@ namespace Ets.SingleApi.Model
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime BookingDate { get; set; }
+        public DateTime? BookingDate { get; set; }
 
         /// <summary>
         /// 预定时间
