@@ -151,6 +151,21 @@
         CacheServicesResult<ShoppingCartDelivery> GetShoppingCartDelivery(string source, string id);
 
         /// <summary>
+        /// 获取订单台位信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">订单台位信息唯一标识符</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        CacheServicesResult<ShoppingCartDesk> GetShoppingCartDesk(string source, string id);
+
+        /// <summary>
         /// 保存订单配送信息
         /// </summary>
         /// <param name="source">The source</param>
@@ -164,6 +179,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         CacheServicesResult<bool> SaveShoppingCartDelivery(string source, ShoppingCartDelivery shoppingCartDelivery);
+
+        /// <summary>
+        /// 保存订单台位信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartDesk">订单台位信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 11:36 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        CacheServicesResult<bool> SaveShoppingCartDesk(string source, ShoppingCartDesk shoppingCartDesk);
 
         /// <summary>
         /// 获取购物车关联信息

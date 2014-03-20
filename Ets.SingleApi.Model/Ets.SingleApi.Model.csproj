@@ -355,6 +355,7 @@
     <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartDesk.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

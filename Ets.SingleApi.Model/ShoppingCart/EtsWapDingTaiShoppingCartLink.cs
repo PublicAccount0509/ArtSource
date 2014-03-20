@@ -91,6 +91,19 @@
         public string DeliveryId { get; set; }
 
         /// <summary>
+        /// 设置或取得订单台位配送信息唯一标识符
+        /// </summary>
+        /// <value>
+        /// The desk identifier.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 10:59 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string DeskId { get; set; }
+
+        /// <summary>
         /// 设置或取得匿名用户Id
         /// </summary>
         /// <value>

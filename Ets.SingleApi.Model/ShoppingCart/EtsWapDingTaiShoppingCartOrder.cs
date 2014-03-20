@@ -39,6 +39,19 @@
         public int OrderId { get; set; }
 
         /// <summary>
+        /// 订台方式Id（2:订台付款、3:订台点菜付款）
+        /// </summary>
+        /// <value>
+        /// The type of the DingTai.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 10:48 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int DingTaiMethodId { get; set; }
+
+        /// <summary>
         /// 设置或取得订单备注信息
         /// </summary>
         /// <value>

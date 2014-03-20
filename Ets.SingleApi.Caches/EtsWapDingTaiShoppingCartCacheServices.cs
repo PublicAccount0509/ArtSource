@@ -265,6 +265,42 @@
         }
 
         /// <summary>
+        /// 获取订单台位信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">订单台位信息唯一标识符</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 11:03 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public CacheServicesResult<ShoppingCartDesk> GetShoppingCartDesk(string source, string id)
+        {
+            var result =
+                CacheUtility.GetInstance().Get(string.Format("{0}_{1}{2}", source, "shopping_cart_desk", id)) as string;
+            if (result.IsEmptyOrNull())
+            {
+                return new CacheServicesResult<ShoppingCartDesk>
+                    {
+                        StatusCode = (int) StatusCode.Succeed.Empty
+                    };
+            }
+
+            return new CacheServicesResult<ShoppingCartDesk>
+                {
+                    Result = result.Deserialize<ShoppingCartDesk>()
+                };
+        }
+
+        /// <summary>
         /// 保存订单配送信息
         /// </summary>
         /// <param name="source">The source</param>
@@ -282,6 +318,35 @@
             var id = shoppingCartDelivery.Id;
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_delivery", id));
             CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_delivery", id), shoppingCartDelivery.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            return new CacheServicesResult<bool>
+            {
+                Result = true
+            };
+        }
+
+        /// <summary>
+        /// 保存订单台位信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartDesk">订单台位信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 11:36 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 11:37 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public CacheServicesResult<bool> SaveShoppingCartDesk(string source, ShoppingCartDesk shoppingCartDesk)
+        {
+            var id = shoppingCartDesk.Id;
+            CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_desk", id));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_desk", id), shoppingCartDesk.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true

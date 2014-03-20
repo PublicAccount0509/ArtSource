@@ -91,6 +91,19 @@
         public ShoppingCartDelivery Delivery { get; set; }
 
         /// <summary>
+        /// 设置或取得购物车对应的台位信息
+        /// </summary>
+        /// <value>
+        /// 购物车对应的台位信息
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 9:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ShoppingCartDesk Desk { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EtsWapDingTaiShoppingCartModel"/> class.
         /// </summary>
         /// 创建者：周超
@@ -105,6 +118,7 @@
             this.Order = new EtsWapDingTaiShoppingCartOrder();
             this.Supplier = new ShoppingCartSupplier();
             this.Delivery = new ShoppingCartDelivery();
+            this.Desk = new ShoppingCartDesk();
         }
     }
 }
