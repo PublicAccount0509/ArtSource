@@ -311,6 +311,29 @@
         }
 
         /// <summary>
+        /// 获取订单台位信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">订单台位信息唯一标识符</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<ShoppingCartDesk> GetShoppingCartDesk(string source, string id)
+        {
+            var shoppingCartDeskResult = this.etsWapDingTaiShoppingCartCacheServices.GetShoppingCartDesk(source, id);
+            return new ServicesResult<ShoppingCartDesk>
+            {
+                StatusCode = shoppingCartDeskResult.StatusCode,
+                Result = shoppingCartDeskResult.Result ?? new ShoppingCartDesk()
+            };
+        }
+
+        /// <summary>
         /// 保存购物车信息
         /// </summary>
         /// <param name="source">The source</param>
@@ -377,6 +400,35 @@
                 StatusCode = saveShoppingCartDeliveryResult.StatusCode,
                 Result = saveShoppingCartDeliveryResult.Result
             };
+        }
+
+        /// <summary>
+        /// 保存订单台位信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="shoppingCartDesk">台位信息</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 11:34 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 11:35 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCartDesk(string source, ShoppingCartDesk shoppingCartDesk)
+        {
+            var saveShoppingCartDeskResult = this.etsWapDingTaiShoppingCartCacheServices.SaveShoppingCartDesk(source,
+                                                                                                              shoppingCartDesk);
+            return new ServicesResult<bool>
+                {
+                    StatusCode = saveShoppingCartDeskResult.StatusCode,
+                    Result = saveShoppingCartDeskResult.Result
+                };
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the QueueDeskTypeLockLogEntity table in the database.
     /// </summary>
     /// Creator:ww
-    /// Creation Date:2014-3-19 10:43:00
+    /// Creation Date:2014-3-20 16:37:43
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -32,27 +32,17 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Id
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private int id;
 
 			/// <summary>
-		/// The DeskTypeId
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		private int deskTypeId;
-
-			/// <summary>
 		/// The IsLock
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -62,7 +52,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsDel
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -72,21 +62,31 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Description
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private string description;
 
 			/// <summary>
-		/// The QueueId
+		/// The SupplierId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private QueueEntity queue;
+		private int supplierId;
+
+			/// <summary>
+		/// The DeskTypeId
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-20 16:37:43
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		private DeskTypeEntity deskType;
 
 		#endregion
 
@@ -94,17 +94,17 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="QueueDeskTypeLockLogEntity"/> class.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
         public QueueDeskTypeLockLogEntity()
         {
 			this.id = 0;
-			this.deskTypeId = 0;
 			this.isLock = false;
 			this.isDel = false;
 			this.description = string.Empty;
+			this.supplierId = 0;
 		}
 
 		#region public member
@@ -113,7 +113,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Id of QueueDeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -131,31 +131,10 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
-        /// Gets or sets a value mapping the DeskTypeId of QueueDeskTypeLockLogEntity table in the database.
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		public virtual int DeskTypeId
-		{
-            get
-            {
-                return this.deskTypeId;
-            }
-
-            set
-            {
-                this.deskTypeId = value;
-            }
-        }
-
-			/// <summary>
         /// Gets or sets a value indicating whether mapping the IsLock of QueueDeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -176,7 +155,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsDel of QueueDeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -197,7 +176,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Description of QueueDeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -215,23 +194,44 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
-        /// Gets or sets a value mapping the QueueId of QueueDeskTypeLockLogEntity table in the database.
+        /// Gets or sets a value mapping the SupplierId of QueueDeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual QueueEntity Queue
+		public virtual int SupplierId
 		{
             get
             {
-                return this.queue;
+                return this.supplierId;
             }
 
             set
             {
-                this.queue = value;
+                this.supplierId = value;
+            }
+        }
+
+			/// <summary>
+        /// Gets or sets a value mapping the DeskTypeId of QueueDeskTypeLockLogEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-20 16:37:43
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual DeskTypeEntity DeskType
+		{
+            get
+            {
+                return this.deskType;
+            }
+
+            set
+            {
+                this.deskType = value;
             }
         }
 
@@ -245,7 +245,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

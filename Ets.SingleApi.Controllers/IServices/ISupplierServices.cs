@@ -407,5 +407,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<DingTaiDeskModel> GetDeskList(string source, DingTaiGetDeskListParameter parameter);
+
+        /// <summary>
+        /// 获取餐厅订台开放时间列表
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 2:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<string> GetDeskOpenTimeList(string source, int supplierId);
     }
 }

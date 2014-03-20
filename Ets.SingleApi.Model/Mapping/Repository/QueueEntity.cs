@@ -12,7 +12,6 @@
 namespace Ets.SingleApi.Model.Repository
 {
 	using System;
-	using System.Collections.Generic;
 		
     /// <summary>
     /// Class:QueueEntity
@@ -20,7 +19,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the QueueEntity table in the database.
     /// </summary>
     /// Creator:ww
-    /// Creation Date:2014-3-19 10:43:00
+    /// Creation Date:2014-3-20 16:37:43
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -33,7 +32,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The QueueID
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -43,7 +42,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Time
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -53,7 +52,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The UserName
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -63,7 +62,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Phone
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -73,7 +72,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SeatNumber
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -83,7 +82,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Remark
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -93,7 +92,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The State
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -103,7 +102,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierID
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -113,7 +112,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierName
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -123,7 +122,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Number
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -133,7 +132,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The AppNumber
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -143,7 +142,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The PhoneNumber
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -153,7 +152,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The AndroidIS
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -163,7 +162,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The AlertNumber
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -173,7 +172,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Sex
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -183,7 +182,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierEmployeeID
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -193,7 +192,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Code
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -203,21 +202,11 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DeskTypeId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private int? deskTypeId;
-
-			/// <summary>
-		/// The QueueDeskTypeLockLogList
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		private IList<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogList;
 
 		#endregion
 
@@ -225,7 +214,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="QueueEntity"/> class.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -250,7 +239,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the QueueID of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -271,7 +260,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Time of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -292,7 +281,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the UserName of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -313,7 +302,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Phone of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -334,7 +323,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SeatNumber of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -355,7 +344,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Remark of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -376,7 +365,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the State of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -397,7 +386,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierID of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -418,7 +407,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierName of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -439,7 +428,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Number of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -460,7 +449,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the AppNumber of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -481,7 +470,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the PhoneNumber of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -502,7 +491,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the AndroidIS of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -523,7 +512,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the AlertNumber of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -544,7 +533,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Sex of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -565,7 +554,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierEmployeeID of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -586,7 +575,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Code of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -607,7 +596,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeskTypeId of QueueEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -624,27 +613,6 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
-        /// Gets or sets a value mapping the QueueDeskTypeLockLogList of QueueEntity table in the database.
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		public virtual IList<QueueDeskTypeLockLogEntity> QueueDeskTypeLockLogList
-		{
-            get
-            {
-                return this.queueDeskTypeLockLogList;
-            }
-
-            set
-            {
-                this.queueDeskTypeLockLogList = value;
-            }
-        }
-
 		#endregion
 
 			/// <summary>
@@ -655,7 +623,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -677,7 +645,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:00
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

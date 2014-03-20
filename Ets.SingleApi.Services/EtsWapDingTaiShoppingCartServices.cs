@@ -90,64 +90,85 @@ namespace Ets.SingleApi.Services
         public ServicesResult<EtsWapDingTaiShoppingCartModel> GetShoppingCart(string source, string shoppingCartId)
         {
             var getShoppingCartLinkResult = this.etsWapShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
-            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            if (getShoppingCartLinkResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = new EtsWapDingTaiShoppingCartModel()
-                };
+                    {
+                        StatusCode = getShoppingCartLinkResult.StatusCode,
+                        Result = new EtsWapDingTaiShoppingCartModel()
+                    };
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.etsWapShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
-            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartResult = this.etsWapShoppingCartProvider.GetShoppingCart(source,
+                                                                                        shoppingCartLink.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartResult.StatusCode,
-                    Result = new EtsWapDingTaiShoppingCartModel()
-                };
+                    {
+                        StatusCode = getShoppingCartResult.StatusCode,
+                        Result = new EtsWapDingTaiShoppingCartModel()
+                    };
             }
 
-            var getShoppingCartSupplierResult = this.etsWapShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
-            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartSupplierResult = this.etsWapShoppingCartProvider.GetShoppingCartSupplier(source,
+                                                                                                        shoppingCartLink
+                                                                                                            .SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = new EtsWapDingTaiShoppingCartModel()
-                };
+                    {
+                        StatusCode = getShoppingCartSupplierResult.StatusCode,
+                        Result = new EtsWapDingTaiShoppingCartModel()
+                    };
             }
 
-            var getShoppingCartCustomerResult = this.etsWapShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
-            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartCustomerResult = this.etsWapShoppingCartProvider.GetShoppingCartCustomer(source,
+                                                                                                        shoppingCartLink
+                                                                                                            .UserId);
+            if (getShoppingCartCustomerResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = new EtsWapDingTaiShoppingCartModel()
-                };
+                    {
+                        StatusCode = getShoppingCartCustomerResult.StatusCode,
+                        Result = new EtsWapDingTaiShoppingCartModel()
+                    };
             }
 
-            var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
-            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source,
+                                                                                                  shoppingCartLink
+                                                                                                      .OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = new EtsWapDingTaiShoppingCartModel()
-                };
+                    {
+                        StatusCode = getShoppingCartOrderResult.StatusCode,
+                        Result = new EtsWapDingTaiShoppingCartModel()
+                    };
             }
 
-            var getShoppingCartDeliveryResult = this.etsWapShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
-            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartDeliveryResult = this.etsWapShoppingCartProvider.GetShoppingCartDelivery(source,
+                                                                                                        shoppingCartLink
+                                                                                                            .DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
-                {
-                    StatusCode = getShoppingCartDeliveryResult.StatusCode,
-                    Result = new EtsWapDingTaiShoppingCartModel()
-                };
+                    {
+                        StatusCode = getShoppingCartDeliveryResult.StatusCode,
+                        Result = new EtsWapDingTaiShoppingCartModel()
+                    };
+            }
+
+            /*订单台位信息*/
+            var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source,
+                                                                                                shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<EtsWapDingTaiShoppingCartModel>
+                    {
+                        StatusCode = getShoppingCartDeliveryResult.StatusCode,
+                        Result = new EtsWapDingTaiShoppingCartModel()
+                    };
             }
 
             var shoppingCart = getShoppingCartResult.Result;
@@ -155,18 +176,20 @@ namespace Ets.SingleApi.Services
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
+            var desk = getShoppingCartDeskResult.Result;
             return new ServicesResult<EtsWapDingTaiShoppingCartModel>
-            {
-                Result = new EtsWapDingTaiShoppingCartModel
                 {
-                    Id = shoppingCartId,
-                    ShoppingCart = shoppingCart,
-                    Supplier = supplier,
-                    Customer = customer,
-                    Order = order,
-                    Delivery = delivery
-                }
-            };
+                    Result = new EtsWapDingTaiShoppingCartModel
+                        {
+                            Id = shoppingCartId,
+                            ShoppingCart = shoppingCart,
+                            Supplier = supplier,
+                            Customer = customer,
+                            Order = order,
+                            Delivery = delivery,
+                            Desk = desk
+                        }
+                };
         }
 
         /// <summary>
@@ -219,7 +242,8 @@ namespace Ets.SingleApi.Services
             var shoppingCartOrder = new EtsWapDingTaiShoppingCartOrder
                 {
                     Id = Guid.NewGuid().ToString(),
-                    PaymentMethodId = ServicesCommon.DefaultPaymentMethodId
+                    DingTaiMethodId = ServicesCommon.DefaultDingTaiMethodId,
+                    PaymentMethodId = ServicesCommon.DefaultPaymentMethodId,
                 };
             var saveShoppingCartOrderResult = this.etsWapShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -246,6 +270,21 @@ namespace Ets.SingleApi.Services
                 };
             }
 
+            /*保存订台台位信息*/
+            var shoppingCartDesk = new ShoppingCartDesk
+            {
+                Id = Guid.NewGuid().ToString()
+            };
+            var saveShoppingCartDeskResult = this.etsWapShoppingCartProvider.SaveShoppingCartDesk(source, shoppingCartDesk);
+            if (saveShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = saveShoppingCartDeskResult.StatusCode,
+                    Result = string.Empty
+                };
+            }
+
             var shoppingCartLink = new EtsWapDingTaiShoppingCartLink
                 {
                     ShoppingCartLinkId = shoppingCartLinkId,
@@ -253,6 +292,7 @@ namespace Ets.SingleApi.Services
                     SupplierId = getShoppingCartSupplierResult.Result.SupplierId,
                     OrderId = shoppingCartOrder.Id,
                     DeliveryId = shoppingCartDelivery.Id,
+                    DeskId = shoppingCartDesk.Id,
                     AnonymityId = userId
                 };
 

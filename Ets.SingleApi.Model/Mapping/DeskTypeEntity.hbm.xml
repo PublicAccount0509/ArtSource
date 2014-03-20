@@ -8,7 +8,7 @@
 			<generator class="native"/>
 		</id>
 		<!--The propertys-->
-		<property name="DeskTypeName" column="DeskTypeName" type="String" />
+		<property name="DeskTypeName" column="DeskTypeName" type="String" not-null="false" />
 		<property name="RoomType" column="RoomType" type="Int32" not-null="false" />
 		<property name="MaxNumber" column="MaxNumber" type="Int32" />
 		<property name="MinNumber" column="MinNumber" type="Int32" />
@@ -20,7 +20,7 @@
 		<property name="UpdateTime" column="UpdateTime" type="Timestamp" />
 		<property name="Description" column="Description" type="String" not-null="false" />
 		<property name="DepositAmount" column="DepositAmount" type="Decimal" not-null="false" />
-		<property name="FloorId" column="FloorID" type="Int32" not-null="false" />
+		<property name="BoxName" column="BoxName" type="String" not-null="false" />
 		<!--The foreign keys-->
 		<bag name="QueueDeskTypeLockLogList" cascade="none" lazy="true" table="QueueDeskTypeLockLog">
 			<key column="DeskTypeId" />
