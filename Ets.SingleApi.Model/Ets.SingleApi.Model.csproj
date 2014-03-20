@@ -104,6 +104,7 @@
     <Compile Include="Controller\EtsWapPaiDuiShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\EtsWapPaiDuiShoppingCartRequst.cs" />
     <Compile Include="Controller\EtsWapPaiDuiShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartDeskRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />

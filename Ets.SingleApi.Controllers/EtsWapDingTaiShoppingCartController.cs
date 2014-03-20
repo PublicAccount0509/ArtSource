@@ -303,6 +303,64 @@
         }
 
         /// <summary>
+        /// 保存台位信息
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="requst">The requst.</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 6:55 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<EtsWapDingTaiShoppingCartModel> SaveDesk(string id, EtsWapDingTaiShoppingCartDeskRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<EtsWapDingTaiShoppingCartModel>
+                    {
+                        Message = new ApiMessage
+                            {
+                                StatusCode = (int) StatusCode.System.InvalidRequest
+                            }
+                    };
+            }
+
+            var desk = new ShoppingCartDesk
+                {
+                    DeskTypeId = requst.DeskTypeId,
+                    BookingDate = requst.BookingDate,
+                    BookingTime = requst.BookingTime,
+                    PeopleCount = requst.PeopleCount
+                };
+
+            var saveShoppingCartDeskResult = this.etsWapDingTaiShoppingCartServices.SaveShoppingCartDesk(
+                this.Source, id, desk);
+            if (!saveShoppingCartDeskResult.Result)
+            {
+                return new Response<EtsWapDingTaiShoppingCartModel>
+                    {
+                        Message = new ApiMessage
+                            {
+                                StatusCode = saveShoppingCartDeskResult.StatusCode
+                            },
+                        Result = new EtsWapDingTaiShoppingCartModel()
+                    };
+            }
+
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                        {
+                            StatusCode = result.StatusCode
+                        },
+                    Result = result.Result
+                };
+        }
+
+        /// <summary>
         /// 保存全部商品信息
         /// </summary>
         /// <param name="id">购物车Id</param>
