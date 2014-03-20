@@ -107,15 +107,6 @@
     <Compile Include="Controller\EtsWapTangShiShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\WechatPaymentRequest.cs" />
     <Compile Include="Controller\WechatPaymentStateRequest.cs" />
-    <Compile Include="Controller\EtsWapDingTaiShoppingCartDeliveryRequst.cs" />
-    <Compile Include="Controller\EtsWapDingTaiShoppingCartRequst.cs" />
-    <Compile Include="Controller\EtsWapDingTaiShoppingCartShoppingRequst.cs" />
-    <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderRequst.cs" />
-    <Compile Include="Controller\DingTaiDesk.cs" />
-    <Compile Include="Controller\EtsWapPaiDuiShoppingCartDeliveryRequst.cs" />
-    <Compile Include="Controller\EtsWapPaiDuiShoppingCartOrderRequst.cs" />
-    <Compile Include="Controller\EtsWapPaiDuiShoppingCartRequst.cs" />
-    <Compile Include="Controller\EtsWapPaiDuiShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartDeskRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
