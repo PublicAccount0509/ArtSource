@@ -2373,6 +2373,7 @@
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="supplierId">餐厅Id</param>
+        /// <param name="bookingDate">预订时间</param>
         /// <returns></returns>
         /// 创建者：苏建峰
         /// 创建日期：3/20/2014 2:22 PM
@@ -2384,7 +2385,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<string> GetDeskOpenTimeList(string source, int supplierId)
+        public ServicesResultList<string> GetDeskOpenTimeList(string source, int supplierId, DateTime bookingDate)
         {
             /*判断餐厅Id是否存在*/
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
@@ -2407,8 +2408,10 @@
                          supplierDeskTimeEntity.EndTime
                      }).ToList();
 
-            var deskOpenTimeList = new List<string>();
-            
+
+            var deskOpenTimeStrList = new List<string>();
+            var deskOpenTimeList = new List<DateTime>();
+
             var beginTimeStr = string.Empty;
             var endTimeStr = string.Empty;
             var todayDate = DateTime.Now.Date;
@@ -2438,16 +2441,21 @@
                 {
                     if (beginTime.Minute%30 == 0)
                     {
-                        deskOpenTimeList.Add(beginTime.ToString("HH:mm"));
+                        deskOpenTimeList.Add(beginTime);
                     }
                     beginTime = beginTime.AddMinutes(1);
                 }
             }
 
+            deskOpenTimeStrList =
+                deskOpenTimeList.Where(p => p >= bookingDate && bookingDate.Date == todayDate)
+                                .Select(p => p.ToString("HH:mm"))
+                                .ToList();
+
             return new ServicesResultList<string>
                 {
-                    ResultTotalCount = deskOpenTimeList.Count,
-                    Result = deskOpenTimeList
+                    ResultTotalCount = deskOpenTimeStrList.Count,
+                    Result = deskOpenTimeStrList
                 };
         }
     }

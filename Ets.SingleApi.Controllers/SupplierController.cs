@@ -1423,7 +1423,8 @@ namespace Ets.SingleApi.Controllers
         /// <summary>
         /// 获取餐厅订台开放时间列表
         /// </summary>
-        /// <param name="id">The identifier.</param>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="bookingDate">预订时间</param>
         /// <returns></returns>
         /// 创建者：苏建峰
         /// 创建日期：3/20/2014 2:40 PM
@@ -1431,9 +1432,22 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<string> DeskOpenTimeList(int id)
+        public ListResponse<string> DeskOpenTimeList(int id, DateTime? bookingDate)
         {
-            var getDeskOpenTimeListResult = this.supplierServices.GetDeskOpenTimeList(this.Source, id);
+            if (bookingDate == null)
+            {
+                return new ListResponse<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode =
+                            (int)StatusCode.System.InvalidRequest
+                    },
+                    Result = new List<string>()
+                };
+            }
+
+            var getDeskOpenTimeListResult = this.supplierServices.GetDeskOpenTimeList(this.Source, id, bookingDate.Value);
 
             if (getDeskOpenTimeListResult.Result == null || getDeskOpenTimeListResult.Result.Count == 0)
             {
