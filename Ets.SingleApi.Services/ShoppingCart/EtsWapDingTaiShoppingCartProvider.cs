@@ -53,6 +53,16 @@
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
+        /// 字段supplierEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 6:41 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository;
+
+        /// <summary>
         /// 字段shoppingCartCacheServices
         /// </summary>
         /// 创建者：周超
@@ -325,11 +335,57 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<ShoppingCartDesk> GetShoppingCartDesk(string source, string id)
         {
-            var shoppingCartDeskResult = this.etsWapDingTaiShoppingCartCacheServices.GetShoppingCartDesk(source, id);
+            var shoppingCartDeskCacheResult = this.etsWapDingTaiShoppingCartCacheServices.GetShoppingCartDesk(source, id);
+
+            var shoppingCartDeskCache = shoppingCartDeskCacheResult.Result;
+
+            if (shoppingCartDeskCache == null)
+            {
+                return new ServicesResult<ShoppingCartDesk>
+                    {
+                        StatusCode = shoppingCartDeskCacheResult.StatusCode,
+                        Result =  new ShoppingCartDesk()
+                    };
+            }
+
+            if (shoppingCartDeskCache.DeskTypeId == 0)
+            {
+                return new ServicesResult<ShoppingCartDesk>
+                    {
+                        StatusCode = shoppingCartDeskCacheResult.StatusCode,
+                        Result = shoppingCartDeskCache
+                    };
+            }
+
+            var deskType = (from deskTypeEntity in this.deskTypeEntityRepository.EntityQueryable
+                            where deskTypeEntity.Id == shoppingCartDeskCache.DeskTypeId
+                            select new ShoppingCartDesk
+                                {
+                                    DeskTypeId = deskTypeEntity.Id,
+                                    RoomType = deskTypeEntity.RoomType,
+                                    TblTypeId = deskTypeEntity.TableType.Id,
+                                    TblTypeName = deskTypeEntity.TableType.TblTypeName,
+                                    MaxNumber = deskTypeEntity.MaxNumber,
+                                    MinNumber = deskTypeEntity.MinNumber,
+                                    LowCost = deskTypeEntity.LowCost,
+                                    DepositAmount = deskTypeEntity.DepositAmount
+                                }).FirstOrDefault();
+
+            if (deskType != null)
+            {
+                shoppingCartDeskCache.RoomType = deskType.RoomType;
+                shoppingCartDeskCache.TblTypeId = deskType.TblTypeId;
+                shoppingCartDeskCache.TblTypeName = deskType.TblTypeName;
+                shoppingCartDeskCache.MaxNumber = deskType.MaxNumber;
+                shoppingCartDeskCache.MinNumber = deskType.MinNumber;
+                shoppingCartDeskCache.LowCost = deskType.LowCost;
+                shoppingCartDeskCache.DepositAmount = deskType.DeskTypeId;
+            }
+
             return new ServicesResult<ShoppingCartDesk>
             {
-                StatusCode = shoppingCartDeskResult.StatusCode,
-                Result = shoppingCartDeskResult.Result ?? new ShoppingCartDesk()
+                StatusCode = shoppingCartDeskCacheResult.StatusCode,
+                Result = shoppingCartDeskCache
             };
         }
 
