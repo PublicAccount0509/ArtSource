@@ -2367,5 +2367,88 @@
                     Result = deskTypeList
                 };
         }
+
+        /// <summary>
+        /// 获取餐厅订台开放时间列表
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 2:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 2:23 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<string> GetDeskOpenTimeList(string source, int supplierId)
+        {
+            /*判断餐厅Id是否存在*/
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResultList<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<string>()
+                };
+            }
+
+            var supplierDeskTimeList =
+                (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
+                 where supplierDeskTimeEntity.SupplierId == supplierId
+
+                 select new
+                     {
+                         supplierDeskTimeEntity.Id,
+                         supplierDeskTimeEntity.BeginTime,
+                         supplierDeskTimeEntity.EndTime
+                     }).ToList();
+
+            var deskOpenTimeList = new List<string>();
+            
+            var beginTimeStr = string.Empty;
+            var endTimeStr = string.Empty;
+            var todayDate = DateTime.Now.Date;
+
+            var beginTime = new DateTime();
+            var endTime = new DateTime();
+
+            foreach (var supplierDeskTime in supplierDeskTimeList)
+            {
+                beginTimeStr= supplierDeskTime.BeginTime;
+                endTimeStr = supplierDeskTime.EndTime;
+
+                beginTime =
+                    todayDate.AddHours(double.Parse(beginTimeStr.Split(':')[0]))
+                             .AddMinutes(double.Parse(beginTimeStr.Split(':')[1]));
+
+                endTime =
+                    todayDate.AddHours(double.Parse(endTimeStr.Split(':')[0]))
+                             .AddMinutes(double.Parse(endTimeStr.Split(':')[1]));
+
+                if (beginTime > endTime)
+                {
+                    continue;
+                }
+
+                while (beginTime <= endTime)
+                {
+                    if (beginTime.Minute%30 == 0)
+                    {
+                        deskOpenTimeList.Add(beginTime.ToString("HH:mm"));
+                    }
+                    beginTime = beginTime.AddMinutes(1);
+                }
+            }
+
+            return new ServicesResultList<string>
+                {
+                    ResultTotalCount = deskOpenTimeList.Count,
+                    Result = deskOpenTimeList
+                };
+        }
     }
 }

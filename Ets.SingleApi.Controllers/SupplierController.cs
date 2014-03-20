@@ -1399,7 +1399,7 @@ namespace Ets.SingleApi.Controllers
 
             var result = getDeskListResult.Result.Select(p => new DingTaiDesk
                 {
-                    Id=p.Id,
+                    Id = p.Id,
                     RoomType = p.RoomType ?? 0,
                     TblTypeId = p.TblTypeId,
                     TblTypeName = p.TblTypeName,
@@ -1420,5 +1420,45 @@ namespace Ets.SingleApi.Controllers
                 };
         }
 
+        /// <summary>
+        /// 获取餐厅订台开放时间列表
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 2:40 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<string> DeskOpenTimeList(int id)
+        {
+            var getDeskOpenTimeListResult = this.supplierServices.GetDeskOpenTimeList(this.Source, id);
+
+            if (getDeskOpenTimeListResult.Result == null || getDeskOpenTimeListResult.Result.Count == 0)
+            {
+                return new ListResponse<string>
+                    {
+                        Message = new ApiMessage
+                            {
+                                StatusCode =
+                                    getDeskOpenTimeListResult.StatusCode == (int) StatusCode.Succeed.Ok
+                                        ? (int) StatusCode.Succeed.Empty
+                                        : getDeskOpenTimeListResult.StatusCode
+                            },
+                        Result = new List<string>()
+                    };
+            }
+
+            return new ListResponse<string>
+                {
+                    Message = new ApiMessage
+                        {
+                            StatusCode = getDeskOpenTimeListResult.StatusCode
+                        },
+                    ResultTotalCount = getDeskOpenTimeListResult.ResultTotalCount,
+                    Result = getDeskOpenTimeListResult.Result
+                };
+        }
     }
 }
