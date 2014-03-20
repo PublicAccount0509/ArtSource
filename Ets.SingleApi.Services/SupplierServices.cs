@@ -2324,7 +2324,7 @@
             {
                 return new ServicesResultList<DingTaiDeskModel>
                     {
-                        StatusCode = (int)StatusCode.Validate.InvalidBookingTimeCode,
+                        StatusCode = (int) StatusCode.Validate.InvalidBookingTimeCode,
                         Result = new List<DingTaiDeskModel>()
                     };
             }
@@ -2344,12 +2344,14 @@
             /*可以预定的台位列表*/
             var deskTypeList = (from deskTypeEntity in this.deskTypeEntityRepository.EntityQueryable
                                 where deskTypeEntity.SupplierId == parameter.SupplierId
+                                      && deskTypeEntity.IsLock == false
+                                      && deskTypeEntity.IsDel == false
                                       && !lockedDeskTypeId.Contains(deskTypeEntity.Id)
                                       && deskTypeEntity.MinNumber <= parameter.PeopleCount
                                       && deskTypeEntity.MaxNumber >= parameter.PeopleCount
                                 select new DingTaiDeskModel
                                     {
-                                        Id=deskTypeEntity.Id,
+                                        Id = deskTypeEntity.Id,
                                         RoomType = deskTypeEntity.RoomType,
                                         TblTypeId = deskTypeEntity.TableType.Id,
                                         TblTypeName = deskTypeEntity.TableType.TblTypeName,
