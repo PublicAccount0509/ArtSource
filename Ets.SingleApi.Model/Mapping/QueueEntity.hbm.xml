@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-	<class name="Ets.SingleApi.Model.Repository.QueueEntity, Ets.SingleApi.Model.Repository" table="Queue" dynamic-update="true" optimistic-lock="all" >
+	<class name="Ets.SingleApi.Model.Repository.QueueEntity, Ets.SingleApi.Model" table="Queue" dynamic-update="true" optimistic-lock="all" >
 	 <!--The cache-->
 	 <cache usage="read-write"/>
 	 <!--The primary keys-->
@@ -25,10 +25,5 @@
 		<property name="SupplierEmployeeId" column="SupplierEmployeeID" type="Int32" not-null="false" />
 		<property name="Code" column="Code" type="String" not-null="false" />
 		<property name="DeskTypeId" column="DeskTypeId" type="Int32" not-null="false" />
-		<!--The foreign keys-->
-		<bag name="QueueDeskTypeLockLogList" cascade="none" lazy="true" table="QueueDeskTypeLockLog">
-			<key column="QueueId" />
-			<one-to-many class="Ets.SingleApi.Model.Repository.QueueDeskTypeLockLogEntity, Ets.SingleApi.Model.Repository" />
-		</bag>
 	</class>
 </hibernate-mapping>

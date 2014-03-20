@@ -653,14 +653,14 @@
     <Compile Include="Services\EtsWapTangShiShoppingCartModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Mapping\DeskBookingEntity.hbm.xml" />
-    <Content Include="Mapping\DeskTypeEntity.hbm.xml" />
-    <Content Include="Mapping\DeskTypeLockLogEntity.hbm.xml" />
-    <Content Include="Mapping\QueueDeskTypeLockLogEntity.hbm.xml" />
-    <Content Include="Mapping\QueueEntity.hbm.xml" />
-    <Content Include="Mapping\SupplierDeskEntity.hbm.xml" />
-    <Content Include="Mapping\SupplierDeskTimeEntity.hbm.xml" />
-    <Content Include="Mapping\TableTypeEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\DeskBookingEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\DeskTypeEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\DeskTypeLockLogEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\QueueDeskTypeLockLogEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\QueueEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierDeskEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierDeskTimeEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\TableTypeEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
