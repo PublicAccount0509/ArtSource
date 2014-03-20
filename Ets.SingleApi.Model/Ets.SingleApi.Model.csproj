@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -47,7 +46,16 @@
     <Compile Include="Controller\AlipayPaymentRequst.cs" />
     <Compile Include="Controller\AlipayPaymentStateRequst.cs" />
     <Compile Include="Controller\BaiFuBaoPaymentRequst.cs" />
+    <Compile Include="Controller\DingTaiDesk.cs" />
     <Compile Include="Controller\DistanceResult.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartDeliveryRequst.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderRequst.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartRequst.cs" />
+    <Compile Include="Controller\EtsWapDingTaiShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\EtsWapPaiDuiShoppingCartDeliveryRequst.cs" />
+    <Compile Include="Controller\EtsWapPaiDuiShoppingCartOrderRequst.cs" />
+    <Compile Include="Controller\EtsWapPaiDuiShoppingCartRequst.cs" />
+    <Compile Include="Controller\EtsWapPaiDuiShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\LocationCity.cs" />
     <Compile Include="Controller\HtjRegisterUserRequest.cs" />
     <Compile Include="Controller\HtjUserExtendResult.cs" />
@@ -96,15 +104,8 @@
     <Compile Include="Controller\EtsWapTangShiShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\EtsWapTangShiShoppingCartRequst.cs" />
     <Compile Include="Controller\EtsWapTangShiShoppingCartShoppingRequst.cs" />
-    <Compile Include="Controller\EtsWapDingTaiShoppingCartDeliveryRequst.cs" />
-    <Compile Include="Controller\EtsWapDingTaiShoppingCartRequst.cs" />
-    <Compile Include="Controller\EtsWapDingTaiShoppingCartShoppingRequst.cs" />
-    <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderRequst.cs" />
-    <Compile Include="Controller\DingTaiDesk.cs" />
-    <Compile Include="Controller\EtsWapPaiDuiShoppingCartDeliveryRequst.cs" />
-    <Compile Include="Controller\EtsWapPaiDuiShoppingCartOrderRequst.cs" />
-    <Compile Include="Controller\EtsWapPaiDuiShoppingCartRequst.cs" />
-    <Compile Include="Controller\EtsWapPaiDuiShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\WechatPaymentRequest.cs" />
+    <Compile Include="Controller\WechatPaymentStateRequest.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -113,13 +114,13 @@
     <Compile Include="ExternalServices\OrderNumberExternalUrlParameter.cs" />
     <Compile Include="ExternalServices\SingleApiExternalServiceAuthenParameter.cs" />
     <Compile Include="IOrderDetailModel.cs" />
-    <Compile Include="Mapping\Repository\DeskTypeEntity.cs" />
     <Compile Include="Mapping\Repository\BaiDuAppLightEntity.cs" />
     <Compile Include="Mapping\Repository\CustomizationOptionEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
     <Compile Include="Mapping\Repository\DeskBookingEntity.cs" />
+    <Compile Include="Mapping\Repository\DeskTypeEntity.cs" />
     <Compile Include="Mapping\Repository\DeskTypeLockLogEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
     <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
@@ -155,8 +156,12 @@
     <Compile Include="Services\BaiFuBaoReturnParameter.cs" />
     <Compile Include="Services\BaiFuBaoSubmitParameter.cs" />
     <Compile Include="Services\CustomerSimpleModel.cs" />
+    <Compile Include="Services\DingTaiDeskModel.cs" />
+    <Compile Include="Services\DingTaiGetDeskListParameter.cs" />
     <Compile Include="Services\DistanceModel.cs" />
     <Compile Include="Services\DistanceParameter.cs" />
+    <Compile Include="Services\EtsWapDingTaiShoppingCartModel.cs" />
+    <Compile Include="Services\EtsWapPaiDuiShoppingCartModel.cs" />
     <Compile Include="Services\HtjUserModel.cs" />
     <Compile Include="Controller\LightSupplier.cs" />
     <Compile Include="Services\HuangTaiJiShoppingCartModel.cs" />
@@ -200,14 +205,19 @@
     <Compile Include="Services\EtsWapShoppingCartModel.cs" />
     <Compile Include="Services\TangShiOrderDetailModel.cs" />
     <Compile Include="Services\TangShiOrderDishModel.cs" />
-    <Compile Include="Services\EtsWapDingTaiShoppingCartModel.cs" />
-    <Compile Include="Services\DingTaiDeskModel.cs" />
-    <Compile Include="Services\DingTaiGetDeskListParameter.cs" />
-    <Compile Include="Services\EtsWapPaiDuiShoppingCartModel.cs" />
+    <Compile Include="Services\WechatPaymentParameter.cs" />
+    <Compile Include="Services\WechatPaymentStateParameter.cs" />
+    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
+    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCart.cs" />
+    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartLink.cs" />
+    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartOrder.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartOrder.cs" />
+    <Compile Include="ShoppingCart\ShoppingCartDesk.cs" />
     <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
     <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
@@ -350,13 +360,6 @@
     <Compile Include="ShoppingCart\EtsWapShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapShoppingCartOrder.cs" />
-    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
-    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
-    <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
-    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCart.cs" />
-    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartLink.cs" />
-    <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartOrder.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartDesk.cs" />
     <Compile Include="SmsSendsType.cs" />
     <Compile Include="UserLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -671,644 +674,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-=======
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B6F811C6-70B6-4D50-A5DB-C7589371860C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ets.SingleApi.Model</RootNamespace>
-    <AssemblyName>Ets.SingleApi.Model</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BusinessType.cs" />
-    <Compile Include="CacheServices\CacheServicesResult.cs" />
-    <Compile Include="CacheServices\CacheServicesListResult.cs" />
-    <Compile Include="Controller\AlipayPaymentRequst.cs" />
-    <Compile Include="Controller\AlipayPaymentStateRequst.cs" />
-    <Compile Include="Controller\BaiFuBaoPaymentRequst.cs" />
-    <Compile Include="Controller\DistanceResult.cs" />
-    <Compile Include="Controller\LocationCity.cs" />
-    <Compile Include="Controller\HtjRegisterUserRequest.cs" />
-    <Compile Include="Controller\HtjUserExtendResult.cs" />
-    <Compile Include="Controller\HuangTaiJiShoppingCartRequst.cs" />
-    <Compile Include="Controller\HuangTaiJiShoppingCartShoppingRequst.cs" />
-    <Compile Include="Controller\HuangTaiJiSupplierCuisine.cs" />
-    <Compile Include="Controller\HuangTaiJiSupplierDishCustomizationOption.cs" />
-    <Compile Include="Controller\HuangTaiJiSupplierDishDetail.cs" />
-    <Compile Include="Controller\HuangTaiJiSupplierDishOptionGroup.cs" />
-    <Compile Include="Controller\HuangTaiJiWaiMaiOrderDetail.cs" />
-    <Compile Include="Controller\HuangTaiJiWaiMaiOrderDish.cs" />
-    <Compile Include="Controller\IsFollowerSupplierResult.cs" />
-    <Compile Include="Controller\PackageCuisine.cs" />
-    <Compile Include="Controller\PackageDish.cs" />
-    <Compile Include="Controller\SaveSupplierCuisine.cs" />
-    <Compile Include="Controller\ConfirmWaiMaiOrderResult.cs" />
-    <Compile Include="Controller\ConfirmWaiMaiOrderRequst.cs" />
-    <Compile Include="Controller\Exist.cs" />
-    <Compile Include="Controller\PaymentResult.cs" />
-    <Compile Include="Controller\PaymentWaiMaiOrderResult.cs" />
-    <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
-    <Compile Include="Controller\ShoppingCartShoppingRequst.cs" />
-    <Compile Include="Controller\ShoppingCartOrderRequst.cs" />
-    <Compile Include="Controller\SupplierCoupon.cs" />
-    <Compile Include="Controller\SupplierCouponRequst.cs" />
-    <Compile Include="Controller\SupplierDeliveryTime.cs" />
-    <Compile Include="Controller\SupplierServiceTime.cs" />
-    <Compile Include="Controller\Response.cs" />
-    <Compile Include="Controller\ListResponse.cs" />
-    <Compile Include="Controller\ShoppingCartDeliveryRequst.cs" />
-    <Compile Include="Controller\ShoppingCartRequst.cs" />
-    <Compile Include="Controller\CustomerSimple.cs" />
-    <Compile Include="Controller\HaiDiLaoShoppingCartDeliveryRequst.cs" />
-    <Compile Include="Controller\HaiDiLaoShoppingCartOrderRequst.cs" />
-    <Compile Include="Controller\HaiDiLaoShoppingCartRequst.cs" />
-    <Compile Include="Controller\HaiDiLaoShoppingCartShoppingRequst.cs" />
-    <Compile Include="Controller\HaiDiLaoShoppingCartExtraRequst.cs" />
-    <Compile Include="Controller\WapGroupSupplier.cs" />
-    <Compile Include="Controller\WapSupplierDetail.cs" />
-    <Compile Include="Controller\OAuthLoginResult.cs" />
-    <Compile Include="Controller\OAuthLoginRequst.cs" />
-    <Compile Include="Controller\OrderShoppingCartStatusResult.cs" />
-    <Compile Include="Controller\BaiFuBaoPaymentStateRequst.cs" />
-    <Compile Include="Controller\SupplierSimple.cs" />
-    <Compile Include="Controller\EtsWapTangShiShoppingCartDeliveryRequst.cs" />
-    <Compile Include="Controller\EtsWapTangShiShoppingCartOrderRequst.cs" />
-    <Compile Include="Controller\EtsWapTangShiShoppingCartRequst.cs" />
-    <Compile Include="Controller\EtsWapTangShiShoppingCartShoppingRequst.cs" />
-    <Compile Include="Controller\WechatPaymentRequest.cs" />
-    <Compile Include="Controller\WechatPaymentStateRequest.cs" />
-    <Compile Include="DefaultServicesResult.cs" />
-    <Compile Include="DeliveryMethodType.cs" />
-    <Compile Include="DetailServices\DetailServicesResultList.cs" />
-    <Compile Include="ExternalServices\ExternalServiceResult.cs" />
-    <Compile Include="ExternalServices\IExternalUrlParameter.cs" />
-    <Compile Include="ExternalServices\OrderNumberExternalUrlParameter.cs" />
-    <Compile Include="ExternalServices\SingleApiExternalServiceAuthenParameter.cs" />
-    <Compile Include="IOrderDetailModel.cs" />
-    <Compile Include="Mapping\Repository\BaiDuAppLightEntity.cs" />
-    <Compile Include="Mapping\Repository\CustomizationOptionEntity.cs" />
-    <Compile Include="Mapping\Repository\DeliveryChargeEntity.cs" />
-    <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
-    <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
-    <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
-    <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
-    <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
-    <Compile Include="Mapping\Repository\PackageContentEntity.cs" />
-    <Compile Include="Mapping\Repository\PackageNameEntity.cs" />
-    <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
-    <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
-    <Compile Include="Mapping\Repository\PaymentRecordEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierDishCustomizationEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierDishGroupEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierDoNotSendTimeEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierGroupAdvertisementEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierGroupFeatureEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierGroupLightEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierGroupLogoImageEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierGroupTemplateEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
-    <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
-    <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
-    <Compile Include="OrderProviderType.cs" />
-    <Compile Include="OrderSourceType.cs" />
-    <Compile Include="Services\AlipayPaymentParameter.cs" />
-    <Compile Include="Services\AlipayPaymentStateParameter.cs" />
-    <Compile Include="Services\BaiFuBaoPaymentParameter.cs" />
-    <Compile Include="Services\BaiFuBaoPaymentStateParameter.cs" />
-    <Compile Include="Services\BaiFuBaoReturnParameter.cs" />
-    <Compile Include="Services\BaiFuBaoSubmitParameter.cs" />
-    <Compile Include="Services\CustomerSimpleModel.cs" />
-    <Compile Include="Services\DistanceModel.cs" />
-    <Compile Include="Services\DistanceParameter.cs" />
-    <Compile Include="Services\HtjUserModel.cs" />
-    <Compile Include="Controller\LightSupplier.cs" />
-    <Compile Include="Services\HuangTaiJiShoppingCartModel.cs" />
-    <Compile Include="Services\HuangTaiJiWaiMaiOrderDetailModel.cs" />
-    <Compile Include="Services\HuangTaiJiWaiMaiOrderDishModel.cs" />
-    <Compile Include="Services\LightFeatureModel.cs" />
-    <Compile Include="Services\LightSupplierModel.cs" />
-    <Compile Include="Services\LightSupplierDetailModel.cs" />
-    <Compile Include="Services\LightSupplierTemplateModel.cs" />
-    <Compile Include="Services\LocationCity.cs" />
-    <Compile Include="Services\OrderBDInfo.cs" />
-    <Compile Include="Services\ParameterBase.cs" />
-    <Compile Include="Services\ShoppingCartModel.cs" />
-    <Compile Include="Services\GetSearchSupplierListParameter.cs" />
-    <Compile Include="Services\SupplierCouponModel.cs" />
-    <Compile Include="Services\SupplierCouponParameter.cs" />
-    <Compile Include="Services\SupplierServiceTimeModel.cs" />
-    <Compile Include="Services\HaiDiLaoShoppingCartModel.cs" />
-    <Compile Include="Services\HtjRegisterUserParameter.cs" />
-    <Compile Include="Services\HtjUserExtendModel.cs" />
-    <Compile Include="Services\SupplierDeliveryTimeModel.cs" />
-    <Compile Include="Controller\UserToken.cs" />
-    <Compile Include="Controller\HtjUser.cs" />
-    <Compile Include="Services\SupplierSimpleModel.cs" />
-    <Compile Include="Services\UserToken.cs" />
-    <Compile Include="Services\PackageDishModel.cs" />
-    <Compile Include="Services\PackageCuisineModel.cs" />
-    <Compile Include="Services\HaiDiLaoWaiMaiOrderDetailModel.cs" />
-    <Compile Include="Services\HaiDiLaoWaiMaiOrderDishModel.cs" />
-    <Compile Include="Controller\LightFeature.cs" />
-    <Compile Include="Controller\LightSupplierDetail.cs" />
-    <Compile Include="Controller\LightSupplierTemplate.cs" />
-    <Compile Include="Services\GetSearchGroupSupplierListParameter.cs" />
-    <Compile Include="Services\LocationCityModel.cs" />
-    <Compile Include="Mapping\Repository\SupplierModelEntity.cs" />
-    <Compile Include="Mapping\Repository\GroupSupplierModelEntity.cs" />
-    <Compile Include="Services\RegisterUserOAuthParameter.cs" />
-    <Compile Include="Services\OAuthLoginParameter.cs" />
-    <Compile Include="Services\OrderShoppingCartStatusModel.cs" />
-    <Compile Include="Services\SupplierRecommendedDishModel.cs" />
-    <Compile Include="Services\EtsWapShoppingCartModel.cs" />
-    <Compile Include="Services\TangShiOrderDetailModel.cs" />
-    <Compile Include="Services\TangShiOrderDishModel.cs" />
-    <Compile Include="Services\WechatPaymentParameter.cs" />
-    <Compile Include="Services\WechatPaymentStateParameter.cs" />
-    <Compile Include="ShoppingCart\HuangTaiJiShoppingCart.cs" />
-    <Compile Include="ShoppingCart\HuangTaiJiShoppingCartItem.cs" />
-    <Compile Include="ShoppingCart\HuangTaiJiShoppingCartLink.cs" />
-    <Compile Include="ShoppingCart\HuangTaiJiShoppingCartOrder.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartExtra.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartLink.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartResult.cs" />
-    <Compile Include="ShoppingCart\IShoppingCartBusiness.cs" />
-    <Compile Include="ShoppingCart\ShoppingCart.cs" />
-    <Compile Include="Controller\SupplierFeature.cs" />
-    <Compile Include="Controller\WaiMaiOrderDetail.cs" />
-    <Compile Include="Controller\WaiMaiOrderDish.cs" />
-    <Compile Include="Controller\WaiMaiOrderRequst.cs" />
-    <Compile Include="Controller\AuthLoginRequst.cs" />
-    <Compile Include="Controller\AuthLoginResult.cs" />
-    <Compile Include="Controller\ExistResult.cs" />
-    <Compile Include="Controller\ExistRequest.cs" />
-    <Compile Include="Controller\UmPaymentRequst.cs" />
-    <Compile Include="Controller\UmPaymentStateRequst.cs" />
-    <Compile Include="Controller\PaymentStateResult.cs" />
-    <Compile Include="Controller\OrderNumberResult.cs" />
-    <Compile Include="Controller\SaveSupplierCuisineRequst.cs" />
-    <Compile Include="Controller\DeleteSupplierCuisineRequst.cs" />
-    <Compile Include="Controller\SaveSupplierDish.cs" />
-    <Compile Include="Controller\SaveSupplierDishRequst.cs" />
-    <Compile Include="Controller\DeleteSupplierDishRequst.cs" />
-    <Compile Include="Controller\SetPasswordRequest.cs" />
-    <Compile Include="Controller\AuthCodeRequst.cs" />
-    <Compile Include="Controller\RoughSupplier.cs" />
-    <Compile Include="Controller\PackagingFeeRequst.cs" />
-    <Compile Include="GaussSphere.cs" />
-    <Compile Include="Location.cs" />
-    <Compile Include="LocationType.cs" />
-    <Compile Include="Mapping\Repository\OrderNumberDcEntity.cs" />
-    <Compile Include="Mapping\Repository\OrderNumberDtEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierDishImageEntity.cs" />
-    <Compile Include="PaymentType.cs" />
-    <Compile Include="Services\AddSupplierCuisineParameter.cs" />
-    <Compile Include="Services\ConfirmWaiMaiOrderParameter.cs" />
-    <Compile Include="Controller\ApiCache.cs" />
-    <Compile Include="Controller\ApiRequst.cs" />
-    <Compile Include="Controller\ApiResponse.cs" />
-    <Compile Include="Controller\ApiMessage.cs" />
-    <Compile Include="Controller\BusinessArea.cs" />
-    <Compile Include="Controller\Cuisine.cs" />
-    <Compile Include="Controller\Customer.cs" />
-    <Compile Include="Controller\CustomerAddress.cs" />
-    <Compile Include="Controller\DishImage.cs" />
-    <Compile Include="Controller\GroupSupplier.cs" />
-    <Compile Include="Controller\LoginResult.cs" />
-    <Compile Include="Controller\LoginRequst.cs" />
-    <Compile Include="Controller\AddWaiMaiOrderRequst.cs" />
-    <Compile Include="Controller\FindPasswordRequest.cs" />
-    <Compile Include="Controller\FindPasswordWay.cs" />
-    <Compile Include="Controller\FollowerSupplier.cs" />
-    <Compile Include="Controller\CustomerAddressRequst.cs" />
-    <Compile Include="Controller\SupplierDetail.cs" />
-    <Compile Include="Controller\UserOrder.cs" />
-    <Compile Include="Controller\AddWaiMaiOrderDish.cs" />
-    <Compile Include="Controller\AddWaiMaiOrderResult.cs" />
-    <Compile Include="Mapping\Repository\CustomerAddressEntity.cs" />
-    <Compile Include="Mapping\Repository\DeliveryAddressEntity.cs" />
-    <Compile Include="Mapping\Repository\OrderSourceEntity.cs" />
-    <Compile Include="Mapping\Repository\OrderStatusEntity.cs" />
-    <Compile Include="Mapping\Repository\SuppTimeTableDisplayEntity.cs" />
-    <Compile Include="Mapping\Repository\TimeTableDisplayEntity.cs" />
-    <Compile Include="OrderType.cs" />
-    <Compile Include="PasswordType.cs" />
-    <Compile Include="Services\ConfirmWaiMaiOrderModel.cs" />
-    <Compile Include="Services\ExistModel.cs" />
-    <Compile Include="Services\PackagingFeeItem.cs" />
-    <Compile Include="Services\RoughSupplierModel.cs" />
-    <Compile Include="Services\TokenModel.cs" />
-    <Compile Include="Services\UmPaymentParameter.cs" />
-    <Compile Include="Services\PaymentWaiMaiOrderParameter.cs" />
-    <Compile Include="Services\AddWaiMaiOrderDishModel.cs" />
-    <Compile Include="Services\AddWaiMaiOrderModel.cs" />
-    <Compile Include="Services\CustomerModel.cs" />
-    <Compile Include="Services\PaymentWaiMaiOrderModel.cs" />
-    <Compile Include="Services\SupplierFeatureModel.cs" />
-    <Compile Include="Services\UserOrdersParameter.cs" />
-    <Compile Include="Services\WaiMaiOrderModel.cs" />
-    <Compile Include="Services\TangShiOrderModel.cs" />
-    <Compile Include="Services\FindPasswordParameter.cs" />
-    <Compile Include="Services\FindPasswordWayModel.cs" />
-    <Compile Include="Services\FollowerSupplierModel.cs" />
-    <Compile Include="Services\IOrderModel.cs" />
-    <Compile Include="Services\PasswordParameter.cs" />
-    <Compile Include="Controller\RegisterUserRequst.cs" />
-    <Compile Include="Controller\RegisterUserResult.cs" />
-    <Compile Include="Controller\SendAuthCodeResult.cs" />
-    <Compile Include="Controller\Supplier.cs" />
-    <Compile Include="Controller\SupplierCuisineDetail.cs" />
-    <Compile Include="Controller\SupplierDishDetail.cs" />
-    <Compile Include="Controller\SupplierCuisine.cs" />
-    <Compile Include="Controller\SupplierDish.cs" />
-    <Compile Include="Controller\SendAuthCodeRequst.cs" />
-    <Compile Include="DetailServices\DetailServicesResult.cs" />
-    <Compile Include="ExternalServices\SmsResult.cs" />
-    <Compile Include="OrderBy.cs" />
-    <Compile Include="Controller\PasswordRequest.cs" />
-    <Compile Include="Services\SendAuthCodeModel.cs" />
-    <Compile Include="Services\SendAuthCodeParameter.cs" />
-    <Compile Include="Services\CustomerAddressModel.cs" />
-    <Compile Include="Services\CustomerAddressParameter.cs" />
-    <Compile Include="Services\SupplierCuisineModel.cs" />
-    <Compile Include="Services\SupplierDetailModel.cs" />
-    <Compile Include="Services\SupplierDishModel.cs" />
-    <Compile Include="Services\DingTaiOrderModel.cs" />
-    <Compile Include="Services\UserOrderModel.cs" />
-    <Compile Include="Services\AllOrderModel.cs" />
-    <Compile Include="Services\GroupSupplierModel.cs" />
-    <Compile Include="Services\GetGroupSupplierListParameter.cs" />
-    <Compile Include="Services\AddWaiMaiOrderParameter.cs" />
-    <Compile Include="Services\WaiMaiOrderDetailModel.cs" />
-    <Compile Include="Services\WaiMaiOrderDishModel.cs" />
-    <Compile Include="Services\AuthLoginModel.cs" />
-    <Compile Include="Services\AuthLoginParameter.cs" />
-    <Compile Include="Services\ExistParameter.cs" />
-    <Compile Include="Services\UmPaymentStateParameter.cs" />
-    <Compile Include="Services\SaveSupplierCuisineModel.cs" />
-    <Compile Include="Services\SaveSupplierCuisineParameter.cs" />
-    <Compile Include="Services\DeleteSupplierCuisineParameter.cs" />
-    <Compile Include="Services\SaveSupplierDishModel.cs" />
-    <Compile Include="Services\AddSupplierDishParameter.cs" />
-    <Compile Include="Services\SaveSupplierDishImageModel.cs" />
-    <Compile Include="Services\SaveSupplierDishParameter.cs" />
-    <Compile Include="Services\DeleteSupplierDishParameter.cs" />
-    <Compile Include="Services\SetPasswordParameter.cs" />
-    <Compile Include="Services\GetUserOrderParameter.cs" />
-    <Compile Include="Services\AuthCodeParameter.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartCustomer.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartItem.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartOrder.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartSupplier.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartDelivery.cs" />
-    <Compile Include="ShoppingCart\HaiDiLaoShoppingCartLink.cs" />
-    <Compile Include="ShoppingCart\HaiDiLaoShoppingCartOrder.cs" />
-    <Compile Include="ShoppingCart\ShoppingCartBase.cs" />
-    <Compile Include="ShoppingCart\BindShoppingCartResult.cs" />
-    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCart.cs" />
-    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartLink.cs" />
-    <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartOrder.cs" />
-    <Compile Include="ShoppingCart\EtsWapShoppingCart.cs" />
-    <Compile Include="ShoppingCart\EtsWapShoppingCartLink.cs" />
-    <Compile Include="ShoppingCart\EtsWapShoppingCartOrder.cs" />
-    <Compile Include="SmsSendsType.cs" />
-    <Compile Include="UserLevel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Mapping\Repository\ActivateCardEntity.cs" />
-    <Compile Include="Mapping\Repository\ActivityEntity.cs" />
-    <Compile Include="Mapping\Repository\AddrBusinessAreaEntity.cs" />
-    <Compile Include="Mapping\Repository\AddrCityEntity.cs" />
-    <Compile Include="Mapping\Repository\AddrProvinceEntity.cs" />
-    <Compile Include="Mapping\Repository\AddrRegionEntity.cs" />
-    <Compile Include="Mapping\Repository\AppEntity.cs" />
-    <Compile Include="Mapping\Repository\AppScopeEntity.cs" />
-    <Compile Include="Mapping\Repository\AutorizationEntity.cs" />
-    <Compile Include="Mapping\Repository\AwardEntity.cs" />
-    <Compile Include="Mapping\Repository\BlockedIPAddressEntity.cs" />
-    <Compile Include="Mapping\Repository\BundleEntity.cs" />
-    <Compile Include="Mapping\Repository\BundleSupplierDishEntity.cs" />
-    <Compile Include="Mapping\Repository\CampaignEntity.cs" />
-    <Compile Include="Mapping\Repository\CampaignSupplierEntity.cs" />
-    <Compile Include="Mapping\Repository\CardEntity.cs" />
-    <Compile Include="Mapping\Repository\CategoryEntity.cs" />
-    <Compile Include="Mapping\Repository\CategoryTypeEntity.cs" />
-    <Compile Include="Mapping\Repository\ChefEntity.cs" />
-    <Compile Include="Mapping\Repository\CommentDiningPurposeEntity.cs" />
-    <Compile Include="Mapping\Repository\ContactEntity.cs" />
-    <Compile Include="Mapping\Repository\CountryEntity.cs" />
-    <Compile Include="Mapping\Repository\CouponEntity.cs" />
-    <Compile Include="Mapping\Repository\CrossSupplierDishEntity.cs" />
-    <Compile Include="Mapping\Repository\CuisineCategoryEntity.cs" />
-    <Compile Include="Mapping\Repository\CuisineEntity.cs" />
-    <Compile Include="Mapping\Repository\CustomerEntity.cs" />
-    <Compile Include="Mapping\Repository\CustomerFavoriteEntity.cs" />
-    <Compile Include="Mapping\Repository\CustomerPointEntity.cs" />
-    <Compile Include="Mapping\Repository\DeliveryEntity.cs" />
-    <Compile Include="Mapping\Repository\DiningPurposeEntity.cs" />
-    <Compile Include="Mapping\Repository\DishImageEntity.cs" />
-    <Compile Include="Mapping\Repository\FeatureEntity.cs" />
-    <Compile Include="Mapping\Repository\FeedBackCommentEntity.cs" />
-    <Compile Include="Mapping\Repository\FeedBackEntity.cs" />
-    <Compile Include="Mapping\Repository\HolidayBackupSupplierEntity.cs" />
-    <Compile Include="Mapping\Repository\InvoiceEntity.cs" />
-    <Compile Include="Mapping\Repository\LevelEntity.cs" />
-    <Compile Include="Mapping\Repository\LocationEntity.cs" />
-    <Compile Include="Mapping\Repository\LocationTypeEntity.cs" />
-    <Compile Include="Mapping\Repository\LoginEntity.cs" />
-    <Compile Include="Mapping\Repository\LoginOAuthEntity.cs" />
-    <Compile Include="Mapping\Repository\MarketingAllowanceEntity.cs" />
-    <Compile Include="Mapping\Repository\MarketingLogEntity.cs" />
-    <Compile Include="Mapping\Repository\MarketingMessageEntity.cs" />
-    <Compile Include="Mapping\Repository\MenuLayoutDishEntity.cs" />
-    <Compile Include="Mapping\Repository\MenuLayoutStyleEntity.cs" />
-    <Compile Include="Mapping\Repository\MenuLayoutSupplierEntity.cs" />
-    <Compile Include="Mapping\Repository\OrderEntity.cs" />
-    <Compile Include="Mapping\Repository\PaymentEntity.cs" />
-    <Compile Include="Mapping\Repository\PointcouponEntity.cs" />
-    <Compile Include="Mapping\Repository\PointCouponSupplierREntity.cs" />
-    <Compile Include="Mapping\Repository\PromotionEntity.cs" />
-    <Compile Include="Mapping\Repository\PublicTransportEntity.cs" />
-    <Compile Include="Mapping\Repository\RatingTypeEntity.cs" />
-    <Compile Include="Mapping\Repository\RegionEntity.cs" />
-    <Compile Include="Mapping\Repository\SourcePathEntity.cs" />
-    <Compile Include="Mapping\Repository\SourceTypeEntity.cs" />
-    <Compile Include="Mapping\Repository\StatementEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierBusinessAreaEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierCategoryEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierCommentEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierCommissionEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierContactEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierCouponEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierCouponTimeEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierCuisineEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierDiningPurposeEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierDishEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierDishMinNumberEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierFeatureEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierImageEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierLocationEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierMenuCategoryEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierMenuCategoryTypeEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierRatingEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierRoomSizeEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierSpecialOfferEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierStationEntity.cs" />
-    <Compile Include="Mapping\Repository\SupplierTransportEntity.cs" />
-    <Compile Include="Mapping\Repository\TableDeskEntity.cs" />
-    <Compile Include="Mapping\Repository\TableReservationEntity.cs" />
-    <Compile Include="Mapping\Repository\TokenEntity.cs" />
-    <Compile Include="Mapping\Repository\TransportStationEntity.cs" />
-    <Compile Include="Mapping\Repository\UserShowWindowEntity.cs" />
-    <Compile Include="Mapping\Repository\VacancyEntity.cs" />
-    <Compile Include="Services\CountryModel.cs" />
-    <Compile Include="Services\DishImageModel.cs" />
-    <Compile Include="Services\GetSupplierListParameter.cs" />
-    <Compile Include="Services\LoginModel.cs" />
-    <Compile Include="Services\LoginParameter.cs" />
-    <Compile Include="Services\RegisterUserModel.cs" />
-    <Compile Include="Services\ServicesResult.cs" />
-    <Compile Include="Services\SupplierModel.cs" />
-    <Compile Include="Services\SupplierCuisineDetailModel.cs" />
-    <Compile Include="Services\ProvinceModel.cs" />
-    <Compile Include="Services\CityModel.cs" />
-    <Compile Include="Services\RegionModel.cs" />
-    <Compile Include="Services\BusinessAreaModel.cs" />
-    <Compile Include="Services\CuisineModel.cs" />
-    <Compile Include="Services\RegisterUserParameter.cs" />
-    <Compile Include="Services\SupplierDishDetailModel.cs" />
-    <Compile Include="Services\ServicesResultList.cs" />
-    <Compile Include="LoginWay.cs" />
-    <Compile Include="ExistsType.cs" />
-    <Compile Include="AccountType.cs" />
-    <Compile Include="FilteredSupplierWay.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\OrderSourceEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\OrderStatusEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\AppEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\AppScopeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\AutorizationEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\TokenEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\ActivateCardEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\ActivityEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\AddrBusinessAreaEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\AddrCityEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\AddrProvinceEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\AddrRegionEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\AwardEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\BlockedIPAddressEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\BundleEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\BundleSupplierDishEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CampaignEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CampaignSupplierEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CardEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CategoryEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CategoryTypeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\ChefEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CommentDiningPurposeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\ContactEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CountryEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CouponEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CrossSupplierDishEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CuisineCategoryEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CuisineEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CustomerEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CustomerFavoriteEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\CustomerPointEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\DeliveryEntity.hbm.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Mapping\DiningPurposeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\DishImageEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\FeatureEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\FeedBackCommentEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\FeedBackEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\HolidayBackupSupplierEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\InvoiceEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\LevelEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\LocationEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\LocationTypeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\LoginEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\LoginOAuthEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\MarketingAllowanceEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\MarketingLogEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\MarketingMessageEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\MenuLayoutDishEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\MenuLayoutStyleEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\MenuLayoutSupplierEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\OrderEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PaymentEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PointcouponEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PointCouponSupplierREntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PromotionEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PublicTransportEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\RatingTypeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SourcePathEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SourceTypeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\StatementEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierBusinessAreaEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierCategoryEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierCommentEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierCommissionEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierContactEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierCouponEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierCouponTimeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierCuisineEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierDiningPurposeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierDishEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierDishMinNumberEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierEntity.hbm.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Mapping\SupplierFeatureEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierImageEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierLocationEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierMenuCategoryEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierMenuCategoryTypeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierRatingEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierRoomSizeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierSpecialOfferEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierStationEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierTransportEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\TableDeskEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\TableReservationEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\TransportStationEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\UserShowWindowEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\VacancyEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\RegionEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ets.SingleApi.Utility\Ets.SingleApi.Utility.csproj">
-      <Project>{a26c9fac-c233-4576-a604-9806ad017a97}</Project>
-      <Name>Ets.SingleApi.Utility</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\CustomerAddressEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\SuppTimeTableDisplayEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\TimeTableDisplayEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\DeliveryAddressEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\OrderNumberDcEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\OrderNumberDtEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\SupplierDishImageEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\SupplierCouponCustomerEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\WxToEtsEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\TimeTableEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\SupplierTimeTableEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\PackageClassificationEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PackageContentEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PackageNameEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PackageSelectedDetailEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PackageSelectedEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\DeliveryChargeEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\DeliveryChargeForExtraMilesEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\DeliveryCouponEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\BaiDuAppLightEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierGroupAdvertisementEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierGroupFeatureEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierGroupLightEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierGroupLogoImageEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierGroupTemplateEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\CustomizationOptionEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\OptionGroupEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierDishCustomizationEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\SupplierDishGroupEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\SupplierDoNotSendTimeEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\SupplierModelEntity.hbm.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\GroupSupplierModelEntity.hbm.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\OrderDetailEntity.hbm.xml" />
-    <EmbeddedResource Include="Mapping\PaymentRecordEntity.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Services\EtsWapTangShiShoppingCartModel.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
->>>>>>> origin/developer_DianCai
 </Project>

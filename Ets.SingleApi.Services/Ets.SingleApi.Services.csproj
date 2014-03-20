@@ -181,14 +181,11 @@
     <Compile Include="ShoppingCart\EtsWapShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\EtsWapTangShiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapTangShiShoppingCartProvider.cs" />
-<<<<<<< HEAD
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapDingTaiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapPaiDuiShoppingCartProvider.cs" />
-=======
     <Compile Include="WechatPaymentQueryData.cs" />
->>>>>>> origin/developer_DianCai
     <Compile Include="ZhongCanShoppingCartServices.cs" />
     <Compile Include="ShoppingCart\HuangTaiJiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IHuangTaiJiShoppingCartProvider.cs" />
