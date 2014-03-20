@@ -20,7 +20,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the SupplierDeskTimeEntity table in the database.
     /// </summary>
     /// Creator:ww
-    /// Creation Date:2014-3-19 10:43:05
+    /// Creation Date:2014-3-20 16:37:43
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Id
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TimeName
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The BeginTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The EndTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The CreateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The UpdateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Description
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DeskTypeLockLogList
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="SupplierDeskTimeEntity"/> class.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Id of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TimeName of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the BeginTime of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the EndTime of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -231,7 +231,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierId of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -252,7 +252,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CreateTime of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -273,7 +273,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the UpdateTime of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -294,7 +294,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Description of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -315,7 +315,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeskTypeLockLogList of SupplierDeskTimeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -342,7 +342,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -364,7 +364,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:05
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

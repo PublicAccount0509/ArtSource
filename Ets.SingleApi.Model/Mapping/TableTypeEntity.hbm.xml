@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-	<class name="Ets.SingleApi.Model.Repository.TableTypeEntity, Ets.SingleApi.Model.Repository" table="TableType" dynamic-update="true" optimistic-lock="all" >
+	<class name="Ets.SingleApi.Model.Repository.TableTypeEntity, Ets.SingleApi.Model" table="TableType" dynamic-update="true" optimistic-lock="all" >
 	 <!--The cache-->
 	 <cache usage="read-write"/>
 	 <!--The primary keys-->
@@ -14,7 +14,7 @@
 		<!--The foreign keys-->
 		<bag name="DeskTypeList" cascade="none" lazy="true" table="DeskType">
 			<key column="TableTypeId" />
-			<one-to-many class="Ets.SingleApi.Model.Repository.DeskTypeEntity, Ets.SingleApi.Model.Repository" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.DeskTypeEntity, Ets.SingleApi.Model" />
 		</bag>
 	</class>
 </hibernate-mapping>

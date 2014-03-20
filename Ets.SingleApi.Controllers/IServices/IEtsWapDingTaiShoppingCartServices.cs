@@ -165,5 +165,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> SaveShoppingCartDelivery(string source, string id, ShoppingCartDelivery shoppingCartDelivery);
+
+        /// <summary>
+        /// 保存订单台位信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartDesk">台位信息</param>
+        /// <returns>
+        /// 返回购物车信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SaveShoppingCartDesk(string source, string id, ShoppingCartDesk shoppingCartDesk);
     }
 }

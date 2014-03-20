@@ -19,7 +19,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the DeskTypeLockLogEntity table in the database.
     /// </summary>
     /// Creator:ww
-    /// Creation Date:2014-3-19 10:42:45
+    /// Creation Date:2014-3-20 16:37:43
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Id
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsDel
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The LockDate
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The CreateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DeskTypeId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierDeskTimeId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="DeskTypeLockLogEntity"/> class.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Id of DeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -145,7 +145,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsDel of DeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -166,7 +166,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the LockDate of DeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -187,7 +187,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CreateTime of DeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierId of DeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -229,7 +229,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeskTypeId of DeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -250,7 +250,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierDeskTimeId of DeskTypeLockLogEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -277,7 +277,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -299,7 +299,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 10:42:45
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

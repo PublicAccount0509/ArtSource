@@ -140,7 +140,7 @@ namespace Ets.SingleApi.Model
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string BookingDate { get; set; }
+        public DateTime BookingDate { get; set; }
 
         /// <summary>
         /// 预定时间
@@ -166,6 +166,6 @@ namespace Ets.SingleApi.Model
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string PeopleCount { get; set; }
+        public int PeopleCount { get; set; }
     }
 }

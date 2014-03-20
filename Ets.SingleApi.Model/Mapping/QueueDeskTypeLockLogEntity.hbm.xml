@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-	<class name="Ets.SingleApi.Model.Repository.QueueDeskTypeLockLogEntity, Ets.SingleApi.Model.Repository" table="QueueDeskTypeLockLog" dynamic-update="true" optimistic-lock="all" >
+	<class name="Ets.SingleApi.Model.Repository.QueueDeskTypeLockLogEntity, Ets.SingleApi.Model" table="QueueDeskTypeLockLog" dynamic-update="true" optimistic-lock="all" >
 	 <!--The cache-->
 	 <cache usage="read-write"/>
 	 <!--The primary keys-->
@@ -8,11 +8,11 @@
 			<generator class="native"/>
 		</id>
 		<!--The propertys-->
-		<property name="DeskTypeId" column="DeskTypeId" type="Int32" />
 		<property name="IsLock" column="IsLock" type="Boolean" />
 		<property name="IsDel" column="IsDel" type="Boolean" />
 		<property name="Description" column="Description" type="String" not-null="false" />
+		<property name="SupplierId" column="SupplierId" type="Int32" />
 		<!--The foreign keys-->
-		<many-to-one name="Queue" class="Ets.SingleApi.Model.Repository.QueueEntity, Ets.SingleApi.Model.Repository" column="QueueId" />
+		<many-to-one name="DeskType" class="Ets.SingleApi.Model.Repository.DeskTypeEntity, Ets.SingleApi.Model" column="DeskTypeId" />
 	</class>
 </hibernate-mapping>

@@ -20,7 +20,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the DeskTypeEntity table in the database.
     /// </summary>
     /// Creator:ww
-    /// Creation Date:2014-3-19 15:44:35
+    /// Creation Date:2014-3-20 16:37:43
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Id
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DeskTypeName
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The RoomType
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The MaxNumber
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The MinNumber
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The LowCost
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsLock
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsDel
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The CreateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The UpdateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Description
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -153,27 +153,27 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DepositAmount
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private decimal? depositAmount;
 
 			/// <summary>
-		/// The FloorID
+		/// The BoxName
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? floorId;
+		private string boxName;
 
 			/// <summary>
 		/// The QueueDeskTypeLockLogList
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierDeskList
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -193,7 +193,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The TableTypeId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="DeskTypeEntity"/> class.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -221,6 +221,7 @@ namespace Ets.SingleApi.Model.Repository
 			this.createTime = DateTime.Now;
 			this.updateTime = DateTime.Now;
 			this.description = string.Empty;
+			this.boxName = string.Empty;
 		}
 
 		#region public member
@@ -229,7 +230,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Id of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -250,7 +251,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeskTypeName of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -271,7 +272,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the RoomType of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -292,7 +293,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the MaxNumber of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -313,7 +314,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the MinNumber of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -334,7 +335,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the LowCost of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -355,7 +356,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsLock of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -376,7 +377,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsDel of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -397,7 +398,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierId of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -418,7 +419,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CreateTime of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -439,7 +440,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the UpdateTime of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -460,7 +461,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Description of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -481,7 +482,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DepositAmount of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -499,23 +500,23 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
-        /// Gets or sets a value mapping the FloorID of DeskTypeEntity table in the database.
+        /// Gets or sets a value mapping the BoxName of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? FloorId
+		public virtual string BoxName
 		{
             get
             {
-                return this.floorId;
+                return this.boxName;
             }
 
             set
             {
-                this.floorId = value;
+                this.boxName = value;
             }
         }
 
@@ -523,7 +524,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the QueueDeskTypeLockLogList of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -544,7 +545,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierDeskList of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -565,7 +566,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the TableTypeId of DeskTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -592,7 +593,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -614,7 +615,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-19 15:44:35
+        /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
