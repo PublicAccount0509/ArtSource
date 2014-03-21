@@ -97,7 +97,7 @@ namespace Ets.SingleApi.Model.Repository
                 return false;
             }
 
-            var castObj = (OrderNumberDcEntity)obj;
+            var castObj = (OrderNumberDtEntity)obj;
             return this.OrderId == castObj.OrderId;
         }
 
