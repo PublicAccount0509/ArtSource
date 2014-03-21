@@ -182,7 +182,12 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository; 
+        private readonly INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository;
+
+        private readonly INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository;
+
+        private readonly INHibernateRepository<QueueEntity> queueEntityRepository;
+
         /// <summary>
         /// 字段supplierDetailServices
         /// </summary>
@@ -212,6 +217,8 @@
         /// <param name="supplierDeskTimeEntityRepository">The supplier desk time entity repository.</param>
         /// <param name="deskTypeLockLogEntityRepository">The desk type lock log entity repository.</param>
         /// <param name="deskTypeEntityRepository">The desk type entity repository.</param>
+        /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
+        /// <param name="queueEntityRepository">The queueEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
@@ -235,6 +242,8 @@
             INHibernateRepository<SupplierDeskTimeEntity> supplierDeskTimeEntityRepository,
             INHibernateRepository<DeskTypeLockLogEntity> deskTypeLockLogEntityRepository,
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
+            INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
+            INHibernateRepository<QueueEntity> queueEntityRepository,
             ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
@@ -253,6 +262,8 @@
             this.supplierDeskTimeEntityRepository = supplierDeskTimeEntityRepository;
             this.deskTypeLockLogEntityRepository = deskTypeLockLogEntityRepository;
             this.deskTypeEntityRepository = deskTypeEntityRepository;
+            this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
+            this.queueEntityRepository = queueEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
         }
 
@@ -1216,8 +1227,6 @@
             };
         }
 
-
-
         /// <summary>
         /// 取得赠品菜
         /// </summary>
@@ -1716,7 +1725,7 @@
             {
                 return new ServicesResult<SupplierDishDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new SupplierDishDetailModel()
                     };
             }
@@ -1788,14 +1797,14 @@
             {
                 return new ServicesResult<SupplierDishDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierDishIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierDishIdCode,
                         Result = new SupplierDishDetailModel()
                     };
             }
 
             var supplierDishImage = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
                                      where entity.SupplierDishId == supplierDishId && entity.Online == true
-                                     select new {entity.SupplierDishId, entity.ImagePath}).FirstOrDefault();
+                                     select new { entity.SupplierDishId, entity.ImagePath }).FirstOrDefault();
 
             var supplierCategory = (from supplierCategoryEntity in this.supplierCategoryEntityRepository.EntityQueryable
                                     where
@@ -2282,7 +2291,7 @@
             {
                 return new ServicesResultList<DingTaiDeskModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<DingTaiDeskModel>()
                     };
             }
@@ -2292,7 +2301,7 @@
             {
                 return new ServicesResultList<DingTaiDeskModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<DingTaiDeskModel>()
                     };
             }
@@ -2324,7 +2333,7 @@
             {
                 return new ServicesResultList<DingTaiDeskModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidBookingTimeCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidBookingTimeCode,
                         Result = new List<DingTaiDeskModel>()
                     };
             }
@@ -2421,7 +2430,7 @@
 
             foreach (var supplierDeskTime in supplierDeskTimeList)
             {
-                beginTimeStr= supplierDeskTime.BeginTime;
+                beginTimeStr = supplierDeskTime.BeginTime;
                 endTimeStr = supplierDeskTime.EndTime;
 
                 beginTime =
@@ -2439,7 +2448,7 @@
 
                 while (beginTime <= endTime)
                 {
-                    if (beginTime.Minute%30 == 0)
+                    if (beginTime.Minute % 30 == 0)
                     {
                         deskOpenTimeList.Add(beginTime);
                     }
