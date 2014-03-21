@@ -795,6 +795,124 @@ namespace Ets.SingleApi.Services
         }
 
         /// <summary>
+        /// 保存用户确认订单信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartOrderConfirm">The shopping cart order confirm.</param>
+        /// <param name="isCalculateCoupon">是否计算优惠</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveShoppingCartOrderConfirm(string source, string id,
+                                                           EtsWapDingTaiShoppingCartOrderConfirm shoppingCartOrderConfirm,
+                                                           bool isCalculateCoupon)
+        {
+            var getShoppingCartLinkResult = this.etsWapShoppingCartProvider.GetShoppingCartLink(source, id);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+            var getShoppingCartResult = this.etsWapShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartResult.StatusCode
+                };
+            }
+
+            /*商户信息*/
+            var getShoppingCartSupplierResult = this.etsWapShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartSupplierResult.StatusCode
+                };
+            }
+
+            /**/
+            var getShoppingCartDeliveryResult = this.etsWapShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeliveryResult.StatusCode
+                };
+            }
+
+            /*订单信息*/
+            var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode
+                };
+            }
+
+            /*订台信息*/
+            var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeskResult.StatusCode
+                };
+            }
+
+            var supplier = getShoppingCartSupplierResult.Result;
+            var delivery = getShoppingCartDeliveryResult.Result;
+            var order = getShoppingCartOrderResult.Result;
+            var desk = getShoppingCartDeskResult.Result;
+
+            var shoppingCart = getShoppingCartResult.Result;
+            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
+            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            var totalfee = shoppingPrice;
+            /*菜品总金额+押金*/
+            var total = totalfee + desk.DepositAmount ?? 0;
+            var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, shoppingCartLink.UserId) : order.CouponFee;
+            var customerTotal = total - coupon;
+
+            /*订单确认用户信息*/
+            delivery.Telephone = shoppingCartOrderConfirm.CustomerPhoneNumber;
+            delivery.Name = shoppingCartOrderConfirm.CustomerName;
+            delivery.Gender = shoppingCartOrderConfirm.CustomerGender;
+
+            /*确认订单信息*/
+            order.OrderInstruction = shoppingCartOrderConfirm.Remark;
+            order.DingTaiMethodId = shoppingCartOrderConfirm.DingTaiMethodId;
+            order.TotalFee = total;
+
+            /*shoppingCartOrder.Id = order.Id;
+            shoppingCartOrder.OrderId = order.OrderId;
+            shoppingCartOrder.IsComplete = order.IsComplete;
+            shoppingCartOrder.TotalPrice = shoppingPrice;
+            shoppingCartOrder.TotalQuantity = shoppingList.Sum(p => p.Quantity);
+            shoppingCartOrder.TotalFee = total;
+            shoppingCartOrder.CustomerTotalFee = customerTotal;
+            shoppingCartOrder.CouponFee = coupon;*/
+            this.etsWapShoppingCartProvider.SaveShoppingCartDelivery(source, delivery);
+            this.etsWapShoppingCartProvider.SaveShoppingCartOrder(source, order);
+            return new ServicesResult<bool>
+            {
+                Result = true
+            };
+        }
+
+        /// <summary>
         /// Saves the shopping cart delivery.
         /// </summary>
         /// <param name="source">The source</param>

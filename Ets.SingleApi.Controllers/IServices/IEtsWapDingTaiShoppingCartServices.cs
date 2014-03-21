@@ -130,11 +130,11 @@
         ServicesResult<bool> SaveShoppingCart(string source, string id, EtsWapDingTaiShoppingCartModel shoppingCart);
 
         /// <summary>
-        /// 保存用户订单信息
+        /// 保存订台确认订单信息
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="id">购物车Id</param>
-        /// <param name="shoppingCartOrder">The shoppingCartOrder</param>
+        /// <param name="shoppingCartOrderConfirm">The shopping cart order confirm.</param>
         /// <param name="isCalculateCoupon">是否计算优惠</param>
         /// <returns>
         /// 返回结果
@@ -147,7 +147,28 @@
         ServicesResult<bool> SaveShoppingCartOrder(
             string source,
             string id,
-            EtsWapDingTaiShoppingCartOrder shoppingCartOrder,
+            EtsWapDingTaiShoppingCartOrder shoppingCartOrderConfirm,
+            bool isCalculateCoupon);
+
+        /// <summary>
+        /// 保存用户确认订单信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">购物车Id</param>
+        /// <param name="shoppingCartOrderConfirm">The shopping cart order confirm.</param>
+        /// <param name="isCalculateCoupon">是否计算优惠</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/21/2013 7:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SaveShoppingCartOrderConfirm(
+            string source,
+            string id,
+            EtsWapDingTaiShoppingCartOrderConfirm shoppingCartOrderConfirm,
             bool isCalculateCoupon);
 
         /// <summary>

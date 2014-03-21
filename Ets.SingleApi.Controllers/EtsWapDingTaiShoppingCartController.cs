@@ -521,6 +521,65 @@
         }
 
         /// <summary>
+        /// 保存确认订单信息
+        /// </summary>
+        /// <param name="id">购物车Id</param>
+        /// <param name="requst">The requst.</param>
+        /// <param name="isCalculateCoupon">if set to <c>true</c> [is calculate coupon].</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 10:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<EtsWapDingTaiShoppingCartModel> SaveOrderConfirm(string id, EtsWapDingTaiShoppingCartOrderConfirmRequst requst, bool isCalculateCoupon = false)
+        {
+            if (requst == null)
+            {
+                return new Response<EtsWapDingTaiShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var orderConfirm = new EtsWapDingTaiShoppingCartOrderConfirm
+                {
+                    CustomerName = requst.CustomerGender,
+                    CustomerGender = requst.CustomerGender,
+                    CustomerPhoneNumber = requst.CustomerPhoneNumber,
+                    Remark = requst.Remark,
+                    DingTaiMethodId = requst.DingTaiMethodId
+                };
+
+            var saveShoppingItemResult = this.etsWapDingTaiShoppingCartServices.SaveShoppingCartOrderConfirm(this.Source, id, orderConfirm, isCalculateCoupon);
+            if (!saveShoppingItemResult.Result)
+            {
+                return new Response<EtsWapDingTaiShoppingCartModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = saveShoppingItemResult.StatusCode
+                    },
+                    Result = new EtsWapDingTaiShoppingCartModel()
+                };
+            }
+
+            var result = this.etsWapDingTaiShoppingCartServices.GetShoppingCart(this.Source, id);
+            return new Response<EtsWapDingTaiShoppingCartModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
         /// 保存订单信息
         /// </summary>
         /// <param name="id">购物车Id</param>
