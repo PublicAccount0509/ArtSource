@@ -86,13 +86,13 @@ namespace Ets.SingleApi.Services
         private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtsWapDingTaiOrderProvider"/> class.
+        /// Initializes a new instance of the <see cref="EtsWapDingTaiOrderProvider" /> class.
         /// </summary>
         /// <param name="tableReservationEntityRepository">The table reservation entity repository.</param>
         /// <param name="paymentRecordEntityRepository">The payment record entity repository.</param>
         /// <param name="orderDetailEntityRepository">The order detail entity repository.</param>
         /// <param name="supplierEntityRepository">The supplier entity repository.</param>
-        /// <param name="etsWapShoppingCartProvider">The ets wap shopping cart provider.</param>
+        /// <param name="etsWapDingTaiShoppingCartProvider">The ets wap ding tai shopping cart provider.</param>
         /// <param name="shoppingCartBaseCacheServices">The shopping cart base cache services.</param>
         /// <param name="orderNumberDtEntityRepository">The order number dt entity repository.</param>
         /// <param name="singleApiOrdersExternalService">The single API orders external service.</param>
@@ -281,9 +281,20 @@ namespace Ets.SingleApi.Services
             };
         }
 
+        /// <summary>
+        /// Gets the type of the order source.
+        /// </summary>
+        /// <returns>
+        /// The OrderSourceType
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 3:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         protected override OrderSourceType GetOrderSourceType()
         {
-            throw new NotImplementedException();
+            return OrderSourceType.EtsWap;
         }
 
         public override ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank)
