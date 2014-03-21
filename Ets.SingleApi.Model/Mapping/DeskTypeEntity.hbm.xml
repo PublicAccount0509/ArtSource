@@ -22,6 +22,10 @@
 		<property name="DepositAmount" column="DepositAmount" type="Decimal" not-null="false" />
 		<property name="BoxName" column="BoxName" type="String" not-null="false" />
 		<!--The foreign keys-->
+		<bag name="DeskBookingList" cascade="none" lazy="true" table="DeskBooking">
+			<key column="DeskTypeId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.DeskBookingEntity, Ets.SingleApi.Model" />
+		</bag>
 		<bag name="QueueDeskTypeLockLogList" cascade="none" lazy="true" table="QueueDeskTypeLockLog">
 			<key column="DeskTypeId" />
 			<one-to-many class="Ets.SingleApi.Model.Repository.QueueDeskTypeLockLogEntity, Ets.SingleApi.Model" />

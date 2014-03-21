@@ -12,12 +12,12 @@
 		<property name="OrderNo" column="OrderNo" type="Int32" />
 		<property name="CreateTime" column="CreateTime" type="Timestamp" />
 		<property name="Description" column="Description" type="String" not-null="false" />
-		<property name="DeskTypeId" column="DeskTypeId" type="Int32" not-null="false" />
 		<property name="BookType" column="BookType" type="Boolean" />
 		<property name="TimeType" column="TimeType" type="Int32" not-null="false" />
 		<property name="NumberOfPeople" column="NumberOfPeople" type="Int32" not-null="false" />
 		<property name="ReservationTime" column="ReservationTime" type="Timestamp" not-null="false" />
 		<!--The foreign keys-->
+		<many-to-one name="DeskType" class="Ets.SingleApi.Model.Repository.DeskTypeEntity, Ets.SingleApi.Model" column="DeskTypeId" />
 		<many-to-one name="Desk" class="Ets.SingleApi.Model.Repository.SupplierDeskEntity, Ets.SingleApi.Model" column="DeskId" />
 	</class>
 </hibernate-mapping>

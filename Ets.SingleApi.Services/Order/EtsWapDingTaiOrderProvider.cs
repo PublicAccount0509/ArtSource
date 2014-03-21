@@ -66,6 +66,16 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
+        /// 字段deskTypeEntityRepository
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：3/21/2014 6:54 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository;
+
+        /// <summary>
         /// The desk booking entity repository
         /// </summary>
         /// 创建者：苏建峰
@@ -102,6 +112,7 @@ namespace Ets.SingleApi.Services
         /// <param name="paymentRecordEntityRepository">The payment record entity repository.</param>
         /// <param name="orderDetailEntityRepository">The order detail entity repository.</param>
         /// <param name="supplierEntityRepository">The supplier entity repository.</param>
+        /// <param name="deskTypeEntityRepository">The deskTypeEntityRepositoryDefault documentation</param>
         /// <param name="deskBookingEntityRepository">The desk booking entity repository.</param>
         /// <param name="etsWapDingTaiShoppingCartProvider">The ets wap ding tai shopping cart provider.</param>
         /// <param name="shoppingCartBaseCacheServices">The shopping cart base cache services.</param>
@@ -117,6 +128,7 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository,
             INHibernateRepository<OrderDetailEntity> orderDetailEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
+             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository,
             IEtsWapDingTaiShoppingCartProvider etsWapDingTaiShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
@@ -128,6 +140,7 @@ namespace Ets.SingleApi.Services
             this.paymentRecordEntityRepository = paymentRecordEntityRepository;
             this.orderDetailEntityRepository = orderDetailEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
+            this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.deskBookingEntityRepository = deskBookingEntityRepository;
             this.etsWapDingTaiShoppingCartProvider = etsWapDingTaiShoppingCartProvider;
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
@@ -707,6 +720,13 @@ namespace Ets.SingleApi.Services
                 return;
             }
 
+            if (desk.DeskTypeId == 0)
+            {
+                return;
+            }
+
+            var deskTypeEntity = deskTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Id == desk.DeskTypeId);
+
             var deskBookingEntity = this.deskBookingEntityRepository.EntityQueryable.FirstOrDefault(
                 p => p.OrderNo == orderId)
                                     ?? new DeskBookingEntity
@@ -717,7 +737,7 @@ namespace Ets.SingleApi.Services
                                         };
 
             deskBookingEntity.SupplierId = supplierId;
-            deskBookingEntity.DeskTypeId = desk.DeskTypeId;
+            deskBookingEntity.DeskType = deskTypeEntity;
             deskBookingEntity.NumberOfPeople = desk.PeopleCount;
             deskBookingEntity.ReservationTime =
                 desk.BookingDate.Value.AddHours(double.Parse(desk.BookingTime.Split(':')[0]))
