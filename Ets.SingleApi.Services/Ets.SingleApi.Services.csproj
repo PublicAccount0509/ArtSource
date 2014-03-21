@@ -210,6 +210,7 @@
     <Compile Include="ShoppingCartServices.cs" />
     <Compile Include="EtsWapTangShiShoppingCartServices.cs" />
     <Compile Include="EtsWapDingTaiShoppingCartServices.cs" />
+    <Compile Include="QueueServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">
