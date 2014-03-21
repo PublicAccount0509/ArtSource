@@ -80,7 +80,7 @@ namespace Ets.SingleApi.Services
             {
                 return new OrderProviderType
                 {
-                    OrderType = OrderType.TangShi,
+                    OrderType = OrderType.DingTai,
                     OrderSourceType = this.GetOrderSourceType()
                 };
             }

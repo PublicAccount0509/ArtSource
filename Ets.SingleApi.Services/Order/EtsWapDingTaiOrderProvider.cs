@@ -86,13 +86,13 @@ namespace Ets.SingleApi.Services
         private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EtsWapDingTaiOrderProvider"/> class.
+        /// Initializes a new instance of the <see cref="EtsWapDingTaiOrderProvider" /> class.
         /// </summary>
         /// <param name="tableReservationEntityRepository">The table reservation entity repository.</param>
         /// <param name="paymentRecordEntityRepository">The payment record entity repository.</param>
         /// <param name="orderDetailEntityRepository">The order detail entity repository.</param>
         /// <param name="supplierEntityRepository">The supplier entity repository.</param>
-        /// <param name="etsWapShoppingCartProvider">The ets wap shopping cart provider.</param>
+        /// <param name="etsWapDingTaiShoppingCartProvider">The ets wap ding tai shopping cart provider.</param>
         /// <param name="shoppingCartBaseCacheServices">The shopping cart base cache services.</param>
         /// <param name="orderNumberDtEntityRepository">The order number dt entity repository.</param>
         /// <param name="singleApiOrdersExternalService">The single API orders external service.</param>
@@ -120,9 +120,136 @@ namespace Ets.SingleApi.Services
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
 
+        /// <summary>
+        /// 取得订单详情
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">订单状态</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// 创建者：苏建峰
+        /// 创建日期：3/21/2014 1:58 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public override ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId)
         {
-            throw new NotImplementedException();
+            //TODO
+            //待修改
+            var tableReservationEntity = (from entity in this.tableReservationEntityRepository.EntityQueryable
+                                          where entity.OrderNumber == orderId
+                                          select entity).FirstOrDefault();
+
+            if (tableReservationEntity == null)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new WaiMaiOrderDetailModel()
+                };
+            }
+
+            var waiMaiOrderDishList = (from entity in this.orderDetailEntityRepository.EntityQueryable
+                                       where entity.OrderId == tableReservationEntity.TableReservationId
+                                       select new TangShiOrderDishModel
+                                       {
+                                           SupplierDishId = entity.SupplierDishId ?? 0,
+                                           SupplierDishName = entity.SupplierDishName,
+                                           Instruction = entity.SpecialInstruction,
+                                           Price = entity.SupplierPrice,
+                                           Quantity = entity.Quantity ?? 0
+                                       }).ToList();
+
+            var supplierId = tableReservationEntity.Supplier.SupplierId;
+            var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<IOrderDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new TangShiOrderDetailModel()
+                };
+            }
+
+            decimal baIduLat;
+            decimal.TryParse(supplierEntity.BaIduLat, out baIduLat);
+            decimal baIduLong;
+            decimal.TryParse(supplierEntity.BaIduLong, out baIduLong);
+            var tableReservationId = tableReservationEntity.TableReservationId.ToString();
+            var paymentEntity = this.paymentRecordEntityRepository.EntityQueryable.FirstOrDefault(p => p.OrderId == tableReservationId);
+            var gender = tableReservationEntity.Contactsex;
+            if (gender.IsEmptyOrNull())
+            {
+                gender = ServicesCommon.DefaultGender.ToString();
+            }
+
+            if (string.Equals(gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(gender, "1", StringComparison.OrdinalIgnoreCase))
+            {
+                gender = "1";
+            }
+            else
+            {
+                gender = "0";
+            }
+
+            //总价 未折扣
+            var total = tableReservationEntity.Total ?? 0;
+            //总价 折扣后
+            var customerTotal = tableReservationEntity.CustomerTotal ?? 0;
+            //折扣
+            var coupon = Math.Max(total - customerTotal, 0);
+
+            var shoppingCartResult = this.shoppingCartBaseCacheServices.GetShoppingCartId(source, orderId);
+            var shoppingCartId = shoppingCartResult == null ? string.Empty : shoppingCartResult.Result;
+
+            var result = new TangShiOrderDetailModel
+            {
+                ShoppingCartId = shoppingCartId,
+                OrderId = tableReservationEntity.OrderNumber.HasValue ? tableReservationEntity.OrderNumber.Value : 0,
+                OrderTypeId = (int)OrderType.TangShi,
+                OrderStatusId = tableReservationEntity.TableStatus,
+                DateReserved = tableReservationEntity.DateReserved.ToString("yyyy-MM-dd HH:mm"),
+                Description = tableReservationEntity.OrderNotes ?? string.Empty,
+                SupplierGroupId = supplierEntity.SupplierGroupId,
+                SupplierId = supplierEntity.SupplierId,
+                SupplierName = supplierEntity.SupplierName ?? string.Empty,
+                SupplierTelephone = supplierEntity.Telephone ?? string.Empty,
+                SupplierAddress = string.Format("{0}{1}", supplierEntity.Address1, supplierEntity.Address2),
+                SupplierBaIduLat = baIduLat,
+                SupplierBaIduLong = baIduLong,
+                InvoiceTitle = tableReservationEntity.InvoiceTitle ?? string.Empty,
+                IsPaid = tableReservationEntity.IsPaId ?? false,
+                DishList = waiMaiOrderDishList,
+                PaymentMethodId = paymentEntity == null ? null : paymentEntity.PaymentMethodId,
+                IsConfirm = paymentEntity != null,
+                ContactName = tableReservationEntity.ContactName,
+                ContactNumber = tableReservationEntity.ContactNumber,
+                Contactsex = gender,
+                TabelNo = tableReservationEntity.TabelNo,
+                TeaBitFee = (tableReservationEntity.TeaBitFee ?? 0).ToString("#0.00"),
+                ServiceFee = (tableReservationEntity.ConsumerAmount ?? 0).ToString("#0.00"),
+                Coupon = coupon.ToString("#0.00"),//折扣
+                CustomerTotal = customerTotal.ToString("#0.00"),//总价 折扣后
+                Total = total.ToString("#0.00")//总价 未折扣
+            };
+
+            if (result.InvoiceTitle.IsEmptyOrNull())
+            {
+                result.InvoiceTitle = ServicesCommon.EmptyInvoiceTitle;
+            }
+
+            return new ServicesResult<IOrderDetailModel>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = result
+            };
         }
 
         /// <summary>
@@ -281,19 +408,114 @@ namespace Ets.SingleApi.Services
             };
         }
 
+        /// <summary>
+        /// Gets the type of the order source.
+        /// </summary>
+        /// <returns>
+        /// The OrderSourceType
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：2/13/2014 3:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         protected override OrderSourceType GetOrderSourceType()
         {
-            throw new NotImplementedException();
+            return OrderSourceType.EtsWap;
         }
 
         public override ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank)
         {
-            throw new NotImplementedException();
+            //获取ShoppingCartLink信息
+            var getShoppingCartLinkResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+
+            //获取 订单信息
+            var getShoppingCartOrderResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            //订单信息
+            var orderInfo = getShoppingCartOrderResult.Result;
+            //修改 缓存订单支付方式
+            var modifyOrderPaymentMethodResult = this.etsWapDingTaiShoppingCartProvider.ModifyOrderPaymentMethod(source, orderInfo.Id, paymentMethodId, payBank);
+            if (modifyOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = modifyOrderPaymentMethodResult.StatusCode,
+                    Result = false
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
         }
 
         public override ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId)
         {
-            throw new NotImplementedException();
+            //获取ShoppingCartLink信息
+            var getShoppingCartLinkResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<OrderShoppingCartStatusModel>
+                {
+                    StatusCode = getShoppingCartLinkResult.StatusCode,
+                    Result = new OrderShoppingCartStatusModel()
+                };
+            }
+
+            var shoppingCartLink = getShoppingCartLinkResult.Result;
+
+            //获取 订单信息
+            var getShoppingCartOrderResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<OrderShoppingCartStatusModel>
+                {
+                    StatusCode = getShoppingCartOrderResult.StatusCode,
+                    Result = new OrderShoppingCartStatusModel()
+                };
+            }
+
+            var tableReservationEntity = this.tableReservationEntityRepository.EntityQueryable.FirstOrDefault(c => c.OrderNumber == getShoppingCartOrderResult.Result.OrderId);
+            if (tableReservationEntity == null)
+            {
+                return new ServicesResult<OrderShoppingCartStatusModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new OrderShoppingCartStatusModel()
+                };
+            }
+
+            return new ServicesResult<OrderShoppingCartStatusModel>
+            {
+                StatusCode = getShoppingCartOrderResult.StatusCode,
+                Result = new OrderShoppingCartStatusModel
+                {
+                    IsComplete = getShoppingCartOrderResult.Result.IsComplete,
+                    IsPaid = tableReservationEntity.IsPaId ?? false,
+                    OrderStatusId = tableReservationEntity.TableStatus ?? -1
+                }
+            };
         }
 
         /// <summary>
