@@ -382,7 +382,7 @@
                 shoppingCartDeskCache.MaxNumber = deskType.MaxNumber;
                 shoppingCartDeskCache.MinNumber = deskType.MinNumber;
                 shoppingCartDeskCache.LowCost = deskType.LowCost;
-                shoppingCartDeskCache.DepositAmount = deskType.DeskTypeId;
+                shoppingCartDeskCache.DepositAmount = deskType.DepositAmount;
             }
 
             return new ServicesResult<ShoppingCartDesk>
