@@ -687,17 +687,25 @@ namespace Ets.SingleApi.Services
         /// <summary>
         /// 保存订台预订信息
         /// </summary>
+        /// <param name="supplier">The supplier.</param>
         /// <param name="orderId">The order identifier.</param>
-        /// <param name="customerTotal">The customer total.</param>
-        /// <param name="paymentMethodId">The payment method identifier.</param>
-        /// <param name="payBank">The pay bank.</param>
+        /// <param name="desk">The desk.</param>
         /// 创建者：苏建峰
         /// 创建日期：3/21/2014 3:18 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void SaveDeskBookingEntity(int supplier, int orderId, ShoppingCartDesk desk)
+        private void SaveDeskBookingEntity(int supplierId, int orderId, ShoppingCartDesk desk)
         {
+            if (desk.BookingDate == null)
+            {
+                return;
+            }
+
+            if (desk.BookingTime.IsEmptyOrNull())
+            {
+                return;
+            }
 
             var deskBookingEntity = this.deskBookingEntityRepository.EntityQueryable.FirstOrDefault(
                 p => p.OrderNo == orderId)
@@ -708,9 +716,12 @@ namespace Ets.SingleApi.Services
                                             CreateTime = DateTime.Now
                                         };
 
+            deskBookingEntity.SupplierId = supplierId;
             deskBookingEntity.DeskTypeId = desk.DeskTypeId;
             deskBookingEntity.NumberOfPeople = desk.PeopleCount;
-            deskBookingEntity.ReservationTime = desk.BookingDate;
+            deskBookingEntity.ReservationTime =
+                desk.BookingDate.Value.AddHours(double.Parse(desk.BookingTime.Split(':')[0]))
+                    .AddMinutes(double.Parse(desk.BookingTime.Split(':')[1]));
             this.deskBookingEntityRepository.Save(deskBookingEntity);
         }
     }
