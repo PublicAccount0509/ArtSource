@@ -16,6 +16,7 @@
 		<property name="SupplierId" column="SupplierId" type="Int32" />
 		<property name="IsEnable" column="IsEnable" type="Boolean" />
 		<property name="Description" column="Description" type="String" not-null="false" />
+		<property name="ImgPath" column="ImgPath" type="String" not-null="false" />
 		<!--The foreign keys-->
 		<bag name="DeskBookingList" cascade="none" lazy="true" table="DeskBooking">
 			<key column="DeskId" />

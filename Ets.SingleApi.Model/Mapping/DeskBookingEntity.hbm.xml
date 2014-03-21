@@ -14,6 +14,9 @@
 		<property name="Description" column="Description" type="String" not-null="false" />
 		<property name="DeskTypeId" column="DeskTypeId" type="Int32" not-null="false" />
 		<property name="BookType" column="BookType" type="Boolean" />
+		<property name="TimeType" column="TimeType" type="Int32" not-null="false" />
+		<property name="NumberOfPeople" column="NumberOfPeople" type="Int32" not-null="false" />
+		<property name="ReservationTime" column="ReservationTime" type="Timestamp" not-null="false" />
 		<!--The foreign keys-->
 		<many-to-one name="Desk" class="Ets.SingleApi.Model.Repository.SupplierDeskEntity, Ets.SingleApi.Model" column="DeskId" />
 	</class>

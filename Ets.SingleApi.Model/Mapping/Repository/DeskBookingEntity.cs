@@ -19,7 +19,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the DeskBookingEntity table in the database.
     /// </summary>
     /// Creator:ww
-    /// Creation Date:2014-3-20 16:37:42
+    /// Creation Date:2014-3-21 14:57:05
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Id
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:05
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The OrderNo
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The CreateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Description
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DeskTypeId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -92,17 +92,47 @@ namespace Ets.SingleApi.Model.Repository
 		/// The BookType
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private bool bookType;
 
 			/// <summary>
+		/// The TimeType
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-21 14:57:06
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		private int? timeType;
+
+			/// <summary>
+		/// The NumberOfPeople
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-21 14:57:06
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		private int? numberOfPeople;
+
+			/// <summary>
+		/// The ReservationTime
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-21 14:57:06
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		private DateTime? reservationTime;
+
+			/// <summary>
 		/// The DeskId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -114,7 +144,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="DeskBookingEntity"/> class.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -134,7 +164,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Id of DeskBookingEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -155,7 +185,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierId of DeskBookingEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -176,7 +206,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the OrderNo of DeskBookingEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -197,7 +227,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CreateTime of DeskBookingEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -218,7 +248,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Description of DeskBookingEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -239,7 +269,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeskTypeId of DeskBookingEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -260,7 +290,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the BookType of DeskBookingEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -278,10 +308,73 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
+        /// Gets or sets a value mapping the TimeType of DeskBookingEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-21 14:57:06
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual int? TimeType
+		{
+            get
+            {
+                return this.timeType;
+            }
+
+            set
+            {
+                this.timeType = value;
+            }
+        }
+
+			/// <summary>
+        /// Gets or sets a value mapping the NumberOfPeople of DeskBookingEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-21 14:57:06
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual int? NumberOfPeople
+		{
+            get
+            {
+                return this.numberOfPeople;
+            }
+
+            set
+            {
+                this.numberOfPeople = value;
+            }
+        }
+
+			/// <summary>
+        /// Gets or sets a value mapping the ReservationTime of DeskBookingEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-21 14:57:06
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual DateTime? ReservationTime
+		{
+            get
+            {
+                return this.reservationTime;
+            }
+
+            set
+            {
+                this.reservationTime = value;
+            }
+        }
+
+			/// <summary>
         /// Gets or sets a value mapping the DeskId of DeskBookingEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -308,7 +401,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -330,7 +423,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:42
+        /// Creation Date:2014-3-21 14:57:06
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

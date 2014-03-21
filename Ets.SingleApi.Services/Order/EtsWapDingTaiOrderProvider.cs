@@ -386,7 +386,9 @@ namespace Ets.SingleApi.Services
 
             var customerId = customer.CustomerId;
             var tableReservationId = this.SaveTableReservationEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
+            /*保存菜品明细*/
             this.SaveOrderDetailEntity(customerId, tableReservationId, shoppingList);
+
             this.SavePaymentEntity(tableReservationId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
 
             /*var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
@@ -573,13 +575,15 @@ namespace Ets.SingleApi.Services
             tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
             tableReservationEntity.Path = order.Path;
             tableReservationEntity.TemplateId = order.Template;
+            //订台类型描述（）
+            tableReservationEntity.DeskTypeDes = "";
 
             this.tableReservationEntityRepository.Save(tableReservationEntity);
             return tableReservationEntity.TableReservationId;
         }
 
         /// <summary>
-        /// 保存订单详情信息
+        /// 保存订单详情（菜品明细）信息
         /// </summary>
         /// <param name="customerId">顾客Id</param>
         /// <param name="orderId">订单Id</param>

@@ -15,6 +15,9 @@
 		<property name="CreateTime" column="CreateTime" type="Timestamp" />
 		<property name="UpdateTime" column="UpdateTime" type="Timestamp" />
 		<property name="Description" column="Description" type="String" not-null="false" />
+		<property name="IsSpecial" column="IsSpecial" type="Boolean" not-null="false" />
+		<property name="IsEnable" column="IsEnable" type="Boolean" not-null="false" />
+		<property name="TimeType" column="TimeType" type="Int32" not-null="false" />
 		<!--The foreign keys-->
 		<bag name="DeskTypeLockLogList" cascade="none" lazy="true" table="DeskTypeLockLog">
 			<key column="SupplierDeskTimeId" />

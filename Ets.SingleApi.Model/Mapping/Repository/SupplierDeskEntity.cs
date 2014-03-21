@@ -20,7 +20,7 @@ namespace Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the SupplierDeskEntity table in the database.
     /// </summary>
     /// Creator:ww
-    /// Creation Date:2014-3-20 16:37:43
+    /// Creation Date:2014-3-21 15:03:38
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Id
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DeskName
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DeskNo
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsDel
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The CreateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The UpdateTime
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The SupplierId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The IsEnable
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -113,17 +113,27 @@ namespace Ets.SingleApi.Model.Repository
 		/// The Description
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private string description;
 
 			/// <summary>
+		/// The ImgPath
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-21 15:03:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		private string imgPath;
+
+			/// <summary>
 		/// The DeskBookingList
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -133,7 +143,7 @@ namespace Ets.SingleApi.Model.Repository
 		/// The DeskTypeId
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -145,7 +155,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Initializes a new instance of the <see cref="SupplierDeskEntity"/> class.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -160,6 +170,7 @@ namespace Ets.SingleApi.Model.Repository
 			this.supplierId = 0;
 			this.isEnable = false;
 			this.description = string.Empty;
+			this.imgPath = string.Empty;
 		}
 
 		#region public member
@@ -168,7 +179,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Id of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -189,7 +200,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeskName of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -210,7 +221,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeskNo of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -231,7 +242,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsDel of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -252,7 +263,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the CreateTime of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -273,7 +284,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the UpdateTime of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -294,7 +305,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the SupplierId of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -315,7 +326,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value indicating whether mapping the IsEnable of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -336,7 +347,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the Description of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -354,10 +365,31 @@ namespace Ets.SingleApi.Model.Repository
         }
 
 			/// <summary>
+        /// Gets or sets a value mapping the ImgPath of SupplierDeskEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-21 15:03:38
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+		public virtual string ImgPath
+		{
+            get
+            {
+                return this.imgPath;
+            }
+
+            set
+            {
+                this.imgPath = value;
+            }
+        }
+
+			/// <summary>
         /// Gets or sets a value mapping the DeskBookingList of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -378,7 +410,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Gets or sets a value mapping the DeskTypeId of SupplierDeskEntity table in the database.
         /// </summary>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -405,7 +437,7 @@ namespace Ets.SingleApi.Model.Repository
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -427,7 +459,7 @@ namespace Ets.SingleApi.Model.Repository
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creation Date:2014-3-21 15:03:38
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

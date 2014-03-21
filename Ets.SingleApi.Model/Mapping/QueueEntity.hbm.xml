@@ -25,5 +25,6 @@
 		<property name="SupplierEmployeeId" column="SupplierEmployeeID" type="Int32" not-null="false" />
 		<property name="Code" column="Code" type="String" not-null="false" />
 		<property name="DeskTypeId" column="DeskTypeId" type="Int32" not-null="false" />
+		<property name="LoginId" column="LoginId" type="Int32" not-null="false" />
 	</class>
 </hibernate-mapping>
