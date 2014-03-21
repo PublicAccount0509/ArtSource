@@ -929,8 +929,7 @@ namespace Ets.SingleApi.Services
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var totalfee = shoppingPrice;
-            /*菜品总金额+押金*/
-            var total = totalfee + desk.DepositAmount ?? 0;
+            var total = totalfee;
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
 
