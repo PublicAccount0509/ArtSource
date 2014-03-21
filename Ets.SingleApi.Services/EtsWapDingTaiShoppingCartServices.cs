@@ -890,10 +890,13 @@ namespace Ets.SingleApi.Services
             delivery.Telephone = shoppingCartOrderConfirm.CustomerPhoneNumber;
             delivery.Name = shoppingCartOrderConfirm.CustomerName;
             delivery.Gender = shoppingCartOrderConfirm.CustomerGender;
+            delivery.IpAddress = shoppingCartOrderConfirm.IPAddress;
 
             /*确认订单信息*/
             order.OrderInstruction = shoppingCartOrderConfirm.Remark;
             order.DingTaiMethodId = shoppingCartOrderConfirm.DingTaiMethodId;
+            order.Template = shoppingCartOrderConfirm.Template;
+            order.Path = shoppingCartOrderConfirm.Source;
             order.TotalFee = total;
 
             /*shoppingCartOrder.Id = order.Id;

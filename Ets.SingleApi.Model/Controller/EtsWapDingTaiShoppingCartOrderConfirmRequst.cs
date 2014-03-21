@@ -78,5 +78,44 @@ namespace Ets.SingleApi.Model.Controller
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int DingTaiMethodId { get; set; }
+        
+        /// <summary>
+        /// IP地址
+        /// </summary>
+        /// <value>
+        /// The customer phone number.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 9:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string IPAddress { get; set; }
+
+        /// <summary>
+        /// source
+        /// </summary>
+        /// <value>
+        /// The remark.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 9:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Source { get; set; }
+
+        /// <summary>
+        /// Template
+        /// </summary>
+        /// <value>
+        /// The ding tai method identifier.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 9:48 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string Template { get; set; }
     }
 }

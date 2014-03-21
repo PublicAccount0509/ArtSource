@@ -552,7 +552,10 @@
                     CustomerGender = requst.CustomerGender,
                     CustomerPhoneNumber = requst.CustomerPhoneNumber,
                     Remark = requst.Remark,
-                    DingTaiMethodId = requst.DingTaiMethodId
+                    DingTaiMethodId = requst.DingTaiMethodId,
+                    IPAddress = requst.IPAddress,
+                    Source = requst.Source,
+                    Template = requst.Template
                 };
 
             var saveShoppingItemResult = this.etsWapDingTaiShoppingCartServices.SaveShoppingCartOrderConfirm(this.Source, id, orderConfirm, isCalculateCoupon);
