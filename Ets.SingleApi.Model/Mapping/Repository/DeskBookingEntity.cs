@@ -56,7 +56,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string orderNo;
+		private int orderNo;
 
 			/// <summary>
 		/// The CreateTime
@@ -152,7 +152,7 @@ namespace Ets.SingleApi.Model.Repository
         {
 			this.id = 0;
 			this.supplierId = 0;
-			this.orderNo = string.Empty;
+			this.orderNo = 0;
 			this.createTime = DateTime.Now;
 			this.description = string.Empty;
 			this.bookType = false;
@@ -210,7 +210,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string OrderNo
+		public virtual int OrderNo
 		{
             get
             {

@@ -66,6 +66,16 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
+        /// The desk booking entity repository
+        /// </summary>
+        /// 创建者：苏建峰
+        /// 创建日期：3/21/2014 3:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository;
+
+        /// <summary>
         /// 字段etsWapShoppingCartProvider
         /// </summary>
         /// 创建者：周超
@@ -92,6 +102,7 @@ namespace Ets.SingleApi.Services
         /// <param name="paymentRecordEntityRepository">The payment record entity repository.</param>
         /// <param name="orderDetailEntityRepository">The order detail entity repository.</param>
         /// <param name="supplierEntityRepository">The supplier entity repository.</param>
+        /// <param name="deskBookingEntityRepository">The desk booking entity repository.</param>
         /// <param name="etsWapDingTaiShoppingCartProvider">The ets wap ding tai shopping cart provider.</param>
         /// <param name="shoppingCartBaseCacheServices">The shopping cart base cache services.</param>
         /// <param name="orderNumberDtEntityRepository">The order number dt entity repository.</param>
@@ -106,6 +117,7 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository,
             INHibernateRepository<OrderDetailEntity> orderDetailEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository,
             IEtsWapDingTaiShoppingCartProvider etsWapDingTaiShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
@@ -116,6 +128,7 @@ namespace Ets.SingleApi.Services
             this.paymentRecordEntityRepository = paymentRecordEntityRepository;
             this.orderDetailEntityRepository = orderDetailEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
+            this.deskBookingEntityRepository = deskBookingEntityRepository;
             this.etsWapDingTaiShoppingCartProvider = etsWapDingTaiShoppingCartProvider;
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
@@ -325,7 +338,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            /*Delivery信息表*/
+            /*Delivery信息*/
             var getShoppingCartDeliveryResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
@@ -336,12 +349,23 @@ namespace Ets.SingleApi.Services
                     };
             }
 
+            /*Desk信息*/
+            var getShoppingCartDeskResult= this.etsWapDingTaiShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                    {
+                        StatusCode = getShoppingCartDeskResult.StatusCode,
+                        Result = string.Empty
+                    };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
-           
+            var desk = getShoppingCartDeskResult.Result;
 
             var shoppingCartBase = this.shoppingCartBaseCacheServices.GetShoppingCartBase(source, shoppingCartId);
             if (shoppingCartBase.Result.IsComplete)
@@ -385,10 +409,13 @@ namespace Ets.SingleApi.Services
             }
 
             var customerId = customer.CustomerId;
-            var tableReservationId = this.SaveTableReservationEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
+            /*保存订单信息*/
+            var tableReservationId = this.SaveTableReservationEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, desk, order);
             /*保存菜品明细*/
             this.SaveOrderDetailEntity(customerId, tableReservationId, shoppingList);
-
+            /*保存预订信息*/
+            this.SaveDeskBookingEntity(supplier.SupplierId, orderId, desk);
+            /*保存支付信息*/
             this.SavePaymentEntity(tableReservationId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
 
             /*var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
@@ -536,7 +563,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveTableReservationEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, EtsWapDingTaiShoppingCartOrder order)
+        private int SaveTableReservationEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartDesk desk, EtsWapDingTaiShoppingCartOrder order)
         {
             var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new TableReservationEntity
             {
@@ -575,8 +602,13 @@ namespace Ets.SingleApi.Services
             tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
             tableReservationEntity.Path = order.Path;
             tableReservationEntity.TemplateId = order.Template;
-            //订台类型描述（）
-            tableReservationEntity.DeskTypeDes = "";
+            //订台类型描述
+            tableReservationEntity.DeskTypeDes = desk.RoomType == null
+                                                     ? ""
+                                                     : desk.RoomType == 0
+                                                           ? "散座"
+                                                           : "包房" + "、" + desk.TblTypeName + "、" + desk.PeopleCount +
+                                                             "人";
 
             this.tableReservationEntityRepository.Save(tableReservationEntity);
             return tableReservationEntity.TableReservationId;
@@ -650,6 +682,36 @@ namespace Ets.SingleApi.Services
             paymentRecordEntity.PaymentMethodId = paymentMethodId;
             paymentRecordEntity.PayBank = payBank;
             this.paymentRecordEntityRepository.Save(paymentRecordEntity);
+        }
+
+        /// <summary>
+        /// 保存订台预订信息
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="customerTotal">The customer total.</param>
+        /// <param name="paymentMethodId">The payment method identifier.</param>
+        /// <param name="payBank">The pay bank.</param>
+        /// 创建者：苏建峰
+        /// 创建日期：3/21/2014 3:18 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SaveDeskBookingEntity(int supplier, int orderId, ShoppingCartDesk desk)
+        {
+
+            var deskBookingEntity = this.deskBookingEntityRepository.EntityQueryable.FirstOrDefault(
+                p => p.OrderNo == orderId)
+                                    ?? new DeskBookingEntity
+                                        {
+                                            OrderNo = orderId,
+                                            BookType = false, //0台位  1排队
+                                            CreateTime = DateTime.Now
+                                        };
+
+            deskBookingEntity.DeskTypeId = desk.DeskTypeId;
+            deskBookingEntity.NumberOfPeople = desk.PeopleCount;
+            deskBookingEntity.ReservationTime = desk.BookingDate;
+            this.deskBookingEntityRepository.Save(deskBookingEntity);
         }
     }
 }

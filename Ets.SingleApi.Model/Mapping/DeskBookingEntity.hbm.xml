@@ -9,7 +9,7 @@
 		</id>
 		<!--The propertys-->
 		<property name="SupplierId" column="SupplierId" type="Int32" />
-		<property name="OrderNo" column="OrderNo" type="String" />
+		<property name="OrderNo" column="OrderNo" type="Int32" />
 		<property name="CreateTime" column="CreateTime" type="Timestamp" />
 		<property name="Description" column="Description" type="String" not-null="false" />
 		<property name="DeskTypeId" column="DeskTypeId" type="Int32" not-null="false" />
