@@ -548,7 +548,7 @@
 
             var orderConfirm = new EtsWapDingTaiShoppingCartOrderConfirm
                 {
-                    CustomerName = requst.CustomerGender,
+                    CustomerName = requst.CustomerName,
                     CustomerGender = requst.CustomerGender,
                     CustomerPhoneNumber = requst.CustomerPhoneNumber,
                     Remark = requst.Remark,
