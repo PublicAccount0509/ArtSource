@@ -146,6 +146,7 @@
                                  where tableReservationEntity.CustomerId == parameter.CustomerId
                                        && tableReservationEntity.Cancelled == parameter.Cancelled
                                        && tableReservationEntity.Type == 2
+                                       || tableReservationEntity.Type == 3
                                  select new
                                      {
                                          tableReservationEntity.TableReservationId,
