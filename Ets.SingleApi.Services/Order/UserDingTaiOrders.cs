@@ -255,7 +255,8 @@
                                                  .Select(pay => pay.PaymentMethodId)
                                                  .FirstOrDefault() ?? -1,
                                   DeskNo = deskBooking == null ? "" : deskBooking.DeskNo,
-                                  RoomType = deskBooking == null ? "" : deskBooking.RoomType.ToString(),
+                                  RoomType = deskBooking.RoomType??0,
+                                  RoomTypeName = deskBooking.RoomType == null ? "" : (deskBooking.RoomType == 0 ? "散座" : "包房"),
                                   MinNumber = deskBooking == null ? 0 : deskBooking.MinNumber,
                                   MaxNumber = deskBooking == null ? 0 : deskBooking.MaxNumber,
                                   BookDate = deskBooking == null ? null : deskBooking.BookDate,
