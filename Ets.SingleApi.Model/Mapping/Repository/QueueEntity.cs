@@ -11,240 +11,250 @@
 
 namespace Ets.SingleApi.Model.Repository
 {
-	using System;
-		
+    using System;
+
     /// <summary>
     /// Class:QueueEntity
     /// Namespace:Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the QueueEntity table in the database.
     /// </summary>
-    /// Creator:ww
-    /// Creation Date:2014-3-20 16:37:43
+    /// Creator:周超
+    /// Creation Date:2014/3/21 15:40:47
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
     [Serializable]
     public class QueueEntity
     {
-		#region private member
+        #region private member
 
-			/// <summary>
-		/// The QueueID
+        /// <summary>
+        /// The QueueID
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int queueId;
+        private int queueId;
 
-			/// <summary>
-		/// The Time
+        /// <summary>
+        /// The Time
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime time;
+        private DateTime time;
 
-			/// <summary>
-		/// The UserName
+        /// <summary>
+        /// The UserName
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string userName;
+        private string userName;
 
-			/// <summary>
-		/// The Phone
+        /// <summary>
+        /// The Phone
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string phone;
+        private string phone;
 
-			/// <summary>
-		/// The SeatNumber
+        /// <summary>
+        /// The SeatNumber
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int seatNumber;
+        private int seatNumber;
 
-			/// <summary>
-		/// The Remark
+        /// <summary>
+        /// The Remark
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string remark;
+        private string remark;
 
-			/// <summary>
-		/// The State
+        /// <summary>
+        /// The State
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int state;
+        private int state;
 
-			/// <summary>
-		/// The SupplierID
+        /// <summary>
+        /// The SupplierID
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int supplierId;
+        private int supplierId;
 
-			/// <summary>
-		/// The SupplierName
+        /// <summary>
+        /// The SupplierName
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string supplierName;
+        private string supplierName;
 
-			/// <summary>
-		/// The Number
+        /// <summary>
+        /// The Number
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string number;
+        private string number;
 
-			/// <summary>
-		/// The AppNumber
+        /// <summary>
+        /// The AppNumber
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? appNumber;
+        private int? appNumber;
 
-			/// <summary>
-		/// The PhoneNumber
+        /// <summary>
+        /// The PhoneNumber
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? phoneNumber;
+        private int? phoneNumber;
 
-			/// <summary>
-		/// The AndroidIS
+        /// <summary>
+        /// The AndroidIS
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? androIdIS;
+        private int? androIdIS;
 
-			/// <summary>
-		/// The AlertNumber
+        /// <summary>
+        /// The AlertNumber
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? alertNumber;
+        private int? alertNumber;
 
-			/// <summary>
-		/// The Sex
+        /// <summary>
+        /// The Sex
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? sex;
+        private int? sex;
 
-			/// <summary>
-		/// The SupplierEmployeeID
+        /// <summary>
+        /// The SupplierEmployeeID
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? supplierEmployeeId;
+        private int? supplierEmployeeId;
 
-			/// <summary>
-		/// The Code
+        /// <summary>
+        /// The Code
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string code;
+        private string code;
 
-			/// <summary>
-		/// The DeskTypeId
+        /// <summary>
+        /// The DeskTypeId
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? deskTypeId;
+        private int? deskTypeId;
 
-		#endregion
+        /// <summary>
+        /// The LoginId
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private int? loginId;
 
-		/// <summary>
+        #endregion
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="QueueEntity"/> class.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
         public QueueEntity()
         {
-			this.queueId = 0;
-			this.time = DateTime.Now;
-			this.userName = string.Empty;
-			this.phone = string.Empty;
-			this.seatNumber = 0;
-			this.remark = string.Empty;
-			this.state = 0;
-			this.supplierId = 0;
-			this.supplierName = string.Empty;
-			this.number = string.Empty;
-			this.code = string.Empty;
-		}
+            this.queueId = 0;
+            this.time = DateTime.Now;
+            this.userName = string.Empty;
+            this.phone = string.Empty;
+            this.seatNumber = 0;
+            this.remark = string.Empty;
+            this.state = 0;
+            this.supplierId = 0;
+            this.supplierName = string.Empty;
+            this.number = string.Empty;
+            this.code = string.Empty;
+        }
 
-		#region public member
+        #region public member
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the QueueID of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int QueueId
-		{
+        public virtual int QueueId
+        {
             get
             {
                 return this.queueId;
@@ -256,16 +266,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Time of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime Time
-		{
+        public virtual DateTime Time
+        {
             get
             {
                 return this.time;
@@ -277,16 +287,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the UserName of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string UserName
-		{
+        public virtual string UserName
+        {
             get
             {
                 return this.userName;
@@ -298,16 +308,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Phone of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Phone
-		{
+        public virtual string Phone
+        {
             get
             {
                 return this.phone;
@@ -319,16 +329,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the SeatNumber of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int SeatNumber
-		{
+        public virtual int SeatNumber
+        {
             get
             {
                 return this.seatNumber;
@@ -340,16 +350,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Remark of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Remark
-		{
+        public virtual string Remark
+        {
             get
             {
                 return this.remark;
@@ -361,16 +371,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the State of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int State
-		{
+        public virtual int State
+        {
             get
             {
                 return this.state;
@@ -382,16 +392,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the SupplierID of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int SupplierId
-		{
+        public virtual int SupplierId
+        {
             get
             {
                 return this.supplierId;
@@ -403,16 +413,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the SupplierName of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string SupplierName
-		{
+        public virtual string SupplierName
+        {
             get
             {
                 return this.supplierName;
@@ -424,16 +434,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Number of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Number
-		{
+        public virtual string Number
+        {
             get
             {
                 return this.number;
@@ -445,16 +455,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the AppNumber of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? AppNumber
-		{
+        public virtual int? AppNumber
+        {
             get
             {
                 return this.appNumber;
@@ -466,16 +476,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the PhoneNumber of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? PhoneNumber
-		{
+        public virtual int? PhoneNumber
+        {
             get
             {
                 return this.phoneNumber;
@@ -487,16 +497,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the AndroidIS of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? AndroIdIS
-		{
+        public virtual int? AndroIdIS
+        {
             get
             {
                 return this.androIdIS;
@@ -508,16 +518,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the AlertNumber of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? AlertNumber
-		{
+        public virtual int? AlertNumber
+        {
             get
             {
                 return this.alertNumber;
@@ -529,16 +539,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Sex of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? Sex
-		{
+        public virtual int? Sex
+        {
             get
             {
                 return this.sex;
@@ -550,16 +560,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the SupplierEmployeeID of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? SupplierEmployeeId
-		{
+        public virtual int? SupplierEmployeeId
+        {
             get
             {
                 return this.supplierEmployeeId;
@@ -571,16 +581,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Code of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Code
-		{
+        public virtual string Code
+        {
             get
             {
                 return this.code;
@@ -592,16 +602,16 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeskTypeId of QueueEntity table in the database.
         /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? DeskTypeId
-		{
+        public virtual int? DeskTypeId
+        {
             get
             {
                 return this.deskTypeId;
@@ -613,17 +623,38 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-		#endregion
+        /// <summary>
+        /// Gets or sets a value mapping the LoginId of QueueEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? LoginId
+        {
+            get
+            {
+                return this.loginId;
+            }
 
-			/// <summary>
+            set
+            {
+                this.loginId = value;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
         /// Determines whether the specified is equal to this instance.
         /// </summary>
         /// <param name="obj">The to compare with this instance.</param>
         /// <returns>
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -638,22 +669,22 @@ namespace Ets.SingleApi.Model.Repository
             return this.QueueId == castObj.QueueId;
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
+        /// Creator:周超
+        /// Creation Date:2014/3/21 15:40:47
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public override int GetHashCode()
-		{
-			var hash = 57; 
-			hash = 27 * hash * this.QueueId.GetHashCode();
-			return hash;
-		}
-	}
+        public override int GetHashCode()
+        {
+            var hash = 57;
+            hash = 27 * hash * this.QueueId.GetHashCode();
+            return hash;
+        }
+    }
 }

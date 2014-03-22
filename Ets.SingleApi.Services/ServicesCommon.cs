@@ -20,6 +20,51 @@
     public class ServicesCommon
     {
         /// <summary>
+        /// 排队号数字位数
+        /// </summary>
+        /// <value>
+        /// 排队号数字位数
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int QueueNumberLength
+        {
+            get
+            {
+                var queueNumberLength = ConfigurationManager.AppSettings["QueueNumberLength"] ?? "5";
+                int result;
+                if (!int.TryParse(queueNumberLength, out result))
+                {
+                    result = 5;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 排队号前缀
+        /// </summary>
+        /// <value>
+        /// 排队号前缀
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/17 22:23
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string QueueNumberPrefix
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["QueueNumberPrefix"] ?? string.Empty).Trim();
+            }
+        }
+
+        /// <summary>
         /// 是否从服务器获取订单号
         /// </summary>
         /// <value>

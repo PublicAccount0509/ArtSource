@@ -1,29 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-	<class name="Ets.SingleApi.Model.Repository.QueueEntity, Ets.SingleApi.Model" table="Queue" dynamic-update="true" optimistic-lock="all" >
-	 <!--The cache-->
-	 <cache usage="read-write"/>
-	 <!--The primary keys-->
-		<id name="QueueId" column="QueueID" type="Int32" >
-			<generator class="native"/>
-		</id>
-		<!--The propertys-->
-		<property name="Time" column="Time" type="Timestamp" />
-		<property name="UserName" column="UserName" type="String" />
-		<property name="Phone" column="Phone" type="String" />
-		<property name="SeatNumber" column="SeatNumber" type="Int32" />
-		<property name="Remark" column="Remark" type="String" not-null="false" />
-		<property name="State" column="State" type="Int32" />
-		<property name="SupplierId" column="SupplierID" type="Int32" />
-		<property name="SupplierName" column="SupplierName" type="String" />
-		<property name="Number" column="Number" type="String" not-null="false" />
-		<property name="AppNumber" column="AppNumber" type="Int32" not-null="false" />
-		<property name="PhoneNumber" column="PhoneNumber" type="Int32" not-null="false" />
-		<property name="AndroIdIS" column="AndroidIS" type="Int32" not-null="false" />
-		<property name="AlertNumber" column="AlertNumber" type="Int32" not-null="false" />
-		<property name="Sex" column="Sex" type="Int32" not-null="false" />
-		<property name="SupplierEmployeeId" column="SupplierEmployeeID" type="Int32" not-null="false" />
-		<property name="Code" column="Code" type="String" not-null="false" />
-		<property name="DeskTypeId" column="DeskTypeId" type="Int32" not-null="false" />
-	</class>
+  <class name="Ets.SingleApi.Model.Repository.QueueEntity, Ets.SingleApi.Model" table="Queue" dynamic-update="true" optimistic-lock="all" >
+    <!--The cache-->
+    <cache usage="read-write"/>
+    <!--The primary keys-->
+    <id name="QueueId" column="QueueID" type="Int32" >
+      <generator class="native"/>
+    </id>
+    <!--The propertys-->
+    <property name="Time" column="Time" type="Timestamp" />
+    <property name="UserName" column="UserName" type="String" />
+    <property name="Phone" column="Phone" type="String" />
+    <property name="SeatNumber" column="SeatNumber" type="Int32" />
+    <property name="Remark" column="Remark" type="String" not-null="false" />
+    <property name="State" column="State" type="Int32" />
+    <property name="SupplierId" column="SupplierID" type="Int32" />
+    <property name="SupplierName" column="SupplierName" type="String" />
+    <property name="Number" column="Number" type="String" not-null="false" />
+    <property name="AppNumber" column="AppNumber" type="Int32" not-null="false" />
+    <property name="PhoneNumber" column="PhoneNumber" type="Int32" not-null="false" />
+    <property name="AndroIdIS" column="AndroidIS" type="Int32" not-null="false" />
+    <property name="AlertNumber" column="AlertNumber" type="Int32" not-null="false" />
+    <property name="Sex" column="Sex" type="Int32" not-null="false" />
+    <property name="SupplierEmployeeId" column="SupplierEmployeeID" type="Int32" not-null="false" />
+    <property name="Code" column="Code" type="String" not-null="false" />
+    <property name="DeskTypeId" column="DeskTypeId" type="Int32" not-null="false" />
+    <property name="LoginId" column="LoginId" type="Int32" not-null="false" />
+  </class>
 </hibernate-mapping>
