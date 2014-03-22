@@ -1474,5 +1474,51 @@ namespace Ets.SingleApi.Controllers
                     Result = getDeskOpenTimeListResult.Result
                 };
         }
+
+        /// <summary>
+        /// 获取餐厅订台开放日期列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="daySpan">日期天数跨度</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/22/2014 7:14 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<DeskOpenDate> DeskOpenDateList(int id)
+        {
+            var getDeskOpenDateListResult = this.supplierServices.GetDeskOpenDateList(this.Source, id);
+
+            if (getDeskOpenDateListResult.Result == null || getDeskOpenDateListResult.Result.Count == 0)
+            {
+                return new ListResponse<DeskOpenDate>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode =
+                            getDeskOpenDateListResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                ? (int)StatusCode.Succeed.Empty
+                                : getDeskOpenDateListResult.StatusCode
+                    },
+                    Result = new List<DeskOpenDate>()
+                };
+            }
+
+            return new ListResponse<DeskOpenDate>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getDeskOpenDateListResult.StatusCode
+                },
+                ResultTotalCount = getDeskOpenDateListResult.ResultTotalCount,
+                Result = getDeskOpenDateListResult.Result.Select(p => new DeskOpenDate
+                        {
+                            Date = p.Date.Date,
+                            IsLock = p.IsLock
+                        }).ToList()
+            };
+        }
     }
 }

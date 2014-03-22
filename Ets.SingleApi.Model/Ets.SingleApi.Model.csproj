@@ -115,6 +115,7 @@
     <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderConfirmRequst.cs" />
     <Compile Include="Controller\CheckDeskRequst.cs" />
     <Compile Include="Controller\Queue.cs" />
+    <Compile Include="Controller\DeskOpenDate.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Services\BaiFuBaoReturnParameter.cs" />
     <Compile Include="Services\BaiFuBaoSubmitParameter.cs" />
     <Compile Include="Services\CustomerSimpleModel.cs" />
+    <Compile Include="Services\DeskOpenDateModel.cs" />
     <Compile Include="Services\DingTaiDeskModel.cs" />
     <Compile Include="Services\DingTaiGetDeskListParameter.cs" />
     <Compile Include="Services\DistanceModel.cs" />

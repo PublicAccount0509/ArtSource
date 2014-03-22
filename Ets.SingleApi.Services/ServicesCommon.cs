@@ -1094,6 +1094,32 @@
         }
 
         /// <summary>
+        /// 订台日期跨度（天）
+        /// </summary>
+        /// <value>
+        /// The default ding tai method identifier.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 11:27 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DingTaiDaySpan
+        {
+            get
+            {
+                var paymentMethodId = ConfigurationManager.AppSettings["DingTaiDaySpan"] ?? "15";
+                int result;
+                if (!int.TryParse(paymentMethodId, out result))
+                {
+                    result = 15;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 默认电磁炉数量
         /// </summary>
         /// <value>
