@@ -790,6 +790,12 @@ namespace Ets.SingleApi.Services
                     pickUpTime = ServicesCommon.PickUpMethodReadyTime;
                 }
 
+                if (!ServicesCommon.SupplierReadyTimeEnable)
+                {
+                    supplierDeliveryTime = ServicesCommon.ActiveDeliveryMethodReadyTime;
+                    pickUpTime = ServicesCommon.ActivePickUpMethodReadyTime;
+                }
+
                 var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? pickUpTime : supplierDeliveryTime;
                 var now = DateTime.Now;
                 var deliveryDate = (shoppingCartOrder.DeliveryDate ?? now).ToString("yyyy-MM-dd");

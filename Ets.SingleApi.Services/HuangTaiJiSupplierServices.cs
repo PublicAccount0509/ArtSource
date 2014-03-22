@@ -459,6 +459,7 @@ namespace Ets.SingleApi.Services
             {
                 deliveryTime = 45;
             }
+
             var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? ServicesCommon.HuangTaiJiServiceTimeReadyTime : deliveryTime;
             var result = this.supplierDetailServices.GetSupplierDeliveryTime(supplierId, startDeliveryDate ?? DateTime.Now, days ?? ServicesCommon.DeliveryTimeDefaultDays, beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierDeliveryTimeModel>

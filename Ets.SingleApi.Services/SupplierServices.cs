@@ -2037,6 +2037,12 @@
                 pickUpTime = ServicesCommon.PickUpMethodReadyTime;
             }
 
+            if (!ServicesCommon.SupplierReadyTimeEnable)
+            {
+                deliveryTime = ServicesCommon.ActiveDeliveryMethodReadyTime;
+                pickUpTime = ServicesCommon.ActivePickUpMethodReadyTime;
+            }
+
             var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? pickUpTime : deliveryTime;
             var result = this.supplierDetailServices.GetSupplierServiceTime(supplierId, startServiceDate ?? DateTime.Now, days ?? ServicesCommon.ServiceTimeDefaultDays, beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierServiceTimeModel>
@@ -2092,6 +2098,12 @@
             if (!int.TryParse(supplier.PickUpTime, out pickUpTime))
             {
                 pickUpTime = ServicesCommon.PickUpMethodReadyTime;
+            }
+
+            if (!ServicesCommon.SupplierReadyTimeEnable)
+            {
+                deliveryTime = ServicesCommon.ActiveDeliveryMethodReadyTime;
+                pickUpTime = ServicesCommon.ActivePickUpMethodReadyTime;
             }
 
             var beginReadyTime = deliveryMethodId == ServicesCommon.PickUpDeliveryMethodId ? pickUpTime : deliveryTime;

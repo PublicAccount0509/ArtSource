@@ -519,6 +519,77 @@
         }
 
         /// <summary>
+        /// 是否启用餐厅备餐时间
+        /// </summary>
+        /// <value>
+        /// 是否启用餐厅备餐时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool SupplierReadyTimeEnable
+        {
+            get
+            {
+                return string.Equals(ConfigurationManager.AppSettings["SupplierReadyTimeEnable"], "true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// 活动设置的送餐时的备餐时间（单位：分钟）
+        /// </summary>
+        /// <value>
+        /// 活动设置的送餐时的备餐时间（单位：分钟）
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int ActiveDeliveryMethodReadyTime
+        {
+            get
+            {
+                var activeDeliveryMethodReadyTime = ConfigurationManager.AppSettings["ActiveDeliveryMethodReadyTime"] ?? "90";
+                int result;
+                if (!int.TryParse(activeDeliveryMethodReadyTime, out result))
+                {
+                    result = 90;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 活动设置的取餐时的备餐时间（单位：分钟）
+        /// </summary>
+        /// <value>
+        /// 活动设置的取餐时的备餐时间（单位：分钟）
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int ActivePickUpMethodReadyTime
+        {
+            get
+            {
+                var activePickUpMethodReadyTime = ConfigurationManager.AppSettings["ActivePickUpMethodReadyTime"] ?? "90";
+                int result;
+                if (!int.TryParse(activePickUpMethodReadyTime, out result))
+                {
+                    result = 90;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 最快送餐时间
         /// </summary>
         /// <value>
