@@ -36,7 +36,9 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string RoomType { get; set; }
+        public int RoomType { get; set; }
+
+        public string RoomTypeName { get; set; }
 
         /// <summary>
         /// 桌子类型

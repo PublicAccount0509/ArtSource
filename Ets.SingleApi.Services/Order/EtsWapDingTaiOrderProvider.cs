@@ -186,10 +186,11 @@ namespace Ets.SingleApi.Services
                                     select new DingTaiOrderDeskModel
                                    {
                                        DeskNo = deskBookingEntity.Desk.DeskNo,
-                                       RoomType = deskBookingEntity.DeskType.RoomType == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
+                                       RoomType = deskBookingEntity.DeskType.RoomType ?? 0,// == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
+                                       RoomTypeName = deskBookingEntity.DeskType.RoomType == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
                                        MaxNumber = deskBookingEntity.DeskType.MaxNumber,
                                        MinNumber = deskBookingEntity.DeskType.MinNumber,
-                                       TblTypeName = deskBookingEntity.DeskType.DeskTypeName
+                                       TblTypeName = deskBookingEntity.DeskType.TableType.TblTypeName
                                    }
                               ).FirstOrDefault();
 

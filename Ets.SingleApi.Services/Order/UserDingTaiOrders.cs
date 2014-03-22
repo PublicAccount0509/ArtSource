@@ -66,10 +66,7 @@
         /// ----------------------------------------------------------------------------------------
         public OrderType OrderType
         {
-            get
-            {
-                return OrderType.DingTai;
-            }
+            get { return OrderType.DingTai; }
         }
 
         /// <summary>
@@ -113,17 +110,17 @@
             if (parameter == null)
             {
                 return new ServicesResultList<IOrderModel>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest,
-                    Result = new List<IOrderModel>()
-                };
+                    {
+                        StatusCode = (int) StatusCode.System.InvalidRequest,
+                        Result = new List<IOrderModel>()
+                    };
             }
 
             var orderList = this.GetDingTaiOrderList(parameter);
             return new ServicesResultList<IOrderModel>
-            {
-                Result = orderList.Cast<IOrderModel>().ToList()
-            };
+                {
+                    Result = orderList.Cast<IOrderModel>().ToList()
+                };
         }
 
         /// <summary>
@@ -145,7 +142,7 @@
             var queryableTemp = (from tableReservationEntity in this.tableReservationEntityRepository.EntityQueryable
                                  where tableReservationEntity.CustomerId == parameter.CustomerId
                                        && tableReservationEntity.Cancelled == parameter.Cancelled
-                                       && (tableReservationEntity.Type == 2|| tableReservationEntity.Type == 3)
+                                       && (tableReservationEntity.Type == 2 || tableReservationEntity.Type == 3)
                                  select new
                                      {
                                          tableReservationEntity.TableReservationId,
@@ -227,7 +224,8 @@
                                            deskBooking.DeskType.MinNumber,
                                            deskBooking.DeskType.MaxNumber,
                                            BookDate = deskBooking.ReservationTime,
-                                           deskBooking.Desk.ImgPath
+                                           deskBooking.Desk.ImgPath,
+                                           deskBooking.DeskType.TableType.TblTypeName
                                        }
                                   ).ToList();
 
@@ -261,7 +259,8 @@
                                   MaxNumber = deskBooking == null ? 0 : deskBooking.MaxNumber,
                                   BookDate = deskBooking == null ? null : deskBooking.BookDate,
                                   BookTime = deskBooking == null ? "" : deskBooking.BookDate.Value.ToString("HH:mm"),
-                                  DeskImgUrl = deskBooking == null ? "" : deskBooking.ImgPath
+                                  DeskImgUrl = deskBooking == null ? "" : deskBooking.ImgPath,
+                                  TblTypeName = deskBooking == null ? "" : deskBooking.TblTypeName
                               }).ToList();
             return result;
         }
