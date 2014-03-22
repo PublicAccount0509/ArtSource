@@ -1096,18 +1096,13 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private decimal CalculateCoupon(decimal total, int supplierId, int? userId)
         {
-            if (userId == null)
-            {
-                return 0;
-            }
-
             var supplierCouponProvider = this.supplierCouponProviderList.FirstOrDefault(p => p.DeliveryMethodType == DeliveryMethodType.TangShi);
             if (supplierCouponProvider == null)
             {
                 return 0;
             }
 
-            var supplierCouponList = supplierCouponProvider.CalculateCoupon(total, supplierId, DateTime.Now, userId.Value);
+            var supplierCouponList = supplierCouponProvider.CalculateCoupon(total, supplierId, DateTime.Now, userId);
             if (supplierCouponList == null || supplierCouponList.Count == 0)
             {
                 return 0;

@@ -1111,11 +1111,6 @@
         /// ----------------------------------------------------------------------------------------
         private decimal CalculateCoupon(decimal total, int supplierId, int deliveryMethodId, int? userId)
         {
-            if (userId == null)
-            {
-                return 0;
-            }
-
             if (this.supplierEntityRepository.EntityQueryable.Any(
                     p =>
                     p.SupplierId == supplierId && ServicesCommon.NoCouponSupplierGroupList.Contains(p.SupplierGroupId)))
@@ -1129,7 +1124,7 @@
                 return 0;
             }
 
-            var supplierCouponList = supplierCouponProvider.CalculateCoupon(total, supplierId, DateTime.Now, userId.Value);
+            var supplierCouponList = supplierCouponProvider.CalculateCoupon(total, supplierId, DateTime.Now, userId);
             if (supplierCouponList == null || supplierCouponList.Count == 0)
             {
                 return 0;

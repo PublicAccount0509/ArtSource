@@ -421,19 +421,5 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<string> GetDeskOpenTimeList(string source, int supplierId, DateTime bookingDate);
-
-        /// <summary>
-        /// 查检订台台位是否被锁
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="supplierId">餐厅Id</param>
-        /// <param name="parameter">The parameter.</param>
-        /// <returns></returns>
-        /// 创建者：苏建峰
-        /// 创建日期：3/22/2014 11:19 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> CheckDesk(string source, int supplierId, CheckDeskParameter parameter);
     }
 }

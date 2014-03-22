@@ -28,5 +28,35 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<QueueDeskModel> GetQueueDeskList(string source, GetQueueDeskListParameter parameter);
+
+        /// <summary>
+        /// 保存排队信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回排队号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> SaveQueueDesk(string source, SaveQueueDeskParameter parameter);
+
+        /// <summary>
+        /// 保存排队信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回排队号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> CheckQueueDeskState(string source, CheckQueueDeskStateParameter parameter);
     }
 }

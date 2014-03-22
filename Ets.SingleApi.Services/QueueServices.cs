@@ -23,6 +23,16 @@
     public class QueueServices : IQueueServices
     {
         /// <summary>
+        /// 字段customerEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
+
+        /// <summary>
         /// 字段supplierEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -65,6 +75,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="CuisineServices" /> class.
         /// </summary>
+        /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="deskTypeEntityRepository">The deskTypeEntityRepository</param>
         /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
@@ -75,11 +86,13 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public QueueServices(
+            INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
             INHibernateRepository<QueueEntity> queueEntityRepository)
         {
+            this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
@@ -105,7 +118,7 @@
             {
                 return new ServicesResultList<QueueDeskModel>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
                     Result = new List<QueueDeskModel>()
                 };
             }
@@ -170,5 +183,191 @@
                 Result = modelList
             };
         }
+
+        /// <summary>
+        /// 保存排队信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回排队号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> SaveQueueDesk(string source, SaveQueueDeskParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = string.Empty
+                };
+            }
+
+            if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = string.Empty
+                };
+            }
+
+            var supplierId = parameter.SupplierId;
+            if (!this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId))
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFondDeskTypeCode,
+                    Result = string.Empty
+                };
+            }
+
+            if (this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.LoginId == parameter.UserId))
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.AleadyQueueCode,
+                    Result = string.Empty
+                };
+            }
+
+            var supplierEntity = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
+                .Select(p => new { p.SupplierId, p.SupplierName })
+                .FirstOrDefault();
+            /*判断餐厅Id是否存在*/
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = string.Empty
+                };
+            }
+
+            var queueEntity = new QueueEntity
+                {
+                    DeskTypeId = parameter.DeskTypeId,
+                    UserName = parameter.UserName,
+                    Phone = parameter.Telephone,
+                    Sex = parameter.Gender,
+                    SupplierId = supplierEntity.SupplierId,
+                    SupplierName = supplierEntity.SupplierName,
+                    SeatNumber = parameter.SeatNumber,
+                    LoginId = parameter.UserId,
+                    Number = ServicesCommon.QueueNumberPrefix + (this.queueEntityRepository.EntityQueryable.Count(p => p.SupplierId == supplierId) + 1).ToString().PadLeft(ServicesCommon.QueueNumberLength, '0')
+                };
+
+            this.queueEntityRepository.Save(queueEntity);
+
+            return new ServicesResult<string>
+            {
+                Result = queueEntity.Number
+            };
+        }
+
+        /// <summary>
+        /// 保存排队信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回排队号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CheckQueueDeskState(string source, CheckQueueDeskStateParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = false
+                };
+            }
+
+            if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = false
+                };
+            }
+
+            var supplierId = parameter.SupplierId;
+            if (!this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFondDeskTypeCode,
+                    Result = false
+                };
+            }
+
+            var result = this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.LoginId == parameter.UserId);
+            return new ServicesResult<bool>
+            {
+                Result = result
+            };
+        }
+
+        /// <summary>
+        /// 取得排队详情信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="queueId">排队Id</param>
+        /// <returns>
+        /// 返回排队详情信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        //public ServicesResult<bool> GetQueue(string source, int queueId)
+        //{
+        //    if (parameter == null)
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            StatusCode = (int)StatusCode.System.InvalidRequest,
+        //            Result = false
+        //        };
+        //    }
+
+        //    if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+        //            Result = false
+        //        };
+        //    }
+
+        //    var supplierId = parameter.SupplierId;
+        //    if (!this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId))
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            StatusCode = (int)StatusCode.Validate.NotFondDeskTypeCode,
+        //            Result = false
+        //        };
+        //    }
+
+        //    var result = this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.LoginId == parameter.UserId);
+        //    return new ServicesResult<bool>
+        //    {
+        //        Result = result
+        //    };
+        //}
     }
 }

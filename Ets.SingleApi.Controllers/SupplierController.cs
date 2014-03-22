@@ -1474,46 +1474,5 @@ namespace Ets.SingleApi.Controllers
                     Result = getDeskOpenTimeListResult.Result
                 };
         }
-
-        /// <summary>
-        /// 查检订台台位是否被锁
-        /// </summary>
-        /// <param name="id">餐厅Id</param>
-        /// <param name="requst">The requst.</param>
-        /// <returns></returns>
-        /// 创建者：苏建峰
-        /// 创建日期：3/22/2014 11:11 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [HttpPost]
-        public Response<bool> CheckDesk(int id,CheckDeskRequst requst)
-        {
-            if (requst == null)
-            {
-                return new Response<bool>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
-                };
-            }
-            var result = this.supplierServices.CheckDesk(this.Source, id, new CheckDeskParameter
-                {
-                    DeskTypeId = requst.DeskTypeId,
-                    BookingDate = requst.BookingDate,
-                    BookingTime = requst.BookingTime
-                });
-
-            return new Response<bool>
-            {
-                Message = new ApiMessage
-                {
-                    StatusCode = result.StatusCode
-                },
-                Result = result.Result
-            };
-        }
     }
 }
