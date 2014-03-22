@@ -111,6 +111,7 @@
     <Compile Include="Controller\WechatPaymentStateRequest.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartDeskRequst.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderConfirmRequst.cs" />
+    <Compile Include="Controller\CheckDeskRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Services\DingTaiOrderDetailModel.cs" />
     <Compile Include="Services\DingTaiOrderDishModel.cs" />
     <Compile Include="Services\DingTaiOrderDeskModel.cs" />
+    <Compile Include="Services\CheckDeskParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />

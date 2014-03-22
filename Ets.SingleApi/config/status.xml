@@ -64,6 +64,8 @@
   <item code="40030" message="无效的购物车Id"></item>
   <item code="40031" message="没有找到对应的购物车"></item>
   <item code="40032" message="该时间段不提供订台"></item>
+  <item code="40033" message="无效的台位类型Id"></item>
+  <item code="40034" message="该台位已被锁定"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>
