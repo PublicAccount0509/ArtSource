@@ -164,7 +164,7 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
-                    Result = new WaiMaiOrderDetailModel()
+                    Result = new DingTaiOrderDetailModel()
                 };
             }
 
@@ -201,7 +201,7 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = new TangShiOrderDetailModel()
+                    Result = new DingTaiOrderDetailModel()
                 };
             }
 
@@ -244,7 +244,7 @@ namespace Ets.SingleApi.Services
             {
                 ShoppingCartId = shoppingCartId,
                 OrderId = tableReservationEntity.OrderNumber.HasValue ? tableReservationEntity.OrderNumber.Value : 0,
-                OrderTypeId = (int)OrderType.TangShi,
+                OrderTypeId = (int)OrderType.DingTai,
                 OrderStatusId = tableReservationEntity.TableStatus,
                 DateReserved = tableReservationEntity.DateReserved.ToString("yyyy-MM-dd HH:mm"),
                 Description = tableReservationEntity.OrderNotes ?? string.Empty,
