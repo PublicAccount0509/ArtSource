@@ -1,4 +1,4 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
     /// 类名称：QueueModel
@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class QueueModel
+    public class Queue
     {
         /// <summary>
         /// 排队Id
@@ -140,7 +140,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int? Gender { get; set; }
+        public int Gender { get; set; }
 
         /// <summary>
         /// 人数
@@ -166,7 +166,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int? RoomType { get; set; }
+        public int RoomType { get; set; }
 
         /// <summary>
         /// 桌位类型Id

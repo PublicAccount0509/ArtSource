@@ -12,7 +12,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SaveSupplierCuisineRequst
+    public class SaveSupplierCuisineRequst : ApiRequst
     {
         /// <summary>
         /// Gets or sets the SupplierMenuCategoryTypeId of SaveSupplierCuisineRequst

@@ -66,6 +66,7 @@
   <item code="40032" message="该时间段不提供订台"></item>
   <item code="40033" message="您已经预订此台位"></item>
   <item code="40034" message="该台位信息不存在"></item>
+  <item code="40035" message="无效的排队Id"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>

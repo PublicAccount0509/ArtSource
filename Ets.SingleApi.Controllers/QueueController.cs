@@ -50,7 +50,7 @@ namespace Ets.SingleApi.Controllers
         /// <summary>
         /// 取得排队台位类型信息
         /// </summary>
-        /// <param name="id">The id</param>
+        /// <param name="supplierId">The supplierId</param>
         /// <param name="queueDate">The queueDate</param>
         /// <param name="userId">The userId</param>
         /// <returns>
@@ -62,11 +62,11 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<QueueDesk> DeskList(int id, DateTime queueDate, int? userId)
+        public ListResponse<QueueDesk> DeskList(int supplierId, DateTime queueDate, int? userId)
         {
             var list = this.queueServices.GetQueueDeskList(this.Source, new GetQueueDeskListParameter
                 {
-                    SupplierId = id,
+                    SupplierId = supplierId,
                     QueueDate = queueDate,
                     UserId = userId
                 });
@@ -100,6 +100,160 @@ namespace Ets.SingleApi.Controllers
                 }).ToList();
 
             return new ListResponse<QueueDesk>
+            {
+                Result = result
+            };
+        }
+
+        /// <summary>
+        /// 保存排队信息
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回排队号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<string> SaveQueue(SaveQueueRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    },
+                    Result = string.Empty
+                };
+            }
+
+            var result = this.queueServices.SaveQueueDesk(this.Source, new SaveQueueDeskParameter
+                {
+                    DeskTypeId = requst.DeskTypeId,
+                    Description = requst.Description,
+                    Gender = requst.Gender,
+                    SeatNumber = requst.SeatNumber,
+                    SupplierId = requst.SupplierId,
+                    Telephone = requst.Telephone,
+                    UserId = requst.UserId,
+                    UserName = requst.UserName
+                });
+
+            return new Response<string>
+            {
+                Result = result.Result,
+                Message = new ApiMessage
+                    {
+                        StatusCode = result.StatusCode
+                    },
+                ResultTotalCount = result.ResultTotalCount
+            };
+        }
+
+        /// <summary>
+        /// 保存排队信息
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回排队号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<bool> CheckQueueDeskState(CheckQueueDeskStateRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var result = this.queueServices.CheckQueueDeskState(this.Source, new CheckQueueDeskStateParameter
+                {
+                    SupplierId = requst.SupplierId,
+                    DeskTypeId = requst.DeskTypeId,
+                    UserId = requst.UserId
+                });
+
+            return new Response<bool>
+            {
+                Result = result.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                ResultTotalCount = result.ResultTotalCount
+            };
+        }
+
+        /// <summary>
+        /// 取得排队台位类型信息
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// 排队台位类型信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 3:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<Queue> GetQueue(int id)
+        {
+            var queue = this.queueServices.GetQueue(this.Source, id);
+
+            if (queue.Result == null)
+            {
+                return new Response<Queue>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = queue.StatusCode == (int)StatusCode.Succeed.Ok
+                                ? (int)StatusCode.Succeed.Empty
+                                : queue.StatusCode
+                    },
+                    Result = new Queue()
+                };
+            }
+
+            var result = new Queue
+                {
+                    BoxName = queue.Result.BoxName,
+                    DeskTypeId = queue.Result.DeskTypeId,
+                    DeskTypeDescription = queue.Result.DeskTypeDescription,
+                    DeskTypeName = queue.Result.DeskTypeName,
+                    QueueDescription = queue.Result.QueueDescription,
+                    Gender = queue.Result.Gender ?? ControllersCommon.DefaultGender,
+                    MaxNumber = queue.Result.MaxNumber,
+                    MinNumber = queue.Result.MinNumber,
+                    Number = queue.Result.Number,
+                    QueueId = queue.Result.QueueId,
+                    QueueStateId = queue.Result.QueueStateId,
+                    RoomType = queue.Result.RoomType ?? 0,
+                    SeatNumber = queue.Result.SeatNumber,
+                    SupplierId = queue.Result.SupplierId,
+                    SupplierName = queue.Result.SupplierName,
+                    TblTypeId = queue.Result.TblTypeId,
+                    TblTypeName = queue.Result.TblTypeName,
+                    Telephone = queue.Result.Telephone,
+                    UserName = queue.Result.UserName
+                };
+
+            return new Response<Queue>
             {
                 Result = result
             };

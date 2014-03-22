@@ -1,8 +1,8 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
-    /// 类名称：SaveQueueDeskParameter
-    /// 命名空间：Ets.SingleApi.Model.Services
+    /// 类名称：SaveQueueRequst
+    /// 命名空间：Ets.SingleApi.Model.Controller
     /// 类功能：保存排队信息参数
     /// </summary>
     /// 创建者：周超
@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SaveQueueDeskParameter
+    public class SaveQueueRequst : ApiRequst
     {
         /// <summary>
         /// 台位类型信息Id
@@ -24,19 +24,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int DeskTypeId { get; set; }
-
-        /// <summary>
-        /// 餐厅Id
-        /// </summary>
-        /// <value>
-        /// 餐厅Id
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：3/21/2014 5:17 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int SupplierId { get; set; }
 
         /// <summary>
         /// 排队描述
