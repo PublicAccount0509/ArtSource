@@ -306,6 +306,7 @@
                     SupplierName = supplierEntity.SupplierName,
                     SeatNumber = parameter.SeatNumber,
                     LoginId = parameter.UserId,
+                    Remark = parameter.Description,
                     Number = ServicesCommon.QueueNumberPrefix + (this.queueEntityRepository.EntityQueryable.Count(p => p.SupplierId == supplierId) + 1).ToString().PadLeft(ServicesCommon.QueueNumberLength, '0')
                 };
 
@@ -380,41 +381,48 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        //public ServicesResult<bool> GetQueue(string source, int queueId)
-        //{
-        //    if (parameter == null)
-        //    {
-        //        return new ServicesResult<bool>
-        //        {
-        //            StatusCode = (int)StatusCode.System.InvalidRequest,
-        //            Result = false
-        //        };
-        //    }
+        public ServicesResult<QueueDetailModel> GetQueue(string source, int queueId)
+        {
+            if (!this.queueEntityRepository.EntityQueryable.Any(p => p.QueueId == queueId))
+            {
+                return new ServicesResult<QueueDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidQueueIdCode,
+                    Result = new QueueDetailModel()
+                };
+            }
 
-        //    if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
-        //    {
-        //        return new ServicesResult<bool>
-        //        {
-        //            StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
-        //            Result = false
-        //        };
-        //    }
+            var result = (from queueEntity in this.queueEntityRepository.EntityQueryable.Where(p => p.QueueId == queueId)
+                          from deskType in this.deskTypeEntityRepository.EntityQueryable
+                          where queueEntity.DeskTypeId == deskType.Id
+                          select new QueueDetailModel
+                              {
+                                  QueueId = queueEntity.QueueId,
+                                  BoxName = deskType.BoxName,
+                                  DeskTypeDescription = deskType.Description,
+                                  DeskTypeId = deskType.Id,
+                                  DeskTypeName = deskType.DeskTypeName,
+                                  Gender = queueEntity.Sex,
+                                  MaxNumber = deskType.MaxNumber,
+                                  MinNumber = deskType.MinNumber,
+                                  Number = queueEntity.Number,
+                                  QueueDescription = queueEntity.Remark,
+                                  QueueStateId = queueEntity.State,
+                                  RoomType = deskType.RoomType,
+                                  SeatNumber = queueEntity.SeatNumber,
+                                  SupplierId = queueEntity.SupplierId,
+                                  SupplierName = queueEntity.SupplierName,
+                                  TblTypeId = deskType.TableType.Id,
+                                  TblTypeName = deskType.TableType.TblTypeName,
+                                  Telephone = queueEntity.Phone,
+                                  UserName = queueEntity.UserName,
+                                  CeateDate = queueEntity.Time
+                              }).FirstOrDefault();
 
-        //    var supplierId = parameter.SupplierId;
-        //    if (!this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId))
-        //    {
-        //        return new ServicesResult<bool>
-        //        {
-        //            StatusCode = (int)StatusCode.Validate.NotFondDeskTypeCode,
-        //            Result = false
-        //        };
-        //    }
-
-        //    var result = this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.LoginId == parameter.UserId);
-        //    return new ServicesResult<bool>
-        //    {
-        //        Result = result
-        //    };
-        //}
+            return new ServicesResult<QueueDetailModel>
+            {
+                Result = result ?? new QueueDetailModel()
+            };
+        }
     }
 }

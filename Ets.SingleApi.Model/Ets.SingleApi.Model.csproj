@@ -46,6 +46,7 @@
     <Compile Include="Controller\AlipayPaymentRequst.cs" />
     <Compile Include="Controller\AlipayPaymentStateRequst.cs" />
     <Compile Include="Controller\BaiFuBaoPaymentRequst.cs" />
+    <Compile Include="Controller\CheckQueueDeskStateRequst.cs" />
     <Compile Include="Controller\DingTaiDesk.cs" />
     <Compile Include="Controller\DingTaiSearchResult.cs" />
     <Compile Include="Controller\DistanceResult.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Controller\PackageCuisine.cs" />
     <Compile Include="Controller\PackageDish.cs" />
     <Compile Include="Controller\QueueDesk.cs" />
+    <Compile Include="Controller\QueueDetail.cs" />
     <Compile Include="Controller\SaveSupplierCuisine.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderResult.cs" />
     <Compile Include="Controller\ConfirmWaiMaiOrderRequst.cs" />
@@ -180,7 +182,8 @@
     <Compile Include="Services\LocationCity.cs" />
     <Compile Include="Services\OrderBDInfo.cs" />
     <Compile Include="Services\ParameterBase.cs" />
-    <Compile Include="Services\QueueModel.cs" />
+    <Compile Include="Services\QueueDetailModel.cs" />
+    <Compile Include="Services\SaveQueueDeskParameter.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />
@@ -216,7 +219,7 @@
     <Compile Include="Services\WechatPaymentStateParameter.cs" />
     <Compile Include="Services\QueueDeskModel.cs" />
     <Compile Include="Services\GetQueueDeskListParameter.cs" />
-    <Compile Include="Services\SaveQueueDeskParameter.cs" />
+    <Compile Include="Controller\SaveQueueDeskParameter.cs" />
     <Compile Include="Services\CheckQueueDeskStateParameter.cs" />
     <Compile Include="Services\DingTaiOrderDetailModel.cs" />
     <Compile Include="Services\DingTaiOrderDishModel.cs" />

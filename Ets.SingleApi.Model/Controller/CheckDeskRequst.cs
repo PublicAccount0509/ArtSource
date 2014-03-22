@@ -14,7 +14,7 @@ namespace Ets.SingleApi.Model.Controller
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class CheckDeskRequst
+    public class CheckDeskRequst : ApiRequst
     {
         /// <summary>
         /// 台位类型Id

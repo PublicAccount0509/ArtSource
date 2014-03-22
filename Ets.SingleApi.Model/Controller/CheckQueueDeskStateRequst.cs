@@ -1,43 +1,41 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
-    using System.Collections.Generic;
-
     /// <summary>
-    /// 类名称：SaveSupplierDishRequst
+    /// 类名称：CheckQueueDeskStateRequst
     /// 命名空间：Ets.SingleApi.Model.Controller
-    /// 类功能：添加餐厅菜参数
+    /// 类功能：检测排队信息参数
     /// </summary>
     /// 创建者：周超
-    /// 创建日期：10/22/2013 5:46 PM
+    /// 创建日期：11/12/2013 10:06 AM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SaveSupplierDishRequst : ApiRequst
+    public class CheckQueueDeskStateRequst : ApiRequst
     {
         /// <summary>
-        /// Gets or sets the SupplierMenuCategoryTypeId of SaveSupplierDishRequst
+        /// 台位类型信息Id
         /// </summary>
         /// <value>
-        /// The SupplierMenuCategoryTypeId
+        /// 台位类型信息Id
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/1/2013 4:33 PM
+        /// 创建日期：11/12/2013 10:07 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int SupplierMenuCategoryTypeId { get; set; }
+        public int DeskTypeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the DishList of SaveSupplierDishRequst
+        /// 用户Id
         /// </summary>
         /// <value>
-        /// The DishList
+        /// 用户Id
         /// </value>
         /// 创建者：周超
-        /// 创建日期：11/1/2013 4:31 PM
+        /// 创建日期：3/21/2014 5:36 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public List<SaveSupplierDish> DishList { get; set; }
+        public int UserId { get; set; }
     }
 }
