@@ -2712,5 +2712,106 @@
                 };
 
         }
+
+        /// <summary>
+        /// 查检订台台位是否被锁
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/22/2014 11:19 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CheckDesk(string source, int supplierId, CheckDeskParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            /*验证餐厅Id*/
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
+            }
+
+            /*验证台位类型Id*/
+            var deskTypeEntity =
+                this.deskTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.SupplierId == supplierId);
+
+            if (deskTypeEntity == null || deskTypeEntity.IsDel)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFondDeskTypeCode
+                };
+            }
+            //台位类型已被锁定
+            if (deskTypeEntity.IsLock)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.DeskTypeIsLocked
+                };
+            }
+
+            /*早晚市开放时间*/
+            var supplierDeskTime = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
+                                    where supplierDeskTimeEntity.SupplierId == supplierId
+                                    select new
+                                    {
+                                        supplierDeskTimeEntity.Id,
+                                        supplierDeskTimeEntity.BeginTime,
+                                        supplierDeskTimeEntity.EndTime
+                                    }).ToList()
+                                          .FirstOrDefault(p => string.Compare(p.BeginTime, parameter.BookingTime,
+                                                                              System.StringComparison.OrdinalIgnoreCase) <
+                                                               0
+                                                               && string.Compare(p.EndTime, parameter.BookingTime,
+                                                                                 System.StringComparison
+                                                                                       .OrdinalIgnoreCase) > 0);
+            //该时间内不可预订
+            if (supplierDeskTime == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidBookingTimeCode
+                };
+            }
+
+            /*在给定的预定日期和预定时间内，被锁定的台位类型*/
+            var lockedDeskTypeList =
+                this.deskTypeLockLogEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId
+                                                                                && p.LockDate == parameter.BookingDate
+                                                                                &&
+                                                                                p.SupplierDeskTime.Id ==
+                                                                                supplierDeskTime.Id
+                                                                                && p.IsDel == false
+                                                                                && p.DeskTypeId == deskTypeEntity.Id)
+                    .ToList();
+
+            if (lockedDeskTypeList.Count > 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.DeskTypeIsLocked
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
     }
 }
