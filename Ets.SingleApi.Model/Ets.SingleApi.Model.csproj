@@ -214,6 +214,9 @@
     <Compile Include="Services\WechatPaymentStateParameter.cs" />
     <Compile Include="Services\QueueDeskModel.cs" />
     <Compile Include="Services\GetQueueDeskListParameter.cs" />
+    <Compile Include="Services\DingTaiOrderDetailModel.cs" />
+    <Compile Include="Services\DingTaiOrderDishModel.cs" />
+    <Compile Include="Services\DingTaiOrderDeskModel.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
