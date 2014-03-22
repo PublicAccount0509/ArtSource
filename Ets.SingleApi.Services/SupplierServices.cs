@@ -2705,6 +2705,11 @@
                 supplierDeskTimeEntityRepository.EntityQueryable.Count(
                     p => p.SupplierId == supplierId && p.IsEnable == true);
 
+            //var d = (from deskTypeLockLog in this.deskTypeLockLogEntityRepository.EntityQueryable
+            //         group deskTypeLockLog by deskTypeLockLog.LockDate
+            //         into a
+            //         select new {a.KeyCount = developerGroup.Count()}).ToList();
+
             return new ServicesResultList<DeskOpenDateModel>
                 {
                     ResultTotalCount = deskOPenDateList.Count,
