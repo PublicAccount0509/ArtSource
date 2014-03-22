@@ -377,5 +377,113 @@
                 Result = result ?? new QueueDetailModel()
             };
         }
+
+        /// <summary>
+        /// 取得排队详情信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回排队详情信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<QueueModel> GetQueueList(string source, GetQueuesParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResultList<QueueModel>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = new List<QueueModel>()
+                };
+            }
+
+            var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
+            var queryableTemp = (from queueEntity in this.queueEntityRepository.EntityQueryable
+                                 from deskType in this.deskTypeEntityRepository.EntityQueryable
+                                 from entity in this.supplierEntityRepository.EntityQueryable
+                                 where queueEntity.DeskTypeId == deskType.Id
+                                 && queueEntity.SupplierId == entity.SupplierId
+                                 select new
+                                     {
+                                         queueEntity.QueueId,
+                                         deskType.BoxName,
+                                         deskType.DeskTypeName,
+                                         deskType.MaxNumber,
+                                         deskType.MinNumber,
+                                         queueEntity.Number,
+                                         QueueStateId = queueEntity.State,
+                                         deskType.RoomType,
+                                         queueEntity.SupplierId,
+                                         queueEntity.SupplierName,
+                                         TblTypeId = deskType.TableType.Id,
+                                         deskType.TableType.TblTypeName,
+                                         CeateDate = queueEntity.Time,
+                                         entity.SupplierGroupId
+                                     });
+
+            if (parameter.QueueStartDate != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.CeateDate >= parameter.QueueStartDate.Value);
+            }
+
+            if (parameter.QueueEndDate != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.CeateDate < parameter.QueueEndDate.Value);
+            }
+
+            if (parameter.SupplierGroupId != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.SupplierGroupId == parameter.SupplierGroupId);
+            }
+
+            if (parameter.IsEtaoshi)
+            {
+                queryableTemp = queryableTemp.Where(p => retentionSupplierGroupIdList.Contains(p.SupplierGroupId));
+            }
+
+            if (parameter.SupplierId != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.SupplierId == parameter.SupplierId);
+            }
+
+            if (parameter.QueueStatus != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.QueueStateId == parameter.QueueStatus);
+            }
+
+            queryableTemp = queryableTemp.OrderByDescending(p => p.CeateDate);
+            if (parameter.PageIndex != null)
+            {
+                queryableTemp = queryableTemp.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize);
+            }
+
+            var queueList = queryableTemp.ToList();
+            var result = queueList.Select(p => new QueueModel
+                        {
+                            QueueId = p.QueueId,
+                            BoxName = p.BoxName,
+                            DeskTypeName = p.DeskTypeName,
+                            MaxNumber = p.MaxNumber,
+                            MinNumber = p.MinNumber,
+                            Number = p.Number,
+                            QueueStateId = p.QueueStateId,
+                            RoomType = p.RoomType,
+                            SupplierId = p.SupplierId,
+                            SupplierName = p.SupplierName,
+                            TblTypeId = p.TblTypeId,
+                            TblTypeName = p.TblTypeName,
+                            CeateDate = p.CeateDate
+                        }).ToList();
+
+            return new ServicesResultList<QueueModel>
+            {
+                Result = result
+            };
+        }
     }
 }

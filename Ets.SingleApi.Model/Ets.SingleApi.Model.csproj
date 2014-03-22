@@ -114,6 +114,7 @@
     <Compile Include="Controller\EtsWapDingTaiShoppingCartDeskRequst.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderConfirmRequst.cs" />
     <Compile Include="Controller\CheckDeskRequst.cs" />
+    <Compile Include="Controller\Queue.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Services\LocationCity.cs" />
     <Compile Include="Services\OrderBDInfo.cs" />
     <Compile Include="Services\ParameterBase.cs" />
+    <Compile Include="Services\QueueModel.cs" />
     <Compile Include="Services\QueueDetailModel.cs" />
     <Compile Include="Services\SaveQueueDeskParameter.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
@@ -225,6 +227,7 @@
     <Compile Include="Services\DingTaiOrderDishModel.cs" />
     <Compile Include="Services\DingTaiOrderDeskModel.cs" />
     <Compile Include="Services\CheckDeskParameter.cs" />
+    <Compile Include="Services\GetQueuesParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />

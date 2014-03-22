@@ -73,5 +73,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<QueueDetailModel> GetQueue(string source, int queueId);
+
+        /// <summary>
+        /// 取得排队详情信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回排队详情信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<QueueModel> GetQueueList(string source, GetQueuesParameter parameter);
     }
 }
