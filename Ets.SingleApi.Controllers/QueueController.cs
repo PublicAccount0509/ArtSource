@@ -259,5 +259,79 @@ namespace Ets.SingleApi.Controllers
                 Result = result
             };
         }
+
+        /// <summary>
+        /// 查询排队列表
+        /// </summary>
+        /// <param name="queueStartDate">The queueStartDate</param>
+        /// <param name="queueEndDate">The queueEndDate</param>
+        /// <param name="queueStatus">The queueStatus</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <param name="isEtaoshi">The  isEtaoshi indicates whether</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="cancelled">The  cancelled indicates whether</param>
+        /// <returns>
+        /// 排队列表
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/22/2014 5:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, int? supplierGroupId, bool isEtaoshi, int pageSize, int? pageIndex, bool cancelled)
+        {
+            var list = this.queueServices.GetQueueList(this.Source, new GetQueuesParameter
+            {
+                QueueStartDate = queueStartDate,
+                QueueEndDate = queueEndDate,
+                QueueStatus = queueStatus,
+                SupplierId = supplierId,
+                SupplierGroupId = supplierGroupId,
+                IsEtaoshi = isEtaoshi,
+                PageSize = pageSize,
+                PageIndex = pageIndex ?? 1,
+                Cancelled = cancelled
+            });
+
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<Queue>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok
+                                ? (int)StatusCode.Succeed.Empty
+                                : list.StatusCode
+                    },
+                    Result = new List<Queue>()
+                };
+            }
+
+            var result = list.Result.Select(p => new Queue
+            {
+                QueueId = p.QueueId,
+                Number = p.Number,
+                QueueStateId = p.QueueStateId,
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName,
+                RoomType = p.RoomType ?? 0,
+                TblTypeId = p.TblTypeId,
+                TblTypeName = p.TblTypeName,
+                BoxName = p.BoxName,
+                DeskTypeName = p.DeskTypeName,
+                MaxNumber = p.MaxNumber,
+                MinNumber = p.MinNumber,
+                CeateDate = p.CeateDate.ToString("#yyyy-MM-dd HH:mm"),
+
+            }).ToList();
+
+            return new ListResponse<Queue>
+            {
+                Result = result
+            };
+        }
     }
 }
