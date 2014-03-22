@@ -67,6 +67,7 @@
   <item code="40033" message="您已经预订此台位"></item>
   <item code="40034" message="该台位信息不存在"></item>
   <item code="40035" message="无效的排队Id"></item>
+  <item code="40036" message="么么哒，你的餐品尚未达到起送金额，继续加菜吧*0*"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>
