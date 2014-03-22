@@ -551,7 +551,7 @@
                 };
             }
 
-            if (order.TotalPrice - order.CouponFee < supplier.FreeDeliveryLine && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
+            if (order.TotalPrice - order.CouponFee < supplier.DelMinOrderAmount && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 return new ServicesResult<string>
                 {
