@@ -255,6 +255,21 @@
                 };
             }
 
+            var supplierId = parameter.SupplierId;
+
+            var supplierEntity = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
+                .Select(p => new { p.SupplierId, p.SupplierName })
+                .FirstOrDefault();
+            /*判断餐厅Id是否存在*/
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = string.Empty
+                };
+            }
+
             if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
             {
                 return new ServicesResult<string>
@@ -264,8 +279,8 @@
                 };
             }
 
-            var supplierId = parameter.SupplierId;
-            if (!this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId))
+            
+            if (!this.deskTypeEntityRepository.EntityQueryable.Any(p => p.Id == parameter.DeskTypeId && p.SupplierId == supplierId))
             {
                 return new ServicesResult<string>
                 {
@@ -283,18 +298,6 @@
                 };
             }
 
-            var supplierEntity = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
-                .Select(p => new { p.SupplierId, p.SupplierName })
-                .FirstOrDefault();
-            /*判断餐厅Id是否存在*/
-            if (supplierEntity == null)
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = string.Empty
-                };
-            }
 
             var queueEntity = new QueueEntity
                 {
@@ -352,7 +355,7 @@
             }
 
             var supplierId = parameter.SupplierId;
-            if (!this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId))
+            if (!this.deskTypeEntityRepository.EntityQueryable.Any(p => p.Id == parameter.DeskTypeId && p.SupplierId == supplierId))
             {
                 return new ServicesResult<bool>
                 {
