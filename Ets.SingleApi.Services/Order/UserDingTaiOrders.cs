@@ -221,6 +221,7 @@
                                            deskBooking.OrderNo,
                                            deskBooking.Desk.DeskNo,
                                            deskBooking.DeskType.RoomType,
+                                           RoomTypeName = deskBooking.DeskType.RoomType == null ? "" : (deskBooking.DeskType.RoomType == 0 ? "散座" : "包房"),
                                            deskBooking.DeskType.MinNumber,
                                            deskBooking.DeskType.MaxNumber,
                                            BookDate = deskBooking.ReservationTime,
