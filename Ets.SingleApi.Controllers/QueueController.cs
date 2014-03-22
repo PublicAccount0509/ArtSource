@@ -212,13 +212,13 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<Queue> GetQueue(int id)
+        public Response<QueueDetail> GetQueue(int id)
         {
             var queue = this.queueServices.GetQueue(this.Source, id);
 
             if (queue.Result == null)
             {
-                return new Response<Queue>
+                return new Response<QueueDetail>
                 {
                     Message = new ApiMessage
                     {
@@ -226,11 +226,11 @@ namespace Ets.SingleApi.Controllers
                                 ? (int)StatusCode.Succeed.Empty
                                 : queue.StatusCode
                     },
-                    Result = new Queue()
+                    Result = new QueueDetail()
                 };
             }
 
-            var result = new Queue
+            var result = new QueueDetail
                 {
                     BoxName = queue.Result.BoxName,
                     DeskTypeId = queue.Result.DeskTypeId,
@@ -250,10 +250,11 @@ namespace Ets.SingleApi.Controllers
                     TblTypeId = queue.Result.TblTypeId,
                     TblTypeName = queue.Result.TblTypeName,
                     Telephone = queue.Result.Telephone,
-                    UserName = queue.Result.UserName
+                    UserName = queue.Result.UserName,
+                    CeateDate = queue.Result.CeateDate.ToString("yyyy-MM-dd HH:mm")
                 };
 
-            return new Response<Queue>
+            return new Response<QueueDetail>
             {
                 Result = result
             };

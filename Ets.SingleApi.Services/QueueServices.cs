@@ -334,21 +334,21 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<QueueModel> GetQueue(string source, int queueId)
+        public ServicesResult<QueueDetailModel> GetQueue(string source, int queueId)
         {
             if (!this.queueEntityRepository.EntityQueryable.Any(p => p.QueueId == queueId))
             {
-                return new ServicesResult<QueueModel>
+                return new ServicesResult<QueueDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidQueueIdCode,
-                    Result = new QueueModel()
+                    Result = new QueueDetailModel()
                 };
             }
 
             var result = (from queueEntity in this.queueEntityRepository.EntityQueryable.Where(p => p.QueueId == queueId)
                           from deskType in this.deskTypeEntityRepository.EntityQueryable
                           where queueEntity.DeskTypeId == deskType.Id
-                          select new QueueModel
+                          select new QueueDetailModel
                               {
                                   QueueId = queueEntity.QueueId,
                                   BoxName = deskType.BoxName,
@@ -368,12 +368,13 @@
                                   TblTypeId = deskType.TableType.Id,
                                   TblTypeName = deskType.TableType.TblTypeName,
                                   Telephone = queueEntity.Phone,
-                                  UserName = queueEntity.UserName
+                                  UserName = queueEntity.UserName,
+                                  CeateDate = queueEntity.Time
                               }).FirstOrDefault();
 
-            return new ServicesResult<QueueModel>
+            return new ServicesResult<QueueDetailModel>
             {
-                Result = result ?? new QueueModel()
+                Result = result ?? new QueueDetailModel()
             };
         }
     }

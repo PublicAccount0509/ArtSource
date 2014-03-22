@@ -72,6 +72,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<QueueModel> GetQueue(string source, int queueId);
+        ServicesResult<QueueDetailModel> GetQueue(string source, int queueId);
     }
 }

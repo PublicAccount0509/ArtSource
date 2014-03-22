@@ -1,4 +1,4 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
     /// 类名称：QueueModel
@@ -10,7 +10,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class QueueModel
+    public class QueueDetail
     {
         /// <summary>
         /// 排队Id
@@ -140,7 +140,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int? Gender { get; set; }
+        public int Gender { get; set; }
 
         /// <summary>
         /// 人数
@@ -166,7 +166,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int? RoomType { get; set; }
+        public int RoomType { get; set; }
 
         /// <summary>
         /// 桌位类型Id
@@ -258,5 +258,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int MinNumber { get; set; }
+
+        /// <summary>
+        /// 排队日期
+        /// </summary>
+        /// <value>
+        /// The CeateDate
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：3/21/2014 3:40 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string CeateDate { get; set; }
     }
 }
