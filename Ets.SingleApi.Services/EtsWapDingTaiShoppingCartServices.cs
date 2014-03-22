@@ -376,7 +376,15 @@ namespace Ets.SingleApi.Services
                     StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
-
+            /*订台信息*/
+            var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeskResult.StatusCode
+                };
+            }
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
@@ -451,7 +459,15 @@ namespace Ets.SingleApi.Services
                     StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
-
+            /*订台信息*/
+            var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeskResult.StatusCode
+                };
+            }
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
@@ -549,7 +565,15 @@ namespace Ets.SingleApi.Services
                     StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
-
+            /*订台信息*/
+            var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeskResult.StatusCode
+                };
+            }
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
@@ -636,7 +660,15 @@ namespace Ets.SingleApi.Services
                     StatusCode = getShoppingCartDeliveryResult.StatusCode
                 };
             }
-
+            /*订台信息*/
+            var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeskResult.StatusCode
+                };
+            }
             var shoppingCartDelivery = getShoppingCartDeliveryResult.Result;
             shoppingCartDelivery.Telephone = customer.Telephone;
             shoppingCartDelivery.Name = customer.Name;
@@ -701,7 +733,15 @@ namespace Ets.SingleApi.Services
                     StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
-
+            /*订台信息*/
+            var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeskResult.StatusCode
+                };
+            }
             shoppingCart.Delivery.Id = getShoppingCartDeliveryResult.Result.Id;
             shoppingCart.Order.Id = getShoppingCartOrderResult.Result.Id;
             shoppingCart.ShoppingCart.ShoppingCartId = getShoppingCartResult.Result.ShoppingCartId;
@@ -768,7 +808,15 @@ namespace Ets.SingleApi.Services
                     StatusCode = getShoppingCartOrderResult.StatusCode
                 };
             }
-
+            /*订台信息*/
+            var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = getShoppingCartDeskResult.StatusCode
+                };
+            }
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var shoppingCart = getShoppingCartResult.Result;
@@ -881,8 +929,7 @@ namespace Ets.SingleApi.Services
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var totalfee = shoppingPrice;
-            /*菜品总金额+押金*/
-            var total = totalfee + desk.DepositAmount ?? 0;
+            var total = totalfee;
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, shoppingCartLink.UserId) : order.CouponFee;
             var customerTotal = total - coupon;
 

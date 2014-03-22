@@ -66,6 +66,16 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
+        /// The desk booking entity repository
+        /// </summary>
+        /// 创建者：苏建峰
+        /// 创建日期：3/21/2014 3:25 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository;
+
+        /// <summary>
         /// 字段etsWapShoppingCartProvider
         /// </summary>
         /// 创建者：周超
@@ -92,6 +102,8 @@ namespace Ets.SingleApi.Services
         /// <param name="paymentRecordEntityRepository">The payment record entity repository.</param>
         /// <param name="orderDetailEntityRepository">The order detail entity repository.</param>
         /// <param name="supplierEntityRepository">The supplier entity repository.</param>
+        /// <param name="deskTypeEntityRepository">The deskTypeEntityRepositoryDefault documentation</param>
+        /// <param name="deskBookingEntityRepository">The desk booking entity repository.</param>
         /// <param name="etsWapDingTaiShoppingCartProvider">The ets wap ding tai shopping cart provider.</param>
         /// <param name="shoppingCartBaseCacheServices">The shopping cart base cache services.</param>
         /// <param name="orderNumberDtEntityRepository">The order number dt entity repository.</param>
@@ -106,6 +118,7 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository,
             INHibernateRepository<OrderDetailEntity> orderDetailEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository,
             IEtsWapDingTaiShoppingCartProvider etsWapDingTaiShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
@@ -116,6 +129,7 @@ namespace Ets.SingleApi.Services
             this.paymentRecordEntityRepository = paymentRecordEntityRepository;
             this.orderDetailEntityRepository = orderDetailEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
+            this.deskBookingEntityRepository = deskBookingEntityRepository;
             this.etsWapDingTaiShoppingCartProvider = etsWapDingTaiShoppingCartProvider;
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
@@ -140,8 +154,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public override ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId)
         {
-            //TODO
-            //待修改
+            /*订台订单信息*/
             var tableReservationEntity = (from entity in this.tableReservationEntityRepository.EntityQueryable
                                           where entity.OrderNumber == orderId
                                           select entity).FirstOrDefault();
@@ -151,21 +164,36 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
-                    Result = new WaiMaiOrderDetailModel()
+                    Result = new DingTaiOrderDetailModel()
                 };
             }
 
-            var waiMaiOrderDishList = (from entity in this.orderDetailEntityRepository.EntityQueryable
-                                       where entity.OrderId == tableReservationEntity.TableReservationId
-                                       select new TangShiOrderDishModel
-                                       {
-                                           SupplierDishId = entity.SupplierDishId ?? 0,
-                                           SupplierDishName = entity.SupplierDishName,
-                                           Instruction = entity.SpecialInstruction,
-                                           Price = entity.SupplierPrice,
-                                           Quantity = entity.Quantity ?? 0
-                                       }).ToList();
+            /*菜品明细*/
+            var dingTaiOrderDishList = (from entity in this.orderDetailEntityRepository.EntityQueryable
+                                        where entity.OrderId == tableReservationEntity.TableReservationId
+                                        select new DingTaiOrderDishModel
+                                        {
+                                            SupplierDishId = entity.SupplierDishId ?? 0,
+                                            SupplierDishName = entity.SupplierDishName,
+                                            Instruction = entity.SpecialInstruction,
+                                            Price = entity.SupplierPrice,
+                                            Quantity = entity.Quantity ?? 0
+                                        }).ToList();
 
+            /*订台信息*/
+            var dingTaiOrderDesk = (from deskBookingEntity in this.deskBookingEntityRepository.EntityQueryable
+                                    where deskBookingEntity.OrderNo == orderId
+                                    select new DingTaiOrderDeskModel
+                                   {
+                                       DeskNo = deskBookingEntity.Desk.DeskNo,
+                                       RoomType = deskBookingEntity.DeskType.RoomType == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
+                                       MaxNumber = deskBookingEntity.DeskType.MaxNumber,
+                                       MinNumber = deskBookingEntity.DeskType.MinNumber,
+                                       TblTypeName = deskBookingEntity.DeskType.DeskTypeName
+                                   }
+                              ).FirstOrDefault();
+
+            /*餐厅信息*/
             var supplierId = tableReservationEntity.Supplier.SupplierId;
             var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
             if (supplierEntity == null)
@@ -173,15 +201,18 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<IOrderDetailModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = new TangShiOrderDetailModel()
+                    Result = new DingTaiOrderDetailModel()
                 };
             }
 
+            /*餐厅地理经纬度*/
             decimal baIduLat;
             decimal.TryParse(supplierEntity.BaIduLat, out baIduLat);
             decimal baIduLong;
             decimal.TryParse(supplierEntity.BaIduLong, out baIduLong);
             var tableReservationId = tableReservationEntity.TableReservationId.ToString();
+
+            /*支付信息*/
             var paymentEntity = this.paymentRecordEntityRepository.EntityQueryable.FirstOrDefault(p => p.OrderId == tableReservationId);
             var gender = tableReservationEntity.Contactsex;
             if (gender.IsEmptyOrNull())
@@ -209,11 +240,11 @@ namespace Ets.SingleApi.Services
             var shoppingCartResult = this.shoppingCartBaseCacheServices.GetShoppingCartId(source, orderId);
             var shoppingCartId = shoppingCartResult == null ? string.Empty : shoppingCartResult.Result;
 
-            var result = new TangShiOrderDetailModel
+            var result = new DingTaiOrderDetailModel
             {
                 ShoppingCartId = shoppingCartId,
                 OrderId = tableReservationEntity.OrderNumber.HasValue ? tableReservationEntity.OrderNumber.Value : 0,
-                OrderTypeId = (int)OrderType.TangShi,
+                OrderTypeId = (int)OrderType.DingTai,
                 OrderStatusId = tableReservationEntity.TableStatus,
                 DateReserved = tableReservationEntity.DateReserved.ToString("yyyy-MM-dd HH:mm"),
                 Description = tableReservationEntity.OrderNotes ?? string.Empty,
@@ -226,7 +257,7 @@ namespace Ets.SingleApi.Services
                 SupplierBaIduLong = baIduLong,
                 InvoiceTitle = tableReservationEntity.InvoiceTitle ?? string.Empty,
                 IsPaid = tableReservationEntity.IsPaId ?? false,
-                DishList = waiMaiOrderDishList,
+                DishList = dingTaiOrderDishList,
                 PaymentMethodId = paymentEntity == null ? null : paymentEntity.PaymentMethodId,
                 IsConfirm = paymentEntity != null,
                 ContactName = tableReservationEntity.ContactName,
@@ -237,7 +268,8 @@ namespace Ets.SingleApi.Services
                 ServiceFee = (tableReservationEntity.ConsumerAmount ?? 0).ToString("#0.00"),
                 Coupon = coupon.ToString("#0.00"),//折扣
                 CustomerTotal = customerTotal.ToString("#0.00"),//总价 折扣后
-                Total = total.ToString("#0.00")//总价 未折扣
+                Total = total.ToString("#0.00"),//总价 未折扣
+                Desk = dingTaiOrderDesk
             };
 
             if (result.InvoiceTitle.IsEmptyOrNull())
@@ -325,7 +357,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            /*Delivery信息表*/
+            /*Delivery信息*/
             var getShoppingCartDeliveryResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
             if (getShoppingCartDeliveryResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
@@ -336,12 +368,23 @@ namespace Ets.SingleApi.Services
                     };
             }
 
+            /*Desk信息*/
+            var getShoppingCartDeskResult= this.etsWapDingTaiShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                    {
+                        StatusCode = getShoppingCartDeskResult.StatusCode,
+                        Result = string.Empty
+                    };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
             var order = getShoppingCartOrderResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
-           
+            var desk = getShoppingCartDeskResult.Result;
 
             var shoppingCartBase = this.shoppingCartBaseCacheServices.GetShoppingCartBase(source, shoppingCartId);
             if (shoppingCartBase.Result.IsComplete)
@@ -385,8 +428,13 @@ namespace Ets.SingleApi.Services
             }
 
             var customerId = customer.CustomerId;
-            var tableReservationId = this.SaveTableReservationEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
+            /*保存订单信息*/
+            var tableReservationId = this.SaveTableReservationEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, desk, order);
+            /*保存菜品明细*/
             this.SaveOrderDetailEntity(customerId, tableReservationId, shoppingList);
+            /*保存预订信息*/
+            this.SaveDeskBookingEntity(supplier.SupplierId, orderId, desk);
+            /*保存支付信息*/
             this.SavePaymentEntity(tableReservationId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
 
             /*var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
@@ -534,32 +582,39 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveTableReservationEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, EtsWapDingTaiShoppingCartOrder order)
+        private int SaveTableReservationEntity(int orderId, int supplierId, int customerId,
+                                               ShoppingCartDelivery delivery, ShoppingCartDesk desk,
+                                               EtsWapDingTaiShoppingCartOrder order)
         {
-            var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new TableReservationEntity
-            {
-                Supplier = new SupplierEntity
-                {
-                    SupplierId = supplierId
-                },
+            var tableReservationEntity =
+                this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ??
+                new TableReservationEntity
+                    {
+                        Supplier = new SupplierEntity
+                            {
+                                SupplierId = supplierId
+                            },
 
-                CustomerId = customerId,
-                OrderNumber = orderId,
-                TableStatus = 1,
-                DateReserved = DateTime.Now,
-                IsPaId = false,
-                IsRating = false,
-                Cancelled = false,
-                IsAdd = false,
-                IsDeal = true,
-                IsReminder = true,
-                IsService = true
-            };
+                        CustomerId = customerId,
+                        OrderNumber = orderId,
+                        TableStatus = 1,
+                        DateReserved = DateTime.Now,
+                        IsPaId = false,
+                        IsRating = false,
+                        Cancelled = false,
+                        IsAdd = false,
+                        IsDeal = true,
+                        IsReminder = true,
+                        IsService = true
+                    };
 
             tableReservationEntity.Type = order.DingTaiMethodId;
             tableReservationEntity.OrderNotes = order.OrderInstruction;
-            tableReservationEntity.CustomerTotal = order.CustomerTotalFee;
-            tableReservationEntity.Total = order.TotalFee;
+            //如果是DF只收取押金，如果是DDF则只收取菜品费
+            tableReservationEntity.CustomerTotal = order.DingTaiMethodId == 2
+                                                       ? desk.DepositAmount
+                                                       : order.CustomerTotalFee;
+            tableReservationEntity.Total = order.DingTaiMethodId == 2 ? desk.DepositAmount : order.TotalFee;
             tableReservationEntity.ConsumerAmount = order.ServiceFee;
             tableReservationEntity.TeaBitFee = order.TeaBitFee;
             tableReservationEntity.ModifyDate = DateTime.Now;
@@ -573,13 +628,20 @@ namespace Ets.SingleApi.Services
             tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
             tableReservationEntity.Path = order.Path;
             tableReservationEntity.TemplateId = order.Template;
+            //订台类型描述
+            tableReservationEntity.DeskTypeDes = desk.RoomType == null
+                                                     ? ""
+                                                     : desk.RoomType == 0
+                                                           ? "散座"
+                                                           : "包房" + "、" + desk.TblTypeName + "、" + desk.PeopleCount +
+                                                             "人";
 
             this.tableReservationEntityRepository.Save(tableReservationEntity);
             return tableReservationEntity.TableReservationId;
         }
 
         /// <summary>
-        /// 保存订单详情信息
+        /// 保存订单详情（菜品明细）信息
         /// </summary>
         /// <param name="customerId">顾客Id</param>
         /// <param name="orderId">订单Id</param>
@@ -646,6 +708,52 @@ namespace Ets.SingleApi.Services
             paymentRecordEntity.PaymentMethodId = paymentMethodId;
             paymentRecordEntity.PayBank = payBank;
             this.paymentRecordEntityRepository.Save(paymentRecordEntity);
+        }
+
+        /// <summary>
+        /// 保存订台预订信息
+        /// </summary>
+        /// <param name="supplier">The supplier.</param>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="desk">The desk.</param>
+        /// 创建者：苏建峰
+        /// 创建日期：3/21/2014 3:18 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SaveDeskBookingEntity(int supplierId, int orderId, ShoppingCartDesk desk)
+        {
+            if (desk.BookingDate == null)
+            {
+                return;
+            }
+
+            if (desk.BookingTime.IsEmptyOrNull())
+            {
+                return;
+            }
+
+            if (desk.DeskTypeId == 0)
+            {
+                return;
+            }
+
+            var deskBookingEntity = this.deskBookingEntityRepository.EntityQueryable.FirstOrDefault(
+                p => p.OrderNo == orderId)
+                                    ?? new DeskBookingEntity
+                                        {
+                                            OrderNo = orderId,
+                                            BookType = false, //0台位  1排队
+                                            CreateTime = DateTime.Now
+                                        };
+
+            deskBookingEntity.SupplierId = supplierId;
+            deskBookingEntity.DeskType = new DeskTypeEntity {Id = desk.DeskTypeId};
+            deskBookingEntity.NumberOfPeople = desk.PeopleCount;
+            deskBookingEntity.ReservationTime =
+                desk.BookingDate.Value.AddHours(double.Parse(desk.BookingTime.Split(':')[0]))
+                    .AddMinutes(double.Parse(desk.BookingTime.Split(':')[1]));
+            this.deskBookingEntityRepository.Save(deskBookingEntity);
         }
     }
 }

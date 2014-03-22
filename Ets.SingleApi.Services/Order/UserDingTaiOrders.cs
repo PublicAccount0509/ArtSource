@@ -51,6 +51,8 @@
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository;
 
+        private readonly INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository;
+
         /// <summary>
         /// 取得订单类型
         /// </summary>
@@ -66,7 +68,7 @@
         {
             get
             {
-                return OrderType.TangShi;
+                return OrderType.DingTai;
             }
         }
 
@@ -76,6 +78,7 @@
         /// <param name="tableReservationEntityRepository">The tableReservationEntityRepository</param>
         /// <param name="orderDetailEntityRepository">The orderDetailEntityRepository</param>
         /// <param name="paymentRecordEntityRepository">The paymentRecordEntityRepository</param>
+        /// <param name="deskBookingEntityRepository">The deskBookingEntityRepositoryDefault documentation</param>
         /// 创建者：周超
         /// 创建日期：2013/10/20 16:04
         /// 修改者：
@@ -84,11 +87,13 @@
         public UserDingTaiOrders(
             INHibernateRepository<TableReservationEntity> tableReservationEntityRepository,
             INHibernateRepository<OrderDetailEntity> orderDetailEntityRepository,
-            INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository)
+            INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository,
+            INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository)
         {
             this.tableReservationEntityRepository = tableReservationEntityRepository;
             this.orderDetailEntityRepository = orderDetailEntityRepository;
             this.paymentRecordEntityRepository = paymentRecordEntityRepository;
+            this.deskBookingEntityRepository = deskBookingEntityRepository;
         }
 
         /// <summary>
@@ -135,23 +140,25 @@
         /// ----------------------------------------------------------------------------------------
         private IEnumerable<DingTaiOrderModel> GetDingTaiOrderList(UserOrdersParameter parameter)
         {
-            var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
+            var retentionSupplierGroupIdList =
+                ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?) p).ToList();
             var queryableTemp = (from tableReservationEntity in this.tableReservationEntityRepository.EntityQueryable
                                  where tableReservationEntity.CustomerId == parameter.CustomerId
-                                 && tableReservationEntity.Cancelled == parameter.Cancelled
+                                       && tableReservationEntity.Cancelled == parameter.Cancelled
+                                       && tableReservationEntity.Type == 2
                                  select new
-                                 {
-                                     tableReservationEntity.TableReservationId,
-                                     tableReservationEntity.OrderNumber,
-                                     tableReservationEntity.Supplier.SupplierId,
-                                     tableReservationEntity.Supplier.SupplierName,
-                                     tableReservationEntity.DateReserved,
-                                     tableReservationEntity.CustomerTotal,
-                                     tableReservationEntity.TableStatus,
-                                     tableReservationEntity.DineNumber,
-                                     tableReservationEntity.IsPaId,
-                                     tableReservationEntity.Supplier.SupplierGroupId
-                                 });
+                                     {
+                                         tableReservationEntity.TableReservationId,
+                                         tableReservationEntity.OrderNumber,
+                                         tableReservationEntity.Supplier.SupplierId,
+                                         tableReservationEntity.Supplier.SupplierName,
+                                         tableReservationEntity.DateReserved,
+                                         tableReservationEntity.CustomerTotal,
+                                         tableReservationEntity.TableStatus,
+                                         tableReservationEntity.DineNumber,
+                                         tableReservationEntity.IsPaId,
+                                         tableReservationEntity.Supplier.SupplierGroupId
+                                     });
 
             if (parameter.SupplierGroupId != null)
             {
@@ -181,47 +188,81 @@
             queryableTemp = queryableTemp.OrderByDescending(p => p.DateReserved);
             if (parameter.PageIndex != null)
             {
-                queryableTemp = queryableTemp.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize);
+                queryableTemp =
+                    queryableTemp.Skip((parameter.PageIndex.Value - 1)*parameter.PageSize).Take(parameter.PageSize);
             }
 
             //菜品名称（菜品1,菜品2,菜品3)
             var tableReservationList = queryableTemp.ToList();
-            var tableReservationIdList = tableReservationList.Select(p => (int?)p.TableReservationId).ToList();
+            var tableReservationIdList = tableReservationList.Select(p => (int?) p.TableReservationId).ToList();
 
             var orderList = (from order in this.orderDetailEntityRepository.EntityQueryable
                              where tableReservationIdList.Contains(order.OrderId)
                              select new
-                             {
-                                 order.SupplierDishName,
-                                 order.OrderId
-                             }).ToList();
+                                 {
+                                     order.SupplierDishName,
+                                     order.OrderId
+                                 }).ToList();
 
             var strTableReservationIdList = tableReservationList.Select(p => p.TableReservationId.ToString()).ToList();
             var paymentList = (from payment in this.paymentRecordEntityRepository.EntityQueryable
                                where strTableReservationIdList.Contains(payment.OrderId)
                                select new
-                               {
-                                   payment.PaymentMethodId,
-                                   payment.OrderId
-                               }).ToList();
+                                   {
+                                       payment.PaymentMethodId,
+                                       payment.OrderId
+                                   }).ToList();
 
-            var result = tableReservationList.Select(p => new DingTaiOrderModel
-            {
-                OrderId = p.OrderNumber ?? 0,
-                SupplierId = p.SupplierId,
-                SupplierName = p.SupplierName ?? string.Empty,
-                DateReserved = p.DateReserved.ToString("yyyy-MM-dd HH:mm"),
-                CustomerTotal = p.CustomerTotal ?? 0,
-                OrderStatusId = p.TableStatus ?? 0,
-                DineNumber = p.DineNumber ?? 0,
-                OrderStatus = string.Empty,
-                OrderType = (int)this.OrderType,
-                IsPaid = p.IsPaId ?? false,
-                DishNames = string.Join("，", orderList.Where(q => q.OrderId == p.TableReservationId).Select(c => c.SupplierDishName).ToList()),
-                //支付方式
-                PaymentMethodId = paymentList.Where(q => q.OrderId == p.TableReservationId.ToString()).Select(pay => pay.PaymentMethodId).FirstOrDefault() ?? -1
-            }).ToList();
 
+
+            /*订台信息*/
+            var orderNumberList = tableReservationList.Select(p => p.OrderNumber).ToList();
+            var deskBookingList = (from deskBooking in this.deskBookingEntityRepository.EntityQueryable
+                                   where orderNumberList.Contains(deskBooking.OrderNo)
+                                   select new
+                                       {
+                                           deskBooking.OrderNo,
+                                           deskBooking.Desk.DeskNo,
+                                           deskBooking.DeskType.RoomType,
+                                           deskBooking.DeskType.MinNumber,
+                                           deskBooking.DeskType.MaxNumber,
+                                           BookDate = deskBooking.ReservationTime,
+                                           deskBooking.Desk.ImgPath
+                                       }
+                                  ).ToList();
+
+            var result = (from p in tableReservationList
+                          let deskBooking = deskBookingList.FirstOrDefault(q => q.OrderNo == p.OrderNumber)
+                          select new DingTaiOrderModel
+                              {
+                                  OrderId = p.OrderNumber ?? 0,
+                                  SupplierId = p.SupplierId,
+                                  SupplierName = p.SupplierName ?? string.Empty,
+                                  DateReserved = p.DateReserved.ToString("yyyy-MM-dd HH:mm"),
+                                  CustomerTotal = p.CustomerTotal ?? 0,
+                                  OrderStatusId = p.TableStatus ?? 0,
+                                  DineNumber = p.DineNumber ?? 0,
+                                  OrderStatus = string.Empty,
+                                  OrderType = (int) this.OrderType,
+                                  IsPaid = p.IsPaId ?? false,
+                                  DishNames =
+                                      string.Join("，",
+                                                  orderList.Where(q => q.OrderId == p.TableReservationId)
+                                                           .Select(c => c.SupplierDishName)
+                                                           .ToList()),
+                                  //支付方式
+                                  PaymentMethodId =
+                                      paymentList.Where(q => q.OrderId == p.TableReservationId.ToString())
+                                                 .Select(pay => pay.PaymentMethodId)
+                                                 .FirstOrDefault() ?? -1,
+                                  DeskNo = deskBooking == null ? "" : deskBooking.DeskNo,
+                                  RoomType = deskBooking == null ? "" : deskBooking.RoomType.ToString(),
+                                  MinNumber = deskBooking == null ? 0 : deskBooking.MinNumber,
+                                  MaxNumber = deskBooking == null ? 0 : deskBooking.MaxNumber,
+                                  BookDate = deskBooking == null ? null : deskBooking.BookDate,
+                                  BookTime = deskBooking == null ? "" : deskBooking.BookDate.Value.ToString("HH:mm"),
+                                  DeskImgUrl = deskBooking == null ? "" : deskBooking.ImgPath
+                              }).ToList();
             return result;
         }
     }

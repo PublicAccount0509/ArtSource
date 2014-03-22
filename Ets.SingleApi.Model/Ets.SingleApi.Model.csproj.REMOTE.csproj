@@ -179,7 +179,6 @@
     <Compile Include="Services\LocationCity.cs" />
     <Compile Include="Services\OrderBDInfo.cs" />
     <Compile Include="Services\ParameterBase.cs" />
-    <Compile Include="Services\QueueModel.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />
@@ -215,8 +214,6 @@
     <Compile Include="Services\WechatPaymentStateParameter.cs" />
     <Compile Include="Services\QueueDeskModel.cs" />
     <Compile Include="Services\GetQueueDeskListParameter.cs" />
-    <Compile Include="Services\SaveQueueDeskParameter.cs" />
-    <Compile Include="Services\CheckQueueDeskStateParameter.cs" />
     <Compile Include="Services\DingTaiOrderDetailModel.cs" />
     <Compile Include="Services\DingTaiOrderDishModel.cs" />
     <Compile Include="Services\DingTaiOrderDeskModel.cs" />
