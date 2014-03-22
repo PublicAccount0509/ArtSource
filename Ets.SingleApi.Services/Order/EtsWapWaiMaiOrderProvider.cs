@@ -551,6 +551,15 @@
                 };
             }
 
+            if (order.TotalPrice - order.CouponFee < supplier.FreeDeliveryLine && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFixedDeliveryFeeCode,
+                    Result = string.Empty
+                };
+            }
+
             var shoppingCartBase = this.shoppingCartBaseCacheServices.GetShoppingCartBase(source, shoppingCartId);
             if (shoppingCartBase.Result.IsComplete)
             {
