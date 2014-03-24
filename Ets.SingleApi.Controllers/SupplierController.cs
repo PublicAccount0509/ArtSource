@@ -69,7 +69,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.System.InvalidRequest
+                                StatusCode = (int)StatusCode.System.InvalidRequest
                             }
                     };
             }
@@ -109,8 +109,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    getSupplierResult.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    getSupplierResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : getSupplierResult.StatusCode
                             },
                         Result = new SupplierDetail()
@@ -204,8 +204,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    getSupplierSimpleResult.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    getSupplierSimpleResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : getSupplierSimpleResult.StatusCode
                             },
                         Result = new SupplierSimple()
@@ -281,8 +281,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    getGroupSupplierListResult.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    getGroupSupplierListResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : getGroupSupplierListResult.StatusCode
                             },
                         Result = new List<GroupSupplier>()
@@ -372,8 +372,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    getGroupSupplierListResult.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    getGroupSupplierListResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : getGroupSupplierListResult.StatusCode
                             },
                         Result = new List<GroupSupplier>()
@@ -435,8 +435,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    getSupplierFeatureListResult.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    getSupplierFeatureListResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : getSupplierFeatureListResult.StatusCode
                             },
                         Result = new List<SupplierFeature>()
@@ -485,8 +485,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    list.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    list.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : list.StatusCode
                             },
                         Result = new List<SupplierCuisine>()
@@ -545,8 +545,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    list.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    list.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : list.StatusCode
                             },
                         Result = new List<SupplierDish>()
@@ -601,8 +601,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    list.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    list.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : list.StatusCode
                             },
                         Result = new List<SupplierCuisineDetail>()
@@ -652,8 +652,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    list.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    list.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : list.StatusCode
                             },
                         Result = new SupplierCuisineDetail()
@@ -701,7 +701,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.System.InvalidRequest
+                                StatusCode = (int)StatusCode.System.InvalidRequest
                             }
                     };
             }
@@ -754,7 +754,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.System.InvalidRequest
+                                StatusCode = (int)StatusCode.System.InvalidRequest
                             }
                     };
             }
@@ -807,7 +807,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.System.InvalidRequest
+                                StatusCode = (int)StatusCode.System.InvalidRequest
                             }
                     };
             }
@@ -856,8 +856,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    list.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    list.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : list.StatusCode
                             },
                         Result = new List<SupplierDishDetail>()
@@ -929,8 +929,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    list.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    list.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : list.StatusCode
                             },
                         Result = new SupplierDishDetail()
@@ -999,7 +999,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.System.InvalidRequest
+                                StatusCode = (int)StatusCode.System.InvalidRequest
                             }
                     };
             }
@@ -1062,7 +1062,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.System.InvalidRequest
+                                StatusCode = (int)StatusCode.System.InvalidRequest
                             }
                     };
             }
@@ -1125,7 +1125,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.System.InvalidRequest
+                                StatusCode = (int)StatusCode.System.InvalidRequest
                             }
                     };
             }
@@ -1175,7 +1175,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.Succeed.Empty
+                                StatusCode = (int)StatusCode.Succeed.Empty
                             },
                         Result = new List<SupplierServiceTime>()
                     };
@@ -1238,7 +1238,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.Succeed.Empty
+                                StatusCode = (int)StatusCode.Succeed.Empty
                             },
                         Result = new List<SupplierDeliveryTime>()
                     };
@@ -1296,7 +1296,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.Succeed.Empty
+                                StatusCode = (int)StatusCode.Succeed.Empty
                             },
                         Result = new DistanceResult()
                     };
@@ -1324,7 +1324,7 @@ namespace Ets.SingleApi.Controllers
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = (int) StatusCode.Succeed.Empty
+                                StatusCode = (int)StatusCode.Succeed.Empty
                             },
                         Result = new DistanceResult()
                     };
@@ -1334,7 +1334,7 @@ namespace Ets.SingleApi.Controllers
                 {
                     Message = new ApiMessage
                         {
-                            StatusCode = (int) StatusCode.Succeed.Ok
+                            StatusCode = (int)StatusCode.Succeed.Ok
                         },
                     Result = new DistanceResult
                         {
@@ -1366,7 +1366,7 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    (int) StatusCode.System.InvalidRequest
+                                    (int)StatusCode.System.InvalidRequest
                             },
                         Result = new List<DingTaiDesk>()
                     };
@@ -1389,8 +1389,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    getDeskListResult.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    getDeskListResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : getDeskListResult.StatusCode
                             },
                         Result = new List<DingTaiDesk>()
@@ -1456,8 +1456,8 @@ namespace Ets.SingleApi.Controllers
                         Message = new ApiMessage
                             {
                                 StatusCode =
-                                    getDeskOpenTimeListResult.StatusCode == (int) StatusCode.Succeed.Ok
-                                        ? (int) StatusCode.Succeed.Empty
+                                    getDeskOpenTimeListResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                        ? (int)StatusCode.Succeed.Empty
                                         : getDeskOpenTimeListResult.StatusCode
                             },
                         Result = new List<string>()
@@ -1479,17 +1479,19 @@ namespace Ets.SingleApi.Controllers
         /// 获取餐厅订台开放日期列表
         /// </summary>
         /// <param name="id">餐厅Id</param>
-        /// <param name="daySpan">日期天数跨度</param>
-        /// <returns></returns>
+        /// <param name="days">The days</param>
+        /// <returns>
+        /// ListResponse{DeskOpenDate}
+        /// </returns>
         /// 创建者：苏建峰
         /// 创建日期：3/22/2014 7:14 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<DeskOpenDate> DeskOpenDateList(int id)
+        public ListResponse<DeskOpenDate> DeskOpenDateList(int id, int? days = null)
         {
-            var getDeskOpenDateListResult = this.supplierServices.GetDeskOpenDateList(this.Source, id);
+            var getDeskOpenDateListResult = this.supplierServices.GetDeskOpenDateList(this.Source, id, days);
 
             if (getDeskOpenDateListResult.Result == null || getDeskOpenDateListResult.Result.Count == 0)
             {

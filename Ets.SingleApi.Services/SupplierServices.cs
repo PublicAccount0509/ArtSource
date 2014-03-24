@@ -184,6 +184,10 @@
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository;
 
+        private readonly INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository;
+
+        private readonly INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository;
+
         private readonly INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository;
 
         private readonly INHibernateRepository<QueueEntity> queueEntityRepository;
@@ -217,6 +221,8 @@
         /// <param name="supplierDeskTimeEntityRepository">The supplier desk time entity repository.</param>
         /// <param name="deskTypeLockLogEntityRepository">The desk type lock log entity repository.</param>
         /// <param name="deskTypeEntityRepository">The desk type entity repository.</param>
+        /// <param name="deskBookingEntityRepository">The deskBookingEntityRepository</param>
+        /// <param name="supplierDeskEntityRepository">The supplierDeskEntityRepository</param>
         /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
         /// <param name="queueEntityRepository">The queueEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
@@ -242,6 +248,8 @@
             INHibernateRepository<SupplierDeskTimeEntity> supplierDeskTimeEntityRepository,
             INHibernateRepository<DeskTypeLockLogEntity> deskTypeLockLogEntityRepository,
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
+            INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository,
+            INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository,
             INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
             INHibernateRepository<QueueEntity> queueEntityRepository,
             ISupplierDetailServices supplierDetailServices)
@@ -262,6 +270,8 @@
             this.supplierDeskTimeEntityRepository = supplierDeskTimeEntityRepository;
             this.deskTypeLockLogEntityRepository = deskTypeLockLogEntityRepository;
             this.deskTypeEntityRepository = deskTypeEntityRepository;
+            this.deskBookingEntityRepository = deskBookingEntityRepository;
+            this.supplierDeskEntityRepository = supplierDeskEntityRepository;
             this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
             this.queueEntityRepository = queueEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
@@ -287,7 +297,7 @@
             {
                 return new ServicesResult<SupplierDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new SupplierDetailModel()
                     };
             }
@@ -322,7 +332,7 @@
             {
                 return new ServicesResult<SupplierDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new SupplierDetailModel()
                     };
             }
@@ -399,7 +409,7 @@
                 var tempSupplierFeatureList =
                     this.supplierFeatureEntityRepository.EntityQueryable.Where(
                         p => p.IsEnabled == true && tempSupplierIdList.Contains(p.Supplier.SupplierId))
-                        .Select(p => new {p.Supplier.SupplierId, p.Feature.FeatureId})
+                        .Select(p => new { p.Supplier.SupplierId, p.Feature.FeatureId })
                         .ToList();
 
                 var supplierIdList = new List<int>();
@@ -433,7 +443,7 @@
 
             var supplierCuisineList =
                 this.supplierCuisineEntityRepository.EntityQueryable.Where(p => p.Supplier.SupplierId == supplierId)
-                    .Select(p => new {p.Cuisine.CuisineId, p.Cuisine.CuisineName})
+                    .Select(p => new { p.Cuisine.CuisineId, p.Cuisine.CuisineName })
                     .ToList();
             supplier.CuisineName = string.Join(",",
                                                supplierCuisineList.Select(p => p.CuisineName)
@@ -514,7 +524,7 @@
             {
                 return new ServicesResult<SupplierSimpleModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new SupplierSimpleModel()
                     };
             }
@@ -549,7 +559,7 @@
             {
                 return new ServicesResult<SupplierSimpleModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new SupplierSimpleModel()
                     };
             }
@@ -601,20 +611,20 @@
             {
                 return new ServicesResult<RoughSupplierModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierDomainCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierDomainCode,
                         Result = new RoughSupplierModel()
                     };
             }
 
             var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == supplierDomain)
-                                  .Select(p => new {p.LoginId, p.IsEnabled})
+                                  .Select(p => new { p.LoginId, p.IsEnabled })
                                   .FirstOrDefault();
 
             if (loginEntity == null)
             {
                 return new ServicesResult<RoughSupplierModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierDomainCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierDomainCode,
                         Result = new RoughSupplierModel()
                     };
             }
@@ -623,7 +633,7 @@
             {
                 return new ServicesResult<RoughSupplierModel>
                     {
-                        StatusCode = (int) StatusCode.General.ErrorPermission,
+                        StatusCode = (int)StatusCode.General.ErrorPermission,
                         Result = new RoughSupplierModel()
                     };
             }
@@ -643,7 +653,7 @@
             {
                 return new ServicesResult<RoughSupplierModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new RoughSupplierModel()
                     };
             }
@@ -696,19 +706,19 @@
             {
                 return new ServicesResult<decimal>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
             var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
-                               .Select(p => new {p.SupplierId, p.PackLadder, p.PackagingFee})
+                               .Select(p => new { p.SupplierId, p.PackLadder, p.PackagingFee })
                                .FirstOrDefault();
 
             if (supplier == null)
             {
                 return new ServicesResult<decimal>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -743,13 +753,13 @@
                 return new ServicesResultList<SupplierModel>
                     {
                         Result = new List<SupplierModel>(),
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
             var list =
                 this.supplierEntityRepository.NamedQuery(string.Format("Pro_QuerySupplierList{0}",
-                                                                       (OrderBy.Supplier) parameter.OrderByType))
+                                                                       (OrderBy.Supplier)parameter.OrderByType))
                     .SetInt32("FeatureID", parameter.FeatureId)
                     .SetInt32("CuisineID", parameter.CuisineId)
                     .SetInt32("RegionId", parameter.RegionId)
@@ -835,7 +845,7 @@
                 return new ServicesResultList<SupplierModel>
                     {
                         Result = new List<SupplierModel>(),
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -928,7 +938,7 @@
                 return new ServicesResultList<GroupSupplierModel>
                     {
                         Result = new List<GroupSupplierModel>(),
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -960,7 +970,7 @@
 
             if (ServicesCommon.SupplierFeatures.Count > 0)
             {
-                var supplierFeatures = ServicesCommon.SupplierFeatures.Select(p => (int?) p).ToList();
+                var supplierFeatures = ServicesCommon.SupplierFeatures.Select(p => (int?)p).ToList();
                 tempQueryable =
                     tempQueryable.Where(
                         q => q.SupplierFeatureList.Any(p => supplierFeatures.Any(t => t == p.Feature.FeatureId)));
@@ -986,14 +996,14 @@
 
             var tempSupplierList = parameter.PageIndex == null
                                        ? queryable.ToList()
-                                       : queryable.Skip((parameter.PageIndex.Value - 1)*parameter.PageSize)
+                                       : queryable.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize)
                                                   .Take(parameter.PageSize)
                                                   .ToList();
             if (tempSupplierList.Count == 0)
             {
                 return new ServicesResultList<GroupSupplierModel>
                     {
-                        StatusCode = (int) StatusCode.Succeed.Empty,
+                        StatusCode = (int)StatusCode.Succeed.Empty,
                         Result = new List<GroupSupplierModel>()
                     };
             }
@@ -1037,7 +1047,7 @@
                     LogoUrl =
                         string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
                                       (supplierImageList.FirstOrDefault(p => p.SupplierId == item.SupplierId) ??
-                                       new {item.SupplierId, ImagePath = string.Empty}).ImagePath),
+                                       new { item.SupplierId, ImagePath = string.Empty }).ImagePath),
                     SupplierFeatureList =
                         supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
                                            .Select(
@@ -1080,7 +1090,7 @@
                 return new ServicesResultList<GroupSupplierModel>
                     {
                         Result = new List<GroupSupplierModel>(),
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -1119,7 +1129,7 @@
                 this.supplierFeatureEntityRepository.EntityQueryable.Where(
                     p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
                     .Select(
-                        p => new {p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId})
+                        p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId })
                     .ToList();
 
             foreach (var supplier in supplierList)
@@ -1159,7 +1169,7 @@
             {
                 return new ServicesResultList<SupplierFeatureModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<SupplierFeatureModel>()
                     };
             }
@@ -1178,7 +1188,7 @@
             {
                 return new ServicesResultList<SupplierFeatureModel>
                     {
-                        StatusCode = (int) StatusCode.Succeed.Empty,
+                        StatusCode = (int)StatusCode.Succeed.Empty,
                         ResultTotalCount = supplierFeatureList.Count,
                         Result = supplierFeatureList
                     };
@@ -1212,7 +1222,7 @@
             {
                 return new ServicesResultList<SupplierCuisineModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<SupplierCuisineModel>()
                     };
             }
@@ -1284,7 +1294,7 @@
             var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
                                          where
                                              supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
-                                         select new {entity.SupplierDishId, entity.ImagePath}).ToList();
+                                         select new { entity.SupplierDishId, entity.ImagePath }).ToList();
 
 
 
@@ -1389,7 +1399,7 @@
             var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
                                          where
                                              supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
-                                         select new {entity.SupplierDishId, entity.ImagePath}).ToList();
+                                         select new { entity.SupplierDishId, entity.ImagePath }).ToList();
 
             var dishList = (from supplierDishEntity in supplierDishList
                             let supplierDishImage =
@@ -1441,7 +1451,7 @@
             {
                 return new ServicesResultList<SupplierCuisineDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<SupplierCuisineDetailModel>()
                     };
             }
@@ -1504,7 +1514,7 @@
             {
                 return new ServicesResult<SupplierCuisineDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new SupplierCuisineDetailModel()
                     };
             }
@@ -1525,7 +1535,7 @@
             {
                 return new ServicesResult<SupplierCuisineDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierCategoryIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierCategoryIdCode,
                         Result = new SupplierCuisineDetailModel()
                     };
             }
@@ -1564,7 +1574,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -1572,7 +1582,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -1582,7 +1592,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -1613,7 +1623,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -1621,7 +1631,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -1631,7 +1641,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -1662,7 +1672,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -1670,7 +1680,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -1680,7 +1690,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -1715,7 +1725,7 @@
             {
                 return new ServicesResultList<SupplierDishDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<SupplierDishDetailModel>()
                     };
             }
@@ -1793,7 +1803,7 @@
             var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
                                          where
                                              supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
-                                         select new {entity.SupplierDishId, entity.ImagePath}).ToList();
+                                         select new { entity.SupplierDishId, entity.ImagePath }).ToList();
 
 
 
@@ -1874,7 +1884,7 @@
             {
                 return new ServicesResult<SupplierDishDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new SupplierDishDetailModel()
                     };
             }
@@ -1946,14 +1956,14 @@
             {
                 return new ServicesResult<SupplierDishDetailModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierDishIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierDishIdCode,
                         Result = new SupplierDishDetailModel()
                     };
             }
 
             var supplierDishImage = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
                                      where entity.SupplierDishId == supplierDishId && entity.Online == true
-                                     select new {entity.SupplierDishId, entity.ImagePath}).FirstOrDefault();
+                                     select new { entity.SupplierDishId, entity.ImagePath }).FirstOrDefault();
 
             var supplierCategory = (from supplierCategoryEntity in this.supplierCategoryEntityRepository.EntityQueryable
                                     where
@@ -2025,7 +2035,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -2033,7 +2043,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -2043,7 +2053,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -2074,7 +2084,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -2082,7 +2092,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -2092,7 +2102,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
                     };
             }
 
@@ -2123,7 +2133,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -2131,7 +2141,7 @@
             {
                 return new ServicesResult<bool>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
                     };
             }
 
@@ -2177,7 +2187,7 @@
             {
                 return new ServicesResultList<SupplierServiceTimeModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<SupplierServiceTimeModel>()
                     };
             }
@@ -2247,7 +2257,7 @@
             {
                 return new ServicesResultList<SupplierDeliveryTimeModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<SupplierDeliveryTimeModel>()
                     };
             }
@@ -2303,12 +2313,12 @@
             {
                 return new ServicesResult<DistanceModel>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest,
+                        StatusCode = (int)StatusCode.System.InvalidRequest,
                         Result = new DistanceModel()
                     };
             }
             var distance = CalDistance(parameter.LocationA, parameter.LocationB, parameter.Gs);
-            var distanceModel = new DistanceModel {Distance = distance};
+            var distanceModel = new DistanceModel { Distance = distance };
             return new ServicesResult<DistanceModel>
                 {
                     Result = distanceModel
@@ -2335,10 +2345,10 @@
             var radLat2 = Rad(locationB.Lat);
             var a = radLat1 - radLat2;
             var b = Rad(locationA.Lng) - Rad(locationB.Lng);
-            var s = 2*Math.Asin(Math.Sqrt(Math.Pow(Math.Sin(a/2), 2) +
-                                          Math.Cos(radLat1)*Math.Cos(radLat2)*Math.Pow(Math.Sin(b/2), 2)));
-            s = s*(gs == GaussSphere.WGS84 ? 6378137.0 : (gs == GaussSphere.Xian80 ? 6378140.0 : 6378245.0));
-            s = Math.Round(s*10000)/10000;
+            var s = 2 * Math.Asin(Math.Sqrt(Math.Pow(Math.Sin(a / 2), 2) +
+                                          Math.Cos(radLat1) * Math.Cos(radLat2) * Math.Pow(Math.Sin(b / 2), 2)));
+            s = s * (gs == GaussSphere.WGS84 ? 6378137.0 : (gs == GaussSphere.Xian80 ? 6378140.0 : 6378245.0));
+            s = Math.Round(s * 10000) / 10000;
             return s;
         }
 
@@ -2356,7 +2366,7 @@
         /// ----------------------------------------------------------------------------------------
         private double Rad(double d)
         {
-            return d*Math.PI/180.0;
+            return d * Math.PI / 180.0;
         }
 
         /// <summary>
@@ -2435,7 +2445,7 @@
             var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
                                          where
                                              supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
-                                         select new {entity.SupplierDishId, entity.ImagePath}).ToList();
+                                         select new { entity.SupplierDishId, entity.ImagePath }).ToList();
 
             var recommendDishList = (from supplierDish in supplierDishList
                                      let supplierDishImage =
@@ -2458,7 +2468,7 @@
                                              SupplierMenuCategoryId =
                                                  supplierCategory == null
                                                      ? null
-                                                     : (int?) supplierCategory.SupplierMenuCategoryId,
+                                                     : (int?)supplierCategory.SupplierMenuCategoryId,
                                              Type = 0, //0 菜 1 小料 2 锅底 3 套餐 4 专人服务
                                              Recipe = supplierDish.Recipe,
                                              PackagingFee = supplierDish.PackagingFee
@@ -2489,7 +2499,7 @@
             {
                 return new ServicesResultList<DingTaiDeskModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<DingTaiDeskModel>()
                     };
             }
@@ -2499,7 +2509,7 @@
             {
                 return new ServicesResultList<DingTaiDeskModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<DingTaiDeskModel>()
                     };
             }
@@ -2531,7 +2541,7 @@
             {
                 return new ServicesResultList<DingTaiDeskModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidBookingTimeCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidBookingTimeCode,
                         Result = new List<DingTaiDeskModel>()
                     };
             }
@@ -2599,15 +2609,14 @@
             {
                 return new ServicesResultList<string>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<string>()
                     };
             }
 
             var supplierDeskTimeList =
                 (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
-                 where supplierDeskTimeEntity.SupplierId == supplierId
-
+                 where supplierDeskTimeEntity.SupplierId == supplierId && supplierDeskTimeEntity.IsEnable == true
                  select new
                      {
                          supplierDeskTimeEntity.Id,
@@ -2646,7 +2655,7 @@
 
                 while (beginTime <= endTime)
                 {
-                    if (beginTime.Minute%30 == 0)
+                    if (beginTime.Minute % 30 == 0)
                     {
                         deskOpenTimeList.Add(beginTime);
                     }
@@ -2671,44 +2680,136 @@
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="supplierId">餐厅Id</param>
-        /// <returns></returns>
+        /// <param name="days">The days</param>
+        /// <returns>
+        /// ServicesResultList{DeskOpenDateModel}
+        /// </returns>
         /// 创建者：苏建峰
         /// 创建日期：3/20/2014 2:22 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<DeskOpenDateModel> GetDeskOpenDateList(string source, int supplierId)
+        public ServicesResultList<DeskOpenDateModel> GetDeskOpenDateList(string source, int supplierId, int? days)
         {
             /*判断餐厅Id是否存在*/
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResultList<DeskOpenDateModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<DeskOpenDateModel>()
                     };
             }
 
-            var deskOPenDateList = new List<DeskOpenDateModel>();
+            var supplierDeskTimeList = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
+                                        where supplierDeskTimeEntity.SupplierId == supplierId && supplierDeskTimeEntity.IsEnable == true
+                                        select new
+                                        {
+                                            supplierDeskTimeEntity.Id,
+                                            supplierDeskTimeEntity.BeginTime,
+                                            supplierDeskTimeEntity.EndTime,
+                                            supplierDeskTimeEntity.TimeType
+                                        }).ToList();
 
-            for (var i = 1; i <= ServicesCommon.DingTaiDaySpan; i++)
+            if (supplierDeskTimeList.Count == 0)
             {
-                deskOPenDateList.Add(new DeskOpenDateModel()
-                    {
-                        Date = DateTime.Now.AddDays(i),
-                        IsLock = false
-                    });
+                return new ServicesResultList<DeskOpenDateModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<DeskOpenDateModel>()
+                };
             }
 
-            //过滤掉被锁定的
-            var supplierDeskTimeCount =
-                supplierDeskTimeEntityRepository.EntityQueryable.Count(
-                    p => p.SupplierId == supplierId && p.IsEnable == true);
+            var supplierDeskCount = this.supplierDeskEntityRepository.EntityQueryable.Count(p => p.SupplierId == supplierId && p.IsDel == false && p.IsEnable);
+            var deskTypeEntityList = this.deskTypeEntityRepository.EntityQueryable.Where(
+                  p => p.IsDel == false && p.IsLock == false && p.SupplierId == supplierId)
+                  .Select(p => new { p.Id, p.SupplierId })
+                  .ToList();
 
-            //var d = (from deskTypeLockLog in this.deskTypeLockLogEntityRepository.EntityQueryable
-            //         group deskTypeLockLog by deskTypeLockLog.LockDate
-            //         into a
-            //         select new {a.KeyCount = developerGroup.Count()}).ToList();
+            if (deskTypeEntityList.Count == 0)
+            {
+                return new ServicesResultList<DeskOpenDateModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<DeskOpenDateModel>()
+                };
+            }
+
+            var now = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+            var dateTimeList = new List<DateTime>();
+            var tempDays = days ?? ServicesCommon.DingTaiDaySpan;
+            for (var i = 0; i < tempDays; i++)
+            {
+                dateTimeList.Add(now.AddDays(i));
+            }
+
+
+            var deskBookingList = (from deskType in deskTypeEntityList
+                                   from time in dateTimeList
+                                   from supplierDeskTime in supplierDeskTimeList
+                                   from deskBookingEntity in this.deskBookingEntityRepository.EntityQueryable
+                                   where deskType.Id == deskBookingEntity.DeskType.Id && deskBookingEntity.SupplierId == supplierId
+                                       && deskBookingEntity.TimeType == supplierDeskTime.TimeType
+                                       && deskBookingEntity.ReservationTime >= time && deskBookingEntity.ReservationTime < time.AddDays(1)
+                                   select new { DeskTypeId = deskType.Id, deskBookingEntity.TimeType, Day = time }).ToList();
+
+            var deskTypeLockLogList = (from deskType in deskTypeEntityList
+                                       from time in dateTimeList
+                                       from supplierDeskTime in supplierDeskTimeList
+                                       from deskTypeLockLog in this.deskTypeLockLogEntityRepository.EntityQueryable
+                                       where deskType.Id == deskTypeLockLog.DeskTypeId && deskTypeLockLog.SupplierId == supplierId
+                                           && deskTypeLockLog.SupplierDeskTime.TimeType == supplierDeskTime.TimeType
+                                           && deskTypeLockLog.LockDate >= time && deskTypeLockLog.LockDate < time.AddDays(1)
+                                       select new { DeskTypeId = deskType.Id, deskTypeLockLog.SupplierDeskTime.TimeType, Day = time }).ToList();
+
+            var deskOPenDateList = new List<DeskOpenDateModel>();
+            foreach (var dateTime in dateTimeList)
+            {
+                var supplierDeskTimeLockList = supplierDeskTimeList.Select(
+                        p =>
+                        new
+                            {
+                                p.TimeType,
+                                Count = deskTypeLockLogList.Count(q => q.Day == dateTime && q.TimeType == p.TimeType)
+                            }).ToList();
+
+                if (!supplierDeskTimeLockList.Any(p => p.Count < deskTypeEntityList.Count))
+                {
+                    deskOPenDateList.Add(new DeskOpenDateModel()
+                 {
+                     Date = dateTime,
+                     IsLock = true
+                 });
+
+                    continue;
+                }
+
+                var supplierDeskTimeBookingList = supplierDeskTimeList.Select(
+                       p =>
+                       new
+                           {
+                               p.TimeType,
+                               Count = deskBookingList.Count(q => q.Day == dateTime && q.TimeType == p.TimeType)
+                           }).ToList();
+
+                if (!supplierDeskTimeBookingList.Any(p => p.Count < deskTypeEntityList.Count))
+                {
+                    deskOPenDateList.Add(new DeskOpenDateModel()
+                    {
+                        Date = dateTime,
+                        IsLock = true
+                    });
+
+                    continue;
+                }
+
+                deskOPenDateList.Add(new DeskOpenDateModel()
+                  {
+                      Date = dateTime,
+                      IsLock = false
+                  });
+            }
+
 
             return new ServicesResultList<DeskOpenDateModel>
                 {
@@ -2779,11 +2880,11 @@
                                         supplierDeskTimeEntity.EndTime
                                     }).ToList()
                                           .FirstOrDefault(p => string.Compare(p.BeginTime, parameter.BookingTime,
-                                                                              System.StringComparison.OrdinalIgnoreCase) <
+                                                                              StringComparison.OrdinalIgnoreCase) <=
                                                                0
                                                                && string.Compare(p.EndTime, parameter.BookingTime,
-                                                                                 System.StringComparison
-                                                                                       .OrdinalIgnoreCase) > 0);
+                                                                                 StringComparison
+                                                                                       .OrdinalIgnoreCase) >= 0);
             //该时间内不可预订
             if (supplierDeskTime == null)
             {
