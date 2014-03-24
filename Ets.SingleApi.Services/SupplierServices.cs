@@ -2715,7 +2715,7 @@
                             item.EndTime,
                         }).ToList();
 
-            var tempList = list.Where(p => !p.Can).ToList();
+            var tempList = list.Where(p => p.Can).ToList();
             if (tempList.Count == 0)
             {
                 return new ServicesResultList<string>
@@ -2725,7 +2725,6 @@
             }
 
             var deskOpenTimeList = new List<DateTime>();
-
             var nowTime = bookingDate.ToString("yyyy-MM-dd") == now.ToString("yyyy-MM-dd") ? now : DateTime.Parse(bookingDate.ToString("yyyy-MM-dd"));
             foreach (var item in tempList)
             {
