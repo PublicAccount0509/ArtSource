@@ -325,8 +325,8 @@ namespace Ets.SingleApi.Controllers
                 DeskTypeName = p.DeskTypeName,
                 MaxNumber = p.MaxNumber,
                 MinNumber = p.MinNumber,
-                CeateDate = p.CeateDate.ToString("#yyyy-MM-dd HH:mm"),
-
+                QueueNumber = p.QueueNumber,
+                CeateDate = p.CeateDate.ToString("yyyy-MM-dd HH:mm")
             }).ToList();
 
             return new ListResponse<Queue>

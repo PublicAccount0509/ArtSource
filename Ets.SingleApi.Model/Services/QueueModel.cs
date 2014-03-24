@@ -171,6 +171,19 @@
         public int MinNumber { get; set; }
 
         /// <summary>
+        /// 排队人数
+        /// </summary>
+        /// <value>
+        /// The QueueNumber
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 1:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int QueueNumber { get; set; }
+
+        /// <summary>
         /// 排队日期
         /// </summary>
         /// <value>

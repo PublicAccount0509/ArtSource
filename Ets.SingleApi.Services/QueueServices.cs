@@ -496,6 +496,14 @@
                             CeateDate = p.CeateDate
                         }).ToList();
 
+            foreach (var queueModel in result)
+            {
+                queueModel.QueueNumber = result.Count(
+                      p =>
+                      p.QueueStateId == 1 && p.SupplierId == queueModel.SupplierId
+                      && string.Compare(p.Number, queueModel.Number, StringComparison.OrdinalIgnoreCase) < 0);
+
+            }
             return new ServicesResultList<QueueModel>
             {
                 Result = result
