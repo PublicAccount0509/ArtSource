@@ -261,7 +261,7 @@
                                   MaxNumber = deskBooking == null ? 0 : deskBooking.MaxNumber,
                                   BookDate = deskBooking == null ? null : deskBooking.BookDate,
                                   BookTime = deskBooking == null ? "" : deskBooking.BookDate.Value.ToString("HH:mm"),
-                                  DeskImgUrl = deskBooking == null ? "" : deskBooking.ImgPath,
+                                  DeskImgUrl = deskBooking == null ? "" : string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, deskBooking.ImgPath),
                                   TblTypeName = deskBooking == null ? "" : deskBooking.TblTypeName
                               }).ToList();
             return result;
