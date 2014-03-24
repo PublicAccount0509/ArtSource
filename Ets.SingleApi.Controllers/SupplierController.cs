@@ -1576,7 +1576,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [HttpGet]
+        [HttpPost]
         public Response<bool> CheckTableNumIsEffective(int supplierId, string tableNo)
         {
             if (supplierId == 0)
