@@ -1561,5 +1561,43 @@ namespace Ets.SingleApi.Controllers
                 Result = result.Result
             };
         }
+        /// <summary>
+        /// Checks the table number is effective.
+        /// </summary>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="tableNo">The tableNo</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/24/2014 1:21 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<bool> CheckTableNumIsEffective(int supplierId, string tableNo)
+        {
+            if (supplierId == 0)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                    }
+                };
+            }
+
+            var result = this.supplierServices.CheckTableNumIsEffective(this.Source,supplierId,tableNo);
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
     }
 }

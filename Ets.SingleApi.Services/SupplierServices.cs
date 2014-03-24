@@ -189,6 +189,16 @@
         private readonly INHibernateRepository<QueueEntity> queueEntityRepository;
 
         /// <summary>
+        /// 字段tableReservationEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/15/2014 2:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository;
+
+        /// <summary>
         /// 字段supplierDetailServices
         /// </summary>
         /// 创建者：周超
@@ -220,6 +230,7 @@
         /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
         /// <param name="queueEntityRepository">The queueEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
+        /// <param name="supplierDeskEntityRepository">The supplierDeskEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
         /// 修改者：
@@ -244,7 +255,8 @@
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
             INHibernateRepository<QueueEntity> queueEntityRepository,
-            ISupplierDetailServices supplierDetailServices)
+            ISupplierDetailServices supplierDetailServices,
+            INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
@@ -265,6 +277,7 @@
             this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
             this.queueEntityRepository = queueEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
+            this.supplierDeskEntityRepository = supplierDeskEntityRepository;
         }
 
         /// <summary>
@@ -2812,6 +2825,60 @@
                 };
             }
 
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
+
+        /// <summary>
+        /// 检查输入桌号是否有效
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="tableNo">The tableNo</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/24/2014 11:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CheckTableNumIsEffective(string source, int supplierId, string tableNo)
+        {
+            var supplierDeskRepository = (from entity in this.supplierDeskEntityRepository.EntityQueryable
+                                          where entity.SupplierId == supplierId && entity.DeskNo == tableNo
+                                          select entity).FirstOrDefault();
+            //找不到桌号信息
+            if (supplierDeskRepository == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFondDeskNum,
+                    Result = false
+                };
+            }
+            //桌号信息被删除
+            if (supplierDeskRepository.IsDel == true)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.DeskIsDelete,
+                    Result = false
+                };
+            }
+            //桌号被锁定
+            if (supplierDeskRepository.IsEnable == false)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.DeskIsLocked,
+                    Result = false
+                };
+            }
+            //桌号可以使用
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,

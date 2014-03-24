@@ -449,5 +449,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> CheckDesk(string source, int supplierId, CheckDeskParameter parameter);
+
+        /// <summary>
+        /// 检查输入桌号是否有效
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="tableNo">The tableNo</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/24/2014 11:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> CheckTableNumIsEffective(string source, int supplierId, string tableNo);
     }
 }

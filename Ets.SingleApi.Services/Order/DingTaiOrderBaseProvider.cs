@@ -51,6 +51,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository;
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DingTaiOrderBaseProvider" /> class.
         /// </summary>
@@ -69,7 +70,7 @@ namespace Ets.SingleApi.Services
         {
             this.tableReservationEntityRepository = tableReservationEntityRepository;
             this.orderNumberDtEntityRepository = orderNumberDtEntityRepository;
-            this.paymentRecordEntityRepository = paymentRecordEntityRepository;
+            this.paymentRecordEntityRepository = paymentRecordEntityRepository; 
         }
 
         /// <summary>
