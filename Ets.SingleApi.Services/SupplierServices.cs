@@ -184,13 +184,25 @@
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository;
 
+        /// <summary>
+        /// 字段deskBookingEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/24/2014 12:20 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository;
 
+        /// <summary>
+        /// 字段supplierDeskEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/24/2014 12:20 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository;
-
-        private readonly INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository;
-
-        private readonly INHibernateRepository<QueueEntity> queueEntityRepository;
 
         /// <summary>
         /// 字段supplierDetailServices
@@ -223,8 +235,6 @@
         /// <param name="deskTypeEntityRepository">The desk type entity repository.</param>
         /// <param name="deskBookingEntityRepository">The deskBookingEntityRepository</param>
         /// <param name="supplierDeskEntityRepository">The supplierDeskEntityRepository</param>
-        /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
-        /// <param name="queueEntityRepository">The queueEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
@@ -250,8 +260,6 @@
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository,
             INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository,
-            INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
-            INHibernateRepository<QueueEntity> queueEntityRepository,
             ISupplierDetailServices supplierDetailServices)
         {
             this.supplierEntityRepository = supplierEntityRepository;
@@ -272,8 +280,6 @@
             this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.deskBookingEntityRepository = deskBookingEntityRepository;
             this.supplierDeskEntityRepository = supplierDeskEntityRepository;
-            this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
-            this.queueEntityRepository = queueEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
         }
 
@@ -2516,26 +2522,20 @@
 
             /*早晚市开放时间*/
             //BeginTime和EndTime时间格式为（07:00、22:00）
-            var supplierDeskTime = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
-                                    where supplierDeskTimeEntity.SupplierId == parameter.SupplierId
-                                    //&& supplierDeskTimeEntity.BeginTime <= parameter.BookingTime 
-                                    //string.Compare(supplierDeskTimeEntity.BeginTime, parameter.BookingTime,
-                                    //               System.StringComparison.OrdinalIgnoreCase) < 0
-                                    //&&
-                                    //string.Compare(supplierDeskTimeEntity.EndTime, parameter.BookingTime,
-                                    //               System.StringComparison.OrdinalIgnoreCase) > 0
-                                    select new
+            var supplierDeskTimeList = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
+                                        where supplierDeskTimeEntity.SupplierId == parameter.SupplierId && supplierDeskTimeEntity.IsEnable == true
+                                        select new
                                         {
                                             supplierDeskTimeEntity.Id,
                                             supplierDeskTimeEntity.BeginTime,
-                                            supplierDeskTimeEntity.EndTime
-                                        }).ToList()
-                                          .FirstOrDefault(p => string.Compare(p.BeginTime, parameter.BookingTime,
-                                                                              System.StringComparison.OrdinalIgnoreCase) <
-                                                               0
-                                                               && string.Compare(p.EndTime, parameter.BookingTime,
-                                                                                 System.StringComparison
-                                                                                       .OrdinalIgnoreCase) > 0);
+                                            supplierDeskTimeEntity.EndTime,
+                                            supplierDeskTimeEntity.TimeType
+                                        }).ToList();
+
+
+            var supplierDeskTime = supplierDeskTimeList.FirstOrDefault(p => string.Compare(p.BeginTime, parameter.BookingTime, StringComparison.OrdinalIgnoreCase) <=
+                                                          0
+                                                          && string.Compare(p.EndTime, parameter.BookingTime, StringComparison.OrdinalIgnoreCase) >= 0);
 
             if (supplierDeskTime == null)
             {
@@ -2614,39 +2614,128 @@
                     };
             }
 
-            var supplierDeskTimeList =
-                (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
-                 where supplierDeskTimeEntity.SupplierId == supplierId && supplierDeskTimeEntity.IsEnable == true
-                 select new
-                     {
-                         supplierDeskTimeEntity.Id,
-                         supplierDeskTimeEntity.BeginTime,
-                         supplierDeskTimeEntity.EndTime
-                     }).ToList();
+            var supplierDeskTimeList = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
+                                        where supplierDeskTimeEntity.SupplierId == supplierId && supplierDeskTimeEntity.IsEnable == true
+                                        select new
+                                        {
+                                            supplierDeskTimeEntity.Id,
+                                            supplierDeskTimeEntity.BeginTime,
+                                            supplierDeskTimeEntity.EndTime,
+                                            supplierDeskTimeEntity.TimeType
+                                        }).ToList();
 
+            if (supplierDeskTimeList.Count == 0)
+            {
+                return new ServicesResultList<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<string>()
+                };
+            }
 
-            var deskOpenTimeStrList = new List<string>();
+            var deskTypeEntityList = this.deskTypeEntityRepository.EntityQueryable.Where(
+                  p => p.IsDel == false && p.IsLock == false && p.SupplierId == supplierId)
+                  .Select(p => new { p.Id, p.SupplierId })
+                  .ToList();
+
+            var supplierDeskEntityList = this.supplierDeskEntityRepository.EntityQueryable.Where(
+                  p => p.IsDel == false && p.IsEnable && p.SupplierId == supplierId)
+                  .Select(p => new { p.Id, DeskTypeId = p.DeskType.Id, p.SupplierId })
+                  .ToList();
+
+            if (deskTypeEntityList.Count == 0)
+            {
+                return new ServicesResultList<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<string>()
+                };
+            }
+
+            var now = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+            var deskBookingList = (from deskType in deskTypeEntityList
+                                   from supplierDeskTime in supplierDeskTimeList
+                                   from deskBookingEntity in this.deskBookingEntityRepository.EntityQueryable
+                                   where deskType.Id == deskBookingEntity.DeskType.Id && deskBookingEntity.SupplierId == supplierId
+                                       && deskBookingEntity.TimeType == supplierDeskTime.TimeType
+                                       && deskBookingEntity.ReservationTime >= now && deskBookingEntity.ReservationTime < now.AddDays(1)
+                                   select new { DeskTypeId = deskType.Id, deskBookingEntity.TimeType }).ToList();
+
+            var deskTypeLockLogList = (from deskType in deskTypeEntityList
+                                       from supplierDeskTime in supplierDeskTimeList
+                                       from deskTypeLockLog in this.deskTypeLockLogEntityRepository.EntityQueryable
+                                       where deskType.Id == deskTypeLockLog.DeskTypeId && deskTypeLockLog.SupplierId == supplierId
+                                           && deskTypeLockLog.SupplierDeskTime.TimeType == supplierDeskTime.TimeType
+                                           && deskTypeLockLog.LockDate >= now && deskTypeLockLog.LockDate < now.AddDays(1)
+                                       select new { DeskTypeId = deskType.Id, deskTypeLockLog.SupplierDeskTime.TimeType }).ToList();
+
+            var supplierDeskTimeLockList = supplierDeskTimeList.Select(
+                        p =>
+                        new
+                        {
+                            p.TimeType,
+                            Count = deskTypeLockLogList.Count(q => q.TimeType == p.TimeType)
+                        }).ToList();
+
+            if (!supplierDeskTimeLockList.Any(p => p.Count < deskTypeEntityList.Count))
+            {
+                return new ServicesResultList<string>
+                {
+                    Result = new List<string>()
+                };
+            }
+
+            var supplierDeskTimeBookingList = supplierDeskTimeList.Select(
+                   p =>
+                   new
+                   {
+                       p.TimeType,
+                       p.BeginTime,
+                       p.EndTime,
+                       Count = deskBookingList.Count(q => q.TimeType == p.TimeType)
+                   }).ToList();
+
+            if (!supplierDeskTimeBookingList.Any(p => p.Count < deskTypeEntityList.Count))
+            {
+                return new ServicesResultList<string>
+                {
+                    Result = new List<string>()
+                };
+            }
+
+            var list = (from item in supplierDeskTimeBookingList
+                        from deskType in deskTypeEntityList
+                        let bookingCount = deskBookingList.Count(p => p.TimeType == item.TimeType && p.DeskTypeId == deskType.Id)
+                        let supplierDeskCount = supplierDeskEntityList.Count(p => p.DeskTypeId == deskType.Id)
+                        select new
+                        {
+                            Can = bookingCount < supplierDeskCount,
+                            item.TimeType,
+                            item.BeginTime,
+                            item.EndTime,
+                        }).ToList();
+
+            var tempList = list.Where(p => !p.Can).ToList();
+            if (tempList.Count == 0)
+            {
+                return new ServicesResultList<string>
+                {
+                    Result = new List<string>()
+                };
+            }
+
             var deskOpenTimeList = new List<DateTime>();
 
-            var beginTimeStr = string.Empty;
-            var endTimeStr = string.Empty;
-            var todayDate = DateTime.Now.Date;
-
-            var beginTime = new DateTime();
-            var endTime = new DateTime();
-
-            foreach (var supplierDeskTime in supplierDeskTimeList)
+            var nowTime = bookingDate.ToString("yyyy-MM-dd") == now.ToString("yyyy-MM-dd") ? now : DateTime.Parse(bookingDate.ToString("yyyy-MM-dd"));
+            foreach (var item in tempList)
             {
-                beginTimeStr = supplierDeskTime.BeginTime;
-                endTimeStr = supplierDeskTime.EndTime;
+                var beginTime = DateTime.Parse(bookingDate.ToString("yyyy-MM-dd") + " " + item.BeginTime + ":00");
+                var endTime = DateTime.Parse(bookingDate.ToString("yyyy-MM-dd") + " " + item.EndTime + ":00");
 
-                beginTime =
-                    todayDate.AddHours(double.Parse(beginTimeStr.Split(':')[0]))
-                             .AddMinutes(double.Parse(beginTimeStr.Split(':')[1]));
-
-                endTime =
-                    todayDate.AddHours(double.Parse(endTimeStr.Split(':')[0]))
-                             .AddMinutes(double.Parse(endTimeStr.Split(':')[1]));
+                if (nowTime > beginTime)
+                {
+                    beginTime = nowTime;
+                }
 
                 if (beginTime > endTime)
                 {
@@ -2655,23 +2744,16 @@
 
                 while (beginTime <= endTime)
                 {
-                    if (beginTime.Minute % 30 == 0)
-                    {
-                        deskOpenTimeList.Add(beginTime);
-                    }
-                    beginTime = beginTime.AddMinutes(1);
+                    deskOpenTimeList.Add(beginTime);
+                    beginTime = beginTime.AddMinutes(30);
                 }
             }
 
-            deskOpenTimeStrList =
-                deskOpenTimeList.Where(p => p >= bookingDate && bookingDate.Date == todayDate)
-                                .Select(p => p.ToString("HH:mm"))
-                                .ToList();
-
+            var result = deskOpenTimeList.OrderBy(p => p).ToList().Select(p => p.ToString("HH:mm")).ToList();
             return new ServicesResultList<string>
                 {
-                    ResultTotalCount = deskOpenTimeStrList.Count,
-                    Result = deskOpenTimeStrList
+                    ResultTotalCount = result.Count,
+                    Result = result
                 };
         }
 
@@ -2720,10 +2802,14 @@
                 };
             }
 
-            var supplierDeskCount = this.supplierDeskEntityRepository.EntityQueryable.Count(p => p.SupplierId == supplierId && p.IsDel == false && p.IsEnable);
             var deskTypeEntityList = this.deskTypeEntityRepository.EntityQueryable.Where(
                   p => p.IsDel == false && p.IsLock == false && p.SupplierId == supplierId)
                   .Select(p => new { p.Id, p.SupplierId })
+                  .ToList();
+
+            var supplierDeskEntityList = this.supplierDeskEntityRepository.EntityQueryable.Where(
+                  p => p.IsDel == false && p.IsEnable && p.SupplierId == supplierId)
+                  .Select(p => new { p.Id, DeskTypeId = p.DeskType.Id, p.SupplierId })
                   .ToList();
 
             if (deskTypeEntityList.Count == 0)
@@ -2742,7 +2828,6 @@
             {
                 dateTimeList.Add(now.AddDays(i));
             }
-
 
             var deskBookingList = (from deskType in deskTypeEntityList
                                    from time in dateTimeList
@@ -2775,11 +2860,11 @@
 
                 if (!supplierDeskTimeLockList.Any(p => p.Count < deskTypeEntityList.Count))
                 {
-                    deskOPenDateList.Add(new DeskOpenDateModel()
-                 {
-                     Date = dateTime,
-                     IsLock = true
-                 });
+                    deskOPenDateList.Add(new DeskOpenDateModel
+                     {
+                         Date = dateTime,
+                         IsLock = true
+                     });
 
                     continue;
                 }
@@ -2794,7 +2879,7 @@
 
                 if (!supplierDeskTimeBookingList.Any(p => p.Count < deskTypeEntityList.Count))
                 {
-                    deskOPenDateList.Add(new DeskOpenDateModel()
+                    deskOPenDateList.Add(new DeskOpenDateModel
                     {
                         Date = dateTime,
                         IsLock = true
@@ -2803,7 +2888,18 @@
                     continue;
                 }
 
-                deskOPenDateList.Add(new DeskOpenDateModel()
+                var list = (from item in supplierDeskTimeBookingList
+                            from deskType in deskTypeEntityList
+                            let bookingCount = deskBookingList.Count(p => p.TimeType == item.TimeType && p.Day == dateTime && p.DeskTypeId == deskType.Id)
+                            let supplierDeskCount = supplierDeskEntityList.Count(p => p.DeskTypeId == deskType.Id)
+                            select bookingCount < supplierDeskCount).ToList();
+
+                if (!list.Any(p => p))
+                {
+                    continue;
+                }
+
+                deskOPenDateList.Add(new DeskOpenDateModel
                   {
                       Date = dateTime,
                       IsLock = false
