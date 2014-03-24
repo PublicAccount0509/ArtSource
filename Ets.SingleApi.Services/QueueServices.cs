@@ -43,16 +43,6 @@
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
 
         /// <summary>
-        /// The table desk entity repository
-        /// </summary>
-        /// 创建者：苏建峰
-        /// 创建日期：3/22/2014 3:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<TableTypeEntity> tableTypeEntityRepository;
-
-        /// <summary>
         /// 字段deskTypeEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -87,7 +77,6 @@
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
-        /// <param name="tableTypeEntityRepository">The table type entity repository.</param>
         /// <param name="deskTypeEntityRepository">The deskTypeEntityRepository</param>
         /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
         /// <param name="queueEntityRepository">The queueEntityRepository</param>
@@ -99,14 +88,12 @@
         public QueueServices(
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
-            INHibernateRepository<TableTypeEntity> tableTypeEntityRepository,
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
             INHibernateRepository<QueueEntity> queueEntityRepository)
         {
             this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
-            this.tableTypeEntityRepository = tableTypeEntityRepository;
             this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
             this.queueEntityRepository = queueEntityRepository;
@@ -131,7 +118,7 @@
             {
                 return new ServicesResultList<QueueDeskModel>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest,
+                        StatusCode = (int)StatusCode.System.InvalidRequest,
                         Result = new List<QueueDeskModel>()
                     };
             }
@@ -142,7 +129,7 @@
             {
                 return new ServicesResultList<QueueDeskModel>
                     {
-                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
                         Result = new List<QueueDeskModel>()
                     };
             }
@@ -156,33 +143,10 @@
                     .Select(p => p.DeskType.Id)
                     .ToList();
 
-            /*var queueDeskTypeList =
-                (from queueDeskTypeLockLog in
-                     this.queueDeskTypeLockLogEntityRepository.EntityQueryable.Where(
-                         p => p.IsDel == false && p.IsLock == false && p.SupplierId == supplierId)
-                 from deskType in
-                     this.deskTypeEntityRepository.EntityQueryable.Where(
-                         p => p.IsDel == false && p.IsLock == false && p.SupplierId == supplierId)
-                 from tableType in this.tableTypeEntityRepository.EntityQueryable
-                 where queueDeskTypeLockLog.DeskType.Id == deskType.Id
-                       && deskType.TableType.Id == tableType.Id
-                 select new
-                     {
-                         deskType.Id,
-                         deskType.DeskTypeName,
-                         deskType.RoomType,
-                         deskType.BoxName,
-                         deskType.Description,
-                         deskType.MaxNumber,
-                         deskType.MinNumber,
-                         TableTypeId = tableType.Id,
-                         tableType.TblTypeName
-                     }).ToList();*/
-
-            var queueDeskTypeList = (from deskType in this.deskTypeEntityRepository.EntityQueryable.Where(
-                p => p.IsDel == false && p.IsLock == false && p.SupplierId == supplierId
-                     && lockedDeskTypeIdList.Contains(p.Id)
-                                         )
+            var queueDeskTypeList = (from id in lockedDeskTypeIdList
+                                     from deskType in this.deskTypeEntityRepository.EntityQueryable.Where(
+                                     p => p.IsDel == false && p.IsLock == false && p.SupplierId == supplierId
+                                          && p.Id == id)
                                      select new
                                          {
                                              deskType.Id,
@@ -196,11 +160,10 @@
                                              deskType.TableType.TblTypeName
                                          }).ToList();
 
-
             var tempQueueDate = parameter.QueueDate.ToString("yyyy-MM-dd");
             var startQueueDate = DateTime.Parse(tempQueueDate);
             var endQueueDate = startQueueDate.AddDays(1);
-            var deskTypeIdList = queueDeskTypeList.Select(p => (int?) p.Id).ToList();
+            var deskTypeIdList = queueDeskTypeList.Select(p => (int?)p.Id).ToList();
 
             var queueList = (from queue in this.queueEntityRepository.EntityQueryable
                              where queue.SupplierId == supplierId && queue.State == 1 && queue.Time >= startQueueDate
@@ -270,7 +233,8 @@
                 };
             }
 
-            if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
+            var customer = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == parameter.UserId);
+            if (customer == null)
             {
                 return new ServicesResult<string>
                 {
@@ -279,7 +243,7 @@
                 };
             }
 
-            
+
             if (!this.deskTypeEntityRepository.EntityQueryable.Any(p => p.Id == parameter.DeskTypeId && p.SupplierId == supplierId))
             {
                 return new ServicesResult<string>
@@ -289,7 +253,7 @@
                 };
             }
 
-            if (this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.LoginId == parameter.UserId))
+            if (this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.CustomerId == customer.CustomerId))
             {
                 return new ServicesResult<string>
                 {
@@ -297,7 +261,6 @@
                     Result = string.Empty
                 };
             }
-
 
             var queueEntity = new QueueEntity
                 {
@@ -308,8 +271,10 @@
                     SupplierId = supplierEntity.SupplierId,
                     SupplierName = supplierEntity.SupplierName,
                     SeatNumber = parameter.SeatNumber,
-                    LoginId = parameter.UserId,
+                    CustomerId = customer.CustomerId,
                     Remark = parameter.Description,
+                    Path = parameter.SourceType,
+                    TemplateId = parameter.Template,
                     Number = ServicesCommon.QueueNumberPrefix + (this.queueEntityRepository.EntityQueryable.Count(p => p.SupplierId == supplierId) + 1).ToString().PadLeft(ServicesCommon.QueueNumberLength, '0')
                 };
 
@@ -345,7 +310,8 @@
                 };
             }
 
-            if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
+            var customer = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == parameter.UserId);
+            if (customer == null)
             {
                 return new ServicesResult<bool>
                 {
@@ -364,7 +330,7 @@
                 };
             }
 
-            var result = this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.LoginId == parameter.UserId);
+            var result = this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.CustomerId == customer.CustomerId);
             return new ServicesResult<bool>
             {
                 Result = result
