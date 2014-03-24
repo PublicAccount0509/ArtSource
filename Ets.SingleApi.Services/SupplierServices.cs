@@ -302,45 +302,45 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResult<SupplierDetailModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new SupplierDetailModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierDetailModel()
+                };
             }
 
             var tempSupplier = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                                 where supplierEntity.SupplierId == supplierId
                                 select new
-                                    {
-                                        supplierEntity.SupplierId,
-                                        supplierEntity.SupplierName,
-                                        supplierEntity.SupplierDescription,
-                                        Address = supplierEntity.Address1,
-                                        supplierEntity.Averageprice,
-                                        supplierEntity.ParkingInfo,
-                                        supplierEntity.Telephone,
-                                        supplierEntity.SupplierGroupId,
-                                        supplierEntity.PackagingFee,
-                                        supplierEntity.FixedDeliveryCharge,
-                                        supplierEntity.FreeDeliveryLine,
-                                        supplierEntity.DelMinOrderAmount,
-                                        supplierEntity.BaIduLat,
-                                        supplierEntity.BaIduLong,
-                                        supplierEntity.TakeawaySpecialOffersSummary,
-                                        supplierEntity.PublicTransport,
-                                        supplierEntity.PackLadder,
-                                        supplierEntity.Fax,
-                                        supplierEntity.Email,
-                                        supplierEntity.RegionCode
-                                    }).FirstOrDefault();
+                                {
+                                    supplierEntity.SupplierId,
+                                    supplierEntity.SupplierName,
+                                    supplierEntity.SupplierDescription,
+                                    Address = supplierEntity.Address1,
+                                    supplierEntity.Averageprice,
+                                    supplierEntity.ParkingInfo,
+                                    supplierEntity.Telephone,
+                                    supplierEntity.SupplierGroupId,
+                                    supplierEntity.PackagingFee,
+                                    supplierEntity.FixedDeliveryCharge,
+                                    supplierEntity.FreeDeliveryLine,
+                                    supplierEntity.DelMinOrderAmount,
+                                    supplierEntity.BaIduLat,
+                                    supplierEntity.BaIduLong,
+                                    supplierEntity.TakeawaySpecialOffersSummary,
+                                    supplierEntity.PublicTransport,
+                                    supplierEntity.PackLadder,
+                                    supplierEntity.Fax,
+                                    supplierEntity.Email,
+                                    supplierEntity.RegionCode
+                                }).FirstOrDefault();
 
             if (tempSupplier == null)
             {
                 return new ServicesResult<SupplierDetailModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new SupplierDetailModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierDetailModel()
+                };
             }
 
             decimal baIduLat;
@@ -351,44 +351,44 @@
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                 p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true)
                                           .Select(p => new SupplierFeatureModel
-                                              {
-                                                  SupplierFeatureId = p.SupplierFeatureId,
-                                                  FeatureName = p.Feature.Feature,
-                                                  FeatureId = p.Feature.FeatureId
-                                              }).ToList();
+                                          {
+                                              SupplierFeatureId = p.SupplierFeatureId,
+                                              FeatureName = p.Feature.Feature,
+                                              FeatureId = p.Feature.FeatureId
+                                          }).ToList();
 
 
             var supplier = new SupplierDetailModel
-                {
-                    SupplierId = tempSupplier.SupplierId,
-                    SupplierName = tempSupplier.SupplierName,
-                    SupplierDescription = tempSupplier.SupplierDescription,
-                    ServiceTime = string.Empty,
-                    Address = tempSupplier.Address,
-                    Averageprice = tempSupplier.Averageprice,
-                    ParkingInfo = tempSupplier.ParkingInfo,
-                    Telephone = tempSupplier.Telephone,
-                    SupplierGroupId = tempSupplier.SupplierGroupId,
-                    PackagingFee = tempSupplier.PackagingFee,
-                    FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge,
-                    CuisineName = string.Empty,
-                    FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
-                    DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
-                    BaIduLat = baIduLat,
-                    BaIduLong = baIduLong,
-                    Email = tempSupplier.Email,
-                    Fax = tempSupplier.Fax,
-                    TakeawaySpecialOffersSummary = tempSupplier.TakeawaySpecialOffersSummary,
-                    PackLadder = tempSupplier.PackLadder,
-                    PublicTransport = tempSupplier.PublicTransport,
-                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
-                                            this.supplierImageEntityRepository.EntityQueryable.Where(
-                                                p => p.Supplier.SupplierId == supplierId && p.Online == true)
-                                                .Select(p => p.ImagePath)
-                                                .FirstOrDefault()),
-                    SupplierFeatureList = supplierFeatureList,
-                    RecommendedDishList = new List<SupplierRecommendedDishModel>()
-                };
+            {
+                SupplierId = tempSupplier.SupplierId,
+                SupplierName = tempSupplier.SupplierName,
+                SupplierDescription = tempSupplier.SupplierDescription,
+                ServiceTime = string.Empty,
+                Address = tempSupplier.Address,
+                Averageprice = tempSupplier.Averageprice,
+                ParkingInfo = tempSupplier.ParkingInfo,
+                Telephone = tempSupplier.Telephone,
+                SupplierGroupId = tempSupplier.SupplierGroupId,
+                PackagingFee = tempSupplier.PackagingFee,
+                FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge,
+                CuisineName = string.Empty,
+                FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
+                DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
+                BaIduLat = baIduLat,
+                BaIduLong = baIduLong,
+                Email = tempSupplier.Email,
+                Fax = tempSupplier.Fax,
+                TakeawaySpecialOffersSummary = tempSupplier.TakeawaySpecialOffersSummary,
+                PackLadder = tempSupplier.PackLadder,
+                PublicTransport = tempSupplier.PublicTransport,
+                LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                        this.supplierImageEntityRepository.EntityQueryable.Where(
+                                            p => p.Supplier.SupplierId == supplierId && p.Online == true)
+                                            .Select(p => p.ImagePath)
+                                            .FirstOrDefault()),
+                SupplierFeatureList = supplierFeatureList,
+                RecommendedDishList = new List<SupplierRecommendedDishModel>()
+            };
 
             var cooperationWaimaiList =
                 ServicesCommon.CooperationWaimaiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p))
@@ -460,10 +460,10 @@
             var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
                                             where entity.SupplierId == supplierId
                                             select new
-                                                {
-                                                    entity.Day,
-                                                    entity.TimeTableDisplayId
-                                                }).ToList();
+                                            {
+                                                entity.Day,
+                                                entity.TimeTableDisplayId
+                                            }).ToList();
 
             var day = DateTime.Now.GetDayOfWeek();
             var timeTableDisplayIdList =
@@ -474,9 +474,9 @@
             if (timeTableDisplayIdList.Count == 0)
             {
                 return new ServicesResult<SupplierDetailModel>
-                    {
-                        Result = supplier
-                    };
+                {
+                    Result = supplier
+                };
             }
 
             //餐厅推荐菜品列表
@@ -484,19 +484,19 @@
             if (recommendedDishList.Count == 0)
             {
                 return new ServicesResult<SupplierDetailModel>
-                    {
-                        Result = supplier
-                    };
+                {
+                    Result = supplier
+                };
             }
             supplier.RecommendedDishList = recommendedDishList;
 
             var timeTableDisplayList = (from entity in this.timeTableDisplayEntityRepository.EntityQueryable
                                         where timeTableDisplayIdList.Contains(entity.TimeTableDisplayId)
                                         select new
-                                            {
-                                                entity.OpenTime,
-                                                entity.CloseTime
-                                            }).ToList();
+                                        {
+                                            entity.OpenTime,
+                                            entity.CloseTime
+                                        }).ToList();
 
             var serviceTime = timeTableDisplayList.Aggregate(string.Empty,
                                                              (current, timeTableDisplay) =>
@@ -506,9 +506,9 @@
             supplier.ServiceTime = serviceTime.Trim();
 
             return new ServicesResult<SupplierDetailModel>
-                {
-                    Result = supplier
-                };
+            {
+                Result = supplier
+            };
         }
 
         /// <summary>
@@ -529,45 +529,45 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResult<SupplierSimpleModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new SupplierSimpleModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierSimpleModel()
+                };
             }
 
             var tempSupplier = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                                 where supplierEntity.SupplierId == supplierId
                                 select new
-                                    {
-                                        supplierEntity.SupplierId,
-                                        supplierEntity.SupplierName,
-                                        supplierEntity.SupplierDescription,
-                                        Address = supplierEntity.Address1,
-                                        supplierEntity.Averageprice,
-                                        supplierEntity.ParkingInfo,
-                                        supplierEntity.Telephone,
-                                        supplierEntity.SupplierGroupId,
-                                        supplierEntity.PackagingFee,
-                                        supplierEntity.FixedDeliveryCharge,
-                                        supplierEntity.FreeDeliveryLine,
-                                        supplierEntity.DelMinOrderAmount,
-                                        supplierEntity.BaIduLat,
-                                        supplierEntity.BaIduLong,
-                                        supplierEntity.TakeawaySpecialOffersSummary,
-                                        supplierEntity.PublicTransport,
-                                        supplierEntity.PackLadder,
-                                        supplierEntity.Fax,
-                                        supplierEntity.Email,
-                                        supplierEntity.RegionCode
-                                    }).FirstOrDefault();
+                                {
+                                    supplierEntity.SupplierId,
+                                    supplierEntity.SupplierName,
+                                    supplierEntity.SupplierDescription,
+                                    Address = supplierEntity.Address1,
+                                    supplierEntity.Averageprice,
+                                    supplierEntity.ParkingInfo,
+                                    supplierEntity.Telephone,
+                                    supplierEntity.SupplierGroupId,
+                                    supplierEntity.PackagingFee,
+                                    supplierEntity.FixedDeliveryCharge,
+                                    supplierEntity.FreeDeliveryLine,
+                                    supplierEntity.DelMinOrderAmount,
+                                    supplierEntity.BaIduLat,
+                                    supplierEntity.BaIduLong,
+                                    supplierEntity.TakeawaySpecialOffersSummary,
+                                    supplierEntity.PublicTransport,
+                                    supplierEntity.PackLadder,
+                                    supplierEntity.Fax,
+                                    supplierEntity.Email,
+                                    supplierEntity.RegionCode
+                                }).FirstOrDefault();
 
             if (tempSupplier == null)
             {
                 return new ServicesResult<SupplierSimpleModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new SupplierSimpleModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierSimpleModel()
+                };
             }
 
             decimal baIduLat;
@@ -576,26 +576,26 @@
             decimal.TryParse(tempSupplier.BaIduLong, out baIduLong);
 
             var supplier = new SupplierSimpleModel
-                {
-                    SupplierId = tempSupplier.SupplierId,
-                    SupplierName = tempSupplier.SupplierName,
-                    SupplierDescription = tempSupplier.SupplierDescription,
-                    Address = tempSupplier.Address,
-                    Averageprice = tempSupplier.Averageprice,
-                    Telephone = tempSupplier.Telephone,
-                    SupplierGroupId = tempSupplier.SupplierGroupId,
-                    PackagingFee = tempSupplier.PackagingFee,
-                    FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge,
-                    FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
-                    DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
-                    BaIduLat = baIduLat,
-                    BaIduLong = baIduLong
-                };
+            {
+                SupplierId = tempSupplier.SupplierId,
+                SupplierName = tempSupplier.SupplierName,
+                SupplierDescription = tempSupplier.SupplierDescription,
+                Address = tempSupplier.Address,
+                Averageprice = tempSupplier.Averageprice,
+                Telephone = tempSupplier.Telephone,
+                SupplierGroupId = tempSupplier.SupplierGroupId,
+                PackagingFee = tempSupplier.PackagingFee,
+                FixedDeliveryCharge = tempSupplier.FixedDeliveryCharge,
+                FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
+                DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
+                BaIduLat = baIduLat,
+                BaIduLong = baIduLong
+            };
 
             return new ServicesResult<SupplierSimpleModel>
-                {
-                    Result = supplier
-                };
+            {
+                Result = supplier
+            };
         }
 
         /// <summary>
@@ -616,10 +616,10 @@
             if (supplierDomain.IsEmptyOrNull())
             {
                 return new ServicesResult<RoughSupplierModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierDomainCode,
-                        Result = new RoughSupplierModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierDomainCode,
+                    Result = new RoughSupplierModel()
+                };
             }
 
             var loginEntity = this.loginEntityRepository.EntityQueryable.Where(p => p.Username == supplierDomain)
@@ -629,49 +629,49 @@
             if (loginEntity == null)
             {
                 return new ServicesResult<RoughSupplierModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierDomainCode,
-                        Result = new RoughSupplierModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierDomainCode,
+                    Result = new RoughSupplierModel()
+                };
             }
 
             if (!loginEntity.IsEnabled)
             {
                 return new ServicesResult<RoughSupplierModel>
-                    {
-                        StatusCode = (int)StatusCode.General.ErrorPermission,
-                        Result = new RoughSupplierModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.General.ErrorPermission,
+                    Result = new RoughSupplierModel()
+                };
             }
 
             var roughSupplierModel = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                                       where supplierEntity.Login.LoginId == loginEntity.LoginId
                                       select new RoughSupplierModel
-                                          {
-                                              SupplierId = supplierEntity.SupplierId,
-                                              SupplierName = supplierEntity.SupplierName,
-                                              SupplierDescription = supplierEntity.SupplierDescription,
-                                              Address = supplierEntity.Address1,
-                                              Telephone = supplierEntity.Telephone
-                                          }).FirstOrDefault();
+                                      {
+                                          SupplierId = supplierEntity.SupplierId,
+                                          SupplierName = supplierEntity.SupplierName,
+                                          SupplierDescription = supplierEntity.SupplierDescription,
+                                          Address = supplierEntity.Address1,
+                                          Telephone = supplierEntity.Telephone
+                                      }).FirstOrDefault();
 
             if (roughSupplierModel == null)
             {
                 return new ServicesResult<RoughSupplierModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new RoughSupplierModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new RoughSupplierModel()
+                };
             }
 
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                 p => p.Supplier.SupplierId == roughSupplierModel.SupplierId && p.IsEnabled == true)
                                           .Select(p => new SupplierFeatureModel
-                                              {
-                                                  SupplierFeatureId = p.SupplierFeatureId,
-                                                  FeatureName = p.Feature.Feature,
-                                                  FeatureId = p.Feature.FeatureId
-                                              }).ToList();
+                                          {
+                                              SupplierFeatureId = p.SupplierFeatureId,
+                                              FeatureName = p.Feature.Feature,
+                                              FeatureId = p.Feature.FeatureId
+                                          }).ToList();
 
             roughSupplierModel.SupplierFeatureList = supplierFeatureList;
 
@@ -687,9 +687,9 @@
             }
 
             return new ServicesResult<RoughSupplierModel>
-                {
-                    Result = roughSupplierModel
-                };
+            {
+                Result = roughSupplierModel
+            };
         }
 
         /// <summary>
@@ -711,9 +711,9 @@
             if (dishList == null || dishList.Count == 0)
             {
                 return new ServicesResult<decimal>
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             var supplier = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
@@ -723,9 +723,9 @@
             if (supplier == null)
             {
                 return new ServicesResult<decimal>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
             }
 
             var packageWay =
@@ -734,9 +734,9 @@
             var packagingFee = ServicesCommon.GetPackagingFee(packageWay, supplier.PackagingFee ?? 0,
                                                               supplier.PackLadder ?? 0, dishList);
             return new ServicesResult<decimal>
-                {
-                    Result = packagingFee
-                };
+            {
+                Result = packagingFee
+            };
         }
 
         /// <summary>
@@ -757,10 +757,10 @@
             if (parameter == null)
             {
                 return new ServicesResultList<SupplierModel>
-                    {
-                        Result = new List<SupplierModel>(),
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    Result = new List<SupplierModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             var list =
@@ -781,23 +781,23 @@
 
             var result = (from entity in list
                           select new SupplierModel
-                              {
-                                  SupplierId = entity.SupplierId,
-                                  SupplierName = entity.SupplierName,
-                                  Address = entity.Address,
-                                  Telephone = entity.Telephone,
-                                  BaIduLat = entity.BaIduLat,
-                                  BaIduLong = entity.BaIduLong,
-                                  SupplierDescription = entity.SupplierDescription,
-                                  Averageprice = entity.Averageprice,
-                                  ParkingInfo = entity.ParkingInfo,
-                                  CuisineName = entity.CuisineName,
-                                  LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
-                                  IsOpenDoor = entity.IsOpenDoor,
-                                  Distance = entity.Distance,
-                                  DateJoined = entity.DateJoined,
-                                  SupplierGroupId = entity.SupplierGroupId
-                              }).ToList();
+                          {
+                              SupplierId = entity.SupplierId,
+                              SupplierName = entity.SupplierName,
+                              Address = entity.Address,
+                              Telephone = entity.Telephone,
+                              BaIduLat = entity.BaIduLat,
+                              BaIduLong = entity.BaIduLong,
+                              SupplierDescription = entity.SupplierDescription,
+                              Averageprice = entity.Averageprice,
+                              ParkingInfo = entity.ParkingInfo,
+                              CuisineName = entity.CuisineName,
+                              LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                              IsOpenDoor = entity.IsOpenDoor,
+                              Distance = entity.Distance,
+                              DateJoined = entity.DateJoined,
+                              SupplierGroupId = entity.SupplierGroupId
+                          }).ToList();
 
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
@@ -805,29 +805,29 @@
                                           .Select(
                                               p =>
                                               new
-                                                  {
-                                                      p.SupplierFeatureId,
-                                                      p.Supplier.SupplierId,
-                                                      p.Feature.Feature,
-                                                      p.Feature.FeatureId
-                                                  })
+                                              {
+                                                  p.SupplierFeatureId,
+                                                  p.Supplier.SupplierId,
+                                                  p.Feature.Feature,
+                                                  p.Feature.FeatureId
+                                              })
                                           .ToList();
 
             foreach (var item in result)
             {
                 item.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
                                                               .Select(p => new SupplierFeatureModel
-                                                                  {
-                                                                      FeatureId = p.FeatureId,
-                                                                      FeatureName = p.Feature,
-                                                                      SupplierFeatureId = p.SupplierFeatureId
-                                                                  }).ToList();
+                                                              {
+                                                                  FeatureId = p.FeatureId,
+                                                                  FeatureName = p.Feature,
+                                                                  SupplierFeatureId = p.SupplierFeatureId
+                                                              }).ToList();
             }
 
             return new ServicesResultList<SupplierModel>
-                {
-                    Result = result
-                };
+            {
+                Result = result
+            };
         }
 
         /// <summary>
@@ -849,10 +849,10 @@
             if (parameter == null)
             {
                 return new ServicesResultList<SupplierModel>
-                    {
-                        Result = new List<SupplierModel>(),
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    Result = new List<SupplierModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             var list =
@@ -874,23 +874,23 @@
 
             var result = (from entity in list
                           select new SupplierModel
-                              {
-                                  SupplierId = entity.SupplierId,
-                                  SupplierName = entity.SupplierName,
-                                  Address = entity.Address,
-                                  Telephone = entity.Telephone,
-                                  BaIduLat = entity.BaIduLat,
-                                  BaIduLong = entity.BaIduLong,
-                                  SupplierDescription = entity.SupplierDescription,
-                                  Averageprice = entity.Averageprice,
-                                  ParkingInfo = entity.ParkingInfo,
-                                  CuisineName = entity.CuisineName,
-                                  LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
-                                  IsOpenDoor = entity.IsOpenDoor,
-                                  Distance = entity.Distance,
-                                  DateJoined = entity.DateJoined,
-                                  SupplierGroupId = entity.SupplierGroupId
-                              }).ToList();
+                          {
+                              SupplierId = entity.SupplierId,
+                              SupplierName = entity.SupplierName,
+                              Address = entity.Address,
+                              Telephone = entity.Telephone,
+                              BaIduLat = entity.BaIduLat,
+                              BaIduLong = entity.BaIduLong,
+                              SupplierDescription = entity.SupplierDescription,
+                              Averageprice = entity.Averageprice,
+                              ParkingInfo = entity.ParkingInfo,
+                              CuisineName = entity.CuisineName,
+                              LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                              IsOpenDoor = entity.IsOpenDoor,
+                              Distance = entity.Distance,
+                              DateJoined = entity.DateJoined,
+                              SupplierGroupId = entity.SupplierGroupId
+                          }).ToList();
 
             var supplierIdList = result.Select(p => p.SupplierId).ToList();
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
@@ -898,29 +898,29 @@
                                           .Select(
                                               p =>
                                               new
-                                                  {
-                                                      p.SupplierFeatureId,
-                                                      p.Supplier.SupplierId,
-                                                      p.Feature.Feature,
-                                                      p.Feature.FeatureId
-                                                  })
+                                              {
+                                                  p.SupplierFeatureId,
+                                                  p.Supplier.SupplierId,
+                                                  p.Feature.Feature,
+                                                  p.Feature.FeatureId
+                                              })
                                           .ToList();
 
             foreach (var item in result)
             {
                 item.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
                                                               .Select(p => new SupplierFeatureModel
-                                                                  {
-                                                                      FeatureId = p.FeatureId,
-                                                                      FeatureName = p.Feature,
-                                                                      SupplierFeatureId = p.SupplierFeatureId
-                                                                  }).ToList();
+                                                              {
+                                                                  FeatureId = p.FeatureId,
+                                                                  FeatureName = p.Feature,
+                                                                  SupplierFeatureId = p.SupplierFeatureId
+                                                              }).ToList();
             }
 
             return new ServicesResultList<SupplierModel>
-                {
-                    Result = result
-                };
+            {
+                Result = result
+            };
         }
 
         /// <summary>
@@ -942,18 +942,18 @@
             if (parameter == null)
             {
                 return new ServicesResultList<GroupSupplierModel>
-                    {
-                        Result = new List<GroupSupplierModel>(),
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    Result = new List<GroupSupplierModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             if (ServicesCommon.TestSupplierGroupId.Contains(parameter.SupplierGroupId))
             {
                 return new ServicesResultList<GroupSupplierModel>
-                    {
-                        Result = new List<GroupSupplierModel>()
-                    };
+                {
+                    Result = new List<GroupSupplierModel>()
+                };
             }
 
             var tempQueryable =
@@ -984,21 +984,21 @@
 
             var queryable = tempQueryable.Select(supplierEntity =>
                                                  new
-                                                     {
-                                                         supplierEntity.SupplierId,
-                                                         supplierEntity.SupplierName,
-                                                         supplierEntity.SupplierDescription,
-                                                         Address = supplierEntity.Address1,
-                                                         supplierEntity.Averageprice,
-                                                         supplierEntity.ParkingInfo,
-                                                         supplierEntity.Telephone,
-                                                         supplierEntity.SupplierGroupId,
-                                                         supplierEntity.DateJoined,
-                                                         supplierEntity.IsOpenDoor,
-                                                         supplierEntity.DefaultCuisineId,
-                                                         supplierEntity.BaIduLat,
-                                                         supplierEntity.BaIduLong
-                                                     });
+                                                 {
+                                                     supplierEntity.SupplierId,
+                                                     supplierEntity.SupplierName,
+                                                     supplierEntity.SupplierDescription,
+                                                     Address = supplierEntity.Address1,
+                                                     supplierEntity.Averageprice,
+                                                     supplierEntity.ParkingInfo,
+                                                     supplierEntity.Telephone,
+                                                     supplierEntity.SupplierGroupId,
+                                                     supplierEntity.DateJoined,
+                                                     supplierEntity.IsOpenDoor,
+                                                     supplierEntity.DefaultCuisineId,
+                                                     supplierEntity.BaIduLat,
+                                                     supplierEntity.BaIduLong
+                                                 });
 
             var tempSupplierList = parameter.PageIndex == null
                                        ? queryable.ToList()
@@ -1008,70 +1008,70 @@
             if (tempSupplierList.Count == 0)
             {
                 return new ServicesResultList<GroupSupplierModel>
-                    {
-                        StatusCode = (int)StatusCode.Succeed.Empty,
-                        Result = new List<GroupSupplierModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Succeed.Empty,
+                    Result = new List<GroupSupplierModel>()
+                };
             }
 
             var supplierIdList = tempSupplierList.Select(p => p.SupplierId).ToList();
             var supplierImageList = this.supplierImageEntityRepository.EntityQueryable.Where(
                 p => supplierIdList.Contains(p.Supplier.SupplierId) && p.Online == true)
                                         .Select(p => new
-                                            {
-                                                p.Supplier.SupplierId,
-                                                p.ImagePath
-                                            }).ToList();
+                                        {
+                                            p.Supplier.SupplierId,
+                                            p.ImagePath
+                                        }).ToList();
 
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                 p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
                                           .Select(
                                               p =>
                                               new
-                                                  {
-                                                      p.SupplierFeatureId,
-                                                      p.Supplier.SupplierId,
-                                                      p.Feature.Feature,
-                                                      p.Feature.FeatureId
-                                                  })
+                                              {
+                                                  p.SupplierFeatureId,
+                                                  p.Supplier.SupplierId,
+                                                  p.Feature.Feature,
+                                                  p.Feature.FeatureId
+                                              })
                                           .ToList();
 
             var groupSupplierList = tempSupplierList.Select(item => new GroupSupplierModel
-                {
-                    SupplierId = item.SupplierId,
-                    SupplierName = item.SupplierName,
-                    Address = item.Address,
-                    Telephone = item.Telephone,
-                    Averageprice = item.Averageprice,
-                    BaIduLat = item.BaIduLat,
-                    BaIduLong = item.BaIduLong,
-                    ParkingInfo = item.ParkingInfo,
-                    CuisineId = item.DefaultCuisineId,
-                    DateJoined = item.DateJoined,
-                    IsOpenDoor = item.IsOpenDoor,
-                    SupplierDescription = item.SupplierDescription,
-                    LogoUrl =
-                        string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
-                                      (supplierImageList.FirstOrDefault(p => p.SupplierId == item.SupplierId) ??
-                                       new { item.SupplierId, ImagePath = string.Empty }).ImagePath),
-                    SupplierFeatureList =
-                        supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
-                                           .Select(
-                                               p =>
-                                               new SupplierFeatureModel
-                                                   {
-                                                       FeatureId = p.FeatureId,
-                                                       FeatureName = p.Feature,
-                                                       SupplierFeatureId = p.SupplierFeatureId
-                                                   })
-                                           .ToList()
-                }).ToList();
+            {
+                SupplierId = item.SupplierId,
+                SupplierName = item.SupplierName,
+                Address = item.Address,
+                Telephone = item.Telephone,
+                Averageprice = item.Averageprice,
+                BaIduLat = item.BaIduLat,
+                BaIduLong = item.BaIduLong,
+                ParkingInfo = item.ParkingInfo,
+                CuisineId = item.DefaultCuisineId,
+                DateJoined = item.DateJoined,
+                IsOpenDoor = item.IsOpenDoor,
+                SupplierDescription = item.SupplierDescription,
+                LogoUrl =
+                    string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                  (supplierImageList.FirstOrDefault(p => p.SupplierId == item.SupplierId) ??
+                                   new { item.SupplierId, ImagePath = string.Empty }).ImagePath),
+                SupplierFeatureList =
+                    supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
+                                       .Select(
+                                           p =>
+                                           new SupplierFeatureModel
+                                           {
+                                               FeatureId = p.FeatureId,
+                                               FeatureName = p.Feature,
+                                               SupplierFeatureId = p.SupplierFeatureId
+                                           })
+                                       .ToList()
+            }).ToList();
 
             return new ServicesResultList<GroupSupplierModel>
-                {
-                    ResultTotalCount = groupSupplierList.Count,
-                    Result = groupSupplierList
-                };
+            {
+                ResultTotalCount = groupSupplierList.Count,
+                Result = groupSupplierList
+            };
         }
 
         /// <summary>
@@ -1094,10 +1094,10 @@
             if (parameter == null)
             {
                 return new ServicesResultList<GroupSupplierModel>
-                    {
-                        Result = new List<GroupSupplierModel>(),
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    Result = new List<GroupSupplierModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             var list = this.supplierEntityRepository.NamedQuery("Pro_QuerySearchGroupSupplierList")
@@ -1114,21 +1114,21 @@
 
             var supplierList = (from entity in list
                                 select new GroupSupplierModel
-                                    {
-                                        SupplierId = entity.SupplierId,
-                                        SupplierName = entity.SupplierName,
-                                        Address = entity.Address,
-                                        Telephone = entity.Telephone,
-                                        BaIduLat = entity.BaIduLat,
-                                        BaIduLong = entity.BaIduLong,
-                                        SupplierDescription = entity.SupplierDescription,
-                                        Averageprice = entity.Averageprice,
-                                        ParkingInfo = entity.ParkingInfo,
-                                        LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
-                                        IsOpenDoor = entity.IsOpenDoor,
-                                        Distance = entity.Distance,
-                                        DateJoined = entity.DateJoined,
-                                    }).ToList();
+                                {
+                                    SupplierId = entity.SupplierId,
+                                    SupplierName = entity.SupplierName,
+                                    Address = entity.Address,
+                                    Telephone = entity.Telephone,
+                                    BaIduLat = entity.BaIduLat,
+                                    BaIduLong = entity.BaIduLong,
+                                    SupplierDescription = entity.SupplierDescription,
+                                    Averageprice = entity.Averageprice,
+                                    ParkingInfo = entity.ParkingInfo,
+                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                                    IsOpenDoor = entity.IsOpenDoor,
+                                    Distance = entity.Distance,
+                                    DateJoined = entity.DateJoined,
+                                }).ToList();
 
             var supplierIdList = supplierList.Select(p => p.SupplierId).ToList();
             var supplierFeatureList =
@@ -1143,17 +1143,17 @@
                 supplier.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == supplier.SupplierId)
                                                                   .Select(p =>
                                                                           new SupplierFeatureModel
-                                                                              {
-                                                                                  FeatureId = p.FeatureId,
-                                                                                  FeatureName = p.Feature,
-                                                                                  SupplierFeatureId =
-                                                                                      p.SupplierFeatureId
-                                                                              }).ToList();
+                                                                          {
+                                                                              FeatureId = p.FeatureId,
+                                                                              FeatureName = p.Feature,
+                                                                              SupplierFeatureId =
+                                                                                  p.SupplierFeatureId
+                                                                          }).ToList();
             }
             return new ServicesResultList<GroupSupplierModel>
-                {
-                    Result = supplierList
-                };
+            {
+                Result = supplierList
+            };
         }
 
         /// <summary>
@@ -1174,37 +1174,37 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResultList<SupplierFeatureModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<SupplierFeatureModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierFeatureModel>()
+                };
             }
 
             var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
                 p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true)
                                           .Select(p => new SupplierFeatureModel
-                                              {
-                                                  SupplierFeatureId = p.SupplierFeatureId,
-                                                  FeatureName = p.Feature.Feature,
-                                                  FeatureId = p.Feature.FeatureId
-                                              })
+                                          {
+                                              SupplierFeatureId = p.SupplierFeatureId,
+                                              FeatureName = p.Feature.Feature,
+                                              FeatureId = p.Feature.FeatureId
+                                          })
                                           .ToList();
 
             if (supplierFeatureList.Count == 0)
             {
                 return new ServicesResultList<SupplierFeatureModel>
-                    {
-                        StatusCode = (int)StatusCode.Succeed.Empty,
-                        ResultTotalCount = supplierFeatureList.Count,
-                        Result = supplierFeatureList
-                    };
-            }
-
-            return new ServicesResultList<SupplierFeatureModel>
                 {
+                    StatusCode = (int)StatusCode.Succeed.Empty,
                     ResultTotalCount = supplierFeatureList.Count,
                     Result = supplierFeatureList
                 };
+            }
+
+            return new ServicesResultList<SupplierFeatureModel>
+            {
+                ResultTotalCount = supplierFeatureList.Count,
+                Result = supplierFeatureList
+            };
         }
 
         /// <summary>
@@ -1227,10 +1227,10 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResultList<SupplierCuisineModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<SupplierCuisineModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierCuisineModel>()
+                };
             }
 
             var supplierMenuCategoryId =
@@ -1246,30 +1246,30 @@
                      supplierCategoryEntity.SupplierId == supplierId &&
                      supplierCategoryEntity.SupplierMenuCategoryId == supplierMenuCategoryId
                  select new
-                     {
-                         supplierCategoryEntity.Category,
-                         supplierCategoryEntity.SupplierId,
-                         supplierCategoryEntity.SupplierCategoryId
-                     }).ToList();
+                 {
+                     supplierCategoryEntity.Category,
+                     supplierCategoryEntity.SupplierId,
+                     supplierCategoryEntity.SupplierCategoryId
+                 }).ToList();
 
             if (tempSupplierCategoryList.Count == 0)
             {
                 return new ServicesResultList<SupplierCuisineModel>
-                    {
-                        Result = new List<SupplierCuisineModel>()
-                    };
+                {
+                    Result = new List<SupplierCuisineModel>()
+                };
             }
 
             var supplierCategoryList = (from entity in tempSupplierCategoryList
                                         where entity.Category != null
                                         select new
-                                            {
-                                                entity.Category.CategoryId,
-                                                entity.Category.CategoryName,
-                                                entity.Category.CategoryNo,
-                                                entity.SupplierId,
-                                                entity.SupplierCategoryId
-                                            }).OrderBy(p => p.CategoryNo).ToList();
+                                        {
+                                            entity.Category.CategoryId,
+                                            entity.Category.CategoryName,
+                                            entity.Category.CategoryNo,
+                                            entity.SupplierId,
+                                            entity.SupplierCategoryId
+                                        }).OrderBy(p => p.CategoryNo).ToList();
 
             var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
             var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
@@ -1277,24 +1277,24 @@
                                           && supplierDishEntity.Online && supplierDishEntity.IsDel == false
                                           && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
                                     select new
-                                        {
-                                            supplierDishEntity.SupplierCategoryId,
-                                            supplierDishEntity.DishNo,
-                                            supplierDishEntity.Price,
-                                            supplierDishEntity.SupplierDishId,
-                                            supplierDishEntity.SupplierDishName,
-                                            supplierDishEntity.SuppllierDishDescription,
-                                            supplierDishEntity.SpicyLevel,
-                                            supplierDishEntity.AverageRating,
-                                            supplierDishEntity.IsCommission,
-                                            supplierDishEntity.IsDiscount,
-                                            supplierDishEntity.Recipe,
-                                            supplierDishEntity.Recommended,
-                                            supplierDishEntity.PackagingFee,
-                                            SupplierId =
-                                        supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
-                                            ImagePath = string.Empty
-                                        }).OrderBy(p => p.DishNo).ToList();
+                                    {
+                                        supplierDishEntity.SupplierCategoryId,
+                                        supplierDishEntity.DishNo,
+                                        supplierDishEntity.Price,
+                                        supplierDishEntity.SupplierDishId,
+                                        supplierDishEntity.SupplierDishName,
+                                        supplierDishEntity.SuppllierDishDescription,
+                                        supplierDishEntity.SpicyLevel,
+                                        supplierDishEntity.AverageRating,
+                                        supplierDishEntity.IsCommission,
+                                        supplierDishEntity.IsDiscount,
+                                        supplierDishEntity.Recipe,
+                                        supplierDishEntity.Recommended,
+                                        supplierDishEntity.PackagingFee,
+                                        SupplierId =
+                                    supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+                                        ImagePath = string.Empty
+                                    }).OrderBy(p => p.DishNo).ToList();
 
             var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
             var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
@@ -1318,35 +1318,35 @@
                      let supplierDishImage =
                          supplierDishImageList.FirstOrDefault(p => p.SupplierDishId == supplierDishEntity.SupplierDishId)
                      select new SupplierDishModel
-                         {
-                             Price = supplierDishEntity.Price,
-                             ImagePath =
-                                 string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
-                                               supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
-                             SupplierDishId = supplierDishEntity.SupplierDishId,
-                             SupplierDishName = supplierDishEntity.SupplierDishName,
-                             SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,
-                             AverageRating = supplierDishEntity.AverageRating,
-                             IsCommission = supplierDishEntity.IsCommission,
-                             IsDiscount = supplierDishEntity.IsDiscount,
-                             Recipe = supplierDishEntity.Recipe,
-                             Recommended = supplierDishEntity.Recommended,
-                             PackagingFee = supplierDishEntity.PackagingFee
-                         }).ToList();
+                     {
+                         Price = supplierDishEntity.Price,
+                         ImagePath =
+                             string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                           supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
+                         SupplierDishId = supplierDishEntity.SupplierDishId,
+                         SupplierDishName = supplierDishEntity.SupplierDishName,
+                         SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,
+                         AverageRating = supplierDishEntity.AverageRating,
+                         IsCommission = supplierDishEntity.IsCommission,
+                         IsDiscount = supplierDishEntity.IsDiscount,
+                         Recipe = supplierDishEntity.Recipe,
+                         Recommended = supplierDishEntity.Recommended,
+                         PackagingFee = supplierDishEntity.PackagingFee
+                     }).ToList();
 
                 list.Add(new SupplierCuisineModel
-                    {
-                        CategoryId = supplierCategory.CategoryId,
-                        CategoryName = supplierCategory.CategoryName,
-                        SupplierDishList = dishList
-                    });
+                {
+                    CategoryId = supplierCategory.CategoryId,
+                    CategoryName = supplierCategory.CategoryName,
+                    SupplierDishList = dishList
+                });
             }
 
             return new ServicesResultList<SupplierCuisineModel>
-                {
-                    ResultTotalCount = list.Count,
-                    Result = list
-                };
+            {
+                ResultTotalCount = list.Count,
+                Result = list
+            };
         }
 
         /// <summary>
@@ -1372,9 +1372,9 @@
             if (categoryIdList.Count == 0)
             {
                 return new ServicesResultList<SupplierDishModel>
-                    {
-                        Result = new List<SupplierDishModel>()
-                    };
+                {
+                    Result = new List<SupplierDishModel>()
+                };
             }
 
             var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
@@ -1382,24 +1382,24 @@
                                           && supplierDishEntity.Online && supplierDishEntity.IsDel == false
                                           && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
                                     select new
-                                        {
-                                            supplierDishEntity.SupplierCategoryId,
-                                            supplierDishEntity.DishNo,
-                                            supplierDishEntity.Price,
-                                            supplierDishEntity.SupplierDishId,
-                                            supplierDishEntity.SupplierDishName,
-                                            supplierDishEntity.SuppllierDishDescription,
-                                            supplierDishEntity.SpicyLevel,
-                                            supplierDishEntity.AverageRating,
-                                            supplierDishEntity.IsCommission,
-                                            supplierDishEntity.IsDiscount,
-                                            supplierDishEntity.Recipe,
-                                            supplierDishEntity.Recommended,
-                                            supplierDishEntity.PackagingFee,
-                                            SupplierId =
-                                        supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
-                                            ImagePath = string.Empty
-                                        }).OrderBy(p => p.DishNo).ToList();
+                                    {
+                                        supplierDishEntity.SupplierCategoryId,
+                                        supplierDishEntity.DishNo,
+                                        supplierDishEntity.Price,
+                                        supplierDishEntity.SupplierDishId,
+                                        supplierDishEntity.SupplierDishName,
+                                        supplierDishEntity.SuppllierDishDescription,
+                                        supplierDishEntity.SpicyLevel,
+                                        supplierDishEntity.AverageRating,
+                                        supplierDishEntity.IsCommission,
+                                        supplierDishEntity.IsDiscount,
+                                        supplierDishEntity.Recipe,
+                                        supplierDishEntity.Recommended,
+                                        supplierDishEntity.PackagingFee,
+                                        SupplierId =
+                                    supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+                                        ImagePath = string.Empty
+                                    }).OrderBy(p => p.DishNo).ToList();
 
             var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
             var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
@@ -1412,28 +1412,28 @@
                                 supplierDishImageList.FirstOrDefault(
                                     p => p.SupplierDishId == supplierDishEntity.SupplierDishId)
                             select new SupplierDishModel
-                                {
-                                    Price = supplierDishEntity.Price,
-                                    ImagePath =
-                                        string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
-                                                      supplierDishImage == null
-                                                          ? string.Empty
-                                                          : supplierDishImage.ImagePath),
-                                    SupplierDishId = supplierDishEntity.SupplierDishId,
-                                    SupplierDishName = supplierDishEntity.SupplierDishName,
-                                    SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,
-                                    AverageRating = supplierDishEntity.AverageRating,
-                                    IsCommission = supplierDishEntity.IsCommission,
-                                    IsDiscount = supplierDishEntity.IsDiscount,
-                                    Recipe = supplierDishEntity.Recipe,
-                                    Recommended = supplierDishEntity.Recommended,
-                                    PackagingFee = supplierDishEntity.PackagingFee
-                                }).ToList();
+                            {
+                                Price = supplierDishEntity.Price,
+                                ImagePath =
+                                    string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                                  supplierDishImage == null
+                                                      ? string.Empty
+                                                      : supplierDishImage.ImagePath),
+                                SupplierDishId = supplierDishEntity.SupplierDishId,
+                                SupplierDishName = supplierDishEntity.SupplierDishName,
+                                SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,
+                                AverageRating = supplierDishEntity.AverageRating,
+                                IsCommission = supplierDishEntity.IsCommission,
+                                IsDiscount = supplierDishEntity.IsDiscount,
+                                Recipe = supplierDishEntity.Recipe,
+                                Recommended = supplierDishEntity.Recommended,
+                                PackagingFee = supplierDishEntity.PackagingFee
+                            }).ToList();
 
             return new ServicesResultList<SupplierDishModel>
-                {
-                    Result = dishList
-                };
+            {
+                Result = dishList
+            };
         }
 
         /// <summary>
@@ -1456,10 +1456,10 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResultList<SupplierCuisineDetailModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<SupplierCuisineDetailModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierCuisineDetailModel>()
+                };
             }
 
             var supplierMenuCategoryId =
@@ -1475,28 +1475,28 @@
                      supplierCategoryEntity.SupplierId == supplierId &&
                      supplierCategoryEntity.SupplierMenuCategoryId == supplierMenuCategoryId
                  select new
-                     {
-                         supplierCategoryEntity.Category,
-                         supplierCategoryEntity.SupplierId,
-                         supplierCategoryEntity.SupplierCategoryId
-                     }).ToList();
+                 {
+                     supplierCategoryEntity.Category,
+                     supplierCategoryEntity.SupplierId,
+                     supplierCategoryEntity.SupplierCategoryId
+                 }).ToList();
 
             var supplierCategoryList = (from entity in tempSupplierCategoryList
                                         where entity.Category != null
                                         select new SupplierCuisineDetailModel
-                                            {
-                                                CategoryId = entity.Category.CategoryId,
-                                                CategoryName = entity.Category.CategoryName,
-                                                CategoryNo = entity.Category.CategoryNo,
-                                                SupplierCategoryId = entity.SupplierCategoryId,
-                                                CategoryDescription = entity.Category.CategoryDescription
-                                            }).OrderBy(p => p.CategoryNo).ToList();
+                                        {
+                                            CategoryId = entity.Category.CategoryId,
+                                            CategoryName = entity.Category.CategoryName,
+                                            CategoryNo = entity.Category.CategoryNo,
+                                            SupplierCategoryId = entity.SupplierCategoryId,
+                                            CategoryDescription = entity.Category.CategoryDescription
+                                        }).OrderBy(p => p.CategoryNo).ToList();
 
             return new ServicesResultList<SupplierCuisineDetailModel>
-                {
-                    ResultTotalCount = supplierCategoryList.Count,
-                    Result = supplierCategoryList
-                };
+            {
+                ResultTotalCount = supplierCategoryList.Count,
+                Result = supplierCategoryList
+            };
         }
 
         /// <summary>
@@ -1519,10 +1519,10 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResult<SupplierCuisineDetailModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new SupplierCuisineDetailModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierCuisineDetailModel()
+                };
             }
 
             var tempSupplierCategory =
@@ -1531,34 +1531,34 @@
                      supplierCategoryEntity.SupplierCategoryId == supplierCategoryId &&
                      supplierCategoryEntity.SupplierId == supplierId
                  select new
-                     {
-                         supplierCategoryEntity.Category,
-                         supplierCategoryEntity.SupplierId,
-                         supplierCategoryEntity.SupplierCategoryId
-                     }).FirstOrDefault();
+                 {
+                     supplierCategoryEntity.Category,
+                     supplierCategoryEntity.SupplierId,
+                     supplierCategoryEntity.SupplierCategoryId
+                 }).FirstOrDefault();
 
             if (tempSupplierCategory == null || tempSupplierCategory.Category == null)
             {
                 return new ServicesResult<SupplierCuisineDetailModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierCategoryIdCode,
-                        Result = new SupplierCuisineDetailModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierCategoryIdCode,
+                    Result = new SupplierCuisineDetailModel()
+                };
             }
 
             var supplierCategory = new SupplierCuisineDetailModel
-                {
-                    CategoryId = tempSupplierCategory.Category.CategoryId,
-                    CategoryName = tempSupplierCategory.Category.CategoryName,
-                    CategoryNo = tempSupplierCategory.Category.CategoryNo,
-                    SupplierCategoryId = tempSupplierCategory.SupplierCategoryId,
-                    CategoryDescription = tempSupplierCategory.Category.CategoryDescription
-                };
+            {
+                CategoryId = tempSupplierCategory.Category.CategoryId,
+                CategoryName = tempSupplierCategory.Category.CategoryName,
+                CategoryNo = tempSupplierCategory.Category.CategoryNo,
+                SupplierCategoryId = tempSupplierCategory.SupplierCategoryId,
+                CategoryDescription = tempSupplierCategory.Category.CategoryDescription
+            };
 
             return new ServicesResult<SupplierCuisineDetailModel>
-                {
-                    Result = supplierCategory
-                };
+            {
+                Result = supplierCategory
+            };
         }
 
         /// <summary>
@@ -1579,17 +1579,17 @@
             if (parameter == null)
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
             }
 
             if (
@@ -1597,17 +1597,17 @@
                     p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
             }
 
             var result = this.supplierDetailServices.AddSupplierCuisine(parameter);
             return new ServicesResult<bool>
-                {
-                    StatusCode = result.StatusCode,
-                    Result = result.Result
-                };
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -1628,17 +1628,17 @@
             if (parameter == null)
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
             }
 
             if (
@@ -1646,17 +1646,17 @@
                     p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
             }
 
             var result = this.supplierDetailServices.UpdateSupplierCuisine(parameter);
             return new ServicesResult<bool>
-                {
-                    StatusCode = result.StatusCode,
-                    Result = result.Result
-                };
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -1677,17 +1677,17 @@
             if (parameter == null)
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
             }
 
             if (
@@ -1695,17 +1695,17 @@
                     p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
             }
 
             var result = this.supplierDetailServices.DeleteSupplierCuisine(parameter);
             return new ServicesResult<bool>
-                {
-                    StatusCode = result.StatusCode,
-                    Result = result.Result
-                };
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -1730,10 +1730,10 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResultList<SupplierDishDetailModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<SupplierDishDetailModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierDishDetailModel>()
+                };
             }
 
             var supplierMenuCategoryId =
@@ -1754,22 +1754,22 @@
 
             var tempSupplierCategoryList = (from supplierCategoryEntity in supplierCategoryQueryable
                                             select new
-                                                {
-                                                    supplierCategoryEntity.Category,
-                                                    supplierCategoryEntity.SupplierId,
-                                                    supplierCategoryEntity.SupplierCategoryId
-                                                }).ToList();
+                                            {
+                                                supplierCategoryEntity.Category,
+                                                supplierCategoryEntity.SupplierId,
+                                                supplierCategoryEntity.SupplierCategoryId
+                                            }).ToList();
 
             var supplierCategoryList = (from entity in tempSupplierCategoryList
                                         where entity.Category != null
                                         select new
-                                            {
-                                                entity.Category.CategoryId,
-                                                entity.Category.CategoryName,
-                                                entity.Category.CategoryNo,
-                                                entity.SupplierId,
-                                                entity.SupplierCategoryId
-                                            }).OrderBy(p => p.CategoryNo).ToList();
+                                        {
+                                            entity.Category.CategoryId,
+                                            entity.Category.CategoryName,
+                                            entity.Category.CategoryNo,
+                                            entity.SupplierId,
+                                            entity.SupplierCategoryId
+                                        }).OrderBy(p => p.CategoryNo).ToList();
 
             var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
             var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
@@ -1777,33 +1777,33 @@
                                           && supplierDishEntity.Online && supplierDishEntity.IsDel == false
                                           && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
                                     select new
-                                        {
-                                            supplierDishEntity.SupplierCategoryId,
-                                            supplierDishEntity.DishNo,
-                                            supplierDishEntity.Price,
-                                            supplierDishEntity.SupplierDishId,
-                                            supplierDishEntity.SupplierDishName,
-                                            supplierDishEntity.SuppllierDishDescription,
-                                            supplierDishEntity.SpicyLevel,
-                                            supplierDishEntity.AverageRating,
-                                            supplierDishEntity.IsCommission,
-                                            supplierDishEntity.IsDiscount,
-                                            supplierDishEntity.Recipe,
-                                            supplierDishEntity.Recommended,
-                                            SupplierId =
-                                        supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
-                                            supplierDishEntity.HasNuts,
-                                            supplierDishEntity.IsDel,
-                                            supplierDishEntity.IsSpecialOffer,
-                                            supplierDishEntity.JianPin,
-                                            supplierDishEntity.Online,
-                                            supplierDishEntity.PackagingFee,
-                                            supplierDishEntity.QuanPin,
-                                            supplierDishEntity.SpecialOfferNo,
-                                            supplierDishEntity.StockLevel,
-                                            supplierDishEntity.Vegetarian,
-                                            ImagePath = string.Empty
-                                        }).OrderBy(p => p.DishNo).ToList();
+                                    {
+                                        supplierDishEntity.SupplierCategoryId,
+                                        supplierDishEntity.DishNo,
+                                        supplierDishEntity.Price,
+                                        supplierDishEntity.SupplierDishId,
+                                        supplierDishEntity.SupplierDishName,
+                                        supplierDishEntity.SuppllierDishDescription,
+                                        supplierDishEntity.SpicyLevel,
+                                        supplierDishEntity.AverageRating,
+                                        supplierDishEntity.IsCommission,
+                                        supplierDishEntity.IsDiscount,
+                                        supplierDishEntity.Recipe,
+                                        supplierDishEntity.Recommended,
+                                        SupplierId =
+                                    supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+                                        supplierDishEntity.HasNuts,
+                                        supplierDishEntity.IsDel,
+                                        supplierDishEntity.IsSpecialOffer,
+                                        supplierDishEntity.JianPin,
+                                        supplierDishEntity.Online,
+                                        supplierDishEntity.PackagingFee,
+                                        supplierDishEntity.QuanPin,
+                                        supplierDishEntity.SpecialOfferNo,
+                                        supplierDishEntity.StockLevel,
+                                        supplierDishEntity.Vegetarian,
+                                        ImagePath = string.Empty
+                                    }).OrderBy(p => p.DishNo).ToList();
 
             var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
             var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
@@ -1827,45 +1827,45 @@
                      let supplierDishImage =
                          supplierDishImageList.FirstOrDefault(p => p.SupplierDishId == supplierDishEntity.SupplierDishId)
                      select new SupplierDishDetailModel
-                         {
-                             Price = supplierDishEntity.Price,
-                             ImagePath =
-                                 string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
-                                               supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
-                             SupplierDishId = supplierDishEntity.SupplierDishId,
-                             DishName = supplierDishEntity.SupplierDishName,
-                             DishDescription = supplierDishEntity.SuppllierDishDescription,
-                             AverageRating = supplierDishEntity.AverageRating,
-                             IsCommission = supplierDishEntity.IsCommission,
-                             IsDiscount = supplierDishEntity.IsDiscount,
-                             Recipe = supplierDishEntity.Recipe,
-                             Recommended = supplierDishEntity.Recommended,
-                             CategoryId = categoryId,
-                             CategoryName = supplierCategory.CategoryName,
-                             DishNo = supplierDishEntity.DishNo,
-                             HasNuts = supplierDishEntity.HasNuts,
-                             IsDel = supplierDishEntity.IsDel,
-                             IsSpecialOffer = supplierDishEntity.IsSpecialOffer,
-                             JianPin = supplierDishEntity.JianPin,
-                             Online = supplierDishEntity.Online,
-                             PackagingFee = supplierDishEntity.PackagingFee,
-                             QuanPin = supplierDishEntity.QuanPin,
-                             SpecialOfferNo = supplierDishEntity.SpecialOfferNo,
-                             SpicyLevel = supplierDishEntity.SpicyLevel,
-                             StockLevel = supplierDishEntity.StockLevel,
-                             SupplierCategoryId = supplierCategory.SupplierCategoryId,
-                             SupplierId = supplierCategory.SupplierId,
-                             Vegetarian = supplierDishEntity.Vegetarian
-                         }).ToList();
+                     {
+                         Price = supplierDishEntity.Price,
+                         ImagePath =
+                             string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                           supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
+                         SupplierDishId = supplierDishEntity.SupplierDishId,
+                         DishName = supplierDishEntity.SupplierDishName,
+                         DishDescription = supplierDishEntity.SuppllierDishDescription,
+                         AverageRating = supplierDishEntity.AverageRating,
+                         IsCommission = supplierDishEntity.IsCommission,
+                         IsDiscount = supplierDishEntity.IsDiscount,
+                         Recipe = supplierDishEntity.Recipe,
+                         Recommended = supplierDishEntity.Recommended,
+                         CategoryId = categoryId,
+                         CategoryName = supplierCategory.CategoryName,
+                         DishNo = supplierDishEntity.DishNo,
+                         HasNuts = supplierDishEntity.HasNuts,
+                         IsDel = supplierDishEntity.IsDel,
+                         IsSpecialOffer = supplierDishEntity.IsSpecialOffer,
+                         JianPin = supplierDishEntity.JianPin,
+                         Online = supplierDishEntity.Online,
+                         PackagingFee = supplierDishEntity.PackagingFee,
+                         QuanPin = supplierDishEntity.QuanPin,
+                         SpecialOfferNo = supplierDishEntity.SpecialOfferNo,
+                         SpicyLevel = supplierDishEntity.SpicyLevel,
+                         StockLevel = supplierDishEntity.StockLevel,
+                         SupplierCategoryId = supplierCategory.SupplierCategoryId,
+                         SupplierId = supplierCategory.SupplierId,
+                         Vegetarian = supplierDishEntity.Vegetarian
+                     }).ToList();
 
                 list.AddRange(dishList);
             }
 
             return new ServicesResultList<SupplierDishDetailModel>
-                {
-                    ResultTotalCount = list.Count,
-                    Result = list
-                };
+            {
+                ResultTotalCount = list.Count,
+                Result = list
+            };
         }
 
         /// <summary>
@@ -1889,10 +1889,10 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResult<SupplierDishDetailModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new SupplierDishDetailModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierDishDetailModel()
+                };
             }
 
             var supplierMenuCategoryId =
@@ -1907,22 +1907,22 @@
 
             var tempSupplierCategoryList = (from supplierCategoryEntity in supplierCategoryQueryable
                                             select new
-                                                {
-                                                    supplierCategoryEntity.Category,
-                                                    supplierCategoryEntity.SupplierId,
-                                                    supplierCategoryEntity.SupplierCategoryId
-                                                }).ToList();
+                                            {
+                                                supplierCategoryEntity.Category,
+                                                supplierCategoryEntity.SupplierId,
+                                                supplierCategoryEntity.SupplierCategoryId
+                                            }).ToList();
 
             var supplierCategoryList = (from entity in tempSupplierCategoryList
                                         where entity.Category != null
                                         select new
-                                            {
-                                                entity.Category.CategoryId,
-                                                entity.Category.CategoryName,
-                                                entity.Category.CategoryNo,
-                                                entity.SupplierId,
-                                                entity.SupplierCategoryId
-                                            }).OrderBy(p => p.CategoryNo).ToList();
+                                        {
+                                            entity.Category.CategoryId,
+                                            entity.Category.CategoryName,
+                                            entity.Category.CategoryNo,
+                                            entity.SupplierId,
+                                            entity.SupplierCategoryId
+                                        }).OrderBy(p => p.CategoryNo).ToList();
 
             var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
 
@@ -1932,39 +1932,39 @@
                                       && supplierDishEntity.SupplierDishId == supplierDishId
                                       && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
                                 select new
-                                    {
-                                        supplierDishEntity.SupplierCategoryId,
-                                        supplierDishEntity.DishNo,
-                                        supplierDishEntity.Price,
-                                        supplierDishEntity.SupplierDishId,
-                                        supplierDishEntity.SupplierDishName,
-                                        supplierDishEntity.SuppllierDishDescription,
-                                        supplierDishEntity.SpicyLevel,
-                                        supplierDishEntity.AverageRating,
-                                        supplierDishEntity.IsCommission,
-                                        supplierDishEntity.IsDiscount,
-                                        supplierDishEntity.Recipe,
-                                        supplierDishEntity.Recommended,
-                                        SupplierId = supplierId,
-                                        supplierDishEntity.HasNuts,
-                                        supplierDishEntity.IsDel,
-                                        supplierDishEntity.IsSpecialOffer,
-                                        supplierDishEntity.JianPin,
-                                        supplierDishEntity.Online,
-                                        supplierDishEntity.PackagingFee,
-                                        supplierDishEntity.QuanPin,
-                                        supplierDishEntity.SpecialOfferNo,
-                                        supplierDishEntity.StockLevel,
-                                        supplierDishEntity.Vegetarian
-                                    }).FirstOrDefault();
+                                {
+                                    supplierDishEntity.SupplierCategoryId,
+                                    supplierDishEntity.DishNo,
+                                    supplierDishEntity.Price,
+                                    supplierDishEntity.SupplierDishId,
+                                    supplierDishEntity.SupplierDishName,
+                                    supplierDishEntity.SuppllierDishDescription,
+                                    supplierDishEntity.SpicyLevel,
+                                    supplierDishEntity.AverageRating,
+                                    supplierDishEntity.IsCommission,
+                                    supplierDishEntity.IsDiscount,
+                                    supplierDishEntity.Recipe,
+                                    supplierDishEntity.Recommended,
+                                    SupplierId = supplierId,
+                                    supplierDishEntity.HasNuts,
+                                    supplierDishEntity.IsDel,
+                                    supplierDishEntity.IsSpecialOffer,
+                                    supplierDishEntity.JianPin,
+                                    supplierDishEntity.Online,
+                                    supplierDishEntity.PackagingFee,
+                                    supplierDishEntity.QuanPin,
+                                    supplierDishEntity.SpecialOfferNo,
+                                    supplierDishEntity.StockLevel,
+                                    supplierDishEntity.Vegetarian
+                                }).FirstOrDefault();
 
             if (supplierDish == null)
             {
                 return new ServicesResult<SupplierDishDetailModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierDishIdCode,
-                        Result = new SupplierDishDetailModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierDishIdCode,
+                    Result = new SupplierDishDetailModel()
+                };
             }
 
             var supplierDishImage = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
@@ -1976,50 +1976,50 @@
                                         supplierCategoryEntity.SupplierId == supplierId &&
                                         supplierCategoryEntity.Category.CategoryId == supplierDish.SupplierCategoryId
                                     select new
-                                        {
-                                            supplierCategoryEntity.Category.CategoryId,
-                                            supplierCategoryEntity.Category.CategoryName,
-                                            supplierCategoryEntity.SupplierId,
-                                            supplierCategoryEntity.SupplierCategoryId
-                                        }).FirstOrDefault();
+                                    {
+                                        supplierCategoryEntity.Category.CategoryId,
+                                        supplierCategoryEntity.Category.CategoryName,
+                                        supplierCategoryEntity.SupplierId,
+                                        supplierCategoryEntity.SupplierCategoryId
+                                    }).FirstOrDefault();
 
             var result = new SupplierDishDetailModel
-                {
-                    Price = supplierDish.Price,
-                    ImagePath = string.Format(
-                        "{0}/{1}",
-                        ServicesCommon.ImageSiteUrl,
-                        supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
-                    SupplierDishId = supplierDish.SupplierDishId,
-                    DishName = supplierDish.SupplierDishName,
-                    DishDescription = supplierDish.SuppllierDishDescription,
-                    AverageRating = supplierDish.AverageRating,
-                    IsCommission = supplierDish.IsCommission,
-                    IsDiscount = supplierDish.IsDiscount,
-                    Recipe = supplierDish.Recipe,
-                    Recommended = supplierDish.Recommended,
-                    DishNo = supplierDish.DishNo,
-                    HasNuts = supplierDish.HasNuts,
-                    IsDel = supplierDish.IsDel,
-                    IsSpecialOffer = supplierDish.IsSpecialOffer,
-                    JianPin = supplierDish.JianPin,
-                    Online = supplierDish.Online,
-                    PackagingFee = supplierDish.PackagingFee,
-                    QuanPin = supplierDish.QuanPin,
-                    SpecialOfferNo = supplierDish.SpecialOfferNo,
-                    SpicyLevel = supplierDish.SpicyLevel,
-                    StockLevel = supplierDish.StockLevel,
-                    SupplierId = supplierDish.SupplierId,
-                    Vegetarian = supplierDish.Vegetarian,
-                    SupplierCategoryId = supplierCategory == null ? 0 : supplierCategory.SupplierCategoryId,
-                    CategoryId = supplierCategory == null ? 0 : supplierCategory.CategoryId,
-                    CategoryName = supplierCategory == null ? string.Empty : supplierCategory.CategoryName
-                };
+            {
+                Price = supplierDish.Price,
+                ImagePath = string.Format(
+                    "{0}/{1}",
+                    ServicesCommon.ImageSiteUrl,
+                    supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
+                SupplierDishId = supplierDish.SupplierDishId,
+                DishName = supplierDish.SupplierDishName,
+                DishDescription = supplierDish.SuppllierDishDescription,
+                AverageRating = supplierDish.AverageRating,
+                IsCommission = supplierDish.IsCommission,
+                IsDiscount = supplierDish.IsDiscount,
+                Recipe = supplierDish.Recipe,
+                Recommended = supplierDish.Recommended,
+                DishNo = supplierDish.DishNo,
+                HasNuts = supplierDish.HasNuts,
+                IsDel = supplierDish.IsDel,
+                IsSpecialOffer = supplierDish.IsSpecialOffer,
+                JianPin = supplierDish.JianPin,
+                Online = supplierDish.Online,
+                PackagingFee = supplierDish.PackagingFee,
+                QuanPin = supplierDish.QuanPin,
+                SpecialOfferNo = supplierDish.SpecialOfferNo,
+                SpicyLevel = supplierDish.SpicyLevel,
+                StockLevel = supplierDish.StockLevel,
+                SupplierId = supplierDish.SupplierId,
+                Vegetarian = supplierDish.Vegetarian,
+                SupplierCategoryId = supplierCategory == null ? 0 : supplierCategory.SupplierCategoryId,
+                CategoryId = supplierCategory == null ? 0 : supplierCategory.CategoryId,
+                CategoryName = supplierCategory == null ? string.Empty : supplierCategory.CategoryName
+            };
 
             return new ServicesResult<SupplierDishDetailModel>
-                {
-                    Result = result
-                };
+            {
+                Result = result
+            };
         }
 
         /// <summary>
@@ -2040,17 +2040,17 @@
             if (parameter == null)
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
             }
 
             if (
@@ -2058,17 +2058,17 @@
                     p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
             }
 
             var result = this.supplierDetailServices.AddSupplierDish(parameter);
             return new ServicesResult<bool>
-                {
-                    StatusCode = result.StatusCode,
-                    Result = result.Result
-                };
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -2089,17 +2089,17 @@
             if (parameter == null)
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
             }
 
             if (
@@ -2107,17 +2107,17 @@
                     p => p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == parameter.SupplierMenuCategoryTypeId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierMenuCategoryTypeIdCode
+                };
             }
 
             var result = this.supplierDetailServices.UpdateSupplierDish(parameter);
             return new ServicesResult<bool>
-                {
-                    StatusCode = result.StatusCode,
-                    Result = result.Result
-                };
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -2138,25 +2138,25 @@
             if (parameter == null)
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    };
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
             }
 
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
             {
                 return new ServicesResult<bool>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode
+                };
             }
 
             var result = this.supplierDetailServices.DeleteSupplierDish(parameter);
             return new ServicesResult<bool>
-                {
-                    StatusCode = result.StatusCode,
-                    Result = result.Result
-                };
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -2183,19 +2183,19 @@
         {
             var supplier =
                 this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
-                    {
-                        p.SupplierId,
-                        p.DeliveryTime,
-                        p.PickUpTime
-                    }).FirstOrDefault();
+                {
+                    p.SupplierId,
+                    p.DeliveryTime,
+                    p.PickUpTime
+                }).FirstOrDefault();
 
             if (supplier == null)
             {
                 return new ServicesResultList<SupplierServiceTimeModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<SupplierServiceTimeModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierServiceTimeModel>()
+                };
             }
 
             int deliveryTime;
@@ -2222,11 +2222,11 @@
                                                                             ServicesCommon.ServiceTimeDefaultDays,
                                                                             beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierServiceTimeModel>
-                {
-                    ResultTotalCount = result.ResultTotalCount,
-                    StatusCode = result.StatusCode,
-                    Result = result.Result
-                };
+            {
+                ResultTotalCount = result.ResultTotalCount,
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -2253,19 +2253,19 @@
         {
             var supplier =
                 this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId).Select(p => new
-                    {
-                        p.SupplierId,
-                        p.DeliveryTime,
-                        p.PickUpTime
-                    }).FirstOrDefault();
+                {
+                    p.SupplierId,
+                    p.DeliveryTime,
+                    p.PickUpTime
+                }).FirstOrDefault();
 
             if (supplier == null)
             {
                 return new ServicesResultList<SupplierDeliveryTimeModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<SupplierDeliveryTimeModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierDeliveryTimeModel>()
+                };
             }
 
             int deliveryTime;
@@ -2293,11 +2293,11 @@
                                                                              ServicesCommon.DeliveryTimeDefaultDays,
                                                                              beginReadyTime, onlyActive);
             return new ServicesResultList<SupplierDeliveryTimeModel>
-                {
-                    ResultTotalCount = result.ResultTotalCount,
-                    StatusCode = result.StatusCode,
-                    Result = result.Result
-                };
+            {
+                ResultTotalCount = result.ResultTotalCount,
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
         }
 
         /// <summary>
@@ -2318,17 +2318,17 @@
             if (parameter == null)
             {
                 return new ServicesResult<DistanceModel>
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest,
-                        Result = new DistanceModel()
-                    };
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = new DistanceModel()
+                };
             }
             var distance = CalDistance(parameter.LocationA, parameter.LocationB, parameter.Gs);
             var distanceModel = new DistanceModel { Distance = distance };
             return new ServicesResult<DistanceModel>
-                {
-                    Result = distanceModel
-                };
+            {
+                Result = distanceModel
+            };
         }
 
         /// <summary>
@@ -2397,12 +2397,12 @@
                        && supplierMenu.SupplierId == supplierCategoryEntity.SupplierId
                        && supplierMenu.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == 1
                  select new
-                     {
-                         supplierCategoryEntity.Category,
-                         supplierCategoryEntity.SupplierId,
-                         supplierCategoryEntity.SupplierCategoryId,
-                         supplierMenu.SupplierMenuCategoryId
-                     }).ToList();
+                 {
+                     supplierCategoryEntity.Category,
+                     supplierCategoryEntity.SupplierId,
+                     supplierCategoryEntity.SupplierCategoryId,
+                     supplierMenu.SupplierMenuCategoryId
+                 }).ToList();
 
             if (tempSupplierCategoryList.Count == 0)
             {
@@ -2412,14 +2412,14 @@
             var supplierCategoryList = (from entity in tempSupplierCategoryList
                                         where entity.Category != null
                                         select new
-                                            {
-                                                entity.Category.CategoryId,
-                                                entity.Category.CategoryName,
-                                                entity.Category.CategoryNo,
-                                                entity.SupplierId,
-                                                entity.SupplierCategoryId,
-                                                entity.SupplierMenuCategoryId
-                                            }).OrderBy(p => p.CategoryNo).ToList();
+                                        {
+                                            entity.Category.CategoryId,
+                                            entity.Category.CategoryName,
+                                            entity.Category.CategoryNo,
+                                            entity.SupplierId,
+                                            entity.SupplierCategoryId,
+                                            entity.SupplierMenuCategoryId
+                                        }).OrderBy(p => p.CategoryNo).ToList();
 
             var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
             var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
@@ -2428,24 +2428,24 @@
                                           supplierDishEntity.Recommended == true
                                           && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
                                     select new
-                                        {
-                                            supplierDishEntity.SupplierCategoryId,
-                                            supplierDishEntity.DishNo,
-                                            supplierDishEntity.Price,
-                                            supplierDishEntity.SupplierDishId,
-                                            supplierDishEntity.SupplierDishName,
-                                            supplierDishEntity.SuppllierDishDescription,
-                                            supplierDishEntity.SpicyLevel,
-                                            supplierDishEntity.AverageRating,
-                                            supplierDishEntity.IsCommission,
-                                            supplierDishEntity.IsDiscount,
-                                            supplierDishEntity.Recipe,
-                                            supplierDishEntity.Recommended,
-                                            supplierDishEntity.PackagingFee,
-                                            SupplierId =
-                                        supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
-                                            ImagePath = string.Empty
-                                        }).OrderBy(p => p.DishNo).ToList();
+                                    {
+                                        supplierDishEntity.SupplierCategoryId,
+                                        supplierDishEntity.DishNo,
+                                        supplierDishEntity.Price,
+                                        supplierDishEntity.SupplierDishId,
+                                        supplierDishEntity.SupplierDishName,
+                                        supplierDishEntity.SuppllierDishDescription,
+                                        supplierDishEntity.SpicyLevel,
+                                        supplierDishEntity.AverageRating,
+                                        supplierDishEntity.IsCommission,
+                                        supplierDishEntity.IsDiscount,
+                                        supplierDishEntity.Recipe,
+                                        supplierDishEntity.Recommended,
+                                        supplierDishEntity.PackagingFee,
+                                        SupplierId =
+                                    supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+                                        ImagePath = string.Empty
+                                    }).OrderBy(p => p.DishNo).ToList();
 
             var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
             var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
@@ -2461,24 +2461,24 @@
                                          supplierCategoryList.FirstOrDefault(
                                              p => p.CategoryId == supplierDish.SupplierCategoryId)
                                      select new SupplierRecommendedDishModel
-                                         {
-                                             Price = supplierDish.Price,
-                                             ImagePath =
-                                                 string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
-                                                               supplierDishImage == null
-                                                                   ? string.Empty
-                                                                   : supplierDishImage.ImagePath),
-                                             SupplierDishId = supplierDish.SupplierDishId,
-                                             SupplierDishName = supplierDish.SupplierDishName,
-                                             SupplierCatogryId = supplierDish.SupplierCategoryId,
-                                             SupplierMenuCategoryId =
-                                                 supplierCategory == null
-                                                     ? null
-                                                     : (int?)supplierCategory.SupplierMenuCategoryId,
-                                             Type = 0, //0 菜 1 小料 2 锅底 3 套餐 4 专人服务
-                                             Recipe = supplierDish.Recipe,
-                                             PackagingFee = supplierDish.PackagingFee
-                                         }).ToList();
+                                     {
+                                         Price = supplierDish.Price,
+                                         ImagePath =
+                                             string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                                           supplierDishImage == null
+                                                               ? string.Empty
+                                                               : supplierDishImage.ImagePath),
+                                         SupplierDishId = supplierDish.SupplierDishId,
+                                         SupplierDishName = supplierDish.SupplierDishName,
+                                         SupplierCatogryId = supplierDish.SupplierCategoryId,
+                                         SupplierMenuCategoryId =
+                                             supplierCategory == null
+                                                 ? null
+                                                 : (int?)supplierCategory.SupplierMenuCategoryId,
+                                         Type = 0, //0 菜 1 小料 2 锅底 3 套餐 4 专人服务
+                                         Recipe = supplierDish.Recipe,
+                                         PackagingFee = supplierDish.PackagingFee
+                                     }).ToList();
 
             return recommendDishList;
         }
@@ -2504,20 +2504,20 @@
             if (parameter == null)
             {
                 return new ServicesResultList<DingTaiDeskModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<DingTaiDeskModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<DingTaiDeskModel>()
+                };
             }
 
             /*判断餐厅Id是否存在*/
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
             {
                 return new ServicesResultList<DingTaiDeskModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<DingTaiDeskModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<DingTaiDeskModel>()
+                };
             }
 
             /*早晚市开放时间*/
@@ -2540,10 +2540,10 @@
             if (supplierDeskTime == null)
             {
                 return new ServicesResultList<DingTaiDeskModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidBookingTimeCode,
-                        Result = new List<DingTaiDeskModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidBookingTimeCode,
+                    Result = new List<DingTaiDeskModel>()
+                };
             }
 
             /*在给定的预定日期和预定时间内，被锁定的台位类型*/
@@ -2567,22 +2567,22 @@
                                       && deskTypeEntity.MinNumber <= parameter.PeopleCount
                                       && deskTypeEntity.MaxNumber >= parameter.PeopleCount
                                 select new DingTaiDeskModel
-                                    {
-                                        Id = deskTypeEntity.Id,
-                                        RoomType = deskTypeEntity.RoomType,
-                                        TblTypeId = deskTypeEntity.TableType.Id,
-                                        TblTypeName = deskTypeEntity.TableType.TblTypeName,
-                                        MaxNumber = deskTypeEntity.MaxNumber,
-                                        MinNumber = deskTypeEntity.MinNumber,
-                                        DepositAmount = deskTypeEntity.DepositAmount,
-                                        LowCost = deskTypeEntity.LowCost
-                                    }).ToList();
+                                {
+                                    Id = deskTypeEntity.Id,
+                                    RoomType = deskTypeEntity.RoomType,
+                                    TblTypeId = deskTypeEntity.TableType.Id,
+                                    TblTypeName = deskTypeEntity.TableType.TblTypeName,
+                                    MaxNumber = deskTypeEntity.MaxNumber,
+                                    MinNumber = deskTypeEntity.MinNumber,
+                                    DepositAmount = deskTypeEntity.DepositAmount,
+                                    LowCost = deskTypeEntity.LowCost
+                                }).ToList();
 
             return new ServicesResultList<DingTaiDeskModel>
-                {
-                    ResultTotalCount = deskTypeList.Count,
-                    Result = deskTypeList
-                };
+            {
+                ResultTotalCount = deskTypeList.Count,
+                Result = deskTypeList
+            };
         }
 
         /// <summary>
@@ -2608,10 +2608,10 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResultList<string>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<string>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<string>()
+                };
             }
 
             var supplierDeskTimeList = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
@@ -2750,10 +2750,10 @@
 
             var result = deskOpenTimeList.OrderBy(p => p).ToList().Select(p => p.ToString("HH:mm")).ToList();
             return new ServicesResultList<string>
-                {
-                    ResultTotalCount = result.Count,
-                    Result = result
-                };
+            {
+                ResultTotalCount = result.Count,
+                Result = result
+            };
         }
 
         /// <summary>
@@ -2776,10 +2776,10 @@
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
                 return new ServicesResultList<DeskOpenDateModel>
-                    {
-                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                        Result = new List<DeskOpenDateModel>()
-                    };
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<DeskOpenDateModel>()
+                };
             }
 
             var supplierDeskTimeList = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
@@ -2852,18 +2852,18 @@
                 var supplierDeskTimeLockList = supplierDeskTimeList.Select(
                         p =>
                         new
-                            {
-                                p.TimeType,
-                                Count = deskTypeLockLogList.Count(q => q.Day == dateTime && q.TimeType == p.TimeType)
-                            }).ToList();
+                        {
+                            p.TimeType,
+                            Count = deskTypeLockLogList.Count(q => q.Day == dateTime && q.TimeType == p.TimeType)
+                        }).ToList();
 
                 if (!supplierDeskTimeLockList.Any(p => p.Count < deskTypeEntityList.Count))
                 {
                     deskOPenDateList.Add(new DeskOpenDateModel
-                     {
-                         Date = dateTime,
-                         IsLock = true
-                     });
+                    {
+                        Date = dateTime,
+                        IsLock = true
+                    });
 
                     continue;
                 }
@@ -2871,10 +2871,10 @@
                 var supplierDeskTimeBookingList = supplierDeskTimeList.Select(
                        p =>
                        new
-                           {
-                               p.TimeType,
-                               Count = deskBookingList.Count(q => q.Day == dateTime && q.TimeType == p.TimeType)
-                           }).ToList();
+                       {
+                           p.TimeType,
+                           Count = deskBookingList.Count(q => q.Day == dateTime && q.TimeType == p.TimeType)
+                       }).ToList();
 
                 if (!supplierDeskTimeBookingList.Any(p => p.Count < deskTypeEntityList.Count))
                 {
@@ -2899,18 +2899,18 @@
                 }
 
                 deskOPenDateList.Add(new DeskOpenDateModel
-                  {
-                      Date = dateTime,
-                      IsLock = false
-                  });
+                {
+                    Date = dateTime,
+                    IsLock = false
+                });
             }
 
 
             return new ServicesResultList<DeskOpenDateModel>
-                {
-                    ResultTotalCount = deskOPenDateList.Count,
-                    Result = deskOPenDateList
-                };
+            {
+                ResultTotalCount = deskOPenDateList.Count,
+                Result = deskOPenDateList
+            };
 
         }
 
@@ -3008,6 +3008,39 @@
                 };
             }
 
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
+        /// <summary>
+        /// 检查输入桌号是否有效
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="tableNo">The tableNo</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/24/2014 11:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CheckTableNumIsEffective(string source, int supplierId, string tableNo)
+        {
+            //找不到桌号信息
+            if (!this.supplierDeskEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId && p.DeskNo == tableNo
+                                                                       && p.IsDel == false && p.IsEnable))
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFondDeskNum,
+                    Result = false
+                };
+            }
+            //桌号可以使用
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,

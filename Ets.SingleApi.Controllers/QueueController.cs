@@ -270,7 +270,6 @@ namespace Ets.SingleApi.Controllers
         /// <param name="queueStatus">The queueStatus</param>
         /// <param name="supplierId">The supplierId</param>
         /// <param name="supplierGroupId">The supplierGroupId</param>
-        /// <param name="isEtaoshi">The  isEtaoshi indicates whether</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="cancelled">The  cancelled indicates whether</param>
@@ -283,7 +282,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, int? supplierGroupId, bool isEtaoshi, int pageSize, int? pageIndex, bool cancelled)
+        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, int? supplierGroupId, int pageSize, int? pageIndex, bool cancelled)
         {
             var list = this.queueServices.GetQueueList(this.Source, new GetQueuesParameter
             {
@@ -292,7 +291,7 @@ namespace Ets.SingleApi.Controllers
                 QueueStatus = queueStatus,
                 SupplierId = supplierId,
                 SupplierGroupId = supplierGroupId,
-                IsEtaoshi = isEtaoshi,
+                IsEtaoshi = this.IsEtaoshi,
                 PageSize = pageSize,
                 PageIndex = pageIndex ?? 1,
                 Cancelled = cancelled
