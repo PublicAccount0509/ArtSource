@@ -427,14 +427,16 @@
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="supplierId">餐厅Id</param>
-        /// <returns></returns>
+        /// <param name="days">The days</param>
+        /// <returns>
+        /// ServicesResultList{DeskOpenDateModel}
+        /// </returns>
         /// 创建者：苏建峰
         /// 创建日期：3/20/2014 2:22 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<DeskOpenDateModel> GetDeskOpenDateList(string source, int supplierId);
-
+        ServicesResultList<DeskOpenDateModel> GetDeskOpenDateList(string source, int supplierId, int? days);
 
         /// <summary>
         /// 查检订台台位是否被锁

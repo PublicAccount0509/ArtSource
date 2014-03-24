@@ -610,10 +610,11 @@
                 };
             }
 
+            var cashCommisionFee = supplierEntity.CashCommisionFee ?? 0;
             var customerId = customer.CustomerId;
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
-                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order)
-                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, order);
+                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order)
+                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order);
             var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
             this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
@@ -650,6 +651,7 @@
         /// <param name="orderId">订单Id</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="customerId">The customerId</param>
+        /// <param name="cashCommisionFee">The cashCommisionFee</param>
         /// <param name="delivery">The delivery</param>
         /// <param name="order">订单信息</param>
         /// <returns>
@@ -660,7 +662,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
+        private int SavePickUpDeliveryEntity(int orderId, int supplierId, int customerId, decimal cashCommisionFee, ShoppingCartDelivery delivery, ShoppingCartOrder order)
         {
             var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new DeliveryEntity
             {
@@ -707,6 +709,7 @@
             deliveryEntity.IPAddress = delivery.IpAddress;
             deliveryEntity.IsTakeInvoice = order.IsTakeInvoice;
             deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
+            deliveryEntity.EtsTakeFoodAmount = order.TotalPrice * (1 - cashCommisionFee) + order.PackagingFee;
 
             this.deliveryEntityRepository.Save(deliveryEntity);
             return deliveryEntity.DeliveryId;
@@ -718,6 +721,7 @@
         /// <param name="orderId">订单Id</param>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="customerId">The customerId</param>
+        /// <param name="cashCommisionFee">The cashCommisionFee</param>
         /// <param name="delivery">The delivery</param>
         /// <param name="order">订单信息</param>
         /// <returns>
@@ -728,7 +732,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, ShoppingCartDelivery delivery, ShoppingCartOrder order)
+        private int SaveDeliveryEntity(int orderId, int supplierId, int customerId, decimal cashCommisionFee, ShoppingCartDelivery delivery, ShoppingCartOrder order)
         {
             var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new DeliveryEntity
             {
@@ -781,6 +785,7 @@
             deliveryEntity.IPAddress = delivery.IpAddress;
             deliveryEntity.IsTakeInvoice = order.IsTakeInvoice;
             deliveryEntity.DeliveryAddressId = deliveryAddressEntity.DeliveryAddressId;
+            deliveryEntity.EtsTakeFoodAmount = order.TotalPrice * (1 - cashCommisionFee) + order.PackagingFee;
 
             //计算送餐距离
             var supplierLocation = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)

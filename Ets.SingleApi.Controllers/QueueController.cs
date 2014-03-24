@@ -135,13 +135,15 @@ namespace Ets.SingleApi.Controllers
             var result = this.queueServices.SaveQueueDesk(this.Source, new SaveQueueDeskParameter
                 {
                     DeskTypeId = requst.DeskTypeId,
-                    Description = requst.Description,
+                    Description = (requst.Description ?? string.Empty).Trim(),
                     Gender = requst.Gender,
                     SeatNumber = requst.SeatNumber,
                     SupplierId = requst.SupplierId,
-                    Telephone = requst.Telephone,
+                    Telephone = (requst.Telephone ?? string.Empty).Trim(),
                     UserId = requst.UserId,
-                    UserName = requst.UserName
+                    UserName = (requst.UserName ?? string.Empty).Trim(),
+                    SourceType = (requst.SourceType ?? string.Empty).Trim(),
+                    Template = (requst.Template ?? string.Empty).Trim(),
                 });
 
             return new Response<string>
