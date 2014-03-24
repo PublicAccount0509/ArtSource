@@ -2725,7 +2725,7 @@
             }
 
             var deskOpenTimeList = new List<DateTime>();
-            var nowTime = bookingDate.ToString("yyyy-MM-dd") == now.ToString("yyyy-MM-dd") ? now : DateTime.Parse(bookingDate.ToString("yyyy-MM-dd"));
+            var nowTime = bookingDate.ToString("yyyy-MM-dd") == now.ToString("yyyy-MM-dd") ? DateTime.Now : DateTime.Parse(bookingDate.ToString("yyyy-MM-dd"));
             foreach (var item in tempList)
             {
                 var beginTime = DateTime.Parse(bookingDate.ToString("yyyy-MM-dd") + " " + item.BeginTime + ":00");
@@ -2745,6 +2745,11 @@
                 {
                     deskOpenTimeList.Add(beginTime);
                     beginTime = beginTime.AddMinutes(30);
+                }
+
+                if (beginTime.AddMinutes(-30) < endTime)
+                {
+                    deskOpenTimeList.Add(endTime);
                 }
             }
 
