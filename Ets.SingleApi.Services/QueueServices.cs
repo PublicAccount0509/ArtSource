@@ -540,9 +540,9 @@
                     Result = false
                 };
             }
-            var result = (from tableReservation in this.tableReservationEntity.EntityQueryable
-                             where tableReservation.TableReservationId == parameter.TableReservationId
-                             select tableReservation).FirstOrDefault();
+            var result = (from queue in this.queueEntityRepository.EntityQueryable
+                          where queue.QueueId == parameter.QueueId
+                          select queue).FirstOrDefault();
 
             if (result == null)
             {
@@ -553,12 +553,12 @@
                 };
             }
 
-            var tempReservationEntity = new TableReservationEntity
+            var tempQueueEntity = new QueueEntity
             {
                 Cancelled = true
             };
 
-            this.tableReservationEntity.Save(tempReservationEntity);
+            this.tableReservationEntity.Save(tempQueueEntity);
 
             return new ServicesResult<bool>
             {

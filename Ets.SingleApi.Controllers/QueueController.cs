@@ -365,7 +365,7 @@ namespace Ets.SingleApi.Controllers
 
             var result = this.queueServices.CancelQueue(this.Source, new CancelQueueParameter
             {
-                TableReservationId = requst.TableReservationId
+                QueueId = requst.QueueId
             });
 
             return new Response<bool>
