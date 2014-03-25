@@ -73,16 +73,6 @@
         private readonly INHibernateRepository<QueueEntity> queueEntityRepository;
 
         /// <summary>
-        /// 字段tableReservationEntity
-        /// </summary>
-        /// 创建者：单琪彬
-        /// 创建日期：3/25/2014 9:14 AM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<TableReservationEntity> tableReservationEntity;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CuisineServices" /> class.
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -90,7 +80,6 @@
         /// <param name="deskTypeEntityRepository">The deskTypeEntityRepository</param>
         /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
         /// <param name="queueEntityRepository">The queueEntityRepository</param>
-        /// <param name="tableReservationEntity">The tableReservationEntity</param>
         /// 创建者：周超
         /// 创建日期：2013/10/13 15:23
         /// 修改者：
@@ -101,15 +90,13 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
-            INHibernateRepository<QueueEntity> queueEntityRepository,
-            INHibernateRepository<TableReservationEntity> tableReservationEntity)
+            INHibernateRepository<QueueEntity> queueEntityRepository)
         {
             this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
             this.queueEntityRepository = queueEntityRepository;
-            this.tableReservationEntity = tableReservationEntity;
         }
 
         /// <summary>
@@ -558,7 +545,7 @@
                 Cancelled = true
             };
 
-            this.tableReservationEntity.Save(tempQueueEntity);
+            this.queueEntityRepository.Save(tempQueueEntity);
 
             return new ServicesResult<bool>
             {
