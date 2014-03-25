@@ -482,6 +482,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<string> GetDeskNoById(string source, int deskId, int supplierId);
+        ServicesResult<string> GetDeskNoById(string source, int? deskId, int supplierId);
     }
 }

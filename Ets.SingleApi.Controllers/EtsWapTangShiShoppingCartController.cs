@@ -166,6 +166,7 @@
         /// </summary>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
+        /// <param name="seatNumber"></param>
         /// <param name="orderId">The orderId</param>
         /// <returns>
         /// 返回购物车信息
@@ -176,9 +177,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> Create(int supplierId, string userId, int orderId = 0)
+        public Response<EtsWapTangShiShoppingCartModel> Create(int supplierId, string userId, string seatNumber, int orderId = 0)
         {
-            var createShoppingCartResult = this.etsWapTangShiShoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId, orderId);
+            var createShoppingCartResult = this.etsWapTangShiShoppingCartServices.CreateShoppingCart(this.Source, supplierId, userId, orderId, seatNumber);
             if (createShoppingCartResult.Result.IsEmptyOrNull())
             {
                 return new Response<EtsWapTangShiShoppingCartModel>

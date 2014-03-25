@@ -1615,7 +1615,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<string> GetDeskNoById(int supplierId, int tableNo)
+        public Response<string> GetDeskNoById(int supplierId, int? tableNo)
         {
             if (supplierId == 0)
             {

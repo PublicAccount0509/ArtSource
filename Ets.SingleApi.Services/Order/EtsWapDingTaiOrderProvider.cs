@@ -106,6 +106,16 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<SupplierDeskTimeEntity> supplierDeskTimeEntityRepository;
 
         /// <summary>
+        /// 字段deskTypeLockLogEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/25/2014 2:50 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeskTypeLockLogEntity> deskTypeLockLogEntityRepository;
+
+        /// <summary>
         /// 字段etsWapShoppingCartProvider
         /// </summary>
         /// 创建者：周超
@@ -136,6 +146,7 @@ namespace Ets.SingleApi.Services
         /// <param name="deskTypeEntityRepository">The deskTypeEntityRepository</param>
         /// <param name="supplierDeskEntityRepository">The supplierDeskEntityRepository</param>
         /// <param name="supplierDeskTimeEntityRepository">The supplierDeskTimeEntityRepository</param>
+        /// <param name="deskTypeLockLogEntityRepository">The deskTypeLockLogEntityRepository</param>
         /// <param name="etsWapDingTaiShoppingCartProvider">The ets wap ding tai shopping cart provider.</param>
         /// <param name="shoppingCartBaseCacheServices">The shopping cart base cache services.</param>
         /// <param name="orderNumberDtEntityRepository">The order number dt entity repository.</param>
@@ -154,6 +165,7 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository,
             INHibernateRepository<SupplierDeskTimeEntity> supplierDeskTimeEntityRepository,
+            INHibernateRepository<DeskTypeLockLogEntity> deskTypeLockLogEntityRepository,
             IEtsWapDingTaiShoppingCartProvider etsWapDingTaiShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
@@ -168,6 +180,7 @@ namespace Ets.SingleApi.Services
             this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.supplierDeskEntityRepository = supplierDeskEntityRepository;
             this.supplierDeskTimeEntityRepository = supplierDeskTimeEntityRepository;
+            this.deskTypeLockLogEntityRepository = deskTypeLockLogEntityRepository;
             this.etsWapDingTaiShoppingCartProvider = etsWapDingTaiShoppingCartProvider;
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
         }
@@ -529,12 +542,31 @@ namespace Ets.SingleApi.Services
             var deskBookingCount = this.deskBookingEntityRepository.EntityQueryable.Count(p => p.DeskType.Id == deskTypeId && p.SupplierId == supplierId && p.TimeType == supplierDeskTime.TimeType && p.ReservationTime >= now && p.ReservationTime < now.AddDays(1));
             var supplierDeskCount = this.supplierDeskEntityRepository.EntityQueryable.Count(p => p.DeskType.Id == deskTypeId && p.SupplierId == supplierId && p.IsDel == false && p.IsEnable);
 
-            if (deskBookingCount >= supplierDeskCount)
+
+            if (deskBookingCount < supplierDeskCount)
             {
-                deskTypeEntity.IsLock = true;
+                return;
             }
 
-            this.deskTypeEntityRepository.Save(deskTypeEntity);
+            var deskTypeLockLogEntity = this.deskTypeLockLogEntityRepository.FindSingleByExpression(
+                   p =>
+                   p.DeskTypeId == deskTypeId && p.SupplierId == supplierId && p.LockDate >= now && p.LockDate < now
+                   && p.SupplierDeskTime.Id == supplierDeskTime.Id) ?? new DeskTypeLockLogEntity
+                       {
+                           CreateTime = DateTime.Now,
+                           DeskTypeId = deskTypeId,
+                           SupplierId = supplierId
+                       };
+
+            deskTypeLockLogEntity.LockDate = now;
+            deskTypeLockLogEntity.IsDel = false;
+            deskTypeLockLogEntity.CreateTime = DateTime.Now;
+            deskTypeLockLogEntity.SupplierDeskTime = new SupplierDeskTimeEntity
+                {
+                    Id = supplierDeskTime.Id
+                };
+
+            this.deskTypeLockLogEntityRepository.Save(deskTypeLockLogEntity);
         }
 
         /// <summary>
