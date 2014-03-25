@@ -424,6 +424,7 @@
                                  from entity in this.supplierEntityRepository.EntityQueryable
                                  where queueEntity.DeskTypeId == deskType.Id
                                  && queueEntity.SupplierId == entity.SupplierId
+                                 && queueEntity.CustomerId == parameter.UserId
                                  select new
                                      {
                                          queueEntity.QueueId,
@@ -496,14 +497,6 @@
                             CeateDate = p.CeateDate
                         }).ToList();
 
-            foreach (var queueModel in result)
-            {
-                queueModel.QueueNumber = result.Count(
-                      p =>
-                      p.QueueStateId == 1 && p.SupplierId == queueModel.SupplierId
-                      && string.Compare(p.Number, queueModel.Number, StringComparison.OrdinalIgnoreCase) < 0);
-
-            }
             return new ServicesResultList<QueueModel>
             {
                 Result = result

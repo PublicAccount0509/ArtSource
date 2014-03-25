@@ -282,7 +282,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, int? supplierGroupId, int pageSize, int? pageIndex, bool cancelled)
+        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, int? supplierGroupId, int pageSize, int? pageIndex, bool cancelled,int userId)
         {
             var list = this.queueServices.GetQueueList(this.Source, new GetQueuesParameter
             {
@@ -294,7 +294,8 @@ namespace Ets.SingleApi.Controllers
                 IsEtaoshi = this.IsEtaoshi,
                 PageSize = pageSize,
                 PageIndex = pageIndex ?? 1,
-                Cancelled = cancelled
+                Cancelled = cancelled,
+                UserId = userId
             });
 
             if (list.Result == null || list.Result.Count == 0)
