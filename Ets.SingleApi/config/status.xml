@@ -71,6 +71,7 @@
   <item code="40037" message="该台位已被锁定"></item>
   <item code="40038" message="该桌号不存在"></item>
   <item code="40039" message="未找到该排队订单"></item>
+  <item code="40040" message="未找到桌号"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>

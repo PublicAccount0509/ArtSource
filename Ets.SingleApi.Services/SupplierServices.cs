@@ -3052,5 +3052,48 @@
                 Result = true
             };
         }
+
+        /// <summary>
+        /// 根据Id查询桌号
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="deskId">The deskId</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <returns>
+        /// 返回桌号
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/25/2014 1:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> GetDeskNoById(string source, int deskId, int supplierId)
+        {
+            if (deskId == 0)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = string.Empty
+                };
+            }
+            var supplierEntity = this.supplierDeskEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId && p.Id == deskId)
+                .Select(p => new { p.DeskNo })
+                .FirstOrDefault();
+            /*判断餐厅Id是否存在*/
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFondDeskNo,
+                    Result = string.Empty
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = supplierEntity.DeskNo
+            };
+        }
     }
 }
