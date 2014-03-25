@@ -176,6 +176,7 @@ namespace Ets.SingleApi.Services
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户Id</param>
         /// <param name="orderId">The orderId</param>
+        /// <param name="seatNumber">The seatNumber</param>
         /// <returns>
         /// 返回一个购物车
         /// </returns>
@@ -184,7 +185,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId, int orderId)
+        public ServicesResult<string> CreateShoppingCart(string source, int supplierId, string userId, int orderId, string seatNumber)
         {
             var bindShoppingCartResult = this.shoppingCartBaseCacheServices.BindShoppingCartId(source, supplierId.ToString(), userId, orderId);
             if (bindShoppingCartResult.StatusCode == (int)StatusCode.Succeed.Ok && !bindShoppingCartResult.Result.IsNew)
@@ -219,7 +220,9 @@ namespace Ets.SingleApi.Services
             var shoppingCartOrder = new EtsWapTangShiShoppingCartOrder
                 {
                     Id = Guid.NewGuid().ToString(),
-                    PaymentMethodId = ServicesCommon.DefaultPaymentMethodId
+                    PaymentMethodId = ServicesCommon.DefaultPaymentMethodId,
+                    SeatNumber = seatNumber,
+                    IsChange = seatNumber.IsEmptyOrNull()
                 };
             var saveShoppingCartOrderResult = this.etsWapShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             if (saveShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)

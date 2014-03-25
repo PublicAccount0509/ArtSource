@@ -3067,7 +3067,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> GetDeskNoById(string source, int deskId, int supplierId)
+        public ServicesResult<string> GetDeskNoById(string source, int? deskId, int supplierId)
         {
             if (deskId == 0)
             {
