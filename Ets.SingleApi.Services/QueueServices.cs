@@ -436,6 +436,7 @@
                                  && queueEntity.SupplierId == entity.SupplierId
                                  && queueEntity.CustomerId == customerEntity.CustomerId
                                  && customerEntity.LoginId == parameter.UserId
+                                 && queueEntity.Cancelled == false
                                  select new
                                      {
                                          queueEntity.QueueId,
@@ -551,12 +552,9 @@
                 };
             }
 
-            var tempQueueEntity = new QueueEntity
-            {
-                Cancelled = true
-            };
+            result.Cancelled = true;
 
-            this.queueEntityRepository.Save(tempQueueEntity);
+            this.queueEntityRepository.Save(result);
 
             return new ServicesResult<bool>
             {
