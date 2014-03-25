@@ -238,6 +238,16 @@ namespace Ets.SingleApi.Model.Repository
         /// ----------------------------------------------------------------------------------------
         private string templateId;
 
+        /// <summary>
+        /// The Cancelled
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-19 10:43:10
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private bool? cancelled;
+
         #endregion
 
         /// <summary>
@@ -263,6 +273,7 @@ namespace Ets.SingleApi.Model.Repository
             this.code = string.Empty;
             this.path = string.Empty;
             this.templateId = string.Empty;
+            this.cancelled = false;
         }
 
         #region public member
@@ -705,6 +716,27 @@ namespace Ets.SingleApi.Model.Repository
             set
             {
                 this.templateId = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether mapping the Cancelled of TableReservationEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014-3-19 10:43:10
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual bool? Cancelled
+        {
+            get
+            {
+                return this.cancelled;
+            }
+
+            set
+            {
+                this.cancelled = value;
             }
         }
 
