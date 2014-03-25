@@ -100,7 +100,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                var paiDuiFeatureId = ConfigurationManager.AppSettings["PaiDuiFeatureId"] ?? "9";
+                var paiDuiFeatureId = ConfigurationManager.AppSettings["PaiDuiFeatureId"] ?? "59";
                 int result;
                 if (!int.TryParse(paiDuiFeatureId, out result))
                 {
