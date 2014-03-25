@@ -479,7 +479,7 @@ namespace Ets.SingleApi.Services
                 parameter.OrderName,
                 parameter.Amount,
                 parameter.CallBackUrl,
-               HttpUtility.UrlDecode(parameter.MerchantUrl)));
+                parameter.MerchantUrl));
 
             if (result == null)
             {
