@@ -273,6 +273,7 @@ namespace Ets.SingleApi.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="cancelled">The  cancelled indicates whether</param>
+        /// <param name="userId">The userId</param>
         /// <returns>
         /// 排队列表
         /// </returns>
@@ -333,6 +334,48 @@ namespace Ets.SingleApi.Controllers
             return new ListResponse<Queue>
             {
                 Result = result
+            };
+        }
+
+        /// <summary>
+        /// 取消排队
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/25/2014 9:49 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<bool> CancelQueue(CancelQueueRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var result = this.queueServices.CancelQueue(this.Source, new CancelQueueParameter
+            {
+                TableReservationId = requst.TableReservationId
+            });
+
+            return new Response<bool>
+            {
+                Result = result.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                ResultTotalCount = result.ResultTotalCount
             };
         }
     }

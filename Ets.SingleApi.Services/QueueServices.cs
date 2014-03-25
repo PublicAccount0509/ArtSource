@@ -73,6 +73,16 @@
         private readonly INHibernateRepository<QueueEntity> queueEntityRepository;
 
         /// <summary>
+        /// 字段tableReservationEntity
+        /// </summary>
+        /// 创建者：单琪彬
+        /// 创建日期：3/25/2014 9:14 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TableReservationEntity> tableReservationEntity;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CuisineServices" /> class.
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -80,6 +90,7 @@
         /// <param name="deskTypeEntityRepository">The deskTypeEntityRepository</param>
         /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
         /// <param name="queueEntityRepository">The queueEntityRepository</param>
+        /// <param name="tableReservationEntity">The tableReservationEntity</param>
         /// 创建者：周超
         /// 创建日期：2013/10/13 15:23
         /// 修改者：
@@ -90,13 +101,15 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
-            INHibernateRepository<QueueEntity> queueEntityRepository)
+            INHibernateRepository<QueueEntity> queueEntityRepository,
+            INHibernateRepository<TableReservationEntity> tableReservationEntity)
         {
             this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
             this.queueEntityRepository = queueEntityRepository;
+            this.tableReservationEntity = tableReservationEntity;
         }
 
         /// <summary>
@@ -500,6 +513,56 @@
             return new ServicesResultList<QueueModel>
             {
                 Result = result
+            };
+        }
+
+
+        /// <summary>
+        /// 取消排队
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/25/2014 9:26 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CancelQueue(string source, CancelQueueParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = false
+                };
+            }
+            var result = (from tableReservation in this.tableReservationEntity.EntityQueryable
+                             where tableReservation.TableReservationId == parameter.TableReservationId
+                             select tableReservation).FirstOrDefault();
+
+            if (result == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFondTableReservation,
+                    Result = false
+                };
+            }
+
+            var tempReservationEntity = new TableReservationEntity
+            {
+                Cancelled = true
+            };
+
+            this.tableReservationEntity.Save(tempReservationEntity);
+
+            return new ServicesResult<bool>
+            {
+                Result = true
             };
         }
     }

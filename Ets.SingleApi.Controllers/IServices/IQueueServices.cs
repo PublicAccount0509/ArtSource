@@ -88,5 +88,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<QueueModel> GetQueueList(string source, GetQueuesParameter parameter);
+
+        /// <summary>
+        /// 取消排队
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/25/2014 9:26 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> CancelQueue(string source, CancelQueueParameter parameter);
     }
 }
