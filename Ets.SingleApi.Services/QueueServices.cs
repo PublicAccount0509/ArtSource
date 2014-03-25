@@ -253,7 +253,11 @@
                 };
             }
 
-            if (this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.CustomerId == customer.CustomerId))
+            if (this.queueEntityRepository.EntityQueryable
+                    .Any(p => p.DeskTypeId == parameter.DeskTypeId
+                            && p.SupplierId == supplierId
+                            && p.CustomerId == customer.CustomerId
+                            && p.Time.Date == DateTime.Now.Date))
             {
                 return new ServicesResult<string>
                 {
@@ -330,7 +334,12 @@
                 };
             }
 
-            var result = this.queueEntityRepository.EntityQueryable.Any(p => p.DeskTypeId == parameter.DeskTypeId && p.SupplierId == supplierId && p.CustomerId == customer.CustomerId);
+            var result = this.queueEntityRepository.EntityQueryable
+                                .Any(p => p.DeskTypeId == parameter.DeskTypeId
+                                        && p.SupplierId == supplierId
+                                        && p.CustomerId == customer.CustomerId
+                                        && p.Time.Date == DateTime.Now.Date);
+
             return new ServicesResult<bool>
             {
                 Result = result
@@ -422,9 +431,11 @@
             var queryableTemp = (from queueEntity in this.queueEntityRepository.EntityQueryable
                                  from deskType in this.deskTypeEntityRepository.EntityQueryable
                                  from entity in this.supplierEntityRepository.EntityQueryable
+                                 from customerEntity in this.customerEntityRepository.EntityQueryable
                                  where queueEntity.DeskTypeId == deskType.Id
                                  && queueEntity.SupplierId == entity.SupplierId
-                                 && queueEntity.CustomerId == parameter.UserId
+                                 && queueEntity.CustomerId == customerEntity.CustomerId
+                                 && customerEntity.LoginId == parameter.UserId
                                  select new
                                      {
                                          queueEntity.QueueId,

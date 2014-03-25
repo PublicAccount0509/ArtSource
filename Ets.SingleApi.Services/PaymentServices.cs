@@ -1,4 +1,5 @@
-﻿using Ets.SingleApi.Services.Payment;
+﻿using System.Web;
+using Ets.SingleApi.Services.Payment;
 
 namespace Ets.SingleApi.Services
 {
@@ -478,7 +479,7 @@ namespace Ets.SingleApi.Services
                 parameter.OrderName,
                 parameter.Amount,
                 parameter.CallBackUrl,
-                parameter.MerchantUrl));
+               HttpUtility.UrlDecode(parameter.MerchantUrl)));
 
             if (result == null)
             {
