@@ -1601,5 +1601,60 @@ namespace Ets.SingleApi.Controllers
                 Result = result.Result
             };
         }
+        /// <summary>
+        /// 根据桌子Id查询桌子编号
+        /// </summary>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="tableNo">The tableNo</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/25/2014 1:36 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<string> GetDeskNoById(int supplierId, int tableNo)
+        {
+            if (supplierId == 0)
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode =
+                            (int)StatusCode.System.InvalidRequest
+                    },
+                    Result = string.Empty
+                };
+            }
+
+            var getDeskNoResult = this.supplierServices.GetDeskNoById(this.Source, tableNo, supplierId);
+
+            if (getDeskNoResult.Result == null || getDeskNoResult.Result.IsEmptyOrNull())
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode =
+                            getDeskNoResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                ? (int)StatusCode.Succeed.Empty
+                                : getDeskNoResult.StatusCode
+                    },
+                    Result = string.Empty
+                };
+            }
+
+            return new Response<string>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getDeskNoResult.StatusCode
+                },
+                Result = getDeskNoResult.Result
+            };
+        }
     }
 }
