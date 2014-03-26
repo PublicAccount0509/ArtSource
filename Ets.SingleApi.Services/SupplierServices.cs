@@ -3041,7 +3041,7 @@
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.NotFondDeskNum,
+                    StatusCode = (int)StatusCode.Validate.InvalidDeskNumCode,
                     Result = false
                 };
             }
@@ -3077,22 +3077,23 @@
                     Result = string.Empty
                 };
             }
-            var supplierEntity = this.supplierDeskEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId && p.Id == deskId)
+            var supplierDesk = this.supplierDeskEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId && p.Id == deskId)
                 .Select(p => new { p.DeskNo })
                 .FirstOrDefault();
+
             /*判断餐厅Id是否存在*/
-            if (supplierEntity == null)
+            if (supplierDesk == null)
             {
                 return new ServicesResult<string>
                 {
-                    StatusCode = (int)StatusCode.Validate.NotFondDeskNo,
+                    StatusCode = (int)StatusCode.Validate.InvalidDeskNumCode,
                     Result = string.Empty
                 };
             }
 
             return new ServicesResult<string>
             {
-                Result = supplierEntity.DeskNo
+                Result = supplierDesk.DeskNo
             };
         }
     }

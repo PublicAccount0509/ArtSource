@@ -553,7 +553,25 @@
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.NotFondTableReservation,
+                    StatusCode = (int)StatusCode.Validate.InvalidQueueIdCode,
+                    Result = false
+                };
+            }
+
+            if (result.State != 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidCancelledQueueStateIdCode,
+                    Result = false
+                };
+            }
+
+            if (result.Cancelled == true)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.AleadyCancelledQueueCode,
                     Result = false
                 };
             }
