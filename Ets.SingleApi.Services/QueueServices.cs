@@ -163,11 +163,12 @@
             var tempQueueDate = parameter.QueueDate.ToString("yyyy-MM-dd");
             var startQueueDate = DateTime.Parse(tempQueueDate);
             var endQueueDate = startQueueDate.AddDays(1);
-            var deskTypeIdList = queueDeskTypeList.Select(p => (int?)p.Id).ToList();
+            var deskTypeIdList = queueDeskTypeList.Select(p => (int?)p.Id).Distinct().ToList();
 
-            var queueList = (from queue in this.queueEntityRepository.EntityQueryable
+            var queueList = (from deskTypeId in deskTypeIdList
+                             from queue in this.queueEntityRepository.EntityQueryable
                              where queue.SupplierId == supplierId && queue.State == 0 && queue.Cancelled == false && queue.Time >= startQueueDate
-                                   && queue.Time < endQueueDate && deskTypeIdList.Contains(queue.DeskTypeId)
+                                   && queue.Time < endQueueDate && queue.DeskTypeId == deskTypeId
                              select new
                                  {
                                      queue.DeskTypeId,
@@ -458,7 +459,8 @@
                                          TblTypeId = deskType.TableType.Id,
                                          deskType.TableType.TblTypeName,
                                          CeateDate = queueEntity.Time,
-                                         entity.SupplierGroupId
+                                         entity.SupplierGroupId,
+                                         queueEntity.Cancelled
                                      });
 
             if (parameter.QueueStartDate != null)
@@ -514,6 +516,15 @@
                             TblTypeName = p.TblTypeName,
                             CeateDate = p.CeateDate
                         }).ToList();
+
+            foreach (var queueModel in result)
+            {
+                var dateTime = DateTime.Parse(queueModel.CeateDate.ToString("yyyy-MM-dd"));
+                queueModel.QueueNumber = queueList.Count(
+                        p =>
+                        p.SupplierId == queueModel.SupplierId && p.CeateDate >= dateTime
+                        && p.CeateDate < dateTime.AddDays(1) && p.Cancelled == false && p.QueueStateId == 0);
+            }
 
             return new ServicesResultList<QueueModel>
             {
