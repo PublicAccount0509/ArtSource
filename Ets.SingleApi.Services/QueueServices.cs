@@ -140,7 +140,7 @@
                     p => p.SupplierId == parameter.SupplierId
                          && p.IsLock == false
                          && p.IsDel == false)
-                    .Select(p => p.DeskType.Id)
+                    .Select(p => p.DeskType.Id).Distinct()
                     .ToList();
 
             var queueDeskTypeList = (from id in lockedDeskTypeIdList
