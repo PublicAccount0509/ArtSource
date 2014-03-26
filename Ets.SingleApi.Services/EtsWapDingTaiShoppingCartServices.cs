@@ -90,7 +90,7 @@ namespace Ets.SingleApi.Services
         public ServicesResult<EtsWapDingTaiShoppingCartModel> GetShoppingCart(string source, string shoppingCartId)
         {
             var getShoppingCartLinkResult = this.etsWapShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
-            if (getShoppingCartLinkResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
                     {
@@ -102,7 +102,7 @@ namespace Ets.SingleApi.Services
             var shoppingCartLink = getShoppingCartLinkResult.Result;
             var getShoppingCartResult = this.etsWapShoppingCartProvider.GetShoppingCart(source,
                                                                                         shoppingCartLink.ShoppingCartId);
-            if (getShoppingCartResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
                     {
@@ -114,7 +114,7 @@ namespace Ets.SingleApi.Services
             var getShoppingCartSupplierResult = this.etsWapShoppingCartProvider.GetShoppingCartSupplier(source,
                                                                                                         shoppingCartLink
                                                                                                             .SupplierId);
-            if (getShoppingCartSupplierResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
                     {
@@ -126,7 +126,7 @@ namespace Ets.SingleApi.Services
             var getShoppingCartCustomerResult = this.etsWapShoppingCartProvider.GetShoppingCartCustomer(source,
                                                                                                         shoppingCartLink
                                                                                                             .UserId);
-            if (getShoppingCartCustomerResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
                     {
@@ -138,7 +138,7 @@ namespace Ets.SingleApi.Services
             var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source,
                                                                                                   shoppingCartLink
                                                                                                       .OrderId);
-            if (getShoppingCartOrderResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
                     {
@@ -150,7 +150,7 @@ namespace Ets.SingleApi.Services
             var getShoppingCartDeliveryResult = this.etsWapShoppingCartProvider.GetShoppingCartDelivery(source,
                                                                                                         shoppingCartLink
                                                                                                             .DeliveryId);
-            if (getShoppingCartDeliveryResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
                     {
@@ -162,7 +162,7 @@ namespace Ets.SingleApi.Services
             /*订单台位信息*/
             var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source,
                                                                                                 shoppingCartLink.DeskId);
-            if (getShoppingCartDeskResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<EtsWapDingTaiShoppingCartModel>
                     {
@@ -273,7 +273,8 @@ namespace Ets.SingleApi.Services
             /*保存订台台位信息*/
             var shoppingCartDesk = new ShoppingCartDesk
             {
-                Id = Guid.NewGuid().ToString()
+                Id = Guid.NewGuid().ToString(),
+                PeopleCount = ServicesCommon.DefaultDingTaiNumber
             };
             var saveShoppingCartDeskResult = this.etsWapShoppingCartProvider.SaveShoppingCartDesk(source, shoppingCartDesk);
             if (saveShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -920,18 +921,14 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var supplier = getShoppingCartSupplierResult.Result;
             var delivery = getShoppingCartDeliveryResult.Result;
             var order = getShoppingCartOrderResult.Result;
-            var desk = getShoppingCartDeskResult.Result;
 
             var shoppingCart = getShoppingCartResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
             var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
             var totalfee = shoppingPrice;
             var total = totalfee;
-            var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, shoppingCartLink.UserId) : order.CouponFee;
-            var customerTotal = total - coupon;
 
             /*订单确认用户信息*/
             delivery.Telephone = shoppingCartOrderConfirm.CustomerPhoneNumber;
@@ -946,14 +943,6 @@ namespace Ets.SingleApi.Services
             order.Path = shoppingCartOrderConfirm.Source;
             order.TotalFee = total;
 
-            /*shoppingCartOrder.Id = order.Id;
-            shoppingCartOrder.OrderId = order.OrderId;
-            shoppingCartOrder.IsComplete = order.IsComplete;
-            shoppingCartOrder.TotalPrice = shoppingPrice;
-            shoppingCartOrder.TotalQuantity = shoppingList.Sum(p => p.Quantity);
-            shoppingCartOrder.TotalFee = total;
-            shoppingCartOrder.CustomerTotalFee = customerTotal;
-            shoppingCartOrder.CouponFee = coupon;*/
             this.etsWapShoppingCartProvider.SaveShoppingCartDelivery(source, delivery);
             this.etsWapShoppingCartProvider.SaveShoppingCartOrder(source, order);
             return new ServicesResult<bool>
@@ -1024,7 +1013,7 @@ namespace Ets.SingleApi.Services
         public ServicesResult<bool> SaveShoppingCartDesk(string source, string id, ShoppingCartDesk shoppingCartDesk)
         {
             var getShoppingCartLinkResult = this.etsWapShoppingCartProvider.GetShoppingCartLink(source, id);
-            if (getShoppingCartLinkResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
                     {
@@ -1035,7 +1024,7 @@ namespace Ets.SingleApi.Services
             var shoppingCartLink = getShoppingCartLinkResult.Result;
             var getShoppingCartDeskResult = this.etsWapShoppingCartProvider.GetShoppingCartDesk(source,
                                                                                                 shoppingCartLink.DeskId);
-            if (getShoppingCartDeskResult.StatusCode != (int) StatusCode.Succeed.Ok)
+            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
                     {

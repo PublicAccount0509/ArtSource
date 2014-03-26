@@ -166,7 +166,7 @@
             var deskTypeIdList = queueDeskTypeList.Select(p => (int?)p.Id).ToList();
 
             var queueList = (from queue in this.queueEntityRepository.EntityQueryable
-                             where queue.SupplierId == supplierId && queue.State == 1 && queue.Time >= startQueueDate
+                             where queue.SupplierId == supplierId && queue.State == 0 && queue.Cancelled == false && queue.Time >= startQueueDate
                                    && queue.Time < endQueueDate && deskTypeIdList.Contains(queue.DeskTypeId)
                              select new
                                  {
@@ -256,6 +256,8 @@
             if (this.queueEntityRepository.EntityQueryable
                     .Any(p => p.DeskTypeId == parameter.DeskTypeId
                             && p.SupplierId == supplierId
+                            && p.State == 0
+                            && p.Cancelled == false
                             && p.CustomerId == customer.CustomerId
                             && p.Time.Date == DateTime.Now.Date))
             {
@@ -279,6 +281,8 @@
                     Remark = parameter.Description,
                     Path = parameter.SourceType,
                     TemplateId = parameter.Template,
+                    State = 0,
+                    Cancelled = false,
                     Number = ServicesCommon.QueueNumberPrefix + (this.queueEntityRepository.EntityQueryable.Count(p => p.SupplierId == supplierId) + 1).ToString().PadLeft(ServicesCommon.QueueNumberLength, '0')
                 };
 
@@ -337,6 +341,8 @@
             var result = this.queueEntityRepository.EntityQueryable
                                 .Any(p => p.DeskTypeId == parameter.DeskTypeId
                                         && p.SupplierId == supplierId
+                                        && p.State == 0
+                                        && p.Cancelled == false
                                         && p.CustomerId == customer.CustomerId
                                         && p.Time.Date == DateTime.Now.Date);
 

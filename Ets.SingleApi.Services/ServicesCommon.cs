@@ -20,6 +20,32 @@
     public class ServicesCommon
     {
         /// <summary>
+        /// 订台默认人数
+        /// </summary>
+        /// <value>
+        /// 订台默认人数
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 11:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DefaultDingTaiNumber
+        {
+            get
+            {
+                var defaultDingTaiNumber = ConfigurationManager.AppSettings["DefaultDingTaiNumber"] ?? "4";
+                int result;
+                if (!int.TryParse(defaultDingTaiNumber, out result))
+                {
+                    result = 4;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 排队号数字位数
         /// </summary>
         /// <value>
