@@ -483,5 +483,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<string> GetDeskNoById(string source, int? deskId, int supplierId);
+
+        /// <summary>
+        /// 查询推荐菜列表
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns>
+        /// 推荐菜列表
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/27/2014 3:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<SupplierRecommendedDishModel> GetRecommendedDish(string source, int supplierId, int? pageIndex,
+                                                                            int? pageSize);
     }
 }

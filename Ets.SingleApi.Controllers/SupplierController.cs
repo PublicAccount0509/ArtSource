@@ -1656,5 +1656,61 @@ namespace Ets.SingleApi.Controllers
                 Result = getDeskNoResult.Result
             };
         }
+
+        /// <summary>
+        /// 查询推荐菜品列表
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns>
+        /// 推荐菜品列表
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/27/2014 3:31 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<SupplierRecommendedDish> GetRecommendedDishList(int id, int pageIndex, int pageSize)
+        {
+            var list = this.supplierServices.GetRecommendedDish(this.Source, id, pageIndex,pageSize);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<SupplierRecommendedDish>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode =
+                            list.StatusCode == (int)StatusCode.Succeed.Ok
+                                ? (int)StatusCode.Succeed.Empty
+                                : list.StatusCode
+                    },
+                    Result = new List<SupplierRecommendedDish>()
+                };
+            }
+
+            var result = list.Result.Select(p => new SupplierRecommendedDish
+            {
+                SupplierDishId = p.SupplierDishId,
+                SupplierDishName = p.SupplierDishName,
+                Price = p.Price,
+                ImagePath = p.ImagePath,
+                SupplierCatogryId = p.SupplierCatogryId,
+                SupplierMenuCategoryId = p.SupplierMenuCategoryId,
+                Type = p.Type,
+                Recipe = p.Recipe,
+                PackagingFee = p.PackagingFee
+            }).ToList();
+
+            return new ListResponse<SupplierRecommendedDish>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
+        }
     }
 }
