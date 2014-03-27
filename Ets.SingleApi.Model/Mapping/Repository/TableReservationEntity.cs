@@ -11,8 +11,8 @@
 
 namespace Ets.SingleApi.Model.Repository
 {
-	using System;
-		
+    using System;
+
     /// <summary>
     /// Class:TableReservationEntity
     /// Namespace:Ets.SingleApi.Model.Repository
@@ -26,691 +26,681 @@ namespace Ets.SingleApi.Model.Repository
     [Serializable]
     public class TableReservationEntity
     {
-		#region private member
+        #region private member
 
-			/// <summary>
-		/// The TableReservationID
+        /// <summary>
+        /// The TableReservationID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int tableReservationId;
+        private int tableReservationId;
 
-			/// <summary>
-		/// The TableID
+        /// <summary>
+        /// The TableID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int tableId;
+        private int tableId;
 
-			/// <summary>
-		/// The CustomerID
+        /// <summary>
+        /// The CustomerID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int customerId;
+        private int customerId;
 
-			/// <summary>
-		/// The Templateid
+        /// <summary>
+        /// The Templateid
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string templateId;
+        private string templateId;
 
-			/// <summary>
-		/// The NumberOfPeople
+        /// <summary>
+        /// The NumberOfPeople
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int numberOfPeople;
+        private int numberOfPeople;
 
-			/// <summary>
-		/// The ContactName
+        /// <summary>
+        /// The ContactName
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string contactName;
+        private string contactName;
 
-			/// <summary>
-		/// The ContactNumber
+        /// <summary>
+        /// The ContactNumber
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string contactNumber;
+        private string contactNumber;
 
-			/// <summary>
-		/// The ReservationTime
+        /// <summary>
+        /// The ReservationTime
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime reservationTime;
+        private DateTime reservationTime;
 
-			/// <summary>
-		/// The DateReserved
+        /// <summary>
+        /// The DateReserved
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime dateReserved;
+        private DateTime dateReserved;
 
-			/// <summary>
-		/// The BookInstruction
+        /// <summary>
+        /// The BookInstruction
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string bookInstruction;
+        private string bookInstruction;
 
-			/// <summary>
-		/// The PaymentID
+        /// <summary>
+        /// The PaymentID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? paymentId;
+        private int? paymentId;
 
-			/// <summary>
-		/// The Cancelled
+        /// <summary>
+        /// The Cancelled
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? cancelled;
+        private bool? cancelled;
 
-			/// <summary>
-		/// The Refunded
+        /// <summary>
+        /// The Refunded
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? refunded;
+        private bool? refunded;
 
-			/// <summary>
-		/// The IsRating
+        /// <summary>
+        /// The IsRating
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isRating;
+        private bool? isRating;
 
-			/// <summary>
-		/// The BookSource
+        /// <summary>
+        /// The BookSource
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? bookSource;
+        private int? bookSource;
 
-			/// <summary>
-		/// The EndOccupancyTime
+        /// <summary>
+        /// The EndOccupancyTime
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime endOccupancyTime;
+        private DateTime endOccupancyTime;
 
-			/// <summary>
-		/// The OrderNotes
+        /// <summary>
+        /// The OrderNotes
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string orderNotes;
+        private string orderNotes;
 
-			/// <summary>
-		/// The OperatorID
+        /// <summary>
+        /// The OperatorID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? operatorId;
+        private int? operatorId;
 
-			/// <summary>
-		/// The Sitcondition
+        /// <summary>
+        /// The Sitcondition
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string sitcondition;
+        private string sitcondition;
 
-			/// <summary>
-		/// The Roomprice
+        /// <summary>
+        /// The Roomprice
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? roomprice;
+        private int? roomprice;
 
-			/// <summary>
-		/// The Contactsex
+        /// <summary>
+        /// The Contactsex
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string contactsex;
+        private string contactsex;
 
-			/// <summary>
-		/// The IsTableForOther
+        /// <summary>
+        /// The IsTableForOther
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isTableForOther;
+        private bool? isTableForOther;
 
-			/// <summary>
-		/// The TableForOtherName
+        /// <summary>
+        /// The TableForOtherName
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string tableForOtherName;
+        private string tableForOtherName;
 
-			/// <summary>
-		/// The TableForOtherType
+        /// <summary>
+        /// The TableForOtherType
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string tableForOtherType;
+        private string tableForOtherType;
 
-			/// <summary>
-		/// The Notes
+        /// <summary>
+        /// The Notes
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string notes;
+        private string notes;
 
-			/// <summary>
-		/// The ForOthers
+        /// <summary>
+        /// The ForOthers
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? forOthers;
+        private bool? forOthers;
 
-			/// <summary>
-		/// The DinerName
+        /// <summary>
+        /// The DinerName
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string dinerName;
+        private string dinerName;
 
-			/// <summary>
-		/// The DinerTypeID
+        /// <summary>
+        /// The DinerTypeID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? dinerTypeId;
+        private int? dinerTypeId;
 
-			/// <summary>
-		/// The SeatRequirementID
+        /// <summary>
+        /// The SeatRequirementID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? seatRequirementId;
+        private int? seatRequirementId;
 
-			/// <summary>
-		/// The RoomTypeID
+        /// <summary>
+        /// The RoomTypeID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? roomTypeId;
+        private int? roomTypeId;
 
-			/// <summary>
-		/// The RealPeople
+        /// <summary>
+        /// The RealPeople
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? realPeople;
+        private int? realPeople;
 
-			/// <summary>
-		/// The RealSpendMoney
+        /// <summary>
+        /// The RealSpendMoney
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? realSpendMoney;
+        private decimal? realSpendMoney;
 
-			/// <summary>
-		/// The TableStatus
+        /// <summary>
+        /// The TableStatus
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? tableStatus;
+        private int? tableStatus;
 
-			/// <summary>
-		/// The OrderNumber
+        /// <summary>
+        /// The OrderNumber
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? orderNumber;
+        private int? orderNumber;
 
-			/// <summary>
-		/// The ActualFinishTime
+        /// <summary>
+        /// The ActualFinishTime
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? actualFinishTime;
+        private DateTime? actualFinishTime;
 
-			/// <summary>
-		/// The Total
+        /// <summary>
+        /// The Total
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? total;
+        private decimal? total;
 
-			/// <summary>
-		/// The CustomerTotal
+        /// <summary>
+        /// The CustomerTotal
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? customerTotal;
+        private decimal? customerTotal;
 
-			/// <summary>
-		/// The IsPaid
+        /// <summary>
+        /// The IsPaid
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isPaId;
+        private bool? isPaId;
 
-			/// <summary>
-		/// The InvoiceRequired
+        /// <summary>
+        /// The InvoiceRequired
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? invoiceRequired;
+        private bool? invoiceRequired;
 
-			/// <summary>
-		/// The InvoiceTitle
+        /// <summary>
+        /// The InvoiceTitle
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string invoiceTitle;
+        private string invoiceTitle;
 
-			/// <summary>
-		/// The DineNumber
+        /// <summary>
+        /// The DineNumber
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? dineNumber;
+        private int? dineNumber;
 
-			/// <summary>
-		/// The TabelNo
+        /// <summary>
+        /// The TabelNo
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string tabelNo;
+        private string tabelNo;
 
-			/// <summary>
-		/// The ServerNo
+        /// <summary>
+        /// The ServerNo
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string serverNo;
+        private string serverNo;
 
-			/// <summary>
-		/// The ValidateType
+        /// <summary>
+        /// The ValidateType
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? valIdateType;
+        private int? valIdateType;
 
-			/// <summary>
-		/// The ValidateCode
+        /// <summary>
+        /// The ValidateCode
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string valIdateCode;
+        private string valIdateCode;
 
-			/// <summary>
-		/// The InvoiceType
+        /// <summary>
+        /// The InvoiceType
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? invoiceType;
+        private int? invoiceType;
 
-			/// <summary>
-		/// The Type
+        /// <summary>
+        /// The Type
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? type;
+        private int? type;
 
-			/// <summary>
-		/// The ModifyDate
+        /// <summary>
+        /// The ModifyDate
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? modifyDate;
+        private DateTime? modifyDate;
 
-			/// <summary>
-		/// The ArravieTime
+        /// <summary>
+        /// The ArravieTime
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? arravieTime;
+        private DateTime? arravieTime;
 
-			/// <summary>
-		/// The LeavelTime
+        /// <summary>
+        /// The LeavelTime
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? leavelTime;
+        private DateTime? leavelTime;
 
-			/// <summary>
-		/// The IsReminder
+        /// <summary>
+        /// The IsReminder
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isReminder;
+        private bool? isReminder;
 
-			/// <summary>
-		/// The IsDeal
+        /// <summary>
+        /// The IsDeal
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isDeal;
+        private bool? isDeal;
 
-			/// <summary>
-		/// The IsService
+        /// <summary>
+        /// The IsService
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isService;
+        private bool? isService;
 
-			/// <summary>
-		/// The IsAdd
+        /// <summary>
+        /// The IsAdd
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isAdd;
+        private bool? isAdd;
 
-			/// <summary>
-		/// The AddTime
+        /// <summary>
+        /// The AddTime
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private DateTime? addTime;
+        private DateTime? addTime;
 
-			/// <summary>
-		/// The OrderPwd
+        /// <summary>
+        /// The OrderPwd
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string orderPwd;
+        private string orderPwd;
 
-			/// <summary>
-		/// The ConsumerAmount
+        /// <summary>
+        /// The ConsumerAmount
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? consumerAmount;
+        private decimal? consumerAmount;
 
-			/// <summary>
-		/// The TeaBitFee
+        /// <summary>
+        /// The TeaBitFee
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? teaBitFee;
+        private decimal? teaBitFee;
 
-			/// <summary>
-		/// The IsupdateAmount
+        /// <summary>
+        /// The IsupdateAmount
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool isupdateAmount;
+        private bool isupdateAmount;
 
-			/// <summary>
-		/// The PointCouponsNumber
+        /// <summary>
+        /// The PointCouponsNumber
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? pointCouponsNumber;
+        private int? pointCouponsNumber;
 
-			/// <summary>
-		/// The IsOnTime
+        /// <summary>
+        /// The IsOnTime
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool isOnTime;
+        private bool isOnTime;
 
-			/// <summary>
-		/// The DirectPointCouponsNumber
+        /// <summary>
+        /// The DirectPointCouponsNumber
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private decimal? directPointCouponsNumber;
+        private decimal? directPointCouponsNumber;
 
-			/// <summary>
-		/// The OrderTableName
+        /// <summary>
+        /// The OrderTableName
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string orderTableName;
+        private string orderTableName;
 
-			/// <summary>
-		/// The Path
+        /// <summary>
+        /// The Path
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string path;
+        private string path;
 
-			/// <summary>
-		/// The UserStatus
+        /// <summary>
+        /// The UserStatus
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int? userStatus;
+        private int? userStatus;
 
-			/// <summary>
-		/// The CouponCode
+        /// <summary>
+        /// The CouponCode
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string couponCode;
+        private string couponCode;
 
-			/// <summary>
-		/// The DeskTypeDes
+        /// <summary>
+        /// The SupplierID
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-19 10:43:10
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string deskTypeDes;
+        private SupplierEntity supplier;
 
-			/// <summary>
-		/// The SupplierID
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:10
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		private SupplierEntity supplier;
-
-		#endregion
+        #endregion
 
-		/// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="TableReservationEntity"/> class.
         /// </summary>
         /// Creator:ww
@@ -720,40 +710,39 @@ namespace Ets.SingleApi.Model.Repository
         /// ----------------------------------------------------------------------------------------
         public TableReservationEntity()
         {
-			this.tableReservationId = 0;
-			this.tableId = 0;
-			this.customerId = 0;
-			this.templateId = string.Empty;
-			this.numberOfPeople = 0;
-			this.contactName = string.Empty;
-			this.contactNumber = string.Empty;
-			this.reservationTime = DateTime.Now;
-			this.dateReserved = DateTime.Now;
-			this.bookInstruction = string.Empty;
-			this.endOccupancyTime = DateTime.Now;
-			this.orderNotes = string.Empty;
-			this.sitcondition = string.Empty;
-			this.contactsex = string.Empty;
-			this.tableForOtherName = string.Empty;
-			this.tableForOtherType = string.Empty;
-			this.notes = string.Empty;
-			this.dinerName = string.Empty;
-			this.invoiceTitle = string.Empty;
-			this.tabelNo = string.Empty;
-			this.serverNo = string.Empty;
-			this.valIdateCode = string.Empty;
-			this.orderPwd = string.Empty;
-			this.isupdateAmount = false;
-			this.isOnTime = false;
-			this.orderTableName = string.Empty;
-			this.path = @"Other";
-			this.couponCode = string.Empty;
-			this.deskTypeDes = string.Empty;
-		}
+            this.tableReservationId = 0;
+            this.tableId = 0;
+            this.customerId = 0;
+            this.templateId = string.Empty;
+            this.numberOfPeople = 0;
+            this.contactName = string.Empty;
+            this.contactNumber = string.Empty;
+            this.reservationTime = DateTime.Now;
+            this.dateReserved = DateTime.Now;
+            this.bookInstruction = string.Empty;
+            this.endOccupancyTime = DateTime.Now;
+            this.orderNotes = string.Empty;
+            this.sitcondition = string.Empty;
+            this.contactsex = string.Empty;
+            this.tableForOtherName = string.Empty;
+            this.tableForOtherType = string.Empty;
+            this.notes = string.Empty;
+            this.dinerName = string.Empty;
+            this.invoiceTitle = string.Empty;
+            this.tabelNo = string.Empty;
+            this.serverNo = string.Empty;
+            this.valIdateCode = string.Empty;
+            this.orderPwd = string.Empty;
+            this.isupdateAmount = false;
+            this.isOnTime = false;
+            this.orderTableName = string.Empty;
+            this.path = @"Other";
+            this.couponCode = string.Empty;
+        }
 
-		#region public member
+        #region public member
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TableReservationID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -761,8 +750,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int TableReservationId
-		{
+        public virtual int TableReservationId
+        {
             get
             {
                 return this.tableReservationId;
@@ -774,7 +763,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TableID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -782,8 +771,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int TableId
-		{
+        public virtual int TableId
+        {
             get
             {
                 return this.tableId;
@@ -795,7 +784,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CustomerID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -803,8 +792,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int CustomerId
-		{
+        public virtual int CustomerId
+        {
             get
             {
                 return this.customerId;
@@ -816,7 +805,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Templateid of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -824,8 +813,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string TemplateId
-		{
+        public virtual string TemplateId
+        {
             get
             {
                 return this.templateId;
@@ -837,7 +826,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the NumberOfPeople of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -845,8 +834,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int NumberOfPeople
-		{
+        public virtual int NumberOfPeople
+        {
             get
             {
                 return this.numberOfPeople;
@@ -858,7 +847,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ContactName of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -866,8 +855,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string ContactName
-		{
+        public virtual string ContactName
+        {
             get
             {
                 return this.contactName;
@@ -879,7 +868,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ContactNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -887,8 +876,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string ContactNumber
-		{
+        public virtual string ContactNumber
+        {
             get
             {
                 return this.contactNumber;
@@ -900,7 +889,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ReservationTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -908,8 +897,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime ReservationTime
-		{
+        public virtual DateTime ReservationTime
+        {
             get
             {
                 return this.reservationTime;
@@ -921,7 +910,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DateReserved of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -929,8 +918,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime DateReserved
-		{
+        public virtual DateTime DateReserved
+        {
             get
             {
                 return this.dateReserved;
@@ -942,7 +931,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the BookInstruction of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -950,8 +939,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string BookInstruction
-		{
+        public virtual string BookInstruction
+        {
             get
             {
                 return this.bookInstruction;
@@ -963,7 +952,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the PaymentID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -971,8 +960,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? PaymentId
-		{
+        public virtual int? PaymentId
+        {
             get
             {
                 return this.paymentId;
@@ -984,7 +973,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the Cancelled of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -992,8 +981,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? Cancelled
-		{
+        public virtual bool? Cancelled
+        {
             get
             {
                 return this.cancelled;
@@ -1005,7 +994,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the Refunded of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1013,8 +1002,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? Refunded
-		{
+        public virtual bool? Refunded
+        {
             get
             {
                 return this.refunded;
@@ -1026,7 +1015,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsRating of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1034,8 +1023,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsRating
-		{
+        public virtual bool? IsRating
+        {
             get
             {
                 return this.isRating;
@@ -1047,7 +1036,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the BookSource of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1055,8 +1044,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? BookSource
-		{
+        public virtual int? BookSource
+        {
             get
             {
                 return this.bookSource;
@@ -1068,7 +1057,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the EndOccupancyTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1076,8 +1065,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime EndOccupancyTime
-		{
+        public virtual DateTime EndOccupancyTime
+        {
             get
             {
                 return this.endOccupancyTime;
@@ -1089,7 +1078,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OrderNotes of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1097,8 +1086,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string OrderNotes
-		{
+        public virtual string OrderNotes
+        {
             get
             {
                 return this.orderNotes;
@@ -1110,7 +1099,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OperatorID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1118,8 +1107,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? OperatorId
-		{
+        public virtual int? OperatorId
+        {
             get
             {
                 return this.operatorId;
@@ -1131,7 +1120,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Sitcondition of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1139,8 +1128,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Sitcondition
-		{
+        public virtual string Sitcondition
+        {
             get
             {
                 return this.sitcondition;
@@ -1152,7 +1141,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Roomprice of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1160,8 +1149,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? Roomprice
-		{
+        public virtual int? Roomprice
+        {
             get
             {
                 return this.roomprice;
@@ -1173,7 +1162,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Contactsex of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1181,8 +1170,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Contactsex
-		{
+        public virtual string Contactsex
+        {
             get
             {
                 return this.contactsex;
@@ -1194,7 +1183,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsTableForOther of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1202,8 +1191,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsTableForOther
-		{
+        public virtual bool? IsTableForOther
+        {
             get
             {
                 return this.isTableForOther;
@@ -1215,7 +1204,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TableForOtherName of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1223,8 +1212,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string TableForOtherName
-		{
+        public virtual string TableForOtherName
+        {
             get
             {
                 return this.tableForOtherName;
@@ -1236,7 +1225,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TableForOtherType of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1244,8 +1233,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string TableForOtherType
-		{
+        public virtual string TableForOtherType
+        {
             get
             {
                 return this.tableForOtherType;
@@ -1257,7 +1246,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Notes of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1265,8 +1254,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Notes
-		{
+        public virtual string Notes
+        {
             get
             {
                 return this.notes;
@@ -1278,7 +1267,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the ForOthers of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1286,8 +1275,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? ForOthers
-		{
+        public virtual bool? ForOthers
+        {
             get
             {
                 return this.forOthers;
@@ -1299,7 +1288,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DinerName of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1307,8 +1296,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string DinerName
-		{
+        public virtual string DinerName
+        {
             get
             {
                 return this.dinerName;
@@ -1320,7 +1309,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DinerTypeID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1328,8 +1317,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? DinerTypeId
-		{
+        public virtual int? DinerTypeId
+        {
             get
             {
                 return this.dinerTypeId;
@@ -1341,7 +1330,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the SeatRequirementID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1349,8 +1338,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? SeatRequirementId
-		{
+        public virtual int? SeatRequirementId
+        {
             get
             {
                 return this.seatRequirementId;
@@ -1362,7 +1351,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the RoomTypeID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1370,8 +1359,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? RoomTypeId
-		{
+        public virtual int? RoomTypeId
+        {
             get
             {
                 return this.roomTypeId;
@@ -1383,7 +1372,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the RealPeople of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1391,8 +1380,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? RealPeople
-		{
+        public virtual int? RealPeople
+        {
             get
             {
                 return this.realPeople;
@@ -1404,7 +1393,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the RealSpendMoney of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1412,8 +1401,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? RealSpendMoney
-		{
+        public virtual decimal? RealSpendMoney
+        {
             get
             {
                 return this.realSpendMoney;
@@ -1425,7 +1414,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TableStatus of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1433,8 +1422,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? TableStatus
-		{
+        public virtual int? TableStatus
+        {
             get
             {
                 return this.tableStatus;
@@ -1446,7 +1435,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OrderNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1454,8 +1443,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? OrderNumber
-		{
+        public virtual int? OrderNumber
+        {
             get
             {
                 return this.orderNumber;
@@ -1467,7 +1456,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ActualFinishTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1475,8 +1464,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? ActualFinishTime
-		{
+        public virtual DateTime? ActualFinishTime
+        {
             get
             {
                 return this.actualFinishTime;
@@ -1488,7 +1477,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Total of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1496,8 +1485,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? Total
-		{
+        public virtual decimal? Total
+        {
             get
             {
                 return this.total;
@@ -1509,7 +1498,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CustomerTotal of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1517,8 +1506,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? CustomerTotal
-		{
+        public virtual decimal? CustomerTotal
+        {
             get
             {
                 return this.customerTotal;
@@ -1530,7 +1519,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsPaid of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1538,8 +1527,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsPaId
-		{
+        public virtual bool? IsPaId
+        {
             get
             {
                 return this.isPaId;
@@ -1551,7 +1540,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the InvoiceRequired of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1559,8 +1548,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? InvoiceRequired
-		{
+        public virtual bool? InvoiceRequired
+        {
             get
             {
                 return this.invoiceRequired;
@@ -1572,7 +1561,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the InvoiceTitle of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1580,8 +1569,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string InvoiceTitle
-		{
+        public virtual string InvoiceTitle
+        {
             get
             {
                 return this.invoiceTitle;
@@ -1593,7 +1582,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DineNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1601,8 +1590,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? DineNumber
-		{
+        public virtual int? DineNumber
+        {
             get
             {
                 return this.dineNumber;
@@ -1614,7 +1603,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TabelNo of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1622,8 +1611,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string TabelNo
-		{
+        public virtual string TabelNo
+        {
             get
             {
                 return this.tabelNo;
@@ -1635,7 +1624,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ServerNo of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1643,8 +1632,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string ServerNo
-		{
+        public virtual string ServerNo
+        {
             get
             {
                 return this.serverNo;
@@ -1656,7 +1645,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ValidateType of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1664,8 +1653,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? ValIdateType
-		{
+        public virtual int? ValIdateType
+        {
             get
             {
                 return this.valIdateType;
@@ -1677,7 +1666,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ValidateCode of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1685,8 +1674,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string ValIdateCode
-		{
+        public virtual string ValIdateCode
+        {
             get
             {
                 return this.valIdateCode;
@@ -1698,7 +1687,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the InvoiceType of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1706,8 +1695,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? InvoiceType
-		{
+        public virtual int? InvoiceType
+        {
             get
             {
                 return this.invoiceType;
@@ -1719,7 +1708,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Type of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1727,8 +1716,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? Type
-		{
+        public virtual int? Type
+        {
             get
             {
                 return this.type;
@@ -1740,7 +1729,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ModifyDate of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1748,8 +1737,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? ModifyDate
-		{
+        public virtual DateTime? ModifyDate
+        {
             get
             {
                 return this.modifyDate;
@@ -1761,7 +1750,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ArravieTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1769,8 +1758,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? ArravieTime
-		{
+        public virtual DateTime? ArravieTime
+        {
             get
             {
                 return this.arravieTime;
@@ -1782,7 +1771,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the LeavelTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1790,8 +1779,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? LeavelTime
-		{
+        public virtual DateTime? LeavelTime
+        {
             get
             {
                 return this.leavelTime;
@@ -1803,7 +1792,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsReminder of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1811,8 +1800,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsReminder
-		{
+        public virtual bool? IsReminder
+        {
             get
             {
                 return this.isReminder;
@@ -1824,7 +1813,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsDeal of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1832,8 +1821,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsDeal
-		{
+        public virtual bool? IsDeal
+        {
             get
             {
                 return this.isDeal;
@@ -1845,7 +1834,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsService of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1853,8 +1842,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsService
-		{
+        public virtual bool? IsService
+        {
             get
             {
                 return this.isService;
@@ -1866,7 +1855,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsAdd of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1874,8 +1863,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsAdd
-		{
+        public virtual bool? IsAdd
+        {
             get
             {
                 return this.isAdd;
@@ -1887,7 +1876,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the AddTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1895,8 +1884,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual DateTime? AddTime
-		{
+        public virtual DateTime? AddTime
+        {
             get
             {
                 return this.addTime;
@@ -1908,7 +1897,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OrderPwd of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1916,8 +1905,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string OrderPwd
-		{
+        public virtual string OrderPwd
+        {
             get
             {
                 return this.orderPwd;
@@ -1929,7 +1918,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the ConsumerAmount of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1937,8 +1926,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? ConsumerAmount
-		{
+        public virtual decimal? ConsumerAmount
+        {
             get
             {
                 return this.consumerAmount;
@@ -1950,7 +1939,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TeaBitFee of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1958,8 +1947,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? TeaBitFee
-		{
+        public virtual decimal? TeaBitFee
+        {
             get
             {
                 return this.teaBitFee;
@@ -1971,7 +1960,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsupdateAmount of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -1979,8 +1968,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool IsupdateAmount
-		{
+        public virtual bool IsupdateAmount
+        {
             get
             {
                 return this.isupdateAmount;
@@ -1992,7 +1981,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the PointCouponsNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -2000,8 +1989,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? PointCouponsNumber
-		{
+        public virtual int? PointCouponsNumber
+        {
             get
             {
                 return this.pointCouponsNumber;
@@ -2013,7 +2002,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsOnTime of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -2021,8 +2010,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool IsOnTime
-		{
+        public virtual bool IsOnTime
+        {
             get
             {
                 return this.isOnTime;
@@ -2034,7 +2023,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DirectPointCouponsNumber of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -2042,8 +2031,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual decimal? DirectPointCouponsNumber
-		{
+        public virtual decimal? DirectPointCouponsNumber
+        {
             get
             {
                 return this.directPointCouponsNumber;
@@ -2055,7 +2044,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OrderTableName of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -2063,8 +2052,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string OrderTableName
-		{
+        public virtual string OrderTableName
+        {
             get
             {
                 return this.orderTableName;
@@ -2076,7 +2065,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Path of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -2084,8 +2073,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Path
-		{
+        public virtual string Path
+        {
             get
             {
                 return this.path;
@@ -2097,7 +2086,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the UserStatus of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -2105,8 +2094,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int? UserStatus
-		{
+        public virtual int? UserStatus
+        {
             get
             {
                 return this.userStatus;
@@ -2118,7 +2107,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the CouponCode of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -2126,8 +2115,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string CouponCode
-		{
+        public virtual string CouponCode
+        {
             get
             {
                 return this.couponCode;
@@ -2139,28 +2128,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
-        /// Gets or sets a value mapping the DeskTypeDes of TableReservationEntity table in the database.
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-19 10:43:10
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		public virtual string DeskTypeDes
-		{
-            get
-            {
-                return this.deskTypeDes;
-            }
-
-            set
-            {
-                this.deskTypeDes = value;
-            }
-        }
-
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the SupplierID of TableReservationEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -2168,8 +2136,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual SupplierEntity Supplier
-		{
+        public virtual SupplierEntity Supplier
+        {
             get
             {
                 return this.supplier;
@@ -2181,9 +2149,9 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-		#endregion
+        #endregion
 
-			/// <summary>
+        /// <summary>
         /// Determines whether the specified is equal to this instance.
         /// </summary>
         /// <param name="obj">The to compare with this instance.</param>
@@ -2206,7 +2174,7 @@ namespace Ets.SingleApi.Model.Repository
             return this.TableReservationId == castObj.TableReservationId;
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
@@ -2217,11 +2185,11 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public override int GetHashCode()
-		{
-			var hash = 57; 
-			hash = 27 * hash * this.TableReservationId.GetHashCode();
-			return hash;
-		}
-	}
+        public override int GetHashCode()
+        {
+            var hash = 57;
+            hash = 27 * hash * this.TableReservationId.GetHashCode();
+            return hash;
+        }
+    }
 }

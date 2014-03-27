@@ -1,27 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-	<class name="Ets.SingleApi.Model.Repository.SupplierDeskTimeEntity, Ets.SingleApi.Model" table="SupplierDeskTime" dynamic-update="true" optimistic-lock="all" >
-	 <!--The cache-->
-	 <cache usage="read-write"/>
-	 <!--The primary keys-->
-		<id name="Id" column="Id" type="Int32" >
-			<generator class="native"/>
-		</id>
-		<!--The propertys-->
-		<property name="TimeName" column="TimeName" type="String" />
-		<property name="BeginTime" column="BeginTime" type="String" />
-		<property name="EndTime" column="EndTime" type="String" />
-		<property name="SupplierId" column="SupplierId" type="Int32" />
-		<property name="CreateTime" column="CreateTime" type="Timestamp" />
-		<property name="UpdateTime" column="UpdateTime" type="Timestamp" />
-		<property name="Description" column="Description" type="String" not-null="false" />
-		<property name="IsSpecial" column="IsSpecial" type="Boolean" not-null="false" />
-		<property name="IsEnable" column="IsEnable" type="Boolean" not-null="false" />
-		<property name="TimeType" column="TimeType" type="Int32" not-null="false" />
-		<!--The foreign keys-->
-		<bag name="DeskTypeLockLogList" cascade="none" lazy="true" table="DeskTypeLockLog">
-			<key column="SupplierDeskTimeId" />
-			<one-to-many class="Ets.SingleApi.Model.Repository.DeskTypeLockLogEntity, Ets.SingleApi.Model" />
-		</bag>
-	</class>
+  <class name="Ets.SingleApi.Model.Repository.SupplierDeskTimeEntity, Ets.SingleApi.Model" table="SupplierDeskTime" dynamic-update="true" optimistic-lock="all" >
+    <!--The cache-->
+    <cache usage="read-write"/>
+    <!--The primary keys-->
+    <id name="Id" column="Id" type="Int32" >
+      <generator class="native"/>
+    </id>
+    <!--The propertys-->
+    <property name="TimeName" column="TimeName" type="String" />
+    <property name="BeginTime" column="BeginTime" type="String" />
+    <property name="EndTime" column="EndTime" type="String" />
+    <property name="SupplierId" column="SupplierId" type="Int32" />
+    <property name="CreateTime" column="CreateTime" type="Timestamp" />
+    <property name="UpdateTime" column="UpdateTime" type="Timestamp" />
+    <property name="Description" column="Description" type="String" not-null="false" />
+    <property name="IsEnable" column="IsEnable" type="Boolean" not-null="false" />
+    <property name="TimeType" column="TimeType" type="Int32" not-null="false" />
+    <!--The foreign keys-->
+    <bag name="DeskTypeLockLogList" cascade="none" lazy="true" table="DeskTypeLockLog">
+      <key column="SupplierDeskTimeId" />
+      <one-to-many class="Ets.SingleApi.Model.Repository.DeskTypeLockLogEntity, Ets.SingleApi.Model" />
+    </bag>
+  </class>
 </hibernate-mapping>
