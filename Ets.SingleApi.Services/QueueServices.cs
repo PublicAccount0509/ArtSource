@@ -420,8 +420,8 @@
                                   SeatNumber = queueEntity.SeatNumber,
                                   SupplierId = queueEntity.SupplierId,
                                   SupplierName = queueEntity.SupplierName,
-                                  TblTypeId = deskType.TableType.Id,
-                                  TblTypeName = deskType.TableType.TblTypeName,
+                                  TblTypeId = deskType.TableType == null ? 0 : deskType.TableType.Id,
+                                  TblTypeName = deskType.TableType == null ? string.Empty : deskType.TableType.TblTypeName,
                                   Telephone = queueEntity.Phone,
                                   UserName = queueEntity.UserName,
                                   CeateDate = queueEntity.Time
@@ -480,8 +480,8 @@
                                          deskType.RoomType,
                                          queueEntity.SupplierId,
                                          queueEntity.SupplierName,
-                                         TblTypeId = deskType.TableType.Id,
-                                         deskType.TableType.TblTypeName,
+                                         TblTypeId = deskType.TableType == null ? 0 : deskType.TableType.Id,
+                                         TblTypeName = deskType.TableType == null ? string.Empty : deskType.TableType.TblTypeName,
                                          CeateDate = queueEntity.Time,
                                          entity.SupplierGroupId,
                                          queueEntity.Cancelled
