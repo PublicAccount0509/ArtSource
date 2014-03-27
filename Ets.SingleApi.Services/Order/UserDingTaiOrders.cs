@@ -111,7 +111,7 @@
             {
                 return new ServicesResultList<IOrderModel>
                     {
-                        StatusCode = (int) StatusCode.System.InvalidRequest,
+                        StatusCode = (int)StatusCode.System.InvalidRequest,
                         Result = new List<IOrderModel>()
                     };
             }
@@ -138,7 +138,7 @@
         private IEnumerable<DingTaiOrderModel> GetDingTaiOrderList(UserOrdersParameter parameter)
         {
             var retentionSupplierGroupIdList =
-                ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?) p).ToList();
+                ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
             var queryableTemp = (from tableReservationEntity in this.tableReservationEntityRepository.EntityQueryable
                                  where tableReservationEntity.CustomerId == parameter.CustomerId
                                        && tableReservationEntity.Cancelled == parameter.Cancelled
@@ -186,12 +186,12 @@
             if (parameter.PageIndex != null)
             {
                 queryableTemp =
-                    queryableTemp.Skip((parameter.PageIndex.Value - 1)*parameter.PageSize).Take(parameter.PageSize);
+                    queryableTemp.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize).Take(parameter.PageSize);
             }
 
             //菜品名称（菜品1,菜品2,菜品3)
             var tableReservationList = queryableTemp.ToList();
-            var tableReservationIdList = tableReservationList.Select(p => (int?) p.TableReservationId).ToList();
+            var tableReservationIdList = tableReservationList.Select(p => (int?)p.TableReservationId).ToList();
 
             var orderList = (from order in this.orderDetailEntityRepository.EntityQueryable
                              where tableReservationIdList.Contains(order.OrderId)
@@ -242,7 +242,7 @@
                                   OrderStatusId = p.TableStatus ?? 0,
                                   DineNumber = p.DineNumber ?? 0,
                                   OrderStatus = string.Empty,
-                                  OrderType = (int) this.OrderType,
+                                  OrderType = (int)this.OrderType,
                                   IsPaid = p.IsPaId ?? false,
                                   DishNames =
                                       string.Join("，",
@@ -254,15 +254,15 @@
                                       paymentList.Where(q => q.OrderId == p.TableReservationId.ToString())
                                                  .Select(pay => pay.PaymentMethodId)
                                                  .FirstOrDefault() ?? -1,
-                                  DeskNo = deskBooking == null ? "" : deskBooking.DeskNo,
-                                  RoomType = deskBooking.RoomType??0,
-                                  RoomTypeName = deskBooking.RoomType == null ? "" : (deskBooking.RoomType == 0 ? "散座" : "包房"),
+                                  DeskNo = deskBooking == null ? string.Empty : deskBooking.DeskNo,
+                                  RoomType = deskBooking == null ? 0 : deskBooking.RoomType ?? 0,
+                                  RoomTypeName = deskBooking == null ? string.Empty : (deskBooking.RoomType == null ? string.Empty : (deskBooking.RoomType == 0 ? "散座" : "包房")),
                                   MinNumber = deskBooking == null ? 0 : deskBooking.MinNumber,
                                   MaxNumber = deskBooking == null ? 0 : deskBooking.MaxNumber,
                                   BookDate = deskBooking == null ? null : deskBooking.BookDate,
-                                  BookTime = deskBooking == null ? "" : deskBooking.BookDate.Value.ToString("HH:mm"),
-                                  DeskImgUrl = deskBooking == null ? "" : string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, deskBooking.ImgPath),
-                                  TblTypeName = deskBooking == null ? "" : deskBooking.TblTypeName
+                                  BookTime = deskBooking == null ? string.Empty : deskBooking.BookDate.Value.ToString("HH:mm"),
+                                  DeskImgUrl = deskBooking == null ? string.Empty : string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, deskBooking.ImgPath),
+                                  TblTypeName = deskBooking == null ? string.Empty : deskBooking.TblTypeName
                               }).ToList();
             return result;
         }
