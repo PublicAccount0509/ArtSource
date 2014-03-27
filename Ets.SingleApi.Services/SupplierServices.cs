@@ -480,15 +480,15 @@
             }
 
             //餐厅推荐菜品列表
-            var recommendedDishList = GetRecommendedDish(supplierId);
-            if (recommendedDishList.Count == 0)
+            var recommendedDishList = GetRecommendedDish(source, supplierId, null, null);
+            if (recommendedDishList == null)
             {
                 return new ServicesResult<SupplierDetailModel>
                 {
                     Result = supplier
                 };
             }
-            supplier.RecommendedDishList = recommendedDishList;
+            supplier.RecommendedDishList = recommendedDishList.Result;
 
             var timeTableDisplayList = (from entity in this.timeTableDisplayEntityRepository.EntityQueryable
                                         where timeTableDisplayIdList.Contains(entity.TimeTableDisplayId)
@@ -2379,6 +2379,8 @@
         /// 获取 餐厅推荐菜品(外卖)列表
         /// </summary>
         /// <param name="supplierId">The supplierIdDefault documentation</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns>
         /// List{SupplierRecommendedDishModel}
         /// </returns>
@@ -2387,7 +2389,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private List<SupplierRecommendedDishModel> GetRecommendedDish(int supplierId)
+        public ServicesResultList<SupplierRecommendedDishModel> GetRecommendedDish(string source, int supplierId, int? pageIndex, int? pageSize)
         {
             var tempSupplierCategoryList =
                 (from supplierMenu in this.supplierMenuCategoryEntityRepository.EntityQueryable
@@ -2406,7 +2408,11 @@
 
             if (tempSupplierCategoryList.Count == 0)
             {
-                return new List<SupplierRecommendedDishModel>();
+                return new ServicesResultList<SupplierRecommendedDishModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<SupplierRecommendedDishModel>()
+                };
             }
 
             var supplierCategoryList = (from entity in tempSupplierCategoryList
@@ -2480,7 +2486,16 @@
                                          PackagingFee = supplierDish.PackagingFee
                                      }).ToList();
 
-            return recommendDishList;
+            if (pageIndex != null && pageSize != null)
+            {
+                recommendDishList = recommendDishList.Skip((int)pageIndex).Take((int)pageSize).ToList();
+            }
+            return new ServicesResultList<SupplierRecommendedDishModel>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = recommendDishList
+            };
+            //return recommendDishList;
         }
 
         /// <summary>
