@@ -508,7 +508,8 @@ namespace Ets.SingleApi.Controllers
                             IsCommission = q.IsCommission,
                             IsDiscount = q.IsDiscount,
                             Recipe = q.Recipe ?? string.Empty,
-                            Recommended = q.Recommended
+                            Recommended = q.Recommended,
+                            PackagingFee = q.PackagingFee ?? 0
                         }).ToList()
                 }).ToList();
 
@@ -1590,7 +1591,7 @@ namespace Ets.SingleApi.Controllers
                 };
             }
 
-            var result = this.supplierServices.CheckTableNumIsEffective(this.Source,supplierId,tableNo);
+            var result = this.supplierServices.CheckTableNumIsEffective(this.Source, supplierId, tableNo);
 
             return new Response<bool>
             {
