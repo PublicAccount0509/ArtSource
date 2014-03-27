@@ -11,9 +11,9 @@
 
 namespace Ets.SingleApi.Model.Repository
 {
-	using System;
-	using System.Collections.Generic;
-		
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Class:TableTypeEntity
     /// Namespace:Ets.SingleApi.Model.Repository
@@ -27,61 +27,51 @@ namespace Ets.SingleApi.Model.Repository
     [Serializable]
     public class TableTypeEntity
     {
-		#region private member
+        #region private member
 
-			/// <summary>
-		/// The Id
+        /// <summary>
+        /// The Id
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int id;
+        private int id;
 
-			/// <summary>
-		/// The TblTypeName
+        /// <summary>
+        /// The TblTypeName
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string tblTypeName;
+        private string tblTypeName;
 
-			/// <summary>
-		/// The SupplierId
+        /// <summary>
+        /// The Description
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int supplierId;
+        private string description;
 
-			/// <summary>
-		/// The Description
+        /// <summary>
+        /// The DeskTypeList
         /// </summary>
         /// Creator:ww
         /// Creation Date:2014-3-20 16:37:43
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string description;
+        private IList<DeskTypeEntity> deskTypeList;
 
-			/// <summary>
-		/// The DeskTypeList
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		private IList<DeskTypeEntity> deskTypeList;
+        #endregion
 
-		#endregion
-
-		/// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="TableTypeEntity"/> class.
         /// </summary>
         /// Creator:ww
@@ -91,15 +81,14 @@ namespace Ets.SingleApi.Model.Repository
         /// ----------------------------------------------------------------------------------------
         public TableTypeEntity()
         {
-			this.id = 0;
-			this.tblTypeName = string.Empty;
-			this.supplierId = 0;
-			this.description = string.Empty;
-		}
+            this.id = 0;
+            this.tblTypeName = string.Empty;
+            this.description = string.Empty;
+        }
 
-		#region public member
+        #region public member
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Id of TableTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -107,8 +96,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int Id
-		{
+        public virtual int Id
+        {
             get
             {
                 return this.id;
@@ -120,7 +109,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the TblTypeName of TableTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -128,8 +117,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string TblTypeName
-		{
+        public virtual string TblTypeName
+        {
             get
             {
                 return this.tblTypeName;
@@ -141,28 +130,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
-        /// Gets or sets a value mapping the SupplierId of TableTypeEntity table in the database.
-        /// </summary>
-        /// Creator:ww
-        /// Creation Date:2014-3-20 16:37:43
-        /// Modifier:
-        /// Last Modified:
-        /// ----------------------------------------------------------------------------------------
-		public virtual int SupplierId
-		{
-            get
-            {
-                return this.supplierId;
-            }
-
-            set
-            {
-                this.supplierId = value;
-            }
-        }
-
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Description of TableTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -170,8 +138,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Description
-		{
+        public virtual string Description
+        {
             get
             {
                 return this.description;
@@ -183,7 +151,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the DeskTypeList of TableTypeEntity table in the database.
         /// </summary>
         /// Creator:ww
@@ -191,8 +159,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual IList<DeskTypeEntity> DeskTypeList
-		{
+        public virtual IList<DeskTypeEntity> DeskTypeList
+        {
             get
             {
                 return this.deskTypeList;
@@ -204,9 +172,9 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-		#endregion
+        #endregion
 
-			/// <summary>
+        /// <summary>
         /// Determines whether the specified is equal to this instance.
         /// </summary>
         /// <param name="obj">The to compare with this instance.</param>
@@ -229,7 +197,7 @@ namespace Ets.SingleApi.Model.Repository
             return this.Id == castObj.Id;
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
@@ -240,11 +208,11 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public override int GetHashCode()
-		{
-			var hash = 57; 
-			hash = 27 * hash * this.Id.GetHashCode();
-			return hash;
-		}
-	}
+        public override int GetHashCode()
+        {
+            var hash = 57;
+            hash = 27 * hash * this.Id.GetHashCode();
+            return hash;
+        }
+    }
 }

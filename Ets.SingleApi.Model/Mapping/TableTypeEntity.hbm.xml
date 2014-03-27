@@ -9,7 +9,6 @@
 		</id>
 		<!--The propertys-->
 		<property name="TblTypeName" column="TblTypeName" type="String" />
-		<property name="SupplierId" column="SupplierId" type="Int32" />
 		<property name="Description" column="Description" type="String" not-null="false" />
 		<!--The foreign keys-->
 		<bag name="DeskTypeList" cascade="none" lazy="true" table="DeskType">
