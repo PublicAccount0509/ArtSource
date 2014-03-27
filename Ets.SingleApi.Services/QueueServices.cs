@@ -166,8 +166,8 @@
                                              deskType.Description,
                                              deskType.MaxNumber,
                                              deskType.MinNumber,
-                                             TableTypeId = deskType.TableType.Id,
-                                             deskType.TableType.TblTypeName
+                                             TableTypeId = deskType.TableType == null ? 0 : deskType.TableType.Id,
+                                             TblTypeName = deskType.TableType == null ? string.Empty : deskType.TableType.TblTypeName
                                          }).ToList();
 
             var tempQueueDate = parameter.QueueDate.ToString("yyyy-MM-dd");

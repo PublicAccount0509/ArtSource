@@ -2586,8 +2586,8 @@
                                 {
                                     Id = deskTypeEntity.Id,
                                     RoomType = deskTypeEntity.RoomType,
-                                    TblTypeId = deskTypeEntity.TableType.Id,
-                                    TblTypeName = deskTypeEntity.TableType.TblTypeName,
+                                    TblTypeId = deskTypeEntity.TableType == null ? 0 : deskTypeEntity.TableType.Id,
+                                    TblTypeName = deskTypeEntity.TableType == null ? string.Empty : deskTypeEntity.TableType.TblTypeName,
                                     MaxNumber = deskTypeEntity.MaxNumber,
                                     MinNumber = deskTypeEntity.MinNumber,
                                     DepositAmount = deskTypeEntity.DepositAmount,
