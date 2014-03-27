@@ -202,12 +202,10 @@
 
             foreach (var queueDeskModel in modelList)
             {
-                var item =
-                    queueList.FirstOrDefault(
-                        p => p.CustomerId == customer.CustomerId && p.DeskTypeId == queueDeskModel.Id);
-
+                var item = queueList.FirstOrDefault(p => p.CustomerId == customer.CustomerId && p.DeskTypeId == queueDeskModel.Id);
                 if (item == null)
                 {
+                    queueDeskModel.QueueNumber = queueList.Count(p => p.DeskTypeId == queueDeskModel.Id);
                     continue;
                 }
 
@@ -476,6 +474,7 @@
                                          deskType.DeskTypeName,
                                          deskType.MaxNumber,
                                          deskType.MinNumber,
+                                         queueEntity.DeskTypeId,
                                          queueEntity.Number,
                                          QueueStateId = queueEntity.State,
                                          deskType.RoomType,
@@ -539,14 +538,39 @@
                             SupplierName = p.SupplierName,
                             TblTypeId = p.TblTypeId,
                             TblTypeName = p.TblTypeName,
-                            CeateDate = p.CeateDate
+                            CeateDate = p.CeateDate,
+                            DeskTypeId = p.DeskTypeId ?? 0
                         }).ToList();
 
+            var dateTime = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+            if ((parameter.QueueStartDate ?? dateTime).ToString("yyyy-MM-dd") == dateTime.ToString("yyyy-MM-dd")
+                && (parameter.QueueStartDate ?? dateTime).ToString("yyyy-MM-dd")
+                == dateTime.AddDays(1).ToString("yyyy-MM-dd"))
+            {
+                return new ServicesResultList<QueueModel>
+                {
+                    Result = result
+                };
+            }
+
+
+            var tempList =
+                result.Where(p => p.QueueStateId == 0)
+                      .Select(p => new { p.SupplierId, p.DeskTypeId, p.CeateDate })
+                      .Distinct()
+                      .ToList();
+
+            var tempQueueList = (from item in tempList
+                                 from queueEntity in this.queueEntityRepository.EntityQueryable
+                                 where
+                                     item.SupplierId == queueEntity.SupplierId && item.DeskTypeId == queueEntity.DeskTypeId
+                                     && queueEntity.Time < item.CeateDate && queueEntity.Time >= dateTime && queueEntity.State == 0 && queueEntity.Cancelled == false
+                                 select new { queueEntity.SupplierId, queueEntity.DeskTypeId, queueEntity.QueueId, CeateDate = queueEntity.Time }).ToList();
             foreach (var queueModel in result)
             {
-                queueModel.QueueNumber = queueList.Count(
+                queueModel.QueueNumber = tempQueueList.Count(
                         p =>
-                        p.SupplierId == queueModel.SupplierId && p.CeateDate < queueModel.CeateDate && p.Cancelled == false && p.QueueStateId == 0);
+                        p.SupplierId == queueModel.SupplierId && p.DeskTypeId == queueModel.DeskTypeId && p.CeateDate < queueModel.CeateDate);
             }
 
             return new ServicesResultList<QueueModel>

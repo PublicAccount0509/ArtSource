@@ -132,6 +132,19 @@
         public string BoxName { get; set; }
 
         /// <summary>
+        /// 台位类型Id
+        /// </summary>
+        /// <value>
+        /// The name of the desk type.
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 1:19 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int DeskTypeId { get; set; }
+
+        /// <summary>
         /// 台位类型名称
         /// </summary>
         /// <value>
