@@ -123,6 +123,16 @@
                     };
             }
 
+            var customer = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == parameter.UserId);
+            if (customer == null)
+            {
+                return new ServicesResultList<QueueDeskModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = new List<QueueDeskModel>()
+                };
+            }
+
             var supplierId = parameter.SupplierId;
             /*判断餐厅Id是否存在*/
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
@@ -171,8 +181,10 @@
                                    && queue.Time < endQueueDate && queue.DeskTypeId == deskTypeId
                              select new
                                  {
+                                     queue.CustomerId,
                                      queue.DeskTypeId,
-                                     queue.Number
+                                     queue.Number,
+                                     queue.Time
                                  }).ToList();
 
             var modelList = queueDeskTypeList.Select(p => new QueueDeskModel
@@ -185,9 +197,22 @@
                     MinNumber = p.MinNumber,
                     RoomType = p.RoomType,
                     TblTypeId = p.TableTypeId,
-                    TblTypeName = p.TblTypeName,
-                    QueueNumber = queueList.Count(q => q.DeskTypeId == p.Id)
+                    TblTypeName = p.TblTypeName
                 }).ToList();
+
+            foreach (var queueDeskModel in modelList)
+            {
+                var item =
+                    queueList.FirstOrDefault(
+                        p => p.CustomerId == customer.CustomerId && p.DeskTypeId == queueDeskModel.Id);
+
+                if (item == null)
+                {
+                    continue;
+                }
+
+                queueDeskModel.QueueNumber = queueList.Count(p => p.DeskTypeId == queueDeskModel.Id && p.Time < item.Time);
+            }
 
             return new ServicesResultList<QueueDeskModel>
                 {
@@ -519,11 +544,9 @@
 
             foreach (var queueModel in result)
             {
-                var dateTime = DateTime.Parse(queueModel.CeateDate.ToString("yyyy-MM-dd"));
                 queueModel.QueueNumber = queueList.Count(
                         p =>
-                        p.SupplierId == queueModel.SupplierId && p.CeateDate >= dateTime
-                        && p.CeateDate < dateTime.AddDays(1) && p.Cancelled == false && p.QueueStateId == 0);
+                        p.SupplierId == queueModel.SupplierId && p.CeateDate < queueModel.CeateDate && p.Cancelled == false && p.QueueStateId == 0);
             }
 
             return new ServicesResultList<QueueModel>

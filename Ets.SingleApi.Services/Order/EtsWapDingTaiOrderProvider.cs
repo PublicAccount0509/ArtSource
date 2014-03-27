@@ -771,13 +771,6 @@ namespace Ets.SingleApi.Services
             tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
             tableReservationEntity.Path = order.Path;
             tableReservationEntity.TemplateId = order.Template;
-            //订台类型描述
-            tableReservationEntity.DeskTypeDes = desk.RoomType == null
-                                                     ? string.Empty
-                                                     : desk.RoomType == 0
-                                                           ? "散座"
-                                                           : "包房" + "、" + desk.TblTypeName + "、" + desk.PeopleCount +
-                                                             "人";
 
             this.tableReservationEntityRepository.Save(tableReservationEntity);
             return tableReservationEntity.TableReservationId;
