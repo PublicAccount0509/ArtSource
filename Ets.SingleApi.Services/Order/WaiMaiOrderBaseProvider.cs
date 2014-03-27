@@ -274,7 +274,7 @@ namespace Ets.SingleApi.Services
                 return new ServicesResult<string>
                 {
                     StatusCode = (int)StatusCode.Succeed.Ok,
-                    Result = "订单已接受，无法修改"
+                    Result = "订单已处理，无法修改"
                 };
             }
 
