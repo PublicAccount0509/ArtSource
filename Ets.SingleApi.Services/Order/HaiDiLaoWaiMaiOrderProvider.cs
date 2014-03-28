@@ -877,7 +877,7 @@ namespace Ets.SingleApi.Services
                 return deliveryEntity.DeliveryId;
             }
 
-            var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.AddressBuilding), string.Empty);
+             var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty);
             if (customerLocation == null)
             {
                 this.deliveryEntityRepository.Save(deliveryEntity);
