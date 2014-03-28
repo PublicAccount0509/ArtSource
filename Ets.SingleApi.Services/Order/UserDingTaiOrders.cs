@@ -228,7 +228,9 @@
                                            deskBooking.DeskType.MaxNumber,
                                            BookDate = deskBooking.ReservationTime,
                                            deskBooking.Desk.ImgPath,
-                                           deskBooking.DeskType.TableType.TblTypeName
+                                           deskBooking.DeskType.TableType.TblTypeName,
+                                           deskBooking.DeskType.DepositAmount,
+                                           deskBooking.DeskType.LowCost,
                                        }
                                   ).ToList();
 
@@ -266,7 +268,9 @@
                                   BookDate = deskBooking == null ? null : deskBooking.BookDate,
                                   BookTime = deskBooking == null ? string.Empty : deskBooking.BookDate.Value.ToString("HH:mm"),
                                   DeskImgUrl = deskBooking == null ? string.Empty : string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, deskBooking.ImgPath),
-                                  TblTypeName = deskBooking == null ? string.Empty : deskBooking.TblTypeName
+                                  TblTypeName = deskBooking == null ? string.Empty : deskBooking.TblTypeName,
+                                  DepositAmount = deskBooking == null ? 0 : deskBooking.DepositAmount,
+                                  LowCost = deskBooking == null ? 0 : deskBooking.LowCost
                               }).ToList();
             return result;
         }
