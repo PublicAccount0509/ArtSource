@@ -2504,7 +2504,7 @@
 
             if (pageIndex != null && pageSize != null)
             {
-                recommendDishList = recommendDishList.Skip((int)pageIndex).Take((int)pageSize).ToList();
+                recommendDishList = recommendDishList.Skip(pageIndex.Value - 1).Take(pageSize.Value).ToList();
             }
             return new ServicesResultList<SupplierRecommendedDishModel>
             {
