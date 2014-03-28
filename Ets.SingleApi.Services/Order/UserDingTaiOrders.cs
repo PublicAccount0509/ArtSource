@@ -221,7 +221,9 @@
                                            deskBooking.OrderNo,
                                            deskBooking.Desk.DeskNo,
                                            deskBooking.DeskType.RoomType,
-                                           RoomTypeName = deskBooking.DeskType.RoomType == null ? "" : (deskBooking.DeskType.RoomType == 0 ? "散座" : "包房"),
+                                           RoomTypeName = deskBooking.DeskType == null 
+                                                            ? string.Empty : (deskBooking.DeskType.RoomType == 0 
+                                                            ? deskBooking.DeskType.TableType.TblTypeName : "包房"),
                                            deskBooking.DeskType.MinNumber,
                                            deskBooking.DeskType.MaxNumber,
                                            BookDate = deskBooking.ReservationTime,
@@ -256,7 +258,9 @@
                                                  .FirstOrDefault() ?? -1,
                                   DeskNo = deskBooking == null ? string.Empty : deskBooking.DeskNo,
                                   RoomType = deskBooking == null ? 0 : deskBooking.RoomType ?? 0,
-                                  RoomTypeName = deskBooking == null ? string.Empty : (deskBooking.RoomType == null ? string.Empty : (deskBooking.RoomType == 0 ? "散座" : "包房")),
+                                  RoomTypeName = deskBooking == null ? string.Empty : (deskBooking.RoomType == null
+                                                ? string.Empty : (deskBooking.RoomType == 0 
+                                                ? deskBooking.TblTypeName : "包房")),
                                   MinNumber = deskBooking == null ? 0 : deskBooking.MinNumber,
                                   MaxNumber = deskBooking == null ? 0 : deskBooking.MaxNumber,
                                   BookDate = deskBooking == null ? null : deskBooking.BookDate,

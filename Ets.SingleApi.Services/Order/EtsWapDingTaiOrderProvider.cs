@@ -238,7 +238,9 @@ namespace Ets.SingleApi.Services
                                    {
                                        DeskNo = deskBookingEntity.Desk.DeskNo,
                                        RoomType = deskBookingEntity.DeskType.RoomType ?? 0,// == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
-                                       RoomTypeName = deskBookingEntity.DeskType.RoomType == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
+                                       RoomTypeName = deskBookingEntity.DeskType == null 
+                                                       ? string.Empty : (deskBookingEntity.DeskType.RoomType == 0 
+                                                       ? deskBookingEntity.DeskType.TableType.TblTypeName : "包房"),
                                        MaxNumber = deskBookingEntity.DeskType.MaxNumber,
                                        MinNumber = deskBookingEntity.DeskType.MinNumber,
                                        TblTypeName = deskBookingEntity.DeskType.TableType.TblTypeName,
