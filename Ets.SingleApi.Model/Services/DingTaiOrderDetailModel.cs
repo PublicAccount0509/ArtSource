@@ -431,6 +431,19 @@
         public string Total { get; set; }
 
         /// <summary>
+        /// 订台方式Id(2 只订位子,3 订位子并点菜)
+        /// </summary>
+        /// <value>
+        /// The DingTaiMethodId
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：3/28/2014 7:57 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int DingTaiMethodId { get; set; }
+
+        /// <summary>
         /// 设置或取得菜信息
         /// </summary>
         /// <value>

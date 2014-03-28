@@ -80,6 +80,19 @@
         public int MinNumber { get; set; }
 
         /// <summary>
+        /// 押金
+        /// </summary>
+        /// <value>
+        /// The DepositAmount
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：3/19/2014 4:54 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal? DepositAmount { get; set; }
+
+        /// <summary>
         /// 最低消费金额
         /// </summary>
         /// <value>

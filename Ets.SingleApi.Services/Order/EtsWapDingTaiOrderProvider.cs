@@ -238,11 +238,14 @@ namespace Ets.SingleApi.Services
                                    {
                                        DeskNo = deskBookingEntity.Desk.DeskNo,
                                        RoomType = deskBookingEntity.DeskType.RoomType ?? 0,// == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
-                                       RoomTypeName = deskBookingEntity.DeskType.RoomType == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
+                                       RoomTypeName = deskBookingEntity.DeskType == null 
+                                                       ? string.Empty : (deskBookingEntity.DeskType.RoomType == 0 
+                                                       ? deskBookingEntity.DeskType.TableType.TblTypeName : "包房"),
                                        MaxNumber = deskBookingEntity.DeskType.MaxNumber,
                                        MinNumber = deskBookingEntity.DeskType.MinNumber,
                                        TblTypeName = deskBookingEntity.DeskType.TableType.TblTypeName,
-                                       LowCost = deskBookingEntity.DeskType.LowCost
+                                       LowCost = deskBookingEntity.DeskType.LowCost,
+                                       DepositAmount = deskBookingEntity.DeskType.DepositAmount
                                    }
                               ).FirstOrDefault();
 
@@ -322,6 +325,7 @@ namespace Ets.SingleApi.Services
                 Coupon = coupon.ToString("#0.00"),//折扣
                 CustomerTotal = customerTotal.ToString("#0.00"),//总价 折扣后
                 Total = total.ToString("#0.00"),//总价 未折扣
+                DingTaiMethodId = (tableReservationEntity.Type ?? 2),//2 只订位，3 订位并点菜
                 Desk = dingTaiOrderDesk
             };
 
