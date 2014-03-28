@@ -102,16 +102,13 @@ namespace Ets.SingleApi.Controllers
         public Response<SupplierDetail> Supplier(int id, string cityCode = null)
         {
             var getSupplierResult = this.supplierServices.GetSupplier(this.Source, id, cityCode);
-            if (getSupplierResult.Result == null)
+            if (getSupplierResult.Result == null || getSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new Response<SupplierDetail>
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode =
-                                    getSupplierResult.StatusCode == (int)StatusCode.Succeed.Ok
-                                        ? (int)StatusCode.Succeed.Empty
-                                        : getSupplierResult.StatusCode
+                                StatusCode = getSupplierResult.StatusCode
                             },
                         Result = new SupplierDetail()
                     };
@@ -1675,7 +1672,7 @@ namespace Ets.SingleApi.Controllers
         [HttpGet]
         public ListResponse<SupplierRecommendedDish> GetRecommendedDishList(int id, int pageIndex, int pageSize)
         {
-            var list = this.supplierServices.GetRecommendedDish(this.Source, id, pageIndex,pageSize);
+            var list = this.supplierServices.GetRecommendedDish(this.Source, id, pageIndex, pageSize);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<SupplierRecommendedDish>

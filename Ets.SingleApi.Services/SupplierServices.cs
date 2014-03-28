@@ -308,6 +308,14 @@
                 };
             }
 
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId && p.Login.IsEnabled))
+            {
+                return new ServicesResult<SupplierDetailModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.OffTheShelfCode,
+                    Result = new SupplierDetailModel()
+                };
+            }
             var tempSupplier = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                                 where supplierEntity.SupplierId == supplierId
                                 select new
@@ -534,7 +542,14 @@
                     Result = new SupplierSimpleModel()
                 };
             }
-
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId && p.Login.IsEnabled))
+            {
+                return new ServicesResult<SupplierSimpleModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.OffTheShelfCode,
+                    Result = new SupplierSimpleModel()
+                };
+            }
             var tempSupplier = (from supplierEntity in this.supplierEntityRepository.EntityQueryable
                                 where supplierEntity.SupplierId == supplierId
                                 select new

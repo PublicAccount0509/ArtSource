@@ -72,6 +72,7 @@
   <item code="40038" message="该桌号不存在"></item>
   <item code="40039" message="该排队号已经过期或者就座，无法取消"></item>
   <item code="40040" message="该排队号已经取消，无法再次取消"></item>
+  <item code="40041" message="该餐厅已下架"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>
