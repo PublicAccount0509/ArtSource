@@ -238,8 +238,8 @@ namespace Ets.SingleApi.Services
                                    {
                                        DeskNo = deskBookingEntity.Desk.DeskNo,
                                        RoomType = deskBookingEntity.DeskType.RoomType ?? 0,// == null ? "" : (deskBookingEntity.DeskType.RoomType == 0 ? "散座" : "包房"),
-                                       RoomTypeName = deskBookingEntity.DeskType == null 
-                                                       ? string.Empty : (deskBookingEntity.DeskType.RoomType == 0 
+                                       RoomTypeName = deskBookingEntity.DeskType == null
+                                                       ? string.Empty : (deskBookingEntity.DeskType.RoomType == 0
                                                        ? deskBookingEntity.DeskType.TableType.TblTypeName : "包房"),
                                        MaxNumber = deskBookingEntity.DeskType.MaxNumber,
                                        MinNumber = deskBookingEntity.DeskType.MinNumber,
@@ -523,7 +523,7 @@ namespace Ets.SingleApi.Services
             }
 
             var now = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
-            var nowTime = now.ToString("HH:mm");
+            var nowTime = DateTime.Now.ToString("HH:mm");
 
             var supplierDeskTimeList = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
                                         where supplierDeskTimeEntity.SupplierId == supplierId && supplierDeskTimeEntity.IsEnable == true
@@ -878,6 +878,23 @@ namespace Ets.SingleApi.Services
                 return;
             }
 
+            var nowTime = desk.BookingDate.Value.AddHours(double.Parse(desk.BookingTime.Split(':')[0]))
+                    .AddMinutes(double.Parse(desk.BookingTime.Split(':')[1]));
+            var supplierDeskTimeList = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
+                                        where supplierDeskTimeEntity.SupplierId == supplierId && supplierDeskTimeEntity.IsEnable == true
+                                        select new
+                                        {
+                                            supplierDeskTimeEntity.Id,
+                                            supplierDeskTimeEntity.BeginTime,
+                                            supplierDeskTimeEntity.EndTime,
+                                            supplierDeskTimeEntity.TimeType
+                                        }).ToList();
+
+
+            var supplierDeskTime = supplierDeskTimeList.FirstOrDefault(p => string.Compare(p.BeginTime, nowTime.ToString("HH:mm"), StringComparison.OrdinalIgnoreCase) <=
+                                                          0
+                                                          && string.Compare(p.EndTime, nowTime.ToString("HH:mm"), StringComparison.OrdinalIgnoreCase) >= 0);
+
             var deskBookingEntity = this.deskBookingEntityRepository.EntityQueryable.FirstOrDefault(
                 p => p.OrderNo == orderId)
                                     ?? new DeskBookingEntity
@@ -890,9 +907,9 @@ namespace Ets.SingleApi.Services
             deskBookingEntity.SupplierId = supplierId;
             deskBookingEntity.DeskType = new DeskTypeEntity { Id = desk.DeskTypeId };
             deskBookingEntity.NumberOfPeople = desk.PeopleCount;
-            deskBookingEntity.ReservationTime =
-                desk.BookingDate.Value.AddHours(double.Parse(desk.BookingTime.Split(':')[0]))
-                    .AddMinutes(double.Parse(desk.BookingTime.Split(':')[1]));
+            deskBookingEntity.ReservationTime = nowTime;
+            deskBookingEntity.TimeType = supplierDeskTime == null ? null : supplierDeskTime.TimeType;
+
             this.deskBookingEntityRepository.Save(deskBookingEntity);
         }
     }
