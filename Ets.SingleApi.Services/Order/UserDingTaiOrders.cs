@@ -137,12 +137,12 @@
         /// ----------------------------------------------------------------------------------------
         private IEnumerable<DingTaiOrderModel> GetDingTaiOrderList(UserOrdersParameter parameter)
         {
-            var retentionSupplierGroupIdList =
-                ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
+            var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
+            var typeList = new List<int?> { 2, 3 };
             var queryableTemp = (from tableReservationEntity in this.tableReservationEntityRepository.EntityQueryable
                                  where tableReservationEntity.CustomerId == parameter.CustomerId
                                        && tableReservationEntity.Cancelled == parameter.Cancelled
-                                       && (tableReservationEntity.Type == 2 || tableReservationEntity.Type == 3)
+                                       && typeList.Contains(tableReservationEntity.Type)
                                  select new
                                      {
                                          tableReservationEntity.TableReservationId,
@@ -221,8 +221,8 @@
                                            deskBooking.OrderNo,
                                            deskBooking.Desk.DeskNo,
                                            deskBooking.DeskType.RoomType,
-                                           RoomTypeName = deskBooking.DeskType == null 
-                                                            ? string.Empty : (deskBooking.DeskType.RoomType == 0 
+                                           RoomTypeName = deskBooking.DeskType == null
+                                                            ? string.Empty : (deskBooking.DeskType.RoomType == 0
                                                             ? deskBooking.DeskType.TableType.TblTypeName : "包房"),
                                            deskBooking.DeskType.MinNumber,
                                            deskBooking.DeskType.MaxNumber,
@@ -261,7 +261,7 @@
                                   DeskNo = deskBooking == null ? string.Empty : deskBooking.DeskNo,
                                   RoomType = deskBooking == null ? 0 : deskBooking.RoomType ?? 0,
                                   RoomTypeName = deskBooking == null ? string.Empty : (deskBooking.RoomType == null
-                                                ? string.Empty : (deskBooking.RoomType == 0 
+                                                ? string.Empty : (deskBooking.RoomType == 0
                                                 ? deskBooking.TblTypeName : "包房")),
                                   MinNumber = deskBooking == null ? 0 : deskBooking.MinNumber,
                                   MaxNumber = deskBooking == null ? 0 : deskBooking.MaxNumber,

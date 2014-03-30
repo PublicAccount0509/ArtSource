@@ -140,6 +140,7 @@
             var queryableTemp = (from tableReservationEntity in this.tableReservationEntityRepository.EntityQueryable
                                  where tableReservationEntity.CustomerId == parameter.CustomerId
                                  && tableReservationEntity.Cancelled == parameter.Cancelled
+                                 && tableReservationEntity.Type == 1
                                  select new
                                  {
                                      tableReservationEntity.TableReservationId,
