@@ -129,6 +129,25 @@
         }
 
         /// <summary>
+        /// 是否以当前时间为优惠时间
+        /// </summary>
+        /// <value>
+        /// 是否以当前时间为优惠时间
+        /// </value>
+        /// 创建者：周超
+        /// 创建日期：10/30/2013 3:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool CouponCurrentTimeWayEnable
+        {
+            get
+            {
+                return string.Equals(ConfigurationManager.AppSettings["CouponCurrentTimeWayEnable"], "true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
         /// 单个锅的押金
         /// </summary>
         /// <value>

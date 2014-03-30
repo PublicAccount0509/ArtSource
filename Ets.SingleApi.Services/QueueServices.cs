@@ -424,7 +424,8 @@
                                   TblTypeName = deskType.TableType == null ? string.Empty : deskType.TableType.TblTypeName,
                                   Telephone = queueEntity.Phone,
                                   UserName = queueEntity.UserName,
-                                  CeateDate = queueEntity.Time
+                                  CeateDate = queueEntity.Time,
+                                  Cancelled = queueEntity.Cancelled
                               }).FirstOrDefault();
 
             return new ServicesResult<QueueDetailModel>
@@ -466,7 +467,6 @@
                                  && queueEntity.SupplierId == entity.SupplierId
                                  && queueEntity.CustomerId == customerEntity.CustomerId
                                  && customerEntity.LoginId == parameter.UserId
-                                 && queueEntity.Cancelled == false
                                  select new
                                      {
                                          queueEntity.QueueId,
@@ -486,6 +486,11 @@
                                          entity.SupplierGroupId,
                                          queueEntity.Cancelled
                                      });
+
+            if (parameter.Cancelled != null)
+            {
+                queryableTemp = queryableTemp.Where(p => p.Cancelled == parameter.Cancelled);
+            }
 
             if (parameter.QueueStartDate != null)
             {
@@ -539,7 +544,8 @@
                             TblTypeId = p.TblTypeId,
                             TblTypeName = p.TblTypeName,
                             CeateDate = p.CeateDate,
-                            DeskTypeId = p.DeskTypeId ?? 0
+                            DeskTypeId = p.DeskTypeId ?? 0,
+                            Cancelled = p.Cancelled
                         }).ToList();
 
             var dateTime = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));

@@ -766,9 +766,6 @@ namespace Ets.SingleApi.Services
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
-            var total = totalfee + fixedDeliveryFee + packagingFee;
-            var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId) : order.CouponFee;
-            var customerTotal = total - coupon;
             shoppingCartOrder.DeliveryDateTime = order.DeliveryDateTime;
             if (isValidateDeliveryTime)
             {
@@ -815,6 +812,14 @@ namespace Ets.SingleApi.Services
                 var deliveryTime = validateDeliveryTimeResult.Result;
                 shoppingCartOrder.DeliveryDateTime = deliveryTime;
             }
+
+            var couponTime = ServicesCommon.CouponCurrentTimeWayEnable
+                         ? DateTime.Now
+                         : (shoppingCartOrder.DeliveryDateTime ?? DateTime.Now);
+
+            var total = totalfee + fixedDeliveryFee + packagingFee;
+            var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId, couponTime) : order.CouponFee;
+            var customerTotal = total - coupon;
 
             shoppingCartOrder.Id = order.Id;
             shoppingCartOrder.OrderId = order.OrderId;
@@ -1033,6 +1038,7 @@ namespace Ets.SingleApi.Services
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="deliveryMethodId">取餐方式</param>
         /// <param name="userId">用户Id</param>
+        /// <param name="dateTime">The dateTime</param>
         /// <returns>
         /// 返回折扣
         /// </returns>
@@ -1041,7 +1047,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private decimal CalculateCoupon(decimal total, int supplierId, int deliveryMethodId, int? userId)
+        private decimal CalculateCoupon(decimal total, int supplierId, int deliveryMethodId, int? userId, DateTime dateTime)
         {
             var supplierCouponProvider = this.supplierCouponProviderList.FirstOrDefault(p => p.DeliveryMethodType == (DeliveryMethodType)deliveryMethodId);
             if (supplierCouponProvider == null)
@@ -1049,7 +1055,7 @@ namespace Ets.SingleApi.Services
                 return 0;
             }
 
-            var supplierCouponList = supplierCouponProvider.CalculateCoupon(total, supplierId, DateTime.Now, userId);
+            var supplierCouponList = supplierCouponProvider.CalculateCoupon(total, supplierId, dateTime, userId);
             if (supplierCouponList == null || supplierCouponList.Count == 0)
             {
                 return 0;

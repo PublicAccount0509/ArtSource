@@ -253,7 +253,8 @@ namespace Ets.SingleApi.Controllers
                     TblTypeName = queue.Result.TblTypeName,
                     Telephone = queue.Result.Telephone,
                     UserName = queue.Result.UserName,
-                    CeateDate = queue.Result.CeateDate.ToString("yyyy-MM-dd HH:mm")
+                    CeateDate = queue.Result.CeateDate.ToString("yyyy-MM-dd HH:mm"),
+                    Cancelled = queue.Result.Cancelled ?? false
                 };
 
             return new Response<QueueDetail>
@@ -283,7 +284,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, int? supplierGroupId, int pageSize, int? pageIndex, bool cancelled,int userId)
+        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, int? supplierGroupId, int pageSize, int? pageIndex, bool? cancelled, int userId)
         {
             var list = this.queueServices.GetQueueList(this.Source, new GetQueuesParameter
             {
@@ -328,7 +329,8 @@ namespace Ets.SingleApi.Controllers
                 MaxNumber = p.MaxNumber,
                 MinNumber = p.MinNumber,
                 QueueNumber = p.QueueNumber,
-                CeateDate = p.CeateDate.ToString("yyyy-MM-dd HH:mm")
+                CeateDate = p.CeateDate.ToString("yyyy-MM-dd HH:mm"),
+                Cancelled = p.Cancelled ?? false
             }).ToList();
 
             return new ListResponse<Queue>

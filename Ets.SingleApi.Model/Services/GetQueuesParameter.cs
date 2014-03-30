@@ -129,7 +129,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public bool Cancelled { get; set; }
+        public bool? Cancelled { get; set; }
 
         /// <summary>
         /// 当前用户UserId
