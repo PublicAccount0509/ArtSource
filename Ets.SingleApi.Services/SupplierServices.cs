@@ -2997,7 +2997,7 @@
 
             /*验证台位类型Id*/
             var deskTypeEntity =
-                this.deskTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.SupplierId == supplierId);
+                this.deskTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.SupplierId == supplierId && p.Id == parameter.DeskTypeId);
 
             if (deskTypeEntity == null || deskTypeEntity.IsDel)
             {
