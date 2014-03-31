@@ -516,6 +516,9 @@ namespace Ets.SingleApi.Services
             /*锁定台位信息*/
             this.LockDeskType(supplierId,desk);
 
+            order.OrderId = orderId;
+            this.etsWapDingTaiShoppingCartProvider.SaveShoppingCartOrder(source, order);
+
             this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
             this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
             return new ServicesResult<string>
