@@ -493,7 +493,7 @@ namespace Ets.SingleApi.Services
             /*保存支付信息*/
             this.SavePaymentEntity(tableReservationId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
             /*锁定台位信息*/
-            this.LockDeskType(desk.DeskTypeId, supplierId);
+            this.LockDeskType(supplierId,desk);
 
             this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
             this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
@@ -514,39 +514,77 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void LockDeskType(int deskTypeId, int supplierId)
+        private void LockDeskType(int supplierId, ShoppingCartDesk desk)
         {
-            var deskTypeEntity = this.deskTypeEntityRepository.FindSingleByExpression(p => p.Id == deskTypeId);
+            if (desk.BookingDate == null)
+            {
+                return;
+            }
+
+            if (desk.BookingTime.IsEmptyOrNull())
+            {
+                return;
+            }
+
+            if (desk.DeskTypeId == 0)
+            {
+                return;
+            }
+
+            var deskTypeEntity = this.deskTypeEntityRepository.FindSingleByExpression(p => p.Id == desk.DeskTypeId);
             if (deskTypeEntity == null)
             {
                 return;
             }
 
-            var now = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
-            var nowTime = DateTime.Now.ToString("HH:mm");
+            var nowTime = desk.BookingDate.Value.AddHours(double.Parse(desk.BookingTime.Split(':')[0]))
+                              .AddMinutes(double.Parse(desk.BookingTime.Split(':')[1]));
 
-            var supplierDeskTimeList = (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
-                                        where supplierDeskTimeEntity.SupplierId == supplierId && supplierDeskTimeEntity.IsEnable == true
-                                        select new
-                                        {
-                                            supplierDeskTimeEntity.Id,
-                                            supplierDeskTimeEntity.BeginTime,
-                                            supplierDeskTimeEntity.EndTime,
-                                            supplierDeskTimeEntity.TimeType
-                                        }).ToList();
+            var supplierDeskTimeList =
+                (from supplierDeskTimeEntity in this.supplierDeskTimeEntityRepository.EntityQueryable
+                 where supplierDeskTimeEntity.SupplierId == supplierId && supplierDeskTimeEntity.IsEnable == true
+                 select new
+                     {
+                         supplierDeskTimeEntity.Id,
+                         supplierDeskTimeEntity.BeginTime,
+                         supplierDeskTimeEntity.EndTime,
+                         supplierDeskTimeEntity.TimeType
+                     }).ToList();
 
 
-            var supplierDeskTime = supplierDeskTimeList.FirstOrDefault(p => string.Compare(p.BeginTime, nowTime, StringComparison.OrdinalIgnoreCase) <=
-                                                          0
-                                                          && string.Compare(p.EndTime, nowTime, StringComparison.OrdinalIgnoreCase) >= 0);
+            var supplierDeskTime =
+                supplierDeskTimeList.FirstOrDefault(
+                    p => string.Compare(p.BeginTime, nowTime.ToString("HH:mm"), StringComparison.OrdinalIgnoreCase) <=
+                         0
+                         &&
+                         string.Compare(p.EndTime, nowTime.ToString("HH:mm"), StringComparison.OrdinalIgnoreCase) >= 0);
             if (supplierDeskTime == null)
             {
                 return;
             }
 
-            var deskBookingCount = this.deskBookingEntityRepository.EntityQueryable.Count(p => p.DeskType.Id == deskTypeId && p.SupplierId == supplierId && p.TimeType == supplierDeskTime.TimeType && p.ReservationTime >= now && p.ReservationTime < now.AddDays(1));
-            var supplierDeskCount = this.supplierDeskEntityRepository.EntityQueryable.Count(p => p.DeskType.Id == deskTypeId && p.SupplierId == supplierId && p.IsDel == false && p.IsEnable);
+            var deskBookingList = (from deskBook in this.deskBookingEntityRepository.EntityQueryable
+                                   from tableReservation in this.tableReservationEntityRepository.EntityQueryable
+                                   where
+                                       deskBook.DeskType.Id == desk.DeskTypeId && deskBook.SupplierId == supplierId &&
+                                       deskBook.TimeType == supplierDeskTime.TimeType &&
+                                       deskBook.ReservationTime >= desk.BookingDate &&
+                                       deskBook.ReservationTime < desk.BookingDate.Value.AddDays(1)
+                                       && deskBook.OrderNo == tableReservation.OrderNumber
+                                       && tableReservation.Cancelled == false
+                                       &&
+                                       ServicesCommon.DingTaiUnLockedOrderStatusIdList.Contains(
+                                           tableReservation.TableStatus ?? 1)
+                                   select deskBook
+                                  ).ToList();
 
+            var deskBookingCount = deskBookingList.Count();
+
+            //var deskBookingCount = this.deskBookingEntityRepository.EntityQueryable.Count(p => p.DeskType.Id == deskTypeId && p.SupplierId == supplierId && p.TimeType == supplierDeskTime.TimeType && p.ReservationTime >= now && p.ReservationTime < now.AddDays(1));
+            var supplierDeskCount =
+                this.supplierDeskEntityRepository.EntityQueryable.Count(
+                    p =>
+                    p.DeskType.Id == desk.DeskTypeId && p.SupplierId == supplierId && p.IsDel == false && p.IsEnable);
 
             if (deskBookingCount < supplierDeskCount)
             {
@@ -554,16 +592,17 @@ namespace Ets.SingleApi.Services
             }
 
             var deskTypeLockLogEntity = this.deskTypeLockLogEntityRepository.FindSingleByExpression(
-                   p =>
-                   p.DeskTypeId == deskTypeId && p.SupplierId == supplierId && p.LockDate >= now && p.LockDate < now
-                   && p.SupplierDeskTime.Id == supplierDeskTime.Id) ?? new DeskTypeLockLogEntity
-                       {
-                           CreateTime = DateTime.Now,
-                           DeskTypeId = deskTypeId,
-                           SupplierId = supplierId
-                       };
+                p =>
+                p.DeskTypeId == desk.DeskTypeId && p.SupplierId == supplierId && p.LockDate >= desk.BookingDate.Value &&
+                p.LockDate < desk.BookingDate.Value.AddDays(1)
+                && p.SupplierDeskTime.Id == supplierDeskTime.Id) ?? new DeskTypeLockLogEntity
+                    {
+                        CreateTime = DateTime.Now,
+                        DeskTypeId = desk.DeskTypeId,
+                        SupplierId = supplierId
+                    };
 
-            deskTypeLockLogEntity.LockDate = now;
+            deskTypeLockLogEntity.LockDate = desk.BookingDate.Value;
             deskTypeLockLogEntity.IsDel = false;
             deskTypeLockLogEntity.CreateTime = DateTime.Now;
             deskTypeLockLogEntity.SupplierDeskTime = new SupplierDeskTimeEntity

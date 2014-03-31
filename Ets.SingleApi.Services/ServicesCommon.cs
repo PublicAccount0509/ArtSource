@@ -46,6 +46,39 @@
         }
 
         /// <summary>
+        /// 订台可以预订的订单状态
+        /// </summary>
+        /// <value>
+        /// 订台可以预订的订单状态
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：3/31/2014 2:21 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static List<int> DingTaiUnLockedOrderStatusIdList
+        {
+            get
+            {
+                var list =
+                    (ConfigurationManager.AppSettings["DingTaiUnLockedOrderStatusIdList"] ?? string.Empty).Split(',');
+                var dingTaiUnLockedOrderStatusIdList = new List<int>();
+                foreach (var item in list)
+                {
+                    int supplierGroupId;
+                    if (!int.TryParse(item, out supplierGroupId))
+                    {
+                        continue;
+                    }
+
+                    dingTaiUnLockedOrderStatusIdList.Add(supplierGroupId);
+                }
+
+                return dingTaiUnLockedOrderStatusIdList;
+            }
+        }
+
+        /// <summary>
         /// 排队号数字位数
         /// </summary>
         /// <value>
