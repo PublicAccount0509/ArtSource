@@ -333,7 +333,7 @@
                 OrderTypeId = (int)OrderType.TangShi,
                 OrderStatusId = tableReservationEntity.TableStatus,
                 DateReserved = tableReservationEntity.DateReserved.ToString("yyyy-MM-dd HH:mm"),
-                Description = tableReservationEntity.OrderNotes ?? string.Empty,
+                Description = tableReservationEntity.Notes ?? string.Empty,
                 SupplierGroupId = supplierEntity.SupplierGroupId,
                 SupplierId = supplierEntity.SupplierId,
                 SupplierName = supplierEntity.SupplierName ?? string.Empty,
@@ -563,7 +563,7 @@
                 IsService = true
             };
 
-            tableReservationEntity.OrderNotes = order.OrderInstruction;
+            tableReservationEntity.Notes = order.OrderInstruction;
             tableReservationEntity.CustomerTotal = order.CustomerTotalFee;
             tableReservationEntity.Total = order.TotalFee;
             tableReservationEntity.ConsumerAmount = order.ServiceFee;
