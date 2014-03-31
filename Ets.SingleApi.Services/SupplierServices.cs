@@ -2758,7 +2758,7 @@
             var now = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
             var tempList = supplierDeskTimeList.ToList();
             var deskOpenTimeList = new List<DateTime>();
-            var nowTime = bookingDate.ToString("yyyy-MM-dd") == now.ToString("yyyy-MM-dd") ? DateTime.Now : DateTime.Parse(bookingDate.ToString("yyyy-MM-dd"));
+            var nowTime = bookingDate.ToString("yyyy-MM-dd") == now.ToString("yyyy-MM-dd") ? DateTime.Now.AddMinutes(Services.ServicesCommon.DingTaiDelay) : DateTime.Parse(bookingDate.ToString("yyyy-MM-dd")).AddMinutes(Services.ServicesCommon.DingTaiDelay);
             foreach (var item in tempList)
             {
                 var beginTime = DateTime.Parse(bookingDate.ToString("yyyy-MM-dd") + " " + item.BeginTime + ":00");
