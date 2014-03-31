@@ -2406,5 +2406,31 @@
 
             return total;
         }
+
+        /// <summary>
+        /// 订台延迟时间(单位：分)(就餐时间 = 预订时间 + 延迟时间)
+        /// </summary>
+        /// <value>
+        /// The ding tai delay.
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：3/31/2014 2:08 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DingTaiDelay
+        {
+            get
+            {
+                var paymentMethodId = ConfigurationManager.AppSettings["DingTaiDelay"] ?? "30";
+                int result;
+                if (!int.TryParse(paymentMethodId, out result))
+                {
+                    result = 30;
+                }
+
+                return result;
+            }
+        }
     }
 }

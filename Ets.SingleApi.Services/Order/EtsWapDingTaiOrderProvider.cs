@@ -450,6 +450,27 @@ namespace Ets.SingleApi.Services
                     };
             }
 
+            if (getShoppingCartDeskResult.Result.BookingDate == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = getShoppingCartDeskResult.StatusCode,
+                    Result = string.Empty
+                };
+            }
+
+            //下单时间 晚于 预定时间
+            var bookingDateTime = getShoppingCartDeskResult.Result.BookingDate.Value.AddHours(double.Parse(getShoppingCartDeskResult.Result.BookingTime.Split(':')[0]))
+                                                           .AddMinutes(double.Parse(getShoppingCartDeskResult.Result.BookingTime.Split(':')[1]));
+            if (bookingDateTime < DateTime.Now)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.OverReservation,
+                    Result = string.Empty
+                };
+            }
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var customer = getShoppingCartCustomerResult.Result;
