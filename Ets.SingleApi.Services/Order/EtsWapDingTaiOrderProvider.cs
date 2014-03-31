@@ -357,66 +357,78 @@ namespace Ets.SingleApi.Services
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [Transaction(TransactionMode.RequiresNew)]
-        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword)
+        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey,
+                                                         string appPassword)
         {
-            var getShoppingCartLinkResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
-            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartLinkResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartLink(source,
+                                                                                                       shoppingCartId);
+            if (getShoppingCartLinkResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartLinkResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
             /*购物车信息*/
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
-            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCart(source,
+                                                                                               shoppingCartLink
+                                                                                                   .ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
             /*商户信息*/
-            var getShoppingCartSupplierResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
-            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartSupplierResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartSupplier(source,
+                                                                                                               shoppingCartLink
+                                                                                                                   .SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartSupplierResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
             /*用户信息*/
-            var getShoppingCartCustomerResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
-            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartCustomerResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartCustomer(source,
+                                                                                                               shoppingCartLink
+                                                                                                                   .UserId);
+            if (getShoppingCartCustomerResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartCustomerResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
             /*订单信息*/
-            var getShoppingCartOrderResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
-            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartOrderResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartOrder(source,
+                                                                                                         shoppingCartLink
+                                                                                                             .OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartOrderResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
             /*Delivery信息*/
-            var getShoppingCartDeliveryResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
-            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartDeliveryResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartDelivery(source,
+                                                                                                               shoppingCartLink
+                                                                                                                   .DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
                     {
@@ -426,8 +438,10 @@ namespace Ets.SingleApi.Services
             }
 
             /*Desk信息*/
-            var getShoppingCartDeskResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartDesk(source, shoppingCartLink.DeskId);
-            if (getShoppingCartDeskResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartDeskResult = this.etsWapDingTaiShoppingCartProvider.GetShoppingCartDesk(source,
+                                                                                                       shoppingCartLink
+                                                                                                           .DeskId);
+            if (getShoppingCartDeskResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
                     {
@@ -447,9 +461,9 @@ namespace Ets.SingleApi.Services
             if (shoppingCartBase.Result.IsComplete)
             {
                 return new ServicesResult<string>
-                {
-                    Result = shoppingCartBase.Result.OrderNumber.ToString()
-                };
+                    {
+                        Result = shoppingCartBase.Result.OrderNumber.ToString()
+                    };
             }
 
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
@@ -467,41 +481,46 @@ namespace Ets.SingleApi.Services
             if (supplierEntity == null)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        Result = string.Empty
+                    };
             }
 
-            var orderId = shoppingCartBase.Result.OrderNumber <= 0 ? this.GetOrderNumberId(source, appKey, appPassword) : shoppingCartBase.Result.OrderNumber;
+            var orderId = shoppingCartBase.Result.OrderNumber <= 0
+                              ? this.GetOrderNumberId(source, appKey, appPassword)
+                              : shoppingCartBase.Result.OrderNumber;
             if (orderId <= 0)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.General.OrderNumberNotFound,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = (int) StatusCode.General.OrderNumberNotFound,
+                        Result = string.Empty
+                    };
             }
 
             var customerId = customer.CustomerId;
             /*保存订单信息*/
-            var tableReservationId = this.SaveTableReservationEntity(orderId, supplier.SupplierId, customer.CustomerId, delivery, desk, order);
+            var tableReservationId = this.SaveTableReservationEntity(orderId, supplier.SupplierId, customer.CustomerId,
+                                                                     delivery, desk, order);
+
             /*保存菜品明细*/
-            this.SaveOrderDetailEntity(customerId, tableReservationId, shoppingList);
+            this.SaveOrderDetailEntity(customerId, tableReservationId, shoppingList, order.DingTaiMethodId == 3);
+
             /*保存预订信息*/
             this.SaveDeskBookingEntity(supplier.SupplierId, orderId, desk);
             /*保存支付信息*/
             this.SavePaymentEntity(tableReservationId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
             /*锁定台位信息*/
-            this.LockDeskType(supplierId,desk);
+            this.LockDeskType(supplierId, desk);
 
             this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
             this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
             return new ServicesResult<string>
-            {
-                StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = orderId.ToString()
-            };
+                {
+                    StatusCode = (int) StatusCode.Succeed.Ok,
+                    Result = orderId.ToString()
+                };
         }
 
         /// <summary>
@@ -825,33 +844,40 @@ namespace Ets.SingleApi.Services
         /// <param name="customerId">顾客Id</param>
         /// <param name="orderId">订单Id</param>
         /// <param name="shoppingList">商品列表</param>
+        /// <param name="isAddOrderDetail">if set to <c>true</c> [is add order detail].</param>
         /// 创建者：周超
         /// 创建日期：11/22/2013 5:26 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private void SaveOrderDetailEntity(int customerId, int orderId, IEnumerable<ShoppingCartItem> shoppingList)
+        private void SaveOrderDetailEntity(int customerId, int orderId, IEnumerable<ShoppingCartItem> shoppingList,
+                                           bool isAddOrderDetail)
         {
-            var removeOrderList = this.orderDetailEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.OrderId == orderId).ToList();
+            var removeOrderList =
+                this.orderDetailEntityRepository.FindByExpression(
+                    p => p.CustomerId == customerId && p.OrderId == orderId).ToList();
             this.orderDetailEntityRepository.Remove(removeOrderList);
 
-            var orderList = (from dish in shoppingList
-                             select new OrderDetailEntity
-                             {
-                                 OrderId = orderId,
-                                 CustomerId = customerId,
-                                 SupplierDishId = dish.ItemId,
-                                 Quantity = dish.Quantity,
-                                 SupplierPrice = dish.Price,
-                                 SupplierDishName = dish.ItemName,
-                                 Total = dish.Price * dish.Quantity,
-                                 SpecialInstruction = dish.Instruction,
-                                 OrderDate = DateTime.Now,
-                                 IsAdd = false,
-                                 OrderType = 1
-                             }).ToList();
+            if (isAddOrderDetail)
+            {
+                var orderList = (from dish in shoppingList
+                                 select new OrderDetailEntity
+                                     {
+                                         OrderId = orderId,
+                                         CustomerId = customerId,
+                                         SupplierDishId = dish.ItemId,
+                                         Quantity = dish.Quantity,
+                                         SupplierPrice = dish.Price,
+                                         SupplierDishName = dish.ItemName,
+                                         Total = dish.Price*dish.Quantity,
+                                         SpecialInstruction = dish.Instruction,
+                                         OrderDate = DateTime.Now,
+                                         IsAdd = false,
+                                         OrderType = 1
+                                     }).ToList();
 
-            this.orderDetailEntityRepository.Save(orderList);
+                this.orderDetailEntityRepository.Save(orderList);
+            }
         }
 
         /// <summary>
