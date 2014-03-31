@@ -303,7 +303,7 @@ namespace Ets.SingleApi.Services
                 OrderTypeId = (int)OrderType.DingTai,
                 OrderStatusId = tableReservationEntity.TableStatus,
                 DateReserved = tableReservationEntity.DateReserved.ToString("yyyy-MM-dd HH:mm"),
-                Description = tableReservationEntity.OrderNotes ?? string.Empty,
+                Description = tableReservationEntity.Notes ?? string.Empty,
                 SupplierGroupId = supplierEntity.SupplierGroupId,
                 SupplierId = supplierEntity.SupplierId,
                 SupplierName = supplierEntity.SupplierName ?? string.Empty,
@@ -795,7 +795,7 @@ namespace Ets.SingleApi.Services
                     };
 
             tableReservationEntity.Type = order.DingTaiMethodId;
-            tableReservationEntity.OrderNotes = order.OrderInstruction;
+            tableReservationEntity.Notes = order.OrderInstruction;
             //如果是DF只收取押金，如果是DDF则只收取菜品费
             tableReservationEntity.CustomerTotal = order.DingTaiMethodId == 2
                                                        ? desk.DepositAmount
