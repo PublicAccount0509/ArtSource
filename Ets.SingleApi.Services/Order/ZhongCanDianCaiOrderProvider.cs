@@ -521,7 +521,7 @@
         /// ----------------------------------------------------------------------------------------
         protected override OrderSourceType GetOrderSourceType()
         {
-            return OrderSourceType.EtsWap;
+            return OrderSourceType.Default;
         }
 
         /// <summary>
