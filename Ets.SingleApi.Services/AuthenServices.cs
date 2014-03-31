@@ -513,7 +513,9 @@
                             .Select(p => new { p.LoginId })
                             .FirstOrDefault();
             var loginId = customer == null ? null : customer.LoginId;
-            var loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == loginId || p.Username == parameter.UserName);
+            var queryable = this.loginEntityRepository.EntityQueryable;
+            queryable = loginId != null ? queryable.Where(p => p.LoginId == loginId) : queryable.Where(p => p.Username == parameter.UserName);
+            var loginEntity = queryable.FirstOrDefault();
             if (loginEntity == null)
             {
                 return new ServicesResult<bool>
