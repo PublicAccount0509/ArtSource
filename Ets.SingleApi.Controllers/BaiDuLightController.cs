@@ -257,6 +257,18 @@
                 };
             }
 
+            if (getLightSupplierDetailResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new Response<LightSupplierDetail>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getLightSupplierDetailResult.StatusCode
+                    },
+                    Result = new LightSupplierDetail()
+                };
+            }
+
             var result = new LightSupplierDetail
             {
                 SupplierGroupLightId = getLightSupplierDetailResult.Result.SupplierGroupLightId,
