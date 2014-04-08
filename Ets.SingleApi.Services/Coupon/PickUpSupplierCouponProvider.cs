@@ -122,7 +122,7 @@
         /// ----------------------------------------------------------------------------------------
         public List<SupplierCouponModel> CalculateCoupon(decimal total, int supplierId, DateTime now, int? userId)
         {
-            var day = Convert.ToInt32(DateTime.Now.GetDayOfWeek());
+            var day = Convert.ToInt32(now.GetDayOfWeek());
             var list = (from couponEntity in this.supplierCouponEntityRepository.EntityQueryable
                         from couponTimeEntity in this.supplierCouponTimeEntityRepository.EntityQueryable
                         where couponEntity.Id == couponTimeEntity.SupplierCoupon.Id &&
