@@ -762,10 +762,6 @@ namespace Ets.SingleApi.Services
             }).ToList());
 
             var totalfee = shoppingPrice;
-            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
-                                          ? 0
-                                         : supplier.FixedDeliveryCharge;
-            var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             shoppingCartOrder.DeliveryDateTime = order.DeliveryDateTime;
             if (isValidateDeliveryTime)
             {
@@ -817,8 +813,13 @@ namespace Ets.SingleApi.Services
                          ? DateTime.Now
                          : (shoppingCartOrder.DeliveryDateTime ?? DateTime.Now);
 
-            var total = totalfee + fixedDeliveryFee + packagingFee;
+
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId, couponTime) : order.CouponFee;
+            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= (totalfee - coupon)
+                              ? 0
+                             : supplier.FixedDeliveryCharge;
+            var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
+            var total = totalfee + fixedDeliveryFee + packagingFee;
             var customerTotal = total - coupon;
 
             shoppingCartOrder.Id = order.Id;
@@ -951,14 +952,15 @@ namespace Ets.SingleApi.Services
             }).ToList());
 
             order.CouponFee = 0;
-            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= shoppingPrice
+            var coupon = order.CouponFee;
+            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= (shoppingPrice - coupon)
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
 
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? shoppingPrice + packagingFee + fixedDeliveryCharge
                         : shoppingPrice + packagingFee;
-            var coupon = order.CouponFee;
+
             var customerTotal = total - coupon;
 
             order.DeliveryMethodId = deliveryMethodId;
@@ -1001,14 +1003,14 @@ namespace Ets.SingleApi.Services
             }).ToList());
 
             var totalfee = shoppingPrice;
-            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= totalfee
+            var coupon = order.CouponFee;
+            var fixedDeliveryCharge = supplier.FreeDeliveryLine <= (totalfee - coupon)
                                           ? 0
                                          : supplier.FixedDeliveryCharge;
-            var canDelivery = totalfee >= supplier.DelMinOrderAmount;
+            var canDelivery = (totalfee - coupon) >= supplier.DelMinOrderAmount;
             var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             var total = totalfee + fixedDeliveryFee + packagingFee;
-            var coupon = order.CouponFee;
             var customerTotal = total - coupon;
 
             if (saveDeliveryMethodId)
