@@ -52,6 +52,26 @@
         private readonly INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository;
 
         /// <summary>
+        /// 可见店铺表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 10:18 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierPlatformRelationEntity> supplierPlatformRelationEntityRepository;
+
+        /// <summary>
+        /// 可见集团表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 10:18 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository;
+
+        /// <summary>
         /// 取得订单类型
         /// </summary>
         /// <value>
@@ -76,6 +96,8 @@
         /// <param name="tableReservationEntityRepository">The tableReservationEntityRepository</param>
         /// <param name="orderDetailEntityRepository">The orderDetailEntityRepository</param>
         /// <param name="paymentRecordEntityRepository">The paymentRecordEntityRepository</param>
+        /// <param name="supplierPlatformRelationEntityRepository">The supplierPlatformRelationEntityRepositoryDefault documentation</param>
+        /// <param name="supplierGroupPlatformEntityRepository">The supplierGroupPlatformEntityRepositoryDefault documentation</param>
         /// 创建者：周超
         /// 创建日期：2013/10/20 16:04
         /// 修改者：
@@ -84,11 +106,15 @@
         public UserTangShiOrders(
             INHibernateRepository<TableReservationEntity> tableReservationEntityRepository,
             INHibernateRepository<OrderDetailEntity> orderDetailEntityRepository,
-            INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository)
+            INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository,
+            INHibernateRepository<SupplierPlatformRelationEntity> supplierPlatformRelationEntityRepository,
+            INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository)
         {
             this.tableReservationEntityRepository = tableReservationEntityRepository;
             this.orderDetailEntityRepository = orderDetailEntityRepository;
             this.paymentRecordEntityRepository = paymentRecordEntityRepository;
+            this.supplierPlatformRelationEntityRepository = supplierPlatformRelationEntityRepository;
+            this.supplierGroupPlatformEntityRepository = supplierGroupPlatformEntityRepository;
         }
 
         /// <summary>
@@ -135,8 +161,6 @@
         /// ----------------------------------------------------------------------------------------
         private IEnumerable<TangShiOrderModel> GetTangShiOrderList(UserOrdersParameter parameter)
         {
-            var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
-
             var queryableTemp = (from tableReservationEntity in this.tableReservationEntityRepository.EntityQueryable
                                  where tableReservationEntity.CustomerId == parameter.CustomerId
                                  && tableReservationEntity.Cancelled == parameter.Cancelled
@@ -162,7 +186,21 @@
 
             if (parameter.IsEtaoshi)
             {
+                //可见集团列表
+                var retentionSupplierGroupIdList = supplierGroupPlatformEntityRepository.EntityQueryable
+                                                    .Where(c => c.PlatformId == parameter.PlatformId)
+                                                    .Select(p => p.SupplierGroupId)
+                                                    .ToList();
+
                 queryableTemp = queryableTemp.Where(p => retentionSupplierGroupIdList.Contains(p.SupplierGroupId));
+
+                //可见店铺列表
+                var retentionSupplierIdList = supplierPlatformRelationEntityRepository.EntityQueryable
+                                                .Where(c => c.PlatformId == parameter.PlatformId)
+                                                .Select(p => (int?)p.SupplierId)
+                                                .ToList();
+
+                queryableTemp = queryableTemp.Where(p => retentionSupplierIdList.Contains(p.SupplierId));
             }
 
             if (parameter.SupplierId != null)

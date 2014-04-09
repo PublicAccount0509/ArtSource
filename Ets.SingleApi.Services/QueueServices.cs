@@ -73,6 +73,26 @@
         private readonly INHibernateRepository<QueueEntity> queueEntityRepository;
 
         /// <summary>
+        /// 可见店铺表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 1:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierPlatformRelationEntity> supplierPlatformRelationEntityRepository;
+
+        /// <summary>
+        /// 可见集团表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 1:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CuisineServices" /> class.
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
@@ -80,6 +100,8 @@
         /// <param name="deskTypeEntityRepository">The deskTypeEntityRepository</param>
         /// <param name="queueDeskTypeLockLogEntityRepository">The queueDeskTypeLockLogEntityRepository</param>
         /// <param name="queueEntityRepository">The queueEntityRepository</param>
+        /// <param name="supplierPlatformRelationEntityRepository">The supplierPlatformRelationEntityRepositoryDefault documentation</param>
+        /// <param name="supplierGroupPlatformEntityRepository">The supplierGroupPlatformEntityRepositoryDefault documentation</param>
         /// 创建者：周超
         /// 创建日期：2013/10/13 15:23
         /// 修改者：
@@ -90,13 +112,17 @@
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<QueueDeskTypeLockLogEntity> queueDeskTypeLockLogEntityRepository,
-            INHibernateRepository<QueueEntity> queueEntityRepository)
+            INHibernateRepository<QueueEntity> queueEntityRepository,
+            INHibernateRepository<SupplierPlatformRelationEntity> supplierPlatformRelationEntityRepository,
+            INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository)
         {
             this.customerEntityRepository = customerEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
             this.deskTypeEntityRepository = deskTypeEntityRepository;
             this.queueDeskTypeLockLogEntityRepository = queueDeskTypeLockLogEntityRepository;
             this.queueEntityRepository = queueEntityRepository;
+            this.supplierPlatformRelationEntityRepository = supplierPlatformRelationEntityRepository;
+            this.supplierGroupPlatformEntityRepository = supplierGroupPlatformEntityRepository;
         }
 
         /// <summary>
@@ -458,7 +484,6 @@
                 };
             }
 
-            var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(p => (int?)p).ToList();
             var queryableTemp = (from queueEntity in this.queueEntityRepository.EntityQueryable
                                  from deskType in this.deskTypeEntityRepository.EntityQueryable
                                  from entity in this.supplierEntityRepository.EntityQueryable
@@ -509,7 +534,21 @@
 
             if (parameter.IsEtaoshi)
             {
+                //可见集团列表
+                var retentionSupplierGroupIdList = supplierGroupPlatformEntityRepository.EntityQueryable
+                                                    .Where(c => c.PlatformId == parameter.PlatformId)
+                                                    .Select(p => p.SupplierGroupId)
+                                                    .ToList();
+
                 queryableTemp = queryableTemp.Where(p => retentionSupplierGroupIdList.Contains(p.SupplierGroupId));
+
+                //可见店铺列表
+                var retentionSupplierIdList = supplierPlatformRelationEntityRepository.EntityQueryable
+                                                .Where(c => c.PlatformId == parameter.PlatformId)
+                                                .Select(p => (int?)p.SupplierId)
+                                                .ToList();
+
+                queryableTemp = queryableTemp.Where(p => retentionSupplierIdList.Contains(p.SupplierId));
             }
 
             if (parameter.SupplierId != null)

@@ -125,6 +125,16 @@
         private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
 
         /// <summary>
+        /// 可见集团表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 10:07 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository;
+
+        /// <summary>
         /// 字段usersDetailServices
         /// </summary>
         /// 创建者：周超
@@ -175,7 +185,7 @@
         private readonly List<IAccount> accountList;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsersServices" /> class.
+        /// Initializes a new instance of the <see cref="UsersServices"/> class.
         /// </summary>
         /// <param name="appEntityRepository">The appEntityRepository</param>
         /// <param name="loginEntityRepository">The login entity repository.</param>
@@ -187,6 +197,8 @@
         /// <param name="supplierImageEntityRepository">The supplierImageEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
+        /// <param name="?">The ?Default documentation</param>
+        /// <param name="supplierGroupPlatformEntityRepository">The supplierGroupPlatformEntityRepositoryDefault documentation</param>
         /// <param name="usersDetailServices">The usersDetailServices</param>
         /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="userOrdersList">The userOrdersList</param>
@@ -208,6 +220,7 @@
             INHibernateRepository<SupplierImageEntity> supplierImageEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository,
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
+            INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository,
             IUsersDetailServices usersDetailServices,
             ISmsDetailServices smsDetailServices,
             List<IUserOrders> userOrdersList,
@@ -224,6 +237,7 @@
             this.supplierImageEntityRepository = supplierImageEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
+            this.supplierGroupPlatformEntityRepository = supplierGroupPlatformEntityRepository;
             this.usersDetailServices = usersDetailServices;
             this.smsDetailServices = smsDetailServices;
             this.userOrdersList = userOrdersList;
@@ -941,6 +955,7 @@
         /// <param name="userId">用户Id</param>
         /// <param name="supplierGroupId">集团Id</param>
         /// <param name="isEtaoshi">是否为etaoshi内部网站</param>
+        /// <param name="platformId">平台Id</param>
         /// <returns>
         /// 返回收藏餐厅列表
         /// </returns>
@@ -949,14 +964,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId, int? supplierGroupId, bool isEtaoshi)
+        public ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId, int? supplierGroupId, bool isEtaoshi, int? platformId)
         {
             if (supplierGroupId == 0)
             {
                 supplierGroupId = null;
             }
-
-            var retentionSupplierGroupIdList = ServicesCommon.RetentionSupplierGroupIdList.Select(temp => (int?)temp).ToList();
+            
             var queryableTemp = (from customerFavorite in this.customerFavoriteEntityRepository.EntityQueryable
                                  from supplier in this.supplierEntityRepository.EntityQueryable
                                  where customerFavorite.Supplier.SupplierId == supplier.SupplierId
@@ -981,6 +995,12 @@
 
             if (isEtaoshi)
             {
+                //可见集团列表
+                var retentionSupplierGroupIdList = supplierGroupPlatformEntityRepository.EntityQueryable
+                                                                                        .Where(c => c.PlatformId == platformId)
+                                                                                        .Select(p => p.SupplierGroupId)
+                                                                                        .ToList();
+
                 queryableTemp = queryableTemp.Where(p => retentionSupplierGroupIdList.Contains(p.SupplierGroupId));
             }
 
@@ -1282,7 +1302,8 @@
                     IsEtaoshi = parameter.IsEtaoshi,
                     PageIndex = parameter.PageIndex,
                     PageSize = parameter.PageSize,
-                    Cancelled = parameter.Cancelled
+                    Cancelled = parameter.Cancelled,
+                    PlatformId = parameter.PlatformId
                 });
 
             if (userOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)

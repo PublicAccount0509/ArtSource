@@ -154,7 +154,9 @@
     <Compile Include="Mapping\Repository\SupplierGroupFeatureEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupLightEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupLogoImageEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierGroupPlatformEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupTemplateEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierPlatformRelationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\TableTypeEntity.cs" />
     <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
@@ -692,6 +694,10 @@
     <EmbeddedResource Include="Mapping\SupplierDeskEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\SupplierDeskTimeEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\TableTypeEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\SupplierGroupPlatformEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierPlatformRelationEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

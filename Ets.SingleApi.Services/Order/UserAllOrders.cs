@@ -32,6 +32,26 @@
         private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
 
         /// <summary>
+        /// 可见店铺表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 10:26 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierPlatformRelationEntity> supplierPlatformRelationEntityRepository;
+
+        /// <summary>
+        /// 可见集团表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 10:26 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository;
+
+        /// <summary>
         /// 取得订单类型
         /// </summary>
         /// <value>
@@ -54,15 +74,21 @@
         /// Initializes a new instance of the <see cref="UserAllOrders" /> class.
         /// </summary>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
+        /// <param name="supplierPlatformRelationEntityRepository">The supplierPlatformRelationEntityRepositoryDefault documentation</param>
+        /// <param name="supplierGroupPlatformEntityRepository">The supplierGroupPlatformEntityRepositoryDefault documentation</param>
         /// 创建者：周超
         /// 创建日期：2013/10/20 16:04
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public UserAllOrders(
-            INHibernateRepository<CustomerEntity> customerEntityRepository)
+            INHibernateRepository<CustomerEntity> customerEntityRepository,
+            INHibernateRepository<SupplierPlatformRelationEntity> supplierPlatformRelationEntityRepository,
+            INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository)
         {
             this.customerEntityRepository = customerEntityRepository;
+            this.supplierPlatformRelationEntityRepository = supplierPlatformRelationEntityRepository;
+            this.supplierGroupPlatformEntityRepository = supplierGroupPlatformEntityRepository;
         }
 
         /// <summary>
@@ -88,14 +114,26 @@
                 };
             }
 
+            //可见集团列表
+            var retentionSupplierGroupIdList = supplierGroupPlatformEntityRepository.EntityQueryable
+                                                .Where(c => c.PlatformId == parameter.PlatformId)
+                                                .Select(p => p.SupplierGroupId)
+                                                .ToList();
+
+            //可见店铺列表
+            var retentionSupplierIdList = supplierPlatformRelationEntityRepository.EntityQueryable
+                                            .Where(c => c.PlatformId == parameter.PlatformId)
+                                            .Select(p => (int?)p.SupplierId)
+                                            .ToList();
+
             var list = this.customerEntityRepository.NamedQuery("Pro_QueryUserOrderList")
                         .SetInt32("CustomerID", parameter.CustomerId)
                         .SetInt32("OrderStatusID", parameter.OrderStatus ?? -1)
                         .SetInt32("PaidStatus", parameter.PaidStatus == null ? -1 : parameter.PaidStatus == true ? 1 : 0)
                         .SetInt32("PageIndex", parameter.PageIndex ?? -1)
                         .SetInt32("PageSize", parameter.PageSize)
-                        .SetString("SupplierGroupIdList", string.Join(",", ServicesCommon.RetentionSupplierGroupIdList))
-                        .SetString("SupplierIdList", string.Join(",", ServicesCommon.FilteredSupplierIdList)).List();
+                        .SetString("SupplierGroupIdList", string.Join(",", retentionSupplierGroupIdList))
+                        .SetString("SupplierIdList", string.Join(",", retentionSupplierIdList)).List();
 
             var orderList = (from object[] item in list
                              let dateReserved = item[1].ObjectToDateTime()

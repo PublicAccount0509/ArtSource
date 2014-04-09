@@ -275,6 +275,7 @@ namespace Ets.SingleApi.Controllers
         /// <param name="pageIndex">Index of the page.</param>
         /// <param name="cancelled">The  cancelled indicates whether</param>
         /// <param name="userId">The userId</param>
+        /// <param name="platformId">平台Id</param>
         /// <returns>
         /// 排队列表
         /// </returns>
@@ -284,7 +285,9 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, int? supplierGroupId, int pageSize, int? pageIndex, bool? cancelled, int userId)
+        public ListResponse<Queue> GetQueueList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId, 
+                                                int? supplierGroupId, int pageSize, int? pageIndex, bool? cancelled, 
+                                                int userId,int? platformId)
         {
             var list = this.queueServices.GetQueueList(this.Source, new GetQueuesParameter
             {
@@ -297,7 +300,8 @@ namespace Ets.SingleApi.Controllers
                 PageSize = pageSize,
                 PageIndex = pageIndex ?? 1,
                 Cancelled = cancelled,
-                UserId = userId
+                UserId = userId,
+                PlatformId = platformId
             });
 
             if (list.Result == null || list.Result.Count == 0)

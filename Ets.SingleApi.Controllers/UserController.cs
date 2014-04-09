@@ -672,6 +672,7 @@
         /// </summary>
         /// <param name="id">用户Id</param>
         /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <param name="platformId">平台Id</param>
         /// <returns>
         /// The FollowerSupplierListResponse
         /// </returns>
@@ -682,7 +683,7 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public ListResponse<FollowerSupplier> FollowerSupplierList(int id, int? supplierGroupId = null)
+        public ListResponse<FollowerSupplier> FollowerSupplierList(int id, int? supplierGroupId = null, int? platformId = null)
         {
             if (!this.ValidateUserId(id))
             {
@@ -696,7 +697,7 @@
                 };
             }
 
-            var list = this.usersServices.GetFollowerSupplierList(this.Source, id, supplierGroupId, this.IsEtaoshi);
+            var list = this.usersServices.GetFollowerSupplierList(this.Source, id, supplierGroupId, this.IsEtaoshi, platformId);
             if (list.Result == null || list.Result.Count == 0)
             {
                 return new ListResponse<FollowerSupplier>
@@ -890,6 +891,7 @@
         /// <param name="pageSize">每页最大数量</param>
         /// <param name="pageIndex">页码</param>
         /// <param name="cancelled">The  cancelled indicates whether</param>
+        /// <param name="platformId">平台Id</param>
         /// <returns>
         /// UserOrderListResponse
         /// </returns>
@@ -900,7 +902,9 @@
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
         [TokenFilter]
-        public ListResponse<IOrderModel> UserOrderList(int id, int orderType = -1, int? orderStatus = null, int? supplierId = null, int? supplierGroupId = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null, bool cancelled = false)
+        public ListResponse<IOrderModel> UserOrderList(int id, int orderType = -1, int? orderStatus = null, int? supplierId = null,
+                                                       int? supplierGroupId = null, bool? paidStatus = null, int pageSize = 10, int? pageIndex = null,
+                                                        bool cancelled = false, int? platformId = null)
         {
             if (!this.ValidateUserId(id))
             {
@@ -923,7 +927,8 @@
                                                                 IsEtaoshi = this.IsEtaoshi,
                                                                 PageIndex = pageIndex,
                                                                 PageSize = pageSize,
-                                                                Cancelled = cancelled
+                                                                Cancelled = cancelled,
+                                                                PlatformId = platformId
                                                             });
 
             if (list.Result == null || list.Result.Count == 0)

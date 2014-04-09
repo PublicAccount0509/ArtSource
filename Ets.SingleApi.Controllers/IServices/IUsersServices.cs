@@ -173,7 +173,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId, int? supplierGroupId, bool isEtaoshi);
+        ServicesResultList<FollowerSupplierModel> GetFollowerSupplierList(string source, int userId, int? supplierGroupId, bool isEtaoshi, int? platformId);
 
         /// <summary>
         /// 判定是否已经收藏餐厅
