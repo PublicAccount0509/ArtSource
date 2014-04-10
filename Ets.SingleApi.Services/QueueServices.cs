@@ -534,21 +534,33 @@
 
             if (parameter.IsEtaoshi)
             {
-                //可见集团列表
-                var retentionSupplierGroupIdList = supplierGroupPlatformEntityRepository.EntityQueryable
-                                                    .Where(c => c.PlatformId == parameter.PlatformId)
-                                                    .Select(p => p.SupplierGroupId)
-                                                    .ToList();
-
-                queryableTemp = queryableTemp.Where(p => retentionSupplierGroupIdList.Contains(p.SupplierGroupId));
-
-                //可见店铺列表
-                var retentionSupplierIdList = supplierPlatformRelationEntityRepository.EntityQueryable
-                                                .Where(c => c.PlatformId == parameter.PlatformId)
-                                                .Select(p => (int?)p.SupplierId)
-                                                .ToList();
-
-                queryableTemp = queryableTemp.Where(p => retentionSupplierIdList.Contains(p.SupplierId));
+                //显示 可见集团列表，可见店铺列表
+                queryableTemp = (from queryable in queryableTemp
+                                 from supplierGroupPlatform in supplierGroupPlatformEntityRepository.EntityQueryable
+                                 from supplierPlatformRelation in supplierPlatformRelationEntityRepository.EntityQueryable
+                                 where queryable.SupplierGroupId == supplierGroupPlatform.SupplierGroupId
+                                       && supplierGroupPlatform.PlatformId == parameter.PlatformId
+                                       && queryable.SupplierId == supplierPlatformRelation.SupplierId
+                                       && supplierPlatformRelation.PlatformId == parameter.PlatformId
+                                 select new
+                                 {
+                                     queryable.QueueId,
+                                     queryable.BoxName,
+                                     queryable.DeskTypeName,
+                                     queryable.MaxNumber,
+                                     queryable.MinNumber,
+                                     queryable.DeskTypeId,
+                                     queryable.Number,
+                                     queryable.QueueStateId,
+                                     queryable.RoomType,
+                                     queryable.SupplierId,
+                                     queryable.SupplierName,
+                                     queryable.TblTypeId,
+                                     queryable.TblTypeName,
+                                     queryable.CeateDate,
+                                     queryable.SupplierGroupId,
+                                     queryable.Cancelled
+                                 });
             }
 
             if (parameter.SupplierId != null)
