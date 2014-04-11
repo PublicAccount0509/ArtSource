@@ -118,6 +118,8 @@
     <Compile Include="Controller\CheckDeskRequst.cs" />
     <Compile Include="Controller\Queue.cs" />
     <Compile Include="Controller\DeskOpenDate.cs" />
+    <Compile Include="Controller\SinaWeiBoPaymentRequst.cs" />
+    <Compile Include="Controller\SinaWeiBoPaymentStateRequst.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
@@ -235,6 +237,8 @@
     <Compile Include="Services\DingTaiOrderDeskModel.cs" />
     <Compile Include="Services\CheckDeskParameter.cs" />
     <Compile Include="Services\GetQueuesParameter.cs" />
+    <Compile Include="Services\SinaWeiBoPaymentParameter.cs" />
+    <Compile Include="Services\SinaWeiBoPaymentStateParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />

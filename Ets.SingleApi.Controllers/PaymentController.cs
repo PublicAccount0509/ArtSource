@@ -344,6 +344,99 @@
             };
         }
 
+        [HttpPost]
+        [TokenFilter]
+        public Response<string> SinaWeiBoPayment(SinaWeiBoPaymentRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Result = string.Empty,
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = string.Empty
+                };
+            }
+
+            var baiFuBaoPaymentResult = this.paymentServices.SinaWeiBoPayment(this.Source, new SinaWeiBoPaymentParameter
+            {
+                OrderId = requst.OrderId,
+                OrderName = requst.OrderName,
+                Amount = requst.Amount,
+                OrderType = requst.OrderType,
+                CallBackUrl = requst.CallBackUrl,
+                MerchantUrl = requst.MerchantUrl
+            });
+
+            return new Response<string>
+            {
+                Result = baiFuBaoPaymentResult.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = baiFuBaoPaymentResult.StatusCode
+                }
+            };
+        }
+
+        [HttpPost]
+        [TokenFilter]
+        public Response<bool> SinaWeiBoPaymentState(SinaWeiBoPaymentStateRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+
+            var result = this.paymentServices.SinaWeiBoPaymentState(this.Source, new SinaWeiBoPaymentStateParameter
+            {
+                NotSign = requst.NotSign,
+                Sign = requst.Sign,
+                OrderId = requst.OrderId,
+                Result = requst.Result,
+                OrderType = requst.OrderType
+            });
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
 
         [HttpPost]
         [TokenFilter]

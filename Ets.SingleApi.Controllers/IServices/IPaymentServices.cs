@@ -106,6 +106,36 @@
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> AlipayPaymentState(string source, AlipayPaymentStateParameter parameter);
 
+        /// <summary>
+        /// 获取新浪微博支付请求Url
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// 新浪微博支付请求Url
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/14/2014 9:55 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> SinaWeiBoPayment(string source, SinaWeiBoPaymentParameter parameter);
+
+        /// <summary>
+        /// 新浪微博支付状态
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：2/11/2014 1:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SinaWeiBoPaymentState(string source, SinaWeiBoPaymentStateParameter parameter);
+
 
         /// <summary>
         ///微信支付请求JSON参数
