@@ -162,6 +162,7 @@
     <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\TableTypeEntity.cs" />
     <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
+    <Compile Include="Mapping\Repository\UserFeedbackEntity.cs" />
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
     <Compile Include="OrderProviderType.cs" />
     <Compile Include="OrderSourceType.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Services\GetQueuesParameter.cs" />
     <Compile Include="Services\SinaWeiBoPaymentParameter.cs" />
     <Compile Include="Services\SinaWeiBoPaymentStateParameter.cs" />
+    <Compile Include="Services\SaveFeedbackParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
@@ -702,6 +704,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Mapping\SupplierGroupPlatformEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\SupplierPlatformRelationEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\UserFeedbackEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

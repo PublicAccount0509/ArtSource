@@ -135,6 +135,16 @@
         private readonly INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository;
 
         /// <summary>
+        /// 用户意见反馈
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/11/2014 11:34 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<UserFeedbackEntity> userFeedbackEntityRepository;
+
+        /// <summary>
         /// 字段usersDetailServices
         /// </summary>
         /// 创建者：周超
@@ -185,7 +195,7 @@
         private readonly List<IAccount> accountList;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsersServices"/> class.
+        /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
         /// <param name="appEntityRepository">The appEntityRepository</param>
         /// <param name="loginEntityRepository">The login entity repository.</param>
@@ -197,8 +207,8 @@
         /// <param name="supplierImageEntityRepository">The supplierImageEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
-        /// <param name="?">The ?Default documentation</param>
         /// <param name="supplierGroupPlatformEntityRepository">The supplierGroupPlatformEntityRepositoryDefault documentation</param>
+        /// <param name="userFeedbackEntityRepository">用户意见反馈</param>
         /// <param name="usersDetailServices">The usersDetailServices</param>
         /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="userOrdersList">The userOrdersList</param>
@@ -221,6 +231,7 @@
             INHibernateRepository<RegionEntity> regionEntityRepository,
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
             INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository,
+            INHibernateRepository<UserFeedbackEntity> userFeedbackEntityRepository,
             IUsersDetailServices usersDetailServices,
             ISmsDetailServices smsDetailServices,
             List<IUserOrders> userOrdersList,
@@ -238,6 +249,7 @@
             this.regionEntityRepository = regionEntityRepository;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.supplierGroupPlatformEntityRepository = supplierGroupPlatformEntityRepository;
+            this.userFeedbackEntityRepository = userFeedbackEntityRepository;
             this.usersDetailServices = usersDetailServices;
             this.smsDetailServices = smsDetailServices;
             this.userOrdersList = userOrdersList;
@@ -1372,6 +1384,47 @@
             return new ServicesResultList<ExistModel>
             {
                 Result = list
+            };
+        }
+
+        /// <summary>
+        /// 保存意见反馈
+        /// </summary>
+        /// <param name="saveFeedbackParameter">The saveFeedbackParameterDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/11/2014 10:55 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SaveFeedback(SaveFeedbackParameter saveFeedbackParameter)
+        {
+            if (saveFeedbackParameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var userFeedback = new UserFeedbackEntity
+                {
+                    UserId = saveFeedbackParameter.UserId,
+                    IPAddress = saveFeedbackParameter.IPAddress,
+                    Content = saveFeedbackParameter.Content,
+                    EmailOrPhone = saveFeedbackParameter.EmailOrPhone,
+                    Source = saveFeedbackParameter.Source,
+                    Path = saveFeedbackParameter.Path
+                };
+
+            this.userFeedbackEntityRepository.Save(userFeedback);
+
+            return new ServicesResult<bool>
+            {
+                Result = true
             };
         }
 

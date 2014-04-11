@@ -971,5 +971,21 @@
                 Result = result
             };
         }
+
+        [HttpPost]
+        [TokenFilter]
+        public Response<bool> SaveFeedback(SaveFeedbackParameter saveFeedbackParameter)
+        {
+            var result = this.usersServices.SaveFeedback(saveFeedbackParameter);
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
     }
 }

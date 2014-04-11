@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.UserFeedbackEntity, Ets.SingleApi.Model" table="UserFeedback" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="FeedbackId" column="FeedbackId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="UserId" column="UserId" type="Int32" not-null="false" />
+		<property name="IPAddress" column="IPAddress" type="String" not-null="false" />
+		<property name="Content" column="Content" type="String" not-null="false" />
+		<property name="EmailOrPhone" column="EmailOrPhone" type="String" not-null="false" />
+		<property name="Source" column="Source" type="String" not-null="false" />
+		<property name="Path" column="Path" type="String" not-null="false" />
+	</class>
+</hibernate-mapping>

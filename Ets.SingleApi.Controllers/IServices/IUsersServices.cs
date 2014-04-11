@@ -254,5 +254,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<ExistModel> Exist(string source, List<ExistParameter> parameterList);
+
+        /// <summary>
+        /// 保存意见反馈
+        /// </summary>
+        /// <param name="saveFeedbackParameter">The saveFeedbackParameterDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/11/2014 10:55 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SaveFeedback(SaveFeedbackParameter saveFeedbackParameter);
     }
 }
