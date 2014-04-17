@@ -65,7 +65,7 @@
                     {
                         Message = new ApiMessage
                             {
-                                StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                                StatusCode = list.StatusCode
                             },
                         Result = new List<BusinessArea>()
                     };
@@ -112,7 +112,7 @@
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                        StatusCode = list.StatusCode
                     },
                     Result = new List<BusinessArea>()
                 };
@@ -160,7 +160,7 @@
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : list.StatusCode
+                        StatusCode = list.StatusCode
                     },
                     Result = new List<BusinessArea>()
                 };
