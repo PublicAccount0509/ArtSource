@@ -2368,43 +2368,43 @@
             var secondDiscount = supplierCouponList.Any(p => p.CouponTypeId == CouponTypeSecondId) ?
                                  supplierCouponList.Where(p => p.CouponTypeId == CouponTypeSecondId).Select(p => p.Discount).Max() / 10 : 1;
 
-            secondDiscount = 1 - secondDiscount;
             if (secondDiscount <= 0)
             {
                 secondDiscount = 1;
             }
 
+            var result = total;
             if (calculateCouponWay == 1)
             {
-                return (total - firstDiscount) * secondDiscount;
+                result = (total - firstDiscount) * secondDiscount;
             }
 
             if (calculateCouponWay == 2)
             {
-                return total * secondDiscount - firstDiscount;
+                result = total * secondDiscount - firstDiscount;
             }
 
             if (calculateCouponWay == 3)
             {
-                return Math.Min((total - firstDiscount) * secondDiscount, total * secondDiscount - firstDiscount);
+                result = Math.Min((total - firstDiscount) * secondDiscount, total * secondDiscount - firstDiscount);
             }
 
             if (calculateCouponWay == 4)
             {
-                return Math.Min(total - firstDiscount, total * secondDiscount);
+                result = Math.Min(total - firstDiscount, total * secondDiscount);
             }
 
             if (calculateCouponWay == 5)
             {
-                return firstDiscount > 0 ? total - firstDiscount : total * secondDiscount;
+                result = firstDiscount > 0 ? total - firstDiscount : total * secondDiscount;
             }
 
             if (calculateCouponWay == 6)
             {
-                return secondDiscount >= 0 && secondDiscount <= 1 ? total * secondDiscount : total - firstDiscount;
+                result = secondDiscount >= 0 && secondDiscount <= 1 ? total * secondDiscount : total - firstDiscount;
             }
 
-            return total;
+            return total - result;
         }
 
         /// <summary>
