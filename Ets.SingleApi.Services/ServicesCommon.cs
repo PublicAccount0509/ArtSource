@@ -2368,12 +2368,12 @@
             var secondDiscount = supplierCouponList.Any(p => p.CouponTypeId == CouponTypeSecondId) ?
                                  supplierCouponList.Where(p => p.CouponTypeId == CouponTypeSecondId).Select(p => p.Discount).Max() / 10 : 1;
 
+            secondDiscount = 1 - secondDiscount;
             if (secondDiscount <= 0)
             {
                 secondDiscount = 1;
             }
 
-            secondDiscount = 1 - secondDiscount;
             if (calculateCouponWay == 1)
             {
                 return (total - firstDiscount) * secondDiscount;
