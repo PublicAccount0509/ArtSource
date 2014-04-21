@@ -1417,7 +1417,8 @@
                     Content = saveFeedbackParameter.Content,
                     EmailOrPhone = saveFeedbackParameter.EmailOrPhone,
                     Source = saveFeedbackParameter.Source,
-                    Path = saveFeedbackParameter.Path
+                    Path = saveFeedbackParameter.Path,
+                    CreateDate = saveFeedbackParameter.CreateDate
                 };
 
             this.userFeedbackEntityRepository.Save(userFeedback);
