@@ -1,7 +1,7 @@
 ﻿using Ets.SingleApi.Model;
 using Ets.SingleApi.Model.Services;
 
-namespace Ets.SingleApi.Services.Coupon
+namespace Ets.SingleApi.Services
 {
     /// <summary>
     /// 接口名称：ISupplierCouponCodeProvider

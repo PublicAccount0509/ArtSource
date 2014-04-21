@@ -55,6 +55,16 @@ namespace Ets.SingleApi.Services
         private readonly List<ISupplierCouponProvider> supplierCouponProviderList;
 
         /// <summary>
+        /// 字段supplierCouponProviderList
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/9/2013 11:29 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly List<ISupplierCouponCodeProvider> supplierCouponCodeProviderList;
+
+        /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
         /// 创建者：周超
@@ -93,6 +103,7 @@ namespace Ets.SingleApi.Services
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="tableReservationEntityRepository">The tableReservationEntityRepository</param>
         /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
+        /// <param name="supplierCouponCodeProviderList">The supplierCouponCodeProviderList</param>
         /// 创建者：周超
         /// 创建日期：12/9/2013 11:28 AM
         /// 修改者：
@@ -104,7 +115,8 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<CouponEntity> couponEntityRepository,
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<TableReservationEntity> tableReservationEntityRepository,
-            List<ISupplierCouponProvider> supplierCouponProviderList)
+            List<ISupplierCouponProvider> supplierCouponProviderList,
+            List<ISupplierCouponCodeProvider> supplierCouponCodeProviderList)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
@@ -112,6 +124,7 @@ namespace Ets.SingleApi.Services
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.tableReservationEntityRepository = tableReservationEntityRepository;
             this.supplierCouponProviderList = supplierCouponProviderList;
+            this.supplierCouponCodeProviderList = supplierCouponCodeProviderList;
         }
 
         /// <summary>
@@ -325,6 +338,74 @@ namespace Ets.SingleApi.Services
             return new ServicesResult<bool>
             {
                 Result = true
+            };
+        }
+
+        /// <summary>
+        /// 取得优惠码优惠计算结果
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回优惠码优惠计算结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/9/2013 10:20 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<SupplierCouponCodeModel> GetSupplierCouponCode(string source, SupplierCouponCodeParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<SupplierCouponCodeModel>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = new SupplierCouponCodeModel()
+                };
+            }
+
+            if (parameter.Total <= 0)
+            {
+                return new ServicesResult<SupplierCouponCodeModel>
+                {
+                    Result = new SupplierCouponCodeModel()
+                };
+            }
+
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == parameter.SupplierId))
+            {
+                return new ServicesResult<SupplierCouponCodeModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new SupplierCouponCodeModel()
+                };
+            }
+
+            if (!this.customerEntityRepository.EntityQueryable.Any(p => p.LoginId == parameter.UserId))
+            {
+                return new ServicesResult<SupplierCouponCodeModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = new SupplierCouponCodeModel()
+                };
+            }
+
+            var supplierCouponCodeProvider = this.supplierCouponCodeProviderList.FirstOrDefault(p => p.CouponType == (CouponCodeType)parameter.CouponTypeId);
+            if (supplierCouponCodeProvider == null)
+            {
+                return new ServicesResult<SupplierCouponCodeModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryMethodId,
+                    Result = new SupplierCouponCodeModel()
+                };
+            }
+
+            var supplierCouponCode = supplierCouponCodeProvider.CalculateCoupon(parameter.CouponCode,parameter.Total) ?? new SupplierCouponCodeModel();
+            return new ServicesResult<SupplierCouponCodeModel>
+            {
+                StatusCode = supplierCouponCode.CouponCode.IsEmptyOrNull() ? (int)StatusCode.Succeed.Empty : (int)StatusCode.Succeed.Ok,
+                Result = supplierCouponCode
             };
         }
     }

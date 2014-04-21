@@ -4,7 +4,7 @@ using Ets.SingleApi.Model.Repository;
 using Ets.SingleApi.Model.Services;
 using Ets.SingleApi.Services.IRepository;
 
-namespace Ets.SingleApi.Services.Coupon
+namespace Ets.SingleApi.Services
 {
     /// <summary>
     /// 类名称：PercentSupplierCouponCodeProvider

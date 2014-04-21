@@ -4,7 +4,7 @@ using Ets.SingleApi.Model.Repository;
 using Ets.SingleApi.Model.Services;
 using Ets.SingleApi.Services.IRepository;
 
-namespace Ets.SingleApi.Services.Coupon
+namespace Ets.SingleApi.Services
 {
     /// <summary>
     /// 类名称：SendMealSupplierCouponCodeProvider
@@ -16,7 +16,7 @@ namespace Ets.SingleApi.Services.Coupon
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SendMealSupplierCouponCodeProvider
+    public class SendMealSupplierCouponCodeProvider : ISupplierCouponCodeProvider
     {
         /// <summary>
         /// 字段customerEntityRepository
