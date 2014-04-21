@@ -41,6 +41,6 @@ namespace Ets.SingleApi.Services.Coupon
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        SupplierCouponModel CalculateCoupon(string couponCode,decimal total);
+        SupplierCouponCodeModel CalculateCoupon(string couponCode, decimal total);
     }
 }
