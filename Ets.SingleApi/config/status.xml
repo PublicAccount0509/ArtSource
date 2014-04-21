@@ -74,6 +74,7 @@
   <item code="40040" message="该排队号已经取消，无法再次取消"></item>
   <item code="40041" message="该餐厅已下架"></item>
   <item code="40042" message="预订时间已过，请重新选择预订时间"></item>
+  <item code="40043" message="无效的优惠码"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>

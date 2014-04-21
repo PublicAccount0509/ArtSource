@@ -161,5 +161,120 @@
                 Result = getSupplierCouponResult.Result
             };
         }
+
+        /// <summary>
+        /// 取得优惠信息
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/9/2013 10:20 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<bool> CheckIsEffective(SupplierCouponCodeRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var getSupplierCouponResult = this.couponServices.CheckIsEffective(this.Source, new SupplierCouponCodeParameter
+            {
+                Total = requst.Total,
+                SupplierId = requst.SupplierId,
+                UserId = requst.UserId,
+                CouponCode = requst.CouponCode
+            });
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getSupplierCouponResult.StatusCode
+                },
+                Result = getSupplierCouponResult.Result
+            };
+        }
+
+        /// <summary>
+        /// 取得优惠计算结果
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回优惠计算结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/9/2013 10:20 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<SupplierCouponCode> SupplierCouponList(SupplierCouponCodeRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<SupplierCouponCode>
+                {
+                    Result = new SupplierCouponCode(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var getSupplierCouponResult = this.couponServices.GetSupplierCouponCode(this.Source, new SupplierCouponCodeParameter
+            {
+                Total = requst.Total,
+                SupplierId = requst.SupplierId,
+                UserId = requst.UserId,
+                CouponCode = requst.CouponCode
+            });
+
+            if (getSupplierCouponResult.Result == null)
+            {
+                return new Response<SupplierCouponCode>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getSupplierCouponResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getSupplierCouponResult.StatusCode
+                    },
+                    Result = new SupplierCouponCode()
+                };
+            }
+
+            var result = new SupplierCouponCode
+            {
+                CouponId = getSupplierCouponResult.Result.CouponId,
+                CouponCode = getSupplierCouponResult.Result.CouponCode,
+                Discount = getSupplierCouponResult.Result.Discount,
+                DiscountAmount = getSupplierCouponResult.Result.DiscountAmount,
+                AmountPayable = getSupplierCouponResult.Result.AmountPayable,
+                CouponTypeId = getSupplierCouponResult.Result.CouponTypeId
+            };
+
+            return new Response<SupplierCouponCode>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getSupplierCouponResult.StatusCode
+                },
+                Result = result,
+                Cache = new ApiCache
+                {
+                    ExpiresIn = CommonUtility.GetTokenExpiresIn()
+                }
+            };
+        }
     }
 }

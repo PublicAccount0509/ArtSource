@@ -1,10 +1,10 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model.Controller
 {
     using System;
 
     /// <summary>
-    /// 类名称：SupplierCouponParameter
-    /// 命名空间：Ets.SingleApi.Model.Services
+    /// 类名称：SupplierCouponRequst
+    /// 命名空间：Ets.SingleApi.Model.Controller
     /// 类功能：优惠参数
     /// </summary>
     /// 创建者：周超
@@ -12,7 +12,7 @@
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SupplierCouponCodeParameter
+    public class SupplierCouponCodeRequst : ApiRequst
     {
         /// <summary>
         /// 设置或取得总消费

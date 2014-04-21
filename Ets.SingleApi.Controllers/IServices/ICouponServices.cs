@@ -58,5 +58,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> CheckIsEffective(string source, SupplierCouponCodeParameter parameter);
+
+        /// <summary>
+        /// 取得优惠码优惠计算结果
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 取得优惠码优惠计算结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：4/21/2014 5:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<SupplierCouponCodeModel> GetSupplierCouponCode(string source,
+                                                                      SupplierCouponCodeParameter parameter);
     }
 }

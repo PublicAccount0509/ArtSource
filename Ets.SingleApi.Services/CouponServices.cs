@@ -391,7 +391,21 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            var supplierCouponCodeProvider = this.supplierCouponCodeProviderList.FirstOrDefault(p => p.CouponType == (CouponCodeType)parameter.CouponTypeId);
+            var coupon = (from couponEntity in this.couponEntityRepository.EntityQueryable
+                          where couponEntity.CouponCode == parameter.CouponCode
+                          && couponEntity.Supplier.SupplierId == parameter.SupplierId
+                          select couponEntity).FirstOrDefault();
+
+            if (coupon == null)
+            {
+                return new ServicesResult<SupplierCouponCodeModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidCouponCode,
+                    Result = new SupplierCouponCodeModel()
+                };
+            }
+
+            var supplierCouponCodeProvider = this.supplierCouponCodeProviderList.FirstOrDefault(p => p.CouponType == (CouponCodeType)coupon.CouponTypeId);
             if (supplierCouponCodeProvider == null)
             {
                 return new ServicesResult<SupplierCouponCodeModel>

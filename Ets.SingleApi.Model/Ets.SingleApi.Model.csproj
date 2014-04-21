@@ -120,6 +120,8 @@
     <Compile Include="Controller\DeskOpenDate.cs" />
     <Compile Include="Controller\SinaWeiBoPaymentRequst.cs" />
     <Compile Include="Controller\SinaWeiBoPaymentStateRequst.cs" />
+    <Compile Include="Controller\SupplierCouponCodeRequst.cs" />
+    <Compile Include="Controller\SupplierCouponCode.cs" />
     <Compile Include="CouponCodeType.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
