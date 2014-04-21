@@ -88,7 +88,7 @@ namespace Ets.SingleApi.Model.Repository
         /// ----------------------------------------------------------------------------------------
 		private string source;
 
-			/// <summary>
+		/// <summary>
 		/// The Path
         /// </summary>
         /// Creator:ww
@@ -97,6 +97,16 @@ namespace Ets.SingleApi.Model.Repository
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
 		private string path;
+
+        /// <summary>
+        /// The createDate
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014/4/11 11:25:57
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private DateTime createDate;
 
 		#endregion
 
@@ -264,6 +274,26 @@ namespace Ets.SingleApi.Model.Repository
             set
             {
                 this.path = value;
+            }
+        }
+        /// <summary>
+        /// Gets or sets a value mapping the Path of UserFeedbackEntity table in the database.
+        /// </summary>
+        /// Creator:ww
+        /// Creation Date:2014/4/11 11:25:57
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual DateTime CreateDate
+        {
+            get
+            {
+                return this.createDate;
+            }
+
+            set
+            {
+                this.createDate = value;
             }
         }
 

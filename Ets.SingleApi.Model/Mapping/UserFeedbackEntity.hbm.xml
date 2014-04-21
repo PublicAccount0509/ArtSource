@@ -13,6 +13,7 @@
 		<property name="Content" column="Content" type="String" not-null="false" />
 		<property name="EmailOrPhone" column="EmailOrPhone" type="String" not-null="false" />
 		<property name="Source" column="Source" type="String" not-null="false" />
-		<property name="Path" column="Path" type="String" not-null="false" />
+    <property name="Path" column="Path" type="String" not-null="false" />
+    <property name="CreateDate" column="CreateDate" type="Timestamp" not-null="false" />
 	</class>
 </hibernate-mapping>

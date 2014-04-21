@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Model.Services
 {
+    using System;
+
     /// <summary>
     /// 类名称：SaveFeedbackParameter
     /// 命名空间：Ets.WapNew.Model.Services
@@ -89,5 +91,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string Path { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        /// <value>
+        /// The CreateDate
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：4/21/2014 10:49 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DateTime CreateDate { get; set; }
     }
 }
