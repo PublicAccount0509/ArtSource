@@ -243,6 +243,7 @@
     <Compile Include="Services\SinaWeiBoPaymentStateParameter.cs" />
     <Compile Include="Services\SaveFeedbackParameter.cs" />
     <Compile Include="Services\SupplierCouponCodeModel.cs" />
+    <Compile Include="Services\SupplierCouponCodeParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />

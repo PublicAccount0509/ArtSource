@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using System;
+
+namespace Ets.SingleApi.Services
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -53,10 +55,43 @@
         private readonly List<ISupplierCouponProvider> supplierCouponProviderList;
 
         /// <summary>
+        /// 字段customerEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：12/7/2013 2:16 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<CouponEntity> couponEntityRepository;
+
+        /// <summary>
+        /// 字段deliveryEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 8:41 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeliveryEntity> deliveryEntityRepository;
+
+        /// <summary>
+        /// 字段tableReservationEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 8:41 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<TableReservationEntity> tableReservationEntityRepository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CouponServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
+        /// <param name="couponEntityRepository">The couponEntityRepository</param>
+        /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
+        /// <param name="tableReservationEntityRepository">The tableReservationEntityRepository</param>
         /// <param name="supplierCouponProviderList">The supplierCouponProviderList</param>
         /// 创建者：周超
         /// 创建日期：12/9/2013 11:28 AM
@@ -66,10 +101,16 @@
         public CouponServices(
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<CustomerEntity> customerEntityRepository,
+            INHibernateRepository<CouponEntity> couponEntityRepository,
+            INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
+            INHibernateRepository<TableReservationEntity> tableReservationEntityRepository,
             List<ISupplierCouponProvider> supplierCouponProviderList)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.customerEntityRepository = customerEntityRepository;
+            this.couponEntityRepository = couponEntityRepository;
+            this.deliveryEntityRepository = deliveryEntityRepository;
+            this.tableReservationEntityRepository = tableReservationEntityRepository;
             this.supplierCouponProviderList = supplierCouponProviderList;
         }
 
@@ -200,6 +241,91 @@
                 {
                     Result = result
                 };
+        }
+
+
+        /// <summary>
+        /// 验证优惠码是否可用
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：4/21/2014 10:27 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        /// <exception cref="System.NotImplementedException"></exception>
+        public ServicesResult<bool> CheckIsEffective(string source, SupplierCouponCodeParameter parameter)
+        {
+            var coupon = (from couponEntity in this.couponEntityRepository.EntityQueryable
+                          where couponEntity.CouponCode == parameter.CouponCode
+                          && couponEntity.Supplier.SupplierId == parameter.SupplierId
+                          select couponEntity).FirstOrDefault();
+            //判断是否存在该优惠码
+            if (coupon == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+            //判断该优惠码是否在有效期内
+            if (DateTime.Now < coupon.StartDate || DateTime.Now > coupon.ExpirationDate)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+            //按试用规则判断是否可以使用该优惠码
+            if (coupon.UseRules == 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false
+                };
+            }
+
+            var deliverylist = (from deliveryEntity in this.deliveryEntityRepository.EntityQueryable
+                            where deliveryEntity.CouponId == coupon.CouponId
+                            select deliveryEntity).ToList();
+
+            var tableReservationlist = (from tableReservationEntity in this.tableReservationEntityRepository.EntityQueryable
+                                        where tableReservationEntity.CouponCode == coupon.CouponCode
+                                        select tableReservationEntity).ToList();
+
+            if (coupon.UseRules == 2)
+            {
+                if ((deliverylist.Count + tableReservationlist.Count) >= 1)
+                {
+                    return new ServicesResult<bool>
+                    {
+                        Result = false
+                    };
+                }
+            }
+
+            if (coupon.UseRules == 3)
+            {
+                var deliveryCount = deliverylist.Count(p => p.CustomerId == parameter.UserId);
+                var tableReservationCount = tableReservationlist.Count(p => p.CustomerId == parameter.UserId);
+
+                if ((deliveryCount + tableReservationCount) >= 1)
+                {
+                    return new ServicesResult<bool>
+                    {
+                        Result = false
+                    };
+                }
+            }
+
+            return new ServicesResult<bool>
+            {
+                Result = true
+            };
         }
     }
 }

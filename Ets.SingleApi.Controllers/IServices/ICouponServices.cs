@@ -44,20 +44,19 @@
         /// ----------------------------------------------------------------------------------------
         ServicesResult<decimal> GetSupplierCoupon(string source, SupplierCouponParameter parameter);
 
-        ///// <summary>
-        ///// 验证优惠码是否可用
-        ///// </summary>
-        ///// <param name="couponCode">优惠码</param>
-        ///// <param name="supplierId">餐厅Id</param>
-        ///// <param name="userId">用户登录Id</param>
-        ///// <returns>
-        ///// Boolean
-        ///// </returns>
-        ///// 创建者：单琪彬
-        ///// 创建日期：4/21/2014 10:27 AM
-        ///// 修改者：
-        ///// 修改时间：
-        ///// ----------------------------------------------------------------------------------------
-        //bool CheckIsEffective(string couponCode, int supplierId, int userId);
+        /// <summary>
+        /// 验证优惠码是否可用
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：4/21/2014 10:27 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> CheckIsEffective(string source, SupplierCouponCodeParameter parameter);
     }
 }

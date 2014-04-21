@@ -21,7 +21,7 @@ namespace Ets.SingleApi.Services.Coupon
         /// <summary>
         /// 字段customerEntityRepository
         /// </summary>
-        /// 创建者：周超
+        /// 创建者：单琪彬
         /// 创建日期：12/7/2013 2:16 PM
         /// 修改者：
         /// 修改时间：
