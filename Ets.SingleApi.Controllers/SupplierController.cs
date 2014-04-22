@@ -179,6 +179,57 @@ namespace Ets.SingleApi.Controllers
         }
 
         /// <summary>
+        /// 根据餐厅域名获取餐厅信息
+        /// </summary>
+        /// <param name="supplierDomain">餐厅域名</param>
+        /// <returns>
+        /// 返回餐厅信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<RoughSupplier> RoughSupplier(string supplierDomain)
+        {
+            var getRoughSupplierResult = this.supplierServices.GetRoughSupplier(this.Source, (supplierDomain ?? string.Empty).Trim());
+            if (getRoughSupplierResult.Result == null)
+            {
+                return new Response<RoughSupplier>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getRoughSupplierResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getRoughSupplierResult.StatusCode
+                    },
+                    Result = new RoughSupplier()
+                };
+            }
+
+            var supplierFeatureList = getRoughSupplierResult.Result.SupplierFeatureList;
+            var supplier = new RoughSupplier
+            {
+                SupplierId = getRoughSupplierResult.Result.SupplierId,
+                SupplierName = getRoughSupplierResult.Result.SupplierName ?? string.Empty,
+                SupplierDescription = getRoughSupplierResult.Result.SupplierDescription ?? string.Empty,
+                Address = getRoughSupplierResult.Result.Address ?? string.Empty,
+                Telephone = getRoughSupplierResult.Result.Telephone ?? string.Empty,
+                IsWaiMai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.WaiMaiFeatureId),
+                IsDingTai = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.DingTaiFeatureId),
+                IsTangShi = supplierFeatureList != null && supplierFeatureList.Exists(q => q.FeatureId == ControllersCommon.TangShiFeatureId)
+            };
+
+            return new Response<RoughSupplier>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getRoughSupplierResult.StatusCode
+                },
+                Result = supplier
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅基本信息
         /// </summary>
         /// <param name="id">餐厅Id</param>
