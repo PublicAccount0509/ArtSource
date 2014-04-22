@@ -1,7 +1,5 @@
 ﻿namespace Ets.SingleApi.Model.Controller
 {
-    using System;
-
     /// <summary>
     /// 类名称：SupplierCouponRequst
     /// 命名空间：Ets.SingleApi.Model.Controller
@@ -26,19 +24,6 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public decimal Total { get; set; }
-
-        /// <summary>
-        /// 设置或取得餐厅Id
-        /// </summary>
-        /// <value>
-        /// 餐厅Id
-        /// </value>
-        /// 创建者：周超
-        /// 创建日期：2013/10/16 23:53
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public int SupplierId { get; set; }
 
         /// <summary>
         /// 设置或取得用户Id
