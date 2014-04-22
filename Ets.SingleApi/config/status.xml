@@ -62,7 +62,7 @@
   <item code="40027" message="未达到餐厅的最低消费，不能下单"></item>
   <item code="40028" message="无效的支付方式"></item>
   <item code="40030" message="无效的购物车Id"></item>
-  <item code="40031" message="没有找到对应的购物车"></item>
+  <item code="40031" message="获取购物车信息为空"></item>
   <item code="40032" message="该时间段不提供订台"></item>
   <item code="40033" message="您已经预订此台位"></item>
   <item code="40034" message="该台位信息不存在"></item>

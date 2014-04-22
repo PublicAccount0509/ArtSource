@@ -39,7 +39,7 @@
             {
                 return new CacheServicesResult<ShoppingCartSupplier>
                {
-                   StatusCode = (int)StatusCode.Succeed.Empty
+                   StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                };
             }
 
@@ -93,7 +93,7 @@
             {
                 return new CacheServicesResult<ShoppingCartCustomer>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -147,7 +147,7 @@
             {
                 return new CacheServicesResult<EtsWapTangShiShoppingCartOrder>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -201,7 +201,7 @@
             {
                 return new CacheServicesResult<EtsWapTangShiShoppingCart>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -255,7 +255,7 @@
             {
                 return new CacheServicesResult<ShoppingCartDelivery>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -309,7 +309,7 @@
             {
                 return new CacheServicesResult<EtsWapTangShiShoppingCartLink>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 

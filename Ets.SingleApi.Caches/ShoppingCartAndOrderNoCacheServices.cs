@@ -61,7 +61,7 @@
             {
                 return new CacheServicesResult<string>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 

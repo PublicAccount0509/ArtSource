@@ -39,7 +39,7 @@
             {
                 return new CacheServicesResult<ShoppingCartSupplier>
                {
-                   StatusCode = (int)StatusCode.Succeed.Empty
+                   StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                };
             }
 
@@ -93,7 +93,7 @@
             {
                 return new CacheServicesResult<ShoppingCartCustomer>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -147,7 +147,7 @@
             {
                 return new CacheServicesResult<EtsWapDingTaiShoppingCartOrder>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -201,7 +201,7 @@
             {
                 return new CacheServicesResult<EtsWapDingTaiShoppingCart>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -254,7 +254,7 @@
             {
                 return new CacheServicesResult<ShoppingCartDelivery>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -290,7 +290,7 @@
             {
                 return new CacheServicesResult<ShoppingCartDesk>
                     {
-                        StatusCode = (int) StatusCode.Succeed.Empty
+                        StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                     };
             }
 
@@ -373,7 +373,7 @@
             {
                 return new CacheServicesResult<EtsWapDingTaiShoppingCartLink>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 

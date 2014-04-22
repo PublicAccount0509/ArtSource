@@ -146,7 +146,7 @@
             {
                 return new CacheServicesResult<string>
                 {
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -202,7 +202,7 @@
                             ShoppingCartId = tempShoppingCartId,
                             IsNew = true
                         },
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -221,7 +221,7 @@
                         ShoppingCartId = tempShoppingCartId,
                         IsNew = true
                     },
-                    StatusCode = (int)StatusCode.Succeed.Empty
+                    StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
                 };
             }
 
@@ -273,7 +273,7 @@
                     ShoppingCartId = newShoppingCartId,
                     IsNew = true
                 },
-                StatusCode = (int)StatusCode.Succeed.Empty
+                StatusCode = (int)StatusCode.Validate.NotFondShoppingCartCode
             };
         }
 
