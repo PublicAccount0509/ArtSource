@@ -257,9 +257,6 @@
     <Content Include="config\castle\components\externalservices.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\wapcontrollers.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="config\castle\components\caches.config" />
   </ItemGroup>
   <ItemGroup>
