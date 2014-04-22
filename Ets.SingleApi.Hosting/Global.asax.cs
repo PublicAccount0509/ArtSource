@@ -82,13 +82,10 @@
                     { "Orders", typeof(IOrdersService) },
                     { "Payment", typeof(IPaymentService) },
                     { "ShoppingCart", typeof(IShoppingCartService) },
-                    { "HaiDiLaoShoppingCart", typeof(IHaiDiLaoShoppingCartService) },
                     { "Sms", typeof(ISmsService) },
                     { "User", typeof(IUserService) },
                     { "Supplier", typeof(ISupplierService) },
                     { "WapSupplier", typeof(IWapSupplierService) },
-                    { "WeiXinWapHtjUser", typeof(IWeiXinWapHtjUserService) },
-                    { "HaiDiLaoSupplier", typeof(IHaiDiLaoSupplierService) },
                     { "BaiDuLight", typeof(IBaiDuLightService) },
                 };
 

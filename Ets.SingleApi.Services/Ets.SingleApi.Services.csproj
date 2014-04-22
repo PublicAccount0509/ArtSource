@@ -97,15 +97,7 @@
     <Compile Include="Exists\SocialOAuthExists.cs" />
     <Compile Include="FilterServices.cs" />
     <Compile Include="FunctionServices.cs" />
-    <Compile Include="HaiDiLaoSupplierServices.cs" />
-    <Compile Include="HuangTaiJiOrderServicesTemp.cs" />
-    <Compile Include="HuangTaiJiShoppingCartServices.cs" />
-    <Compile Include="HuangTaiJiSupplierServices.cs" />
-    <Compile Include="ICacheServices\IHuangTaiJiShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartAndOrderNoCacheServices.cs" />
-    <Compile Include="ICacheServices\IZhongCanShoppingCartCacheServices.cs" />
-    <Compile Include="ICacheServices\IHaiDiLaoShoppingCartCacheServices.cs" />
-    <Compile Include="ICacheServices\IShunFengShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IShoppingCartBaseCacheServices.cs" />
     <Compile Include="ICacheServices\IEtsWapShoppingCartCacheServices.cs" />
     <Compile Include="ICacheServices\IEtsWapTangShiShoppingCartCacheServices.cs" />
@@ -114,7 +106,6 @@
     <Compile Include="IDetailServices\IUsersDetailServices.cs" />
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
-    <Compile Include="IDetailServices\IHaiDiLaoSupplierDetailServices.cs" />
     <Compile Include="IExternalServices\ISingleApiOrdersExternalService.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="Login\OAuthLogin.cs" />
@@ -124,7 +115,6 @@
     <Compile Include="OrderNumber\IOrderNumber.cs" />
     <Compile Include="Order\DingTaiOrderBaseProvider.cs" />
     <Compile Include="Order\DingTaiOrderProvider.cs" />
-    <Compile Include="Order\HuangTaiJiWaiMaiOrderProvider.cs" />
     <Compile Include="Order\IOrderBaseProvider.cs" />
     <Compile Include="Order\IOrderProvider.cs" />
     <Compile Include="Order\IUserOrders.cs" />
@@ -138,8 +128,6 @@
     <Compile Include="OrderNumber\WaiMaiOrderNumber.cs" />
     <Compile Include="Order\WaiMaiOrderBaseProvider.cs" />
     <Compile Include="Order\WaiMaiOrderProvider.cs" />
-    <Compile Include="Order\HaiDiLaoWaiMaiOrderProvider.cs" />
-    <Compile Include="Order\ZhongCanWaiMaiOrderProvider.cs" />
     <Compile Include="Order\EtsWapWaiMaiOrderProvider.cs" />
     <Compile Include="Order\EtsWapTangShiOrderProvider.cs" />
     <Compile Include="Order\UserTangShiOrders.cs" />
@@ -147,7 +135,6 @@
     <Compile Include="Order\PaiDuiOrderBaseProvider.cs" />
     <Compile Include="Order\PaiDuiOrderProvider.cs" />
     <Compile Include="Order\EtsWapPaiDuiOrderProvider.cs" />
-    <Compile Include="Order\ZhongCanDianCaiOrderProvider.cs" />
     <Compile Include="PaymentServices.cs" />
     <Compile Include="Payment\AlipayPayment.cs" />
     <Compile Include="Payment\AlipayPaymentCommon.cs" />
@@ -192,16 +179,6 @@
     <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapPaiDuiShoppingCartProvider.cs" />
     <Compile Include="WechatPaymentQueryData.cs" />
-    <Compile Include="ZhongCanShoppingCartServices.cs" />
-    <Compile Include="ShoppingCart\HuangTaiJiShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\IHuangTaiJiShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\IZhongCanShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\IShunFengShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\ZhongCanShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\IHaiDiLaoShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\HaiDiLaoShoppingCartProvider.cs" />
-    <Compile Include="ShoppingCart\ShunFengShoppingCartProvider.cs" />
-    <Compile Include="ShunFengShoppingCartServices.cs" />
     <Compile Include="SmsServices.cs" />
     <Compile Include="SupplierServices.cs" />
     <Compile Include="UsersServices.cs" />
@@ -209,8 +186,6 @@
     <Compile Include="OrderServices.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="HtjExtendServices.cs" />
-    <Compile Include="HaiDiLaoShoppingCartServices.cs" />
     <Compile Include="BaiDuLightServices.cs" />
     <Compile Include="EtsWapShoppingCartServices.cs" />
     <Compile Include="ShoppingCartServices.cs" />

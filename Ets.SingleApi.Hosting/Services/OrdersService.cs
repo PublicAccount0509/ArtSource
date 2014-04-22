@@ -59,26 +59,6 @@
             return new Response<WaiMaiOrderDetailModel>();
         }
 
-
-        /// <summary>
-        /// 取得外卖订单详情
-        /// </summary>
-        /// <param name="id">订单号</param>
-        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
-        /// <returns>
-        /// 返回结果
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 9:26 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/GetOrder/{id}?orderType={orderType}&orderSourceType=1", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<HaiDiLaoWaiMaiOrderDetailModel> GetHaiDiLaoOrder(string id, int orderType)
-        {
-            return new Response<HaiDiLaoWaiMaiOrderDetailModel>();
-        }
-
         /// <summary>
         /// 保存订单信息
         /// </summary>

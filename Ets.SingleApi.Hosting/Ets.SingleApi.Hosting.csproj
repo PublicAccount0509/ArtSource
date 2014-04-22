@@ -88,19 +88,14 @@
     <Compile Include="Contracts\ICouponService.cs" />
     <Compile Include="Contracts\ICuisineService.cs" />
     <Compile Include="Contracts\IFunctionService.cs" />
-    <Compile Include="Contracts\IHuangTaiJiShoppingCartService.cs" />
-    <Compile Include="Contracts\IHuangTaiJiSupplierService.cs" />
     <Compile Include="Contracts\IOrdersService.cs" />
     <Compile Include="Contracts\IPaymentService.cs" />
     <Compile Include="Contracts\ISmsService.cs" />
     <Compile Include="Contracts\IShoppingCartService.cs" />
     <Compile Include="Contracts\ISupplierService.cs" />
     <Compile Include="Contracts\IUserService.cs" />
-    <Compile Include="Contracts\IHaiDiLaoShoppingCartService.cs" />
     <Compile Include="Contracts\IWapSupplierService.cs" />
-    <Compile Include="Contracts\IWeiXinWapHtjUserService.cs" />
     <Compile Include="Contracts\ITestService.cs" />
-    <Compile Include="Contracts\IHaiDiLaoSupplierService.cs" />
     <Compile Include="Contracts\IBaiDuLightService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -119,19 +114,14 @@
     <Compile Include="Services\CouponService.cs" />
     <Compile Include="Services\CuisineService.cs" />
     <Compile Include="Services\FunctionService.cs" />
-    <Compile Include="Services\HuangTaiJiShoppingCartService.cs" />
-    <Compile Include="Services\HuangTaiJiSupplierService.cs" />
     <Compile Include="Services\OrdersService.cs" />
     <Compile Include="Services\PaymentService.cs" />
     <Compile Include="Services\SmsService.cs" />
     <Compile Include="Services\ShoppingCartService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Services\WeiXinWapHtjUserService.cs" />
     <Compile Include="Services\WapSupplierService.cs" />
-    <Compile Include="Services\HaiDiLaoShoppingCartService.cs" />
     <Compile Include="Services\SupplierService.cs" />
     <Compile Include="Services\TestService.cs" />
-    <Compile Include="Services\HaiDiLaoSupplierService.cs" />
     <Compile Include="Services\BaiDuLightService.cs" />
   </ItemGroup>
   <ItemGroup>

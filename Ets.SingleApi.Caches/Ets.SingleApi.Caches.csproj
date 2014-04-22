@@ -41,12 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheServicesCommon.cs" />
-    <Compile Include="HuangTaiJiShoppingCartCacheServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShoppingCartAndOrderNoCacheServices.cs" />
-    <Compile Include="ZhongCanShoppingCartCacheServices.cs" />
-    <Compile Include="HaiDiLaoShoppingCartCacheServices.cs" />
-    <Compile Include="ShunFengShoppingCartCacheServices.cs" />
     <Compile Include="ShoppingCartBaseCacheServices.cs" />
     <Compile Include="EtsWapShoppingCartCacheServices.cs" />
     <Compile Include="EtsWapTangShiShoppingCartCacheServices.cs" />
