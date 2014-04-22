@@ -169,11 +169,6 @@
     <Compile Include="Services\DistanceParameter.cs" />
     <Compile Include="Services\EtsWapDingTaiShoppingCartModel.cs" />
     <Compile Include="Services\EtsWapPaiDuiShoppingCartModel.cs" />
-    <Compile Include="Controller\LightSupplier.cs" />
-    <Compile Include="Services\LightFeatureModel.cs" />
-    <Compile Include="Services\LightSupplierModel.cs" />
-    <Compile Include="Services\LightSupplierDetailModel.cs" />
-    <Compile Include="Services\LightSupplierTemplateModel.cs" />
     <Compile Include="Services\LocationCity.cs" />
     <Compile Include="Services\OrderBDInfo.cs" />
     <Compile Include="Services\ParameterBase.cs" />
@@ -191,9 +186,6 @@
     <Compile Include="Services\UserToken.cs" />
     <Compile Include="Services\PackageDishModel.cs" />
     <Compile Include="Services\PackageCuisineModel.cs" />
-    <Compile Include="Controller\LightFeature.cs" />
-    <Compile Include="Controller\LightSupplierDetail.cs" />
-    <Compile Include="Controller\LightSupplierTemplate.cs" />
     <Compile Include="Services\GetSearchGroupSupplierListParameter.cs" />
     <Compile Include="Services\LocationCityModel.cs" />
     <Compile Include="Mapping\Repository\SupplierModelEntity.cs" />

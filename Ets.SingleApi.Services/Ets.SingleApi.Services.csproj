@@ -186,7 +186,6 @@
     <Compile Include="OrderServices.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="BaiDuLightServices.cs" />
     <Compile Include="EtsWapShoppingCartServices.cs" />
     <Compile Include="ShoppingCartServices.cs" />
     <Compile Include="EtsWapTangShiShoppingCartServices.cs" />

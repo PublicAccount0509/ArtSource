@@ -96,7 +96,6 @@
     <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Contracts\IWapSupplierService.cs" />
     <Compile Include="Contracts\ITestService.cs" />
-    <Compile Include="Contracts\IBaiDuLightService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -122,7 +121,6 @@
     <Compile Include="Services\WapSupplierService.cs" />
     <Compile Include="Services\SupplierService.cs" />
     <Compile Include="Services\TestService.cs" />
-    <Compile Include="Services\BaiDuLightService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

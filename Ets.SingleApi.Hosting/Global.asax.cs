@@ -85,8 +85,7 @@
                     { "Sms", typeof(ISmsService) },
                     { "User", typeof(IUserService) },
                     { "Supplier", typeof(ISupplierService) },
-                    { "WapSupplier", typeof(IWapSupplierService) },
-                    { "BaiDuLight", typeof(IBaiDuLightService) },
+                    { "WapSupplier", typeof(IWapSupplierService) }
                 };
 
             foreach (var key in routes.Keys)
