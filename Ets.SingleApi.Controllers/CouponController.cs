@@ -163,7 +163,7 @@
         }
 
         /// <summary>
-        /// 取得优惠信息
+        /// 检查优惠码是否可用
         /// </summary>
         /// <param name="requst">The requst</param>
         /// <returns>
@@ -219,7 +219,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<SupplierCouponCode> SupplierCouponList(SupplierCouponCodeRequst requst)
+        public Response<SupplierCouponCode> SupplierCouponCode(SupplierCouponCodeRequst requst)
         {
             if (requst == null)
             {
