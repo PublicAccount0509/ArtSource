@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="BaiFuBaoBackgroundNotice.aspx.cs" Inherits="Ets.SingleApi.Pay.BaiFuBaoBackgroundNotice" %>
+﻿<%@ Page Language="C#"  ValidateRequest="false" AutoEventWireup="true" CodeBehind="BaiFuBaoBackgroundNotice.aspx.cs" Inherits="Ets.SingleApi.Pay.BaiFuBaoBackgroundNotice" %>
 
 <!DOCTYPE html>
 
