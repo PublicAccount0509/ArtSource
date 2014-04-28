@@ -1,5 +1,4 @@
-﻿using System.Web;
-using Ets.SingleApi.Services.Payment;
+﻿using Ets.SingleApi.Services.Payment;
 
 namespace Ets.SingleApi.Services
 {
@@ -10,7 +9,6 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// 类名称：PaymentServices

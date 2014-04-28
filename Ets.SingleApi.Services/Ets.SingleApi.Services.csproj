@@ -87,7 +87,6 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="DetailServices\UsersDetailServices.cs" />
-    <Compile Include="DetailServices\WaiMaiOrderDetailServices.cs" />
     <Compile Include="Distance\BaiduMapDistance.cs" />
     <Compile Include="Distance\IDistance.cs" />
     <Compile Include="Exists\EmailExists.cs" />
@@ -109,23 +108,17 @@
     <Compile Include="IExternalServices\ISingleApiOrdersExternalService.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="Login\OAuthLogin.cs" />
-    <Compile Include="OrderNumber\DingTaiOrderNumber.cs" />
-    <Compile Include="OrderNumber\TangShiOrderNumber.cs" />
-    <Compile Include="OrderServicesTemp.cs" />
-    <Compile Include="OrderNumber\IOrderNumber.cs" />
     <Compile Include="Order\DingTaiOrderBaseProvider.cs" />
     <Compile Include="Order\DingTaiOrderProvider.cs" />
     <Compile Include="Order\IOrderBaseProvider.cs" />
     <Compile Include="Order\IOrderProvider.cs" />
     <Compile Include="Order\IUserOrders.cs" />
-    <Compile Include="OrderNumber\OrderNumberResult.cs" />
     <Compile Include="Order\TangShiOrderBaseProvider.cs" />
     <Compile Include="Order\TangShiOrderProvider.cs" />
     <Compile Include="Order\UserOrdersResult.cs" />
     <Compile Include="Order\UserWaiMaiOrders.cs" />
     <Compile Include="Order\UserDingTaiOrders.cs" />
     <Compile Include="Order\UserAllOrders.cs" />
-    <Compile Include="OrderNumber\WaiMaiOrderNumber.cs" />
     <Compile Include="Order\WaiMaiOrderBaseProvider.cs" />
     <Compile Include="Order\WaiMaiOrderProvider.cs" />
     <Compile Include="Order\EtsWapWaiMaiOrderProvider.cs" />
