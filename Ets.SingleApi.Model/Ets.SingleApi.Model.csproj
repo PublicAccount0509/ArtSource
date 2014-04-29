@@ -124,13 +124,16 @@
     <Compile Include="Mapping\Repository\DeskBookingEntity.cs" />
     <Compile Include="Mapping\Repository\DeskTypeEntity.cs" />
     <Compile Include="Mapping\Repository\DeskTypeLockLogEntity.cs" />
+    <Compile Include="Mapping\Repository\DirectPayEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
     <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
+    <Compile Include="Mapping\Repository\OrderNumberDpEntity.cs" />
     <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
     <Compile Include="Mapping\Repository\PackageContentEntity.cs" />
     <Compile Include="Mapping\Repository\PackageNameEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
+    <Compile Include="Mapping\Repository\PaymentDirectEntity.cs" />
     <Compile Include="Mapping\Repository\PaymentRecordEntity.cs" />
     <Compile Include="Mapping\Repository\QueueDeskTypeLockLogEntity.cs" />
     <Compile Include="Mapping\Repository\QueueEntity.cs" />
@@ -673,6 +676,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\UserFeedbackEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\DirectPayEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\OrderNumberDpEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\PaymentDirectEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
