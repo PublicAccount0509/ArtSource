@@ -107,6 +107,8 @@
     <Compile Include="Controller\SinaWeiBoPaymentStateRequst.cs" />
     <Compile Include="Controller\SupplierCouponCodeRequst.cs" />
     <Compile Include="Controller\SupplierCouponCode.cs" />
+    <Compile Include="Controller\TelephoneNumLoginRequst.cs" />
+    <Compile Include="Controller\TelephoneNumLoginResult.cs" />
     <Compile Include="CouponCodeType.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Services\SaveFeedbackParameter.cs" />
     <Compile Include="Services\SupplierCouponCodeModel.cs" />
     <Compile Include="Services\SupplierCouponCodeParameter.cs" />
+    <Compile Include="Services\TelephoneNumLoginParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />

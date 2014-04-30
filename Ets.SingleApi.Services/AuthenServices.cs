@@ -374,6 +374,84 @@
         }
 
         /// <summary>
+        /// 仅通过手机号登录（自动登录）
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：4/30/2014 4:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<AuthLoginModel> TelphoneNumLogin(string source, TelephoneNumLoginParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var login = this.loginList.FirstOrDefault(p => p.LoginWay == LoginWay.TelephoneNum);
+            if (login == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    StatusCode = (int)StatusCode.General.UnknowError,
+                    Result = new AuthLoginModel()
+                };
+            }
+
+            var loginData = login.Login(source, parameter.Telephone, string.Empty);
+            if (loginData.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = loginData.StatusCode
+                };
+            }
+
+            var appEntity = this.appEntityRepository.EntityQueryable.FirstOrDefault(p => p.AppKey == parameter.AppKey);
+            if (appEntity == null)
+            {
+                return new ServicesResult<AuthLoginModel>
+                {
+                    Result = new AuthLoginModel(),
+                    StatusCode = (int)StatusCode.OAuth.InvalidClient
+                };
+            }
+
+            var accessToken = Guid.NewGuid().ToString("N");
+            var refreshToken = Guid.NewGuid().ToString("N");
+            var tokenEntity = new TokenEntity
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                AppKey = appEntity,
+                CreatedTime = DateTime.Now,
+                UserId = loginData.LoginId
+            };
+
+            this.tokenEntityRepository.Save(tokenEntity);
+
+            return new ServicesResult<AuthLoginModel>
+            {
+                Result = new AuthLoginModel
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    UserId = loginData.LoginId,
+                    TokenType = CommonUtility.GetTokenType(),
+                    IsRegister = loginData.IsRegister
+                }
+            };
+        }
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="source">The source</param>
