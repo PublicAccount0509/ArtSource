@@ -65,7 +65,7 @@ namespace Ets.SingleApi.Services
         private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartServices" /> class.
+        /// Initializes a new instance of the <see cref="EtsWapShoppingCartServices" /> class.
         /// </summary>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// <param name="etsWapShoppingCartProvider">The shoppingCartProvider</param>
@@ -819,9 +819,9 @@ namespace Ets.SingleApi.Services
                         ? DateTime.Now
                         : (shoppingCartOrder.DeliveryDateTime ?? DateTime.Now);
             var coupon = isCalculateCoupon ? this.CalculateCoupon(shoppingPrice, supplier.SupplierId, deliveryMethodId, shoppingCartLink.UserId, couponTime) : order.CouponFee;
-            var fixedDeliveryCharge = supplier.IsFullFree ? 0 : (supplier.FreeDeliveryLine <= (totalfee - coupon)
+            var fixedDeliveryCharge = supplier.IsFullFree ? (supplier.FreeDeliveryLine <= (totalfee - coupon)
                                       ? 0
-                                      : supplier.FixedDeliveryCharge);
+                                      : supplier.FixedDeliveryCharge) : 0;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
             var total = totalfee + fixedDeliveryFee + packagingFee;
             var customerTotal = total - coupon;
@@ -957,9 +957,9 @@ namespace Ets.SingleApi.Services
 
             order.CouponFee = 0;
             var coupon = order.CouponFee;
-            var fixedDeliveryCharge = supplier.IsFullFree ? 0 : (supplier.FreeDeliveryLine <= (shoppingPrice - coupon)
+            var fixedDeliveryCharge = supplier.IsFullFree ? (supplier.FreeDeliveryLine <= (shoppingPrice - coupon)
                                           ? 0
-                                          : supplier.FixedDeliveryCharge);
+                                          : supplier.FixedDeliveryCharge) : 0;
 
             var total = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
                         ? shoppingPrice + packagingFee + fixedDeliveryCharge
@@ -1007,9 +1007,9 @@ namespace Ets.SingleApi.Services
 
             var totalfee = shoppingPrice;
             var coupon = order.CouponFee;
-            var fixedDeliveryCharge = supplier.IsFullFree ? 0 : (supplier.FreeDeliveryLine <= (totalfee - coupon)
+            var fixedDeliveryCharge = supplier.IsFullFree ? (supplier.FreeDeliveryLine <= (totalfee - coupon)
                                           ? 0
-                                          : supplier.FixedDeliveryCharge);
+                                          : supplier.FixedDeliveryCharge) : 0;
             var canDelivery = totalfee >= supplier.DelMinOrderAmount;
             var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
