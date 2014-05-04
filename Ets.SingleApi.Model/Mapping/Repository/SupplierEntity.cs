@@ -1040,6 +1040,16 @@ namespace Ets.SingleApi.Model.Repository
         private int? menuLayout;
 
         /// <summary>
+        /// The IsFullFree
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/10/13 14:01:30
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private bool? isFullFree;
+
+        /// <summary>
         /// The BundleList
         /// </summary>
         /// Creator:周超
@@ -3591,6 +3601,27 @@ namespace Ets.SingleApi.Model.Repository
             set
             {
                 this.menuLayout = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether mapping the IsFullFree of SupplierEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/10/13 14:01:30
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual bool? IsFullFree
+        {
+            get
+            {
+                return this.isFullFree;
+            }
+
+            set
+            {
+                this.isFullFree = value;
             }
         }
 
