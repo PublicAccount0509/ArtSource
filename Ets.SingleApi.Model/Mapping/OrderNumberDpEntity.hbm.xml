@@ -1,16 +1,4 @@
-<<<<<<< HEAD
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
-	<class name="Ets.SingleApi.Model.Repository.OrderNumberDpEntity, Ets.SingleApi.Model.Repository" table="OrderNumberDp" dynamic-update="true" optimistic-lock="all" >
-	 <!--The cache-->
-	 <cache usage="read-write"/>
-	 <!--The primary keys-->
-	<!-- could not find a primary key for this table/view. NHibernate requires an 'id' element, so you'll have to define one manually. -->
-		<!--The propertys-->
-		<property name="OrderId" column="OrderId" type="Int32" />
-	</class>
-=======
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
   <class name="Ets.SingleApi.Model.Repository.OrderNumberDpEntity, Ets.SingleApi.Model" table="OrderNumberDp" dynamic-update="true" optimistic-lock="all" >
     <!--The cache-->
@@ -20,5 +8,4 @@
       <generator class="native"/>
     </id>
   </class>
->>>>>>> b6e48d9ff5b0b2110b22c3480d4f2d21d87792f5
 </hibernate-mapping>
