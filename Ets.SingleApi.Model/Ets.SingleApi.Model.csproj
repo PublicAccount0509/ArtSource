@@ -107,6 +107,8 @@
     <Compile Include="Controller\SinaWeiBoPaymentStateRequst.cs" />
     <Compile Include="Controller\SupplierCouponCodeRequst.cs" />
     <Compile Include="Controller\SupplierCouponCode.cs" />
+    <Compile Include="Controller\SaveDirectPayRequest.cs" />
+    <Compile Include="Controller\DirectPayDetail.cs" />
     <Compile Include="CouponCodeType.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
@@ -124,13 +126,16 @@
     <Compile Include="Mapping\Repository\DeskBookingEntity.cs" />
     <Compile Include="Mapping\Repository\DeskTypeEntity.cs" />
     <Compile Include="Mapping\Repository\DeskTypeLockLogEntity.cs" />
+    <Compile Include="Mapping\Repository\DirectPayEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
     <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
+    <Compile Include="Mapping\Repository\OrderNumberDpEntity.cs" />
     <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
     <Compile Include="Mapping\Repository\PackageContentEntity.cs" />
     <Compile Include="Mapping\Repository\PackageNameEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedDetailEntity.cs" />
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
+    <Compile Include="Mapping\Repository\PaymentDirectEntity.cs" />
     <Compile Include="Mapping\Repository\PaymentRecordEntity.cs" />
     <Compile Include="Mapping\Repository\QueueDeskTypeLockLogEntity.cs" />
     <Compile Include="Mapping\Repository\QueueEntity.cs" />
@@ -213,6 +218,9 @@
     <Compile Include="Services\SaveFeedbackParameter.cs" />
     <Compile Include="Services\SupplierCouponCodeModel.cs" />
     <Compile Include="Services\SupplierCouponCodeParameter.cs" />
+    <Compile Include="Services\DirectPayModel.cs" />
+    <Compile Include="Services\GetDirectPayOrderListParameter.cs" />
+    <Compile Include="Services\SaveDirectPayParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
@@ -673,6 +681,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\UserFeedbackEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mapping\DirectPayEntity.hbm.xml" />
+    <Content Include="Mapping\OrderNumberDpEntity.hbm.xml" />
+    <Content Include="Mapping\PaymentDirectEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

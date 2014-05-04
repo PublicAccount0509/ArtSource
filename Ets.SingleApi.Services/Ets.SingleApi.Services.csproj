@@ -128,6 +128,7 @@
     <Compile Include="Order\PaiDuiOrderBaseProvider.cs" />
     <Compile Include="Order\PaiDuiOrderProvider.cs" />
     <Compile Include="Order\EtsWapPaiDuiOrderProvider.cs" />
+    <Compile Include="Order\DirectPayOrderBaseProvider.cs" />
     <Compile Include="PaymentServices.cs" />
     <Compile Include="Payment\AlipayPayment.cs" />
     <Compile Include="Payment\AlipayPaymentCommon.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="EtsWapTangShiShoppingCartServices.cs" />
     <Compile Include="EtsWapDingTaiShoppingCartServices.cs" />
     <Compile Include="QueueServices.cs" />
+    <Compile Include="DirectPayServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Controllers\Ets.SingleApi.Controllers.csproj">

@@ -1,0 +1,460 @@
+﻿namespace Ets.SingleApi.Services
+{
+    using Ets.SingleApi.Controllers.IServices;
+    using Ets.SingleApi.Model;
+    using Ets.SingleApi.Model.ExternalServices;
+    using Ets.SingleApi.Model.Repository;
+    using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.IExternalServices;
+    using Ets.SingleApi.Services.IRepository;
+    using Ets.SingleApi.Utility;
+    using System;
+    using System.Json;
+    using System.Linq;
+
+    public class DirectPayServices : IDirectPayServices
+    {
+        /// <summary>
+        /// 字段queueEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 2:07 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DirectPayEntity> directPayEntityRepository;
+
+        /// <summary>
+        /// 字段sourcePathEntityRepository
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 2:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SourcePathEntity> sourcePathEntityRepository;
+
+        /// <summary>
+        /// 字段sourceTypeEntityRepository
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 2:06 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository;
+
+        /// <summary>
+        /// 字段loginEntityRepository
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 2:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<LoginEntity> loginEntityRepository;
+
+        /// <summary>
+        /// 字段customerEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 5:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
+
+        /// <summary>
+        /// 字段supplierEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：11/25/2013 3:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
+
+        /// <summary>
+        /// 字段deskTypeEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：3/21/2014 2:07 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<PaymentDirectEntity> paymentDirectEntityRepository;
+
+        /// <summary>
+        /// 可见店铺表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 1:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierPlatformRelationEntity> supplierPlatformRelationEntityRepository;
+
+        /// <summary>
+        /// 可见集团表
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/9/2014 1:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository;
+
+        /// <summary>
+        /// 当面付订单号
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 1:40 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<OrderNumberDpEntity> orderNumberDpEntityRepository;
+
+        /// <summary>
+        /// 字段singleApiOrdersExternalService
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 1:36 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISingleApiOrdersExternalService singleApiOrdersExternalService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CuisineServices" /> class.
+        /// </summary>
+        /// <param name="directPayEntityRepository">The queueEntityRepository</param>
+        /// <param name="sourcePathEntityRepository">The sourcePathEntityRepositoryDefault documentation</param>
+        /// <param name="sourceTypeEntityRepository">The sourceTypeEntityRepositoryDefault documentation</param>
+        /// <param name="loginEntityRepository">The loginEntityRepositoryDefault documentation</param>
+        /// <param name="customerEntityRepository">The customerEntityRepository</param>
+        /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
+        /// <param name="paymentDirectEntityRepository">The deskTypeEntityRepository</param>
+        /// <param name="supplierPlatformRelationEntityRepository">The supplierPlatformRelationEntityRepositoryDefault documentation</param>
+        /// <param name="supplierGroupPlatformEntityRepository">The supplierGroupPlatformEntityRepositoryDefault documentation</param>
+        /// <param name="orderNumberDpEntityRepository">The orderNumberDpEntityRepositoryDefault documentation</param>
+        /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalServiceDefault documentation</param>
+        /// 创建者：周超
+        /// 创建日期：2013/10/13 15:23
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DirectPayServices(
+            INHibernateRepository<DirectPayEntity> directPayEntityRepository,
+            INHibernateRepository<SourcePathEntity> sourcePathEntityRepository,
+            INHibernateRepository<SourceTypeEntity> sourceTypeEntityRepository,
+            INHibernateRepository<LoginEntity> loginEntityRepository,
+            INHibernateRepository<CustomerEntity> customerEntityRepository,
+            INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<PaymentDirectEntity> paymentDirectEntityRepository,
+            INHibernateRepository<SupplierPlatformRelationEntity> supplierPlatformRelationEntityRepository,
+            INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository,
+            INHibernateRepository<OrderNumberDpEntity> orderNumberDpEntityRepository,
+            ISingleApiOrdersExternalService singleApiOrdersExternalService)
+        {
+            this.sourcePathEntityRepository = sourcePathEntityRepository;
+            this.sourceTypeEntityRepository = sourceTypeEntityRepository;
+            this.loginEntityRepository = loginEntityRepository;
+            this.customerEntityRepository = customerEntityRepository;
+            this.supplierEntityRepository = supplierEntityRepository;
+            this.paymentDirectEntityRepository = paymentDirectEntityRepository;
+            this.directPayEntityRepository = directPayEntityRepository;
+            this.supplierPlatformRelationEntityRepository = supplierPlatformRelationEntityRepository;
+            this.supplierGroupPlatformEntityRepository = supplierGroupPlatformEntityRepository;
+            this.orderNumberDpEntityRepository = orderNumberDpEntityRepository;
+            this.singleApiOrdersExternalService = singleApiOrdersExternalService;
+        }
+
+        public ServicesResultList<DirectPayModel> GetOrderList(string source, GetDirectPayOrderListParameter getDirectPayOrderListParameter)
+        {
+            return new ServicesResultList<DirectPayModel>();
+        }
+
+        public ServicesResult<DirectPayModel> GetOrderDetail(string source, int directPayId)
+        {
+            return new ServicesResult<DirectPayModel>();
+        }
+
+        /// <summary>
+        /// 创建当面付订单
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="appKey"></param>
+        /// <param name="appPassword"></param>
+        /// <param name="saveDirectPayParameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// 当面付订单号
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 10:39 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> CreateOrder(string source, string appKey, string appPassword, SaveDirectPayParameter saveDirectPayParameter)
+        {
+            //校验SupplierId合法性
+            var supplierId = saveDirectPayParameter.SupplierId;
+            var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == supplierId);
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = string.Empty
+                };
+            }
+
+            //获取OrderId
+            var orderId = this.GetOrderNumberId(source, appKey, appPassword);
+            if (orderId <= 0)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.General.OrderNumberNotFound,
+                    Result = string.Empty
+                };
+            }
+
+            //校验UserId合法性
+            var tempLogin = this.loginEntityRepository.EntityQueryable
+                                .Where(p => p.LoginId == saveDirectPayParameter.UserId && p.IsEnabled)
+                                .Select(p => new { UserId = p.LoginId }).FirstOrDefault();
+
+            if (tempLogin == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                };
+            }
+
+            //获取UserId 对应的CustomerId
+            var customer = this.customerEntityRepository.EntityQueryable
+                               .Where(p => p.LoginId == saveDirectPayParameter.UserId)
+                               .Select(p => new { p.CustomerId }).FirstOrDefault();
+
+            if (customer == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode
+                };
+            }
+
+            //保存当面付订单信息
+            var directPayId = this.SaveDirectPayEntity(
+                                        orderId, customer.CustomerId, supplierId,
+                                        saveDirectPayParameter.Amount, saveDirectPayParameter.TelePhone, saveDirectPayParameter.IPAddress,
+                                        saveDirectPayParameter.Template, saveDirectPayParameter.SourceType);
+
+            //保存当面付订单支付信息
+            this.SavePaymentDirectEntity(directPayId, saveDirectPayParameter.Amount, saveDirectPayParameter.PaymentMethodId, saveDirectPayParameter.PayBank);
+
+            return new ServicesResult<string>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = orderId.ToString()
+            };
+        }
+
+        /// <summary>
+        /// 检查手机号支付次数是否超过上限
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="phoneNo">电话号码</param>
+        /// <param name="upperLimit">当面付支付上限</param>
+        /// <returns>
+        /// True 超过或等于上限；False 没有超过上限
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 10:51 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CheckTelePhonePayMoreThanUpperLimit(string source, string phoneNo, int upperLimit)
+        {
+            var directPayList = this.directPayEntityRepository.EntityQueryable
+                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Value.Date.Equals(DateTime.Now.Date))
+                         .Select(s => new { s.ContactPhone, s.DateAdded })
+                         .ToList();
+
+            return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = directPayList.Count() >= upperLimit
+                };
+        }
+        
+        /// <summary>
+        /// 保存当面付订单信息
+        /// </summary>
+        /// <param name="orderId">The orderIdDefault documentation</param>
+        /// <param name="customerId">The customerIdDefault documentation</param>
+        /// <param name="supplierId">The supplierIdDefault documentation</param>
+        /// <param name="amount">The amountDefault documentation</param>
+        /// <param name="phoneNo">The phoneNoDefault documentation</param>
+        /// <param name="iPAddress">The iPAddressDefault documentation</param>
+        /// <param name="template">The templateDefault documentation</param>
+        /// <param name="sourceType">The pathDefault documentation</param>
+        /// <returns>
+        /// 当面付订单号
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 2:29 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int SaveDirectPayEntity(int orderId, int customerId, int supplierId, decimal amount, string phoneNo, string iPAddress, string template, string sourceType)
+        {
+            var directPayEntity = this.directPayEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new DirectPayEntity
+            {
+                SupplierId = supplierId,
+                CustomerId = customerId,
+                OrderNumber = orderId,
+                OrderStatusId = 1,
+                DateAdded = DateTime.Now,
+                IsPaId = false,
+                IsRating = false,
+                Cancelled = false
+            };
+
+            directPayEntity.ContactPhone = phoneNo;
+            directPayEntity.Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == template);
+            directPayEntity.Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == sourceType);
+            directPayEntity.IPAddress = iPAddress;
+            directPayEntity.CustomerTotal = amount;
+            directPayEntity.Total = amount;
+
+            this.directPayEntityRepository.Save(directPayEntity);
+
+            return directPayEntity.DirectPayId;
+        }
+
+        /// <summary>
+        /// 保存支付信息
+        /// </summary>
+        /// <param name="directPayId">订单Id</param>
+        /// <param name="amount">支付总金额</param>
+        /// <param name="paymentMethodId">支付方式</param>
+        /// <param name="payBank">支付银行</param>
+        /// 创建者：周超
+        /// 创建日期：11/23/2013 11:07 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SavePaymentDirectEntity(int directPayId, decimal amount, int paymentMethodId, string payBank)
+        {
+            if (paymentMethodId <= 0)
+            {
+                return;
+            }
+
+            var paymentEntity = this.paymentDirectEntityRepository.EntityQueryable.FirstOrDefault(p => p.DirectPay.DirectPayId == directPayId)
+                                 ?? new PaymentDirectEntity
+                                 {
+                                     PaymentTypeId = 1,
+                                     DirectPay = new DirectPayEntity { DirectPayId = directPayId },
+                                     TransactionCode = string.Empty,
+                                     CardId = string.Empty,
+                                     Authorized = false,
+                                     CVV = 0,
+                                     AVS = string.Empty,
+                                     PC = 0,
+                                     AuthCode = string.Empty,
+                                     VoicePayResponse = string.Empty,
+                                     TransactionFee = 0
+                                 };
+
+            paymentEntity.Amount = amount;
+            paymentEntity.MethodChangeHistory = paymentEntity.PaymentMethodId.ToString();
+            paymentEntity.PaymentMethodId = paymentMethodId;
+            paymentEntity.PayBank = payBank;
+
+            this.paymentDirectEntityRepository.Save(paymentEntity);
+        }
+
+        /// <summary>
+        /// 取得一个订单号
+        /// </summary>
+        /// <returns>
+        /// 订单号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/25/2013 2:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int GetOrderNumberId(string source, string appKey, string appPassword)
+        {
+            return ServicesCommon.FromServerEnable
+                       ? this.GetServerOrderNumber(source, appKey, appPassword)
+                       : this.GetLocalOrderNumber();
+        }
+
+        /// <summary>
+        /// 从本地获取订单号
+        /// </summary>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 11:33 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int GetLocalOrderNumber()
+        {
+            var entity = this.orderNumberDpEntityRepository.EntityQueryable.FirstOrDefault();
+            if (entity == null)
+            {
+                return 0;
+            }
+
+            var orderNumber = entity.OrderId;
+            this.orderNumberDpEntityRepository.Remove(entity);
+            return orderNumber;
+        }
+
+        /// <summary>
+        /// 从服务器获取订单号
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：3/2/2014 11:34 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int GetServerOrderNumber(string source, string appKey, string appPassword)
+        {
+            var result = this.singleApiOrdersExternalService.OrderNumber(
+                  new OrderNumberExternalUrlParameter { OrderType = (int)OrderType.DirectPay },
+                  string.Empty,
+                  new SingleApiExternalServiceAuthenParameter { AppKey = appKey, AppPassword = appPassword, Source = source });
+
+            var data = result.Result;
+            var jsonValue = JsonValue.Parse(data);
+            if (jsonValue == null || jsonValue["Message"] == null)
+            {
+                return 0;
+            }
+
+            if (jsonValue["Message"]["StatusCode"] != (int)StatusCode.Succeed.Ok)
+            {
+                return 0;
+            }
+
+            int orderNumber;
+            int.TryParse(jsonValue["Result"], out orderNumber);
+            return orderNumber;
+        }
+    }
+}

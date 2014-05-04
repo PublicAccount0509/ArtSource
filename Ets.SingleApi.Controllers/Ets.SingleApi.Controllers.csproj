@@ -88,6 +88,7 @@
     <Compile Include="IServices\IEtsWapDingTaiShoppingCartServices.cs" />
     <Compile Include="IServices\IEtsWapPaiDuiShoppingCartServices.cs" />
     <Compile Include="IServices\IQueueServices.cs" />
+    <Compile Include="IServices\IDirectPayServices.cs" />
     <Compile Include="OrdersController.cs" />
     <Compile Include="PaymentController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="EtsWapDingTaiShoppingCartController.cs" />
     <Compile Include="EtsWapPaiDuiShoppingCartController.cs" />
     <Compile Include="QueueController.cs" />
+    <Compile Include="DirectPayController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ets.SingleApi.Model\Ets.SingleApi.Model.csproj">
