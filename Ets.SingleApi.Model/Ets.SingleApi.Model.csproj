@@ -109,6 +109,8 @@
     <Compile Include="Controller\SupplierCouponCode.cs" />
     <Compile Include="Controller\SaveDirectPayRequest.cs" />
     <Compile Include="Controller\DirectPayDetail.cs" />
+    <Compile Include="Controller\TelephoneNumLoginRequst.cs" />
+    <Compile Include="Controller\TelephoneNumLoginResult.cs" />
     <Compile Include="CouponCodeType.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Services\DirectPayModel.cs" />
     <Compile Include="Services\GetDirectPayOrderListParameter.cs" />
     <Compile Include="Services\SaveDirectPayParameter.cs" />
+    <Compile Include="Services\TelephoneNumLoginParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
@@ -683,9 +686,9 @@
     <EmbeddedResource Include="Mapping\UserFeedbackEntity.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Mapping\DirectPayEntity.hbm.xml" />
-    <Content Include="Mapping\OrderNumberDpEntity.hbm.xml" />
-    <Content Include="Mapping\PaymentDirectEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\DirectPayEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\OrderNumberDpEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\PaymentDirectEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

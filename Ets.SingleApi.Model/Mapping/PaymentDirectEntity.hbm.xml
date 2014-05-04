@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 	<class name="Ets.SingleApi.Model.Repository.PaymentDirectEntity, Ets.SingleApi.Model.Repository" table="PaymentDirect" dynamic-update="true" optimistic-lock="all" >
@@ -8,6 +9,18 @@
 			<generator class="native"/>
 		</id>
 		<!--The propertys-->
+=======
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.PaymentDirectEntity, Ets.SingleApi.Model" table="PaymentDirect" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="PaymentDirectId" column="PaymentDirectID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+>>>>>>> b6e48d9ff5b0b2110b22c3480d4f2d21d87792f5
 		<property name="PaymentTypeId" column="PaymentTypeID" type="Int32" />
 		<property name="Amount" column="Amount" type="Decimal" />
 		<property name="PaymentDate" column="PaymentDate" type="Timestamp" />
@@ -22,8 +35,15 @@
 		<property name="VoicePayResponse" column="VoicePayResponse" type="String" not-null="false" />
 		<property name="TransactionFee" column="TransactionFee" type="Decimal" not-null="false" />
 		<property name="MethodChangeHistory" column="MethodChangeHistory" type="String" not-null="false" />
+<<<<<<< HEAD
 		<property name="PayBank" column="payBank" type="String" not-null="false" />
 		<!--The foreign keys-->
 		<many-to-one name="DirectPay" class="Ets.SingleApi.Model.Repository.DirectPayEntity, Ets.SingleApi.Model.Repository" column="DirectPayID" />
 	</class>
+=======
+		<property name="PayBank" column="payBank" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<many-to-one name="DirectPay" class="Ets.SingleApi.Model.Repository.DirectPayEntity, Ets.SingleApi.Model" column="DirectPayID" />
+	</class>
+>>>>>>> b6e48d9ff5b0b2110b22c3480d4f2d21d87792f5
 </hibernate-mapping>

@@ -108,6 +108,7 @@
     <Compile Include="IExternalServices\ISingleApiOrdersExternalService.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="Login\OAuthLogin.cs" />
+    <Compile Include="Login\TelephoneNumLogin.cs" />
     <Compile Include="Order\DingTaiOrderBaseProvider.cs" />
     <Compile Include="Order\DingTaiOrderProvider.cs" />
     <Compile Include="Order\IOrderBaseProvider.cs" />

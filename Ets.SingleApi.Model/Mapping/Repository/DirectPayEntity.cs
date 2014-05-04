@@ -8,7 +8,6 @@
 //   Class Funtion:Represent the class mapping the DirectPayEntity table in the database.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Ets.SingleApi.Model.Repository
 {
 	using System;

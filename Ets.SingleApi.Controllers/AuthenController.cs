@@ -300,6 +300,83 @@
         }
 
         /// <summary>
+        /// 仅通过手机号登录（自动登录）
+        /// </summary>
+        /// <param name="requst">The requst.</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：4/30/2014 4:53 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<TelephoneNumLoginResult> TelephoneNumLogin(TelephoneNumLoginRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<TelephoneNumLoginResult>
+                {
+                    Result = new TelephoneNumLoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (requst.Telephone.IsEmptyOrNull())
+            {
+                return new Response<TelephoneNumLoginResult>
+                {
+                    Result = new TelephoneNumLoginResult(),
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidUserNameCode
+                    }
+                };
+            }
+
+            var loginResult = this.authenServices.TelphoneNumLogin(this.Source, new TelephoneNumLoginParameter
+            {
+                Telephone = (requst.Telephone ?? string.Empty).Trim(),
+                AppKey = (this.AppKey ?? string.Empty).Trim()
+            });
+
+            if (loginResult.Result == null)
+            {
+                return new Response<TelephoneNumLoginResult>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = loginResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : loginResult.StatusCode
+                    },
+                    Result = new TelephoneNumLoginResult()
+                };
+            }
+
+            var result = new TelephoneNumLoginResult
+                {
+                    UserId = loginResult.Result.UserId,
+                    AccessToken = loginResult.Result.AccessToken ?? string.Empty,
+                    RefreshToken = loginResult.Result.RefreshToken ?? string.Empty,
+                    TokenType = loginResult.Result.TokenType ?? string.Empty
+                };
+
+            return new Response<TelephoneNumLoginResult>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = loginResult.StatusCode
+                },
+                Result = result,
+                Cache = new ApiCache
+                {
+                    ExpiresIn = CommonUtility.GetTokenExpiresIn()
+                }
+            };
+        }
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="id">The id</param>
