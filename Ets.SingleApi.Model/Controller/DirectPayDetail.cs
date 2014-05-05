@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Model.Controller
+﻿using System;
+
+namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
     /// 类名称：DirectPayDetail
@@ -88,6 +90,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string CeateDate { get; set; }
+        public DateTime? CeateDate { get; set; }
     }
 }
