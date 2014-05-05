@@ -26,7 +26,6 @@
 		<property name="RejectReason" column="RejectReason" type="String" not-null="false" />
 		<property name="QuotedDirectPayTime" column="QuotedDirectPayTime" type="String" not-null="false" />
 		<property name="OperatorId" column="OperatorID" type="Int32" not-null="false" />
-		<property name="TemplateId" column="Templateid" type="String" not-null="false" />
 		<property name="ContactPhone" column="ContactPhone" type="String" not-null="false" />
 		<property name="Contact" column="Contact" type="String" not-null="false" />
 		<property name="Gender" column="Gender" type="String" not-null="false" />
@@ -63,7 +62,6 @@
 		<property name="NetWorkPay" column="NetWorkPay" type="Decimal" not-null="false" />
 		<property name="PosPay" column="PosPay" type="Decimal" not-null="false" />
 		<property name="StoreCardPaySup" column="StoreCardPaySup" type="Decimal" not-null="false" />
-		<property name="Path" column="Path" type="String" not-null="false" />
 		<property name="DirectPayDistance" column="DirectPayDistance" type="Double" />
 		<property name="LogisSendTime" column="LogisSendTime" type="Timestamp" not-null="false" />
 		<property name="NumOfPeople" column="NumOfPeople" type="Int32" not-null="false" />

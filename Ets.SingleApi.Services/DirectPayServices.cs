@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using System.Data.Linq.SqlClient;
+
+namespace Ets.SingleApi.Services
 {
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
@@ -278,7 +280,7 @@
         public ServicesResult<bool> CheckTelePhonePayMoreThanUpperLimit(string source, string phoneNo, int upperLimit)
         {
             var directPayList = this.directPayEntityRepository.EntityQueryable
-                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Value.Date.Equals(DateTime.Now.Date))
+                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Value.Date == DateTime.Now.Date)
                          .Select(s => new { s.ContactPhone, s.DateAdded })
                          .ToList();
 
@@ -288,7 +290,7 @@
                     Result = directPayList.Count() >= upperLimit
                 };
         }
-        
+
         /// <summary>
         /// 保存当面付订单信息
         /// </summary>
@@ -326,8 +328,10 @@
             directPayEntity.Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == template);
             directPayEntity.Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == sourceType);
             directPayEntity.IPAddress = iPAddress;
-            directPayEntity.CustomerTotal = amount;
-            directPayEntity.Total = amount;
+            directPayEntity.RealUserPrice = 10;//用户优惠金额
+            directPayEntity.RealSupplierPrice = 10;//餐厅优惠金额
+            directPayEntity.CustomerTotal = 80;//客户实际消费金额
+            directPayEntity.Total = 100;//总金额 = 用户优惠金额 + 餐厅优惠金额 + 客户实际消费金额
 
             this.directPayEntityRepository.Save(directPayEntity);
 
