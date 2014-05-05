@@ -65,7 +65,7 @@ namespace Ets.SingleApi.Services
         private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartServices" /> class.
+        /// Initializes a new instance of the <see cref="EtsWapShoppingCartServices" /> class.
         /// </summary>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// <param name="etsWapShoppingCartProvider">The shoppingCartProvider</param>
