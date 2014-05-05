@@ -13,30 +13,55 @@
     public class SaveDirectPayRequest : ApiRequst
     {
         /// <summary>
-        /// 餐厅Id
+        /// 用户优惠金额
         /// </summary>
         /// <value>
-        /// 餐厅Id
-        /// </value>
+        /// 用户优惠金额
         /// 创建者：王巍
         /// 创建日期：4/30/2014 11:07 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int SupplierId { get; set; }
+        public decimal CustomerCouponTotal { get; set; }
 
         /// <summary>
-        /// 金额
+        /// 餐厅优惠金额
         /// </summary>
         /// <value>
-        /// 金额
+        /// The SupplierCouponTotal
         /// </value>
         /// 创建者：王巍
-        /// 创建日期：4/30/2014 11:07 AM
+        /// 创建日期：5/5/2014 2:16 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal Amount { get; set; }
+        public decimal SupplierCouponTotal { get; set; }
+
+        /// <summary>
+        /// 用户实付金额
+        /// </summary>
+        /// <value>
+        /// 用户实付金额
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 2:17 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal CustomerTotal { get; set; }
+
+        /// <summary>
+        /// 应付总金额
+        /// </summary>
+        /// <value>
+        /// The Total
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 2:17 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal Total { get; set; }
 
         /// <summary>
         /// 电话号码
@@ -49,7 +74,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string PhoneNo { get; set; }
+        public string Telephone { get; set; }
 
         /// <summary>
         /// 支付方式Id

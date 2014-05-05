@@ -18,8 +18,8 @@ namespace Ets.SingleApi.Model.Repository
     /// Namespace:Ets.SingleApi.Model.Repository
     /// Class Funtion:Represent the class mapping the PaymentDirectEntity table in the database.
     /// </summary>
-    /// Creator:周超
-    /// Creation Date:2014/4/29 13:20:01
+    /// Creator:ww
+    /// Creation Date:2014/5/5 14:36:34
     /// Modifier:
     /// Last Modified:
     /// ----------------------------------------------------------------------------------------
@@ -31,8 +31,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The PaymentDirectID
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -41,8 +41,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The PaymentTypeID
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -51,8 +51,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The Amount
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -61,8 +61,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The PaymentDate
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -71,8 +71,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The TransactionCode
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -81,8 +81,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The CardID
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -91,8 +91,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The PaymentMethodID
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -101,8 +101,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The Authorized
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -111,8 +111,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The CVV
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -121,8 +121,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The AVS
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -131,8 +131,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The PC
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -141,8 +141,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The AuthCode
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -151,8 +151,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The VoicePayResponse
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -161,8 +161,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The TransactionFee
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -171,8 +171,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The MethodChangeHistory
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -181,8 +181,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The payBank
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -191,8 +191,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
 		/// The DirectPayID
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -203,8 +203,8 @@ namespace Ets.SingleApi.Model.Repository
 		/// <summary>
         /// Initializes a new instance of the <see cref="PaymentDirectEntity"/> class.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -229,8 +229,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the PaymentDirectID of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -250,8 +250,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the PaymentTypeID of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -271,8 +271,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the Amount of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -292,8 +292,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the PaymentDate of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -313,8 +313,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the TransactionCode of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -334,8 +334,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the CardID of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -355,8 +355,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the PaymentMethodID of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -376,8 +376,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value indicating whether mapping the Authorized of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -397,8 +397,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the CVV of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -418,8 +418,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the AVS of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -439,8 +439,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the PC of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -460,8 +460,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the AuthCode of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -481,8 +481,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the VoicePayResponse of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -502,8 +502,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the TransactionFee of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -523,8 +523,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the MethodChangeHistory of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -544,8 +544,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the payBank of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -565,8 +565,8 @@ namespace Ets.SingleApi.Model.Repository
 			/// <summary>
         /// Gets or sets a value mapping the DirectPayID of PaymentDirectEntity table in the database.
         /// </summary>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -592,8 +592,8 @@ namespace Ets.SingleApi.Model.Repository
         /// <returns>
         /// true if the specified is equal to this instance; otherwise,false.
         /// </returns>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
@@ -614,8 +614,8 @@ namespace Ets.SingleApi.Model.Repository
         /// <returns>
         /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
-        /// Creator:周超
-        /// Creation Date:2014/4/29 13:20:01
+        /// Creator:ww
+        /// Creation Date:2014/5/5 14:36:34
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------

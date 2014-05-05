@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 	<class name="Ets.SingleApi.Model.Repository.DirectPayEntity, Ets.SingleApi.Model" table="DirectPay" dynamic-update="true" optimistic-lock="all" >
 	 <!--The cache-->
@@ -8,79 +8,33 @@
 			<generator class="native"/>
 		</id>
 		<!--The propertys-->
-		<property name="CustomerId" column="CustomerID" type="Int32" />
-		<property name="OrderStatusId" column="OrderStatusID" type="Int32" />
-		<property name="DirectPayMethodId" column="DirectPayMethodID" type="Int32" not-null="false" />
-		<property name="DirectPayAddressId" column="DirectPayAddressID" type="Int32" not-null="false" />
-		<property name="DirectPayZoneId" column="DirectPayZoneID" type="Int32" not-null="false" />
-		<property name="CouponId" column="CouponID" type="Int32" not-null="false" />
-		<property name="Total" column="Total" type="Decimal" not-null="false" />
-		<property name="IsPaId" column="IsPaid" type="Boolean" not-null="false" />
-		<property name="Cancelled" column="Cancelled" type="Boolean" not-null="false" />
-		<property name="DirectPayDate" column="DirectPayDate" type="Timestamp" not-null="false" />
-		<property name="DirectPayInstruction" column="DirectPayInstruction" type="String" not-null="false" />
-		<property name="DateAdded" column="DateAdded" type="Timestamp" not-null="false" />
-		<property name="IPAddress" column="IPAddress" type="String" not-null="false" />
-		<property name="IsRating" column="IsRating" type="Boolean" not-null="false" />
-		<property name="OrderNotes" column="OrderNotes" type="String" not-null="false" />
-		<property name="RejectReason" column="RejectReason" type="String" not-null="false" />
-		<property name="QuotedDirectPayTime" column="QuotedDirectPayTime" type="String" not-null="false" />
-		<property name="OperatorId" column="OperatorID" type="Int32" not-null="false" />
+    <property name="CustomerId" column="CustomerID" type="Int32" />
+    <property name="SupplierId" column="SupplierID" type="Int32" not-null="false" />
+    <property name="OrderNumber" column="OrderNumber" type="Int32" />
 		<property name="ContactPhone" column="ContactPhone" type="String" not-null="false" />
-		<property name="Contact" column="Contact" type="String" not-null="false" />
+		<property name="ContactName" column="ContactName" type="String" not-null="false" />
 		<property name="Gender" column="Gender" type="String" not-null="false" />
-		<property name="Tel" column="Tel" type="String" not-null="false" />
-		<property name="InvoiceRequired" column="InvoiceRequired" type="Boolean" not-null="false" />
-		<property name="SupplierId" column="SupplierID" type="Int32" not-null="false" />
+		<property name="IsPaId" column="IsPaid" type="Boolean" />
+		<property name="OrderStateId" column="OrderStateId" type="Int32" />
+		<property name="DateAdded" column="DateAdded" type="Timestamp" />
+		<property name="Instruction" column="Instruction" type="String" not-null="false" />
+		<property name="OrderNotes" column="OrderNotes" type="String" not-null="false" />
+		<property name="ModifyDate" column="ModifyDate" type="Timestamp" />
+		<property name="Total" column="Total" type="Decimal" />
+		<property name="CustomerTotal" column="CustomerTotal" type="Decimal" />
+		<property name="CouponTotal" column="CouponTotal" type="Decimal" />
+		<property name="CustomerCouponTotal" column="CustomerCouponTotal" type="Decimal" />
+		<property name="SupplierCouponTotal" column="SupplierCouponTotal" type="Decimal" />
+		<property name="InvoiceRequired" column="InvoiceRequired" type="Boolean" />
 		<property name="InvoiceTitle" column="InvoiceTitle" type="String" not-null="false" />
-		<property name="PackagingFee" column="PackagingFee" type="Decimal" not-null="false" />
-		<property name="DeliverCharge" column="DeliverCharge" type="Decimal" not-null="false" />
-		<property name="DeliverSourcs" column="DeliverSourcs" type="Byte" not-null="false" />
-		<property name="SendingPersonId" column="SendingPersonID" type="Int32" not-null="false" />
-		<property name="LogisticsTakeFoodTime" column="LogisticsTakeFoodTime" type="Timestamp" not-null="false" />
-		<property name="OrderNumber" column="OrderNumber" type="Int32" not-null="false" />
-		<property name="CustomerTotal" column="CustomerTotal" type="Decimal" not-null="false" />
-		<property name="CCdiscount" column="CCdiscount" type="Decimal" not-null="false" />
-		<property name="ActualSendTime" column="ActualSendTime" type="Timestamp" not-null="false" />
-		<property name="ReceivablePrice" column="ReceivablePrice" type="Decimal" not-null="false" />
-		<property name="RealUserPrice" column="RealUserPrice" type="Decimal" not-null="false" />
-		<property name="RealSupplierPrice" column="RealSupplierPrice" type="Decimal" not-null="false" />
-		<property name="RealSupplierType" column="RealSupplierType" type="Byte" not-null="false" />
-		<property name="IsTakeInvoice" column="IsTakeInvoice" type="Boolean" not-null="false" />
-		<property name="AddedTime" column="AddedTime" type="Timestamp" not-null="false" />
-		<property name="CheckStatus" column="CheckStatus" type="Byte" not-null="false" />
-		<property name="HandOverStatus" column="HandOverStatus" type="Byte" not-null="false" />
-		<property name="Lat" column="Lat" type="Double" not-null="false" />
-		<property name="Lng" column="Lng" type="Double" not-null="false" />
-		<property name="LogisticsId" column="LogisticsId" type="String" not-null="false" />
-		<property name="ModifyDate" column="ModifyDate" type="Timestamp" not-null="false" />
-		<property name="EtsTakeFoodAmount" column="EtsTakeFoodAmount" type="Decimal" not-null="false" />
-		<property name="EtsActualTakeFoodAmount" column="EtsActualTakeFoodAmount" type="Decimal" not-null="false" />
-		<property name="TaxPointAmount" column="TaxPointAmount" type="Decimal" not-null="false" />
-		<property name="AreaId" column="AreaId" type="Int32" not-null="false" />
-		<property name="CashPay" column="CashPay" type="Decimal" not-null="false" />
-		<property name="NetWorkPay" column="NetWorkPay" type="Decimal" not-null="false" />
-		<property name="PosPay" column="PosPay" type="Decimal" not-null="false" />
-		<property name="StoreCardPaySup" column="StoreCardPaySup" type="Decimal" not-null="false" />
-		<property name="DirectPayDistance" column="DirectPayDistance" type="Double" />
-		<property name="LogisSendTime" column="LogisSendTime" type="Timestamp" not-null="false" />
-		<property name="NumOfPeople" column="NumOfPeople" type="Int32" not-null="false" />
-		<property name="NumOfCutlery" column="NumOfCutlery" type="Int32" not-null="false" />
-		<property name="ServiceFee" column="ServiceFee" type="Decimal" not-null="false" />
-		<property name="Pot" column="Pot" type="Int32" not-null="false" />
-		<property name="Stove" column="Stove" type="Int32" not-null="false" />
-		<property name="ZBGD" column="ZBGD" type="Int32" not-null="false" />
-		<property name="ZBXL" column="ZBXL" type="Int32" not-null="false" />
-		<property name="PrintState" column="PrintState" type="Boolean" not-null="false" />
-		<property name="CcName" column="CcName" type="String" not-null="false" />
-		<property name="DirectPayDiscount" column="DirectPayDiscount" type="Decimal" not-null="false" />
-		<property name="ReprintState" column="ReprintState" type="Boolean" not-null="false" />
+		<property name="Cancelled" column="Cancelled" type="Boolean" not-null="false" />
+		<property name="IPAddress" column="IPAddress" type="String" not-null="false" />
 		<!--The foreign keys-->
 		<bag name="PaymentDirectList" cascade="none" lazy="true" table="PaymentDirect">
 			<key column="DirectPayID" />
 			<one-to-many class="Ets.SingleApi.Model.Repository.PaymentDirectEntity, Ets.SingleApi.Model" />
 		</bag>
-    <many-to-one name="Path" class="Ets.SingleApi.Model.Repository.SourcePathEntity, Ets.SingleApi.Model" column="Path" />
-    <many-to-one name="Template" class="Ets.SingleApi.Model.Repository.SourceTypeEntity, Ets.SingleApi.Model" column="Templateid" />
+		<many-to-one name="Path" class="Ets.SingleApi.Model.Repository.SourcePathEntity, Ets.SingleApi.Model" column="Path" />
+		<many-to-one name="Template" class="Ets.SingleApi.Model.Repository.SourceTypeEntity, Ets.SingleApi.Model" column="Templateid" />
 	</class>
 </hibernate-mapping>

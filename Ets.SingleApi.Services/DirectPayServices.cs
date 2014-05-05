@@ -195,7 +195,7 @@ namespace Ets.SingleApi.Services
                                      supplier.SupplierId,
                                      supplier.SupplierName,
                                      directPay.OrderNumber,
-                                     directPay.OrderStatusId,
+                                     directPay.OrderStateId,
                                      directPay.IsPaId,
                                      CeateDate = directPay.DateAdded,
                                      supplier.SupplierGroupId,
@@ -250,7 +250,7 @@ namespace Ets.SingleApi.Services
                                      queryable.SupplierId,
                                      queryable.SupplierName,
                                      queryable.OrderNumber,
-                                     queryable.OrderStatusId,
+                                     queryable.OrderStateId,
                                      queryable.IsPaId,
                                      queryable.CeateDate,
                                      queryable.SupplierGroupId,
@@ -278,12 +278,12 @@ namespace Ets.SingleApi.Services
                 DirectPayId = p.DirectPayId,
                 SupplierId = p.SupplierId,
                 SupplierName = p.SupplierName,
-                OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
-                OrderStatusId = p.OrderStatusId,
-                IsPaid = p.IsPaId ?? false,
+                OrderId = p.OrderNumber,
+                OrderStatusId = p.OrderStateId,
+                IsPaid = p.IsPaId,
                 CreateDate = p.CeateDate,
-                PayableAmount = p.PayableAmount ?? 0,
-                ActualPaidAmount = p.ActualPaidAmount ?? 0,
+                PayableAmount = p.PayableAmount,
+                ActualPaidAmount = p.ActualPaidAmount,
                 OrderType = (int)OrderType.DirectPay,
                 PaymentMethodId = paymentList.Where(c => c.DirectPayId == p.DirectPayId).Select(s => s.PaymentMethodId).FirstOrDefault(),
                 Cancelled = p.Cancelled
@@ -406,12 +406,10 @@ namespace Ets.SingleApi.Services
 
             //保存当面付订单信息
             var directPayId = this.SaveDirectPayEntity(
-                                        orderId, customer.CustomerId, supplierId,
-                                        saveDirectPayParameter.Amount, saveDirectPayParameter.TelePhone, saveDirectPayParameter.IPAddress,
-                                        saveDirectPayParameter.Template, saveDirectPayParameter.SourceType);
+                                        orderId, customer.CustomerId, saveDirectPayParameter);
 
             //保存当面付订单支付信息
-            this.SavePaymentDirectEntity(directPayId, saveDirectPayParameter.Amount, saveDirectPayParameter.PaymentMethodId, saveDirectPayParameter.PayBank);
+            this.SavePaymentDirectEntity(directPayId, saveDirectPayParameter.Total, saveDirectPayParameter.PaymentMethodId, saveDirectPayParameter.PayBank);
 
             return new ServicesResult<string>
             {
@@ -437,7 +435,7 @@ namespace Ets.SingleApi.Services
         public ServicesResult<bool> CheckTelePhonePayMoreThanUpperLimit(string source, string phoneNo, int upperLimit)
         {
             var directPayList = this.directPayEntityRepository.EntityQueryable
-                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Value.Date == DateTime.Now.Date)
+                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Date == DateTime.Now.Date)
                          .Select(s => new { s.ContactPhone, s.DateAdded })
                          .ToList();
 
@@ -453,12 +451,7 @@ namespace Ets.SingleApi.Services
         /// </summary>
         /// <param name="orderId">The orderIdDefault documentation</param>
         /// <param name="customerId">The customerIdDefault documentation</param>
-        /// <param name="supplierId">The supplierIdDefault documentation</param>
-        /// <param name="amount">The amountDefault documentation</param>
-        /// <param name="phoneNo">The phoneNoDefault documentation</param>
-        /// <param name="iPAddress">The iPAddressDefault documentation</param>
-        /// <param name="template">The templateDefault documentation</param>
-        /// <param name="sourceType">The pathDefault documentation</param>
+        /// <param name="saveDirectPayParameter">The saveDirectPayParameterDefault documentation</param>
         /// <returns>
         /// 当面付订单号
         /// </returns>
@@ -467,28 +460,28 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveDirectPayEntity(int orderId, int customerId, int supplierId, decimal amount, string phoneNo, string iPAddress, string template, string sourceType)
+        private int SaveDirectPayEntity(int orderId, int customerId, SaveDirectPayParameter saveDirectPayParameter)
         {
             var directPayEntity = this.directPayEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new DirectPayEntity
             {
-                SupplierId = supplierId,
+                SupplierId = saveDirectPayParameter.SupplierId,
                 CustomerId = customerId,
                 OrderNumber = orderId,
-                OrderStatusId = 1,
+                OrderStateId = 1,
                 DateAdded = DateTime.Now,
                 IsPaId = false,
-                IsRating = false,
                 Cancelled = false
             };
 
-            directPayEntity.ContactPhone = phoneNo;
-            directPayEntity.Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == template);
-            directPayEntity.Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == sourceType);
-            directPayEntity.IPAddress = iPAddress;
-            directPayEntity.RealUserPrice = 10;//用户优惠金额
-            directPayEntity.RealSupplierPrice = 10;//餐厅优惠金额
-            directPayEntity.CustomerTotal = 80;//客户实际消费金额
-            directPayEntity.Total = 100;//总金额 = 用户优惠金额 + 餐厅优惠金额 + 客户实际消费金额
+            directPayEntity.ContactPhone = saveDirectPayParameter.Telephone;
+            directPayEntity.Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == saveDirectPayParameter.Template);
+            directPayEntity.Path = this.sourcePathEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == saveDirectPayParameter.SourceType);
+            directPayEntity.IPAddress = saveDirectPayParameter.IPAddress;
+            directPayEntity.CustomerCouponTotal = saveDirectPayParameter.CustomerCouponTotal;//用户优惠金额
+            directPayEntity.SupplierCouponTotal = saveDirectPayParameter.SupplierCouponTotal;//餐厅优惠金额
+            directPayEntity.CouponTotal = saveDirectPayParameter.CustomerCouponTotal + saveDirectPayParameter.SupplierCouponTotal;//优惠总金额
+            directPayEntity.CustomerTotal = saveDirectPayParameter.CustomerTotal;//用户实付金额
+            directPayEntity.Total = saveDirectPayParameter.Total;//应付总金额 = 用户优惠金额 + 餐厅优惠金额 + 客户实际消费金额
 
             this.directPayEntityRepository.Save(directPayEntity);
 

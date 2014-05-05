@@ -75,14 +75,17 @@
             var result = this.directPayServices.CreateOrder(this.Source, this.AppKey, this.AppPassword, new SaveDirectPayParameter
                 {
                     SupplierId = requst.SupplierId,
-                    Amount = requst.Amount,
                     PaymentMethodId = requst.PaymentMethodId,
                     IPAddress = requst.IPAddress,
                     Template = requst.Template,
                     PayBank = requst.PayBank,
-                    TelePhone = requst.PhoneNo,
+                    Telephone = requst.Telephone,
                     SourceType = requst.SourceType,
-                    UserId = requst.UserId
+                    UserId = requst.UserId,
+                    CustomerCouponTotal = requst.CustomerCouponTotal,
+                    SupplierCouponTotal = requst.SupplierCouponTotal,
+                    CustomerTotal = requst.CustomerTotal,
+                    Total = requst.Total
                 });
 
             return new Response<string>
