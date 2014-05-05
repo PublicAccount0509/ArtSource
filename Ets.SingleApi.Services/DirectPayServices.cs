@@ -1,4 +1,5 @@
-﻿using System.Data.Linq.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.Linq.SqlClient;
 
 namespace Ets.SingleApi.Services
 {
@@ -173,12 +174,168 @@ namespace Ets.SingleApi.Services
 
         public ServicesResultList<DirectPayModel> GetOrderList(string source, GetDirectPayOrderListParameter getDirectPayOrderListParameter)
         {
-            return new ServicesResultList<DirectPayModel>();
+            if (getDirectPayOrderListParameter == null)
+            {
+                return new ServicesResultList<DirectPayModel>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = new List<DirectPayModel>()
+                };
+            }
+
+            var directPayTemp = (from directPay in this.directPayEntityRepository.EntityQueryable
+                                 from supplier in this.supplierEntityRepository.EntityQueryable
+                                 from customerEntity in this.customerEntityRepository.EntityQueryable
+                                 where directPay.SupplierId == supplier.SupplierId
+                                     && directPay.CustomerId == customerEntity.CustomerId
+                                     && customerEntity.LoginId == getDirectPayOrderListParameter.UserId
+                                 select new
+                                 {
+                                     directPay.DirectPayId,
+                                     supplier.SupplierId,
+                                     supplier.SupplierName,
+                                     directPay.OrderNumber,
+                                     directPay.OrderStatusId,
+                                     directPay.IsPaId,
+                                     CeateDate = directPay.DateAdded,
+                                     supplier.SupplierGroupId,
+                                     PayableAmount = directPay.Total,
+                                     ActualPaidAmount = directPay.CustomerTotal,
+                                     directPay.Cancelled
+                                 });
+
+            var directPayIdList = directPayTemp.Select(p => p.DirectPayId).ToList();
+
+            var paymentList = (from payment in this.paymentDirectEntityRepository.EntityQueryable
+                               where directPayIdList.Contains(payment.DirectPay.DirectPayId)
+                               select new
+                               {
+                                   payment.PaymentMethodId,
+                                   payment.DirectPay.DirectPayId
+                               }).ToList();
+
+            if (getDirectPayOrderListParameter.Cancelled != null)
+            {
+                directPayTemp = directPayTemp.Where(p => p.Cancelled == getDirectPayOrderListParameter.Cancelled);
+            }
+
+            if (getDirectPayOrderListParameter.DirectPayStartDate != null)
+            {
+                directPayTemp = directPayTemp.Where(p => p.CeateDate >= getDirectPayOrderListParameter.DirectPayStartDate.Value);
+            }
+
+            if (getDirectPayOrderListParameter.DirectPayEndDate != null)
+            {
+                directPayTemp = directPayTemp.Where(p => p.CeateDate < getDirectPayOrderListParameter.DirectPayEndDate.Value);
+            }
+
+            if (getDirectPayOrderListParameter.SupplierGroupId != null)
+            {
+                directPayTemp = directPayTemp.Where(p => p.SupplierGroupId == getDirectPayOrderListParameter.SupplierGroupId);
+            }
+
+            if (getDirectPayOrderListParameter.IsEtaoshi)
+            {
+                //显示 可见集团列表，可见店铺列表
+                directPayTemp = (from queryable in directPayTemp
+                                 from supplierGroupPlatform in supplierGroupPlatformEntityRepository.EntityQueryable
+                                 from supplierPlatformRelation in supplierPlatformRelationEntityRepository.EntityQueryable
+                                 where queryable.SupplierGroupId == supplierGroupPlatform.SupplierGroupId
+                                       && supplierGroupPlatform.PlatformId == getDirectPayOrderListParameter.PlatformId
+                                       && queryable.SupplierId == supplierPlatformRelation.SupplierId
+                                       && supplierPlatformRelation.PlatformId == getDirectPayOrderListParameter.PlatformId
+                                 select new
+                                 {
+                                     queryable.DirectPayId,
+                                     queryable.SupplierId,
+                                     queryable.SupplierName,
+                                     queryable.OrderNumber,
+                                     queryable.OrderStatusId,
+                                     queryable.IsPaId,
+                                     queryable.CeateDate,
+                                     queryable.SupplierGroupId,
+                                     queryable.PayableAmount,
+                                     queryable.ActualPaidAmount,
+                                     queryable.Cancelled
+                                 });
+            }
+
+            if (getDirectPayOrderListParameter.SupplierId != null)
+            {
+                directPayTemp = directPayTemp.Where(p => p.SupplierId == getDirectPayOrderListParameter.SupplierId);
+            }
+
+            directPayTemp = directPayTemp.OrderByDescending(p => p.CeateDate);
+            if (getDirectPayOrderListParameter.PageIndex != null)
+            {
+                directPayTemp = directPayTemp.Skip((getDirectPayOrderListParameter.PageIndex.Value - 1) * getDirectPayOrderListParameter.PageSize).Take(getDirectPayOrderListParameter.PageSize);
+            }
+
+            var directPayList = directPayTemp.ToList();
+
+            var result = directPayList.Select(p => new DirectPayModel
+            {
+                DirectPayId = p.DirectPayId,
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName,
+                OrderId = p.OrderNumber.HasValue ? p.OrderNumber.Value : 0,
+                OrderStatusId = p.OrderStatusId,
+                IsPaid = p.IsPaId ?? false,
+                CreateDate = p.CeateDate,
+                PayableAmount = p.PayableAmount ?? 0,
+                ActualPaidAmount = p.ActualPaidAmount ?? 0,
+                OrderType = (int)OrderType.DirectPay,
+                PaymentMethodId = paymentList.Where(c => c.DirectPayId == p.DirectPayId).Select(s => s.PaymentMethodId).FirstOrDefault(),
+                Cancelled = p.Cancelled
+            }).ToList();
+
+            return new ServicesResultList<DirectPayModel>
+            {
+                Result = result
+            };
         }
 
-        public ServicesResult<DirectPayModel> GetOrderDetail(string source, int directPayId)
+        public ServicesResult<DirectPayModel> GetOrderDetail(string source, int orderNumber)
         {
-            return new ServicesResult<DirectPayModel>();
+            var directPayEntity = (from directPay in this.directPayEntityRepository.EntityQueryable
+                                   from supplier in this.supplierEntityRepository.EntityQueryable
+                                   where directPay.SupplierId == supplier.SupplierId
+                                         && directPay.OrderNumber == orderNumber
+                                   select new
+                                       {
+                                           directPay.DirectPayId,
+                                           directPay.SupplierId,
+                                           supplier.SupplierName,
+                                           OrderType = (int)OrderType.DirectPay,
+                                           IsPaid = directPay.IsPaId,
+                                           Telephone = directPay.ContactPhone,
+                                           CreateDate = directPay.DateAdded,
+                                           PayableAmount = directPay.Total,
+                                           ActualPaidAmount = directPay.CustomerTotal
+                                       }
+                    ).FirstOrDefault();
+
+            if (directPayEntity == null)
+            {
+                return new ServicesResult<DirectPayModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new DirectPayModel()
+                };
+            }
+
+            var paymentEntity = this.paymentDirectEntityRepository.EntityQueryable.FirstOrDefault(p => p.DirectPay.DirectPayId == directPayEntity.DirectPayId);
+
+            var result = new DirectPayModel
+                {
+
+                };
+
+            return new ServicesResult<DirectPayModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = result
+                };
         }
 
         /// <summary>

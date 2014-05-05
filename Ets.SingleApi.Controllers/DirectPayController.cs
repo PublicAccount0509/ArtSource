@@ -72,7 +72,7 @@
                 };
             }
 
-            var result = this.directPayServices.CreateOrder(this.Source,this.AppKey,this.AppPassword,new SaveDirectPayParameter
+            var result = this.directPayServices.CreateOrder(this.Source, this.AppKey, this.AppPassword, new SaveDirectPayParameter
                 {
                     SupplierId = requst.SupplierId,
                     Amount = requst.Amount,
@@ -83,7 +83,7 @@
                     TelePhone = requst.PhoneNo,
                     SourceType = requst.SourceType,
                     UserId = requst.UserId
-                } );
+                });
 
             return new Response<string>
             {
@@ -187,9 +187,9 @@
         /// <summary>
         /// 查询排队列表
         /// </summary>
-        /// <param name="queueStartDate">The queueStartDate</param>
-        /// <param name="queueEndDate">The queueEndDate</param>
-        /// <param name="queueStatus">The queueStatus</param>
+        /// <param name="startDate">The startDateDefault documentation</param>
+        /// <param name="endDate">The queueEndDate</param>
+        /// <param name="orderStatusId">The orderStatusIdDefault documentation</param>
         /// <param name="supplierId">The supplierId</param>
         /// <param name="supplierGroupId">The supplierGroupId</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -206,11 +206,59 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<DirectPayModel> GetOrderList(DateTime? queueStartDate, DateTime? queueEndDate, int? queueStatus, int? supplierId,
+        public ListResponse<DirectPayModel> GetOrderList(DateTime? startDate, DateTime? endDate, int? orderStatusId, int? supplierId,
                                                 int? supplierGroupId, int pageSize, int? pageIndex, bool? cancelled,
                                                 int userId, int? platformId)
         {
-            return new ListResponse<DirectPayModel>();
+            var list = this.directPayServices.GetOrderList(this.Source, new GetDirectPayOrderListParameter
+            {
+                DirectPayStartDate = startDate,
+                DirectPayEndDate = endDate,
+                OrderStatusId = orderStatusId,
+                SupplierId = (supplierId ?? 0) > 0 ? supplierId : null,
+                SupplierGroupId = (supplierGroupId ?? 0) > 0 ? supplierGroupId : null,
+                IsEtaoshi = this.IsEtaoshi,
+                PageSize = pageSize,
+                PageIndex = pageIndex ?? 1,
+                Cancelled = cancelled,
+                UserId = userId,
+                PlatformId = platformId
+            });
+
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<DirectPayModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode == (int)StatusCode.Succeed.Ok
+                                ? (int)StatusCode.Succeed.Empty
+                                : list.StatusCode
+                    },
+                    Result = new List<DirectPayModel>()
+                };
+            }
+
+            var result = list.Result.Select(p => new DirectPayModel
+            {
+                DirectPayId = p.DirectPayId,
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName,
+                OrderId = p.OrderId,
+                OrderStatusId = p.OrderStatusId,
+                IsPaid = p.IsPaid,
+                PaymentMethodId = p.PaymentMethodId,
+                OrderType = p.OrderType,
+                ActualPaidAmount = p.ActualPaidAmount,
+                PayableAmount = p.PayableAmount,
+                CreateDate = p.CreateDate,
+                Cancelled = p.Cancelled ?? false
+            }).ToList();
+
+            return new ListResponse<DirectPayModel>
+            {
+                Result = result
+            };
         }
     }
 }

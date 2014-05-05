@@ -33,7 +33,7 @@
         /// 获取当面付订单明细
         /// </summary>
         /// <param name="source">The sourceDefault documentation</param>
-        /// <param name="directPayId">The directPayIdDefault documentation</param>
+        /// <param name="orderNumber">The directPayIdDefault documentation</param>
         /// <returns>
         /// ServicesResult{DirectPayModel}
         /// </returns>
@@ -42,7 +42,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<DirectPayModel> GetOrderDetail(string source, int directPayId);
+        ServicesResult<DirectPayModel> GetOrderDetail(string source, int orderNumber);
 
         /// <summary>
         /// 创建当面付订单
