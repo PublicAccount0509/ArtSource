@@ -475,7 +475,7 @@ namespace Ets.SingleApi.Services
         public ServicesResult<bool> CheckTelePhonePayMoreThanUpperLimit(string source, string phoneNo, int upperLimit)
         {
             var directPayList = this.directPayEntityRepository.EntityQueryable
-                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Date == DateTime.Now.Date)
+                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Date == DateTime.Now.Date && c.Cancelled == false)
                          .Select(s => new { s.ContactPhone, s.DateAdded })
                          .ToList();
 
