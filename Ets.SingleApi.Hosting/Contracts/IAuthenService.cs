@@ -51,6 +51,36 @@
         Response<AuthLoginResult> AuthLogin(AuthLoginRequst requst);
 
         /// <summary>
+        /// 第三方登录
+        /// </summary>
+        /// <param name="requst">请求参数</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 11:33 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：第三方登录")]
+        Response<OAuthLoginResult> OAuthLogin(OAuthLoginRequst requst);
+
+        /// <summary>
+        /// 仅通过手机号登录（自动登录）
+        /// </summary>
+        /// <param name="requst">请求参数</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：4/30/2014 4:53 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：仅通过手机号登录（自动登录）")]
+        Response<TelephoneNumLoginResult> TelephoneNumLogin(TelephoneNumLoginRequst requst);
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="id">用户Id</param>
@@ -70,7 +100,7 @@
         /// <summary>
         /// 修改密码
         /// </summary>
-         /// <param name="requst">请求参数</param>
+        /// <param name="requst">请求参数</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -86,7 +116,7 @@
         /// <summary>
         /// 找回密码
         /// </summary>
-         /// <param name="requst">请求参数</param>
+        /// <param name="requst">请求参数</param>
         /// <returns>
         /// 返回结果
         /// </returns>
@@ -102,7 +132,7 @@
         /// <summary>
         /// 验证验证码
         /// </summary>
-         /// <param name="requst">请求参数</param>
+        /// <param name="requst">请求参数</param>
         /// <returns>
         /// 返回结果
         /// </returns>

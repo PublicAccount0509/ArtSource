@@ -54,5 +54,41 @@
         {
             return new Response<decimal>();
         }
+
+        /// <summary>
+        /// 检查优惠码是否可用
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/9/2013 10:20 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/CheckIsEffective", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> CheckIsEffective(SupplierCouponCodeRequst requst)
+        {
+            return new Response<bool>();
+        }
+
+        /// <summary>
+        /// 根据优惠码取得优惠计算结果
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回优惠计算结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/9/2013 10:20 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/SupplierCouponCode", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<SupplierCouponCode> SupplierCouponCode(SupplierCouponCodeRequst requst)
+        {
+            return new Response<SupplierCouponCode>();
+        }
     }
 }

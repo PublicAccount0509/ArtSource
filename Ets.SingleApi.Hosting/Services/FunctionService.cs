@@ -59,5 +59,25 @@
         {
             return new Response<LocationCity>();
         }
+
+        /// <summary>
+        /// 计算距离
+        /// </summary>
+        /// <param name="userLat"></param>
+        /// <param name="userLong"></param>
+        /// <param name="supplierId"></param>
+        /// <returns>
+        /// 距离
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 3:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/GetDistance?userLat={userLat}&userLong={userLong}&supplierId={supplierId}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<DistanceResult> GetDistance(double userLat, double userLong, int supplierId)
+        {
+            return new Response<DistanceResult>();
+        }
     }
 }
