@@ -142,7 +142,20 @@ namespace Ets.SingleApi.Model.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
+
+        /// <summary>
+        /// 订单付款时间
+        /// </summary>
+        /// <value>
+        /// The payment date.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：5/6/2014 10:21 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DateTime? PaymentDate { get; set; }
 
         /// <summary>
         /// 应付金额
