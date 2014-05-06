@@ -77,7 +77,7 @@ namespace Ets.SingleApi.Model.Controller
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal PayableAmount { get; set; }
+        public decimal Total { get; set; }
 
         /// <summary>
         /// 实付金额
@@ -90,7 +90,33 @@ namespace Ets.SingleApi.Model.Controller
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal ActualPaidAmount { get; set; }
+        public decimal CustomerTotal { get; set; }
+
+        /// <summary>
+        /// 客户优惠金额
+        /// </summary>
+        /// <value>
+        /// 客户优惠金额
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 11:13 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal CustomerCouponTotal { get; set; }
+
+        /// <summary>
+        /// 商户优惠金额
+        /// </summary>
+        /// <value>
+        /// 商户优惠金额
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 11:13 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal SupplierCouponTotal { get; set; }
 
         /// <summary>
         /// 支付方式Id

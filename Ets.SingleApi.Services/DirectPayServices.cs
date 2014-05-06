@@ -298,8 +298,8 @@ namespace Ets.SingleApi.Services
                 OrderStatusId = p.OrderStateId,
                 IsPaid = p.IsPaId,
                 CreateDate = p.CeateDate,
-                PayableAmount = p.PayableAmount,
-                ActualPaidAmount = p.ActualPaidAmount,
+                Total = p.PayableAmount,
+                CustomerTotal = p.ActualPaidAmount,
                 CustomerCouponTotal = p.CustomerCouponTotal,
                 SupplierCouponTotal = p.SupplierCouponTotal,
                 OrderType = (int)OrderType.DirectPay,
@@ -343,8 +343,10 @@ namespace Ets.SingleApi.Services
                                            IsPaid = directPay.IsPaId,
                                            Telephone = directPay.ContactPhone,
                                            CreateDate = directPay.DateAdded,
-                                           PayableAmount = directPay.Total,
-                                           ActualPaidAmount = directPay.CustomerTotal
+                                           directPay.Total,
+                                           directPay.CustomerTotal,
+                                           directPay.CustomerCouponTotal,
+                                           directPay.SupplierCouponTotal
                                        }
                     ).FirstOrDefault();
 
@@ -367,8 +369,10 @@ namespace Ets.SingleApi.Services
                     OrderType = (int) OrderType.DirectPay,
                     DirectPayId = directPayEntity.DirectPayId,
                     IsPaid = directPayEntity.IsPaid,
-                    ActualPaidAmount = directPayEntity.ActualPaidAmount,
-                    PayableAmount = directPayEntity.PayableAmount,
+                    Total = directPayEntity.Total,
+                    CustomerTotal = directPayEntity.CustomerTotal,
+                    CustomerCouponTotal = directPayEntity.CustomerCouponTotal,
+                    SupplierCouponTotal = directPayEntity.SupplierCouponTotal,
                     OrderId = directPayEntity.OrderNumber,
                     CreateDate = directPayEntity.CreateDate,
                     PaymentDate =paymentEntity == null ? (DateTime?)null : paymentEntity.PaymentDate,

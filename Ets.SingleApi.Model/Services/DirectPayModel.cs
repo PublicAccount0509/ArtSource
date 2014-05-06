@@ -168,7 +168,7 @@ namespace Ets.SingleApi.Model.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal PayableAmount { get; set; }
+        public decimal Total { get; set; }
 
         /// <summary>
         /// 实付金额
@@ -181,7 +181,7 @@ namespace Ets.SingleApi.Model.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public decimal ActualPaidAmount { get; set; }
+        public decimal CustomerTotal { get; set; }
 
         /// <summary>
         /// 客户优惠金额
