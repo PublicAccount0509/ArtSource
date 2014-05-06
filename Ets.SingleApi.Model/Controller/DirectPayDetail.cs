@@ -15,6 +15,19 @@ namespace Ets.SingleApi.Model.Controller
     public class DirectPayDetail
     {
         /// <summary>
+        /// 订单号
+        /// </summary>
+        /// <value>
+        /// The OrderId
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 11:45 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public long OrderId { get; set; }
+
+        /// <summary>
         /// 餐厅Id
         /// </summary>
         /// <value>

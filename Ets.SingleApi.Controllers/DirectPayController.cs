@@ -173,6 +173,7 @@
 
             var result = new DirectPayDetail
                 {
+                    OrderId = orderDetail.Result.OrderId,
                     SupplierId = orderDetail.Result.SupplierId,
                     SupplierName = orderDetail.Result.SupplierName,
                     PaymentMethodId = orderDetail.Result.PaymentMethodId,
