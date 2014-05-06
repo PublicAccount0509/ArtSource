@@ -358,7 +358,7 @@ namespace Ets.SingleApi.Services
                     SupplierId = directPayEntity.SupplierId ?? 0,
                     SupplierName = directPayEntity.SupplierName,
                     PaymentMethodId = paymentEntity == null ? 0 : paymentEntity.PaymentMethodId,
-                    OrderType =(int)OrderType.DirectPay,
+                    OrderType = (int)OrderType.DirectPay,
                     DirectPayId = directPayEntity.DirectPayId,
                     IsPaid = directPayEntity.IsPaid,
                     ActualPaidAmount = directPayEntity.ActualPaidAmount,
@@ -474,7 +474,7 @@ namespace Ets.SingleApi.Services
         public ServicesResult<bool> CheckTelePhonePayMoreThanUpperLimit(string source, string phoneNo, int upperLimit)
         {
             var directPayList = this.directPayEntityRepository.EntityQueryable
-                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Date == DateTime.Now.Date)
+                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Date == DateTime.Now.Date && c.Cancelled == false)
                          .Select(s => new { s.ContactPhone, s.DateAdded })
                          .ToList();
 
