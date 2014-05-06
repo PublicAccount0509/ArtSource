@@ -209,21 +209,18 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<DirectPayModel> GetOrderList(DateTime? startDate, DateTime? endDate, int? orderStatusId, int? supplierId,
-                                                int? supplierGroupId, int pageSize, int? pageIndex, bool? cancelled,
+        public ListResponse<DirectPayModel> GetOrderList(DateTime? startDate, DateTime? endDate, 
+                                                int? supplierGroupId, int pageSize, int? pageIndex, 
                                                 int userId, int? platformId)
         {
             var list = this.directPayServices.GetOrderList(this.Source, new GetDirectPayOrderListParameter
             {
                 DirectPayStartDate = startDate,
                 DirectPayEndDate = endDate,
-                OrderStatusId = orderStatusId,
-                SupplierId = (supplierId ?? 0) > 0 ? supplierId : null,
                 SupplierGroupId = (supplierGroupId ?? 0) > 0 ? supplierGroupId : null,
                 IsEtaoshi = this.IsEtaoshi,
                 PageSize = pageSize,
                 PageIndex = pageIndex ?? 1,
-                Cancelled = cancelled,
                 UserId = userId,
                 PlatformId = platformId
             });

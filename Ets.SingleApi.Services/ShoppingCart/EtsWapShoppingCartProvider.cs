@@ -186,7 +186,8 @@
                                             FixedDeliveryCharge = supplierEntity.FixedDeliveryCharge ?? 0,
                                             FreeDeliveryLine = supplierEntity.FreeDeliveryLine ?? 0,
                                             DelMinOrderAmount = supplierEntity.DelMinOrderAmount ?? 0,
-                                            PackLadder = supplierEntity.PackLadder ?? 0
+                                            PackLadder = supplierEntity.PackLadder ?? 0,
+                                            IsFullFree = supplierEntity.IsFullFree ?? false
                                         }).FirstOrDefault();
 
             if (shoppingCartSupplier == null)
