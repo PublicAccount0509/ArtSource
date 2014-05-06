@@ -64,7 +64,7 @@ namespace Ets.SingleApi.Model.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public int OrderId { get; set; }
+        public long OrderId { get; set; }
 
         /// <summary>
         /// 订单状态Id

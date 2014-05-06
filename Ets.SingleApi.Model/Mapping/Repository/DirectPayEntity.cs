@@ -47,7 +47,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int orderNumber;
+		private long orderNumber;
 
 			/// <summary>
 		/// The ContactPhone
@@ -344,7 +344,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int OrderNumber
+		public virtual long OrderNumber
 		{
             get
             {

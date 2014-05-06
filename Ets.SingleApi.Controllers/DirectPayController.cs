@@ -263,5 +263,48 @@
                 Result = result
             };
         }
+
+        /// <summary>
+        /// 取消当面付订单
+        /// </summary>
+        /// <param name="cancelDirectPayParameter">The cancelDirectPayParameterDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：5/6/2014 8:57 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<bool> CanceledDirectPay(CancelDirectPayParameter cancelDirectPayParameter)
+        {
+
+            if (cancelDirectPayParameter == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var result = this.directPayServices.CancelDirectPay(this.Source, new CancelDirectPayParameter
+            {
+                DirectPayId = cancelDirectPayParameter.DirectPayId
+            });
+
+            return new Response<bool>
+            {
+                Result = result.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                ResultTotalCount = result.ResultTotalCount
+            };
+        }
     }
 }

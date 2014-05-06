@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Linq.SqlClient;
 
 namespace Ets.SingleApi.Services
 {
@@ -172,6 +171,19 @@ namespace Ets.SingleApi.Services
             this.singleApiOrdersExternalService = singleApiOrdersExternalService;
         }
 
+        /// <summary>
+        /// 获取当面付订单列表
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="getDirectPayOrderListParameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// ServicesResultList{QueueDeskModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 10:17 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public ServicesResultList<DirectPayModel> GetOrderList(string source, GetDirectPayOrderListParameter getDirectPayOrderListParameter)
         {
             if (getDirectPayOrderListParameter == null)
@@ -295,6 +307,19 @@ namespace Ets.SingleApi.Services
             };
         }
 
+        /// <summary>
+        /// 获取当面付订单明细
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderNumber">The directPayIdDefault documentation</param>
+        /// <returns>
+        /// ServicesResult{DirectPayModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 10:54 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public ServicesResult<DirectPayModel> GetOrderDetail(string source, int orderNumber)
         {
             var directPayEntity = (from directPay in this.directPayEntityRepository.EntityQueryable
@@ -304,9 +329,12 @@ namespace Ets.SingleApi.Services
                                    select new
                                        {
                                            directPay.DirectPayId,
+                                           directPay.OrderNumber,
                                            directPay.SupplierId,
                                            supplier.SupplierName,
                                            OrderType = (int)OrderType.DirectPay,
+                                           directPay.OrderStateId,
+                                           directPay.Cancelled,
                                            IsPaid = directPay.IsPaId,
                                            Telephone = directPay.ContactPhone,
                                            CreateDate = directPay.DateAdded,
@@ -328,7 +356,19 @@ namespace Ets.SingleApi.Services
 
             var result = new DirectPayModel
                 {
-
+                    SupplierId = directPayEntity.SupplierId ?? 0,
+                    SupplierName = directPayEntity.SupplierName,
+                    PaymentMethodId = paymentEntity == null ? 0 : paymentEntity.PaymentMethodId,
+                    OrderType = directPayEntity.OrderType,
+                    DirectPayId = directPayEntity.DirectPayId,
+                    IsPaid = directPayEntity.IsPaid,
+                    ActualPaidAmount = directPayEntity.ActualPaidAmount,
+                    PayableAmount = directPayEntity.PayableAmount,
+                    OrderId = directPayEntity.OrderNumber,
+                    CreateDate = directPayEntity.CreateDate,
+                    OrderStatusId = directPayEntity.OrderStateId,
+                    Cancelled = directPayEntity.Cancelled,
+                    Telephone = directPayEntity.Telephone
                 };
 
             return new ServicesResult<DirectPayModel>
@@ -447,6 +487,70 @@ namespace Ets.SingleApi.Services
         }
 
         /// <summary>
+        /// 取消当面付订单
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">当面付订单Id</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：5/6/2014 8:54 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CancelDirectPay(string source, CancelDirectPayParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = false
+                };
+            }
+            var result = (from directPay in this.directPayEntityRepository.EntityQueryable
+                          where directPay.DirectPayId == parameter.DirectPayId
+                          select directPay).FirstOrDefault();
+
+            if (result == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidQueueIdCode,
+                    Result = false
+                };
+            }
+
+            if (result.OrderStateId != 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidCancelledQueueStateIdCode,
+                    Result = false
+                };
+            }
+
+            if (result.Cancelled == true)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.AleadyCancelledQueueCode,
+                    Result = false
+                };
+            }
+
+            result.Cancelled = true;
+
+            this.directPayEntityRepository.Save(result);
+
+            return new ServicesResult<bool>
+            {
+                Result = true
+            };
+        }
+
+        /// <summary>
         /// 保存当面付订单信息
         /// </summary>
         /// <param name="orderId">The orderIdDefault documentation</param>
@@ -460,15 +564,15 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveDirectPayEntity(int orderId, int customerId, SaveDirectPayParameter saveDirectPayParameter)
+        private int SaveDirectPayEntity(long orderId, int customerId, SaveDirectPayParameter saveDirectPayParameter)
         {
             var directPayEntity = this.directPayEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new DirectPayEntity
             {
                 SupplierId = saveDirectPayParameter.SupplierId,
                 CustomerId = customerId,
                 OrderNumber = orderId,
-                OrderStateId = 1,
                 DateAdded = DateTime.Now,
+                OrderStateId = 0,
                 IsPaId = false,
                 Cancelled = false
             };
@@ -542,7 +646,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int GetOrderNumberId(string source, string appKey, string appPassword)
+        private long GetOrderNumberId(string source, string appKey, string appPassword)
         {
             return ServicesCommon.FromServerEnable
                        ? this.GetServerOrderNumber(source, appKey, appPassword)
@@ -560,7 +664,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int GetLocalOrderNumber()
+        private long GetLocalOrderNumber()
         {
             var entity = this.orderNumberDpEntityRepository.EntityQueryable.FirstOrDefault();
             if (entity == null)
@@ -587,7 +691,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int GetServerOrderNumber(string source, string appKey, string appPassword)
+        private long GetServerOrderNumber(string source, string appKey, string appPassword)
         {
             var result = this.singleApiOrdersExternalService.OrderNumber(
                   new OrderNumberExternalUrlParameter { OrderType = (int)OrderType.DirectPay },
@@ -606,8 +710,8 @@ namespace Ets.SingleApi.Services
                 return 0;
             }
 
-            int orderNumber;
-            int.TryParse(jsonValue["Result"], out orderNumber);
+            long orderNumber;
+            long.TryParse(jsonValue["Result"], out orderNumber);
             return orderNumber;
         }
     }
