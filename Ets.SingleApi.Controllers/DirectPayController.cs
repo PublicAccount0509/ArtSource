@@ -173,12 +173,20 @@
 
             var result = new DirectPayDetail
                 {
+                    OrderId = orderDetail.Result.OrderId,
                     SupplierId = orderDetail.Result.SupplierId,
-                    PaymentMethodId = orderDetail.Result.PaymentMethodId,
                     SupplierName = orderDetail.Result.SupplierName,
+                    PaymentMethodId = orderDetail.Result.PaymentMethodId,
+                    Total = orderDetail.Result.Total,
+                    CustomerTotal = orderDetail.Result.CustomerTotal,
+                    CustomerCouponTotal = orderDetail.Result.CustomerCouponTotal,
+                    SupplierCouponTotal = orderDetail.Result.SupplierCouponTotal,
                     CeateDate = orderDetail.Result.CreateDate,
+                    PaymentDate = orderDetail.Result.PaymentDate,
                     Telephone = orderDetail.Result.Telephone,
-                    IsPaid = orderDetail.Result.IsPaid
+                    Cancelled = orderDetail.Result.Cancelled != null && orderDetail.Result.Cancelled.Value,
+                    IsPaid = orderDetail.Result.IsPaid,
+                    OrderStatusId = orderDetail.Result.OrderStatusId
                 };
 
             return new Response<DirectPayDetail>
@@ -192,12 +200,9 @@
         /// </summary>
         /// <param name="startDate">The startDateDefault documentation</param>
         /// <param name="endDate">The queueEndDate</param>
-        /// <param name="orderStatusId">The orderStatusIdDefault documentation</param>
-        /// <param name="supplierId">The supplierId</param>
         /// <param name="supplierGroupId">The supplierGroupId</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
-        /// <param name="cancelled">The  cancelled indicates whether</param>
         /// <param name="userId">The userId</param>
         /// <param name="platformId">平台Id</param>
         /// <returns>
@@ -249,8 +254,10 @@
                 IsPaid = p.IsPaid,
                 PaymentMethodId = p.PaymentMethodId,
                 OrderType = p.OrderType,
-                ActualPaidAmount = p.ActualPaidAmount,
-                PayableAmount = p.PayableAmount,
+                Total = p.Total,
+                CustomerTotal = p.CustomerTotal,
+                CustomerCouponTotal = p.CustomerCouponTotal,
+                SupplierCouponTotal = p.SupplierCouponTotal,
                 CreateDate = p.CreateDate,
                 Cancelled = p.Cancelled ?? false
             }).ToList();
@@ -258,6 +265,49 @@
             return new ListResponse<DirectPayModel>
             {
                 Result = result
+            };
+        }
+
+        /// <summary>
+        /// 取消当面付订单
+        /// </summary>
+        /// <param name="cancelDirectPayParameter">The cancelDirectPayParameterDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：5/6/2014 8:57 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<bool> CanceledDirectPay(CancelDirectPayParameter cancelDirectPayParameter)
+        {
+
+            if (cancelDirectPayParameter == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var result = this.directPayServices.CancelDirectPay(this.Source, new CancelDirectPayParameter
+            {
+                DirectPayId = cancelDirectPayParameter.DirectPayId
+            });
+
+            return new Response<bool>
+            {
+                Result = result.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                ResultTotalCount = result.ResultTotalCount
             };
         }
     }

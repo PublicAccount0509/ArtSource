@@ -224,6 +224,7 @@
     <Compile Include="Services\GetDirectPayOrderListParameter.cs" />
     <Compile Include="Services\SaveDirectPayParameter.cs" />
     <Compile Include="Services\TelephoneNumLoginParameter.cs" />
+    <Compile Include="Services\CancelDirectPayParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />

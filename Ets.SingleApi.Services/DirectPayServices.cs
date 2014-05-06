@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Linq.SqlClient;
 
 namespace Ets.SingleApi.Services
 {
@@ -172,6 +171,19 @@ namespace Ets.SingleApi.Services
             this.singleApiOrdersExternalService = singleApiOrdersExternalService;
         }
 
+        /// <summary>
+        /// 获取当面付订单列表
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="getDirectPayOrderListParameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// ServicesResultList{QueueDeskModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 10:17 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public ServicesResultList<DirectPayModel> GetOrderList(string source, GetDirectPayOrderListParameter getDirectPayOrderListParameter)
         {
             if (getDirectPayOrderListParameter == null)
@@ -201,6 +213,8 @@ namespace Ets.SingleApi.Services
                                      supplier.SupplierGroupId,
                                      PayableAmount = directPay.Total,
                                      ActualPaidAmount = directPay.CustomerTotal,
+                                     directPay.CustomerCouponTotal,
+                                     directPay.SupplierCouponTotal,
                                      directPay.Cancelled
                                  });
 
@@ -256,6 +270,8 @@ namespace Ets.SingleApi.Services
                                      queryable.SupplierGroupId,
                                      queryable.PayableAmount,
                                      queryable.ActualPaidAmount,
+                                     queryable.CustomerCouponTotal,
+                                     queryable.SupplierCouponTotal,
                                      queryable.Cancelled
                                  });
             }
@@ -282,8 +298,10 @@ namespace Ets.SingleApi.Services
                 OrderStatusId = p.OrderStateId,
                 IsPaid = p.IsPaId,
                 CreateDate = p.CeateDate,
-                PayableAmount = p.PayableAmount,
-                ActualPaidAmount = p.ActualPaidAmount,
+                Total = p.PayableAmount,
+                CustomerTotal = p.ActualPaidAmount,
+                CustomerCouponTotal = p.CustomerCouponTotal,
+                SupplierCouponTotal = p.SupplierCouponTotal,
                 OrderType = (int)OrderType.DirectPay,
                 PaymentMethodId = paymentList.Where(c => c.DirectPayId == p.DirectPayId).Select(s => s.PaymentMethodId).FirstOrDefault(),
                 Cancelled = p.Cancelled
@@ -295,6 +313,19 @@ namespace Ets.SingleApi.Services
             };
         }
 
+        /// <summary>
+        /// 获取当面付订单明细
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderNumber">The directPayIdDefault documentation</param>
+        /// <returns>
+        /// ServicesResult{DirectPayModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：4/30/2014 10:54 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public ServicesResult<DirectPayModel> GetOrderDetail(string source, int orderNumber)
         {
             var directPayEntity = (from directPay in this.directPayEntityRepository.EntityQueryable
@@ -304,14 +335,18 @@ namespace Ets.SingleApi.Services
                                    select new
                                        {
                                            directPay.DirectPayId,
+                                           directPay.OrderNumber,
                                            directPay.SupplierId,
                                            supplier.SupplierName,
-                                           OrderType = (int)OrderType.DirectPay,
+                                           directPay.OrderStateId,
+                                           directPay.Cancelled,
                                            IsPaid = directPay.IsPaId,
                                            Telephone = directPay.ContactPhone,
                                            CreateDate = directPay.DateAdded,
-                                           PayableAmount = directPay.Total,
-                                           ActualPaidAmount = directPay.CustomerTotal
+                                           directPay.Total,
+                                           directPay.CustomerTotal,
+                                           directPay.CustomerCouponTotal,
+                                           directPay.SupplierCouponTotal
                                        }
                     ).FirstOrDefault();
 
@@ -328,7 +363,22 @@ namespace Ets.SingleApi.Services
 
             var result = new DirectPayModel
                 {
-
+                    SupplierId = directPayEntity.SupplierId ?? 0,
+                    SupplierName = directPayEntity.SupplierName,
+                    PaymentMethodId = paymentEntity == null ? 0 : paymentEntity.PaymentMethodId,
+                    OrderType = (int) OrderType.DirectPay,
+                    DirectPayId = directPayEntity.DirectPayId,
+                    IsPaid = directPayEntity.IsPaid,
+                    Total = directPayEntity.Total,
+                    CustomerTotal = directPayEntity.CustomerTotal,
+                    CustomerCouponTotal = directPayEntity.CustomerCouponTotal,
+                    SupplierCouponTotal = directPayEntity.SupplierCouponTotal,
+                    OrderId = directPayEntity.OrderNumber,
+                    CreateDate = directPayEntity.CreateDate,
+                    PaymentDate =paymentEntity == null ? (DateTime?)null : paymentEntity.PaymentDate,
+                    OrderStatusId = directPayEntity.OrderStateId,
+                    Cancelled = directPayEntity.Cancelled,
+                    Telephone = directPayEntity.Telephone
                 };
 
             return new ServicesResult<DirectPayModel>
@@ -435,7 +485,7 @@ namespace Ets.SingleApi.Services
         public ServicesResult<bool> CheckTelePhonePayMoreThanUpperLimit(string source, string phoneNo, int upperLimit)
         {
             var directPayList = this.directPayEntityRepository.EntityQueryable
-                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Date == DateTime.Now.Date)
+                         .Where(c => c.ContactPhone == phoneNo && c.DateAdded.Date == DateTime.Now.Date && c.Cancelled == false)
                          .Select(s => new { s.ContactPhone, s.DateAdded })
                          .ToList();
 
@@ -444,6 +494,70 @@ namespace Ets.SingleApi.Services
                     StatusCode = (int)StatusCode.Succeed.Ok,
                     Result = directPayList.Count() >= upperLimit
                 };
+        }
+
+        /// <summary>
+        /// 取消当面付订单
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">当面付订单Id</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：5/6/2014 8:54 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> CancelDirectPay(string source, CancelDirectPayParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest,
+                    Result = false
+                };
+            }
+            var result = (from directPay in this.directPayEntityRepository.EntityQueryable
+                          where directPay.DirectPayId == parameter.DirectPayId
+                          select directPay).FirstOrDefault();
+
+            if (result == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidQueueIdCode,
+                    Result = false
+                };
+            }
+
+            if (result.OrderStateId != 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidCancelledQueueStateIdCode,
+                    Result = false
+                };
+            }
+
+            if (result.Cancelled == true)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.AleadyCancelledQueueCode,
+                    Result = false
+                };
+            }
+
+            result.Cancelled = true;
+
+            this.directPayEntityRepository.Save(result);
+
+            return new ServicesResult<bool>
+            {
+                Result = true
+            };
         }
 
         /// <summary>
@@ -467,8 +581,8 @@ namespace Ets.SingleApi.Services
                 SupplierId = saveDirectPayParameter.SupplierId,
                 CustomerId = customerId,
                 OrderNumber = orderId,
-                OrderStateId = 1,
                 DateAdded = DateTime.Now,
+                OrderStateId = 0,
                 IsPaId = false,
                 Cancelled = false
             };
