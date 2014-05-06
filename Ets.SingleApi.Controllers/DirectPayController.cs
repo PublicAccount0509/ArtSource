@@ -173,12 +173,18 @@
 
             var result = new DirectPayDetail
                 {
+                    OrderId = orderDetail.Result.OrderId,
                     SupplierId = orderDetail.Result.SupplierId,
-                    PaymentMethodId = orderDetail.Result.PaymentMethodId,
                     SupplierName = orderDetail.Result.SupplierName,
+                    PaymentMethodId = orderDetail.Result.PaymentMethodId,
+                    PayableAmount = orderDetail.Result.PayableAmount,
+                    ActualPaidAmount = orderDetail.Result.ActualPaidAmount,
                     CeateDate = orderDetail.Result.CreateDate,
+                    PaymentDate = orderDetail.Result.PaymentDate,
                     Telephone = orderDetail.Result.Telephone,
-                    IsPaid = orderDetail.Result.IsPaid
+                    Cancelled = orderDetail.Result.Cancelled != null && orderDetail.Result.Cancelled.Value,
+                    IsPaid = orderDetail.Result.IsPaid,
+                    OrderStatusId = orderDetail.Result.OrderStatusId
                 };
 
             return new Response<DirectPayDetail>

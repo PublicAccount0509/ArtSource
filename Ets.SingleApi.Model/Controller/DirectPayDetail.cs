@@ -15,6 +15,19 @@ namespace Ets.SingleApi.Model.Controller
     public class DirectPayDetail
     {
         /// <summary>
+        /// 订单号
+        /// </summary>
+        /// <value>
+        /// The OrderId
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 11:45 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public long OrderId { get; set; }
+
+        /// <summary>
         /// 餐厅Id
         /// </summary>
         /// <value>
@@ -54,6 +67,32 @@ namespace Ets.SingleApi.Model.Controller
         public string Telephone { get; set; }
 
         /// <summary>
+        /// 应付金额
+        /// </summary>
+        /// <value>
+        /// 应付金额
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 11:10 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal PayableAmount { get; set; }
+
+        /// <summary>
+        /// 实付金额
+        /// </summary>
+        /// <value>
+        /// 实付金额
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 11:13 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal ActualPaidAmount { get; set; }
+
+        /// <summary>
         /// 支付方式Id
         /// </summary>
         /// <value>
@@ -65,6 +104,19 @@ namespace Ets.SingleApi.Model.Controller
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int PaymentMethodId { get; set; }
+
+        /// <summary>
+        /// 是否取消
+        /// </summary>
+        /// <value>
+        /// 是否取消
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 11:43 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool Cancelled { get; set; }
 
         /// <summary>
         /// 是否支付
@@ -90,6 +142,32 @@ namespace Ets.SingleApi.Model.Controller
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public DateTime? CeateDate { get; set; }
+        public DateTime CeateDate { get; set; }
+
+        /// <summary>
+        /// 订单付款时间
+        /// </summary>
+        /// <value>
+        /// The payment date.
+        /// </value>
+        /// 创建者：苏建峰
+        /// 创建日期：5/6/2014 10:21 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public DateTime? PaymentDate { get; set; }
+
+        /// <summary>
+        /// 订单状态Id
+        /// </summary>
+        /// <value>
+        /// 订单状态Id
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/5/2014 12:03 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public int OrderStatusId { get; set; }
     }
 }
