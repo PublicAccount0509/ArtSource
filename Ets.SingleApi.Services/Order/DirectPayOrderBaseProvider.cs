@@ -21,14 +21,14 @@
     public class DirectPayOrderBaseProvider : IOrderBaseProvider
     {
         /// <summary>
-        /// 字段tableReservationEntityRepository
+        /// 字段directPayEntityRepository
         /// </summary>
         /// 创建者：周超
         /// 创建日期：3/15/2014 2:01 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<TableReservationEntity> tableReservationEntityRepository;
+        private readonly INHibernateRepository<DirectPayEntity> directPayEntityRepository;
 
         /// <summary>
         /// 字段orderNumberDtEntityRepository
@@ -53,7 +53,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="DingTaiOrderBaseProvider" /> class.
         /// </summary>
-        /// <param name="tableReservationEntityRepository">The tableReservationEntityRepository</param>
+        /// <param name="directPayEntityRepository">The directPayEntityRepository</param>
         /// <param name="orderNumberDtEntityRepository">The orderNumberDtEntityRepository</param>
         /// <param name="paymentRecordEntityRepository">The paymentRecordEntityRepository</param>
         /// 创建者：周超
@@ -62,11 +62,11 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public DirectPayOrderBaseProvider(
-            INHibernateRepository<TableReservationEntity> tableReservationEntityRepository,
+            INHibernateRepository<DirectPayEntity> directPayEntityRepository,
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
             INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository)
         {
-            this.tableReservationEntityRepository = tableReservationEntityRepository;
+            this.directPayEntityRepository = directPayEntityRepository;
             this.orderNumberDtEntityRepository = orderNumberDtEntityRepository;
             this.paymentRecordEntityRepository = paymentRecordEntityRepository;
         }
@@ -134,7 +134,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<int> Exist(string source, int orderId)
         {
-            var tableReservationEntity = (from entity in this.tableReservationEntityRepository.EntityQueryable
+            var tableReservationEntity = (from entity in this.directPayEntityRepository.EntityQueryable
                                           where entity.OrderNumber == orderId
                                           select entity).FirstOrDefault();
 
@@ -149,7 +149,7 @@
             return new ServicesResult<int>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = tableReservationEntity.IsPaId == true ? 1 : 2
+                Result = tableReservationEntity.IsPaId ? 1 : 2
             };
         }
 
@@ -169,7 +169,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveOrderPaid(string source, int orderId, bool isPaid)
         {
-            var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
+            var tableReservationEntity = this.directPayEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
             if (tableReservationEntity == null)
             {
                 return new ServicesResult<bool>
@@ -180,7 +180,7 @@
             }
 
             tableReservationEntity.IsPaId = true;
-            this.tableReservationEntityRepository.Save(tableReservationEntity);
+            this.directPayEntityRepository.Save(tableReservationEntity);
 
             return new ServicesResult<bool>
             {
@@ -206,8 +206,8 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> SaveOrderPaymentMethod(string source, int orderId, int paymentMethodId, string payBank)
         {
-            var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
-            if (tableReservationEntity == null)
+            var directPayEntity = this.directPayEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
+            if (directPayEntity == null)
             {
                 return new ServicesResult<bool>
                 {
@@ -216,7 +216,7 @@
                 };
             }
 
-            var tableReservationId = tableReservationEntity.TableReservationId.ToString();
+            var tableReservationId = directPayEntity.DirectPayId.ToString();
             var paymentRecordEntity = this.paymentRecordEntityRepository.EntityQueryable.FirstOrDefault(p => p.OrderId == tableReservationId)
                                  ?? new PaymentRecordEntity
                                  {
@@ -225,7 +225,7 @@
                                      PaymentDate = DateTime.Now
                                  };
 
-            paymentRecordEntity.Amount = tableReservationEntity.CustomerTotal ?? 0;
+            paymentRecordEntity.Amount = directPayEntity.CustomerTotal;
             paymentRecordEntity.OrderTypeId = (int)OrderType.DirectPay; //订台 2 堂食 1
             paymentRecordEntity.PaymentMethodId = paymentMethodId;
             paymentRecordEntity.PayBank = payBank;
@@ -252,7 +252,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<string> GetOrderEditFlag(string source, int orderId)
         {
-            var tableReservationEntity = (from entity in this.tableReservationEntityRepository.EntityQueryable
+            var tableReservationEntity = (from entity in this.directPayEntityRepository.EntityQueryable
                                           where entity.OrderNumber == orderId
                                           select entity).FirstOrDefault();
             if (tableReservationEntity == null)
@@ -264,16 +264,7 @@
                 };
             }
 
-            if (!ServicesCommon.TangPaiDuiEditStatusIdList.Contains(tableReservationEntity.TableStatus ?? 0))
-            {
-                return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Succeed.Ok,
-                    Result = "订单已处理，无法修改"
-                };
-            }
-
-            if (tableReservationEntity.IsPaId == true)
+            if (tableReservationEntity.IsPaId)
             {
                 return new ServicesResult<string>
                 {
@@ -313,7 +304,7 @@
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<bool> CancelOrder(string source, int orderId)
         {
-            var tableReservationEntity = (from entity in this.tableReservationEntityRepository.EntityQueryable
+            var tableReservationEntity = (from entity in this.directPayEntityRepository.EntityQueryable
                                           where entity.OrderNumber == orderId
                                           select entity).FirstOrDefault();
             if (tableReservationEntity == null)
@@ -326,7 +317,7 @@
             }
 
             tableReservationEntity.Cancelled = true;
-            this.tableReservationEntityRepository.Save(tableReservationEntity);
+            this.directPayEntityRepository.Save(tableReservationEntity);
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
