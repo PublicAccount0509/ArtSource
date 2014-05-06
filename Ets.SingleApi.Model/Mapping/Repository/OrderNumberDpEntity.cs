@@ -36,7 +36,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private long orderId;
+		private int orderId;
 
 		#endregion
 
@@ -63,7 +63,7 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual long OrderId
+		public virtual int OrderId
 		{
             get
             {

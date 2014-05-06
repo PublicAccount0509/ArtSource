@@ -332,7 +332,6 @@ namespace Ets.SingleApi.Services
                                            directPay.OrderNumber,
                                            directPay.SupplierId,
                                            supplier.SupplierName,
-                                           OrderType = (int)OrderType.DirectPay,
                                            directPay.OrderStateId,
                                            directPay.Cancelled,
                                            IsPaid = directPay.IsPaId,
@@ -359,7 +358,7 @@ namespace Ets.SingleApi.Services
                     SupplierId = directPayEntity.SupplierId ?? 0,
                     SupplierName = directPayEntity.SupplierName,
                     PaymentMethodId = paymentEntity == null ? 0 : paymentEntity.PaymentMethodId,
-                    OrderType = directPayEntity.OrderType,
+                    OrderType =(int)OrderType.DirectPay,
                     DirectPayId = directPayEntity.DirectPayId,
                     IsPaid = directPayEntity.IsPaid,
                     ActualPaidAmount = directPayEntity.ActualPaidAmount,
@@ -564,7 +563,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveDirectPayEntity(long orderId, int customerId, SaveDirectPayParameter saveDirectPayParameter)
+        private int SaveDirectPayEntity(int orderId, int customerId, SaveDirectPayParameter saveDirectPayParameter)
         {
             var directPayEntity = this.directPayEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new DirectPayEntity
             {
@@ -646,7 +645,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private long GetOrderNumberId(string source, string appKey, string appPassword)
+        private int GetOrderNumberId(string source, string appKey, string appPassword)
         {
             return ServicesCommon.FromServerEnable
                        ? this.GetServerOrderNumber(source, appKey, appPassword)
@@ -664,7 +663,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private long GetLocalOrderNumber()
+        private int GetLocalOrderNumber()
         {
             var entity = this.orderNumberDpEntityRepository.EntityQueryable.FirstOrDefault();
             if (entity == null)
@@ -691,7 +690,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private long GetServerOrderNumber(string source, string appKey, string appPassword)
+        private int GetServerOrderNumber(string source, string appKey, string appPassword)
         {
             var result = this.singleApiOrdersExternalService.OrderNumber(
                   new OrderNumberExternalUrlParameter { OrderType = (int)OrderType.DirectPay },
@@ -710,8 +709,8 @@ namespace Ets.SingleApi.Services
                 return 0;
             }
 
-            long orderNumber;
-            long.TryParse(jsonValue["Result"], out orderNumber);
+            int orderNumber;
+            int.TryParse(jsonValue["Result"], out orderNumber);
             return orderNumber;
         }
     }

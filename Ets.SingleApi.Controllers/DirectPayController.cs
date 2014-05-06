@@ -192,12 +192,9 @@
         /// </summary>
         /// <param name="startDate">The startDateDefault documentation</param>
         /// <param name="endDate">The queueEndDate</param>
-        /// <param name="orderStatusId">The orderStatusIdDefault documentation</param>
-        /// <param name="supplierId">The supplierId</param>
         /// <param name="supplierGroupId">The supplierGroupId</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="pageIndex">Index of the page.</param>
-        /// <param name="cancelled">The  cancelled indicates whether</param>
         /// <param name="userId">The userId</param>
         /// <param name="platformId">平台Id</param>
         /// <returns>
