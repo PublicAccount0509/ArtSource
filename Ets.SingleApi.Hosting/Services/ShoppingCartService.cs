@@ -21,197 +21,63 @@
     public class ShoppingCartService : IShoppingCartService
     {
         /// <summary>
-        /// 创建一个购物车
+        /// 更改购物车状态
         /// </summary>
         /// <param name="id">购物车Id</param>
+        /// <param name="complete">The  complete indicates whether</param>
+        /// <param name="orderId">The orderId</param>
+        /// <param name="orderType">Type of the order.</param>
         /// <returns>
-        /// 返回购物车信息
+        /// 返回结果
         /// </returns>
         /// 创建者：周超
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/ShoppingCart/{id}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> ShoppingCart(string id)
+        [WebInvoke(UriTemplate = "/SaveShoppingCartComplete/{id}?complete={complete}&orderId={orderId}&orderType={orderType}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> SaveShoppingCartComplete(string id, bool complete, int orderId, int orderType)
         {
-            return new Response<ShoppingCartModel>();
+            return new Response<bool>();
         }
 
         /// <summary>
-        /// 保存购物车信息
+        /// 取得购物车是否完成的状态
         /// </summary>
         /// <param name="id">购物车Id</param>
-        /// <param name="requst">购物车信息</param>
+        /// <param name="orderId">The orderId</param>
+        /// <param name="orderType">Type of the order.</param>
         /// <returns>
-        /// 返回购物车信息
+        /// 返回购物车状态
         /// </returns>
         /// 创建者：周超
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/ShoppingCart/{id}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> SaveShoppingCart(string id, ShoppingCartRequst requst)
+        [WebGet(UriTemplate = "/GetShoppingCartComplete/{id}?orderId={orderId}&orderType={orderType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> GetShoppingCartComplete(string id, int orderId, int orderType)
         {
-            return new Response<ShoppingCartModel>();
+            return new Response<bool>();
         }
 
         /// <summary>
-        /// 创建一个购物车
+        /// 取得购物车Id
         /// </summary>
-        /// <param name="supplierId">餐厅Id</param>
-        /// <param name="userId">用户的唯一标识</param>
+        /// <param name="orderId">The orderId</param>
+        /// <param name="orderType">Type of the order.</param>
         /// <returns>
-        /// 返回购物车信息
+        /// 返回购物车Id
         /// </returns>
         /// 创建者：周超
         /// 创建日期：11/20/2013 11:56 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/Create?supplierId={supplierId}&userId={userId}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> Create(int supplierId, string userId)
+        [WebGet(UriTemplate = "/GetShoppingCartId?orderId={orderId}&orderType={orderType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<string> GetShoppingCartId(int orderId, int orderType)
         {
-            return new Response<ShoppingCartModel>();
-        }
-
-        /// <summary>
-        /// 关联顾客信息
-        /// </summary>
-        /// <param name="id">购物车Id</param>
-        /// <param name="userId">用户Id</param>
-        /// <returns>
-        /// 返回购物车信息
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 9:29 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/Customer/{id}?userId={userId}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> Customer(string id, int userId)
-        {
-            return new Response<ShoppingCartModel>();
-        }
-
-        /// <summary>
-        /// 保存送餐信息
-        /// </summary>
-        /// <param name="id">The id</param>
-        /// <param name="requst">The requst</param>
-        /// <returns>
-        /// 返回购物车信息
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 9:29 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/Delivery/{id}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> Delivery(string id, ShoppingCartDeliveryRequst requst)
-        {
-            return new Response<ShoppingCartModel>();
-        }
-
-        /// <summary>
-        /// 保存全部商品信息
-        /// </summary>
-        /// <param name="id">购物车Id</param>
-        /// <param name="requst">商品信息</param>
-        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
-        /// <returns>
-        /// 返回购物车信息
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 9:25 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/Shopping/{id}?saveDeliveryMethodId={saveDeliveryMethodId}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> Shopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId)
-        {
-            return new Response<ShoppingCartModel>();
-        }
-
-        /// <summary>
-        /// 添加商品信息
-        /// </summary>
-        /// <param name="id">购物车Id</param>
-        /// <param name="requst">商品信息</param>
-        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
-        /// <returns>
-        /// 返回购物车信息
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 9:25 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/AddShopping/{id}?saveDeliveryMethodId={saveDeliveryMethodId}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId)
-        {
-            return new Response<ShoppingCartModel>();
-        }
-
-        /// <summary>
-        /// 删除商品信息
-        /// </summary>
-        /// <param name="id">购物车Id</param>
-        /// <param name="requst">商品信息</param>
-        /// <param name="saveDeliveryMethodId">是否即时更新DeliveryMethodId</param>
-        /// <returns>
-        /// 返回购物车信息
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 9:25 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/DeleteShopping/{id}?saveDeliveryMethodId={saveDeliveryMethodId}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst, bool saveDeliveryMethodId)
-        {
-            return new Response<ShoppingCartModel>();
-        }
-
-        /// <summary>
-        /// 保存订单信息
-        /// </summary>
-        /// <param name="id">购物车Id</param>
-        /// <param name="requst">订单信息</param>
-        /// <param name="isCalculateCoupon">是否计算优惠</param>
-        /// <param name="isValidateDeliveryTime">是否检测送餐时间</param>
-        /// <returns>
-        /// 返回购物车信息
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 9:25 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/Order/{id}?isCalculateCoupon={isCalculateCoupon}&isValidateDeliveryTime={isValidateDeliveryTime}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> Order(string id, ShoppingCartOrderRequst requst, bool isCalculateCoupon, bool isValidateDeliveryTime)
-        {
-            return new Response<ShoppingCartModel>();
-        }
-
-        /// <summary>
-        /// 保存送餐方式
-        /// </summary>
-        /// <param name="id">购物车Id</param>
-        /// <param name="deliveryMethodId">送餐方式Id</param>
-        /// <returns>
-        /// 返回购物车信息
-        /// </returns>
-        /// 创建者：周超
-        /// 创建日期：11/21/2013 9:25 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [WebInvoke(UriTemplate = "/SaveDeliveryMethod/{id}?deliveryMethodId={deliveryMethodId}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> SaveDeliveryMethod(string id, int deliveryMethodId)
-        {
-            return new Response<ShoppingCartModel>();
+            return new Response<string>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Ets.SingleApi.Hosting.Contracts
 {
+    using System;
     using System.ComponentModel;
     using System.ServiceModel;
 
@@ -50,6 +51,38 @@
         [OperationContract]
         [Description("方法功能：获取餐厅信息")]
         Response<SupplierDetail> Supplier(string id);
+
+        /// <summary>
+        /// 根据餐厅域名获取餐厅信息
+        /// </summary>
+        /// <param name="supplierDomain">餐厅域名</param>
+        /// <returns>
+        /// 返回餐厅信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：根据餐厅域名获取餐厅信息")]
+        Response<RoughSupplier> RoughSupplier(string supplierDomain);
+
+        /// <summary>
+        /// 获取餐厅基本信息
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取餐厅基本信息")]
+        Response<SupplierSimple> SupplierSimple(int id);
 
         /// <summary>
         /// 获取餐厅分店信息
@@ -347,5 +380,139 @@
         [OperationContract]
         [Description("方法功能：取得餐厅送餐时间")]
         ListResponse<SupplierDeliveryTime> SupplierDeliveryTime(string id, string startDate, string days);
+
+        /// <summary>
+        /// 计算距离
+        /// </summary>
+        /// <param name="userLat"></param>
+        /// <param name="userLong"></param>
+        /// <param name="id"></param>
+        /// <returns>
+        /// 距离
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 3:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：计算距离")]
+        Response<DistanceResult> GetDistance(int id, double userLat, double userLong);
+
+        /// <summary>
+        /// 获取订台台位列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="bookingDate">预订日期</param>
+        /// <param name="bookingTime">预订时间</param>
+        /// <param name="peopleCount">预定人数</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/18/2014 5:53 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取订台台位列表")]
+        ListResponse<DingTaiDesk> DeskList(int id, DateTime bookingDate, string bookingTime, int peopleCount);
+
+        /// <summary>
+        /// 获取餐厅订台开放时间列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="bookingDate">预订时间</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/20/2014 2:40 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取餐厅订台开放时间列表")]
+        ListResponse<string> DeskOpenTimeList(int id, DateTime bookingDate);
+
+        /// <summary>
+        /// 获取餐厅订台开放日期列表
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="days">The days</param>
+        /// <returns>
+        /// ListResponse{DeskOpenDate}
+        /// </returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/22/2014 7:14 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取餐厅订台开放日期列表")]
+        ListResponse<DeskOpenDate> DeskOpenDateList(int id, int days);
+
+        /// <summary>
+        /// 查检订台台位是否被锁
+        /// </summary>
+        /// <param name="id">餐厅Id</param>
+        /// <param name="requst">The requst.</param>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：3/22/2014 11:11 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：查检订台台位是否被锁")]
+        Response<bool> CheckDesk(int id, CheckDeskRequst requst);
+
+        /// <summary>
+        /// 检查桌号是否有效
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="tableNo">桌号</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/24/2014 1:21 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：检查桌号是否有效")]
+        Response<bool> CheckTableNumIsEffective(int supplierId, string tableNo);
+
+        /// <summary>
+        /// 根据桌子Id查询桌子编号
+        /// </summary>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="tableNo">The tableNo</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/25/2014 1:36 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：根据桌子Id查询桌子编号")]
+        Response<string> GetDeskNoById(int supplierId, int tableNo);
+
+        /// <summary>
+        /// 查询推荐菜品列表
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns>
+        /// 推荐菜品列表
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：3/27/2014 3:31 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取订台台位列表")]
+        ListResponse<SupplierRecommendedDish> GetRecommendedDishList(int id, int pageIndex, int pageSize);
     }
 }

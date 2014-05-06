@@ -96,6 +96,7 @@
     <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Contracts\IWapSupplierService.cs" />
     <Compile Include="Contracts\ITestService.cs" />
+    <Compile Include="Contracts\副本 IShoppingCartService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

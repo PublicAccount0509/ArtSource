@@ -24,7 +24,7 @@
         /// </summary>
         /// <param name="requst">The requst</param>
         /// <returns>
-        /// 返回结果
+        /// 返回交易号
         /// </returns>
         /// 创建者：周超
         /// 创建日期：10/28/2013 4:03 PM
@@ -51,6 +51,168 @@
         /// ----------------------------------------------------------------------------------------
         [WebInvoke(UriTemplate = "/UmPaymentState", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         public Response<bool> UmPaymentState(UmPaymentStateRequst requst)
+        {
+            return new Response<bool>();
+        }
+
+        /// <summary>
+        /// 百付宝支付
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回交易号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 1:54 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/BaiFuBaoPayment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<string> BaiFuBaoPayment(BaiFuBaoPaymentRequst requst)
+        {
+            return new Response<string>();
+        }
+
+        /// <summary>
+        /// 查询百付宝支付状态
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 1:57 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/BaiFuBaoPaymentState", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> BaiFuBaoPaymentState(BaiFuBaoPaymentStateRequst requst)
+        {
+            return new Response<bool>();
+        }
+
+        /// <summary>
+        /// 支付宝支付
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回交易号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 1:58 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/AlipayPayment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<string> AlipayPayment(AlipayPaymentRequst requst)
+        {
+            return new Response<string>();
+        }
+
+        /// <summary>
+        /// 查询支付宝支付状态
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 1:58 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/AlipayPaymentState", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> AlipayPaymentState(AlipayPaymentStateRequst requst)
+        {
+            return new Response<bool>();
+        }
+
+        /// <summary>
+        /// 新浪微博支付
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回交易号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 1:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/SinaWeiBoPayment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<string> SinaWeiBoPayment(SinaWeiBoPaymentRequst requst)
+        {
+            return new Response<string>();
+        }
+
+        /// <summary>
+        /// 查询新浪微博支付状态
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 1:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/SinaWeiBoPaymentState", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> SinaWeiBoPaymentState(SinaWeiBoPaymentStateRequst requst)
+        {
+            return new Response<bool>();
+        }
+
+        /// <summary>
+        /// 微信支付
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回交易号
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 2:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/WechatPayment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<string> WechatPayment(WechatPaymentRequest requst)
+        {
+            return new Response<string>();
+        }
+
+        /// <summary>
+        /// 查询微信支付状态查询微信支付状态
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 2:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/WechatPaymentState", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> WechatPaymentState(WechatPaymentStateRequest requst)
+        {
+            return new Response<bool>();
+        }
+
+        /// <summary>
+        /// 查询微信通知状态
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/6/2014 2:02 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/WechatPaymentDeliveryNotify", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> WechatPaymentDeliveryNotify(WechatPaymentStateRequest requst)
         {
             return new Response<bool>();
         }

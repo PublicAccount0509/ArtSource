@@ -54,5 +54,23 @@
         [OperationContract]
         [Description("方法功能：根据坐标取得对应地址；参数说明：type（默认值为0 Baidu定位）")]
         Response<LocationCity> LocationCity(double userLat, double userLong, int type);
+
+        /// <summary>
+        /// 计算距离
+        /// </summary>
+        /// <param name="userLat"></param>
+        /// <param name="userLong"></param>
+        /// <param name="supplierId"></param>
+        /// <returns>
+        /// 距离
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：11/4/2013 3:49 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：计算距离")]
+        Response<DistanceResult> GetDistance(double userLat, double userLong, int supplierId);
     }
 }
