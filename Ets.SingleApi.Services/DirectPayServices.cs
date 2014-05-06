@@ -213,6 +213,8 @@ namespace Ets.SingleApi.Services
                                      supplier.SupplierGroupId,
                                      PayableAmount = directPay.Total,
                                      ActualPaidAmount = directPay.CustomerTotal,
+                                     directPay.CustomerCouponTotal,
+                                     directPay.SupplierCouponTotal,
                                      directPay.Cancelled
                                  });
 
@@ -268,6 +270,8 @@ namespace Ets.SingleApi.Services
                                      queryable.SupplierGroupId,
                                      queryable.PayableAmount,
                                      queryable.ActualPaidAmount,
+                                     queryable.CustomerCouponTotal,
+                                     queryable.SupplierCouponTotal,
                                      queryable.Cancelled
                                  });
             }
@@ -296,6 +300,8 @@ namespace Ets.SingleApi.Services
                 CreateDate = p.CeateDate,
                 PayableAmount = p.PayableAmount,
                 ActualPaidAmount = p.ActualPaidAmount,
+                CustomerCouponTotal = p.CustomerCouponTotal,
+                SupplierCouponTotal = p.SupplierCouponTotal,
                 OrderType = (int)OrderType.DirectPay,
                 PaymentMethodId = paymentList.Where(c => c.DirectPayId == p.DirectPayId).Select(s => s.PaymentMethodId).FirstOrDefault(),
                 Cancelled = p.Cancelled
