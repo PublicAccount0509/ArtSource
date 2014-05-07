@@ -189,6 +189,24 @@
         }
 
         /// <summary>
+        /// 第三方登录注册用户
+        /// </summary>
+        /// <param name="requst">The requstDefault documentation</param>
+        /// <returns>
+        /// 返回注册结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2/17/2014 5:57 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/RegisterOAuth", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<RegisterUserResult> RegisterOAuth(RegisterUserOAuthRequst requst)
+        {
+            return new Response<RegisterUserResult>();
+        }
+
+        /// <summary>
         /// 获取用户收藏的餐厅列表
         /// </summary>
         /// <param name="id">用户Id</param>

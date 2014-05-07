@@ -613,7 +613,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<RegisterUserResult> RegisterOAuth(RegisterUserOAuthParameter requst)
+        public Response<RegisterUserResult> RegisterOAuth(RegisterUserOAuthRequst requst)
         {
             if (requst == null)
             {
