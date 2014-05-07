@@ -96,7 +96,9 @@
     <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Contracts\IWapSupplierService.cs" />
     <Compile Include="Contracts\ITestService.cs" />
-    <Compile Include="Contracts\副本 IShoppingCartService.cs" />
+    <Compile Include="Contracts\IEtsWapShoppingCartService.cs" />
+    <Compile Include="Contracts\IEtsWapDingTaiShoppingCartService.cs" />
+    <Compile Include="Contracts\IEtsWapTangShiShoppingCarService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -122,6 +124,9 @@
     <Compile Include="Services\WapSupplierService.cs" />
     <Compile Include="Services\SupplierService.cs" />
     <Compile Include="Services\TestService.cs" />
+    <Compile Include="Services\EtsWapShoppingCartService.cs" />
+    <Compile Include="Services\EtsWapDingTaiShoppingCartService.cs" />
+    <Compile Include="Services\EtsWapTangShiShoppingCartService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

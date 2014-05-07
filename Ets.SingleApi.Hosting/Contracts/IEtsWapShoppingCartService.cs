@@ -7,9 +7,9 @@
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
-    /// 接口名称：IShoppingCartService
+    /// 接口名称：IEtsWapShoppingCartService
     /// 命名空间：Ets.SingleApi.Hosting.Contracts
-    /// 接口功能：ShoppingCart服务
+    /// 接口功能：外卖购物车
     /// </summary>
     /// 创建者：周超
     /// 创建日期：12/9/2013 3:06 PM
@@ -17,7 +17,7 @@
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
     [ServiceContract]
-    public interface IShoppingCartService1
+    public interface IEtsWapShoppingCartService
     {
         /// <summary>
         /// 创建一个购物车
@@ -50,13 +50,14 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：保存购物车信息；参数说明：id（购物车Id）；返回结果：购物车信息")]
-        Response<ShoppingCartModel> SaveShoppingCart(string id, ShoppingCartRequst requst);
+        Response<ShoppingCartModel> ShoppingCart(string id, ShoppingCartRequst requst);
 
         /// <summary>
         /// 创建一个购物车
         /// </summary>
         /// <param name="supplierId">餐厅Id</param>
         /// <param name="userId">用户的唯一标识</param>
+        /// <param name="orderId">The orderId</param>
         /// <returns>
         /// 返回购物车信息
         /// </returns>
@@ -67,7 +68,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：保存购物车信息；参数说明：supplierId（餐厅Id），userId（用户的唯一标识）；返回结果：购物车信息")]
-        Response<ShoppingCartModel> Create(int supplierId, string userId);
+        Response<ShoppingCartModel> Create(int supplierId, string userId, int orderId);
 
         /// <summary>
         /// 关联顾客信息

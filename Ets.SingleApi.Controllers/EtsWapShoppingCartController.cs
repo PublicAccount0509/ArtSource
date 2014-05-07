@@ -33,7 +33,7 @@
         private readonly IEtsWapShoppingCartServices etsWapShoppingCartServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ZhongCanShoppingCartController"/> class.
+        /// Initializes a new instance of the <see cref="EtsWapShoppingCartController"/> class.
         /// </summary>
         /// <param name="etsWapShoppingCartServices">The etsWapShoppingCartServices</param>
         /// 创建者：周超

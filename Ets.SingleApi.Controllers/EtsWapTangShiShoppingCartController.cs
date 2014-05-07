@@ -369,7 +369,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> AddShopping(string id, ShoppingCartShoppingRequst requst)
+        public Response<EtsWapTangShiShoppingCartModel> AddShopping(string id, EtsWapTangShiShoppingCartShoppingRequst requst)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
@@ -426,7 +426,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<EtsWapTangShiShoppingCartModel> DeleteShopping(string id, ShoppingCartShoppingRequst requst)
+        public Response<EtsWapTangShiShoppingCartModel> DeleteShopping(string id, EtsWapTangShiShoppingCartShoppingRequst requst)
         {
             if (requst == null || requst.ShoppingCartItemList == null || requst.ShoppingCartItemList.Count == 0)
             {
