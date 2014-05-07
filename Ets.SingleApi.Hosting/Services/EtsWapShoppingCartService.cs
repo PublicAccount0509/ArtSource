@@ -52,7 +52,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebInvoke(UriTemplate = "/ShoppingCart/{id}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<ShoppingCartModel> ShoppingCart(string id, ShoppingCartRequst requst)
+        public Response<ShoppingCartModel> SaveShoppingCart(string id, ShoppingCartRequst requst)
         {
             return new Response<ShoppingCartModel>();
         }

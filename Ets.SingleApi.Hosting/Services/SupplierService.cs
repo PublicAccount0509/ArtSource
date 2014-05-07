@@ -88,7 +88,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/SupplierSimple/{id}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<SupplierSimple> SupplierSimple(int id)
+        public Response<SupplierSimple> SupplierSimple(string id)
         {
             return new Response<SupplierSimple>();
         }
@@ -439,7 +439,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/GetDistance/{id}?userLat={userLat}&userLong={userLong}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<DistanceResult> GetDistance(int id, double userLat, double userLong)
+        public Response<DistanceResult> GetDistance(string id, double userLat, double userLong)
         {
             return new Response<DistanceResult>();
         }
@@ -458,7 +458,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/DeskList/{id}?bookingDate={bookingDate}&bookingTime={bookingTime}&peopleCount={peopleCount}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public ListResponse<DingTaiDesk> DeskList(int id, DateTime bookingDate, string bookingTime, int peopleCount)
+        public ListResponse<DingTaiDesk> DeskList(string id, DateTime bookingDate, string bookingTime, int peopleCount)
         {
             return new ListResponse<DingTaiDesk>();
         }
@@ -475,7 +475,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/DeskOpenTimeList/{id}?bookingDate={bookingDate}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public ListResponse<string> DeskOpenTimeList(int id, DateTime bookingDate)
+        public ListResponse<string> DeskOpenTimeList(string id, DateTime bookingDate)
         {
             return new ListResponse<string>();
         }
@@ -494,7 +494,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/DeskOpenDateList/{id}?days={days}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public ListResponse<DeskOpenDate> DeskOpenDateList(int id, int days)
+        public ListResponse<DeskOpenDate> DeskOpenDateList(string id, int days)
         {
             return new ListResponse<DeskOpenDate>();
         }
@@ -510,8 +510,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/CheckDesk/{id}?startDate={startDate}&days={days}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<bool> CheckDesk(int id, CheckDeskRequst requst)
+        [WebInvoke(UriTemplate = "/CheckDesk/{id}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<bool> CheckDesk(string id, CheckDeskRequst requst)
         {
             return new Response<bool>();
         }
@@ -569,7 +569,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/GetRecommendedDishList/{id}?pageIndex={pageIndex}&pageSize={pageSize}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public ListResponse<SupplierRecommendedDish> GetRecommendedDishList(int id, int pageIndex, int pageSize)
+        public ListResponse<SupplierRecommendedDish> GetRecommendedDishList(string id, int pageIndex, int pageSize)
         {
             return new ListResponse<SupplierRecommendedDish>();
         }

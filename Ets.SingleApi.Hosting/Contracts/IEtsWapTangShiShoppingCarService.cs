@@ -50,7 +50,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：保存购物车信息；参数说明：id（购物车Id）；返回结果：购物车信息")]
-        Response<EtsWapTangShiShoppingCartModel> ShoppingCart(string id, EtsWapTangShiShoppingCartRequst requst);
+        Response<EtsWapTangShiShoppingCartModel> SaveShoppingCart(string id, EtsWapTangShiShoppingCartRequst requst);
 
         /// <summary>
         /// 创建一个购物车

@@ -4,7 +4,6 @@
     using System.ServiceModel.Web;
 
     using Ets.SingleApi.Hosting.Contracts;
-    using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
 
@@ -45,7 +44,6 @@
         /// 取得外卖订单详情
         /// </summary>
         /// <param name="id">订单号</param>
-        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付</param>
         /// <param name="orderSourceType">订单来源：0 默认类型</param>
         /// <returns>
         /// 返回结果
@@ -55,10 +53,48 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/GetOrder/{id}?orderType={orderType}&orderSourceType=0", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<IOrderDetailModel> GetOrder(string id, int orderType, int orderSourceType)
+        [WebGet(UriTemplate = "/GetOrder/{id}?orderType=0&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<WaiMaiOrderDetailModel> GetWaiMaiOrder(string id, int orderSourceType)
         {
-            return new Response<IOrderDetailModel>();
+            return new Response<WaiMaiOrderDetailModel>();
+        }
+
+        /// <summary>
+        /// 取得订台订单详情
+        /// </summary>
+        /// <param name="id">订单号</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/GetOrder/{id}?orderType=2&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<DingTaiOrderDetailModel> GetDingTaiOrder(string id, int orderSourceType)
+        {
+            return new Response<DingTaiOrderDetailModel>();
+        }
+
+        /// <summary>
+        /// 取得堂食订单详情
+        /// </summary>
+        /// <param name="id">订单号</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/GetOrder/{id}?orderType=1&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<TangShiOrderDetailModel> GetTangShiOrder(string id, int orderSourceType)
+        {
+            return new Response<TangShiOrderDetailModel>();
         }
 
         /// <summary>
@@ -136,7 +172,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/GetOrderEditFlag/{id}?orderType={orderType}&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<string> GetOrderEditFlag(int id, int orderType, int orderSourceType)
+        public Response<string> GetOrderEditFlag(string id, int orderType, int orderSourceType)
         {
             return new Response<string>();
         }
@@ -156,7 +192,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebInvoke(UriTemplate = "/CancelOrder/{id}?orderType={orderType}&orderSourceType={orderSourceType}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<bool> CancelOrder(int id, int orderType, int orderSourceType)
+        public Response<bool> CancelOrder(string id, int orderType, int orderSourceType)
         {
             return new Response<bool>();
         }

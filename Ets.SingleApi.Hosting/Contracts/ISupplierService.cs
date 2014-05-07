@@ -82,7 +82,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：获取餐厅基本信息")]
-        Response<SupplierSimple> SupplierSimple(int id);
+        Response<SupplierSimple> SupplierSimple(string id);
 
         /// <summary>
         /// 获取餐厅分店信息
@@ -397,7 +397,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：计算距离")]
-        Response<DistanceResult> GetDistance(int id, double userLat, double userLong);
+        Response<DistanceResult> GetDistance(string id, double userLat, double userLong);
 
         /// <summary>
         /// 获取订台台位列表
@@ -414,7 +414,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：获取订台台位列表")]
-        ListResponse<DingTaiDesk> DeskList(int id, DateTime bookingDate, string bookingTime, int peopleCount);
+        ListResponse<DingTaiDesk> DeskList(string id, DateTime bookingDate, string bookingTime, int peopleCount);
 
         /// <summary>
         /// 获取餐厅订台开放时间列表
@@ -429,7 +429,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：获取餐厅订台开放时间列表")]
-        ListResponse<string> DeskOpenTimeList(int id, DateTime bookingDate);
+        ListResponse<string> DeskOpenTimeList(string id, DateTime bookingDate);
 
         /// <summary>
         /// 获取餐厅订台开放日期列表
@@ -446,7 +446,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：获取餐厅订台开放日期列表")]
-        ListResponse<DeskOpenDate> DeskOpenDateList(int id, int days);
+        ListResponse<DeskOpenDate> DeskOpenDateList(string id, int days);
 
         /// <summary>
         /// 查检订台台位是否被锁
@@ -461,7 +461,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：查检订台台位是否被锁")]
-        Response<bool> CheckDesk(int id, CheckDeskRequst requst);
+        Response<bool> CheckDesk(string id, CheckDeskRequst requst);
 
         /// <summary>
         /// 检查桌号是否有效
@@ -513,6 +513,6 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：获取订台台位列表")]
-        ListResponse<SupplierRecommendedDish> GetRecommendedDishList(int id, int pageIndex, int pageSize);
+        ListResponse<SupplierRecommendedDish> GetRecommendedDishList(string id, int pageIndex, int pageSize);
     }
 }

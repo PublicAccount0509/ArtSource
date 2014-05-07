@@ -59,14 +59,14 @@
                     "Orders", 
                     "Payment", 
                     "ShoppingCart",
-                    "HaiDiLaoShoppingCart", 
                     "Sms",
                     "User", 
                     "Supplier",
-                    "HaiDiLaoSupplier",
-                    "WapSupplier", 
-                    "WeiXinWapHtjUser",
-                    "BaiDuLight"
+                    "DirectPay",
+                    "Queue", 
+                    "EtsWapDingTaiShoppingCart",
+                    "EtsWapShoppingCart",
+                    "EtsWapTangShiShoppingCart"
                 };
             if (list.Length == 0)
             {
@@ -148,7 +148,6 @@
             var resut = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build.ToString().PadLeft(4, '0'));
             var htmlContent = this.GetHtmlContent(string.Format("{0}/{1}/help", root, list.First()));
             var style = this.GetHtmlItem(htmlContent, @"(?i)[\<]style.*?[\>].*?(</style>)");
-            // var title = string.Format("<p class=\"heading1\">{0}/</p><p>SinleApi接口文档.</p>", root);
             var title = string.Format("<p class=\"heading1\">{0}({1})</p>", "SingleApi接口说明", root);
             var head = string.Format("<head><title>{0}</title>{1}</head>", "SingleApi接口说明", style);
             var body = string.Format("<body><div id=\"content\">{0}<table style=\"width:100%;\"><tr style=\"height:25px;\"><th width=\"10%\"></th><th width=\"30%\">Uri</th><th width=\"10%\">Method</th><th>Description</th></tr>{1}<tr style=\"height:25px;\"><th colspan=\"4\">The system version is {3}</th></tr></table><br/><br/><table style=\"width:100%;\"><tr style=\"height:25px;\"><th>SingleApi调用示例</th></tr><tr><td>{2}</td></tr><tr style=\"height:25px;\"><th></th></tr></table><div></body>", title, string.Join(string.Empty, tableItemList), example.Replace("'", "\""), resut);

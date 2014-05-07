@@ -46,11 +46,12 @@
     <Compile Include="Controller\AlipayPaymentRequst.cs" />
     <Compile Include="Controller\AlipayPaymentStateRequst.cs" />
     <Compile Include="Controller\BaiFuBaoPaymentRequst.cs" />
-    <Compile Include="Controller\CancelDirectPayParameter.cs" />
+    <Compile Include="Controller\CancelDirectPayRequest.cs" />
     <Compile Include="Controller\CancelQueueRequst.cs" />
     <Compile Include="Controller\CheckQueueDeskStateRequst.cs" />
     <Compile Include="Controller\DingTaiDesk.cs" />
     <Compile Include="Controller\DingTaiSearchResult.cs" />
+    <Compile Include="Controller\DirectPayModelResponse.cs" />
     <Compile Include="Controller\DistanceResult.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartDeliveryRequst.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderRequst.cs" />

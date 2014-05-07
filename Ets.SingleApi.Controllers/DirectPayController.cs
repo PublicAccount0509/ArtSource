@@ -214,7 +214,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ListResponse<DirectPayModel> GetOrderList(DateTime? startDate, DateTime? endDate, 
+        public ListResponse<DirectPayModelResponse> GetOrderList(DateTime? startDate, DateTime? endDate, 
                                                 int? supplierGroupId, int pageSize, int? pageIndex, 
                                                 int userId, int? platformId)
         {
@@ -232,7 +232,7 @@
 
             if (list.Result == null || list.Result.Count == 0)
             {
-                return new ListResponse<DirectPayModel>
+                return new ListResponse<DirectPayModelResponse>
                 {
                     Message = new ApiMessage
                     {
@@ -240,11 +240,11 @@
                                 ? (int)StatusCode.Succeed.Empty
                                 : list.StatusCode
                     },
-                    Result = new List<DirectPayModel>()
+                    Result = new List<DirectPayModelResponse>()
                 };
             }
 
-            var result = list.Result.Select(p => new DirectPayModel
+            var result = list.Result.Select(p => new DirectPayModelResponse
             {
                 DirectPayId = p.DirectPayId,
                 SupplierId = p.SupplierId,
@@ -262,7 +262,7 @@
                 Cancelled = p.Cancelled ?? false
             }).ToList();
 
-            return new ListResponse<DirectPayModel>
+            return new ListResponse<DirectPayModelResponse>
             {
                 Result = result
             };
@@ -271,7 +271,7 @@
         /// <summary>
         /// 取消当面付订单
         /// </summary>
-        /// <param name="cancelDirectPayParameter">The cancelDirectPayParameterDefault documentation</param>
+        /// <param name="cancelDirectPayRequest">The cancelDirectPayParameterDefault documentation</param>
         /// <returns>
         /// Boolean}
         /// </returns>
@@ -281,10 +281,10 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<bool> CanceledDirectPay(CancelDirectPayRequest cancelDirectPayParameter)
+        public Response<bool> CanceledDirectPay(CancelDirectPayRequest cancelDirectPayRequest)
         {
 
-            if (cancelDirectPayParameter == null)
+            if (cancelDirectPayRequest == null)
             {
                 return new Response<bool>
                 {
@@ -297,7 +297,7 @@
 
             var result = this.directPayServices.CancelDirectPay(this.Source, new CancelDirectPayParameter
             {
-                DirectPayId = cancelDirectPayParameter.DirectPayId
+                DirectPayId = cancelDirectPayRequest.DirectPayId
             });
 
             return new Response<bool>

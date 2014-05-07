@@ -3,8 +3,8 @@
     using System.ComponentModel;
     using System.ServiceModel;
 
-    using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
+    using Ets.SingleApi.Model.Services;
 
     /// <summary>
     /// 接口名称：IOrdersService
@@ -41,7 +41,6 @@
         /// 取得外卖订单详情
         /// </summary>
         /// <param name="id">订单号</param>
-        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付</param>
         /// <param name="orderSourceType">订单来源：0 默认类型</param>
         /// <returns>
         /// 返回结果
@@ -53,7 +52,41 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：取得外卖订单详情；参数说明：id（订单号），orderType（订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付），orderSourceType（订单来源：0 默认类型）")]
-        Response<IOrderDetailModel> GetOrder(string id, int orderType, int orderSourceType);
+        Response<WaiMaiOrderDetailModel> GetWaiMaiOrder(string id, int orderSourceType);
+
+        /// <summary>
+        /// 取得订台订单详情
+        /// </summary>
+        /// <param name="id">订单号</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：取得订台订单详情；参数说明：id（订单号），orderType（订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付），orderSourceType（订单来源：0 默认类型）")]
+        Response<DingTaiOrderDetailModel> GetDingTaiOrder(string id, int orderSourceType);
+
+        /// <summary>
+        /// 取得堂食订单详情
+        /// </summary>
+        /// <param name="id">订单号</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/23/2013 9:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：取得堂食订单详情；参数说明：id（订单号），orderType（订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付），orderSourceType（订单来源：0 默认类型）")]
+        Response<TangShiOrderDetailModel> GetTangShiOrder(string id, int orderSourceType);
 
         /// <summary>
         /// 保存订单信息
@@ -125,7 +158,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：当前订单是否可以修改；参数说明：shoppingCartId（购物车Id），orderType（订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付），orderSourceType（订单来源：0 默认类型）；返回结果：空字串可以修改；否则，不可修改")]
-        Response<string> GetOrderEditFlag(int id, int orderType, int orderSourceType);
+        Response<string> GetOrderEditFlag(string id, int orderType, int orderSourceType);
 
         /// <summary>
         /// 取消订单
@@ -143,7 +176,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：取消订单；参数说明：shoppingCartId（购物车Id），orderType（订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付），orderSourceType（订单来源：0 默认类型）；返回结果：true取消成功；false取消失败。")]
-        Response<bool> CancelOrder(int id, int orderType, int orderSourceType);
+        Response<bool> CancelOrder(string id, int orderType, int orderSourceType);
 
         /// <summary>
         /// 更新订单的支付方式
