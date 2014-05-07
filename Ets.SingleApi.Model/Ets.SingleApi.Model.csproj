@@ -46,6 +46,7 @@
     <Compile Include="Controller\AlipayPaymentRequst.cs" />
     <Compile Include="Controller\AlipayPaymentStateRequst.cs" />
     <Compile Include="Controller\BaiFuBaoPaymentRequst.cs" />
+    <Compile Include="Controller\CancelDirectPayParameter.cs" />
     <Compile Include="Controller\CancelQueueRequst.cs" />
     <Compile Include="Controller\CheckQueueDeskStateRequst.cs" />
     <Compile Include="Controller\DingTaiDesk.cs" />

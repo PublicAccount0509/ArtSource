@@ -281,7 +281,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<bool> CanceledDirectPay(CancelDirectPayParameter cancelDirectPayParameter)
+        public Response<bool> CanceledDirectPay(CancelDirectPayRequest cancelDirectPayParameter)
         {
 
             if (cancelDirectPayParameter == null)
