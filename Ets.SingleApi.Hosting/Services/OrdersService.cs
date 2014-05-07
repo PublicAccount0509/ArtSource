@@ -4,7 +4,6 @@
     using System.ServiceModel.Web;
 
     using Ets.SingleApi.Hosting.Contracts;
-    using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
 
