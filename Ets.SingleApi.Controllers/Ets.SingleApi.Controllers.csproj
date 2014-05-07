@@ -101,7 +101,6 @@
     <Compile Include="ShoppingCartController.cs" />
     <Compile Include="EtsWapTangShiShoppingCartController.cs" />
     <Compile Include="EtsWapDingTaiShoppingCartController.cs" />
-    <Compile Include="EtsWapPaiDuiShoppingCartController.cs" />
     <Compile Include="QueueController.cs" />
     <Compile Include="DirectPayController.cs" />
   </ItemGroup>
