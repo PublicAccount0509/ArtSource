@@ -1,8 +1,8 @@
-﻿namespace Ets.SingleApi.Model.Services
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
     /// 类名称：QueueDesk
-    /// 命名空间：Ets.SingleApi.Model.Services
+    /// 命名空间：Ets.SingleApi.Model.Controller
     /// 类功能：排队台位信息
     /// </summary>
     /// 创建者：苏建峰

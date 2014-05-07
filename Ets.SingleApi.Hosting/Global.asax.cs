@@ -85,7 +85,11 @@
                     { "Sms", typeof(ISmsService) },
                     { "User", typeof(IUserService) },
                     { "Supplier", typeof(ISupplierService) },
-                    { "WapSupplier", typeof(IWapSupplierService) }
+                    { "DirectPay", typeof(IDirectPayService) },
+                    { "Queue", typeof(IQueueService) },
+                    { "EtsWapDingTaiShoppingCart", typeof(IEtsWapDingTaiShoppingCartService) },
+                    { "EtsWapShoppingCart", typeof(IEtsWapShoppingCartService) },
+                    { "EtsWapTangShiShoppingCart", typeof(IEtsWapTangShiShoppingCartService) }
                 };
 
             foreach (var key in routes.Keys)

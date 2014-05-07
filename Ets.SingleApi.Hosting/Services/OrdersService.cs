@@ -55,7 +55,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [WebGet(UriTemplate = "/GetOrder/{id}?orderType={orderType}&orderSourceType=0", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        [WebGet(UriTemplate = "/GetOrder/{id}?orderType={orderType}&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         public Response<IOrderDetailModel> GetOrder(string id, int orderType, int orderSourceType)
         {
             return new Response<IOrderDetailModel>();
@@ -136,7 +136,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebGet(UriTemplate = "/GetOrderEditFlag/{id}?orderType={orderType}&orderSourceType={orderSourceType}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<string> GetOrderEditFlag(int id, int orderType, int orderSourceType)
+        public Response<string> GetOrderEditFlag(string id, int orderType, int orderSourceType)
         {
             return new Response<string>();
         }
@@ -156,7 +156,7 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [WebInvoke(UriTemplate = "/CancelOrder/{id}?orderType={orderType}&orderSourceType={orderSourceType}", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
-        public Response<bool> CancelOrder(int id, int orderType, int orderSourceType)
+        public Response<bool> CancelOrder(string id, int orderType, int orderSourceType)
         {
             return new Response<bool>();
         }

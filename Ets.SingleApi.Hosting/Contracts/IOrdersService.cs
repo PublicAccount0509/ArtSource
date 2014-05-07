@@ -125,7 +125,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：当前订单是否可以修改；参数说明：shoppingCartId（购物车Id），orderType（订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付），orderSourceType（订单来源：0 默认类型）；返回结果：空字串可以修改；否则，不可修改")]
-        Response<string> GetOrderEditFlag(int id, int orderType, int orderSourceType);
+        Response<string> GetOrderEditFlag(string id, int orderType, int orderSourceType);
 
         /// <summary>
         /// 取消订单
@@ -143,7 +143,7 @@
         /// ----------------------------------------------------------------------------------------
         [OperationContract]
         [Description("方法功能：取消订单；参数说明：shoppingCartId（购物车Id），orderType（订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付），orderSourceType（订单来源：0 默认类型）；返回结果：true取消成功；false取消失败。")]
-        Response<bool> CancelOrder(int id, int orderType, int orderSourceType);
+        Response<bool> CancelOrder(string id, int orderType, int orderSourceType);
 
         /// <summary>
         /// 更新订单的支付方式
