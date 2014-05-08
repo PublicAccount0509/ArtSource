@@ -582,7 +582,7 @@ namespace Ets.SingleApi.Services
                 CustomerId = customerId,
                 OrderNumber = orderId,
                 DateAdded = DateTime.Now,
-                OrderStateId = 0,
+                OrderStateId = 1,//1 订单生成中(详见表OrderStatus)
                 IsPaId = false,
                 Cancelled = false
             };
