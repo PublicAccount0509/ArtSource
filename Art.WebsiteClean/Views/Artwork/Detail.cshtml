@@ -1,0 +1,85 @@
+﻿@model ArtworkDetailModel
+@{    
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = "art worktype manage";
+}
+
+<div class="conterbox addartwork">
+    <h2 class="crumbs">您所在位置：艺术家管理 > 作品管理 > 查看作品详情
+    </h2>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="zpinfobox">
+        <tr>
+            <td colspan="2" valign="middle">
+                <img src="@(Request.Url.Scheme + "://" + Request.Url.Authority + "/" + Model.ImageFileName)" /></td>
+        </tr>
+        <tr>
+            <td class="sm">作品名称:</td>
+            <td class="smnr">@Model.Name</td>
+        </tr>
+        <tr>
+            <td class="sm">所属作者:</td>
+            <td class="smnr">@Model.ArtistName</td>
+        </tr>
+        <tr>
+            <td class="sm">作品目前所属机构:</td>
+            <td class="smnr">@Model.Institution</td>
+        </tr>
+        <tr>
+            <td class="sm">作品大小:</td>
+            <td class="smnr">@Model.Size</td>
+        </tr>
+        <tr>
+            <td class="sm">材质:</td>
+            <td class="smnr">@Model.ArtMaterial</td>
+        </tr>
+        <tr>
+            <td class="sm">创作年代:</td>
+            <td class="smnr">@Model.Period</td>
+        </tr>
+        <tr>
+            <td class="sm">作品分类:</td>
+            <td class="smnr">@Model.ArtworkType</td>
+        </tr>
+        <tr>
+            <td class="sm">题材:</td>
+            <td class="smnr">@Model.Genre</td>
+        </tr>
+        <tr>
+            <td class="sm">字体:</td>
+            <td class="smnr">无</td>
+        </tr>
+        <tr>
+            <td class="sm">形制:</td>
+            <td class="smnr">@Model.ArtShape</td>
+        </tr>
+        <tr>
+            <td class="sm">技法:</td>
+            <td class="smnr">@Model.ArtTechnique</td>
+        </tr>
+        <tr>
+            <td class="sm">创作灵感:</td>
+            <td class="smnr">@Model.CreationInspiration</td>
+        </tr>
+        <tr>
+            <td class="sm">适用空间: </td>
+            <td class="smnr">@string.Join("、", Model.SuitablePlaces)</td>
+        </tr>
+        <tr>
+            <td class="sm">拍卖方式:</td>
+            <td class="smnr">@Model.AuctionType</td>
+        </tr>
+        <tr>
+            <td class="sm">拍卖价格:</td>
+            <td class="smnr">@Model.AuctionPrice</td>
+        </tr>
+        <tr>
+            <td class="sm">开拍时间:</td>
+            <td class="smnr">@(Model.StartDateTime == null ? "" : Model.StartDateTime.Value.ToString("yyyy-MM-dd hh:mm:ss"))</td>
+        </tr>
+        <tr>
+            <td class="sm">结束时间: </td>
+            <td class="smnr">@(Model.EndDateTime == null ? "" : Model.EndDateTime.Value.ToString("yyyy-MM-dd hh:mm:ss"))</td>
+        </tr>
+    </table>
+</div>

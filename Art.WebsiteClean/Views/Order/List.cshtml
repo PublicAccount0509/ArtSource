@@ -1,0 +1,213 @@
+﻿@model OrderManageModel
+@{
+    Layout = "~/Views/Shared/_ArtLayout.cshtml"; 
+}
+<div class="conterbox orderManage">
+    <h2 class="crumbs">您所在位置：订单管理 > 订单查询
+    </h2>
+    <div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hd">
+            <from method="post" name="" id="">
+                   <tr>
+                       <td class="w10">开始日期：<input value="" type="text" name="" id="startdate" class="inptexth dataw"/></td>
+                       <td class="w20">结束日期：<input value="" type="text" name="" id="enddate" class="inptexth dataw"/></td>
+                       <td class="w70">&nbsp;</td>
+                   </tr>
+                   <tr>
+                       <td>
+                           订单状态：
+                           <select name="" class="inptexth">
+                               <option selected="selected" value="">全部</option>
+                               <option value="">待处理</option>
+                               <option value="">接受订单</option>
+                               <option value="">订单完成</option>
+                               <option value="">订单失败</option>
+                               <option value="">订单关闭</option>
+                           </select>
+                       </td>
+                       <td>
+                           付款状态：
+                           <select name="" class="inptexth">
+                               <option selected="selected" value="">全部</option>
+                               <option value="">己付款</option>
+                               <option value="">未付款</option>
+                           </select>
+                       </td>
+                       <td>订单号：<input type="text" value="" name="" class="inptexth orderw"/><input type="submit" value="查询" name="" class="btn"/></td>
+                   </tr>
+               </from>
+
+        </table>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="item-hd">
+            <tr>
+                <td class="w30">订单信息</td>
+                <td class="w12">订单状态</td>
+                <td class="w12">支付方式</td>
+                <td class="w12">配送方式</td>
+                <td class="w12">付款状态</td>
+                <td class="w20">操作</td>
+            </tr>
+        </table>
+
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="item-bd">
+
+            @for (int i = 0; i < Model.PagedOrders.Orders.Count; i++)
+            {
+                var item = Model.PagedOrders.Orders[i];
+                <tbody>
+                    <tr class="order-hd">
+                        <td colspan="6"><span class="order-num">订单编号：@item.OrderNumber</span> <span class="order-time">交易时间：@item.TransactionDateTime.ToGeneralString()</span></td>
+                    </tr>
+                    <tr class="order-item">
+                        <td class="item w30">
+                            <div class="pic-info">
+                                <img src="i/2.jpg" />
+                            </div>
+                            <div class="txt-info">
+                                <p class="txt-title">莎士比亚</p>
+                                <p class="txt-fl">作品分类：油画</p>
+                            </div>
+                        </td>
+
+                        <td class="w12 item-zt">@item.Status</td>
+                        <td class="w12 item-zffs">@item.PayMode</td>
+                        <td class="w12 item-psfs">@item.DeliveryMode</td>
+                        <td class="w12 item-fkzt">
+                            <p class="yfk">
+                                <span class="J_showMsg hide">
+                                    <img src="i/new_msg.gif" /></span><span class="hide J_userMsg">本周来取，取前请忽包装</span>己付款
+                            </p>
+                            <p><a href="http://192.168.1.118:8080/ysp-shop/admin/orderManage-info.html" target="_blank">详情</a></p>
+                        </td>
+                        <td class="w20 tiem-cz">
+                            <a href="" class="yes">
+                                <img src="icon/jieshou.png" align="top" />接受</a>
+                            <a href="" class="no J_noBtn">
+                                <img src="icon/jujue.png" align="top" />拒绝</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+        <div class="grid-pager clearfix">
+            <div class="t-status-text">显示记录1-15,共66条</div>
+            <div class="t-pager t-reset">
+                <a href="#" class="t-link t-state-disabled">
+                    <!--变灰不可选-->
+                    <span class="t-icon t-arrow-first-gray">first</span>
+                    <!--变高亮可选
+                        <span class="t-icon t-arrow-first">first</span>
+                        -->
+                </a>
+                <a href="#" class="t-link t-state-disabled">
+                    <!--变灰不可选-->
+                    <span class="t-icon t-arrow-prev-gray">prev</span>
+                    <!--高亮可选
+                        <span class="t-icon t-arrow-prev">prev</span>
+                        -->
+                </a>
+                <div class="t-numeric">
+                    <span class="t-state-active">1</span>
+                    <a class="t-link num">2</a>
+                    <a class="t-link num">3</a>
+                    <a class="t-link num">4</a>
+                    <a class="t-link num">5</a>
+                </div>
+                <a href="#" class="t-link">
+                    <!--高亮可选-->
+                    <span class="t-icon t-arrow-next">next</span>
+                    <!--变灰不可选
+                        <span class="t-icon t-arrow-next-gray">next</span>
+                        -->
+                </a>
+                <a href="#" class="t-link">
+                    <!--高亮可选-->
+                    <span class="t-icon t-arrow-last">last</span>
+                    <!--变灰不可选
+                           <span class="t-icon t-arrow-last-gray">last</span>
+                        -->
+                </a>
+            </div>
+
+            <div class="refresh">
+                <a href="" class="t-refresh">刷新</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="orderManage">
+    <!--拒绝弹框 start-->
+    <div class="add-openbox" id="J_nobox">
+        <h2>拒绝理由<a href="" class="J_closebox xbtn"></a></h2>
+        <p class="textinfo">
+            <textarea class="J_noTextarea">输入拒绝理由</textarea>
+        </p>
+        <p class="btnbox">
+            <input value="提交" type="button" class="J_closebox closebox" />
+
+        </p>
+    </div>
+    <!--退款弹框 start-->
+    <div class="add-openbox" id="J_refundbox">
+        <h2>输入退款信息<a href="" class="J_closebox xbtn"></a></h2>
+        <p class="textinfo">
+            <textarea class="J_noTextarea">输入退款信息，买家姓名、退款账号等信息</textarea>
+        </p>
+        <p class="btnbox">
+            <input value="提交" type="button" class="J_closebox closebox" />
+
+        </p>
+    </div>
+
+    <!--填写物流弹框start-->
+    <div class="add-openbox" id="J_wuliubox">
+        <h2>添加艺术分类提示<a href="" class="J_closebox xbtn"></a></h2>
+        <p class="textinfo">物流公司:<input class="wuliuinp J_wuliuinp" value="例如：圆通物流" name="" /></p>
+        <p class="textinfo">物流单号:<input class="wuliuinp J_wuliuinp" value="例如：9016080878" name="" /></p>
+        <p class="btnbox">
+            <input value="提交" type="button" class="J_closebox closebox" />
+
+        </p>
+    </div>
+    <!--end-->
+</div>
+
+<script>
+    $(document).ready(function () {
+        //日历控件
+        var adminjs = new adminglass();//实例化后台类
+        adminjs.datepickerbox('#startdate', '#enddate');
+        //关闭弹层
+        $('.J_closebox').click(function () {
+            adminjs.closewinbox('.add-openbox');
+            return false
+        })
+        //买家留言
+        adminjs.hoveritem('.J_showMsg', '.J_userMsg');
+
+        //拒绝弹框
+        $('.J_noBtn').click(function () {
+            adminjs.openwinbox('#J_nobox');
+            return false;
+        });
+
+        //拒绝弹框input文字交互
+        adminjs.inpFocusBlur('.J_noTextarea');
+
+        //退款弹框
+        $('.J_refundBtn').click(function () {
+            adminjs.openwinbox('#J_refundbox');
+            return false;
+        });
+
+        //物流弹框
+        $('.J_wuliuBtn').click(function () {
+            adminjs.openwinbox('#J_wuliubox');
+            return false;
+        });
+        //物流弹框input文字交互
+        adminjs.inpFocusBlur('.J_wuliuinp');
+    })
+</script>

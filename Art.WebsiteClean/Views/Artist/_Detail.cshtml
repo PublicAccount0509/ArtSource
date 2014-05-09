@@ -1,0 +1,49 @@
+﻿@model ArtistDetailModel
+<h2>艺术家-@Model.Name<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+<dl class="zjinfo clearfix">
+    <dt class="zjimg">
+        <img src="/@Model.AvatarFileName" /></dt>
+    <dd class="zjinfotext">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>姓名：</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>性别：</td>
+                <td>@Model.Gender</td>
+            </tr>
+            <tr>
+                <td>出生日期：</td>
+                <td>@(Model.Birthday == null ? "" : Model.Birthday.Value.ToString("yyyy年M月d日"))</td>
+            </tr>
+            <tr>
+                <td>毕业学校：</td>
+                <td>@Model.School</td>
+            </tr>
+            <tr>
+                <td>所获奖项：</td>
+                <td>
+                    @foreach (var item in Model.Prizes)
+                    {
+                        <p>@item</p>    
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>流派：</td>
+                <td>@string.Join("、", Model.ProfessionNames)</td>
+            </tr>
+            <tr>
+                <td>擅长：</td>
+                <td>@string.Join("、", Model.SkilledGenres)</td>
+            </tr>
+            <tr>
+                <td>代表作：</td>
+                <td>@Model.Masterpiece @Model.MasterpieceType</td>
+            </tr>
+        </table>
+
+
+    </dd>
+</dl>

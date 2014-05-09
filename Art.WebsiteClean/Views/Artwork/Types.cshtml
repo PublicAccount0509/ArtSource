@@ -1,0 +1,236 @@
+﻿@model ArtworkTypesModel
+@{    
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = "art worktype manage";
+}
+<script src="~/Scripts/Views/ArtworkTypes.js"></script>
+<div class="conterbox atrworkFl">
+    <h2 class="crumbs">您所在位置：作品管理 > 作品分类
+    </h2>
+    <div class="">
+        <div class="searchbox clearfix">
+            <span class="t-addfr">
+                <input type="submit" value="添加分类" name="" class="btn" id="J_addflBtn" /></span>
+        </div>
+        <div class="data">
+            @Html.Partial("_TypesList", Model.ArtworkTypes)
+        </div>
+    </div>
+
+</div>
+
+<div class="atrworkFl">
+    <!--添加艺术分类弹框 start-->
+    <div class="add-openbox addflbox-openwin" id="J_addflbox">
+        <h2>添加作品分类提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+        <dl class="addflbox clearfix">
+            <dt>分类名称：</dt>
+            <dd>
+                <input class="addflinp t-inp J_addflinp" value="如油画、版画，每次添加一个名称" name="" /><i class="biaored">*</i></dd>
+
+        </dl>
+        <dl class="addflbox clearfix">
+            <dt>子属性：</dt>
+            <dd class="">
+                <dl class="win-itembox clearfix material">
+                    <dt class="win-t-text"><i class="biaored">*</i>材质</dt>
+                    <dd class="win-t-item J_win-caizhi"></dd>
+                    <input class="iconadd J_addBtn" type="button" value="" />
+                </dl>
+                <dl class="win-itembox clearfix shape">
+                    <dt class="win-t-text">形制</dt>
+                    <dd class="win-t-item J_win-xingzhi"></dd>
+                    <input class="iconadd J_addBtn" type="button" value="" />
+                </dl>
+                <dl class="win-itembox clearfix technique">
+                    <dt class="win-t-text">技法</dt>
+                    <dd class="win-t-item J_win-jifa"></dd>
+                    <input class="iconadd J_addBtn" type="button" value="" />
+                </dl>
+            </dd>
+        </dl>
+
+
+        <p class="btnbox">
+            <input value="添加" id="btnConfirmAdd" type="button" class="J_closebox" />
+            <input value="取消" type="button" class="J_closebox closebox" />
+        </p>
+    </div>
+    <!--end-->
+    <!--编辑艺术分类弹框 start-->
+    <div class="add-openbox addflbox-openwin" id="J_compilebox">
+        <h2>编辑作品分类提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+        <dl class="addflbox clearfix">
+            <dt>分类名称：</dt>
+            <dd>
+                <input class="addflinp t-inp J_flnameInp" value="" name="" /><i class="biaored">*</i></dd>
+
+        </dl>
+        <dl class="addflbox clearfix">
+            <dt>子属性：</dt>
+            <dd class="">
+                <dl class="win-itembox clearfix material">
+                    <dt class="win-t-text"><i class="biaored">*</i>材质</dt>
+                    <dd class="win-t-item J_win-caizhi"></dd>
+                    <input class="iconadd J_addBtn" type="button" value="" />
+                </dl>
+                <dl class="win-itembox clearfix shape">
+                    <dt class="win-t-text">形制</dt>
+                    <dd class="win-t-item J_win-xingzhi"></dd>
+                    <input class="iconadd J_addBtn" type="button" value="" />
+                </dl>
+                <dl class="win-itembox clearfix technique">
+                    <dt class="win-t-text">技法</dt>
+                    <dd class="win-t-item J_win-jifa"></dd>
+                    <input class="iconadd J_addBtn" type="button" value="" />
+                </dl>
+            </dd>
+        </dl>
+        <p class="btnbox">
+            <input value="确定" id="btnConfirmEdit" type="button" class="closebox" />
+            <input value="取消" type="button" class="J_closebox closebox" />
+        </p>
+    </div>
+    <!--end-->
+
+    <!--删除分类 start-->
+    <div class="add-openbox" id="J_deletelistBox">
+        <h2>删除艺术家提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+        <p class="l-textinfo">
+            确定删除该分类吗？删除后，该分类下的作品，将会全部删除！请谨慎操作！
+        </p>
+        <p class="btnbox">
+            <input value="确定" id="btnConfirmDelete" type="button" />
+            <input value="取消" type="button" class="J_closebox closebox" />
+        </p>
+    </div>
+    <!--end-->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var viewInstance = new art.ui.view.ArtworkTypes();
+
+        var adminjs = new adminglass();//实例化后台js类
+        //关闭弹层
+        $('.J_closebox').click(function () {
+            adminjs.closewinbox('.add-openbox');
+        })
+        //input文字交互
+        adminjs.inpFocusBlur('.J_addflinp');
+
+        //添加分类弹框
+        $('#J_addflBtn').click(function () {
+            currentId = 0;
+            openEditDialog("", "", "", "");
+            return false;
+        });
+
+        //编辑分类弹框
+        var currentId;
+        $(document).on("click", '.J_compile', function () {
+            currentId = $(this).closest("tr").attr("typeid");
+
+            var flname = $(this).parent().parent().find('.flname').html(), //表格分类名称
+                caizhi = $(this).parent().parent().find('.J_caizhi').html(), //表格材质
+                xingzhi = $(this).parent().parent().find('.J_xingzhi').html(), //表格形制
+                jifa = $(this).parent().parent().find('.J_jifa').html(); //表格技法
+
+            openEditDialog(flname, caizhi, xingzhi, jifa);
+            return false;
+
+        });
+
+        function openEditDialog(name, material, shape, technique) {
+            adminjs.openwinbox('#J_compilebox');
+
+            $('#J_compilebox .J_flnameInp').val(name);
+            $('#J_compilebox .J_win-caizhi').html(material);
+            $('#J_compilebox .J_win-xingzhi').html(shape);
+            $('#J_compilebox .J_win-jifa').html(technique);
+
+            $('#J_compilebox').find('.J_deleBtn').each(function () {
+                if ($(this).attr('ifshow') == 'true') {
+                    $(this).css('display', 'none');
+                }
+            });
+        }
+        adminjs.fladddeleitem();
+
+        //删除分类
+        var currentTypeId = 0;
+        $(document).on("click", '.J_deleteflBtn', function () {
+            currentTypeId = $(this).closest("tr").attr("typeId");
+            adminjs.openwinbox('#J_deletelistBox');
+            return false;
+        });
+
+        $("#btnConfirmEdit").click(function () {
+            $(".borderRed").removeClass("borderRed");
+            var artworkType = extractArtworkType(currentId);
+            if ($(".borderRed").length > 0) {
+                return;
+            }
+            var btn = this;
+            if (artworkType.Name == "") {
+                alert("请输入名称");
+                return;
+            }
+            if (artworkType.ArtMaterials.length == 0) {
+                alert("请输入材料");
+                return;
+            }
+            if (currentId > 0) {
+                viewInstance.updateType(artworkType, function () {
+                    adminjs.closewinbox($(btn).closest(".add-openbox"));
+                });
+            } else {
+                viewInstance.addType(artworkType, function () {
+                    adminjs.closewinbox($(btn).closest(".add-openbox"));
+                });
+            }
+        });
+
+        $("#btnConfirmDelete").click(function () {
+            adminjs.closewinbox($(this).closest(".add-openbox"));
+            viewInstance.removeType(currentTypeId);
+        });
+
+        function extractArtworkType() {
+            var artworkType = {};
+            artworkType.Id = currentId;
+            artworkType.Text = $("input.J_flnameInp").val();
+            artworkType.ArtMaterials = extractItems($("dl.material dd span.t-item"));
+            artworkType.ArtShapes = extractItems($("dl.shape dd span.t-item"));
+            artworkType.ArtTechniques = extractItems($("dl.technique dd span.t-item"));
+            return artworkType;
+        }
+
+        function extractItems(itemsContainer) {
+            var items = [];
+            for (var i = 0; i < itemsContainer.length; i++) {
+                var itemContainer = $(itemsContainer[i]);
+                var id = itemContainer.attr("itemid");
+                var nameContainer = itemContainer.find(":first");
+                var name;
+                if ($(nameContainer).is("input")) {
+                    name = $(nameContainer).val();
+                }
+                else {
+                    name = $(nameContainer).text();
+                }
+                if (!id && !name) {
+                    continue;
+                }
+                if (id > 0 && name == "") {
+                    nameContainer.addClass("borderRed");
+                }
+                var item = { Id: id, Text: name };
+                items.push(item);
+            }
+            return items;
+        }
+    });
+
+
+</script>

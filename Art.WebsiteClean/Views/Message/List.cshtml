@@ -1,0 +1,279 @@
+﻿@model MessageModel
+@{    
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = "评价管理";
+}
+<script src="~/Scripts/Views/MessageList.js"></script>
+<div class="conterbox pingjia J_switchTab">
+    <h2 class="crumbs">您所在位置：评价管理 > 站内信
+    </h2>
+    <div class="switchBox">
+        <ul class="hd J_nav">
+            <li class="J_cur">系统通知</li>
+            <li>评价管理</li>
+        </ul>
+        <div class="bd">
+            <div class="tab-content J_tabct systemBox">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="systemSearch ">
+                    <tr>
+                        <td class="startdateinp">发布时间：<input value="" name="" type="text" id="" class="calendarInp startdate" /></td>
+                        <td class="enddateinp">结束时间：<input value="" name="" type="text" id="" class="calendarInp enddate" /></td>
+                        <td class="zt">
+                            <input type="submit" value="搜索" id="btnSearchNotice" class="searchBtn" />
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div class="clearfix inform_dele">
+                    <input type="button" value="发布通知" name="" class="searchBtn informBtn J_issueTz" />
+                    <input type="button" value="批量删除" name="" class="searchBtn delebtn J_deleAllList" />
+                </div>
+
+                <div class="noticeData">
+                    @Html.Partial("_NoticeList", Model.SystemNoticeModel)
+                </div>
+            </div>
+            <div class="tab-content J_tabct commentbox hide">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="systemSearch">
+                    <tr>
+                        <td class="startdateinp">发布时间：<input value="" name="" type="text" id="" class="calendarInp startdate" /></td>
+                        <td class="enddateinp">结束时间：<input value="" name="" type="text" id="" class="calendarInp enddate" /></td>
+                        <td class="zt">状态：
+                                <select class="state">
+                                    <option selected="selected" value="">全部</option>
+                                    <option value="0">审核中</option>
+                                    <option value="1">审核通过</option>
+                                    <option value="2">审核不通过</option>
+                                    <option value="3">已回复</option>
+                                </select>
+                        </td>
+                        <td>
+                            <input type="button" value="搜索" id="btnSearchComment" class="searchBtn" /></td>
+                    </tr>
+                </table>
+
+                <div class="commentData">
+                    @Html.Partial("_CommentList", Model.CommentModel)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--全部删除弹框 start-->
+<div class="add-openbox" id="J_deleAllbox">
+    <h2>全部删除提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+    <p class="textinfo">
+        确定删除所有消息列表吗，删除后不可恢复，请谨慎操作！
+    </p>
+    <p class="btnbox">
+        <input value="确定" id="btnConfirmDeleteNoticeSelected" type="button" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+
+<!--单个删除弹框 start-->
+<div class="add-openbox" id="J_delelistbox">
+    <h2>删除提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+    <p class="textinfo">
+        确定删除该消息吗，删除后不可恢复，请谨慎操作！
+    </p>
+    <p class="btnbox">
+        <input id="btnConfirmDeleteNotice" value="确定" type="button" class="J_closebox" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+
+<!--查看消息 start-->
+<div class="add-openbox" id="J_lookAtbox">
+    <h2>查看提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        标题：乐艺网正式上线发布了
+    </p>
+    <p class="l-textinfo">
+        内容：我们的乐艺网，正式发布上线了，期待你的使用~我们的乐艺网，正式发布上线了，期待你的使用~我们的乐艺网，正式发布上线了，期待你的使用~我们的乐艺网，正式发布上线了，期待你的使用~我们的乐艺网，正式发布上线了，期待你的使用~
+    </p>
+    <p class="btnbox">
+        <input value="确定" type="button" class="J_closebox" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+<!--发布通知 start-->
+<div class="add-openbox" id="J_issueTzbox">
+    <h2>发布通知<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+    <dl class="issueTz clearfix">
+        <dt>标题：</dt>
+        <dd>
+            <input id="txtNoticeTitle" type="text" class="inp" /></dd>
+    </dl>
+    <dl class="issueTz clearfix">
+        <dt>内容：</dt>
+        <dd>
+            <textarea id="txtNoticeContent" class="txtarea"></textarea></dd>
+    </dl>
+
+    <p class="btnbox">
+        <input value="发布" id="btnNoticeConfirm" type="button" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+<!--回复 start-->
+<div class="add-openbox" id="J_replybox">
+    <h2>评价内容<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+    <div class="comment clearfix">
+        <div class="im-l">
+            <dl class="clearfix">
+                <dt>
+                    <img src="i/1.jpg" /></dt>
+                <dd>
+                    <i></i>
+                    <span class="time commentTime">2013-5-25 18：22</span>
+                    <p class="commentText">
+                        哇好漂亮的作品哇
+                    </p>
+                </dd>
+            </dl>
+        </div>
+        @*<div class="im-r">
+            <dl class="clearfix">
+                <dt>
+                    <img src="i/2.jpg" /></dt>
+                <dd>
+                    <i></i>
+                    <span class="time">2013-5-25 18：22
+                    </span>
+                    <p>
+                        谢谢亲，喜欢就买一副吧
+                    </p>
+                </dd>
+            </dl>
+        </div>*@
+
+    </div>
+    <div class="sendbox">
+        <textarea class="sendtxt"></textarea>
+        <input type="button" value="发送" class="sendbtn" />
+    </div>
+</div>
+<!--end-->
+<script>
+    $(document).ready(function () {
+        var viewNoticeInstance = new art.ui.view.SystemNoticeList();
+        var viewCommentInstance = new art.ui.view.CommentList();
+
+        //日历控件
+        var adminjs = new adminglass();//实例化后台类
+        adminjs.datepickerbox('.startdate', '.enddate');
+        //tab切换
+        adminjs.switchTab('.J_switchTab .J_nav li', '.J_switchTab');
+        //checkbox 全选
+        adminjs.clickCheck('.checkall', '.J_listbox');
+        //删除
+        ////关闭弹层
+        $(".J_closebox").click(function () {
+            adminjs.closewinbox($(this).closest(".add-openbox"));
+        });
+
+
+        ////发布消息
+        $('.J_issueTz').click(function () {
+            adminjs.openwinbox('#J_issueTzbox');
+            return false
+        });
+
+        var currentNoticeId = 0;
+
+        $("#btnNoticeConfirm").click(function () {
+            var title = $("#txtNoticeTitle").val();
+            var content = $("#txtNoticeContent").val();
+            viewNoticeInstance.publish(title, content, resetStateAfterPublish);
+
+            return false;
+        });
+
+        $("#btnConfirmDeleteNotice").click(function () {
+            viewNoticeInstance.remove([currentNoticeId]);
+        });
+
+        $("#btnConfirmDeleteNoticeSelected").click(function () {
+            var $trs = $(":checkbox.checkItem:checked").closest("tr");
+            var ids = $.map($trs, function (item, index) {
+                return $(item).attr("noticeId");
+            });
+            adminjs.closewinbox($(this).closest(".add-openbox"));
+            viewNoticeInstance.remove(ids);
+        });
+
+        $("#btnSearchNotice").click(function () {
+            viewNoticeInstance.setCriteria($(".startdate ").val(), $(".enddate").val());
+            viewNoticeInstance.refresh(0);
+        });
+
+        function resetStateAfterPublish() {
+            adminjs.closewinbox("#J_issueTzbox");
+            $("#txtNoticeTitle").val("");
+            $("#txtNoticeContent").val("");
+
+            $(".startdate").val("");
+            $(".enddate").val("")
+        }
+
+        ////删除所有
+        $('.J_deleAllList').click(function () {
+            adminjs.openwinbox('#J_deleAllbox');
+            return false
+        });
+        ////删除单个
+        $(document).on("click", ".J_deleList", function () {
+            currentNoticeId = $(this).closest("tr").attr("noticeId");
+            adminjs.openwinbox('#J_delelistbox');
+            return false
+        });
+        ////查看消息
+        $(document).on("click", '.J_lookAt', function () {
+            adminjs.openwinbox('#J_lookAtbox');
+            return false
+        });
+
+        //回复
+        $(document).on("click", ".J_reply", function () {
+            var tr = $(this).closest("tr");
+            viewCommentInstance.setCurrentTr(tr);
+            $(".commentTime").text($(tr).find("td.time").text());
+            $(".commentText").text($(tr).find("td.text").text());
+            adminjs.openwinbox('#J_replybox');
+            return false
+        });
+
+
+        $(document).on("click", ".commentData a.approve", function () {
+            var tr = $(this).closest("tr");
+            viewCommentInstance.setCurrentTr(tr);
+            viewCommentInstance.approve();
+        });
+
+        $(document).on("click", ".commentData a.unApprove", function () {
+            var tr = $(this).closest("tr");
+            viewCommentInstance.setCurrentTr(tr);
+            viewCommentInstance.unApprove();
+        });
+
+        $(".sendbtn").click(function () {
+            var text = $(".sendtxt").val();
+            var _btn = this;
+            viewCommentInstance.reply(text, function () {
+                $(".sendtxt").val("");
+                adminjs.closewinbox($(_btn).closest(".add-openbox"));
+            });
+        });
+
+        $("#btnSearchComment").click(function () {
+            viewCommentInstance.setCriteria($(".commentbox .startdate").val(), $(".commentbox .enddate").val(),$("select.state option:selected").val());
+            viewCommentInstance.refresh(0);
+        });
+    })
+</script>

@@ -1,0 +1,126 @@
+﻿@model IList<ProfessionModel>
+@{
+    ViewBag.Title = "Types";
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = "Types Manager";
+}
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/Views/ArtistTypes.js"></script>
+<script src="~/Scripts/Extension/kendo.Extension.js"></script>
+<script src="~/Scripts/webExpress/webExpress.controls.adpaters.js"></script>
+<div class="conterbox authorFl">
+    <h2 class="crumbs">您所在位置：艺术家管理 > 分类管理
+    </h2>
+    <div class="">
+        <div class="searchbox clearfix">
+            <span class="t-addfr">
+                <input type="button" value="添加分类" name="" class="btn" id="J_addflBtn" /></span>
+        </div>
+        <div class="data">
+            @Html.Partial("_TypesList", Model)
+        </div>
+    </div>
+</div>
+<!--添加艺术分类弹框 start-->
+<div class="add-openbox" id="J_addflbox">
+    <h2>添加艺术分类提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="textinfo">添加艺术分类:<input id="txtArtTypeName_add" class="addflinp J_addflinp" value="例如：油画家" name="" /></p>
+    <p class="btnbox">
+        <input id="J_addbtn" value="添加" type="button" class="J_closebox closebox" />
+        <input value="取消" type="button" class="J_closebox closebox" />
+    </p>
+</div>
+<!--end-->
+<!--编辑艺术分类弹框 start-->
+<div class="add-openbox" id="J_compileflbox">
+    <h2>编辑分类提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="textinfo">编辑分类:<input id="txtArtTypeName_up" class="addflinp J_compileinp" value="例如：油画家" name="" /></p>
+    <p class="btnbox">
+        <input id="J_upbtn" value="确定" type="button" class="J_closebox closebox" />
+        <input value="取消" type="button" class="J_closebox closebox" />
+    </p>
+</div>
+<!--end-->
+
+<!--删除分类 start-->
+<div class="add-openbox" id="J_deletelistBox">
+    <h2>删除分类提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        确定删除该分类？删除后不可恢复,请谨慎操作！
+    </p>
+    <p class="l-textinfo">
+        请将该分类下的艺术家全部删除后，方可进行分类的删除~
+    </p>
+    <p class="btnbox">
+        <input id="J_delbtn" value="确定" type="button" class="J_closebox closebox" />
+        <input value="取消" type="button" class="J_closebox closebox" />
+    </p>
+</div>
+<!--end-->
+
+
+@* ReSharper disable InconsistentNaming *@
+<script type="text/javascript">
+    $(document).ready(function() {
+        var viewInstance = new art.ui.view.ArtistTypes();
+        var adminjs = new window.adminglass(); //实例化后台js类
+        //编辑分类弹框
+        var currentId;
+        //关闭弹层
+        $('.J_closebox').click(function() {
+            adminjs.closewinbox('.add-openbox');
+            return false;
+        });
+        //input文字交互
+        adminjs.inpFocusBlur('.J_addflinp');
+        adminjs.inpFocusBlur('.J_compileinp');
+        //添加分类弹框
+        $('#J_addflBtn').click(function() {
+            currentId = 0;
+            adminjs.openwinbox('#J_addflbox');
+            return false;
+        });
+        //编辑分类弹框
+        $(document).on("click", ".J_compile",function () {
+            currentId = $(this).closest("tr").attr("typeid"); //tdArtTypeName_
+            $("#txTartTypeName").val($("#tdArtTypeName_" + currentId).html());
+            adminjs.openwinbox('#J_compileflbox');
+            $('.J_compileinp').val($(this).parent().parent().find('.flname').text());
+            return false;
+        });
+        //删除分类
+        $(document).on("click", ".J_deleteflBtn",function () {
+            currentId = $(this).closest("tr").attr("typeid");
+            adminjs.openwinbox('#J_deletelistBox');
+            return false;
+        });
+        $("#J_delbtn").click(function() {
+            var btn = this;
+            viewInstance.remove(currentId, null);
+            adminjs.closewinbox($(btn).closest(".add-openbox"));
+        });
+        $("#J_addbtn").click(function() {
+            save();
+        });
+
+        $("#J_upbtn").click(function() {
+            save();
+        });
+
+        function save() {
+            var artType = extractArtType();
+            var btn = this;
+            viewInstance.saveType(artType, function() {
+                adminjs.closewinbox($(btn).closest(".add-openbox"));
+            });
+        }
+
+        function extractArtType() {
+            var artType = {};
+            artType.Id = currentId;
+            artType.Name = currentId == 0 ? $("#txtArtTypeName_add").val() : $("#txtArtTypeName_up").val();
+            return artType;
+        }
+    });
+</script>
+@* ReSharper restore InconsistentNaming *@

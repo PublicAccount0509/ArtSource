@@ -1,0 +1,58 @@
+﻿@model IList<ArtworkTypeModel>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="t-grid">
+    <thead>
+        <tr class="theadbg">
+            <th align="center" class="flnum">序号</th>
+            <th align="center" class="flname">作品分类名称</th>
+            <th align="center" class="">子属性</th>
+            <th align="center" class="floperation">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+            <tr typeId="@item.Id">
+                <td align="center" class="flnum">@(i + 1)</td>
+                <td align="center" class="flname">@item.Text</td>
+                <td class="flchild">材质：
+                            <div class="itembox J_caizhi">
+                                @foreach (var material in item.ArtMaterials)
+                                {
+                                    <span class="t-item" itemId="@material.Id">
+                                        <span class="t-text J_t_text">@material.Text</span>
+                                        <input class="icondele J_deleBtn" type="button"  ifshow="@material.IsUsed.ToString().ToLower()" />
+                                    </span>    
+                                }
+                            </div>
+                    <br>
+                    形制：
+                            <div class="itembox J_xingzhi">
+                                @foreach (var shape in item.ArtShapes)
+                                {
+                                    <span class="t-item" itemId="@shape.Id">
+                                        <span class="t-text J_t_text" >@shape.Text</span>
+                                        <input class="icondele J_deleBtn" type="button" ifshow="@shape.IsUsed.ToString().ToLower()" />
+                                    </span>    
+                                }
+                            </div>
+                    <br>
+                    技法：
+                            <div class="itembox J_jifa">
+                                @foreach (var technique in item.ArtTechniques)
+                                { 
+                                    <span class="t-item" itemId="@technique.Id">
+                                        <span class="t-text J_t_text"  >@technique.Text</span>
+                                        <input class="icondele J_deleBtn" type="button" value="" name="" ifshow="@technique.IsUsed.ToString().ToLower()" />
+                                    </span>
+                                }
+                            </div>
+                </td>
+                <td align="center" class="floperation">
+                        <a href="javascript:void(0)" class="J_compile"><img src="/icon/bianji.png" align="top" />编辑</a>
+                        <a href="javascript:void(0)" class="J_deleteflBtn"><img src="/icon/shanchu.png" align="top" />删除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,39 @@
+﻿@model PagedSystemNoticeModel
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tablestyle t-grid J_listbox">
+	<thead>
+		<tr class="theadbg">
+			<th class="t-check">
+				<input type="checkbox" name="" class="checkall" /></th>
+			<th ckass="t-num">序号</th>
+			<th class="t-time">发布时间</th>
+			<th class="t-fbuser">发布人</th>
+			<th class="t-title">标题</th>
+			<th class="t-zt">状态</th>
+			<th class="t-cz">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (int i = 0; i < Model.SystemNotices.Count; i++)
+		{
+			var item = Model.SystemNotices[i];
+			<tr noticeId="@item.Id">
+				<td>
+					<input type="checkbox" name="J_checklist" noticeId="@item.Id" class="checkItem"  /></td>
+				<td>@(i+1)</td>
+				<td>@item.Date.ToString("yyyy-MM-dd hh:mm:ss")</td>
+				<td>@item.AdminUser.Position--@item.AdminUser.Name</td>
+				<td align="left" class="J_title">@item.Title<span class="hide J_content">@item.Content</span></td>
+				<td><span class="t-gray">@item.IsSuccessful</span></td>
+				<td class="command">
+					<a class="look J_lookAt" href="">
+						<img src="i/chakaninfo.png" align="top" />查看</a>
+					<a class="dele J_deleList" href="javascript:void(0)">
+						<img src="i/shanchu.png" align="top" />删除</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@Html.Partial("_Pager", Model.PagingResult)

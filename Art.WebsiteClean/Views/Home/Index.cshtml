@@ -1,0 +1,19 @@
+﻿@model SummaryModel
+@{
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = "主页";
+}
+<div class="conterbox">
+    <div class="author">
+        <h2 class="titlestyle"><span class="titleIcon"></span><span>签约艺术家</span></h2>
+        <p>目前签约艺术家共<span>@Model.ArtistCount</span>人，在线拍卖作品<span>@Model.ArtworkCountOnline</span>副</p>
+    </div>
+    <div class="production">
+        <h2 class="titlestyle"><span class="titleIcon"></span><span>作品</span></h2>
+        <p>最新上传作品共<span>@Model.ArtworkCountLastest</span>副，上架总数共<span>@Model.ArtworkCountxxxxxxx</span>副，下线作品共<span>@Model.ArtworkCountOffline</span>副</p>
+    </div>
+    <div class="orderlist">
+        <h2 class="titlestyle"><span class="titleIcon"></span><span>订单统计</span></h2>
+        <p>今日成交<span>@Model.TransactionCountToday</span>单，总计成交单数<span>@Model.TransactionCountTotal</span>单</p>
+    </div>
+</div>

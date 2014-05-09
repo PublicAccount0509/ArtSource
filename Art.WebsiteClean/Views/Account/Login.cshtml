@@ -1,0 +1,115 @@
+﻿@model LoginModel
+@{    
+	Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>登陆页</title>
+
+	<link rel="stylesheet" href="http://192.168.1.118:8080/ysp-shop/admin/css/admin.css" />
+	<link rel="stylesheet" href="http://192.168.1.118:8080/ysp-shop/admin/css/header.css" />
+
+	<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+	<script src="http://192.168.1.118:8080/ysp-shop/admin/js/admin.js" type="text/javascript"></script>
+	<script src="~/Scripts/jquery.validate.js"></script>
+	<script src="~/Scripts/Extension/jquery.validate.Extension.js"></script>
+	<script src="~/Scripts/Kendo/kendo.web.js"></script>
+</head>
+<body>
+	<div class="wabPage">
+		<header class="header">
+			<div class="logo">
+			</div>
+		</header>
+		<div class="conterbox">
+			<h2 class="logoin-titlestyle">账号登陆</h2>
+			<div class="logoin clearfix">
+				<div class="userbox">
+					<form name="from1" action="Login" method="post">
+						@Html.AntiForgeryToken()
+                        
+						<p class="clearfix">
+							@Html.ValidationSummary()
+						</p>
+
+						<dl class="clearfix">
+							<dt>用户名：</dt>
+							<dd>
+								<input type="text" value="@Model.UserName" required name="UserName" class="inp" />
+								@*<label for="UserName" class="error"></label>*@
+							</dd>
+						</dl>
+						<dl class="clearfix">
+							<dt>密码：</dt>
+							<dd>
+								<input type="password" name="Password" class="inp" />
+								@*<label for="Password" class="error">密码错误</label>*@
+
+							</dd>
+						</dl>
+						<dl class="clearfix">
+							<dt>验证码：</dt>
+							<dd class="yzmstyle clearfix"><span>
+								<input type="text" value="" maxlength="4" name="Captcha" class="inp yzmInp" /></span>
+								<span class="yzmbox">
+									<img src="@Url.Action("CaptchaImage")" class="captcha" />
+								</span>
+								@*<label for="Captcha" class="t-errormessage">验证码错误</label>*@
+							</dd>
+						</dl>
+						<p class="remember-password">
+							<span>
+								<input type="checkbox" name="RememberMe" @(Model.RememberMe?"checked='checked'":"") />记住密码</span>
+						</p>
+						<p class="logoBtn">
+							<input type="submit" value="登陆" name="btnSubmit" class="btn" />
+						</p>
+
+					</form>
+				</div>
+				<div class="adimg">
+					<img src="http://192.168.1.118:8080/ysp-shop/admin/i/1.jpg" class="J_logoimg" />
+					<img src="http://192.168.1.118:8080/ysp-shop/admin/i/2.jpg" class="J_logoimg" />
+					<img src="http://192.168.1.118:8080/ysp-shop/admin/i/3.jpg" class="J_logoimg" />
+					<img src="http://192.168.1.118:8080/ysp-shop/admin/i/4.jpg" class="J_logoimg" />
+					<img src="http://192.168.1.118:8080/ysp-shop/admin/i/5.jpg" class="J_logoimg" />
+				</div>
+			</div>
+		</div>
+		<footer class="footer">
+			Copyright Reserved 2013-2014 易淘艺术网络科技(北京)有限公司版权所有
+		</footer>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var logoimg = $('.J_logoimg');
+			var m = 4; //随机显示图片的总数量
+			var n = Math.floor(Math.random() * m);
+			$(logoimg[n]).css('display', 'block');
+
+			$("[name=RememberMe]").click(function () {
+				$(this).val(this.checked);
+			});
+
+			$("img.captcha").click(function () {
+			    $(this).attr("src", $(this).attr("src") + "?a=" + new Date().getTime());
+			});
+
+			$("form").validate({
+				rules: {
+					UserName: "required",
+					Password: "required",
+					Captcha: "required"
+				},
+				onkeyup:false
+			});
+
+
+		})
+	</script>
+
+</body>
+</html>

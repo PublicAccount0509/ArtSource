@@ -1,0 +1,45 @@
+﻿@model PagedArtistModel
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="t-grid">
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>分类</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Artists.Count; i++)
+        {
+            var item = Model.Artists[i];
+            <tr>
+                <td style="text-align: center; width: 50px">@(i + 1)</td>
+                <td>@item.Name</td>
+                <td>@string.Join(",", item.ProfessionNames)</td>
+                <td style="text-align: center">@(item.IsPublic ? "已发布" : "未发布")</td>
+                <td style="text-align: center" class="floperation">
+                    <a href="/Artist/Edit/@item.Id" target="_blank">编辑</a>
+                    <a href="javascript:void(0)" url="/Artist/Delete/@item.Id" class="J_deletezzBtn">删除</a>
+
+                    @if (item.IsPublic)
+                    {
+                        if (item.CanUnPublish)
+                        {
+                        <a href="javascript:void(0)" url="/Artist/UnPublish/@item.Id" class="J_issueBtn">取消发布</a>    
+                        }
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)" url="/Artist/Publish/@item.Id" class="J_issueBtn">发布</a>
+                    }
+
+                    <a href="javascript:void(0)" url="/Artist/Detail/@item.Id" class="J_zjIinfo">查看详情</a>
+                    <a href="/Artwork/List?ArtistId=@item.Id" target="_blank">查看作品</a>
+                </td>
+            </tr>  
+        }
+    </tbody>
+</table>
+ 
+@Html.Partial("_Pager", Model.PagingResult)

@@ -1,0 +1,141 @@
+﻿@model ArtworkManageModel
+@{
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = "作品管理";
+}
+<script src="~/Scripts/Views/ArtworkList.js"></script>
+
+<div class="conterbox atrworkManage">
+    <h2 class="crumbs">您所在位置：作品管理 > 作品管理
+    </h2>
+    <div class="managebox">
+        <div class="searchbox clearfix">
+            <span class="name">作品名称：<input type="text" value="" id="txtName" class="searchinp" /></span>
+            <span class="fl">作品分类：
+                    <select id="ddlArtworkType">
+                        <option value="" selected="selected">全部</option>
+
+                        <option value="">国画</option>
+                        <option value="">水墨画</option>
+                        <option value="">当代画</option>
+                    </select>
+            </span>
+            <span class="tc" id="ddlArtMaterial">作品材质：
+                    <select name="">
+                        <option value="" selected="selected">全部</option>
+                        <option value="">蕾丝</option>
+                        <option value="">帆布</option>
+                    </select>
+            </span>
+            <span class="zz" id="ddlArtist">作者：
+                    <select name="">
+                        <option value="">全部</option>
+                        @for (int i = 0; i < Model.Artists.Count; i++)
+                        {
+                            var item = Model.Artists[i];
+                            if (item.Value.ToString() == Request.QueryString["ArtistId"])
+                            {
+                            <option value="@item.Value" selected="selected">@item.Text</option>    
+                            }
+                            else
+                            {
+                            <option value="@item.Value" >@item.Text</option>
+                            }
+                        }
+                    </select>
+            </span>
+            <span class="srarchbtn">
+                <input type="submit" value="搜索" name="" class="btn" /></span>
+        </div>
+        <div class="data">
+            @Html.Partial("_List", Model.PagedArtworks)
+        </div>
+    </div>
+</div>
+
+<!--取消发布 start-->
+<div class="add-openbox" id="J_cancelBox">
+    <h2>取消发布提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        确定取消发布该作品吗？取消后,则无法在前台显示!
+    </p>
+    <p class="btnbox">
+        <input value="确定" type="button" class="J_closebox confirmCancelPublish" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+<!--发布 start-->
+<div class="add-openbox" id="J_issueBox">
+    <h2>发布提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        确定发布该作品吗？发布后将会在前台显示。
+    </p>
+    <p class="btnbox">
+        <input value="确定" type="button" class="J_closebox confirmPublish" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+<!--删除作品 start-->
+<div class="add-openbox" id="J_deletezpBox">
+    <h2>删除作品提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        确定删除该作品吗？删除后，该作品不可恢复！。请谨慎操作！
+    </p>
+    <p class="btnbox">
+        <input value="确定" type="button" class="J_closebox confirmDelete" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var viewInstance = new art.ui.view.ArtworkList();
+        var domResolver = new art.ui.view.DomResolver();
+
+
+        //弹框
+        var adminjs = new adminglass();//实例化后台类
+        adminjs.closewinbox();
+
+        //取消发布
+        $(document).on("click", ".J_cancelBtn", function () {
+            adminjs.openwinbox('#J_cancelBox');
+            domResolver.setCurrentRecordElement($(this).closest("tr"));
+            return false;
+        });
+
+        //发布
+        $(document).on("click", ".J_issueBtn", function () {
+            adminjs.openwinbox('#J_issueBox');
+            domResolver.setCurrentRecordElement($(this).closest("tr"));
+            return false;
+
+        });
+
+        //删除作品
+        $(document).on("click", ".J_deletezpBtn", function () {
+            adminjs.openwinbox('#J_deletezpBox');
+            domResolver.setCurrentRecordElement($(this).closest("tr"));
+            return false;
+        });
+
+        $(".confirmDelete").click(function () {
+            var artworkId = domResolver.getRecordId();
+            viewInstance.remove(artworkId);
+        });
+
+        $(".confirmCancelPublish").click(function () {
+            var artworkId = domResolver.getRecordId();
+            viewInstance.cancelPublish(artworkId);
+        });
+
+        $(".confirmPublish").click(function () {
+            var artworkId = domResolver.getRecordId();
+            viewInstance.publish(artworkId);
+            domResolver.setPublishState(true);
+        });
+    })
+</script>

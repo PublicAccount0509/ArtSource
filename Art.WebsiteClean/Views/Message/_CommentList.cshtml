@@ -1,0 +1,45 @@
+﻿@model PagedCommentModel
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tablestyle t-grid J_listbox">
+    <thead>
+        <tr class="theadbg">
+            <th ckass="t-num">序号</th>
+            <th class="t-time">发布时间</th>
+            <th class="t-zuopin">关联作品</th>
+            <th class="t-comment">评价内容</th>
+            <th class="t-zt">状态</th>
+            <th class="t-cz">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Comments.Count; i++)
+        {
+            var item = Model.Comments[i];
+        <tr commentId="@item.Id">
+            <td>@(i+1)</td>
+            <td class="time">@item.Date.ToGeneralString()</td>
+            <td>@item.Artwork</td>
+            <td align="left" class="J_commentNr text">@item.Text</td>
+            <td class="state"><span class="t-gray">@item.State.ToString()</span></td>
+            <td class="command">
+                @if (item.State == Art.Data.Common.CommentState.Approving)
+                {
+                <a class="t-green approve" href="###">审核通过</a>
+                <a class="dele unApprove" href="###">审核不通过</a>    
+                }
+                else if (item.State == Art.Data.Common.CommentState.Approved)
+                {
+                    <a href="javascript:void(0)" class="J_reply">回复</a>
+                }
+                else
+                {
+                    @:-
+                }
+                
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@Html.Partial("_Pager", Model.PagingResult)

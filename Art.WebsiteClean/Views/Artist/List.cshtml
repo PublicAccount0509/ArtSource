@@ -1,0 +1,229 @@
+﻿@model ArtistManageModel
+@{
+    var _viewFeature = "艺术家管理";
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = _viewFeature;
+}
+
+<div class="conterbox addAuthor">
+    <h2 class="crumbs">您所在位置：艺术家管理 > @_viewFeature
+    </h2>
+    <div class="managebox">
+        <div class="searchbox clearfix">
+            <span class="t-search">艺术家搜索<input id="txtNamePart" type="text" value="" name="" class="searchinp" />
+                选择分类:
+                            <select id="selectProfessionId">
+                                <option value="null" selected="selected">全部</option>
+                                @foreach (var prof in Model.Professions)
+                                {
+                                    <option value="@prof.Id">@prof.Name</option>
+                                }
+                            </select><input type="submit" value="搜索" name="" id="btnSearch" /></span>
+            @*<span class="t-addfl">
+                <input type="submit" value="添加分类" name="" class="btn" id="J_addflBtn" /></span>*@
+        </div>
+
+        <div class="data">
+            @Html.Partial("_List", Model.PagedArtists)
+        </div>
+    </div>
+
+</div>
+
+<!--添加艺术分类弹框 start-->
+@*<div class="add-openbox" id="J_addflbox">
+    <h2>添加艺术分类提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="textinfo">添加艺术分类:<input class="addflinp J_addflinp" value="例如：油画家" name="" /></p>
+    <p class="btnbox">
+        <input value="添加" type="button" class="J_closebox" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>*@
+<!--end-->
+<!--删除艺术家分类 start-->
+<div class="add-openbox" id="J_deletelistBox">
+    <h2>删除艺术家分类提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        确定删除该分类吗？删除该分类后，该分类旗下所有艺术品将删除。请谨慎操作！
+    </p>
+    <p class="btnbox">
+        <input value="确定" type="button" class="J_closebox" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+<!--删除艺术家 start-->
+<div class="add-openbox" id="J_deletezzBox">
+    <h2>删除艺术家提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        确定删除该画家吗？删除该画家后，旗下所有作品将删除。请谨慎操作！
+    </p>
+    <p class="btnbox">
+        <input id="btnDelete" value="确定" type="button" class="J_closebox" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+<!--取消发布 start-->
+<div class="add-openbox" id="J_cancelBox">
+    <h2>取消发布提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        确定取消发布该画家吗？取消后将无法在前台显示。
+    </p>
+    <p class="btnbox">
+        <input value="确定" type="button" class="J_closebox" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+<!--发布 start-->
+<div class="add-openbox" id="J_issueBox">
+    <h2>发布提示<a href="" class="J_closebox xbtn"></a></h2>
+    <p class="l-textinfo">
+        确定发布该画家吗？发布后将会在前台显示。
+    </p>
+    <p class="btnbox">
+        <input id="btnPublishOK" value="确定" type="button" class="J_closebox" />
+        <input value="取消" type="button" class="J_closebox" />
+    </p>
+</div>
+<!--end-->
+<!--作家详情 start-->
+<div class="add-openbox zjinfoclass" id="J_zjIinfoBox">
+</div>
+<!--end-->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var adminjs = new adminglass();//实例化后台js类
+        //关闭弹层
+        $(document).on("click", ".J_closebox", function () {
+            var box = $(this).closest(".add-openbox");
+            adminjs.closewinbox(box);
+        });
+        //input文字交互
+        adminjs.inpFocusBlur('.J_addflinp');
+
+        //添加分类弹框
+        //$('#J_addflBtn').click(function () {
+        //    adminjs.openwinbox('#J_addflbox');
+        //    return false;
+        //});
+
+        //删除分类
+        $(document).on("click", ".J_deleteflBtn", function () {
+            adminjs.openwinbox('#J_deletelistBox');
+            return false;
+        });
+        //删除艺术家
+
+        $(".data").on("click", ".J_deletezzBtn", function () {
+            adminjs.openwinbox('#J_deletezzBox');
+            currentElement = $(this);
+            return false;
+        });
+
+
+        $("#btnDelete").click(function () {
+            var url = currentElement.attr("url");
+            var btn = this;
+            webExpress.utility.ajax.request(url, null, function (data) {
+                if (data.IsSuccess) {
+                    adminjs.closewinbox($(btn).closest(".add-openbox"));
+                    refresh(currentPageIndex);
+                }
+                else {
+                    alert(data.Message);
+                }
+            },
+            function () {
+                alert(0);
+            }
+            );
+        });
+
+        //取消发布
+        $('.J_cancelBtn').click(function () {
+            adminjs.openwinbox('#J_cancelBox');
+            return false;
+        });
+        //发布
+
+        var currentElement;
+        $('.J_issueBtn').click(function () {
+            adminjs.openwinbox('#J_issueBox');
+            currentElement = $(this);
+            return false;
+        });
+
+        $("#btnPublishOK").click(function () {
+            var url = currentElement.attr("url");
+            webExpress.utility.ajax.request(url, null, function (data) {
+                if (data.IsSuccess) {
+                    var lookups = { "未发布": "已发布", "已发布": "未发布", "发布": "取消发布", "取消发布": "发布" };
+                    var cmdText = lookups[currentElement.text()];
+                    currentElement.text(cmdText);
+
+                    var statusElement = currentElement.closest("td").prev();
+                    var statusText = lookups[statusElement.text()];
+                    statusElement.text(statusText);
+                }
+                else {
+                    alert(data.Message);
+                }
+            },
+            function () {
+                alert(0);
+            }
+            );
+        });
+
+        //查看作者
+        $('.J_zjIinfo').click(function () {
+            var url = $(this).attr("url");
+            webExpress.utility.ajax.request(url, null,
+            function (data, status) {
+                $("#J_zjIinfoBox").html(data);
+                adminjs.closewinbox();
+                adminjs.openwinbox('#J_zjIinfoBox');
+            },
+            function () {
+                alert("error!");
+            },
+            { type: "Get", dataType: "html", contentType: "application/html; charset=UTF-8" }
+            );
+
+            return false;
+        });
+        $('#btnOK').click(function () {
+            alert(1);
+        })
+
+        $("#btnSearch").click(function () {
+            currentNamePart = $("#txtNamePart").val();
+            currentProfessionId = $("#selectProfessionId").val();
+            refresh(0);
+        });
+
+    })
+
+    var currentPageIndex = 0;
+    var currentNamePart = "";
+    var currentProfessionId = null;
+    function refresh(pageIndex) {
+        var url = "/Artist/List";
+        var criteria = { NamePart: currentNamePart, ProfessionId: currentProfessionId, PagingRequest: { PageIndex: pageIndex, PageSize: 10 } };
+        webExpress.utility.ajax.request(url, criteria,
+            function (data) {
+                $(".data").html(data);
+
+            }
+            , function (data) {
+                $(".data").html(data.responseText);
+                currentPageIndex = pageIndex;
+            });
+    }
+
+
+</script>

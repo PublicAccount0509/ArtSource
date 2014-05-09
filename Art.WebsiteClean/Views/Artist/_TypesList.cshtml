@@ -1,0 +1,27 @@
+﻿@model IList<ProfessionModel>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="t-grid">
+    <thead>
+        <tr class="theadbg">
+            <th align="center" class="flnum">序号</th>
+            <th align="center" class="flname">分类名称</th>
+            <th align="center" class="floperation">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 1;
+            foreach (var item in Model)
+            {
+            <tr typeId="@item.Id">
+                <td align="center" class="flnum">@i</td>
+                <td id="tdArtTypeName_@item.Id" align="center" class="flname">@item.Name</td>
+                <td align="center" class="floperation">
+                    <a href="#" class="J_compile">
+                        <img src="/icon/bianji.png" align="top" />编辑</a><a href="#" class="J_deleteflBtn"><img src="/icon/shanchu.png" align="top" />删除</a>
+                </td>
+            </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
