@@ -12,7 +12,7 @@ namespace Art.Website.Models
         public string Name { get; set; }
         public bool IsPublic { get; set; }
         public bool CanUnPublish { get; set; }
-        public IList<string> ProfessionNames { get; set; }
+        public IList<string> ArtistTypeNames { get; set; }
     }
      
 
@@ -26,7 +26,7 @@ namespace Art.Website.Models
             to.Id = from.Id;
             to.Name = from.Name;
             to.IsPublic = from.IsPublic;
-            to.ProfessionNames = from.Professions.Select(i => i.Name).ToList();
+            to.ArtistTypeNames = from.ArtistTypes.Select(i => i.Name).ToList();
 
             return to;
         }

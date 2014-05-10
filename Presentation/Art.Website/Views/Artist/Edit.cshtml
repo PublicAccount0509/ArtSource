@@ -103,16 +103,16 @@
             </dl>
 
 
-            <dl class="genre clearfix mandatory" property-name="@PropName(i => i.Artist.ProfessionIds)" control-type="simpleCheckbox">
+            <dl class="genre clearfix mandatory" property-name="@PropName(i => i.Artist.ArtistTypeIds)" control-type="simpleCheckbox">
                 <dt><i>*</i>流派:<span class="t-errormessage hide">请选择流派</span></dt>
                 <dd class="checkboxjj">
 
-                    @for (int i = 0; i < Model.SourceProfessions.Length; i++)
+                    @for (int i = 0; i < Model.SourceArtistTypes.Length; i++)
                     {
                         <span>
-                            <input type="checkbox" value="@Model.SourceProfessions[i].Id" />@Model.SourceProfessions[i].Name</span>    
+                            <input type="checkbox" value="@Model.SourceArtistTypes[i].Id" />@Model.SourceArtistTypes[i].Name</span>    
                     }
-                    <label for="@PropName(i => i.Artist.ProfessionIds)" class="error t-errormessage">请填写得过奖项</label>
+                    <label for="@PropName(i => i.Artist.ArtistTypeIds)" class="error t-errormessage">请填写得过奖项</label>
                 </dd>
             </dl>
             <dl class="beGoodAt clearfix mandatory" property-name="@PropName(i => i.Artist.SkilledGenreIds)" control-type="simpleCheckbox">

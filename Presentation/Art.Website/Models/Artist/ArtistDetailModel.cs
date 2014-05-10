@@ -16,7 +16,7 @@ namespace Art.Website.Models
         public DateTime? Birthday { get; set; }
         public string School { get; set; }
         public string[] Prizes { get; set; }
-        public string[] ProfessionNames { get; set; }
+        public string[] ArtistTypeNames { get; set; }
         public string[] SkilledGenres { get; set; }
         public string Masterpiece { get; set; }
         public string MasterpieceType { get; set; }
@@ -35,7 +35,7 @@ namespace Art.Website.Models
             to.Birthday = from.Birthday;
             to.School = from.School;
             to.Prizes = from.PrizeItems.Split(',');
-            to.ProfessionNames = from.Professions.Select(i => i.Name).ToArray();
+            to.ArtistTypeNames = from.ArtistTypes.Select(i => i.Name).ToArray();
             to.SkilledGenres = from.SkilledGenres.Select(i => i.Name).ToArray() ;
             to.Masterpiece = from.Masterpiece;
             to.MasterpieceType = "agnostic"; 

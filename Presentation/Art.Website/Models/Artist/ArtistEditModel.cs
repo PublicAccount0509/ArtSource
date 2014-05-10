@@ -13,7 +13,7 @@ namespace Art.Website.Models
     {
         public ArtistModel Artist { get; set; }
 
-        public ProfessionModel[] SourceProfessions { get; set; }
+        public ArtistTypeModel[] SourceArtistTypes { get; set; }
 
         public GenreModel[] SourceGenres { get; set; }
 

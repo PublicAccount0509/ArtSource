@@ -99,8 +99,8 @@
         }
 
         function parseModel(model) {
-            for (var i = 0; i < model.Artist.ProfessionIds.length; i++) {
-                model.Artist.ProfessionIds[i] += "";
+            for (var i = 0; i < model.Artist.ArtistTypeIds.length; i++) {
+                model.Artist.ArtistTypeIds[i] += "";
             }
 
             for (var i = 0; i < model.Artist.SkilledGenreIds.length; i++) {

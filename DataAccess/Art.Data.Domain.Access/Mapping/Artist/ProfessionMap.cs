@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Domain.Access.Mapping
 {
-    public class ProfessionMap : ArtEntityTypeConfiguration<Profession>
+    public class ArtistTypeMap : ArtEntityTypeConfiguration<ArtistType>
     {
-        public ProfessionMap()
+        public ArtistTypeMap()
         {
             this.HasMany(t => t.Artists)
-                 .WithMany(t => t.Professions)
-                 .Map(t => t.MapLeftKey("ProfessionId").MapRightKey("ArtistId"));
+                 .WithMany(t => t.ArtistTypes)
+                 .Map(t => t.MapLeftKey("ArtistTypeId").MapRightKey("ArtistId"));
         }
     }
 }

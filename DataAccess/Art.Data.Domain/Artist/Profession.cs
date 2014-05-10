@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Domain
 {
-    public class Profession : BaseEntity, ISoftDelete
+    public class ArtistType : BaseEntity, ISoftDelete
     {
-        public Profession()
+        public ArtistType()
         {
             Artists = new HashSet<Artist>();
         } 

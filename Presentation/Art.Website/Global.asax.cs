@@ -1,9 +1,11 @@
-﻿using Art.Data.Domain.Access.Initializers;
+﻿using Art.Data.Domain.Access;
+using Art.Data.Domain.Access.Initializers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -27,7 +29,9 @@ namespace Art.Website
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
-            Database.SetInitializer(new ArtDropCreateDatabaseIfModelChanges()); 
+            IDataProvider dataProvider = new SqlServerDataProvider();
+            var sqlCommandFile = HostingEnvironment.MapPath("~/App_Data/SqlServer.Indexes.sql");
+            dataProvider.InitDatabase(sqlCommandFile); 
         }
     }
 }

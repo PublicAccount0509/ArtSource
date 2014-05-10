@@ -51,7 +51,7 @@
     <Compile Include="MessageController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj">
+    <ProjectReference Include="..\Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj">
       <Project>{92477c11-e258-4aa6-b004-a03b0e0bb483}</Project>
       <Name>Art.BussinessLogic.Entities</Name>
     </ProjectReference>

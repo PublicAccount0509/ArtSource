@@ -12,7 +12,6 @@ namespace Art.Data.Domain
 {
     public class ArtworkType : BaseEntity, ISoftDelete, IIdNameEntry
     {
-        [Index(IsUnique=true)]
         [MaxLength(50)]
         public string Name { get; set; }
 
@@ -20,6 +19,6 @@ namespace Art.Data.Domain
 
         public virtual ICollection<ArtShape> ArtShapes { get; set; }
 
-        public virtual ICollection<ArtTechnique> ArtTechniques { get; set; }
+        public virtual ICollection<ArtTechnique> ArtTechniques { get; set; } 
     }
 }

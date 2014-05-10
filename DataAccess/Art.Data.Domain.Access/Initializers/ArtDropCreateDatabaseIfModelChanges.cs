@@ -12,18 +12,32 @@ namespace Art.Data.Domain.Access.Initializers
 {
     public class ArtDropCreateDatabaseIfModelChanges : DropCreateDatabaseIfModelChanges<ArtDbContext>
     {
+        private string[] _sqlCommands;
+        public ArtDropCreateDatabaseIfModelChanges(string[] sqlCommands)
+        {
+            _sqlCommands = sqlCommands;
+        }
+
         protected override void Seed(ArtDbContext context)
         {
-            var professionsString = "油画家 版画家 国画家 漫画家 水墨画家 当代艺术家 摄影家";
-            var professions = professionsString.Split(' ');
-            for (var i = 0; i < professions.Length; i++)
+            if (_sqlCommands != null)
             {
-                var prof = new Profession
+                for (int i = 0; i < _sqlCommands.Length; i++)
+                {
+                    context.Database.ExecuteSqlCommand(_sqlCommands[i]);
+                }
+            }
+
+            var artistTypesString = "油画家 版画家 国画家 漫画家 水墨画家 当代艺术家 摄影家";
+            var artistTypes = artistTypesString.Split(' ');
+            for (var i = 0; i < artistTypes.Length; i++)
+            {
+                var prof = new ArtistType
                 {
                     Id = i + 1,
-                    Name = professions[i]
+                    Name = artistTypes[i]
                 };
-                context.Set<Profession>().Add(prof);
+                context.Set<ArtistType>().Add(prof);
             };
 
             var genresString = "风景、肖像、海景、静物、自然、人物、运动、流行文化、文本、个人记忆、怀旧、建筑、政治、动物、叙事、幽默、花卉、其他";
@@ -48,7 +62,7 @@ namespace Art.Data.Domain.Access.Initializers
                 Gender = Genders.Female,
                 PrizeItems = "aaaa",
                 Degree = Degree.博士,
-                Professions = new Profession[] { context.Set<Profession>().First() },
+                ArtistTypes = new ArtistType[] { context.Set<ArtistType>().First() },
                 SkilledGenres = new Genre[] { context.Set<Genre>().First() }
             };
             context.Set<Artist>().Add(artist);
@@ -101,7 +115,7 @@ namespace Art.Data.Domain.Access.Initializers
             var artPlaces = "卧室、餐厅、客厅、办公室、书房、酒吧".Split('、').Select(i => new ArtPlace { Name = i }).ToList(); // new List<ArtPlace>() { new ArtPlace { Name = "卧室" }, new ArtPlace { Name = "客厅" }, new ArtPlace { Name = "餐厅" }, new ArtPlace { Name = "办公室" } };
             context.Set<ArtPlace>().AddRange(artPlaces);
 
-           // var artPeriods = new List<ArtPeriod>() { new ArtPeriod { Name = "50 n" }, new ArtPeriod { Name = "60 n" }, new ArtPeriod { Name = "70 n" } };
+            // var artPeriods = new List<ArtPeriod>() { new ArtPeriod { Name = "50 n" }, new ArtPeriod { Name = "60 n" }, new ArtPeriod { Name = "70 n" } };
 
             //context.Set<ArtPeriod>().AddRange(artPeriods);
 

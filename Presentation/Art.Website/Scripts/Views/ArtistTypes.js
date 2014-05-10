@@ -14,7 +14,7 @@
         }
 
         function saveType(artType, onSuccess) {
-            var url = artType.Id > 0 ? "/Artist/UpdateProfession" : "/Artist/AddProfession";
+            var url = artType.Id > 0 ? "/Artist/UpdateArtistType" : "/Artist/AddArtistType";
             webExpress.utility.ajax.request(url, artType, function (data) {
                 if (data.IsSuccess) {
                     if (onSuccess) {
@@ -27,9 +27,9 @@
             });
         }
 
-        function remove(professionId, onSuccess) {
-            var url = "/Artist/DeleteProfession/" + professionId;
-            webExpress.utility.ajax.request(url, professionId, function (data) {
+        function remove(artistTypeId, onSuccess) {
+            var url = "/Artist/DeleteArtistType/" + artistTypeId;
+            webExpress.utility.ajax.request(url, artistTypeId, function (data) {
                 if (data.IsSuccess) {
                     if (onSuccess) {
                         onSuccess();
@@ -42,7 +42,7 @@
         }
 
         function refresh() {
-            var url = "/Artist/ProfessionList";
+            var url = "/Artist/ArtistTypeList";
             webExpress.utility.ajax.request(url, null, function (data) {
                 $(".data").html(data);
             });

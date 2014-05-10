@@ -12,10 +12,10 @@ namespace Art.Website.Models
     {
         public ArtistManageModel()
         {
-            Professions = new List<ProfessionModel>();
+            ArtistTypes = new List<ArtistTypeModel>();
         }
 
-        public List<ProfessionModel> Professions { get; set; }
+        public List<ArtistTypeModel> ArtistTypes { get; set; }
 
         public PagedArtistModel PagedArtists { get; set; }
     }

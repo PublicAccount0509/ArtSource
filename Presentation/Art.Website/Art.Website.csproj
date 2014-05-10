@@ -238,6 +238,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SqlServer.Indexes.sql" />
     <Content Include="Content\images\icon\img-x.psd" />
     <Content Include="Content\images\icon\sprite-icon.psd" />
     <Content Include="favicon.ico" />
@@ -441,7 +442,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Authorization\" />
     <Folder Include="Filters\" />
   </ItemGroup>
@@ -449,35 +449,35 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj">
+    <ProjectReference Include="..\..\BussinessLogic\Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj">
       <Project>{92477c11-e258-4aa6-b004-a03b0e0bb483}</Project>
       <Name>Art.BussinessLogic.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BussinessLogic\Art.BussinessLogic\Art.BussinessLogic.csproj">
+    <ProjectReference Include="..\..\BussinessLogic\Art.BussinessLogic\Art.BussinessLogic.csproj">
       <Project>{6db25716-e246-475d-aec3-513107464dbc}</Project>
       <Name>Art.BussinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataAccess\Art.Data.Common\Art.Data.Common.csproj">
+    <ProjectReference Include="..\..\DataAccess\Art.Data.Common\Art.Data.Common.csproj">
       <Project>{449228d3-3f33-445a-8733-1ae940671d41}</Project>
       <Name>Art.Data.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataAccess\Art.Data.Domain.Access\Art.Data.Domain.Access.csproj">
+    <ProjectReference Include="..\..\DataAccess\Art.Data.Domain.Access\Art.Data.Domain.Access.csproj">
       <Project>{ea13d35d-ac04-48a3-a20f-7e7085400c3d}</Project>
       <Name>Art.Data.Domain.Access</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataAccess\Art.Data.Domain\Art.Data.Domain.Entities.csproj">
+    <ProjectReference Include="..\..\DataAccess\Art.Data.Domain\Art.Data.Domain.Entities.csproj">
       <Project>{83e133a9-e8f3-4ecb-b4ec-5a163f3ad3d1}</Project>
       <Name>Art.Data.Domain.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebExpress\WebExpress.Core\WebExpress.Core.csproj">
+    <ProjectReference Include="..\..\WebExpress\WebExpress.Core\WebExpress.Core.csproj">
       <Project>{c5637d1e-9a03-481e-876a-76b615d860ec}</Project>
       <Name>WebExpress.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebExpress\WebExpress.Javascripts\WebExpress.Javascripts.csproj">
+    <ProjectReference Include="..\..\WebExpress\WebExpress.Javascripts\WebExpress.Javascripts.csproj">
       <Project>{963085fa-ae42-467d-826a-3d8f1acab95c}</Project>
       <Name>WebExpress.Javascripts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebExpress\WebExpress.Website\WebExpress.Website\WebExpress.Website.csproj">
+    <ProjectReference Include="..\..\WebExpress\WebExpress.Website\WebExpress.Website\WebExpress.Website.csproj">
       <Project>{7ff99fa8-091f-45cd-97aa-78c89b427f93}</Project>
       <Name>WebExpress.Website</Name>
     </ProjectReference>

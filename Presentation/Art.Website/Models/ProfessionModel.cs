@@ -7,34 +7,34 @@ using System.Web;
 
 namespace Art.Website.Models
 {
-    public class ProfessionModel
+    public class ArtistTypeModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
-    public class ProfessionTranslator : TranslatorBase<Profession, ProfessionModel>
+    public class ArtistTypeTranslator : TranslatorBase<ArtistType, ArtistTypeModel>
     {
-        public static readonly ProfessionTranslator Instance = new ProfessionTranslator();
+        public static readonly ArtistTypeTranslator Instance = new ArtistTypeTranslator();
 
-        public override ProfessionModel Translate(Profession from)
+        public override ArtistTypeModel Translate(ArtistType from)
         {
-            var to = new ProfessionModel();
+            var to = new ArtistTypeModel();
             to.Id = from.Id;
             to.Name = from.Name;
             return to;
         }
 
-        public override Profession Translate(ProfessionModel from)
+        public override ArtistType Translate(ArtistTypeModel from)
         {
-            Profession to;
+            ArtistType to;
             if (from.Id > 0)
             {
-                to = ArtistBussinessLogic.Instance.GetProfession(from.Id);
+                to = ArtistBussinessLogic.Instance.GetArtistType(from.Id);
             }
             else
             {
-                to = new Profession();
+                to = new ArtistType();
             }
             to.Name = from.Name;
             return to;

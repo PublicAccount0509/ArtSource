@@ -25,9 +25,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebExpress.Website", "WebEx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.Data.Common", "DataAccess\Art.Data.Common\Art.Data.Common.csproj", "{449228D3-3F33-445A-8733-1AE940671D41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.BussinessLogic.Entities", "Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj", "{92477C11-E258-4AA6-B004-A03B0E0BB483}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.BussinessLogic.Entities", "BussinessLogic\Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj", "{92477C11-E258-4AA6-B004-A03B0E0BB483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.Website", "Art.WebsiteClean\Art.Website.csproj", "{787A510E-85AB-4031-80C0-6E58E9DB501C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.Website", "Presentation\Art.Website\Art.Website.csproj", "{787A510E-85AB-4031-80C0-6E58E9DB501C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

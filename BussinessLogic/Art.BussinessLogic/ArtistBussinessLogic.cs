@@ -15,13 +15,13 @@ namespace Art.BussinessLogic
         public static readonly ArtistBussinessLogic Instance = new ArtistBussinessLogic();
 
         private readonly IRepository<Artist> _artistRepository;
-        private readonly IRepository<Profession> _professionRepository;
+        private readonly IRepository<ArtistType> _artistTypeRepository;
         private readonly IRepository<Genre> _genreRepository;
 
         private ArtistBussinessLogic()
         {
             _artistRepository = new EfRepository<Artist>();
-            _professionRepository = new EfRepository<Profession>();
+            _artistTypeRepository = new EfRepository<ArtistType>();
             _genreRepository = new EfRepository<Genre>();
         }
 
@@ -37,7 +37,7 @@ namespace Art.BussinessLogic
             return artists;
         }
 
-        public PagedList<Artist> SearchArtists(string namePart, int? professionId, PagingRequest paging)
+        public PagedList<Artist> SearchArtists(string namePart, int? artistTypeId, PagingRequest paging)
         {
             Guard.IsNotNull<ArgumentNullException>(paging, "paging");
 
@@ -47,9 +47,9 @@ namespace Art.BussinessLogic
                 query = query.Where(i => i.Name.Contains(namePart));
             }
 
-            if (professionId.HasValue)
+            if (artistTypeId.HasValue)
             {
-                query = query.Where(i => i.Professions.Any(p => p.Id == professionId.Value));
+                query = query.Where(i => i.ArtistTypes.Any(p => p.Id == artistTypeId.Value));
             }
 
             query = query.OrderBy(i => i.Id);
@@ -59,40 +59,34 @@ namespace Art.BussinessLogic
             return result;
         }
 
-        public Profession[] GetArtistProfessions(int artistId)
+        public ArtistType[] GetArtistTypes(int artistId)
         {
-            var profs = from p in _professionRepository.Table
+            var profs = from p in _artistTypeRepository.Table
                         where p.Id == 1 || p.Id == 2
                         select p;
             return profs.ToArray();
         }
 
-        public Profession[] GetProfessions()
+        public ArtistType[] GetArtistTypes()
         {
-            var professions = _professionRepository.Table.ToArray();
-            return professions;
+            var types = _artistTypeRepository.Table.ToArray();
+            return types;
         }
 
-        public Profession GetProfession(int id)
+        public ArtistType GetArtistType(int id)
         {
-           return _professionRepository.GetById(id);
+           return _artistTypeRepository.GetById(id);
         }
-        /// <summary>
-        /// Gets the name of the profession by.
-        /// </summary>
-        /// <param name="name">The name</param>
-        /// <returns>
-        /// The Profession
-        /// </returns>
+        
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 5:44 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public Profession GetProfessionByName(string name)
+        public ArtistType GetArtistTypeByName(string name)
         {
-            var profession = _professionRepository.Table.Where( p=>name == p.Name);
-            return profession.FirstOrDefault();
+            var type = _artistTypeRepository.Table.Where( p=>name == p.Name);
+            return type.FirstOrDefault();
         }
 
         public Genre[] GetGenres()
@@ -141,14 +135,14 @@ namespace Art.BussinessLogic
             return true;
         }
 
-        public ICollection<Profession> GetProfessions(List<int> ids)
+        public ICollection<ArtistType> GetArtistTypes(List<int> ids)
         {
             if (ids == null)
             {
                 return null;
             }
 
-            var query = from p in _professionRepository.Table
+            var query = from p in _artistTypeRepository.Table
                         where ids.Contains(p.Id)
                         select p;
             return query.ToList();
@@ -165,62 +159,35 @@ namespace Art.BussinessLogic
                         select p;
             return query.ToList();
         }
-        /// <summary>
-        /// Searches the professions.
-        /// </summary>
-        /// <returns>
-        /// IList{Profession}
-        /// </returns>
-        /// 创建者：黄磊
-        /// 创建日期：5/9/2014 2:35 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public IList<Profession> SearchProfessions()
-        {
-            var query = _professionRepository.Table.ToList();
-
-            //var result = new List<Profession>(query);
-            return query;
-        }
-        /// <summary>
-        /// The method will 
-        /// </summary>
-        /// <param name="profession">The profession</param>
+         
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 12:55 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public void Add(Profession profession)
+        public void Add(ArtistType artistType)
         {
-            _professionRepository.Insert(profession);
+            _artistTypeRepository.Insert(artistType);
         }
-        /// <summary>
-        /// The method will 
-        /// </summary>
-        /// <param name="profession">The profession</param>
+
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 12:53 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public void UpdateProfession(Profession profession)
+        public void UpdateArtistType(ArtistType artistType)
         {
-            _professionRepository.Update(profession);
+            _artistTypeRepository.Update(artistType);
         }
-        /// <summary>
-        /// The method will 
-        /// </summary>
-        /// <param name="profession">The profession</param>
+
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 5:00 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public void DeleteProfession(Profession profession)
+        public void DeleteArtistType(ArtistType artistType)
         {
-            _professionRepository.Delete(profession);
+            _artistTypeRepository.Delete(artistType);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Art.Data.Domain
         [MaxLength(303)]
         public string AppName { get; set; }
         public string StackTrace { get; set; }
-        public string Message344 { get; set; }
+        public string Message { get; set; }
 
         public string FAUserName { get; set; }
         public DateTime FADateTime { get; set; }

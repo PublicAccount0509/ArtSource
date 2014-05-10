@@ -87,6 +87,7 @@ namespace Art.Website.Controllers
         }
 
         [HttpPost]
+        //添加艺术家
         public JsonResult Add(ArtistModel model)
         {
             var artist = ArtistTranslator.Instance.Translate(model);
@@ -121,7 +122,7 @@ namespace Art.Website.Controllers
         private PagedArtistModel GetPagedArtistModel(ArtistSearchCriteria criteria)
         {
             var artistItems = new List<ArtistItem>();
-            var pagedArtists = ArtistBussinessLogic.Instance.SearchArtists(criteria.NamePart, criteria.ProfessionId, criteria.PagingRequest);
+            var pagedArtists = ArtistBussinessLogic.Instance.SearchArtists(criteria.NamePart, criteria.ArtistTypeId, criteria.PagingRequest);
             foreach (var item in pagedArtists)
             {
                 var artist = ArtistItemTranslator.Instance.Translate(item);
@@ -141,8 +142,8 @@ namespace Art.Website.Controllers
             var defaultCriteria = new ArtistSearchCriteria(10);
             model.PagedArtists = GetPagedArtistModel(defaultCriteria);
 
-            var professions = ArtistBussinessLogic.Instance.GetProfessions();
-            model.Professions = ProfessionTranslator.Instance.Translate(professions).ToList();
+            var types = ArtistBussinessLogic.Instance.GetArtistTypes();
+            model.ArtistTypes = ArtistTypeTranslator.Instance.Translate(types).ToList();
 
             return View(model);
         }
@@ -150,13 +151,13 @@ namespace Art.Website.Controllers
 
         private ArtistEditModel GetArtistEditModel(Artist artist)
         {
-            var professions = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetProfessions();
+            var artistTypes = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetArtistTypes();
             var genres = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetGenres();
             var artworkTypes = Art.BussinessLogic.ArtworkBussinessLogic.Instance.GetArtworkTypes();
             var model = new ArtistEditModel
             {
                 Artist = ArtistTranslator.Instance.Translate(artist),
-                SourceProfessions = ProfessionTranslator.Instance.Translate(professions).ToArray(),
+                SourceArtistTypes = ArtistTypeTranslator.Instance.Translate(artistTypes).ToArray(),
                 SourceGenres = GenreTranslator.Instance.Translate(genres).ToArray(),
                 Degrees = EnumExtenstion.GetEnumItems<Degree>(),
                 ArtworkTypes = IdNameModelTranslator<ArtworkType>.Instance.Translate(artworkTypes).ToArray()
@@ -179,7 +180,7 @@ namespace Art.Website.Controllers
         /// ----------------------------------------------------------------------------------------
         public ActionResult Types()
         {
-            var models = GetTypesModel();
+            var models = GetArtistTypesModel();
             return View(models);
         }
         /// <summary>
@@ -193,27 +194,21 @@ namespace Art.Website.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public PartialViewResult ProfessionList()
+        public PartialViewResult ArtistTypeList()
         {
-            var artworkTypes = GetTypesModel();
+            var artworkTypes = GetArtistTypesModel();
             return PartialView("_TypesList", artworkTypes);
         }
 
-        /// <summary>
-        /// Gets the types model.
-        /// </summary>
-        /// <returns>
-        /// IList{ProfessionModel}
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 3:59 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private IList<ProfessionModel> GetTypesModel()
+        private IList<ArtistTypeModel> GetArtistTypesModel()
         {
-            var professions = ArtistBussinessLogic.Instance.GetProfessions();
-            var models = ProfessionTranslator.Instance.Translate(professions);
+            var types = ArtistBussinessLogic.Instance.GetArtistTypes();
+            var models = ArtistTypeTranslator.Instance.Translate(types);
             return models;
         }
 
@@ -230,15 +225,15 @@ namespace Art.Website.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public JsonResult AddProfession(ProfessionModel model)
+        public JsonResult AddArtistType(ArtistTypeModel model)
         {
-            var profession = ProfessionTranslator.Instance.Translate(model);
+            var artist = ArtistTypeTranslator.Instance.Translate(model);
 
-            if (ArtistBussinessLogic.Instance.GetProfessionByName(model.Name) != null)
+            if (ArtistBussinessLogic.Instance.GetArtistTypeByName(model.Name) != null)
             {
                 return Json(new ResultModel(false, "已存在相同名称的分类!"));
             }
-            ArtistBussinessLogic.Instance.Add(profession);
+            ArtistBussinessLogic.Instance.Add(artist);
 
             var result = new ResultModel(true, "add successfully!");
             return Json(result);
@@ -257,42 +252,36 @@ namespace Art.Website.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public JsonResult UpdateProfession(ProfessionModel model)
+        public JsonResult UpdateArtistType(ArtistTypeModel model)
         {
-            var profession = ProfessionTranslator.Instance.Translate(model);
+            var artistType = ArtistTypeTranslator.Instance.Translate(model);
 
-            var ret = ArtistBussinessLogic.Instance.GetProfessionByName(model.Name);
+            var ret = ArtistBussinessLogic.Instance.GetArtistTypeByName(model.Name);
             if (ret != null && ret.Id != model.Id)
             {
                 return Json(new ResultModel(false, "已存在相同名称的分类!"));
             }
-            ArtistBussinessLogic.Instance.UpdateProfession(profession);
+            ArtistBussinessLogic.Instance.UpdateArtistType(artistType);
 
             var result = new ResultModel(true, "update successfully!");
 
             return Json(result);
         }
-        /// <summary>
-        /// Deletes the profession.
-        /// </summary>
-        /// <param name="id">The id</param>
-        /// <returns>
-        /// JsonResult
-        /// </returns>
+       
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 5:33 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public JsonResult DeleteProfession(int id)
+        public JsonResult DeleteArtistType(int id)
         {
-            var profession = ArtistBussinessLogic.Instance.GetProfession(id);
-            if (profession.Artists.Count > 0)
+            var artistType = ArtistBussinessLogic.Instance.GetArtistType(id);
+            if (artistType.Artists.Count > 0)
             {
                 return Json(new ResultModel(false, "请将该分类下的艺术家全部删除后，方可进行分类的删除~"));
             }
-            ArtistBussinessLogic.Instance.DeleteProfession(profession);
+            ArtistBussinessLogic.Instance.DeleteArtistType(artistType);
 
             var result = new ResultModel(true, "Delete successfully!");
 

@@ -43,11 +43,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\Art.Data.Common\Art.Data.Common.csproj">
+    <ProjectReference Include="..\..\DataAccess\Art.Data.Common\Art.Data.Common.csproj">
       <Project>{449228d3-3f33-445a-8733-1ae940671d41}</Project>
       <Name>Art.Data.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebExpress\WebExpress.Core\WebExpress.Core.csproj">
+    <ProjectReference Include="..\..\WebExpress\WebExpress.Core\WebExpress.Core.csproj">
       <Project>{c5637d1e-9a03-481e-876a-76b615d860ec}</Project>
       <Name>WebExpress.Core</Name>
     </ProjectReference>

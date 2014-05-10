@@ -12,9 +12,9 @@
         <div class="searchbox clearfix">
             <span class="t-search">艺术家搜索<input id="txtNamePart" type="text" value="" name="" class="searchinp" />
                 选择分类:
-                            <select id="selectProfessionId">
+                            <select id="selectArtistTypeId">
                                 <option value="null" selected="selected">全部</option>
-                                @foreach (var prof in Model.Professions)
+                                @foreach (var prof in Model.ArtistTypes)
                                 {
                                     <option value="@prof.Id">@prof.Name</option>
                                 }
@@ -202,7 +202,7 @@
 
         $("#btnSearch").click(function () {
             currentNamePart = $("#txtNamePart").val();
-            currentProfessionId = $("#selectProfessionId").val();
+            currentArtistTypeId = $("#selectArtistTypeId").val();
             refresh(0);
         });
 
@@ -210,10 +210,10 @@
 
     var currentPageIndex = 0;
     var currentNamePart = "";
-    var currentProfessionId = null;
+    var currentArtistTypeId = null;
     function refresh(pageIndex) {
         var url = "/Artist/List";
-        var criteria = { NamePart: currentNamePart, ProfessionId: currentProfessionId, PagingRequest: { PageIndex: pageIndex, PageSize: 10 } };
+        var criteria = { NamePart: currentNamePart, ArtistTypeId: currentArtistTypeId, PagingRequest: { PageIndex: pageIndex, PageSize: 10 } };
         webExpress.utility.ajax.request(url, criteria,
             function (data) {
                 $(".data").html(data);

@@ -12,9 +12,9 @@ namespace Art.Data.Domain.Access.Mapping
     {
         public ArtistMap()
         {
-            this.HasMany(t => t.Professions)
+            this.HasMany(t => t.ArtistTypes)
                  .WithMany(t => t.Artists)
-                 .Map(t => t.MapLeftKey("ArtistId").MapRightKey("ProfessionId"));
+                 .Map(t => t.MapLeftKey("ArtistId").MapRightKey("ArtistTypeId"));
 
             this.HasMany(t => t.SkilledGenres)
                 .WithMany(t => t.Artists)

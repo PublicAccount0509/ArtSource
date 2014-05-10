@@ -14,7 +14,7 @@ namespace Art.Data.Domain
     {
         public Artist()
         {
-            Professions = new HashSet<Profession>();
+            ArtistTypes = new HashSet<ArtistType>();
             SkilledGenres = new List<Genre>();
         }
 
@@ -45,7 +45,7 @@ namespace Art.Data.Domain
 
         public Degree? Degree { get; set; }
 
-        public virtual ICollection<Profession> Professions { get; set; }
+        public virtual ICollection<ArtistType> ArtistTypes { get; set; }
 
         public virtual ICollection<Genre> SkilledGenres { get; set; }
 

@@ -13,8 +13,45 @@ using WebExpress.Website.Exceptions;
 
 namespace Art.Website.Controllers
 {
+    public class LoggingFilterAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            filterContext.HttpContext.Trace.Write("(Logging Filter)Action Executing: " +
+                filterContext.ActionDescriptor.ActionName);
+
+            base.OnActionExecuting(filterContext);
+        }
+
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            if (filterContext.Exception != null)
+                filterContext.HttpContext.Trace.Write("(Logging Filter)Exception thrown");
+
+            base.OnActionExecuted(filterContext);
+        }
+    }
+
+    public class ActAttribute : Attribute
+    {
+        private string _feature;
+        public ActAttribute(string feature)
+        {
+            _feature = feature;
+        }
+
+        public string Feature
+        {
+            get
+            {
+                return _feature;
+            }
+        }
+    }
+
     public class ArtworkController : Controller
     {
+
         public ActionResult Types()
         {
             var model = new ArtworkTypesModel();
@@ -22,6 +59,8 @@ namespace Art.Website.Controllers
             return View(model);
         }
 
+        [Act("删除艺术品分类")]
+        [LoggingFilter]
         public JsonResult DeleteArtworkType(int id)
         {
             var artworkType = ArtworkBussinessLogic.Instance.GetArtworkType(id);
@@ -38,6 +77,8 @@ namespace Art.Website.Controllers
             return Json(model);
         }
 
+        [Act("添加艺术品分类")]
+        [LoggingFilter]
         public JsonResult AddArtworkType(ArtworkTypeModel model)
         {
             if (string.IsNullOrEmpty(model.Text))

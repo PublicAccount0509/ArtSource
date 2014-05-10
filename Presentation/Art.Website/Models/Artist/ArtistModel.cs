@@ -13,7 +13,7 @@ namespace Art.Website.Models
     {
         public ArtistModel()
         {
-            ProfessionIds = new List<int>();
+            ArtistTypeIds = new List<int>();
             SkilledGenreIds = new List<int>();
         }
 
@@ -41,7 +41,7 @@ namespace Art.Website.Models
 
         public Degree? Degree { get; set; }
 
-        public List<int> ProfessionIds { get; set; }
+        public List<int> ArtistTypeIds { get; set; }
 
         public List<int> SkilledGenreIds { get; set; }
     }
@@ -69,7 +69,7 @@ namespace Art.Website.Models
                 to.AvatarFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.AvatarFileName);
             }
 
-            to.ProfessionIds = from.Professions.Select(i => i.Id).ToList();
+            to.ArtistTypeIds = from.ArtistTypes.Select(i => i.Id).ToList();
             to.SkilledGenreIds = from.SkilledGenres.Select(i => i.Id).ToList();
 
             return to;
@@ -92,8 +92,8 @@ namespace Art.Website.Models
                 to.AvatarFileName = Path.GetFileName(from.AvatarFileName);
             }
 
-            to.Professions = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetProfessions(from.ProfessionIds);// null;// from.Professions.Select(i => i.Id).ToArray();
-            to.SkilledGenres = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetSkilledGenres(from.SkilledGenreIds);// = from.SkilledGenres.Select(i => i.Id).ToArray();
+            to.ArtistTypes = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetArtistTypes(from.ArtistTypeIds);
+            to.SkilledGenres = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetSkilledGenres(from.SkilledGenreIds);
             return to;
         }
     }

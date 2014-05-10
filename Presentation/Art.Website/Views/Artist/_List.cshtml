@@ -16,7 +16,7 @@
             <tr>
                 <td style="text-align: center; width: 50px">@(i + 1)</td>
                 <td>@item.Name</td>
-                <td>@string.Join(",", item.ProfessionNames)</td>
+                <td>@string.Join(",", item.ArtistTypeNames)</td>
                 <td style="text-align: center">@(item.IsPublic ? "已发布" : "未发布")</td>
                 <td style="text-align: center" class="floperation">
                     <a href="/Artist/Edit/@item.Id" target="_blank">编辑</a>
