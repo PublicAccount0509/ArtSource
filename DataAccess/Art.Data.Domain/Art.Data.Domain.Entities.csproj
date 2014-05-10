@@ -58,10 +58,11 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="CommonEnitities\Genre.cs" />
-    <Compile Include="Artist\Profession.cs" />
+    <Compile Include="Artist\ArtistType.cs" />
     <Compile Include="Customer\Address.cs" />
     <Compile Include="Customer\Customer.cs" />
-    <Compile Include="ExceptionLog.cs" />
+    <Compile Include="Logging\ExceptionLog.cs" />
+    <Compile Include="Logging\OperationLog.cs" />
     <Compile Include="Order\Order.cs" />
     <Compile Include="Order\OrderDeliveryInfo.cs" />
     <Compile Include="Order\OrderInvoiceInfo.cs" />

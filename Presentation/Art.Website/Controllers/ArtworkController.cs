@@ -1,6 +1,8 @@
 ﻿using Art.BussinessLogic;
 using Art.Data.Common;
 using Art.Data.Domain;
+using Art.Website.Common;
+using Art.Website.Filters;
 using Art.Website.Models;
 using System;
 using System.Collections.Generic;
@@ -13,45 +15,9 @@ using WebExpress.Website.Exceptions;
 
 namespace Art.Website.Controllers
 {
-    public class LoggingFilterAttribute : ActionFilterAttribute
-    {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            filterContext.HttpContext.Trace.Write("(Logging Filter)Action Executing: " +
-                filterContext.ActionDescriptor.ActionName);
-
-            base.OnActionExecuting(filterContext);
-        }
-
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            if (filterContext.Exception != null)
-                filterContext.HttpContext.Trace.Write("(Logging Filter)Exception thrown");
-
-            base.OnActionExecuted(filterContext);
-        }
-    }
-
-    public class ActAttribute : Attribute
-    {
-        private string _feature;
-        public ActAttribute(string feature)
-        {
-            _feature = feature;
-        }
-
-        public string Feature
-        {
-            get
-            {
-                return _feature;
-            }
-        }
-    }
 
     public class ArtworkController : Controller
     {
-
         public ActionResult Types()
         {
             var model = new ArtworkTypesModel();
@@ -129,8 +95,6 @@ namespace Art.Website.Controllers
 
         public ActionResult UpdateArtworkType(ArtworkTypeModel model)
         {
-
-
             var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
             ArtworkBussinessLogic.Instance.UpdateArtworkType(artworkType);
 

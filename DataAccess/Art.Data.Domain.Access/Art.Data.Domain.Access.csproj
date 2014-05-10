@@ -60,7 +60,7 @@
     <Compile Include="Mapping\Artwork\ArtShapeMap.cs" />
     <Compile Include="Mapping\Artwork\ArtworkTypeMap.cs" />
     <Compile Include="Mapping\Artwork\AuctionTypeMap.cs" />
-    <Compile Include="Mapping\Artist\ProfessionMap.cs" />
+    <Compile Include="Mapping\Artist\ArtistTypeMap.cs" />
     <Compile Include="Mapping\Auction\AcitonBillMap.cs" />
     <Compile Include="Mapping\Customer\CustomerMap.cs" />
     <Compile Include="Mapping\Customer\AddressMap.cs" />
@@ -68,8 +68,9 @@
     <Compile Include="Mapping\AdminUserMap.cs" />
     <Compile Include="Mapping\Artwork\ArtPeriodMap.cs" />
     <Compile Include="Mapping\Artwork\ArtPlaceMap.cs" />
-    <Compile Include="Mapping\ExceptionLog.cs" />
+    <Compile Include="Mapping\Logging\ExceptionLogMap.cs" />
     <Compile Include="Mapping\CommentMap.cs" />
+    <Compile Include="Mapping\Logging\OperationLogMap.cs" />
     <Compile Include="Mapping\Order\OrderMap.cs" />
     <Compile Include="Mapping\Order\OrderDeliveryInfoMap.cs" />
     <Compile Include="Mapping\Order\OrderInvoiceInfo.cs" />

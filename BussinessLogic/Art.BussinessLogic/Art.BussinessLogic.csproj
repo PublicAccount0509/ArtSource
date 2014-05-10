@@ -49,6 +49,7 @@
     <Compile Include="UserBussinessLogic.cs" />
     <Compile Include="ArtworkBussinessLogic.cs" />
     <Compile Include="MessageController.cs" />
+    <Compile Include="LoggingBussinessLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj">

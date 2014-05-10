@@ -187,6 +187,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Authentication\FormAuthenticationService.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
+    <Compile Include="Common\ActAttribute.cs" />
     <Compile Include="Common\Config\ConfigSettings.cs" />
     <Compile Include="Common\ImageRouteHandler.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Filters\LoggingFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -443,7 +445,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authorization\" />
-    <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
