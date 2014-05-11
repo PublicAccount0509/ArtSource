@@ -17,5 +17,7 @@ namespace Art.Data.Domain
         public bool ExceptionHandled { get; set; }
 
         public DateTime FADateTime { get; set; }
+
+        public string Test { get; set; }
     }
 }

@@ -141,7 +141,7 @@ namespace Art.Data.Domain.Access.Initializers
             artwork.EndDateTime = DateTime.Now.AddDays(3);
             context.Set<Artwork>().Add(artwork);
 
-            var customer = new Customer() { Name = "lifengbao" };
+            var customer = new Customer() { LoginName="abc", Password="1231231" };
             context.Set<Customer>().Add(customer);
 
             var adminUser = new AdminUser

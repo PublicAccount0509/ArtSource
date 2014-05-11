@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,11 @@ namespace Art.Data.Domain
 {
     public class Customer : BaseEntity
     {
-        public string Name { get; set; }
-
+        [Required]
         public string LoginName { get; set; }
+
+        [Required]
+        public string Password { get; set; }
 
         public DateTime? Birthday { get; set; }
 
