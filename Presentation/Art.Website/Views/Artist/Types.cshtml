@@ -23,8 +23,8 @@
 </div>
 <!--添加艺术分类弹框 start-->
 <div class="add-openbox" id="J_addflbox">
-    <h2>添加艺术分类提示<a href="" class="J_closebox xbtn"></a></h2>
-    <p class="textinfo">添加艺术分类:<input id="txtArtTypeName_add" class="addflinp J_addflinp" value="例如：油画家" name="" /></p>
+    <h2>添加艺术分类提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+    <p class="textinfo">添加艺术分类:<input id="txtArtTypeName_add" class="addflinp J_addflinp" placeholder="例如：油画家" name="" /></p>
     <p class="btnbox">
         <input id="J_addbtn" value="添加" type="button" class="J_closebox closebox" />
         <input value="取消" type="button" class="J_closebox closebox" />
@@ -33,8 +33,8 @@
 <!--end-->
 <!--编辑艺术分类弹框 start-->
 <div class="add-openbox" id="J_compileflbox">
-    <h2>编辑分类提示<a href="" class="J_closebox xbtn"></a></h2>
-    <p class="textinfo">编辑分类:<input id="txtArtTypeName_up" class="addflinp J_compileinp" value="例如：油画家" name="" /></p>
+    <h2>编辑分类提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
+    <p class="textinfo">编辑分类:<input id="txtArtTypeName_up" class="addflinp J_compileinp" placeholder="例如：油画家" name="" /></p>
     <p class="btnbox">
         <input id="J_upbtn" value="确定" type="button" class="J_closebox closebox" />
         <input value="取消" type="button" class="J_closebox closebox" />
@@ -44,7 +44,7 @@
 
 <!--删除分类 start-->
 <div class="add-openbox" id="J_deletelistBox">
-    <h2>删除分类提示<a href="" class="J_closebox xbtn"></a></h2>
+    <h2>删除分类提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
         确定删除该分类？删除后不可恢复,请谨慎操作！
     </p>
@@ -72,8 +72,8 @@
             return false;
         });
         //input文字交互
-        adminjs.inpFocusBlur('.J_addflinp');
-        adminjs.inpFocusBlur('.J_compileinp');
+        //adminjs.inpFocusBlur('.J_addflinp');
+        //adminjs.inpFocusBlur('.J_compileinp');
         //添加分类弹框
         $('#J_addflBtn').click(function() {
             currentId = 0;

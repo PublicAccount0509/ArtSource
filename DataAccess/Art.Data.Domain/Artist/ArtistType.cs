@@ -14,8 +14,10 @@ namespace Art.Data.Domain
         public ArtistType()
         {
             Artists = new HashSet<Artist>();
-        } 
+        }
+
         [StringLength(30)]
+        [Required]
         public string Name { get; set; }
 
         public virtual ICollection<Artist> Artists { get; set; }
