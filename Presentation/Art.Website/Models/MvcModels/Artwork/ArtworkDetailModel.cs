@@ -38,7 +38,11 @@ namespace Art.Website.Models
         public override ArtworkDetailModel Translate(Artwork from)
         {
             var to = new ArtworkDetailModel();
-            to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName); 
+            if (!string.IsNullOrEmpty(from.ImageFileName))
+            {
+                to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName);
+            }
+
             to.Name = from.Name;
             to.ArtistName = from.Artist.Name;
             to.Institution = from.Institution;
