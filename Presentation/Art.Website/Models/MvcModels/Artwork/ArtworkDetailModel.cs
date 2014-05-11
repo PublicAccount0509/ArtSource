@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Website.Common.Config;
 using System;
@@ -24,7 +25,7 @@ namespace Art.Website.Models
         public string ArtTechnique { get; set; }
         public string CreationInspiration { get; set; }
         public string[] SuitablePlaces { get; set; }
-        public string AuctionType { get; set; }
+        public AuctionType AuctionType { get; set; }
         public decimal AuctionPrice { get; set; }
         public DateTime? StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }
@@ -50,7 +51,7 @@ namespace Art.Website.Models
             to.ArtTechnique = from.ArtTechnique == null ? null : from.ArtTechnique.Name;
             to.CreationInspiration = from.CreationInspiration;
             to.SuitablePlaces = from.SuitableArtPlaces.Select(i => i.Name).ToArray();
-            to.AuctionType = from.AuctionType.ToString();
+            to.AuctionType = from.AuctionType;
             to.AuctionPrice = from.AuctionPrice;
             to.StartDateTime = from.StartDateTime;
             to.EndDateTime = from.EndDateTime;

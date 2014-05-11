@@ -1,7 +1,7 @@
 ﻿@model ArtworkDetailModel
 @{    
     Layout = "~/Views/Shared/_ArtLayout.cshtml";
-    ViewBag.Title = "art worktype manage";
+    ViewBag.Title = "作品详情";
 }
 
 <div class="conterbox addartwork">
@@ -71,15 +71,18 @@
         </tr>
         <tr>
             <td class="sm">拍卖价格:</td>
-            <td class="smnr">@Model.AuctionPrice</td>
+            <td class="smnr">@string.Format("{0:C}", Model.AuctionPrice) 元</td>
         </tr>
-        <tr>
-            <td class="sm">开拍时间:</td>
-            <td class="smnr">@(Model.StartDateTime == null ? "" : Model.StartDateTime.Value.ToString("yyyy-MM-dd hh:mm:ss"))</td>
-        </tr>
-        <tr>
-            <td class="sm">结束时间: </td>
-            <td class="smnr">@(Model.EndDateTime == null ? "" : Model.EndDateTime.Value.ToString("yyyy-MM-dd hh:mm:ss"))</td>
-        </tr>
+        @if (Model.AuctionType != Art.Data.Common.AuctionType.一口价)
+        {
+            <tr>
+                <td class="sm">开拍时间:</td>
+                <td class="smnr">@(Model.StartDateTime == null ? "" : Model.StartDateTime.Value.ToGeneralString())</td>
+            </tr>
+            <tr>
+                <td class="sm">结束时间: </td>
+                <td class="smnr">@(Model.EndDateTime == null ? "" : Model.EndDateTime.Value.ToGeneralString())</td>
+            </tr>
+        }
     </table>
 </div>
