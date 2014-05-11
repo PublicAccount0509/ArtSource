@@ -29,7 +29,11 @@ namespace Art.Website.Models
         public decimal AuctionPrice { get; set; }
         public DateTime? StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }
-    }
+
+        public decimal? FeePackageGeneral { get; set; }
+        public decimal? FeePackageFine { get; set; }
+        public decimal? FeeDeliveryLocal { get; set; }
+        public decimal? FeeDeliveryNonlocal { get; set; }    }
 
     public class ArtworkDetailModelTranslator : TranslatorBase<Artwork, ArtworkDetailModel>
     {
@@ -59,6 +63,11 @@ namespace Art.Website.Models
             to.AuctionPrice = from.AuctionPrice;
             to.StartDateTime = from.StartDateTime;
             to.EndDateTime = from.EndDateTime;
+
+            to.FeePackageGeneral = from.FeePackageGeneral;
+            to.FeePackageFine = from.FeePackageFine;
+            to.FeeDeliveryLocal = from.FeeDeliveryLocal;
+            to.FeeDeliveryNonlocal = from.FeeDeliveryNonlocal;
             return to;
         }
 

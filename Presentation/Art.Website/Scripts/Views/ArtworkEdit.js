@@ -172,10 +172,11 @@
             var url = model.Artwork.Id > 0 ? "/Artwork/Update" : "/Artwork/Add";
             webExpress.utility.ajax.request(url, model.Artwork,
             function () {
-                alert("success");
+                alert("保存成功");
+                location.href = location.href;
             },
             function () {
-                alert("error");
+                alert("保存错误");
             });
         }
 

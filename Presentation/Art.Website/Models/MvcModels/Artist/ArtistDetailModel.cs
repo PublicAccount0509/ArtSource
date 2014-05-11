@@ -38,7 +38,7 @@ namespace Art.Website.Models
             to.ArtistTypeNames = from.ArtistTypes.Select(i => i.Name).ToArray();
             to.SkilledGenres = from.SkilledGenres.Select(i => i.Name).ToArray() ;
             to.Masterpiece = from.Masterpiece;
-            to.MasterpieceType = "agnostic"; 
+            to.MasterpieceType = from.MasterpieceType.Name;
             if (!string.IsNullOrEmpty(from.AvatarFileName))
             {
                 to.AvatarFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.AvatarFileName);

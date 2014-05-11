@@ -84,5 +84,43 @@
                 <td class="smnr">@(Model.EndDateTime == null ? "" : Model.EndDateTime.Value.ToGeneralString())</td>
             </tr>
         }
+        <tr>
+            <td class="sm">包装费: </td>
+            <td class="smnr">
+                @if (Model.FeePackageGeneral != null)
+                {
+                    @:一般包装<span>@Model.FeePackageGeneral.Value</span>元
+                }
+            
+                @if (Model.FeePackageGeneral != null && Model.FeePackageFine != null)
+                { 
+                    @:，
+                }
+
+                @if (Model.FeePackageFine != null)
+                {
+                    @:精装<span>@Model.FeePackageFine.Value</span>元   
+	            }
+            </td>
+        </tr>
+        <tr>
+            <td class="sm">运费: </td>
+            <td class="smnr">
+                @if (Model.FeeDeliveryLocal != null)
+                {
+                    @:市内运费<span>@Model.FeeDeliveryLocal.Value</span>元
+                }
+
+                @if (Model.FeeDeliveryLocal != null && Model.FeeDeliveryNonlocal != null)
+                { 
+                    @:，
+                }
+
+                @if (Model.FeeDeliveryNonlocal != null)
+                {
+                    @:外地运费<span>@Model.FeeDeliveryNonlocal.Value</span>元
+	            }
+            </td>
+        </tr>
     </table>
 </div>
