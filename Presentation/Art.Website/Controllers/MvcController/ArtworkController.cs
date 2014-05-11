@@ -21,7 +21,7 @@ namespace Art.Website.Controllers
         public ActionResult Types()
         {
             var model = new ArtworkTypesModel();
-            model.ArtworkTypes = GetArtworkTypes();
+            model.ArtworkTypes = GetArtworkTypeModels();
             return View(model);
         }
 
@@ -105,11 +105,11 @@ namespace Art.Website.Controllers
 
         public PartialViewResult ArtworkTypes()
         {
-            var artworkTypes = GetArtworkTypes();
+            var artworkTypes = GetArtworkTypeModels();
             return PartialView("_TypesList", artworkTypes);
         }
 
-        private IList<ArtworkTypeModel> GetArtworkTypes()
+        private IList<ArtworkTypeModel> GetArtworkTypeModels()
         {
             var artworkTypes = ArtworkBussinessLogic.Instance.GetArtworkTypes();
             var artworkTypeModels = ArtworkTypeModelTranslator.Instance.Translate(artworkTypes);
@@ -191,6 +191,9 @@ namespace Art.Website.Controllers
 
             var artists = ArtistBussinessLogic.Instance.GetArtists();
             model.Artists = IdNameModelTranslator<Artist>.Instance.Translate(artists);
+
+            var artworkTypes = ArtworkBussinessLogic.Instance.GetArtworkTypes();
+            model.ArtworkTypes = GetArtworkTypeModels();
             return View(model);
         }
 

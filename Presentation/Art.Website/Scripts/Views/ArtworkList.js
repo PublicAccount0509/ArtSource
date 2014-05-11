@@ -109,7 +109,7 @@ art.ui.view = {};
         }
 
         function refresh(pageIndex) {
-            var url = "Artwork/List";
+            var url = "/Artwork/List";
             if (pageIndex !== undefined) {
                 _searchCriterial.PagingRequest.PageIndex = pageIndex;
             }

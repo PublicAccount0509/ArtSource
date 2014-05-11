@@ -13,16 +13,17 @@
             <span class="name">作品名称：<input type="text" value="" id="txtName" class="searchinp" /></span>
             <span class="fl">作品分类：
                     <select id="ddlArtworkType">
-                        <option value="" selected="selected">全部</option>
-
-                        <option value="">国画</option>
-                        <option value="">水墨画</option>
-                        <option value="">当代画</option>
+                        <option value="" >全部</option>
+                        @for (int i = 0; i < Model.ArtworkTypes.Count; i++)
+                        {
+                            var item = Model.ArtworkTypes[i];
+                            <option value="@item.Id">@item.Text</option>
+                        } 
                     </select>
             </span>
             <span class="tc" id="ddlArtMaterial">作品材质：
                     <select name="">
-                        <option value="" selected="selected">全部</option>
+                        <option value="">全部</option>
                         <option value="">蕾丝</option>
                         <option value="">帆布</option>
                     </select>
@@ -45,7 +46,7 @@
                     </select>
             </span>
             <span class="srarchbtn">
-                <input type="submit" value="搜索" name="" class="btn" /></span>
+                <input type="button" value="搜索" id="btnSearch" class="btn" /></span>
         </div>
         <div class="data">
             @Html.Partial("_List", Model.PagedArtworks)
@@ -136,6 +137,10 @@
             var artworkId = domResolver.getRecordId();
             viewInstance.publish(artworkId);
             domResolver.setPublishState(true);
+        });
+
+        $("#btnSearch").click(function () {
+            viewInstance.search();
         });
     })
 </script>

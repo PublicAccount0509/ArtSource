@@ -14,7 +14,10 @@ namespace Art.Website.Models
         {
         }
 
+        public IList<ArtworkTypeModel> ArtworkTypes { get; set; }
+
         public IList<ValueTextEntry> Artists { get; set; }
+
         public PagedArtworkModel PagedArtworks { get; set; }
     }
 
