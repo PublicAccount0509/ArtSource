@@ -48,6 +48,12 @@ namespace Art.BussinessLogic
             return _artworkTypeRepository.GetById(id);
         }
 
+        public ArtworkType GetArtworkTypeByName(string name)
+        {
+           var query = _artworkTypeRepository.Table.Where(i=>i.Name == name);
+           return query.FirstOrDefault();
+        }
+
         public void AddArtworkType(ArtworkType artworkType)
         {
             _artworkTypeRepository.Insert(artworkType);

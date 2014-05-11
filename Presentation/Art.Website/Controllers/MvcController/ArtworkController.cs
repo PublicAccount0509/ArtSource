@@ -47,41 +47,95 @@ namespace Art.Website.Controllers
         [LoggingFilter]
         public JsonResult AddArtworkType(ArtworkTypeModel model)
         {
-            if (string.IsNullOrEmpty(model.Text))
+            string message;
+            if (!ValidateArtworkType(model,out message))
             {
-                return Json(new ResultModel(false, "分类不可为空"));
+                return Json(new ResultModel(false,message));
             }
-
-            for (int i = 0; i < model.ArtMaterials.Count; i++)
-            {
-                if (string.IsNullOrEmpty(model.ArtMaterials[i].Text))
-                {
-                    return Json(new ResultModel(false, "材质不可为空"));
-                }
-            }
-
-            for (int i = 0; i < model.ArtShapes.Count; i++)
-            {
-                if (string.IsNullOrEmpty(model.ArtShapes[i].Text))
-                {
-                    return Json(new ResultModel(false, "形制不可为空"));
-                }
-            }
-
-            for (int i = 0; i < model.ArtTechniques.Count; i++)
-            {
-                if (string.IsNullOrEmpty(model.ArtTechniques[i].Text))
-                {
-                    return Json(new ResultModel(false, "技法不可为空"));
-                }
-            }
-
 
             var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
             ArtworkBussinessLogic.Instance.AddArtworkType(artworkType);
 
             var result = new ResultModel(true, string.Empty);
             return Json(result);
+        }
+
+        [Act("编辑艺术品分类")]
+        [LoggingFilter]
+        public ActionResult UpdateArtworkType(ArtworkTypeModel model)
+        {
+            string message;
+            if (!ValidateArtworkType(model, out message))
+            {
+                return Json(new ResultModel(false, message));
+            }
+            var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
+            ArtworkBussinessLogic.Instance.UpdateArtworkType(artworkType);
+
+            var result = new ResultModel(true, string.Empty);
+            return Json(result);
+        }
+
+        public bool ValidateArtworkType(ArtworkTypeModel model, out string message)
+        {
+            if (string.IsNullOrEmpty(model.Text))
+            {
+                message = "分类不可为空";
+                return false;
+            }
+            var at = ArtworkBussinessLogic.Instance.GetArtworkTypeByName(model.Text);
+            if (at != null && at.Id != model.Id)
+            {
+                message = "已存在相同名称的分类!";
+                return false;
+            }
+
+            for (int i = 0; i < model.ArtMaterials.Count; i++)
+            {
+                if (string.IsNullOrEmpty(model.ArtMaterials[i].Text))
+                {
+                    message = "材质不可为空";
+                    return false;
+                }
+            }
+
+            if (model.ArtMaterials.GroupBy(i => i.Text).Count() != model.ArtMaterials.Count)
+            {
+                message = "材质名有重复";
+                return false;
+            }
+
+            for (int i = 0; i < model.ArtShapes.Count; i++)
+            {
+                if (string.IsNullOrEmpty(model.ArtShapes[i].Text))
+                {
+                    message = "形制不可为空";
+                    return false;
+                }
+            }
+
+            if (model.ArtShapes.GroupBy(i => i.Text).Count() != model.ArtShapes.Count)
+            {
+                message = "形制有重复";
+                return false;
+            }
+
+            for (int i = 0; i < model.ArtTechniques.Count; i++)
+            {
+                if (string.IsNullOrEmpty(model.ArtTechniques[i].Text))
+                {
+                    message = "技法不可为空";
+                    return false;
+                }
+            }
+
+            if (model.ArtTechniques.GroupBy(i => i.Text).Count() != model.ArtTechniques.Count)
+            {
+                message = "技法有重复";
+                return false;
+            }
+            message = null;
+            return true;
         }
 
         public void Test()
@@ -93,15 +147,6 @@ namespace Art.Website.Controllers
             ArtworkBussinessLogic.Instance.UpdateArtworkType(artworkType);
         }
 
-        public ActionResult UpdateArtworkType(ArtworkTypeModel model)
-        {
-            var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
-            ArtworkBussinessLogic.Instance.UpdateArtworkType(artworkType);
-
-            var result = new ResultModel(true, string.Empty);
-            return Json(result);
-
-        }
 
         public PartialViewResult ArtworkTypes()
         {
