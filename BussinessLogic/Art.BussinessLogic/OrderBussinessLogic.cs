@@ -49,10 +49,16 @@ namespace Art.BussinessLogic
                 query = query.Where(i => i.FADateTime <= dateEnd);
             }
 
-            if (string.IsNullOrEmpty(criteria.OrderNumber))
+            if (!string.IsNullOrEmpty(criteria.OrderNumber))
             {
                 query = query.Where(i => i.OrderNumber == criteria.OrderNumber);
             }
+
+            if (criteria.Status.HasValue)
+            {
+                query = query.Where(i => i.Status == criteria.Status.Value);
+            }
+
             query = query.OrderByDescending(i => i.Id);
 
             var result = new PagedList<Order>(query, criteria.PagingRequest.PageIndex, criteria.PagingRequest.PageSize);
@@ -70,6 +76,16 @@ namespace Art.BussinessLogic
                 results.Add(result);
             }
             return results;
+        }
+
+        public void Deliver(int orderId, string companyName, string billNumber)
+        {
+            var order = _orderRepository.GetById(orderId);
+            order.DeliveryInfo.DeliveryCompany = companyName;
+            order.DeliveryInfo.DeliveryNumber = billNumber;
+            order.DeliveryInfo.Status = DeliveryStatus.已发货;
+
+            _orderRepository.Update(order);
         }
     }
 }

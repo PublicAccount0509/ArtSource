@@ -234,7 +234,10 @@
     <Compile Include="Models\MvcModels\Message\SystemNoticeModel.cs" />
     <Compile Include="Models\MvcModels\Message\SystemNoticeSearchCriteria.cs" />
     <Compile Include="Models\MvcModels\Order\AddOrderModel.cs" />
+    <Compile Include="Models\MvcModels\Order\AddressModel.cs" />
+    <Compile Include="Models\MvcModels\Order\DeliverModel.cs" />
     <Compile Include="Models\MvcModels\Order\OrderManageModel.cs" />
+    <Compile Include="Models\MvcModels\Order\OrderSearchCriteria.cs" />
     <Compile Include="Models\MvcModels\ProfessionModel.cs" />
     <Compile Include="Models\MvcModels\Translators\ITranslator.cs" />
     <Compile Include="Models\MvcModels\Translators\TranslatorBase.cs" />
@@ -398,6 +401,7 @@
     <Content Include="Scripts\Views\ArtworkTypes.js" />
     <Content Include="Scripts\Views\base\ViewBase.js" />
     <Content Include="Scripts\Views\MessageList.js" />
+    <Content Include="Scripts\Views\OrderList.js" />
     <Content Include="Scripts\Views\_references.views.js" />
     <Content Include="Scripts\webExpress\webExpress.control.confirmWindow.js" />
     <Content Include="Scripts\webExpress\webExpress.controls.adpaters.js" />
@@ -449,6 +453,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Order\Test.cshtml" />
+    <Content Include="Views\Order\_List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authorization\" />

@@ -13,12 +13,12 @@ namespace Art.Website.Models
     public class OrderManageModel
     {
         public List<string> Status { get; set; }
-        public PagedOrderSimpleModel PagedOrders { get; set; }
+        public PagedOrderModel PagedOrders { get; set; }
     }
 
-    public class PagedOrderSimpleModel
+    public class PagedOrderModel
     {
-        public PagedOrderSimpleModel(List<OrderSimpleModel> orders, PagingResult pagingResult)
+        public PagedOrderModel(List<OrderSimpleModel> orders, PagingResult pagingResult)
         {
             this.Orders = orders;
             this.PagingResult = pagingResult;
@@ -51,7 +51,10 @@ namespace Art.Website.Models
             to.Id = from.Id;
             to.OrderNumber = from.OrderNumber;
             to.TransactionDateTime = from.FADateTime;
-            to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.OrderItem.Artwork.ImageFileName);
+            if (!string.IsNullOrEmpty(from.OrderItem.Artwork.ImageFileName))
+            {
+                to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.OrderItem.Artwork.ImageFileName);
+            }            
             to.Status = from.Status;
             to.PayMode = from.PayMode;
             to.PayStatus = from.PayStatus;

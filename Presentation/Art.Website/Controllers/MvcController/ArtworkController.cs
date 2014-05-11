@@ -242,7 +242,7 @@ namespace Art.Website.Controllers
             return View(model);
         }
 
-        public ActionResult List(ArtworkSearchCriteria criteria)
+        public PartialViewResult List(ArtworkSearchCriteria criteria)
         {
             var model = GetPagedArtworkModel(criteria);
             return PartialView("_List", model);

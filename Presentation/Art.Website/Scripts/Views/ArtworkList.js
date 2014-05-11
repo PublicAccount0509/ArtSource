@@ -1,9 +1,6 @@
 ﻿/// <reference path="_references.views.js" />
 /// <reference path="../webExpress/webExpress.controls.adpaters.js" />
-
-var art = {};
-art.ui = {};
-art.ui.view = {};
+ 
 
 (function () {
     art.ui.view.ArtworkList = ArtworkListClass;
@@ -13,7 +10,7 @@ art.ui.view = {};
         var DEFAULT_PAGESIZE = 10;
 
         var _self = this;
-        var _searchCriterial = { PagingRequest: { PageIndex: 0, PageSize: DEFAULT_PAGESIZE } };
+        var _searchCriteria = { PagingRequest: { PageIndex: 0, PageSize: DEFAULT_PAGESIZE } };
         var _currentPageIndex = 0;
 
         function _init() {
@@ -93,7 +90,7 @@ art.ui.view = {};
         }
 
         function search() {
-            _searchCriterial = {
+            _searchCriteria = {
                 NamePart: $("#txtName").val(),
                 ArtworkTypeId: $("#ddlArtworkType option:selected").val(),
                 ArtistId: $("#ddlArtMaterial option:selected").val(),
@@ -108,9 +105,9 @@ art.ui.view = {};
         function refresh(pageIndex) {
             var url = "/Artwork/List";
             if (pageIndex !== undefined) {
-                _searchCriterial.PagingRequest.PageIndex = pageIndex;
+                _searchCriteria.PagingRequest.PageIndex = pageIndex;
             }
-            webExpress.utility.ajax.request(url, _searchCriterial,
+            webExpress.utility.ajax.request(url, _searchCriteria,
                 function (data) {
                     $(".data").html(data);
 

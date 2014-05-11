@@ -18,7 +18,11 @@ namespace Art.Website.Controllers
             var model = new AddOrderModel();
             model.ArtworkId = 1;
             model.CustomerId = 1;
-            model.DeliveryMode = DeliveryMode.自提;
+            //model
+            model.DeliverInfoModel = new DeliverInfoModel()
+            {
+                Mode = DeliveryMode.物流配送
+            };
             model.InvoiceType = InvoiceType.个人;
             model.InvoiceCustomerName = "雷锋";
             model.Message = "sssssssoon";
@@ -39,8 +43,23 @@ namespace Art.Website.Controllers
             criteria.PagingRequest = new WebExpress.Core.PagingRequest()
             {
                 PageIndex = 0,
-                PageSize = 10
+                PageSize = 2
             };
+
+            var model = new OrderManageModel();
+            model.PagedOrders = GetPagedOrderModel(criteria);
+            return View(model);
+        }
+
+        [HttpPost]
+        public PartialViewResult List(OrderSearchCriteria criteria)
+        {
+            var model = GetPagedOrderModel(criteria);
+            return PartialView("_List", model);
+        }
+
+        private PagedOrderModel GetPagedOrderModel(OrderSearchCriteria criteria)
+        {
             var pagedOrders = OrderBussinessLogic.Instance.SearchOrders(criteria);
             var simpleOrders = new List<OrderSimpleModel>();
             foreach (var item in pagedOrders)
@@ -48,12 +67,18 @@ namespace Art.Website.Controllers
                 var simpleOrder = OrderSimpleModelTranslator.Instance.Translate(item);
                 simpleOrders.Add(simpleOrder);
             }
-            var model = new OrderManageModel();
-            model.PagedOrders = new PagedOrderSimpleModel(simpleOrders, pagedOrders.PagingResult);
-            return View(model);
+
+            var model = new PagedOrderModel(simpleOrders, pagedOrders.PagingResult);
+            return model;
         }
 
-        public ActionResult AuctionList() 
+        public JsonResult Deliver(DeliverInfoModel model)
+        {
+            OrderBussinessLogic.Instance.Deliver(model.Id, model.DeliveryCompany, model.DeliveryNumber);
+            return Json(new ResultModel(true, ""));
+        }
+
+        public ActionResult AuctionList()
         {
             return View();
         }

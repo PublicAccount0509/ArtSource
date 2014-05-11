@@ -13,7 +13,8 @@ namespace Art.Website.Models
         public string Message { get; set; }
         public int ArtworkId { get; set; }
         public PayMode PayMode { get; set; }
-        public DeliveryMode DeliveryMode { get; set; }
+
+        public DeliverInfoModel DeliverInfoModel { get; set; }
 
         public InvoiceType InvoiceType { get; set; }
         public string InvoiceCustomerName { get; set; }
@@ -34,7 +35,7 @@ namespace Art.Website.Models
             to.CustomerId = from.CustomerId;
             to.CustumerMessage = from.Message;
             to.PayMode = from.PayMode;
-            to.DeliveryMode = from.DeliveryMode;
+            to.DeliveryMode = from.DeliverInfoModel.Mode;
             to.InvoiceInfo = new OrderInvoiceInfo()
             {
                 InvoiceType = InvoiceType.单位,

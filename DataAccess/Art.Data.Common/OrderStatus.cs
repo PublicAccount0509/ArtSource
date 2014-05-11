@@ -8,7 +8,7 @@ namespace Art.Data.Common
 {
     public enum OrderStatus
     {
-        生成中,
+        生成中 = 1,
         待处理,
         已接受,
         已发货,
