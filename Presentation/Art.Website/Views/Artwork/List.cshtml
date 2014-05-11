@@ -13,19 +13,16 @@
             <span class="name">作品名称：<input type="text" value="" id="txtName" class="searchinp" /></span>
             <span class="fl">作品分类：
                     <select id="ddlArtworkType">
-                        <option value="" >全部</option>
+                        <option value="">全部</option>
                         @for (int i = 0; i < Model.ArtworkTypes.Count; i++)
                         {
                             var item = Model.ArtworkTypes[i];
                             <option value="@item.Id">@item.Text</option>
-                        } 
+                        }
                     </select>
             </span>
-            <span class="tc" id="ddlArtMaterial">作品材质：
-                    <select name="">
-                        <option value="">全部</option>
-                        <option value="">蕾丝</option>
-                        <option value="">帆布</option>
+            <span class="tc">作品材质：
+                    <select id="ddlArtMaterial" data-bind="source:ArtMaterials" data-value-field="Id" data-text-field="Text">
                     </select>
             </span>
             <span class="zz" id="ddlArtist">作者：
@@ -93,6 +90,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        @{ var str = WebExpress.Website.Serialization.JavaScriptJsonSerializer.Instance.Serialize(Model.ArtworkTypes); }
+        var sourceArtworkTypes =  @Html.Raw(@str);
+        console.dir(sourceArtworkTypes);
+
+            
+
         var viewInstance = new art.ui.view.ArtworkList();
         var domResolver = new art.ui.view.DomResolver();
 
@@ -121,6 +124,21 @@
             adminjs.openwinbox('#J_deletezpBox');
             domResolver.setCurrentRecordElement($(this).closest("tr"));
             return false;
+        });
+
+        $("#ddlArtworkType").change(function () {
+            var artworkTypeId = $(this).find("option:selected").val(); 
+            var artworkType = $.grep(sourceArtworkTypes, function (element, index) {
+                return element.Id == artworkTypeId;
+            })[0];
+            
+            var data = {ArtMaterials:[{Id:"",Text:"未填"}]};
+            if (artworkType) {
+                data.ArtMaterials = data.ArtMaterials.concat(artworkType.ArtMaterials);
+            }
+
+            var viewModel = kendo.observable(data);
+            kendo.bind($("#ddlArtMaterial"), viewModel);
         });
 
         $(".confirmDelete").click(function () {
