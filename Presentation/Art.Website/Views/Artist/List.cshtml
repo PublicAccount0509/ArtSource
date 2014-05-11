@@ -41,8 +41,8 @@
 </div>*@
 <!--end-->
 <!--删除艺术家分类 start-->
-<div class="add-openbox" id="J_deletelistBox">
-    <h2>删除艺术家分类提示<a href="" class="J_closebox xbtn"></a></h2>
+@*<div class="add-openbox" id="J_deletelistBox">
+    <h2>删除艺术家分类提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
         确定删除该分类吗？删除该分类后，该分类旗下所有艺术品将删除。请谨慎操作！
     </p>
@@ -50,11 +50,11 @@
         <input value="确定" type="button" class="J_closebox" />
         <input value="取消" type="button" class="J_closebox" />
     </p>
-</div>
+</div>*@
 <!--end-->
 <!--删除艺术家 start-->
 <div class="add-openbox" id="J_deletezzBox">
-    <h2>删除艺术家提示<a href="" class="J_closebox xbtn"></a></h2>
+    <h2>删除艺术家提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
         确定删除该画家吗？删除该画家后，旗下所有作品将删除。请谨慎操作！
     </p>
@@ -66,19 +66,19 @@
 <!--end-->
 <!--取消发布 start-->
 <div class="add-openbox" id="J_cancelBox">
-    <h2>取消发布提示<a href="" class="J_closebox xbtn"></a></h2>
+    <h2>取消发布提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
         确定取消发布该画家吗？取消后将无法在前台显示。
     </p>
     <p class="btnbox">
-        <input value="确定" type="button" class="J_closebox" />
+        <input id="btnUnPublishOK" value="确定" type="button" class="J_closebox" />
         <input value="取消" type="button" class="J_closebox" />
     </p>
 </div>
 <!--end-->
 <!--发布 start-->
 <div class="add-openbox" id="J_issueBox">
-    <h2>发布提示<a href="" class="J_closebox xbtn"></a></h2>
+    <h2>发布提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
         确定发布该画家吗？发布后将会在前台显示。
     </p>
@@ -104,13 +104,7 @@
         });
         //input文字交互
         adminjs.inpFocusBlur('.J_addflinp');
-
-        //添加分类弹框
-        //$('#J_addflBtn').click(function () {
-        //    adminjs.openwinbox('#J_addflbox');
-        //    return false;
-        //});
-
+         
         //删除分类
         $(document).on("click", ".J_deleteflBtn", function () {
             adminjs.openwinbox('#J_deletelistBox');
@@ -144,30 +138,41 @@
         });
 
         //取消发布
-        $('.J_cancelBtn').click(function () {
+        $(document).on("click", ".J_cancelBtn", function () {
             adminjs.openwinbox('#J_cancelBox');
+            currentElement = $(this);
             return false;
         });
-        //发布
 
+        //发布
         var currentElement;
-        $('.J_issueBtn').click(function () {
+        $(document).on("click", '.J_issueBtn', function () {
             adminjs.openwinbox('#J_issueBox');
             currentElement = $(this);
             return false;
+        });
+
+        $("#btnUnPublishOK").click(function () {
+            var url = currentElement.attr("url");
+            webExpress.utility.ajax.request(url, null, function (data) {
+                if (data.IsSuccess) {
+                    refresh();
+                }
+                else {
+                    alert(data.Message);
+                }
+            },
+            function () {
+                alert(0);
+            }
+            );
         });
 
         $("#btnPublishOK").click(function () {
             var url = currentElement.attr("url");
             webExpress.utility.ajax.request(url, null, function (data) {
                 if (data.IsSuccess) {
-                    var lookups = { "未发布": "已发布", "已发布": "未发布", "发布": "取消发布", "取消发布": "发布" };
-                    var cmdText = lookups[currentElement.text()];
-                    currentElement.text(cmdText);
-
-                    var statusElement = currentElement.closest("td").prev();
-                    var statusText = lookups[statusElement.text()];
-                    statusElement.text(statusText);
+                    refresh();
                 }
                 else {
                     alert(data.Message);
@@ -180,7 +185,7 @@
         });
 
         //查看作者
-        $('.J_zjIinfo').click(function () {
+        $(document).on("click", '.J_zjIinfo', function () {
             var url = $(this).attr("url");
             webExpress.utility.ajax.request(url, null,
             function (data, status) {
@@ -190,8 +195,7 @@
             },
             function () {
                 alert("error!");
-            },
-            { type: "Get", dataType: "html", contentType: "application/html; charset=UTF-8" }
+            }
             );
 
             return false;

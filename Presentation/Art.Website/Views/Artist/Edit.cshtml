@@ -56,29 +56,33 @@
                     <label for="@PropName(i => i.Artist.Birthday)" class="error t-errormessage" generated="true" ></label>
                 </dd>
             </dl>
-            <dl class="birthyear clearfix date" property-name="Artist.Deathday" control-type="dateSelects">
+            <dl class="birthyear clearfix date" property-name="@PropName(i=>i.Artist.Deathday)" control-type="dateSelects">
                 <dt><i>*</i>卒于:</dt>
                 <dd>
-                    <select name="year">
+                    <select name="@PropName(i=>i.Artist.Deathday)">
+                        <option value="">未填</option>
                         @for (int i = 1949; i <= DateTime.Now.Year; i++)
                         {
                             <option value="@i">@i 年</option>
                         }
                     </select>
-
-                    <select name="month">
+                    
+                    <select name="@PropName(i=>i.Artist.Deathday)">
+                        <option value="">未填</option>
                         @for (int i = 1; i <= 12; i++)
                         {
                             <option value="@i">@i 月</option>
                         }
                     </select>
-
-                    <select name="day">
+                    
+                    <select name="@PropName(i=>i.Artist.Deathday)">
+                        <option value="">未填</option>
                         @for (int i = 1; i <= 31; i++)
                         {
                             <option value="@i">@i 日</option>
                         }
                     </select>
+                    <label for="@PropName(i => i.Artist.Deathday)" class="error t-errormessage" generated="true" ></label>
                 </dd>
             </dl>
             <dl class="education clearfix" data-source="Degrees" property-name="Artist.Degree" control-type="simpleDropdown">

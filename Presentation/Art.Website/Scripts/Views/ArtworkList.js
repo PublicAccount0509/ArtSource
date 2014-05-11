@@ -29,7 +29,7 @@ art.ui.view = {};
         }
 
         function remove(artworkId) {
-            var url = "Artwork/Delete/" + artworkId;
+            var url = "/Artwork/Delete/" + artworkId;
             webExpress.utility.ajax.request(url, null,
             function (data) {
                 if (data.IsSuccess) {
@@ -45,12 +45,11 @@ art.ui.view = {};
         }
 
         function publish(artworkId) {
-            var url = "Artwork/Publish/" + artworkId;
+            var url = "/Artwork/Publish/" + artworkId;
             webExpress.utility.ajax.request(url, null,
             function (data) {
-                if (data.IsSuccess) {
-                    alert("ss");
-                    //refresh(_currentPageIndex);
+                if (data.IsSuccess) { 
+                    refresh();
                 }
                 else {
                     alert(data.Message);
@@ -62,12 +61,11 @@ art.ui.view = {};
         }
 
         function cancelPublish(artworkId) {
-            var url = "Artwork/CancelPublish/" + artworkId;
+            var url = "/Artwork/CancelPublish/" + artworkId;
             webExpress.utility.ajax.request(url, null,
             function (data) {
                 if (data.IsSuccess) {
-                    alert("ss");
-                    //refresh(_currentPageIndex);
+                    refresh();
                 }
                 else {
                     alert(data.Message);
@@ -79,12 +77,11 @@ art.ui.view = {};
         }
 
         function cancelPublish(artworkId) {
-            var url = "Artwork/CancelPublish/" + artworkId;
+            var url = "/Artwork/CancelPublish/" + artworkId;
             webExpress.utility.ajax.request(url, null,
             function (data) {
-                if (data.IsSuccess) {
-                    alert("ss");
-                    //refresh(_currentPageIndex);
+                if (data.IsSuccess) { 
+                    refresh();
                 }
                 else {
                     alert(data.Message);

@@ -85,7 +85,17 @@
                 return re.test(viewModel.Artist.Birthday);
             }, "请填写日期");
 
+            jQuery.validator.addMethod("DeathdayValidate", function (value, element) {
+                if (viewModel.Artist.Deathday == "") {
+                    return true;
+                }
+                var re = /^\d{4}-\d{1,2}-\d{1,2}$/;
+                return re.test(viewModel.Artist.Birthday);
+            }, "请填写日期");
+            
+
             options.rules["Artist.Birthday"] = { DateValidate: true };
+            options.rules["Artist.Deathday"] = { DeathdayValidate: true };
 
             $("form").validate(options);
         }

@@ -50,8 +50,8 @@ namespace Art.BussinessLogic
 
         public ArtworkType GetArtworkTypeByName(string name)
         {
-           var query = _artworkTypeRepository.Table.Where(i=>i.Name == name);
-           return query.FirstOrDefault();
+            var query = _artworkTypeRepository.Table.Where(i => i.Name == name);
+            return query.FirstOrDefault();
         }
 
         public void AddArtworkType(ArtworkType artworkType)
@@ -73,7 +73,7 @@ namespace Art.BussinessLogic
                 return false;
             }
 
-            var artworks =_artworkRepository.Table.Where(i=>i.ArtworkType.Id == artworkType.Id);
+            var artworks = _artworkRepository.Table.Where(i => i.ArtworkType.Id == artworkType.Id);
             if (artworks.Any())
             {
                 reasons.Add("该分类已被使用，不能删除！");
@@ -125,7 +125,7 @@ namespace Art.BussinessLogic
         {
             return _artPlaceRepository.Table.ToList();
         }
-         
+
 
         public ICollection<ArtPlace> GetArtPlaces(List<int> ids)
         {
@@ -142,6 +142,7 @@ namespace Art.BussinessLogic
 
         public void Add(Artwork artwork)
         {
+            artwork.IsPublic = true;
             _artworkRepository.Insert(artwork);
         }
 

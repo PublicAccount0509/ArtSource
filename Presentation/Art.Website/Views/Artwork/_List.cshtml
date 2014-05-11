@@ -28,18 +28,18 @@
                 <td align="center" class="zpticai">@item.Genre</td>
                 <td align="center" class="paimailx">@item.AuctionType</td>
                 <td align="center" class="zt">@(item.IsPublic ? "已发布" : "未发布")</td>
-                <td align="center" class="caozuo">
-                    <a href="/Artwork/Edit/@item.Id">编辑</a>
-                    <a href="javascript:void(0)" class="J_deletezpBtn">删除</a>
+                <td align="center" class="caozuo">   
+                    <a href="/Artwork/Edit/@item.Id"><img src="/icon/bianji.png" align="top" />编辑</a>
+                    <a href="javascript:void(0)" class="J_deletezpBtn"><img src="/icon/shanchu.png" align="top" />删除</a>
                     @if (item.IsPublic)
                     {
-                        <a href="javascript:void(0)" class="J_cancelBtn">取消发布</a>    
+                        <a href="javascript:void(0)" class="J_cancelBtn"><img src="/icon/quxiaofabu.png" align="top" />取消发布</a>    
                     }
                     else
                     {
-                        <a href="javascript:void(0)" class="J_issueBtn">发布</a>    
+                        <a href="javascript:void(0)" class="J_issueBtn"><img src="/icon/fabu.png" align="top" />发布</a>    
                     }
-                    <a href="/Artwork/Detail/@item.Id">查看</a>
+                    <a href="/Artwork/Detail/@item.Id"><img src="/icon/chakaninfo.png" align="top" />查看</a>
                 </td>
             </tr>
         }

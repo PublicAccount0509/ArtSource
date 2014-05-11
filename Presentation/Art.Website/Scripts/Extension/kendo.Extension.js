@@ -13,6 +13,9 @@
     },
     change: function () {
         var value = this.yearControl.val() + "-" + this.monthControl.val() + "-" + this.dayControl.val();
+        if (value == "--") {
+            value = "";
+        }
         this.bindings["date"].set(value);
     },
     refresh: function () {

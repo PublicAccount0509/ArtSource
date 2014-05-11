@@ -75,9 +75,9 @@ namespace Art.BussinessLogic
 
         public ArtistType GetArtistType(int id)
         {
-           return _artistTypeRepository.GetById(id);
+            return _artistTypeRepository.GetById(id);
         }
-        
+
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 5:44 PM
         /// 修改者：
@@ -85,7 +85,7 @@ namespace Art.BussinessLogic
         /// ----------------------------------------------------------------------------------------
         public ArtistType GetArtistTypeByName(string name)
         {
-            var type = _artistTypeRepository.Table.Where( p=>name == p.Name);
+            var type = _artistTypeRepository.Table.Where(p => name == p.Name);
             return type.FirstOrDefault();
         }
 
@@ -103,8 +103,9 @@ namespace Art.BussinessLogic
 
         public Artist Add(Artist artist)
         {
-           var result =  _artistRepository.Insert(artist);
-           return result;
+            artist.IsPublic = true;
+            var result = _artistRepository.Insert(artist);
+            return result;
         }
 
         public void Update(Artist artist)
@@ -159,7 +160,7 @@ namespace Art.BussinessLogic
                         select p;
             return query.ToList();
         }
-         
+
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 12:55 PM
         /// 修改者：

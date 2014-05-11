@@ -53,7 +53,7 @@
 
 <!--取消发布 start-->
 <div class="add-openbox" id="J_cancelBox">
-    <h2>取消发布提示<a href="" class="J_closebox xbtn"></a></h2>
+    <h2>取消发布提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
         确定取消发布该作品吗？取消后,则无法在前台显示!
     </p>
@@ -65,7 +65,7 @@
 <!--end-->
 <!--发布 start-->
 <div class="add-openbox" id="J_issueBox">
-    <h2>发布提示<a href="" class="J_closebox xbtn"></a></h2>
+    <h2>发布提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
         确定发布该作品吗？发布后将会在前台显示。
     </p>
@@ -77,7 +77,7 @@
 <!--end-->
 <!--删除作品 start-->
 <div class="add-openbox" id="J_deletezpBox">
-    <h2>删除作品提示<a href="" class="J_closebox xbtn"></a></h2>
+    <h2>删除作品提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
         确定删除该作品吗？删除后，该作品不可恢复！。请谨慎操作！
     </p>
@@ -102,7 +102,11 @@
 
         //弹框
         var adminjs = new adminglass();//实例化后台类
-        adminjs.closewinbox();
+        
+        $(document).on("click", ".J_closebox", function () {
+            var box = $(this).closest(".add-openbox");
+            adminjs.closewinbox(box);
+        });
 
         //取消发布
         $(document).on("click", ".J_cancelBtn", function () {
