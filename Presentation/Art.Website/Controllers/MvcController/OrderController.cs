@@ -18,9 +18,9 @@ namespace Art.Website.Controllers
             var model = new AddOrderModel();
             model.ArtworkId = 1;
             model.CustomerId = 1;
-            model.DeliveryMode = DeliveryMode.物流配送;
-            model.InvoiceType = InvoiceType.单位;
-            model.InvoiceCustomerName = "apple inc.";
+            model.DeliveryMode = DeliveryMode.自提;
+            model.InvoiceType = InvoiceType.个人;
+            model.InvoiceCustomerName = "雷锋";
             model.Message = "sssssssoon";
             model.PayMode = PayMode.Alipay;
 
@@ -39,7 +39,7 @@ namespace Art.Website.Controllers
             criteria.PagingRequest = new WebExpress.Core.PagingRequest()
             {
                 PageIndex = 0,
-                PageSize = 2
+                PageSize = 10
             };
             var pagedOrders = OrderBussinessLogic.Instance.SearchOrders(criteria);
             var simpleOrders = new List<OrderSimpleModel>();

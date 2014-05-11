@@ -1,7 +1,4 @@
-﻿var art = {};
-art.ui = {};
-art.ui.view = {};
-
+﻿ 
 (function () { 
     art.ui.view.ViewBase = ViewBaseClass;
 

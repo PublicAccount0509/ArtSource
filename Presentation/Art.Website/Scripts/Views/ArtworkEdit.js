@@ -155,16 +155,16 @@
 
             if (model.Artwork.Id == 0) {
                 model.Artwork.AuctionPrice = "";
-                model.Artwork.AuctionType = 1;
+                model.Artwork.AuctionType = art.config.enums.AuctionTypes.一口价;
             }
 
             model.SourceArtMaterials = getArtworkTypeSubItem(artworkType, "ArtMaterials");
             model.SourceArtShapes = getArtworkTypeSubItem(artworkType, "ArtShapes");
             model.SourceArtTechniques = getArtworkTypeSubItem(artworkType, "ArtTechniques"); model.IsHideAuctionDateTime = model.Artwork.AuctionType == 1;
 
-            model.IsHideAuctionDateTime = model.Artwork.AuctionType == 1;
+            model.IsHideAuctionDateTime = model.Artwork.AuctionType == art.config.enums.AuctionTypes.一口价;
             model.switchActionType = function (e) {
-                this.set("IsHideAuctionDateTime", e.currentTarget.value == 1);
+                this.set("IsHideAuctionDateTime", e.currentTarget.value == art.config.enums.AuctionTypes.一口价);
             }
         }
 

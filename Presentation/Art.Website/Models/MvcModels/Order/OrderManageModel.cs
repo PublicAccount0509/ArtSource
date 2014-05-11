@@ -1,7 +1,9 @@
 ﻿using Art.Data.Common;
 using Art.Data.Domain;
+using Art.Website.Common.Config;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using WebExpress.Core.Paging;
@@ -34,7 +36,7 @@ namespace Art.Website.Models
         public OrderStatus Status { get; set; }
         public PayMode PayMode { get; set; }
         public PayStatus PayStatus { get; set; }
-        public DeliveryMode DeliveryMode { get; set; } 
+        public DeliveryMode DeliveryMode { get; set; }
         public string CustumerMessage { get; set; }
 
     }
@@ -49,7 +51,7 @@ namespace Art.Website.Models
             to.Id = from.Id;
             to.OrderNumber = from.OrderNumber;
             to.TransactionDateTime = from.FADateTime;
-            to.ImageFileName = from.OrderItem.Artwork.ImageFileName;
+            to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.OrderItem.Artwork.ImageFileName);
             to.Status = from.Status;
             to.PayMode = from.PayMode;
             to.PayStatus = from.PayStatus;

@@ -14,6 +14,9 @@ namespace WebExpress.Core.Enums
         /// <summary>
         /// Get the name (key) of enum item.
         /// </summary>
+        string Name { get; }
+
+
         string Text { get; }
 
         /// <summary>
