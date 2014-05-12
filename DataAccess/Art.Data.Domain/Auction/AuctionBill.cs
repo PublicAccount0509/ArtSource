@@ -15,6 +15,10 @@ namespace Art.Data.Domain
 
         public decimal BidPrice { get; set; }
 
+        public string CustumerMessage { get; set; }
+
+        public DateTime BidDateTime { get; set; }
+
         public AuctionResult AuctionResult { get; set; }
 
         public virtual Artwork Artwork { get; set; }

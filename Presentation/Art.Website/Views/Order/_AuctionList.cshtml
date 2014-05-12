@@ -1,0 +1,58 @@
+﻿@using Art.Data.Common
+@model PagedAuctionModel
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="t-grid">
+    <thead>
+        <tr class="theadbg">
+            <th class="pminfo">拍卖作品</th>
+            <th class="yj">原始价</th>
+            <th class="pmfs">拍卖方式</th>
+            <th class="pmcj">拍卖出价</th>
+            <th class="cjr">出价人</th>
+            <th class="time">拍卖时间</th>
+            <th class="tiem-cz">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Auctions)
+        {
+            <tr auctionId="@item.Id" class="order-item">
+                <td class="item pminfo">
+                    <div class="pic-info">
+                        <img src="@item.ImageFileName" />
+                    </div>
+                    <div class="txt-info">
+                        <p class="txt-title">@item.ArtName</p>
+                        <p class="txt-fl">作者:@item.ArtworkName</p>
+                    </div>
+                </td>
+                <td class="w12 yj">￥@item.AuctionPrice</td>
+                <td class="w12 pmfs">@item.AuctionType</td>
+                <td id="tdBidPrice_@item.Id" class="w12 pmcj">￥@item.BidPrice</td>
+                <td class="w12 cjr">
+                    <p>@item.CustumerName</p>
+                    <p><span class="J_showMsg">
+                           <img src="/icon/new_msg.gif" /><span class="J_userMsg msgBox"><i></i><span>出价人留言：@item.CustumerMessage</span></span></span>---</p>
+                </td>
+                <td class="w12 time">@item.BidDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td class="w20 tiem-cz">
+                    @switch (item.AuctionResult)
+                    {
+                        case AuctionResult.None:
+                            <a href="" class="yes J_yesBtn">
+                                <img src="/icon/jieshou.png" align="top" />接受</a>
+                            <a href="" class="no J_noBtn">
+                                <img src="/icon/jujue.png" align="top" />拒绝</a>
+                            break;
+                        case AuctionResult.Accept:
+                            <span class="close">己接受</span>
+                            break;
+                        case AuctionResult.Refuse:
+                            <span class="close">己拒绝</span>
+                            break;
+                    }
+                </td>
+            </tr>
+        }
+</table>
+@Html.Partial("_Pager", Model.PagingResult)

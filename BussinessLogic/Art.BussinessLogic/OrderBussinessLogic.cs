@@ -20,12 +20,15 @@ namespace Art.BussinessLogic
         private readonly IRepository<Artwork> _artworkRepository;
 
         private readonly IRepository<Address> _addressRepository;
+
+        private readonly IRepository<AuctionBill> _auctionBillRepository; 
         private OrderBussinessLogic()
         {
             _orderRepository = new EfRepository<Order>();
             _customerRepository = new EfRepository<Customer>();
             _addressRepository = new EfRepository<Address>();
             _artworkRepository = new EfRepository<Artwork>();
+            _auctionBillRepository = new EfRepository<AuctionBill>();
         }
 
 
@@ -63,6 +66,114 @@ namespace Art.BussinessLogic
 
             var result = new PagedList<Order>(query, criteria.PagingRequest.PageIndex, criteria.PagingRequest.PageSize);
             return result;
+        }
+
+        /// <summary>
+        /// Searches the auction.
+        /// </summary>
+        /// <param name="criteria">The criteria</param>
+        /// <returns>
+        /// PagedList{AuctionBill}
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/12/2014 11:21 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public PagedList<AuctionBill> SearchAuction(AuctionSearchCriteria criteria)
+        {
+            var query = _auctionBillRepository.Table;
+            query =
+                query.Where(p =>
+                            //(!criteria.StartDate.HasValue || p.BidDateTime >= criteria.StartDate.Value.BeginOfDay())
+                            //&& (!criteria.EndDate.HasValue || p.BidDateTime <= criteria.EndDate.Value.EndOfDay())
+                            (criteria.ArtistsId == null || p.Artwork.Artist.Id == criteria.ArtistsId)
+                            && (criteria.ArtworkId == null || p.ArtworkId == criteria.ArtworkId));
+            if (criteria.StartDate.HasValue)
+            {
+                var dateBegin = criteria.StartDate.Value.BeginOfDay();
+                query = query.Where(i => i.BidDateTime >= dateBegin);
+            }
+
+            if (criteria.EndDate.HasValue)
+            {
+                var dateEnd = criteria.EndDate.Value.EndOfDay();
+                query = query.Where(i => i.BidDateTime <= dateEnd);
+            }
+            query = query.OrderByDescending(i => i.Id);
+
+            var result = new PagedList<AuctionBill>(query, criteria.PagingRequest.PageIndex,
+                                                    criteria.PagingRequest.PageSize);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the auction bill by identifier.
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// AuctionBill
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/12/2014 3:40 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public AuctionBill GetAuctionBillById(int id)
+        {
+            return _auctionBillRepository.GetById(id);
+        }
+
+        /// <summary>
+        /// 操作拍卖操作--拒绝
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/12/2014 3:51 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool AuctionRefuse(int id)
+        {
+            var auctionBill = GetAuctionBillById(id);
+            if (auctionBill == null)
+            {
+                return false;
+            }
+            auctionBill.AuctionResult = AuctionResult.Refuse;
+            //SaveChanges
+            _auctionBillRepository.Update(auctionBill);
+            return true;
+        }
+
+        /// <summary>
+        /// 操作拍卖操作--接受
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/12/2014 3:51 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool AuctionAccept(int id)
+        {
+            var auctionBill = GetAuctionBillById(id);
+            if (auctionBill == null)
+            {
+                return false;
+            }
+            auctionBill.AuctionResult = AuctionResult.Accept;
+            var otherAuctions =
+                _auctionBillRepository.Table.Where(p => p.ArtworkId == auctionBill.ArtworkId && p.Id != auctionBill.Id);
+            //接受一个出价人，相关的出价全部为拒绝
+            foreach (var otherAuction in otherAuctions)
+            {
+                otherAuction.AuctionResult = AuctionResult.Refuse;
+                //_auctionBillRepository.Update(otherAuction);
+            }
+            //SaveChanges
+            _auctionBillRepository.Update(auctionBill);
+            return true;
         }
 
         public List<Order> AddOrders(List<Order> orders)

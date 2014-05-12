@@ -3,19 +3,31 @@
 <div class="grid-pager clearfix">
     <div class="t-status-text">显示记录@(Model.RecordCount)条,共@(Model.TotalCount)条</div>
     <div class="t-pager t-reset">
-        <a href="#" class="t-link t-state-disabled">
+        <a href="#" class="t-link">
             <!--变灰不可选-->
-            <span class="t-icon t-arrow-first-gray">first</span>
+            @*<span class="t-icon t-arrow-first-gray">first</span>*@
             <!--变高亮可选
-                        <span class="t-icon t-arrow-first">first</span>
-                        -->
+                <span class="t-icon t-arrow-first">first</span>
+                -->
+            @if (Model.HasPreviousPage)
+            {
+                <span class="t-icon t-arrow-first">first</span>
+            }
+            else
+            {
+                <span class="t-icon t-arrow-first-gray">first</span>
+            }
         </a>
-        <a href="#" class="t-link t-state-disabled">
-            <!--变灰不可选-->
-            <span class="t-icon t-arrow-prev-gray">prev</span>
-            <!--高亮可选
-                        <span class="t-icon t-arrow-prev">prev</span>
-                        -->
+        <a href="#" class="t-link">
+
+            @if (Model.HasPreviousPage)
+            {
+                <span class="t-icon t-arrow-prev">prev</span>
+            }
+            else
+            {
+                <span class="t-icon t-arrow-prev-gray">prev</span>
+            }
         </a>
         <div class="t-numeric">
             @for (int i = 0; i < Model.TotalPages; i++)
@@ -45,10 +57,10 @@
             }
         </a>
         <a href="#" class="t-link">
-            @if (Model.HasPreviousPage)
+            @if (Model.HasNextPage)
             {
                 <!--高亮可选-->
-                <span class="t-icon t-arrow-last">last</span>    
+                <span class="t-icon t-arrow-last" pageIndex="@Model.TotalPages">last</span>    
             }
             else
             {
@@ -59,6 +71,6 @@
     </div>
 
     <div class="refresh">
-        <a href="javascript:void(0)" onclick="art.ui.view.current.refresh()" class="t-refresh">刷新</a>
+        <a href="javascript:void(0);" class="t-refresh">刷新</a>
     </div>
 </div>
