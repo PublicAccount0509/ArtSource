@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Domain.Access.Mapping
 {
-    public class AcitonBillMap : ArtEntityTypeConfiguration<AcitonBillMap>
+    public class AcitonBillMap : ArtEntityTypeConfiguration<AuctionBill>
     {
         public AcitonBillMap()
         { 

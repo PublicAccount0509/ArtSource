@@ -95,6 +95,23 @@ namespace Art.BussinessLogic
             return artwork;
         }
 
+        /// <summary>
+        /// Gets the artworks.
+        /// </summary>
+        /// <returns>
+        /// IList{Artwork}
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/12/2014 1:35 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public IList<Artwork> GetArtworks()
+        {
+            var artworks = _artworkRepository.Table.ToList();
+            return artworks;
+        }
+
 
         public ArtMaterial GetArtMaterial(int id)
         {

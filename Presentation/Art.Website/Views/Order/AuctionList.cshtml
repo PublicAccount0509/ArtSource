@@ -1,6 +1,161 @@
-﻿@{
-    ViewBag.Title = "AuctionList";
-    Layout = "~/Views/Shared/_ArtLayout.cshtml"; 
+﻿@model AuctionManageModel
+@{
+    ViewBag.Title = "Types";
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = "拍卖管理";
 }
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/Views/AuctionList.js"></script>
+<script src="~/Scripts/Extension/kendo.Extension.js"></script>
+<script src="~/Scripts/webExpress/webExpress.controls.adpaters.js"></script>
 
-<h2>AuctionList</h2>
+<div class="conterbox orderManage auctionManage">
+        <h2 class="crumbs">
+            您所在位置：订单管理 > 拍卖管理
+        </h2>
+        <div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hd">
+                <from method="post" name="" id="">
+                    <tr>
+                        <td class="w10">开始日期：<input value="" type="text" name="" id="startdate" class="inptexth dataw"/></td>
+                        <td class="w20">结束日期：<input value="" type="text" name="" id="enddate" class="inptexth dataw"/></td>
+                        <td class="w70">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            作者：
+                            <select name="" id="ddlArtist" class="inptexth">
+                                <option selected="selected" value="">全部</option>
+                                @foreach (var prof in Model.Artists)
+                                {
+                                    <option value="@prof.Id">@prof.Name</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            作品：
+                            <select name="" id="ddlArtwork" class="inptexth">
+                                <option selected="selected" value="">全部</option>
+                                <@foreach (var prof in Model.Artworks)
+                                 {
+                                     <option value="@prof.Id">@prof.Name</option>
+                                 }
+                            </select>
+                        </td>
+                        <td><input type="button" id="btnSearch" value="查询" name="" class="btn"/></td>
+                    </tr>
+                </from>
+
+            </table>
+            <div class="data">
+            @Html.Partial("_AuctionList", Model.PagedAuctions)
+            </div>
+            @*<div class="grid-pager clearfix">
+                <div class="t-status-text">显示记录1-15,共66条</div>
+                <div class="t-pager t-reset">
+                    <a href="#" class="t-link t-state-disabled">
+                        <!--变灰不可选-->
+                        <span class="t-icon t-arrow-first-gray">first</span>
+                        <!--变高亮可选
+                        <span class="t-icon t-arrow-first">first</span>
+                        -->
+                    </a>
+                    <a href="#" class="t-link t-state-disabled">
+                        <!--变灰不可选-->
+                        <span class="t-icon t-arrow-prev-gray">prev</span>
+                        <!--高亮可选
+                        <span class="t-icon t-arrow-prev">prev</span>
+                        -->
+                    </a>
+                    <div class="t-numeric">
+                        <span class="t-state-active">1</span>
+                        <a class="t-link num">2</a>
+                        <a class="t-link num">3</a>
+                        <a class="t-link num">4</a>
+                        <a class="t-link num">5</a>
+                    </div>
+                    <a href="#" class="t-link">
+                        <!--高亮可选-->
+                        <span class="t-icon t-arrow-next">next</span>
+                        <!--变灰不可选
+                        <span class="t-icon t-arrow-next-gray">next</span>
+                        -->
+                    </a>
+                    <a href="#" class="t-link">
+                        <!--高亮可选-->
+                        <span class="t-icon t-arrow-last">last</span>
+                        <!--变灰不可选
+                           <span class="t-icon t-arrow-last-gray">last</span>
+                        -->
+                    </a>
+                </div>
+
+                <div class="refresh">
+                    <a href="" class="t-refresh">刷新</a>
+                </div>
+            </div>*@
+        </div>
+    </div><div class="auctionManage">
+    <!--接受弹框 start-->
+    <div id="J_yesBox" class="add-openbox">
+        <h2>接受提示<a class="J_closebox xbtn" href=""></a></h2>
+        <p class="l-textinfo">确认将作品<span class="t-bold J_zpName"></span>以<span class="J_cmoney cmoney"></span>拍卖出去吗？一经同意，无法撤消返回。
+        </p>
+        <p class="btnbox">
+            <input id="btnAccept" type="button" class="J_closebox closebox" value="确定">
+            <input type="button" class="J_closebox closebox" value="取消">
+        </p>
+    </div>
+    <!--拒绝弹框 start-->
+    <div id="J_noBox" class="add-openbox">
+        <h2>拒绝提示<a class="J_closebox xbtn" href=""></a></h2>
+        <p class="l-textinfo">确认作品<span class="t-bold J_zpName"></span>，暂不以<span class="J_cmoney cmoney"></span>出售？
+        </p>
+        <p class="btnbox">
+            <input id="btnRefuse" type="button" class="J_closebox closebox" value="确定">
+            <input type="button" class="J_closebox closebox" value="取消">
+        </p>
+    </div>
+    </div><script>
+    var adminjs = new adminglass(); //实例化后台类
+    $(document).ready(function () {
+        var auctionId;
+        //var auctionResult;
+        var viewInstance = new art.ui.view.AuctionListClass();
+        viewInstance.init();
+        //日历控件
+        adminjs.datepickerbox('#startdate', '#enddate');
+        //关闭弹层
+        $(document).on("click", ".J_closebox", function() {
+            adminjs.closewinbox('.add-openbox');
+            return false;
+        });
+        //买家留言
+        adminjs.hoveritem('.J_showMsg', '.J_userMsg');
+
+        //接受弹框
+        $(document).on("click", ".J_yesBtn", function () {
+            auctionId = $(this).closest("tr").attr("auctionId");
+            //auctionResult = 1;
+            adminjs.openwinbox('#J_yesBox');
+            $('.J_zpName').text($(this).parent().parent().find('.txt-title').text());
+            $('.J_cmoney').text($(this).parent().parent().find('.pmcj').text());
+            return false;
+        });
+        //拒绝弹框
+        $(document).on("click", ".J_noBtn", function () {
+            auctionId = $(this).closest("tr").attr("auctionId");
+            //auctionResult = 2;
+            adminjs.openwinbox('#J_noBox');
+            $('.J_zpName').text($(this).parent().parent().find('.txt-title').text());
+            $('.J_cmoney').text($(this).parent().parent().find('.pmcj').text());
+            return false;
+        });
+        $("#btnRefuse").click(function () {
+            viewInstance.auctionRefuse(auctionId);
+        });
+        $("#btnAccept").click(function () {
+            viewInstance.auctionAccept(auctionId);
+        });
+    });
+</script>
