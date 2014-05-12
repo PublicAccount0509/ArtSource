@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Art.Data.Domain.Access;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,10 @@ namespace Art.WebService
     {
         protected void Application_Start()
         {
-            //GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            IDataProvider dataProvider = new SqlServerDataProvider();
+            dataProvider.InitDatabase(string.Empty);
         }
     }
 }

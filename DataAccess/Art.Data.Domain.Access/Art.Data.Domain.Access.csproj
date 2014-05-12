@@ -64,6 +64,9 @@
     <Compile Include="Mapping\Auction\AcitonBillMap.cs" />
     <Compile Include="Mapping\Customer\CustomerMap.cs" />
     <Compile Include="Mapping\Customer\AddressMap.cs" />
+    <Compile Include="Mapping\Customer\ActivityCollectMap.cs" />
+    <Compile Include="Mapping\Customer\ActivityPraiseMap.cs" />
+    <Compile Include="Mapping\Customer\ActivityShareMap.cs" />
     <Compile Include="Mapping\GenreMap.cs" />
     <Compile Include="Mapping\AdminUserMap.cs" />
     <Compile Include="Mapping\Artwork\ArtPeriodMap.cs" />

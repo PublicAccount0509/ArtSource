@@ -61,6 +61,9 @@
     <Compile Include="Artist\ArtistType.cs" />
     <Compile Include="Customer\Address.cs" />
     <Compile Include="Customer\Customer.cs" />
+    <Compile Include="Customer\ActivityCollect.cs" />
+    <Compile Include="Customer\ActivityShare.cs" />
+    <Compile Include="Customer\ActivityPraise.cs" />
     <Compile Include="Logging\ExceptionLog.cs" />
     <Compile Include="Logging\OperationLog.cs" />
     <Compile Include="Order\Order.cs" />

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebExpress.Core;
 using WebExpress.Core.Paging;
 
 namespace Art.Website.Models

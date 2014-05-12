@@ -151,6 +151,11 @@ namespace Art.BussinessLogic
             _artworkRepository.Update(artwork);
         }
 
+        public PagedList<Artwork> SearchArtworks(PagingRequest paging)
+        {
+            return SearchArtworks(null,null,null,null,paging);
+        }
+
         public PagedList<Artwork> SearchArtworks(string namePart, int? artworkTypeId, int? artMaterialId, int? artistId, PagingRequest paging)
         {
             Guard.IsNotNull<ArgumentNullException>(paging, "paging");

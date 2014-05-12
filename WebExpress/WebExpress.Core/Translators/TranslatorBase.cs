@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Art.Website.Models
+namespace WebExpress.Core
 {
     public abstract class TranslatorBase<TDomain, TModel> : ITranslator<TDomain, TModel>
     {

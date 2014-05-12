@@ -238,8 +238,6 @@
     <Compile Include="Models\Order\OrderManageModel.cs" />
     <Compile Include="Models\Order\OrderSearchCriteria.cs" />
     <Compile Include="Models\ProfessionModel.cs" />
-    <Compile Include="Models\Translators\ITranslator.cs" />
-    <Compile Include="Models\Translators\TranslatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

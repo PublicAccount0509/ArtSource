@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{832A573B-EB02-450A-9507-94403C992733}</ProjectGuid>
+    <ProjectGuid>{8A548090-D64D-4650-952F-4E2CB011DB07}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -38,6 +38,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
@@ -59,16 +65,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,12 +83,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ArtworkController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CustomerModel.cs" />
-    <Compile Include="Models\CustomerRegisterModel.cs" />
+    <Compile Include="Models\ArtworkSimpleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +101,28 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BussinessLogic\Art.BussinessLogic\Art.BussinessLogic.csproj">
+      <Project>{6db25716-e246-475d-aec3-513107464dbc}</Project>
+      <Name>Art.BussinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataAccess\Art.Data.Common\Art.Data.Common.csproj">
+      <Project>{449228d3-3f33-445a-8733-1ae940671d41}</Project>
+      <Name>Art.Data.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataAccess\Art.Data.Domain.Access\Art.Data.Domain.Access.csproj">
+      <Project>{ea13d35d-ac04-48a3-a20f-7e7085400c3d}</Project>
+      <Name>Art.Data.Domain.Access</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataAccess\Art.Data.Domain\Art.Data.Domain.Entities.csproj">
+      <Project>{83e133a9-e8f3-4ecb-b4ec-5a163f3ad3d1}</Project>
+      <Name>Art.Data.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WebExpress\WebExpress.Core\WebExpress.Core.csproj">
+      <Project>{c5637d1e-9a03-481e-876a-76b615d860ec}</Project>
+      <Name>WebExpress.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

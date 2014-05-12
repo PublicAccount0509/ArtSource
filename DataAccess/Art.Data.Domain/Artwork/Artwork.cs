@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Domain
 {
-    public class Artwork : BaseEntity,ISoftDelete
+    public class Artwork : BaseEntity, ISoftDelete
     {
         public string Name { get; set; }
         public virtual Artist Artist { get; set; }
@@ -28,22 +28,25 @@ namespace Art.Data.Domain
 
         public bool IsPublic { get; set; }
 
-        
+
         public decimal? FeePackageGeneral { get; set; }
 
         public decimal? FeePackageFine { get; set; }
 
         public decimal? FeeDeliveryLocal { get; set; }
 
-        public decimal? FeeDeliveryNonlocal { get; set; } 
+        public decimal? FeeDeliveryNonlocal { get; set; }
 
-        
+
         public virtual ICollection<ArtPlace> SuitableArtPlaces { get; set; }
 
         public virtual ArtworkType ArtworkType { get; set; }
         public virtual ArtMaterial ArtMaterial { get; set; }
         public virtual ArtShape ArtShape { get; set; }
         public virtual ArtTechnique ArtTechnique { get; set; }
+
+        public virtual List<Comment> Comments { get; set; }
+        public virtual Comment DefaultComment { get; set; }
     }
-     
+
 }

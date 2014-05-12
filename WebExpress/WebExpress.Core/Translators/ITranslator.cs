@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Art.Website.Models
+namespace WebExpress.Core
 {
     public interface ITranslator<T, TResult>
     {

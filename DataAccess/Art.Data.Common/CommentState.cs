@@ -11,6 +11,7 @@ namespace Art.Data.Common
         Approving,
         Approved,
         UnApproved,
-        Replied
+        Replied,
+        Top
     }
 }

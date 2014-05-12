@@ -13,7 +13,16 @@ namespace Art.Data.Domain.Access
     {
         public void InitDatabase(string sqlCommandFile)
         {
-            var sqlCommands = ParseCommands(sqlCommandFile);
+            string[] sqlCommands;
+            if (string.IsNullOrEmpty(sqlCommandFile))
+            {
+                sqlCommands = new string[0];
+            }
+            else
+            {
+                sqlCommands = ParseCommands(sqlCommandFile);
+            }
+            
             Database.SetInitializer(new ArtDropCreateDatabaseIfModelChanges(sqlCommands));  
         }
 
