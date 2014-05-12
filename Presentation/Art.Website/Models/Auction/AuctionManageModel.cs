@@ -5,6 +5,7 @@ using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Website.Common.Config;
 using WebExpress.Core.Paging;
+using WebExpress.Core;
 
 namespace Art.Website.Models
 {
