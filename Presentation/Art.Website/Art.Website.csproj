@@ -237,6 +237,7 @@
     <Compile Include="Models\Order\AddOrderModel.cs" />
     <Compile Include="Models\Order\AddressModel.cs" />
     <Compile Include="Models\Order\DeliverModel.cs" />
+    <Compile Include="Models\Order\OrderDetailModel.cs" />
     <Compile Include="Models\Order\OrderManageModel.cs" />
     <Compile Include="Models\Order\OrderSearchCriteria.cs" />
     <Compile Include="Models\ProfessionModel.cs" />
