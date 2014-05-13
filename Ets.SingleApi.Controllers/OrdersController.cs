@@ -353,5 +353,20 @@
             var preFix = ((OrderType)orderType).ToString();
             return string.Format("{0}{1}", preFix, this.Source);
         }
+
+        /// <summary>
+        /// 创建堂食订单
+        /// </summary>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：5/13/2014 4:24 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<string> SaveOrder()
+        {
+            return new Response<string>();
+        }
     }
 }
