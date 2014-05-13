@@ -8,8 +8,8 @@ namespace Art.Data.Common
 {
     public enum DeliveryType
     {
+        市内 =1 ,
+        外地,
         自提,
-        市内,
-        外地
     }
 }

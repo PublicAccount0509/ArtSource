@@ -20,8 +20,8 @@ namespace Art.Data.Domain
 
         public int? DefaultAddressId { get; set; }
 
-        public Address DefaultAddress { get; set; }
+        public virtual Address DefaultAddress { get; set; }
 
-        public ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }
