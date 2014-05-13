@@ -39,8 +39,7 @@ namespace Art.Website.Models
 
 
         public decimal Price { get; set; }
-        //public decimal FeePackage { get; set; }
-        //public decimal FeeDelivery { get; set; }
+
 
 
         public string Note { get; set; }
