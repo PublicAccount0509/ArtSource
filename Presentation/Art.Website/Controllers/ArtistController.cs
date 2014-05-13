@@ -78,7 +78,6 @@ namespace Art.Website.Controllers
             return Json(model);
         }
 
-
         public ViewResult Add()
         {
             var artist = new Artist();
@@ -90,18 +89,30 @@ namespace Art.Website.Controllers
         //添加艺术家
         public JsonResult Add(ArtistModel model)
         {
-            var artist = ArtistTranslator.Instance.Translate(model);
+            string errormagess;
+            if (!CheckArtistModel(model, out errormagess))
+            {
+                return Json(new ResultModel(false, errormagess, 0));
+            }
 
+            var artist = ArtistTranslator.Instance.Translate(model);
 
             var newArtist = ArtistBussinessLogic.Instance.Add(artist);
 
             var result = new ResultModel(true, "add successfully!", newArtist.Id);
             return Json(result);
+            //return Json(new ResultModel(true, "add successfully!", 1));
         }
+        
 
         [HttpPost]
         public JsonResult Update(ArtistModel model)
         {
+            string errormagess;
+            if (!CheckArtistModel(model, out errormagess))
+            {
+                return Json(new ResultModel(false, errormagess, 0));
+            }
             var artist = ArtistTranslator.Instance.Translate(model);
 
             ArtistBussinessLogic.Instance.Update(artist);
@@ -109,6 +120,111 @@ namespace Art.Website.Controllers
             var result = new ResultModel(true, "update successfully!");
 
             return Json(result);
+        }
+
+        /// <summary>
+        /// Checks the artist model.
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <param name="errormagess">The errormagess</param>
+        /// <returns>
+        /// Boolean
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/13/2014 11:09 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool CheckArtistModel(ArtistModel model, out string errormagess)
+        {
+            errormagess = string.Empty;
+            var ret = true;
+            if (model == null)
+            {
+                errormagess = "请求参数不存在！";
+                ret = false;
+            }
+            else
+            {
+                //非空验证
+                if (string.IsNullOrEmpty(model.Name))
+                {
+                    errormagess = "请填写姓名！";
+                    ret = false;
+                }
+                if (model.Name.Trim().Length == 0)
+                {
+                    errormagess = "请填写姓名！";
+                    ret = false;
+                }
+                else if (model.Birthday == null)
+                {
+                    errormagess = "请填写出生日期";
+                    ret = false;
+                }
+                else if (model.Deathday != null && model.Birthday >= model.Deathday)
+                {
+                    errormagess = "出生日期大于卒日期";
+                    ret = false;
+                }
+                else if (string.IsNullOrEmpty(model.PrizeItems))
+                {
+                    errormagess = "请填写得过奖项 ";
+                    ret = false;
+                }
+                else if (model.PrizeItems.Trim().Length == 0)
+                {
+                    errormagess = "请填写得过奖项 ";
+                    ret = false;
+                }
+                else if (model.ArtistTypeIds.Count == 0)
+                {
+                    errormagess = "请选择流派 ";
+                    ret = false;
+                }
+                else if (model.SkilledGenreIds.Count == 0)
+                {
+                    errormagess = "请选择擅长 ";
+                    ret = false;
+                }
+                else if (string.IsNullOrEmpty(model.Masterpiece))
+                {
+                    errormagess = "请填写代表作品 ";
+                    ret = false;
+                }
+                else if (model.Masterpiece.Trim().Length == 0)
+                {
+                    errormagess = "请填写代表作品 ";
+                    ret = false;
+                }
+                else if (model.MasterpieceTypeId == 0)
+                {
+                    errormagess = "请选择作品分类 ";
+                    ret = false;
+                }
+                else if (string.IsNullOrEmpty(model.AvatarFileName))
+                {
+                    errormagess = "请选择作者头像 ";
+                    ret = false;
+                }
+                else if (model.AvatarFileName.Trim().Length == 0)
+                {
+                    errormagess = "请选择作者头像 ";
+                    ret = false;
+                }
+                //长度验证
+                //else if (model.Name.Length > 30)
+                //{
+                //    errormagess = "姓名必须在30个字符以内 ";
+                //    ret = false;
+                //}
+                //else if (model.PrizeItems.Length > 30)
+                //{
+                //    errormagess = "得过奖项必须在30个字符以内 ";
+                //    ret = false;
+                //}
+            }
+            return ret;
         }
         #endregion
 

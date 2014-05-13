@@ -182,17 +182,28 @@ namespace Art.Website.Controllers
         [HttpPost]
         public JsonResult Add(ArtworkModel model)
         {
+            string errormagess;
+            if (!CheckArtworkModel(model, out errormagess))
+            {
+                return Json(new ResultModel(false, errormagess));
+            }
             var artwork = ArtworkModelTranslator.Instance.Translate(model);
 
             ArtworkBussinessLogic.Instance.Add(artwork);
 
             var result = new ResultModel(true, "add successfully!");
             return Json(result);
+            //return Json(new ResultModel(true, "add successfully!"));
         }
 
         [HttpPost]
         public JsonResult Update(ArtworkModel model)
         {
+            string errormagess;
+            if (!CheckArtworkModel(model, out errormagess))
+            {
+                return Json(new ResultModel(false, errormagess));
+            }
             //bussiness check
             if (model.AuctionType == AuctionType.一口价)
             {
@@ -207,6 +218,129 @@ namespace Art.Website.Controllers
             var result = new ResultModel(true, "update successfully!");
 
             return Json(result);
+        }
+
+        /// <summary>
+        /// Checks the artwork model.
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <param name="errormagess">The errormagess</param>
+        /// <returns>
+        /// Boolean
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/13/2014 11:50 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private bool CheckArtworkModel(ArtworkModel model, out string errormagess)
+        {
+            errormagess = string.Empty;
+            var ret = true;
+            if (model == null)
+            {
+                errormagess = "请求参数不存在！";
+                ret = false;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(model.Name))
+                {
+                    errormagess = "请填写作品名称 ";
+                    ret = false;
+                }
+                else if (model.Name.Trim().Length == 0)
+                {
+                    errormagess = "请填写作品名称 ";
+                    ret = false;
+                }
+                else if (model.ArtistId == 0)
+                {
+                    errormagess = "请选择作者 ";
+                    ret = false;
+                }
+                else if (string.IsNullOrEmpty(model.Size))
+                {
+                    errormagess = "请输入作品大小 ";
+                    ret = false;
+                }
+                else if (model.Size.Trim().Length == 0)
+                {
+                    errormagess = "请输入作品大小 ";
+                    ret = false;
+                }
+                else if (model.ArtYear == 0)
+                {
+                    errormagess = "请选择年代 ";
+                    ret = false;
+                }
+                else if (model.ArtworkTypeId == 0)
+                {
+                    errormagess = "请选择作品分类 ";
+                    ret = false;
+                }
+                else if (model.ArtMaterialId == 0)
+                {
+                    errormagess = "请选择材质 ";
+                    ret = false;
+                }
+                else if (model.GenreId == 0)
+                {
+                    errormagess = "请选择题材 ";
+                    ret = false;
+                }
+                else if (model.SuitablePlaceIds.Count == 0)
+                {
+                    errormagess = "请选择适用空间 ";
+                    ret = false;
+                }
+                else if (string.IsNullOrEmpty(model.ImageFileName))
+                {
+                    errormagess = "请选择作品图片 ";
+                    ret = false;
+                }
+                //else if (model.AuctionType == null)
+                //{
+                //    errormagess = "请选择拍卖方式 ";
+                //    ret = false;
+                //}
+                else if (model.AuctionPrice == 0)
+                {
+                    errormagess = "请填写拍卖价格 ";
+                    ret = false;
+                }
+                else if (!model.FeePackageGeneralEnabled && !model.FeePackageFineEnabled)
+                {
+                    errormagess = "至少选择一种方式包装 ";
+                    ret = false;
+                }
+                else if (model.FeePackageGeneralEnabled && model.FeePackageGeneral.HasValue)
+                {
+                    errormagess = "请填写一般包装价格 ";
+                    ret = false;
+                }
+                else if (model.FeePackageFineEnabled && model.FeePackageFine.HasValue)
+                {
+                    errormagess = "请填写精装价格 ";
+                    ret = false;
+                }
+                else if (!model.FeeDeliveryLocalEnabled && !model.FeeDeliveryNonlocalEnabled)
+                {
+                    errormagess = "至少选择一种方式运费 ";
+                    ret = false;
+                }
+                else if (model.FeeDeliveryLocalEnabled && model.FeeDeliveryLocal.HasValue)
+                {
+                    errormagess = "请填写市内运费价格 ";
+                    ret = false;
+                }
+                else if (model.FeeDeliveryNonlocalEnabled && model.FeeDeliveryNonlocal.HasValue)
+                {
+                    errormagess = "请填写外地运费价格 ";
+                    ret = false;
+                }
+            }
+            return ret;
         }
 
         public ActionResult Edit(int id)
