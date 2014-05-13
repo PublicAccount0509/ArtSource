@@ -6,16 +6,16 @@ using System.Web;
 
 namespace Art.Website.Models
 {
-    public class DeliverInfoModel
-    {
-        public int Id { get; set; }
-        public string DeliveryCompany { get; set; }
-        public string DeliveryNumber { get; set; }
+    //public class DeliverInfoModel
+    //{
+    //    public int Id { get; set; }
+    //    public string DeliveryCompany { get; set; }
+    //    public string DeliveryNumber { get; set; }
          
-        public DeliveryMode Mode { get; set; } 
-        public DeliveryStatus Status { get; set; }
+    //    public DeliveryType Mode { get; set; } 
+    //    public DeliveryStatus Status { get; set; }
 
-        public AddressModel CustomerAddress { get; set; }
+    //    public AddressModel CustomerAddress { get; set; }
          
-    }
+    //}
 }

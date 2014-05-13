@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Common
 {
-    public enum PackingMode
+    public enum PackingType
     {
         一般包装,
         精包装

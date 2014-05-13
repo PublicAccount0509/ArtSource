@@ -9,7 +9,7 @@ namespace Art.Data.Domain
 {
     public class OrderPayInfo:BaseEntity
     {
-        public PayMode Mode { get; set; }
+        public PayType Mode { get; set; }
 
         public PayStatus Status { get; set; }
     }

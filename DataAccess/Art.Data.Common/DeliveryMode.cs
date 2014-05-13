@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Common
 {
-    public enum DeliveryMode
+    public enum DeliveryType
     {
         自提,
-        物流配送
+        市内,
+        外地
     }
 }
