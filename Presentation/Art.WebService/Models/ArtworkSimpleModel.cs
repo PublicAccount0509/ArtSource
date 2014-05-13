@@ -17,23 +17,31 @@ namespace Art.WebService.Models
 
         public int CommentUserId { get; set; }
         public int CommentUserIconPath { get; set; }
-        public int CommentContent { get; set; }
+        public string CommentContent { get; set; }
 
         public int ImageWidth { get; set; }
         public int ImageHeight { get; set; }
         public string ImagePath { get; set; }
     }
 
-    public class ArtworkSimpleModel : TranslatorBase<Artwork, ArtworkSimpleModel>
+    public class ArtworkSimpleModelTranslator : TranslatorBase<Artwork, ArtworkSimpleModel>
     {
-        public static readonly ArtworkSimpleModel Instance = new ArtworkSimpleModel();
+        public static readonly ArtworkSimpleModelTranslator Instance = new ArtworkSimpleModelTranslator
+            ();
 
         public override ArtworkSimpleModel Translate(Artwork from)
         {
             var to = new ArtworkSimpleModel();
             to.Id = from.Id;
             to.Name = from.Name;
-            //to.ShareCount = to.ShareCount;
+             
+            if (from.DefaultComment !=null)
+            {
+                to.CommentUserId = from.DefaultComment.Id;
+                //to.CommentUserIconPath = from.DefaultComment
+                to.CommentContent = from.DefaultComment.Text;
+            }
+            
             return to;
         }
 

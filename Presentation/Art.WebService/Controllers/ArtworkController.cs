@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.WebService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,16 @@ namespace Art.WebService.Controllers
     public class ArtworkController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        public IEnumerable<ArtworkSimpleModel> Get()
         {
             var paging= new PagingRequest(0,10 );
             var aa = ArtworkBussinessLogic.Instance.SearchArtworks(paging);
-            return new string[] { "value1", "value2" };
+            //var dd =  ArtworkSimpleModel.Instance.Translate(aa);
+            return null;
+
+            
+
+            //return new string[] { "value1", "value2" };
         }
 
         // GET api/<controller>/5
