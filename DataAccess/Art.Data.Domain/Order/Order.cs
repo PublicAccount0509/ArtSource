@@ -44,7 +44,10 @@ namespace Art.Data.Domain
         public virtual Customer Customer { get; set; }
 
         [ForeignKey("ArtworkId")]
-        public virtual Artwork Artwork { get; set; } 
+        public virtual Artwork Artwork { get; set; }
+
+        //[ForeignKey("ReceiptAddressId")]
+        //public virtual Address ReceiptAddress { get; set; }
 
         public virtual PayStatus PayStatus { get; set; }
 

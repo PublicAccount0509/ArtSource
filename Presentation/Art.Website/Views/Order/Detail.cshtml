@@ -1,0 +1,134 @@
+﻿@using Art.Data.Common
+@model OrderDetailModel
+@{
+    Layout = "~/Views/Shared/_ArtLayout.cshtml";
+    ViewBag.Title = "订单详情";
+}
+
+<div class="conterbox orderManage">
+    <h2 class="crumbs">您所在位置：艺术家管理 > 作品管理 > 订单详情
+    </h2>
+    <div class="orderinfo">
+        <p class="title">订单信息</p>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>订单号：@Model.OrderNumber</td>
+                <td>订单状态：@Model.Status</td>
+                <td>下单时间：@Model.CreateDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            </tr>
+            <tr>
+                <td>作品名称：@Model.ArtworkName</td>
+                <td>作品分类：@Model.ArtworkTypeName</td>
+                <td>价格：￥<span class="jiage">@Model.Price.ToString("F2")</span></td>
+            </tr>
+        </table>
+        <p class="title">配送信息</p>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="peisongInfo">
+            <tr>
+                <td>收货人：@Model.ReceiptAddress.Name</td>
+                <td>电话：@Model.ReceiptAddress.Telephone</td>
+            </tr>
+            @if (@Model.DeliveryType != DeliveryType.自提)
+            {
+                <tr>
+                    <td colspan="2">收货地址：@Model.ReceiptAddress.DetailAddress</td>
+                </tr>
+            }
+            <tr>
+                <td>配送方式：@Model.DeliveryType（￥@Model.FeeDelivery.ToString("f2")）</td>
+                @if (Model.DeliveryType == DeliveryType.自提)
+                {
+                    switch (Model.Status)
+                    {
+                        case OrderStatus.已接受:
+                    <td>配送状态：待自提 </td>
+                            break;
+                        case OrderStatus.完成:
+                    <td>配送状态：已自提 </td>
+                            break;
+                        default:
+                    <td>配送状态：---- </td>
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (Model.Status)
+                    {
+                        case OrderStatus.已接受:
+                    <td>配送状态：待发货 </td>
+                            break;
+                        case OrderStatus.已发货:
+                    <td>配送状态：已发货 </td>
+                            break;
+                        case OrderStatus.完成:
+                    <td>配送状态：已收货 </td>
+                            break;
+                        default:
+                    <td>配送状态：---- </td>
+                            break;
+                    }
+                }
+            </tr>
+            @if (@Model.DeliveryType != DeliveryType.自提)
+            {
+                <tr>
+                    <td>配送物流：@Model.DeliveryCompany</td>
+                    <td>物流单号：@Model.DeliveryNumber</td>
+                </tr>
+            }
+            <tr>
+                <td>包装方式：@Model.PackingType（￥@Model.FeePackage.ToString("f2")）</td>
+                <td></td>
+            </tr>
+        </table>
+        <p class="title">支付信息</p>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>支付方式：无 @*@Model.PayType*@</td>
+                <td>支付状态：无 @*@Model.PayStatus*@</td>
+            </tr>
+        </table>
+        <p class="title">发票信息</p>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                @switch (Model.InvoiceType)
+                {
+                    case InvoiceType.单位:
+                    <td>单位：@(Model.InvoiceCompanyName)</td>
+                        break;
+                    case InvoiceType.个人:
+                    <td>个人</td>
+                        break;
+                    default:
+                    <td></td>
+                        break;
+                }
+            </tr>
+        </table>
+        <p class="title">备注信息</p>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>@Model.Note</td>
+            </tr>
+        </table>
+        <p class="title money">订单金额总计</p>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                @{ var total = Model.Price + Model.FeeDelivery + Model.FeePackage;}
+                <td>订单总计金额：作品￥@Model.Price.ToString("f2")+@Model.DeliveryType￥@Model.FeeDelivery.ToString("f2")+@Model.PackingType￥@Model.FeePackage.ToString("f2")=
+                    <span class="moneyNum">￥@total.ToString("f2")</span>
+                </td>
+            </tr>
+        </table>
+        <p class="title">其它信息</p>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="othertb">
+            <tr>
+                <td>@*拒绝订单理由：买家ID：15811282129  不想购物物品了，因为价格不符合市场价位。
+                        退款信息：刘畅  直接退换到支付宝 123454566@163.com*@
+                    @Model.OtherMessage
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

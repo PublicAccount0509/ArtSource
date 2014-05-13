@@ -12,6 +12,6 @@ namespace Art.Data.Domain
 
         public string Name { get; set; }
         public string Telephone { get; set; }
-        public string Detail2{ get; set; }
+        public string Detail{ get; set; }
     }
 }

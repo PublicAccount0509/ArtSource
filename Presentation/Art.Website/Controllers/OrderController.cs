@@ -232,5 +232,32 @@ namespace Art.Website.Controllers
             return View();
         }
 
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// The ActionResult
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/13/2014 2:10 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ActionResult Detail(int id)
+        {
+            var result = OrderBussinessLogic.Instance.GetOrderById(id);
+            if (result == null)
+            {
+                return View(new OrderDetailModel());
+            }
+            var model = OrderDetailModelTranslator.Instance.Translate(result);
+            var address = OrderBussinessLogic.Instance.GetAddress(result.ReceiptAddressId);
+            if (address != null)
+            {
+                model.ReceiptAddress = AddressModelTranslator.Instance.Translate(address);
+            }
+            return View(model);
+        }
     }
 }

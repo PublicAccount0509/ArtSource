@@ -237,6 +237,7 @@
     <Compile Include="Models\Order\AddOrderModel.cs" />
     <Compile Include="Models\Order\AddressModel.cs" />
     <Compile Include="Models\Order\DeliverModel.cs" />
+    <Compile Include="Models\Order\OrderDetailModel.cs" />
     <Compile Include="Models\Order\OrderManageModel.cs" />
     <Compile Include="Models\Order\OrderSearchCriteria.cs" />
     <Compile Include="Models\ProfessionModel.cs" />
@@ -453,9 +454,11 @@
     <Content Include="Views\Order\Test.cshtml" />
     <Content Include="Views\Order\_List.cshtml" />
     <Content Include="Views\Order\_AuctionList.cshtml" />
+    <Content Include="Views\Order\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authorization\" />
+    <Folder Include="Models\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

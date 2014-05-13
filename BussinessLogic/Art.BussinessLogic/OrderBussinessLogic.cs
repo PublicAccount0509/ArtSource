@@ -69,6 +69,39 @@ namespace Art.BussinessLogic
         }
 
         /// <summary>
+        /// Gets the order by identifier.
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// Order
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/13/2014 2:13 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Order GetOrderById(int id)
+        {
+            return _orderRepository.GetById(id);
+        }
+
+        /// <summary>
+        /// Gets the address.
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// Address
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/13/2014 3:14 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Address GetAddress(int id)
+        {
+            return _addressRepository.GetById(id);
+        }
+        /// <summary>
         /// Searches the auction.
         /// </summary>
         /// <param name="criteria">The criteria</param>
