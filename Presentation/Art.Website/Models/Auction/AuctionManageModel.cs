@@ -210,7 +210,7 @@ namespace Art.Website.Models
             }
             to.AuctionPrice = from.Artwork.AuctionPrice;
             to.BidPrice = from.BidPrice;
-            to.CustumerName = from.Customer.LoginName;
+            to.CustumerName = from.Customer.NickName;
             to.CustumerMessage = from.CustumerMessage;
             to.BidDateTime = from.BidDateTime;
             to.AuctionResult = from.AuctionResult;

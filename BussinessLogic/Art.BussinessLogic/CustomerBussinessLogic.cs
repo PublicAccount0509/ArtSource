@@ -20,18 +20,20 @@ namespace Art.BussinessLogic
             _activityCollectRepository = new EfRepository<ActivityCollect>();
         }
 
-        public CustomerRegisterResult Register(Customer customer)
+        public bool ExistPhoneNumber(string phoneNumber)
         {
-            if (string.IsNullOrEmpty(customer.LoginName) )
-            {
-                return CustomerRegisterResult.LoginNameAlreadyExists;
-            }
-            if (_customerRepository.Table.Where(i=>i.LoginName == customer.LoginName).Any())
-            {
-                return CustomerRegisterResult.LoginNameAlreadyExists;
-            }
-            _customerRepository.Insert(customer);
-            return  CustomerRegisterResult.Success;
+            return _customerRepository.Table.Where(i=>i.PhoneNumber == phoneNumber).Any();    
+        }
+
+        public bool ExistNickName(string nickName)
+        {
+            return _customerRepository.Table.Where(i => i.NickName == nickName).Any();
+        }
+
+        public Customer Add(Customer customer)
+        {
+            var result = _customerRepository.Insert(customer);
+            return result;
         }
 
         public IList<Customer> GetAll()
@@ -47,8 +49,15 @@ namespace Art.BussinessLogic
 
         public IList<ActivityCollect> GetActivityCollect(int customerId)
         {
-           var query = _activityCollectRepository.Table.Where(i=>i.Customer.Id == customerId);
-           return query.ToList();
+            var query = _activityCollectRepository.Table.Where(i => i.Customer.Id == customerId);
+            return query.ToList();
+        }
+
+        public bool ValidateLogin(string loginName, string password)
+        {
+            var query = _customerRepository.Table.Where(i => i.NickName == loginName || i.PhoneNumber == loginName);
+            query = query.Where(i=>i.Password == password);
+            return query.Any();
         }
     }
 
