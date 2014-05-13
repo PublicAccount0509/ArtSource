@@ -12,7 +12,10 @@ namespace Art.Website.Controllers
     {
         [HttpGet]
         public ActionResult List()
-        {  
+        {
+            var activities = CustomerBussinessLogic.Instance.GetActivityCollect(1);
+
+
             var model = new MessageModel();
             model.SystemNoticeModel = GetPagedSystemNoticeModel(new SystemNoticeSearchCriteria(10));
             model.CommentModel = GetPagedCommentModel(new CommentSearchCriteria(10));
@@ -82,7 +85,7 @@ namespace Art.Website.Controllers
             return Json(result);
         }
 
-        public JsonResult Reply(int commentId,string repliedText)
+        public JsonResult Reply(int commentId, string repliedText)
         {
             MessageBussinessLogic.Instance.AddReply(commentId, repliedText);
             var result = new ResultModel(true, string.Empty);

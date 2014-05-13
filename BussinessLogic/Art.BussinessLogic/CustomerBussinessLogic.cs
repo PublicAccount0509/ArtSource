@@ -13,9 +13,11 @@ namespace Art.BussinessLogic
         public static readonly CustomerBussinessLogic Instance = new CustomerBussinessLogic();
 
         private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<ActivityCollect> _activityCollectRepository;
         private CustomerBussinessLogic()
         {
             _customerRepository = new EfRepository<Customer>();
+            _activityCollectRepository = new EfRepository<ActivityCollect>();
         }
 
         public CustomerRegisterResult Register(Customer customer)
@@ -40,6 +42,13 @@ namespace Art.BussinessLogic
         public Customer Get(int id)
         {
             return _customerRepository.GetById(id);
+        }
+
+
+        public IList<ActivityCollect> GetActivityCollect(int customerId)
+        {
+           var query = _activityCollectRepository.Table.Where(i=>i.Customer.Id == customerId);
+           return query.ToList();
         }
     }
 

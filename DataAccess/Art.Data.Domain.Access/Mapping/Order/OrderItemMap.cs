@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Domain.Access.Mapping
 {
-    public class OrderItemMap : ArtEntityTypeConfiguration<OrderItem>
-    {
-    }
+    //public class OrderItemMap : ArtEntityTypeConfiguration<OrderItem>
+    //{
+    //}
 }

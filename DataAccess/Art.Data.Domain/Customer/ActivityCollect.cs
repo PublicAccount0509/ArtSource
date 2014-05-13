@@ -8,8 +8,8 @@ namespace Art.Data.Domain
 {
     public class ActivityCollect : BaseEntity
     {
-        public int CustomerId { get; set; }
-        public int ArtworkId { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Artwork Artwork { get; set; }
 
         public DateTime FADatetime { get; set; }
     }

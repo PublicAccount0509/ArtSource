@@ -6,43 +6,78 @@
         var item = Model.Orders[i];
         <tbody orderId="@item.Id">
             <tr class="order-hd">
-                <td colspan="6"><span class="order-num">订单编号：@item.OrderNumber</span> <span class="order-time">交易时间：@item.TransactionDateTime.ToGeneralString()</span></td>
+                <td colspan="6">
+                    <span class="order-num">订单编号：@item.OrderNumber</span>
+                    <span class="order-time">交易时间：@item.TransactionDateTime.ToGeneralString()</span>
+                </td>
             </tr>
             <tr class="order-item">
                 <td class="item w30">
                     <div class="pic-info">
-                        <img src="/@item.ImageFileName" />
+                        <img src="/@item.ArtworkImagePath" />
                     </div>
                     <div class="txt-info">
-                        <p class="txt-title">莎士比亚</p>
-                        <p class="txt-fl">作品分类：油画</p>
+                        <p class="txt-title">@item.ArtworkType</p>
+                        <p class="txt-fl">作品分类：@item.ArtworkType</p>
                     </div>
                 </td>
 
-                <td class="w12 item-zt">@item.Status</td>
-                <td class="w12 item-zffs">@item.PayMode</td>
-                <td class="w12 item-psfs">@item.DeliveryMode</td>
+                <td class="w12 item-zt">@item.Status.ToString()</td>
+                <td class="w12 item-zffs">@item.PayType.ToString()</td>
+                <td class="w12 item-psfs">@item.DeliveryType.ToString()</td>
                 <td class="w12 item-fkzt">
                     <p class="yfk">
                         <span class="J_showMsg hide">
-                            <img src="i/new_msg.gif" /></span><span class="hide J_userMsg">本周来取，取前请忽包装</span>己付款
+                            <img src="i/new_msg.gif" /></span><span class="hide J_userMsg">@item.Note</span>@(item.PayStatus == Art.Data.Common.PayStatus.支付成功 ? "己付款" : "未付款")
                     </p>
-                    <p><a href="http://192.168.1.118:8080/ysp-shop/admin/orderManage-info.html" target="_blank">详情</a></p>
+                    <p><a href="/Order/Detail/@item.Id" target="_blank">详情</a></p>
                 </td>
                 <td class="w20 tiem-cz">
-                    @if (item.Status == Art.Data.Common.OrderStatus.待处理)
+                    @if (item.Status == Art.Data.Common.OrderStatus.生成中)
+                    {
+                        //TODO
+                    }
+                    else if (item.Status == Art.Data.Common.OrderStatus.已关闭)
+                    {
+                        <span class="close">交易己关闭</span>
+                    }
+                    else if (item.Status == Art.Data.Common.OrderStatus.待处理)
                     {
                         <a href="" class="yes">
                             <img src="/icon/jieshou.png" align="top" />接受</a>
                         <a href="" class="no J_noBtn">
                             <img src="/icon/jujue.png" align="top" />拒绝</a>    
                     }
-                    else if (item.Status == Art.Data.Common.OrderStatus.已接受 && item.DeliveryMode == Art.Data.Common.DeliveryMode.物流配送)
+                    else if (item.Status == Art.Data.Common.OrderStatus.已接受)
                     {
+                        if (item.DeliveryType == Art.Data.Common.DeliveryType.自提)
+                        {
+                        <span class="close">待自提</span>
+                        }
+                        else
+                        {
                         <a href="" class="wait-fh J_wuliuBtn">
-                            <img src="i/waitfh.png" align="top">等待发货</a>    
+                            <img src="/icon/waitfh.png" align="top">等待发货</a>        
+                        }
                     }
-
+                    else if (item.Status == Art.Data.Common.OrderStatus.已发货)
+                    { 
+                        <p><span class="succeed">己发货</span></p>
+                        <p><a href="/Order/Detail/@item.Id" target="_blank">配送信息</a></p>
+                    }
+                    else if (item.Status == Art.Data.Common.OrderStatus.完成)
+                    { 
+                        <p><span class="succeed">交易成功</span></p>
+                        <p><a href="/Order/Detail/@item.Id" target="_blank">配送信息</a></p>
+                    }
+                    else if (item.Status == Art.Data.Common.OrderStatus.已拒绝)
+                    { 
+                        <span class="close">己拒绝</span><a href="" class="refund J_refundBtn">退款</a>
+                    }
+                    else if (item.Status == Art.Data.Common.OrderStatus.已退款)
+                    { 
+                        <span class="close">订单失败</span>
+                    }
                 </td>
 
             </tr>

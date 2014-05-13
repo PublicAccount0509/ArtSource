@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Common
 {
-    public enum PayMode
+    public enum PayType
     {
         Alipay,
         Other

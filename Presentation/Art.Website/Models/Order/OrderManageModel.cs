@@ -33,12 +33,14 @@ namespace Art.Website.Models
         public int Id { get; set; }
         public string OrderNumber { get; set; }
         public DateTime TransactionDateTime { get; set; }
-        public string ImageFileName { get; set; }
+        public string ArtworkName { get; set; }
+        public string ArtworkImagePath { get; set; }
+        public string ArtworkType { get; set; }
         public OrderStatus Status { get; set; }
-        public PayMode PayMode { get; set; }
+        public PayType PayType { get; set; }
         public PayStatus PayStatus { get; set; }
-        public DeliveryMode DeliveryMode { get; set; }
-        public string CustumerMessage { get; set; }
+        public DeliveryType DeliveryType { get; set; }
+        public string Note { get; set; }
 
     }
 
@@ -52,15 +54,17 @@ namespace Art.Website.Models
             to.Id = from.Id;
             to.OrderNumber = from.OrderNumber;
             to.TransactionDateTime = from.FADateTime;
-            if (!string.IsNullOrEmpty(from.OrderItem.Artwork.ImageFileName))
+            to.ArtworkName = from.Artwork.Name;
+            to.ArtworkType = from.Artwork.ArtworkType.Name;
+            if (!string.IsNullOrEmpty(from.Artwork.ImageFileName))
             {
-                to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.OrderItem.Artwork.ImageFileName);
+                to.ArtworkImagePath = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.Artwork.ImageFileName);
             }            
             to.Status = from.Status;
-            to.PayMode = from.PayMode;
+            to.PayType = from.PayType;
             to.PayStatus = from.PayStatus;
-            to.DeliveryMode = from.DeliveryMode;
-            to.CustumerMessage = from.CustumerMessage;
+            to.DeliveryType = from.DeliveryType;
+            to.Note = from.Note;
             return to;
         }
 

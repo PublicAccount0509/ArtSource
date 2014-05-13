@@ -21,7 +21,7 @@ namespace Art.BussinessLogic
 
         private readonly IRepository<Address> _addressRepository;
 
-        private readonly IRepository<AuctionBill> _auctionBillRepository; 
+        private readonly IRepository<AuctionBill> _auctionBillRepository;
         private OrderBussinessLogic()
         {
             _orderRepository = new EfRepository<Order>();
@@ -85,8 +85,8 @@ namespace Art.BussinessLogic
             var query = _auctionBillRepository.Table;
             query =
                 query.Where(p =>
-                            //(!criteria.StartDate.HasValue || p.BidDateTime >= criteria.StartDate.Value.BeginOfDay())
-                            //&& (!criteria.EndDate.HasValue || p.BidDateTime <= criteria.EndDate.Value.EndOfDay())
+                    //(!criteria.StartDate.HasValue || p.BidDateTime >= criteria.StartDate.Value.BeginOfDay())
+                    //&& (!criteria.EndDate.HasValue || p.BidDateTime <= criteria.EndDate.Value.EndOfDay())
                             (criteria.ArtistsId == null || p.Artwork.Artist.Id == criteria.ArtistsId)
                             && (criteria.ArtworkId == null || p.ArtworkId == criteria.ArtworkId));
             if (criteria.StartDate.HasValue)
@@ -176,25 +176,46 @@ namespace Art.BussinessLogic
             return true;
         }
 
-        public List<Order> AddOrders(List<Order> orders)
+        public Order AddOrder(Order order)
         {
-            var results = new List<Order>();
-            foreach (var order in orders)
-            {
-                order.FADateTime = DateTime.Now;
+            order.FADateTime = DateTime.Now;
+            var artwork = _artworkRepository.GetById(order.ArtworkId);
 
-                var result = _orderRepository.Insert(order);
-                results.Add(result);
+            if (order.PackingType == PackingType.一般包装)
+            {
+                order.FeePackage = artwork.FeePackageGeneral.Value;
             }
-            return results;
+            else
+            {
+                order.FeePackage = artwork.FeePackageFine.Value;
+            }
+
+            if (order.DeliveryType == DeliveryType.市内)
+            {
+                order.FeeDelivery = artwork.FeeDeliveryLocal.Value;
+            }
+            else if (order.DeliveryType == DeliveryType.外地)
+            {
+                order.FeeDelivery = artwork.FeeDeliveryNonlocal.Value;
+            }
+            else
+            {
+                order.FeeDelivery = 0;
+            }
+            order.Status = OrderStatus.生成中;
+            order.OrderNumber = "1234567890";
+
+
+            var result = _orderRepository.Insert(order);
+            return result;
         }
 
         public void Deliver(int orderId, string companyName, string billNumber)
         {
             var order = _orderRepository.GetById(orderId);
-            order.DeliveryInfo.DeliveryCompany = companyName;
-            order.DeliveryInfo.DeliveryNumber = billNumber;
-            order.DeliveryInfo.Status = DeliveryStatus.已发货;
+            //order.DeliveryInfo.DeliveryCompany = companyName;
+            //order.DeliveryInfo.DeliveryNumber = billNumber;
+            //order.DeliveryInfo.Status = DeliveryStatus.已发货;
 
             _orderRepository.Update(order);
         }

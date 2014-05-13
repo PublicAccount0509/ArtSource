@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Common
 {
-    public enum DeliveryStatus
-    {
-        未发货,
-        已发货,
-    }
+    //public enum DeliveryStatus
+    //{
+    //    未发货,
+    //    已发货,
+    //}
 }
