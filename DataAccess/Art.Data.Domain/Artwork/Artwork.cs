@@ -47,6 +47,8 @@ namespace Art.Data.Domain
 
         public virtual List<Comment> Comments { get; set; }
         public virtual Comment DefaultComment { get; set; }
+
+        public virtual List<ArtworkImage> Images { get; set; }
     }
 
 }

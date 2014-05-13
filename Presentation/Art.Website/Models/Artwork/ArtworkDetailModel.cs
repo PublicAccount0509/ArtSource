@@ -1,7 +1,7 @@
 ﻿using Art.BussinessLogic;
+using Art.Common;
 using Art.Data.Common;
 using Art.Data.Domain;
-using Art.Website.Common.Config;
 using System;
 using System.Collections.Generic;
 using System.IO;

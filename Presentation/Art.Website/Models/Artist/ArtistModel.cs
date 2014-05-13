@@ -1,6 +1,6 @@
 ﻿using Art.Data.Common;
 using Art.Data.Domain;
-using Art.Website.Common.Config;
+using Art.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;

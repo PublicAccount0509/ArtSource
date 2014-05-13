@@ -1,4 +1,4 @@
-﻿using Art.Website.Common.Config;
+﻿using Art.Common;
 using Art.Website.Models.CommonModel;
 using System;
 using System.Collections.Generic;

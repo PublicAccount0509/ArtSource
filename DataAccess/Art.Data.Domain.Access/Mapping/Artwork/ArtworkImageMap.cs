@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebExpress.Core
+namespace Art.Data.Domain.Access.Mapping
 {
-    public class ImageHelper
+    public class ArtworkImageMap : ArtEntityTypeConfiguration<ArtworkImage>
     {
+
     }
 }

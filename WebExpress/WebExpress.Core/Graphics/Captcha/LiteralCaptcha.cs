@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebExpress.Core.Graphics.Captcha
+namespace WebExpress.Core 
 {
     public class LiteralCaptcha : ICaptcha
     {

@@ -314,12 +314,12 @@ namespace Art.Website.Controllers
                     errormagess = "至少选择一种方式包装 ";
                     ret = false;
                 }
-                else if (model.FeePackageGeneralEnabled && model.FeePackageGeneral.HasValue)
+                else if (model.FeePackageGeneralEnabled && !model.FeePackageGeneral.HasValue)
                 {
                     errormagess = "请填写一般包装价格 ";
                     ret = false;
                 }
-                else if (model.FeePackageFineEnabled && model.FeePackageFine.HasValue)
+                else if (model.FeePackageFineEnabled && !model.FeePackageFine.HasValue)
                 {
                     errormagess = "请填写精装价格 ";
                     ret = false;
@@ -329,12 +329,12 @@ namespace Art.Website.Controllers
                     errormagess = "至少选择一种方式运费 ";
                     ret = false;
                 }
-                else if (model.FeeDeliveryLocalEnabled && model.FeeDeliveryLocal.HasValue)
+                else if (model.FeeDeliveryLocalEnabled && !model.FeeDeliveryLocal.HasValue)
                 {
                     errormagess = "请填写市内运费价格 ";
                     ret = false;
                 }
-                else if (model.FeeDeliveryNonlocalEnabled && model.FeeDeliveryNonlocal.HasValue)
+                else if (model.FeeDeliveryNonlocalEnabled && !model.FeeDeliveryNonlocal.HasValue)
                 {
                     errormagess = "请填写外地运费价格 ";
                     ret = false;

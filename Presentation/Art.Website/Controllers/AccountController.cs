@@ -12,7 +12,6 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Drawing.Drawing2D;
-using WebExpress.Core.Graphics.Captcha;
 using Art.BussinessLogic;
 
 namespace Art.Website.Controllers
