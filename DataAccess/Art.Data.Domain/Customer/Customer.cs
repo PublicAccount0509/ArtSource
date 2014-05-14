@@ -18,6 +18,8 @@ namespace Art.Data.Domain
 
         [Required]
         public string Password { get; set; }
+
+        public string AvatarPath { get; set; }
          
         public int? DefaultAddressId { get; set; }
 

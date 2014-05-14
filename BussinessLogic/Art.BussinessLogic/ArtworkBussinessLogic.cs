@@ -166,17 +166,16 @@ namespace Art.BussinessLogic
 
             artwork.Images = new List<ArtworkImage>();
 
-
-            var fullFileName = HttpContext.Current.Server.MapPath("~/" + Path.Combine(ConfigSettings.Instance.UploadedFileFolder, artwork.ImageFileName));
-            var destFullFileName = HttpContext.Current.Server.MapPath("~/" + Path.Combine(ConfigSettings.Instance.UploadedFileFolder, string.Format("{0}_{1}.{2}", Path.GetFileNameWithoutExtension(fullFileName), "type1", Path.GetExtension(fullFileName))));
+            var fullFileName = CommonHelper.GetUploadFileAbsolutePath(artwork.ImageFileName);
+            var destFullFileName = string.Format("{0}/{1}_{2}{3}", Path.GetDirectoryName(fullFileName), Path.GetFileNameWithoutExtension(fullFileName), Data.Common.ArtworkImageResizeType.Size_W290_MinH240.ToString(), Path.GetExtension(fullFileName));
 
             ImageTransformer.Instance.ResizeImageToWidth(fullFileName, destFullFileName, 290, 240);
 
             artwork.Images = new List<ArtworkImage>();
             artwork.Images.Add(new ArtworkImage
             {
-                ImagePath = destFullFileName,
-                ImageType = Data.Common.ArtworkImageResizeType.Type1
+                ImagePath = Path.GetFileName(destFullFileName),
+                ImageType = Data.Common.ArtworkImageResizeType.Size_W290_MinH240
             });
 
             _artworkRepository.Insert(artwork);

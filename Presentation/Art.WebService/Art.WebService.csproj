@@ -100,6 +100,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\debug.pubxml" />
+    <None Include="Properties\PublishProfiles\ForApp.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -111,6 +112,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Art.Common\Art.Common.csproj">
+      <Project>{8043328c-37ea-4788-b45e-79a3f46ca26d}</Project>
+      <Name>Art.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BussinessLogic\Art.BussinessLogic\Art.BussinessLogic.csproj">
       <Project>{6db25716-e246-475d-aec3-513107464dbc}</Project>
       <Name>Art.BussinessLogic</Name>

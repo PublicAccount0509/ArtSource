@@ -1,4 +1,5 @@
-﻿using Art.Data.Domain;
+﻿using Art.Common;
+using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,16 @@ namespace Art.WebService.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string ImagePath { get; set; }
+
         public int ShareCount { get; set; }
         public int CollectAccount { get; set; }
         public int PraiseCount { get; set; }
 
         public int CommentUserId { get; set; }
-        public int CommentUserIconPath { get; set; }
+        public string CommentUserIconPath { get; set; }
         public string CommentContent { get; set; }
 
-        public int ImageWidth { get; set; }
-        public int ImageHeight { get; set; }
-        public string ImagePath { get; set; }
     }
 
     public class ArtworkSimpleModelTranslator : TranslatorBase<Artwork, ArtworkSimpleModel>
@@ -34,14 +34,20 @@ namespace Art.WebService.Models
             var to = new ArtworkSimpleModel();
             to.Id = from.Id;
             to.Name = from.Name;
-             
-            if (from.DefaultComment !=null)
+
+            var image = from.Images.FirstOrDefault(i => i.ImageType == Data.Common.ArtworkImageResizeType.Size_W290_MinH240);
+            if (image != null)
+            {
+                to.ImagePath = CommonHelper.GetUploadFileRelativePath(image.ImagePath);
+            }
+
+            if (from.DefaultComment != null)
             {
                 to.CommentUserId = from.DefaultComment.Id;
-                //to.CommentUserIconPath = from.DefaultComment
+                to.CommentUserIconPath = CommonHelper.GetUploadFileRelativePath(from.DefaultComment.Customer.AvatarPath);
                 to.CommentContent = from.DefaultComment.Text;
             }
-            
+
             return to;
         }
 

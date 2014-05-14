@@ -15,35 +15,23 @@ namespace Art.WebService.Controllers
         // GET api/<controller>
         public IEnumerable<ArtworkSimpleModel> Get()
         {
-            var paging= new PagingRequest(0,10 );
+            var paging = new PagingRequest(0, 10);
             var aa = ArtworkBussinessLogic.Instance.SearchArtworks(paging);
             //var dd =  ArtworkSimpleModel.Instance.Translate(aa);
             return null;
 
-            
-
-            //return new string[] { "value1", "value2" };
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        [HttpGet]
+        public ArtworkSimpleModel[] List(int itemsCount, int pageIndex)
         {
-            return "value";
+            var paging = new PagingRequest(pageIndex, itemsCount);
+            var artworks = ArtworkBussinessLogic.Instance.SearchArtworks(paging);
+            var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
+            return models.ToArray();
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
     }
 }
