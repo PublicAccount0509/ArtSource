@@ -14,10 +14,12 @@ namespace Art.BussinessLogic
 
         private readonly IRepository<Customer> _customerRepository;
         private readonly IRepository<ActivityCollect> _activityCollectRepository;
+        private readonly IRepository<Address> _addressRepository;
         private CustomerBussinessLogic()
         {
             _customerRepository = new EfRepository<Customer>();
             _activityCollectRepository = new EfRepository<ActivityCollect>();
+            _addressRepository = new EfRepository<Address>();
         }
 
         public bool ExistPhoneNumber(string phoneNumber)
@@ -58,6 +60,73 @@ namespace Art.BussinessLogic
             var query = _customerRepository.Table.Where(i => i.NickName == loginName || i.PhoneNumber == loginName);
             query = query.Where(i=>i.Password == password);
             return query.Any();
+        }
+        /// <summary>
+        /// Adds the address.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <returns>
+        /// Address
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 10:34 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Address AddAddress(Address address)
+        {
+            //添加地址
+            var insert = _addressRepository.Insert(address);
+            //保存对Customer的更改
+            _customerRepository.Update(address.Customer);
+            return insert;
+        }
+
+        /// <summary>
+        /// Gets the address by identifier.
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// Address
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 10:39 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Address GetAddressById(int id)
+        {
+            return _addressRepository.GetById(id);
+        }
+        /// <summary>
+        /// Updates the address.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 10:49 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void UpdateAddress(Address address)
+        {
+            //保存更改
+            _addressRepository.Update(address);
+        }
+        /// <summary>
+        /// Removes the address.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 11:00 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void RemoveAddress(Address address)
+        {
+            //保存对Customer表的更改
+            _customerRepository.Update(address.Customer);
+            //删除地址
+            _addressRepository.Delete(address);
         }
     }
 
