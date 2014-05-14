@@ -5,6 +5,25 @@ using System.Web;
 
 namespace Art.WebService.Models
 {
+    public class SimpleResultModel
+    {
+        public SimpleResultModel(bool isSuccess)
+            : this(isSuccess, string.Empty)
+        {
+
+        }
+
+
+        public SimpleResultModel(bool isSuccess, string message)
+        {
+            this.IsSuccess = isSuccess;
+            this.Message = message;
+        }
+
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+    }
+
     public class ResultModel
     {
         public ResultModel(bool isSuccess)

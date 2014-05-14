@@ -48,10 +48,10 @@ namespace Art.WebService.Controllers
 
         [HttpPost]
         //可以使用昵称或者手机号码登录
-        public ResultModel Login(LoginModel model)
+        public SimpleResultModel Login(LoginModel model)
         {
             var flg = CustomerBussinessLogic.Instance.ValidateLogin(model.LoginName,model.Password);
-            return new ResultModel(flg);
+            return new SimpleResultModel(flg);
         }
 
 
