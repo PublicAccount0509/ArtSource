@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Art.Data.Common
+namespace Art.Data.Domain.Access.Mapping
 {
-    public enum PackingType
+    public class ArtworkImageMap : ArtEntityTypeConfiguration<ArtworkImage>
     {
-        一般包装 = 1,
-        精包装
+
     }
 }

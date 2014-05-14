@@ -50,6 +50,7 @@
     <Compile Include="Artwork\ArtPlace.cs" />
     <Compile Include="Artwork\ArtTechnique.cs" />
     <Compile Include="Artwork\Artwork.cs" />
+    <Compile Include="Artwork\ArtworkImage.cs" />
     <Compile Include="Artwork\ArtworkType.cs" />
     <Compile Include="Artwork\ArtMaterial.cs" />
     <Compile Include="Artwork\ArtShape.cs" />

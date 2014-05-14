@@ -1,10 +1,13 @@
-﻿using Art.Data.Domain;
+﻿using Art.Common;
+using Art.Data.Domain;
 using Art.Data.Domain.Access;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using WebExpress.Core;
 using WebExpress.Core.Guards;
 
@@ -160,6 +163,22 @@ namespace Art.BussinessLogic
         public void Add(Artwork artwork)
         {
             artwork.IsPublic = true;
+
+            artwork.Images = new List<ArtworkImage>();
+
+
+            var fullFileName = HttpContext.Current.Server.MapPath("~/" + Path.Combine(ConfigSettings.Instance.UploadedFileFolder, artwork.ImageFileName));
+            var destFullFileName = HttpContext.Current.Server.MapPath("~/" + Path.Combine(ConfigSettings.Instance.UploadedFileFolder, string.Format("{0}_{1}.{2}", Path.GetFileNameWithoutExtension(fullFileName), "type1", Path.GetExtension(fullFileName))));
+
+            ImageTransformer.Instance.ResizeImageToWidth(fullFileName, destFullFileName, 290, 240);
+
+            artwork.Images = new List<ArtworkImage>();
+            artwork.Images.Add(new ArtworkImage
+            {
+                ImagePath = destFullFileName,
+                ImageType = Data.Common.ArtworkImageResizeType.Type1
+            });
+
             _artworkRepository.Insert(artwork);
         }
 
@@ -170,7 +189,7 @@ namespace Art.BussinessLogic
 
         public PagedList<Artwork> SearchArtworks(PagingRequest paging)
         {
-            return SearchArtworks(null,null,null,null,paging);
+            return SearchArtworks(null, null, null, null, paging);
         }
 
         public PagedList<Artwork> SearchArtworks(string namePart, int? artworkTypeId, int? artMaterialId, int? artistId, PagingRequest paging)

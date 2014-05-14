@@ -56,6 +56,7 @@
     <Compile Include="Mapping\Artist\ArtistMap.cs" />
     <Compile Include="Mapping\Artwork\ArtMaterialMap.cs" />
     <Compile Include="Mapping\Artwork\ArtTechniqueMap.cs" />
+    <Compile Include="Mapping\Artwork\ArtworkImageMap.cs" />
     <Compile Include="Mapping\Artwork\ArtworkMap.cs" />
     <Compile Include="Mapping\Artwork\ArtShapeMap.cs" />
     <Compile Include="Mapping\Artwork\ArtworkTypeMap.cs" />

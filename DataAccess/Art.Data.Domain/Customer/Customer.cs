@@ -11,17 +11,18 @@ namespace Art.Data.Domain
     public class Customer : BaseEntity
     {
         [Required]
-        public string LoginName { get; set; }
+        public string NickName { get; set; }
+        
+        [Required]
+        public string PhoneNumber { get; set; }
 
         [Required]
         public string Password { get; set; }
-
-        public DateTime? Birthday { get; set; }
-
+         
         public int? DefaultAddressId { get; set; }
 
-        public Address DefaultAddress { get; set; }
+        public virtual Address DefaultAddress { get; set; }
 
-        public ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

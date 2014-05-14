@@ -188,7 +188,6 @@
     <Compile Include="Authentication\FormAuthenticationService.cs" />
     <Compile Include="Authentication\IAuthenticationService.cs" />
     <Compile Include="Common\ActAttribute.cs" />
-    <Compile Include="Common\Config\ConfigSettings.cs" />
     <Compile Include="Common\ImageRouteHandler.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
@@ -466,6 +465,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Art.Common\Art.Common.csproj">
+      <Project>{8043328c-37ea-4788-b45e-79a3f46ca26d}</Project>
+      <Name>Art.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BussinessLogic\Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj">
       <Project>{92477c11-e258-4aa6-b004-a03b0e0bb483}</Project>
       <Name>Art.BussinessLogic.Entities</Name>
