@@ -440,6 +440,69 @@
         }
 
         /// <summary>
+        /// 保存用户地址
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="requst">地址信息</param>
+        /// <returns>
+        /// The CustomerAddressResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:41
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public Response<string> InsertCustomerAddress(int id, CustomerAddressRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(id))
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+
+            var result = this.usersServices.InsertCustomerAddress(this.Source, id, new CustomerAddressParameter
+            {
+                CustomerAddressId = requst.CustomerAddressId,
+                Name = (requst.Name ?? string.Empty).Trim(),
+                Address = (requst.Address ?? string.Empty).Trim(),
+                AddressAlias = (requst.AddressAlias ?? string.Empty).Trim(),
+                IsDefault = requst.IsDefault,
+                RegionCode = (requst.RegionCode ?? string.Empty).Trim(),
+                Sex = requst.Sex,
+                Telephone = (requst.Telephone ?? string.Empty).Trim(),
+                AddressBuilding = (requst.AddressBuilding ?? string.Empty).Trim(),
+                AddressDetail = (requst.AddressDetail ?? string.Empty).Trim()
+            });
+
+            return new Response<string>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
         /// 删除用户地址
         /// </summary>
         /// <param name="id">用户Id</param>

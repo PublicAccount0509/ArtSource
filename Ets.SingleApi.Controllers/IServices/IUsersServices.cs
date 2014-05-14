@@ -97,6 +97,22 @@
         ServicesResult<bool> SaveCustomerAddress(string source, int userId, CustomerAddressParameter parameter);
 
         /// <summary>
+        /// 管理用户地址
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="userId">用户Id</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> InsertCustomerAddress(string source, int userId, CustomerAddressParameter parameter);
+
+        /// <summary>
         /// 删除用户地址
         /// </summary>
         /// <param name="source">The source</param>

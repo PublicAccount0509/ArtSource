@@ -133,6 +133,26 @@
         }
 
         /// <summary>
+        /// 保存用户地址
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="requst">地址信息</param>
+        /// <returns>
+        /// The CustomerAddressResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:41
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebInvoke(UriTemplate = "/InsertCustomerAddress/{id}", Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<string> InsertCustomerAddress(string id, CustomerAddressRequst requst)
+        {
+            return new Response<string>();
+        }
+
+        /// <summary>
         /// 删除用户地址
         /// </summary>
         /// <param name="id">用户Id</param>

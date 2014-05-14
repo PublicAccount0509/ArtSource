@@ -652,6 +652,99 @@
         }
 
         /// <summary>
+        /// 管理用户地址
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="userId">用户Id</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 21:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> InsertCustomerAddress(string source, int userId, CustomerAddressParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
+            if (customerEntity == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = string.Empty
+                };
+            }
+
+            var isDefault = parameter.IsDefault;
+            var customerId = customerEntity.CustomerId;
+            if (this.customerAddressEntityRepository.EntityQueryable.Count(p => p.CustomerId == customerId && p.IsDel == false) == 0)
+            {
+                isDefault = true;
+            }
+
+            var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Code == parameter.RegionCode);
+            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(
+                    p => p.CustomerId == customerId && p.CustomerAddressId == parameter.CustomerAddressId && p.IsDel == false) ?? new CustomerAddressEntity
+                    {
+                        IsDefault = isDefault ?? false
+                    };
+
+            customerAddressEntity.Recipient = parameter.Name;
+            customerAddressEntity.Address1 = parameter.Address;
+            customerAddressEntity.Address2 = string.Format("{0}{1}", parameter.AddressBuilding, parameter.AddressDetail);
+            customerAddressEntity.AddressBuilding = parameter.AddressBuilding;
+            customerAddressEntity.AddressDetail = parameter.AddressDetail;
+            customerAddressEntity.AddressAlias = parameter.AddressAlias;
+            customerAddressEntity.CityId = regionEntity == null ? null : (int?)regionEntity.CityId;
+            customerAddressEntity.CountyId = regionEntity == null ? null : (int?)regionEntity.Id;
+            customerAddressEntity.CountryId = regionEntity == null ? null : (int?)regionEntity.ProvinceId;
+            customerAddressEntity.RegionCode = parameter.RegionCode;
+            customerAddressEntity.Telephone = parameter.Telephone;
+            customerAddressEntity.Sex = parameter.Sex ?? ServicesCommon.DefaultGender;
+            customerAddressEntity.CustomerId = customerId;
+            customerAddressEntity.IsDel = false;
+
+            if (isDefault != null)
+            {
+                customerAddressEntity.IsDefault = isDefault;
+            }
+
+            if (isDefault != true)
+            {
+                this.customerAddressEntityRepository.Save(customerAddressEntity);
+                return new ServicesResult<string>
+                {
+                    Result = customerAddressEntity.CustomerAddressId.ToString()
+                };
+            }
+
+            var customerAddressId = customerAddressEntity.CustomerAddressId;
+            var customerAddressEntityList = this.customerAddressEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.CustomerAddressId != customerAddressId && p.IsDefault == true && p.IsDel == false).ToList();
+            foreach (var addressEntity in customerAddressEntityList)
+            {
+                addressEntity.IsDefault = false;
+            }
+
+            customerAddressEntityList.Add(customerAddressEntity);
+            this.customerAddressEntityRepository.SaveTransaction(customerAddressEntityList);
+            return new ServicesResult<string>
+            {
+                Result = customerAddressEntity.CustomerAddressId.ToString()
+            };
+        }
+
+        /// <summary>
         /// 删除用户地址
         /// </summary>
         /// <param name="source">The source</param>
