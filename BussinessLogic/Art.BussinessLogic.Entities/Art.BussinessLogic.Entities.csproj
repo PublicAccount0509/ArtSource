@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminUser\AdminUserSearchCriteria.cs" />
     <Compile Include="Order\AuctionSearchCriteria.cs" />
     <Compile Include="Order\OrderSearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

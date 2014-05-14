@@ -1,0 +1,30 @@
+﻿@model IList<AdminUserModel>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="t-grid systemSet">
+    <thead>
+        <tr class="theadbg">
+            <th align="center" class="userName">姓名</th>
+            <th align="center" class="logoinName">登陆名</th>
+            <th align="center" class="operation">操作</th>
+            <th align="center" class="qxSet">权限设置</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr AdminUserId="@item.Id" AdminUserName="@item.Name" AdminUserLoginName="@item.LoginName" AdminUserPassWord="@item.PassWord" AdminUserPosition="@item.Position" AdminUserContact="@item.Contact">
+            <td align="center" class="userName">@item.Name</td>
+            <td align="center" class="logoinName">@item.LoginName</td>
+            <td align="center" class="operation">
+                <a href="#" class="J_dele">
+                    <img src="/icon/shanchu.png" align="top" />删除</a>
+                <a href="#" class="J_lookInfo">
+                    <img src="/icon/chakaninfo.png" align="top" />查看</a>
+                <a href="#" class="J_compile">
+                    <img src="/icon/bianji.png" align="top" />编辑</a>
+                <a href="#" class="J_xgPassword">
+                    <img src="/icon/xiugaimima.png" align="top" />修改密码</a></td>
+            <td align="center" class="qxSet"><a href="" class="J_qxset">权限设置</a></td>
+        </tr>
+        }
+    </tbody>
+</table>

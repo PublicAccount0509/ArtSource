@@ -1,47 +1,26 @@
-﻿@{
-    ViewBag.Title = "Types";
+﻿@model IList<AdminUserModel>
+@{
+    ViewBag.Title = "系统设置";
     Layout = "~/Views/Shared/_ArtLayout.cshtml";
 }
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/Views/AdminUserList.js"></script>
+<script src="~/Scripts/Extension/kendo.Extension.js"></script>
+<script src="~/Scripts/webExpress/webExpress.controls.adpaters.js"></script>
 <div class="conterbox systemSet">
     <h2 class="crumbs">您所在位置：系统设置
     </h2>
     <div class="managebox">
         <div class="searchbox clearfix">
-            <span class="t-search">用户名<input type="text" value="" name="" class="searchinp" />
-                <input type="submit" value="搜索" name="" class="btn" /></span>
+            <span class="t-search">姓名<input id="txtUserName" type="text" value="" name="" class="searchinp" />
+                <input type="button" id="btnSearch" value="搜索" name="" class="btn" /></span>
             <span class="t-addfl">
                 <input type="submit" value="添加用户" name="" class="btn" id="J_adduser" /></span>
         </div>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="t-grid systemSet">
-            <thead>
-                <tr class="theadbg">
-                    <th align="center" class="userName">用户名称</th>
-                    <th align="center" class="logoinName">登陆名</th>
-                    <th align="center" class="operation">操作</th>
-                    <th align="center" class="qxSet">权限设置</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td align="center" class="userName">易淘人</td>
-                    <td align="center" class="logoinName">土土</td>
-                    <td align="center" class="operation">
-                        <a href="#" class="J_dele">
-                            <img src="/icon/shanchu.png" align="top" />删除</a>
-                        <a href="#" class="J_lookInfo">
-                            <img src="/icon/chakaninfo.png" align="top" />查看</a>
-                        <a href="#" class="J_compile">
-                            <img src="/icon/bianji.png" align="top" />编辑</a>
-                        <a href="#" class="J_xgPassword">
-                            <img src="/icon/xiugaimima.png" align="top" />修改密码</a></td>
-                    <td align="center" class="qxSet"><a href="" class="J_qxset">权限设置</a></td>
-                </tr>
-
-            </tbody>
-        </table>
-
+        <div class="data">
+            @Html.Partial("_List", Model)
+        </div>
     </div>
-
 </div>
 
 <div class="systemSet">
@@ -55,7 +34,7 @@
                     <input value="" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
-                <td class="title-text">用户名:</td>
+                <td class="title-text">登录名:</td>
                 <td class="title-inp">
                     <input value="" name="" type="text" class="title-inp" /></td>
             </tr>
@@ -99,23 +78,23 @@
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="adduser-bz">
             <tr>
                 <td class="title-text">姓名:</td>
-                <td class="title-inp">土豆</td>
+                <td id="tdUserName_look" class="title-inp">土豆</td>
             </tr>
             <tr>
-                <td class="title-text">用户名:</td>
-                <td class="title-inp">得意的飘</td>
+                <td class="title-text">登录名:</td>
+                <td id="tdLoginName_look" class="title-inp">得意的飘</td>
             </tr>
             <tr>
                 <td class="title-text">登陆密码:</td>
-                <td class="title-inp">123456</td>
+                <td id="tdLoginPassWord_look" class="title-inp">123456</td>
             </tr>
             <tr>
                 <td class="title-text">职位:</td>
-                <td class="title-inp">运营</td>
+                <td id="tdPosition_look" class="title-inp">运营</td>
             </tr>
             <tr>
                 <td class="title-text">联系方式:</td>
-                <td class="title-inp">123466789</td>
+                <td id="tdContact_look" class="title-inp">123466789</td>
             </tr>
         </table>
         <p class="btnbox">
@@ -131,31 +110,31 @@
             <tr>
                 <td class="title-text">姓名:</td>
                 <td class="title-inp">
-                    <input value="土豆" name="" type="text" class="title-inp" /></td>
+                    <input id="txtName_edit" value="土豆" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
                 <td class="title-text">用户名:</td>
                 <td class="title-inp">
-                    <input value="得意的飘" name="" type="text" class="title-inp" /></td>
+                    <input id="txtLoginName_edit" value="得意的飘" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
                 <td class="title-text">登陆密码:</td>
                 <td class="title-inp">
-                    <input value="123456" name="" type="text" class="title-inp" /></td>
+                    <input id="txtPassWord_edit" value="123456" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
                 <td class="title-text">职位:</td>
                 <td class="title-inp">
-                    <input value="运营" name="" type="text" class="title-inp" /></td>
+                    <input id="txtPosition_edit" value="运营" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
                 <td class="title-text">联系方式:</td>
                 <td class="title-inp">
-                    <input value="138888888" name="" type="text" class="title-inp" /></td>
+                    <input id="Contact_edit" value="138888888" name="" type="text" class="title-inp" /></td>
             </tr>
         </table>
         <p class="btnbox">
-            <input value="确定" type="button" class="J_closebox closebox" />
+            <input id="btnEditAdminUser" value="确定" type="button" class="J_closebox closebox" />
             <input value="取消" type="button" class="J_closebox closebox" />
         </p>
     </div>
@@ -264,42 +243,62 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var viewInstance = new art.ui.view.AdminUserList();
+        viewInstance.init();
         var adminjs = new adminglass();//实例化后台js类
+        var adminUserId;
         //关闭弹层
-        $('.J_closebox').click(function () {
+        $(document).on("click", ".J_closebox", function() {
             adminjs.closewinbox('.add-openbox');
-            return false
-        })
+            return false;
+        });
         //添加用户
         $('#J_adduser').click(function () {
             adminjs.openwinbox('#J_addUserBox');
             return false;
         });
+        $("#btnEditAdminUser").click(function() {
+            viewInstance.updateAdminUser();
+        });
         //删除
-        $('.J_dele').click(function () {
+        $(document).on("click", ".J_dele", function() {
             adminjs.openwinbox('#J_deleUserBox');
             return false;
         });
         //查看用户
-        $('.J_lookInfo').click(function () {
+        $(document).on("click", ".J_lookInfo", function () {
+            var tr = $(this).closest("tr");
+            adminUserId = tr.attr("AdminUserId");
+            $("#tdUserName_look").html(tr.attr("AdminUserName"));
+            $("#tdLoginName_look").html(tr.attr("AdminUserLoginName"));
+            $("#tdLoginPassWord_look").html(tr.attr("AdminUserPassWord"));
+            $("#tdPosition_look").html(tr.attr("AdminUserPosition"));
+            $("#tdContact_look").html(tr.attr("AdminUserContact"));
             adminjs.openwinbox('#J_lookInfoBox');
             return false;
         });
 
         //编辑用户
-        $('.J_compile').click(function () {
+        $(document).on("click", ".J_compile", function () {
+            var tr = $(this).closest("tr");
+            adminUserId = tr.attr("AdminUserId");
+            $("#txtName_edit").val(tr.attr("AdminUserName"));
+            $("#txtLoginName_edit").val(tr.attr("AdminUserLoginName"));
+            $("#txtPassWord_edit").val(tr.attr("AdminUserPassWord"));
+            $("#txtPosition_edit").val(tr.attr("AdminUserPosition"));
+            $("#Contact_edit").val(tr.attr("AdminUserContact"));
             adminjs.openwinbox('#J_compileBox');
             return false;
         });
 
         //权限设置
-        $('.J_qxset').click(function () {
+        $(document).on("click", ".J_qxset", function() {
             adminjs.openwinbox('#J_qxsetBox');
             return false;
         });
 
-        //修改密码
-        $('.J_xgPassword').click(function () {
+            //修改密码
+        $(document).on("click", ".J_xgPassword", function() {
             adminjs.openwinbox('#J_xgPasswordBox');
             return false;
 

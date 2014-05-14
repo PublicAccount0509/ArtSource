@@ -402,6 +402,7 @@
     <Content Include="Scripts\Views\OrderList.js" />
     <Content Include="Scripts\Views\_references.views.js" />
     <Content Include="Scripts\Views\AuctionList.js" />
+    <Content Include="Scripts\Views\AdminUserList.js" />
     <Content Include="Scripts\webExpress\webExpress.control.confirmWindow.js" />
     <Content Include="Scripts\webExpress\webExpress.controls.adpaters.js" />
     <Content Include="Scripts\webExpress\webExpress.js" />
@@ -455,6 +456,7 @@
     <Content Include="Views\Order\_List.cshtml" />
     <Content Include="Views\Order\_AuctionList.cshtml" />
     <Content Include="Views\Order\Detail.cshtml" />
+    <Content Include="Views\AdminUser\_List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authorization\" />

@@ -11,7 +11,10 @@ namespace Art.Website.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string LoginName { get; set; }
+        public string PassWord { get; set; }
         public string Position { get; set; }
+        public string Contact { get; set; }
     }
 
     public class AdminUserModelTranslator : TranslatorBase<AdminUser, AdminUserModel>
@@ -23,7 +26,10 @@ namespace Art.Website.Models
             var to = new AdminUserModel();
             to.Id = from.Id;
             to.Name = from.Name;
+            to.LoginName = from.LoginName;
+            to.PassWord = from.Password;
             to.Position = from.Position;
+            to.Contact = from.Contact;
             return to;
         }
 
