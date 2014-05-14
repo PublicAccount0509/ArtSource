@@ -48,14 +48,14 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private readonly INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository;
+        private readonly INHibernateRepository<PaymentDirectEntity> paymentDirectEntityRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DingTaiOrderBaseProvider" /> class.
         /// </summary>
         /// <param name="directPayEntityRepository">The directPayEntityRepository</param>
         /// <param name="orderNumberDtEntityRepository">The orderNumberDtEntityRepository</param>
-        /// <param name="paymentRecordEntityRepository">The paymentRecordEntityRepository</param>
+        /// <param name="paymentDirectEntityRepository">The paymentDirectEntityRepositoryDefault documentation</param>
         /// 创建者：周超
         /// 创建日期：10/25/2013 2:14 PM
         /// 修改者：
@@ -64,11 +64,11 @@
         public DirectPayOrderBaseProvider(
             INHibernateRepository<DirectPayEntity> directPayEntityRepository,
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
-            INHibernateRepository<PaymentRecordEntity> paymentRecordEntityRepository)
+            INHibernateRepository<PaymentDirectEntity> paymentDirectEntityRepository)
         {
             this.directPayEntityRepository = directPayEntityRepository;
             this.orderNumberDtEntityRepository = orderNumberDtEntityRepository;
-            this.paymentRecordEntityRepository = paymentRecordEntityRepository;
+            this.paymentDirectEntityRepository = paymentDirectEntityRepository;
         }
 
         /// <summary>
@@ -182,6 +182,7 @@
             tableReservationEntity.IsPaId = true;
             this.directPayEntityRepository.Save(tableReservationEntity);
 
+
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
@@ -216,20 +217,32 @@
                 };
             }
 
-            var tableReservationId = directPayEntity.DirectPayId.ToString();
-            var paymentRecordEntity = this.paymentRecordEntityRepository.EntityQueryable.FirstOrDefault(p => p.OrderId == tableReservationId)
-                                 ?? new PaymentRecordEntity
+            var directPayId = directPayEntity.DirectPayId;
+
+            var paymentDirectEntity = this.paymentDirectEntityRepository.EntityQueryable.FirstOrDefault(p => p.DirectPay.DirectPayId == directPayId)
+                                 ?? new PaymentDirectEntity
                                  {
                                      PaymentTypeId = 1,
-                                     OrderId = tableReservationId,
-                                     PaymentDate = DateTime.Now
+                                     DirectPay = new DirectPayEntity { DirectPayId = directPayId },
+                                     TransactionCode = string.Empty,
+                                     CardId = string.Empty,
+                                     Authorized = false,
+                                     CVV = 0,
+                                     AVS = string.Empty,
+                                     PC = 0,
+                                     AuthCode = string.Empty,
+                                     VoicePayResponse = string.Empty,
+                                     TransactionFee = 0
                                  };
 
-            paymentRecordEntity.Amount = directPayEntity.CustomerTotal;
-            paymentRecordEntity.OrderTypeId = (int)OrderType.DirectPay; //订台 2 堂食 1
-            paymentRecordEntity.PaymentMethodId = paymentMethodId;
-            paymentRecordEntity.PayBank = payBank;
-            this.paymentRecordEntityRepository.Save(paymentRecordEntity);
+            paymentDirectEntity.Amount = directPayEntity.CustomerTotal;
+            paymentDirectEntity.MethodChangeHistory = paymentDirectEntity.PaymentMethodId.ToString();
+            paymentDirectEntity.PaymentMethodId = paymentMethodId;
+            paymentDirectEntity.PaymentDate = DateTime.Now;
+            paymentDirectEntity.PayBank = payBank;
+
+            this.paymentDirectEntityRepository.Save(paymentDirectEntity);
+
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,

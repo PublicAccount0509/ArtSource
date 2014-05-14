@@ -399,10 +399,29 @@ namespace Ets.SingleApi.Services
             }
 
             var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, parameter.OrderId, true);
+            if (saveOrderPaidResult == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+            if (saveOrderPaidResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = saveOrderPaidResult.Result,
+                    StatusCode = saveOrderPaidResult.StatusCode
+                };
+            }
+
+            //保存订单状态 支付方式(参见表PaymentMethod) 9:百付宝支付
+            var saveOrderPaymentMethod = orderBaseProvider.SaveOrderPaymentMethod(source, parameter.OrderId, 9, string.Empty);
+
             return new ServicesResult<bool>
             {
-                Result = saveOrderPaidResult.Result,
-                StatusCode = saveOrderPaidResult.StatusCode
+                Result = saveOrderPaymentMethod.Result,
+                StatusCode = saveOrderPaymentMethod.StatusCode
             };
         }
 

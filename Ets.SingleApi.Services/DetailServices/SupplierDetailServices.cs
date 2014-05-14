@@ -920,6 +920,18 @@
                         continue;
                     }
 
+                    //如果分钟不为00，则重新计算开始时间的分钟
+                    if (startDate.Minute != 0 && ServicesCommon.DeliveryTimeInterval != 0)
+                    {
+                        //例： 12:01 --> deviation = 01/15 = 0
+                        var deviation = startDate.Minute / ServicesCommon.DeliveryTimeInterval;
+                        // 12:00 加 (0 + 1)* 15 分钟
+                        var newStartDate =
+                            DateTime.Parse(startDate.ToString("yyyy-MM-dd HH:00:ss"))
+                                    .AddMinutes((deviation + 1)*ServicesCommon.DeliveryTimeInterval);
+                        startDate = newStartDate;
+                    }
+
                     tempDeliveryTimeList.Add(string.Format("{0:t}-{1:t}", startDate, endDate));
                     while (startDate <= endDate)
                     {
