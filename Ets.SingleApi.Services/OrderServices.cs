@@ -1,6 +1,4 @@
-﻿using Ets.SingleApi.Model.Controller;
-
-namespace Ets.SingleApi.Services
+﻿namespace Ets.SingleApi.Services
 {
     using System.Collections.Generic;
     using System.Json;

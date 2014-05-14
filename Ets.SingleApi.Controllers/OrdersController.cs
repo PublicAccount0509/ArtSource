@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Controllers
+﻿using Ets.SingleApi.Model.Services;
+
+namespace Ets.SingleApi.Controllers
 {
     using System.Web.Http;
 
@@ -364,9 +366,34 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<string> SaveOrder(SaveTangShiOrdersParameter tangShiOrdersParameter)
+        public Response<string> SaveOrder(SaveTangShiOrdersRequst requst)
         {
-            var getOrderResult = this.orderServices.SaveTempOrder(tangShiOrdersParameter, this.AppKey, this.AppPassword);
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Result = string.Empty,
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var getOrderResult = this.orderServices.SaveTempOrder(new SaveTangShiOrdersParameter
+            {
+                Source = requst.Source,
+                Path = requst.Path,
+                SupplierID = requst.SupplierID,
+                CustomerName = requst.CustomerName,
+                CustomerSex = requst.CustomerSex,
+                TableNo = requst.TableNo,
+                Remark = requst.Remark,
+                TempOrderNumber = requst.TempOrderNumber,
+                PayMentMethodId = requst.PayMentMethodId,
+                SupplierDishList = requst.SupplierDishList
+            },this.AppKey,this.AppPassword);
+
             if (getOrderResult.Result == null)
             {
                 return new Response<string>
@@ -374,9 +401,10 @@
                     Message = new ApiMessage
                     {
                         StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
-                    }
+                    },
+                    Result = string.Empty
                 };
-            }
+           }
 
             return new Response<string>
             {

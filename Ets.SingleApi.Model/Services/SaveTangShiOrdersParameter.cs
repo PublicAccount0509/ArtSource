@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using Ets.SingleApi.Model.Controller;
 
-namespace Ets.SingleApi.Model.Controller
+namespace Ets.SingleApi.Model.Services
 {
     /// <summary>
     /// 类名称：SaveTangShiOrdersParameter
-    /// 命名空间：Ets.SingleApi.Model.Controller
-    /// 类功能：保存堂食订单传入参数
+    /// 命名空间：Ets.SingleApi.Model.Services
+    /// 类功能：
     /// </summary>
     /// 创建者：单琪彬
-    /// 创建日期：5/14/2014 9:42 AM
+    /// 创建日期：5/14/2014 1:57 PM
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------

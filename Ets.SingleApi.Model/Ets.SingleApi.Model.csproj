@@ -76,7 +76,7 @@
     <Compile Include="Controller\PaymentResult.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderResult.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
-    <Compile Include="Controller\SaveTangShiOrdersParameter.cs" />
+    <Compile Include="Controller\SaveTangShiOrdersRequst.cs" />
     <Compile Include="Controller\ShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\ShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\SupplierCoupon.cs" />
@@ -187,6 +187,7 @@
     <Compile Include="Services\QueueModel.cs" />
     <Compile Include="Services\QueueDetailModel.cs" />
     <Compile Include="Services\SaveQueueDeskParameter.cs" />
+    <Compile Include="Services\SaveTangShiOrdersParameter.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />
