@@ -140,25 +140,25 @@ namespace Art.WebService.Controllers
 
         public SaveAddressStatus CheckAddressModel(AddressModel model, out string message)
         {
-            message = string.Empty; 
+            message = string.Empty;
             if (string.IsNullOrEmpty(model.Detail))
             {
                 message = "地址不能为空";
                 return SaveAddressStatus.DetailEmpty;
             }
-            
+
             if (string.IsNullOrEmpty(model.PhoneNumber))
             {
                 message = "手机号不能为空";
                 return SaveAddressStatus.PhoneNumberEmpty;
             }
-            
+
             if (string.IsNullOrEmpty(model.ReceiptName))
             {
                 message = "联系人不能为空";
                 return SaveAddressStatus.ReceiptNameEmpty;
             }
-             
+
             return SaveAddressStatus.Success;
         }
 
@@ -189,6 +189,18 @@ namespace Art.WebService.Controllers
             }
             CustomerBussinessLogic.Instance.RemoveAddress(address);
             return new SimpleResultModel((int)DeleteAddressStatus.Success);
+        }
+
+        [HttpGet]
+        public ResultModel<AddressModel[]> MyAddresses(int userId)
+        {
+            var addresses = CustomerBussinessLogic.Instance.GetMyAddresses(userId);
+            var result = AddressModelTranslator.Instance.Translate(addresses);
+            return new ResultModel<AddressModel[]>
+            {
+                Status = (int)GetMyAddressesStatus.Success,
+                Result = result.ToArray()
+            };
         }
     }
 }

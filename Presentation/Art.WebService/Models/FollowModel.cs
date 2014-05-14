@@ -17,7 +17,7 @@ namespace Art.WebService.Models
         ArtistNotExist,
         UserNotExist,
         ArtistAlreadyFollowed,
-        ArtistNoFollowed
+        NotFollowYet
     }
 
     public class FollowModelTranslator : TranslatorBase<ActivityFollow, FollowModel>

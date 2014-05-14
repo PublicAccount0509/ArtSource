@@ -16,9 +16,9 @@ namespace Art.WebService.Models
         public string Detail { get; set; }
         public bool? IsDefault { get; set; }
     }
-    
+
     public enum SaveAddressStatus
-    { 
+    {
         Success,
         DetailEmpty,
         PhoneNumberEmpty,
@@ -33,6 +33,11 @@ namespace Art.WebService.Models
         AddressIdNotExist
     }
 
+    public enum GetMyAddressesStatus
+    {
+        Success
+    }
+
 
     public class AddressModelTranslator : TranslatorBase<Address, AddressModel>
     {
@@ -40,11 +45,17 @@ namespace Art.WebService.Models
 
         public override AddressModel Translate(Address from)
         {
-            //var to = new CustomerRegisterModel();
-            //to.Id = from.Id;
-            //to.Name = from.Name;
-            //return to;
-            throw new NotImplementedException();
+            var to = new AddressModel();
+            to.Id = from.Id;
+            to.PhoneNumber = from.Telephone;
+            to.ReceiptName = from.Name;
+            to.UserId = from.Customer.Id;
+            to.Detail = from.Detail;
+            if (from.Customer.DefaultAddressId.HasValue)
+            {
+                to.IsDefault = from.Customer.DefaultAddressId.Value == from.Id;
+            }
+            return to;
         }
 
         public override Address Translate(AddressModel from)

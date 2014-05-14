@@ -24,7 +24,7 @@ namespace Art.BussinessLogic
 
         public bool ExistPhoneNumber(string phoneNumber)
         {
-            return _customerRepository.Table.Where(i=>i.PhoneNumber == phoneNumber).Any();    
+            return _customerRepository.Table.Where(i => i.PhoneNumber == phoneNumber).Any();
         }
 
         public bool ExistNickName(string nickName)
@@ -43,6 +43,11 @@ namespace Art.BussinessLogic
             return _customerRepository.Table.ToList();
         }
 
+
+        public IList<Address> GetMyAddresses(int userId)
+        {
+            return _addressRepository.Table.Where(i => i.Customer.Id == userId).ToList();
+        }
 
         public bool Exist(int id)
         {
@@ -63,7 +68,7 @@ namespace Art.BussinessLogic
         public Customer RetrieveCustomer(string loginName, string password)
         {
             var query = _customerRepository.Table.Where(i => i.NickName == loginName || i.PhoneNumber == loginName);
-            query = query.Where(i=>i.Password == password);
+            query = query.Where(i => i.Password == password);
             return query.FirstOrDefault();
         }
         /// <summary>

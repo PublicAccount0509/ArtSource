@@ -5,13 +5,13 @@ using System.Web;
 
 namespace Art.WebService.Models
 {
-    public class ShareArtworkModel
+    public class ActivityShareModel
     {
         public int ArtworkId { get; set; }
         public int UserId { get; set; }
     }
 
-    public enum ShareArtworkStatus
+    public enum ActivityShareStatus
     { 
         Success,
         ArtworkNotExist,

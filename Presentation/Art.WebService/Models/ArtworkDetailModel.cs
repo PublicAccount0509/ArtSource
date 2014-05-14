@@ -14,7 +14,7 @@ namespace Art.WebService.Models
         public string ImagePath { get; set; }
         public bool HasPraised { get; set; }
 
-        public AuctionType AuctionType { get; set; }
+        public int AuctionType { get; set; }
         public int AuctionCount { get; set; }
         public DateTime? StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }
@@ -27,10 +27,12 @@ namespace Art.WebService.Models
         public string Inspiration { get; set; }
         public int ArtistId { get; set; }
         public string ArtistName { get; set; }
+
+        public decimal Price { get; set; }
     }
 
     public enum ArtworkDetailModelStatus
-    { 
+    {
         Success,
         ArtworkNotFound,
         UserNotFound
@@ -48,7 +50,7 @@ namespace Art.WebService.Models
             {
                 to.ImagePath = CommonHelper.GetUploadFileRelativePath_SlantStyle(image.ImagePath);
             }
-            to.AuctionType = from.AuctionType;
+            to.AuctionType = (int)from.AuctionType;
             to.StartDateTime = from.StartDateTime;
             to.EndDateTime = from.EndDateTime;
             to.Size = from.Size;
@@ -56,10 +58,11 @@ namespace Art.WebService.Models
             to.ArtworkType = from.ArtworkType.Name;
             to.Material = from.ArtMaterial.Name;
             to.Technique = from.ArtTechnique == null ? string.Empty : from.ArtTechnique.Name;
-            to.FitPlaces = from.SuitableArtPlaces.Select(i => i.Name).ToString();
+            to.FitPlaces = string.Join(",", from.SuitableArtPlaces.Select(i => i.Name));
             to.Inspiration = from.CreationInspiration;
             to.ArtistId = from.Artist.Id;
             to.ArtistName = from.Artist.Name;
+            to.Price = from.AuctionPrice;
             return to;
         }
 

@@ -40,33 +40,118 @@ namespace Art.WebService.Controllers
         }
 
         [HttpGet]
-        public ResultModel<ArtworkDetailModel> Detail(int artworkId, int userId)
+        public ResultModel<ArtworkDetailModel> Detail(int artworkId, int? userId)
         {
             var artwork = ArtworkBussinessLogic.Instance.GetArtwork(artworkId);
             var model = ArtworkDetailModelTranslator.Instance.Translate(artwork);
-
+            if (userId.HasValue)
+            {
+                model.HasPraised = ArtworkBussinessLogic.Instance.HasPraised(artworkId, userId.Value);
+            }            
             var result = new ResultModel<ArtworkDetailModel>((int)ArtworkDetailModelStatus.Success, string.Empty, model);
             return result;
         }
 
-        //public 
-
-        public SimpleResultModel Share(ShareArtworkModel model)
+        //public  
+        public SimpleResultModel Share(ActivityShareModel model)
         {
             if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
             {
-                return new SimpleResultModel((int)ShareArtworkStatus.ArtworkNotExist, "指定的作品Id不存在");
+                return new SimpleResultModel((int)ActivityShareStatus.ArtworkNotExist, "指定的作品Id不存在");
             }
 
             if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
             {
-                return new SimpleResultModel((int)ShareArtworkStatus.UserNotExist, "指定的用户Id不存在");
+                return new SimpleResultModel((int)ActivityShareStatus.UserNotExist, "指定的用户Id不存在");
             }
 
             ArtworkBussinessLogic.Instance.Share(model.ArtworkId, model.UserId);
             return SimpleResultModel.Success();
         }
 
+        public SimpleResultModel Collect(ActivityCollectModel model)
+        {
+            if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
+            {
+                return new SimpleResultModel((int)ActivityCollectStatus.ArtworkNotExist, "指定的作品Id不存在");
+            }
 
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel((int)ActivityCollectStatus.UserNotExist, "指定的用户Id不存在");
+            }
+
+            if (ArtworkBussinessLogic.Instance.ExistCollect(model.ArtworkId, model.UserId))
+            {
+                return new SimpleResultModel((int)ActivityCollectStatus.AlreadyCollected, "用户已经收藏过该作品");
+            }
+
+            ArtworkBussinessLogic.Instance.Collect(model.ArtworkId, model.UserId);
+            return SimpleResultModel.Success();
+        }
+
+        public SimpleResultModel CancelCollect(ActivityCancelCollectModel model)
+        {
+            if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
+            {
+                return new SimpleResultModel((int)ActivityCancelCollectStatus.ArtworkNotExist, "指定的作品Id不存在");
+            }
+
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel((int)ActivityCancelCollectStatus.UserNotExist, "指定的用户Id不存在");
+            }
+
+            if (!ArtworkBussinessLogic.Instance.ExistCollect(model.ArtworkId, model.UserId))
+            {
+                return new SimpleResultModel((int)ActivityCancelCollectStatus.NotCollectYet, "用户还没有收藏过该作品");
+            }
+
+            ArtworkBussinessLogic.Instance.CancelCollect(model.ArtworkId, model.UserId);
+            return SimpleResultModel.Success();
+        }
+
+        public SimpleResultModel Praise(ActivityPraiseModel model)
+        {
+            if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
+            {
+                return new SimpleResultModel((int)ActivityPraiseStatus.ArtworkNotExist, "指定的作品Id不存在");
+            }
+
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel((int)ActivityPraiseStatus.UserNotExist, "指定的用户Id不存在");
+            }
+
+            if (ArtworkBussinessLogic.Instance.ExistPraise(model.ArtworkId, model.UserId))
+            {
+                return new SimpleResultModel((int)ActivityPraiseStatus.AlreadyPraised, "用户已经收藏过该作品");
+            }
+
+            ArtworkBussinessLogic.Instance.Praise(model.ArtworkId, model.UserId);
+            return SimpleResultModel.Success();
+        }
+
+
+        public SimpleResultModel CancelPraise(ActivityCancelPraiseModel model)
+        {
+            if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
+            {
+                return new SimpleResultModel((int)ActivityCancelPraiseStatus.ArtworkNotExist, "指定的作品Id不存在");
+            }
+
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel((int)ActivityCancelPraiseStatus.UserNotExist, "指定的用户Id不存在");
+            }
+
+            if (!ArtworkBussinessLogic.Instance.ExistPraise(model.ArtworkId, model.UserId))
+            {
+                return new SimpleResultModel((int)ActivityCancelPraiseStatus.NotPraiseYet, "用户还没有赞过该作品");
+            }
+
+            ArtworkBussinessLogic.Instance.CancelCollect(model.ArtworkId, model.UserId);
+            return SimpleResultModel.Success();
+        }
     }
 }

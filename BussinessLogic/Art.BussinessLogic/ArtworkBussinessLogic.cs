@@ -173,7 +173,7 @@ namespace Art.BussinessLogic
 
         public void Add(Artwork artwork)
         {
-            artwork.IsPublic = true; 
+            artwork.IsPublic = true;
 
             var fullFileName = CommonHelper.GetUploadFileAbsolutePath(artwork.ImageFileName);
             artwork.Images = GetImages(fullFileName);
@@ -272,6 +272,12 @@ namespace Art.BussinessLogic
             return count;
         }
 
+        public bool ExistCollect(int artworkId, int customerId)
+        {
+            var query = _activityCollectRepository.Table.Where(i => i.ArtworkId == artworkId && i.CustomerId == customerId);
+            return query.Any();
+        }
+
         public ActivityCollect Collect(int artworkId, int customerId)
         {
             var entity = new ActivityCollect();
@@ -282,13 +288,24 @@ namespace Art.BussinessLogic
             return result;
         }
 
+        public void CancelCollect(int artworkId, int customerId)
+        {
+            var entity = _activityCollectRepository.Table.Where(i => i.ArtworkId == artworkId && i.CustomerId == customerId).FirstOrDefault();
+            _activityCollectRepository.Delete(entity);
+        }
+
         public int GetCollectCount(int artworkId)
         {
             var count = _activityShareRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
             return count;
         }
 
-
+        public bool ExistPraise(int artworkId, int customerId)
+        {
+            var query = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId && i.CustomerId == customerId);
+            return query.Any();
+        }
+        
         public ActivityPraise Praise(int artworkId, int customerId)
         {
             var entity = new ActivityPraise();
@@ -297,6 +314,12 @@ namespace Art.BussinessLogic
             entity.FADatetime = DateTime.Now;
             var result = _activityPraiseRepository.Insert(entity);
             return result;
+        }
+
+        public bool HasPraised(int artworkId, int customerId)
+        {
+            var query = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId && i.CustomerId == customerId);
+            return query.Any();
         }
 
         public int GetPraiseCount(int artworkId)
