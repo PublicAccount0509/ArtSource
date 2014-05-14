@@ -372,6 +372,7 @@
     <Content Include="Scripts\dynamicScript.js" />
     <Content Include="Scripts\Extension\jquery.validate.Extension.js" />
     <Content Include="Scripts\Extension\kendo.Extension.js" />
+    <None Include="Properties\PublishProfiles\forApp.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />

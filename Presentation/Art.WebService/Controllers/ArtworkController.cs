@@ -15,35 +15,43 @@ namespace Art.WebService.Controllers
         // GET api/<controller>
         public IEnumerable<ArtworkSimpleModel> Get()
         {
-            var paging= new PagingRequest(0,10 );
+            var paging = new PagingRequest(0, 10);
             var aa = ArtworkBussinessLogic.Instance.SearchArtworks(paging);
             //var dd =  ArtworkSimpleModel.Instance.Translate(aa);
             return null;
 
-            
-
-            //return new string[] { "value1", "value2" };
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        [HttpGet]
+        public ArtworkSimpleModel[] List(int itemsCount, int pageIndex)
         {
-            return "value";
+            var paging = new PagingRequest(pageIndex, itemsCount);
+            var artworks = ArtworkBussinessLogic.Instance.SearchArtworks(paging);
+            var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
+            foreach (var model in models)
+            {
+                model.ShareCount = ArtworkBussinessLogic.Instance.GetShareCount(model.Id);
+            }
+            return models.ToArray();
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        public SimpleResultModel Share(ShareArtworkModel model)
         {
+            if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
+            {
+                return new SimpleResultModel(false, "指定的作品Id不存在");
+            }
+
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel(false, "指定的用户Id不存在");
+            }
+
+            ArtworkBussinessLogic.Instance.Share(model.ArtworkId, model.UserId);
+            return new SimpleResultModel(true);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
+
     }
 }

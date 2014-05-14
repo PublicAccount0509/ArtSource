@@ -24,6 +24,9 @@ namespace Art.BussinessLogic
         private readonly IRepository<ArtTechnique> _artTechniqueRepository;
         //private readonly IRepository<ArtPeriod> _artPeriodRepository;
         private readonly IRepository<ArtPlace> _artPlaceRepository;
+        private readonly IRepository<ActivityShare> _activityShareRepository;
+        private readonly IRepository<ActivityCollect> _activityCollectRepository;
+        private readonly IRepository<ActivityPraise> _activityPraiseRepository;
 
         private ArtworkBussinessLogic()
         {
@@ -34,6 +37,9 @@ namespace Art.BussinessLogic
             _artTechniqueRepository = new EfRepository<ArtTechnique>();
             //_artPeriodRepository = new EfRepository<ArtPeriod>();
             _artPlaceRepository = new EfRepository<ArtPlace>();
+            _activityShareRepository = new EfRepository<ActivityShare>();
+            _activityCollectRepository = new EfRepository<ActivityCollect>();
+            _activityPraiseRepository = new EfRepository<ActivityPraise>();
         }
 
         public List<ArtworkType> GetArtworkTypes()
@@ -90,6 +96,11 @@ namespace Art.BussinessLogic
         {
             _artworkTypeRepository.Delete(artworkType);
             return true;
+        }
+
+        public bool Exist(int id)
+        {
+            return GetArtwork(id) != null;
         }
 
         public Artwork GetArtwork(int id)
@@ -166,17 +177,16 @@ namespace Art.BussinessLogic
 
             artwork.Images = new List<ArtworkImage>();
 
-
-            var fullFileName = HttpContext.Current.Server.MapPath("~/" + Path.Combine(ConfigSettings.Instance.UploadedFileFolder, artwork.ImageFileName));
-            var destFullFileName = HttpContext.Current.Server.MapPath("~/" + Path.Combine(ConfigSettings.Instance.UploadedFileFolder, string.Format("{0}_{1}.{2}", Path.GetFileNameWithoutExtension(fullFileName), "type1", Path.GetExtension(fullFileName))));
+            var fullFileName = CommonHelper.GetUploadFileAbsolutePath(artwork.ImageFileName);
+            var destFullFileName = string.Format("{0}/{1}_{2}{3}", Path.GetDirectoryName(fullFileName), Path.GetFileNameWithoutExtension(fullFileName), Data.Common.ArtworkImageResizeType.Size_W290_MinH240.ToString(), Path.GetExtension(fullFileName));
 
             ImageTransformer.Instance.ResizeImageToWidth(fullFileName, destFullFileName, 290, 240);
 
             artwork.Images = new List<ArtworkImage>();
             artwork.Images.Add(new ArtworkImage
             {
-                ImagePath = destFullFileName,
-                ImageType = Data.Common.ArtworkImageResizeType.Type1
+                ImagePath = Path.GetFileName(destFullFileName),
+                ImageType = Data.Common.ArtworkImageResizeType.Size_W290_MinH240
             });
 
             _artworkRepository.Insert(artwork);
@@ -227,6 +237,56 @@ namespace Art.BussinessLogic
         public void Delete(Artwork artwork)
         {
             _artworkRepository.Delete(artwork);
+        }
+
+
+        public ActivityShare Share(int artworkId, int customerId)
+        {
+            var entity = new ActivityShare();
+            entity.ArtworkId = artworkId;
+            entity.CustomerId = customerId;
+            entity.FADatetime = DateTime.Now;
+            var result = _activityShareRepository.Insert(entity);
+            return result;
+        }
+
+        public int GetShareCount(int artworkId)
+        {
+            var count = _activityShareRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
+            return count;
+        } 
+
+        public ActivityCollect Collect(int artworkId, int customerId)
+        {
+            var entity = new ActivityCollect();
+            entity.ArtworkId = artworkId;
+            entity.CustomerId = customerId;
+            entity.FADatetime = DateTime.Now;
+            var result = _activityCollectRepository.Insert(entity);
+            return result;
+        }
+
+        public int GetCollectCount(int artworkId)
+        {
+            var count = _activityShareRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
+            return count;
+        }
+
+
+        public ActivityPraise Praise(int artworkId, int customerId)
+        {
+            var entity = new ActivityPraise();
+            entity.ArtworkId = artworkId;
+            entity.CustomerId = customerId;
+            entity.FADatetime = DateTime.Now;
+            var result = _activityPraiseRepository.Insert(entity);
+            return result;
+        }
+
+        public int GetPraiseCount(int artworkId)
+        {
+            var count = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
+            return count;
         }
 
     }
