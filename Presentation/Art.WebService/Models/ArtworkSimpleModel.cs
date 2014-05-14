@@ -13,6 +13,7 @@ namespace Art.WebService.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
+        public string ArtistName { get; set; }
 
         public int ShareCount { get; set; }
         public int CollectAccount { get; set; }
@@ -34,11 +35,12 @@ namespace Art.WebService.Models
             var to = new ArtworkSimpleModel();
             to.Id = from.Id;
             to.Name = from.Name;
+            to.ArtistName = from.Artist.Name;
 
             var image = from.Images.FirstOrDefault(i => i.ImageType == Data.Common.ArtworkImageResizeType.Size_W290_MinH240);
             if (image != null)
             {
-                to.ImagePath = CommonHelper.GetUploadFileRelativePath(image.ImagePath);
+                to.ImagePath = CommonHelper.GetUploadFileRelativePath_SlantStyle(image.ImagePath);
             }
 
             if (from.DefaultComment != null)
