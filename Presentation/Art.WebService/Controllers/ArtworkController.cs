@@ -39,6 +39,13 @@ namespace Art.WebService.Controllers
             return result;
         }
 
+        public ArtworkDetailModel Detail(int artworkId,int userId)
+        {
+            var artwork = ArtworkBussinessLogic.Instance.GetArtwork(artworkId);
+
+            return null;
+        }
+
         //public 
 
         public SimpleResultModel Share(ShareArtworkModel model)
