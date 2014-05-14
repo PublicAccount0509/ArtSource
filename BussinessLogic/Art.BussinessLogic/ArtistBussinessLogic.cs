@@ -17,18 +17,36 @@ namespace Art.BussinessLogic
         private readonly IRepository<Artist> _artistRepository;
         private readonly IRepository<ArtistType> _artistTypeRepository;
         private readonly IRepository<Genre> _genreRepository;
+        private readonly IRepository<ActivityFollow> _activityFollowRepository;
 
         private ArtistBussinessLogic()
         {
             _artistRepository = new EfRepository<Artist>();
             _artistTypeRepository = new EfRepository<ArtistType>();
             _genreRepository = new EfRepository<Genre>();
+            _activityFollowRepository = new EfRepository<ActivityFollow>();
         }
 
         public Artist GetArtist(int artistId)
         {
             var artist = _artistRepository.GetById(artistId);
             return artist;
+        }
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// The Boolean
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 4:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool Exist(int id)
+        {
+            return GetArtist(id) != null;
         }
 
         public IList<Artist> GetArtists()
@@ -189,6 +207,69 @@ namespace Art.BussinessLogic
         public void DeleteArtistType(ArtistType artistType)
         {
             _artistTypeRepository.Delete(artistType);
+        }
+
+        /// <summary>
+        /// Exists the follow.
+        /// </summary>
+        /// <param name="artistId">The artistId</param>
+        /// <param name="customerId">The customerId</param>
+        /// <returns>
+        /// Boolean
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 2:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool ExistFollow(int artistId, int customerId)
+        {
+            return _activityFollowRepository.Table.Any(p => p.ArtistId == artistId && p.CustomerId == customerId);
+        }
+        /// <summary>
+        /// Adds the follow.
+        /// </summary>
+        /// <param name="activityFollow">The activityFollow</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 2:04 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void AddFollow(ActivityFollow activityFollow)
+        {
+            _activityFollowRepository.Insert(activityFollow);
+        }
+
+        /// <summary>
+        /// Deletes the follow.
+        /// </summary>
+        /// <param name="activityFollow">The activityFollow</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 5:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void DeleteFollow(ActivityFollow activityFollow)
+        {
+            var activity =
+                _activityFollowRepository.Table.FirstOrDefault(p => p.ArtistId == activityFollow.ArtistId && p.CustomerId == activityFollow.CustomerId);
+            _activityFollowRepository.Delete(activity);
+        }
+        /// <summary>
+        /// Gets the follows by customer identifier.
+        /// </summary>
+        /// <param name="customerId">The customerId</param>
+        /// <returns>
+        /// ActivityFollow[][]
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 2:34 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ActivityFollow[] GetFollowsByCustomerId(int customerId)
+        {
+            return _activityFollowRepository.Table.Where(p => p.CustomerId == customerId).ToArray();
         }
     }
 }

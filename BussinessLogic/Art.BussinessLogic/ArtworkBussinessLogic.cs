@@ -304,6 +304,21 @@ namespace Art.BussinessLogic
             var count = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
             return count;
         }
-
+        /// <summary>
+        /// Gets the artworks by artist identifier.
+        /// </summary>
+        /// <param name="artistId">The artistId</param>
+        /// <returns>
+        /// Artwork[][]
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 2:22 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public Artwork[] GetArtworksByArtistId(int artistId)
+        {
+            return _artworkRepository.Table.Where(p => p.Artist.Id == artistId).ToArray();
+        }
     }
 }

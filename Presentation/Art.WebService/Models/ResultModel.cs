@@ -57,6 +57,7 @@ namespace Art.WebService.Models
 
     public class ResultModel<TResult>
     {
+        public ResultModel() { }
         public ResultModel(int status)
             : this(status, string.Empty)
         {

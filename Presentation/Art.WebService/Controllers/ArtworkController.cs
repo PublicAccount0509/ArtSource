@@ -39,6 +39,7 @@ namespace Art.WebService.Controllers
             return result;
         }
 
+        [HttpGet]
         public ResultModel<ArtworkDetailModel> Detail(int artworkId, int userId)
         {
             var artwork = ArtworkBussinessLogic.Instance.GetArtwork(artworkId);
