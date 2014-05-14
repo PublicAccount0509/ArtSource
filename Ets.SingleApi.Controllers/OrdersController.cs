@@ -364,9 +364,28 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<string> SaveOrder()
+        public Response<string> SaveOrder(SaveTangShiOrdersParameter tangShiOrdersParameter)
         {
-            return new Response<string>();
+            var getOrderResult = this.orderServices.SaveTempOrder(tangShiOrdersParameter, this.AppKey, this.AppPassword);
+            if (getOrderResult.Result == null)
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
+                    }
+                };
+            }
+
+            return new Response<string>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderResult.StatusCode
+                },
+                Result = getOrderResult.Result
+            };
         }
     }
 }

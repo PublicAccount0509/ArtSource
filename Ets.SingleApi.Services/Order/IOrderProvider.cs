@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Model.Controller;
+
+namespace Ets.SingleApi.Services
 {
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Services;
@@ -59,6 +61,22 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword);
+
+        /// <summary>
+        /// 保存堂食订单信息
+        /// </summary>
+        /// <param name="tangShiOrdersParameter">The tangShiOrdersParameter</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// 保存堂食订单信息
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：5/14/2014 10:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> SaveTempOrder(SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey, string appPassword);
 
         /// <summary>
         /// 更新订单的支付方式

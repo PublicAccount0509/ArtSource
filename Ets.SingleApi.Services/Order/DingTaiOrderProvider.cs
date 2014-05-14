@@ -1,4 +1,5 @@
 ﻿using System.Json;
+using Ets.SingleApi.Model.Controller;
 using Ets.SingleApi.Model.ExternalServices;
 using Ets.SingleApi.Services.IExternalServices;
 
@@ -24,7 +25,7 @@ namespace Ets.SingleApi.Services
     /// ----------------------------------------------------------------------------------------
     public abstract class DingTaiOrderProvider : IOrderProvider
     {
-        
+
         /// <summary>
         /// 字段orderNumberDtEntityRepository
         /// </summary>
@@ -79,10 +80,10 @@ namespace Ets.SingleApi.Services
             get
             {
                 return new OrderProviderType
-                {
-                    OrderType = OrderType.DingTai,
-                    OrderSourceType = this.GetOrderSourceType()
-                };
+                    {
+                        OrderType = OrderType.DingTai,
+                        OrderSourceType = this.GetOrderSourceType()
+                    };
             }
         }
 
@@ -101,7 +102,8 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public abstract ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank);
+        public abstract ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId,
+                                                                      int paymentMethodId, string payBank);
 
         /// <summary>
         /// 查询订单是否完成，订单是否已支付
@@ -116,7 +118,8 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public abstract ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source, string shoppingCartId);
+        public abstract ServicesResult<OrderShoppingCartStatusModel> GetOrderShoppingCartStatus(string source,
+                                                                                                string shoppingCartId);
 
         /// <summary>
         /// 取得订单详情
@@ -148,8 +151,24 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public abstract ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword);
+        public abstract ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey,
+                                                         string appPassword);
 
+        /// <summary>
+        /// 保存订单信息
+        /// </summary>
+        /// <param name="tangShiOrdersParameter">The tangShiOrdersParameter</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/20 16:01
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public abstract ServicesResult<string> SaveTempOrder(SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey, string appPassword);
         /// <summary>
         /// Gets the type of the order source.
         /// </summary>
@@ -222,9 +241,14 @@ namespace Ets.SingleApi.Services
         private int GetServerOrderNumber(string source, string appKey, string appPassword)
         {
             var result = this.singleApiOrdersExternalService.OrderNumber(
-                  new OrderNumberExternalUrlParameter { OrderType = (int)this.OrderProviderType.OrderType },
-                  string.Empty,
-                  new SingleApiExternalServiceAuthenParameter { AppKey = appKey, AppPassword = appPassword, Source = source });
+                new OrderNumberExternalUrlParameter {OrderType = (int) this.OrderProviderType.OrderType},
+                string.Empty,
+                new SingleApiExternalServiceAuthenParameter
+                    {
+                        AppKey = appKey,
+                        AppPassword = appPassword,
+                        Source = source
+                    });
 
             var data = result.Result;
             var jsonValue = JsonValue.Parse(data);
@@ -233,7 +257,7 @@ namespace Ets.SingleApi.Services
                 return 0;
             }
 
-            if (jsonValue["Message"]["StatusCode"] != (int)StatusCode.Succeed.Ok)
+            if (jsonValue["Message"]["StatusCode"] != (int) StatusCode.Succeed.Ok)
             {
                 return 0;
             }

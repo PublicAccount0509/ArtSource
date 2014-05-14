@@ -921,5 +921,10 @@
             paymentEntity.PayBank = payBank;
             this.paymentEntityRepository.Save(paymentEntity);
         }
+
+        public override ServicesResult<string> SaveTempOrder(Model.Controller.SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey, string appPassword)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

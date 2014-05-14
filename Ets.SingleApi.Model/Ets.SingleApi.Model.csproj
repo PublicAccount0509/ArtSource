@@ -76,11 +76,13 @@
     <Compile Include="Controller\PaymentResult.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderResult.cs" />
     <Compile Include="Controller\PaymentWaiMaiOrderRequst.cs" />
+    <Compile Include="Controller\SaveTangShiOrdersParameter.cs" />
     <Compile Include="Controller\ShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\ShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\SupplierCoupon.cs" />
     <Compile Include="Controller\SupplierCouponRequst.cs" />
     <Compile Include="Controller\SupplierDeliveryTime.cs" />
+    <Compile Include="Controller\SupplierDishItem.cs" />
     <Compile Include="Controller\SupplierRecommendedDish.cs" />
     <Compile Include="Controller\SupplierServiceTime.cs" />
     <Compile Include="Controller\Response.cs" />
