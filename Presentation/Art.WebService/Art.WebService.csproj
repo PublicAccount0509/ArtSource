@@ -104,6 +104,8 @@
     <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\ShareArtworkModel.cs" />
+    <Compile Include="Models\PraiseArtworkModel.cs" />
+    <Compile Include="Models\CollectArtworkModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

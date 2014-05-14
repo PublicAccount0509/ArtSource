@@ -46,24 +46,122 @@ namespace Art.WebService.Controllers
             return null;
         }
 
-        //public 
-
         public SimpleResultModel Share(ShareArtworkModel model)
         {
             if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
             {
-                return new SimpleResultModel((int)ShareArtworkStatus.ArtworkNotExist, "指定的作品Id不存在");
+                return new SimpleResultModel((int)ShareArtworkStatus.ArtworkNotExist, "指定的作品不存在");
             }
 
             if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
             {
-                return new SimpleResultModel((int)ShareArtworkStatus.UserNotExist, "指定的用户Id不存在");
+                return new SimpleResultModel((int)ShareArtworkStatus.UserNotExist, "指定的用户不存在");
             }
-
-            ArtworkBussinessLogic.Instance.Share(model.ArtworkId, model.UserId);
+            //if (ArtistBussinessLogic.Instance.ExistFollow(model.ArtworkId, model.UserId))
+            //{
+            //    return new SimpleResultModel((int)ShareArtworkStatus.ArtistAlreadyShared, "您已经分享过该作品");
+            //}
+            var entity = ShareArtworkModelTranslator.Instance.Translate(model);
+            ArtworkBussinessLogic.Instance.Share(entity);
             return SimpleResultModel.Success();
         }
 
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        /// The SimpleResultModel
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 5:53 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public SimpleResultModel Praise(PraiseArtworkModel model)
+        {
+            if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
+            {
+                return new SimpleResultModel((int)PraiseArtworkStatus.ArtworkNotExist, "指定的作品不存在");
+            }
 
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel((int)PraiseArtworkStatus.UserNotExist, "指定的用户不存在");
+            }
+            if (ArtworkBussinessLogic.Instance.ExistPraise(model.ArtworkId, model.UserId))
+            {
+                return new SimpleResultModel((int)PraiseArtworkStatus.ArtistAlreadyPraised, "您已经赞过该作品");
+            }
+            var praiseArtwork = PraiseArtworkModelTranslator.Instance.Translate(model);
+            ArtworkBussinessLogic.Instance.Praise(praiseArtwork);
+            return SimpleResultModel.Success();
+        }
+
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        /// The SimpleResultModel
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 6:24 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public SimpleResultModel Collect(CollectArtworkModel model)
+        {
+            if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
+            {
+                return new SimpleResultModel((int)CollectArtworkStatus.ArtworkNotExist, "指定的作品不存在");
+            }
+
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel((int)CollectArtworkStatus.UserNotExist, "指定的用户不存在");
+            }
+            if (ArtworkBussinessLogic.Instance.ExistCollect(model.ArtworkId, model.UserId))
+            {
+                return new SimpleResultModel((int)CollectArtworkStatus.ArtistAlreadyCollected, "您已经收藏过该作品");
+            }
+            var collectArtwork = CollectArtworkModelTranslator.Instance.Translate(model);
+            ArtworkBussinessLogic.Instance.Collect(collectArtwork);
+            return SimpleResultModel.Success();
+        }
+
+        /// <summary>
+        /// Cancels the collect.
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        /// SimpleResultModel
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 7:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public SimpleResultModel CancelCollect(CollectArtworkModel model)
+        {
+            if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
+            {
+                return new SimpleResultModel((int)CollectArtworkStatus.ArtworkNotExist, "指定的作品不存在");
+            }
+
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel((int)CollectArtworkStatus.UserNotExist, "指定的用户不存在");
+            }
+            if (!ArtworkBussinessLogic.Instance.ExistCollect(model.ArtworkId, model.UserId))
+            {
+                return new SimpleResultModel((int)CollectArtworkStatus.ArtistNoCollected, "您还没有收藏该作品");
+            }
+            var collectArtwork = CollectArtworkModelTranslator.Instance.Translate(model);
+            ArtworkBussinessLogic.Instance.DeleteCollect(collectArtwork);
+            return SimpleResultModel.Success();
+        }
     }
 }

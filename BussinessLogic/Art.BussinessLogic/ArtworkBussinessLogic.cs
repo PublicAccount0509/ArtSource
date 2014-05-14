@@ -239,13 +239,25 @@ namespace Art.BussinessLogic
             _artworkRepository.Delete(artwork);
         }
 
-
-        public ActivityShare Share(int artworkId, int customerId)
+        /// <summary>
+        /// Exists the share.
+        /// </summary>
+        /// <param name="artworkId">The artworkId</param>
+        /// <param name="customerId">The customerId</param>
+        /// <returns>
+        /// Boolean
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 6:38 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool ExistShare(int artworkId, int customerId)
         {
-            var entity = new ActivityShare();
-            entity.ArtworkId = artworkId;
-            entity.CustomerId = customerId;
-            entity.FADatetime = DateTime.Now;
+            return _activityShareRepository.Table.Any(p => p.ArtworkId == artworkId && p.CustomerId == customerId);
+        }
+        public ActivityShare Share(ActivityShare entity)
+        {
             var result = _activityShareRepository.Insert(entity);
             return result;
         }
@@ -256,15 +268,15 @@ namespace Art.BussinessLogic
             return count;
         } 
 
-        public ActivityCollect Collect(int artworkId, int customerId)
-        {
-            var entity = new ActivityCollect();
-            entity.ArtworkId = artworkId;
-            entity.CustomerId = customerId;
-            entity.FADatetime = DateTime.Now;
-            var result = _activityCollectRepository.Insert(entity);
-            return result;
-        }
+        //public ActivityCollect Collect(int artworkId, int customerId)
+        //{
+        //    var entity = new ActivityCollect();
+        //    entity.ArtworkId = artworkId;
+        //    entity.CustomerId = customerId;
+        //    entity.FADatetime = DateTime.Now;
+        //    var result = _activityCollectRepository.Insert(entity);
+        //    return result;
+        //}
 
         public int GetCollectCount(int artworkId)
         {
@@ -272,17 +284,74 @@ namespace Art.BussinessLogic
             return count;
         }
 
-
-        public ActivityPraise Praise(int artworkId, int customerId)
+        /// <summary>
+        /// Exists the praise.
+        /// </summary>
+        /// <param name="artworkId">The artworkId</param>
+        /// <param name="customerId">The customerId</param>
+        /// <returns>
+        /// Boolean
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 5:56 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool ExistPraise(int artworkId, int customerId)
         {
-            var entity = new ActivityPraise();
-            entity.ArtworkId = artworkId;
-            entity.CustomerId = customerId;
-            entity.FADatetime = DateTime.Now;
-            var result = _activityPraiseRepository.Insert(entity);
+            return _activityPraiseRepository.Table.Any(p => p.ArtworkId == artworkId && p.CustomerId == customerId);
+        }
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="activityPraise">The activityPraise</param>
+        /// <returns>
+        /// The ActivityPraise
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 6:02 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ActivityPraise Praise(ActivityPraise activityPraise)
+        {
+            var result = _activityPraiseRepository.Insert(activityPraise);
             return result;
         }
-
+        public bool ExistCollect(int artworkId, int customerId)
+        {
+            return _activityCollectRepository.Table.Any(p => p.ArtworkId == artworkId && p.CustomerId == customerId);
+        }
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="activityCollect">The activityCollect</param>
+        /// <returns>
+        /// The ActivityCollect
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 6:28 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ActivityCollect Collect(ActivityCollect activityCollect)
+        {
+            var result = _activityCollectRepository.Insert(activityCollect);
+            return result;
+        }
+        /// <summary>
+        /// Deletes the collect.
+        /// </summary>
+        /// <param name="activityCollect">The activityCollect</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 7:03 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void DeleteCollect(ActivityCollect activityCollect)
+        {
+            _activityCollectRepository.Delete(activityCollect);
+        }
         public int GetPraiseCount(int artworkId)
         {
             var count = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId).Count();

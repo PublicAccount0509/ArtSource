@@ -7,31 +7,31 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
-    public class ShareArtworkModel
+    public class PraiseArtworkModel
     {
         public int ArtworkId { get; set; }
         public int UserId { get; set; }
     }
 
-    public enum ShareArtworkStatus
+    public enum PraiseArtworkStatus
     { 
         Success,
         ArtworkNotExist,
         UserNotExist,
-        ArtistAlreadyShared
+        ArtistAlreadyPraised
     }
-    public class ShareArtworkModelTranslator : TranslatorBase<ActivityShare, ShareArtworkModel>
+    public class PraiseArtworkModelTranslator : TranslatorBase<ActivityPraise, PraiseArtworkModel>
     {
-        public static readonly ShareArtworkModelTranslator Instance = new ShareArtworkModelTranslator();
+        public static readonly PraiseArtworkModelTranslator Instance = new PraiseArtworkModelTranslator();
 
-        public override ShareArtworkModel Translate(ActivityShare from)
+        public override PraiseArtworkModel Translate(ActivityPraise from)
         {
             throw new NotImplementedException();
         }
 
-        public override ActivityShare Translate(ShareArtworkModel from)
+        public override ActivityPraise Translate(PraiseArtworkModel from)
         {
-            var to = new ActivityShare();
+            var to = new ActivityPraise();
             to.ArtworkId = from.ArtworkId;
             to.CustomerId = from.UserId;
             to.FADatetime = DateTime.Now;

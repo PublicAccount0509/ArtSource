@@ -7,31 +7,32 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
-    public class ShareArtworkModel
+    public class CollectArtworkModel
     {
         public int ArtworkId { get; set; }
         public int UserId { get; set; }
     }
 
-    public enum ShareArtworkStatus
+    public enum CollectArtworkStatus
     { 
         Success,
         ArtworkNotExist,
         UserNotExist,
-        ArtistAlreadyShared
+        ArtistAlreadyCollected,
+        ArtistNoCollected
     }
-    public class ShareArtworkModelTranslator : TranslatorBase<ActivityShare, ShareArtworkModel>
+    public class CollectArtworkModelTranslator : TranslatorBase<ActivityCollect, CollectArtworkModel>
     {
-        public static readonly ShareArtworkModelTranslator Instance = new ShareArtworkModelTranslator();
+        public static readonly CollectArtworkModelTranslator Instance = new CollectArtworkModelTranslator();
 
-        public override ShareArtworkModel Translate(ActivityShare from)
+        public override CollectArtworkModel Translate(ActivityCollect from)
         {
             throw new NotImplementedException();
         }
 
-        public override ActivityShare Translate(ShareArtworkModel from)
+        public override ActivityCollect Translate(CollectArtworkModel from)
         {
-            var to = new ActivityShare();
+            var to = new ActivityCollect();
             to.ArtworkId = from.ArtworkId;
             to.CustomerId = from.UserId;
             to.FADatetime = DateTime.Now;
