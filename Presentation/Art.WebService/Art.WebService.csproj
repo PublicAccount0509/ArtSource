@@ -103,6 +103,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\AddressModel.cs" />
+
     <Compile Include="Models\ActivityShareModel.cs" />
     <Compile Include="Models\ActivityCollectModel.cs" />
     <Compile Include="Models\ActivityCancelCollectModel.cs" />

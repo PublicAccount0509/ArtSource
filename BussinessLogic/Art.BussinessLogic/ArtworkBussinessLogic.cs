@@ -255,6 +255,23 @@ namespace Art.BussinessLogic
             _artworkRepository.Delete(artwork);
         }
 
+        /// <summary>
+        /// Exists the share.
+        /// </summary>
+        /// <param name="artworkId">The artworkId</param>
+        /// <param name="customerId">The customerId</param>
+        /// <returns>
+        /// Boolean
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 6:38 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool ExistShare(int artworkId, int customerId)
+        {
+            return _activityShareRepository.Table.Any(p => p.ArtworkId == artworkId && p.CustomerId == customerId);
+        }
 
         public ActivityShare Share(int artworkId, int customerId)
         {
@@ -268,14 +285,7 @@ namespace Art.BussinessLogic
 
         public int GetShareCount(int artworkId)
         {
-            var count = _activityShareRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
-            return count;
-        }
-
-        public bool ExistCollect(int artworkId, int customerId)
-        {
-            var query = _activityCollectRepository.Table.Where(i => i.ArtworkId == artworkId && i.CustomerId == customerId);
-            return query.Any();
+            return _activityShareRepository.Table.Count(i => i.ArtworkId == artworkId);
         }
 
         public ActivityCollect Collect(int artworkId, int customerId)
@@ -305,7 +315,7 @@ namespace Art.BussinessLogic
             var query = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId && i.CustomerId == customerId);
             return query.Any();
         }
-        
+
         public ActivityPraise Praise(int artworkId, int customerId)
         {
             var entity = new ActivityPraise();
@@ -316,11 +326,13 @@ namespace Art.BussinessLogic
             return result;
         }
 
-        public bool HasPraised(int artworkId, int customerId)
+
+        public bool ExistCollect(int artworkId, int customerId)
         {
-            var query = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId && i.CustomerId == customerId);
-            return query.Any();
+            return _activityCollectRepository.Table.Any(p => p.ArtworkId == artworkId && p.CustomerId == customerId);
         }
+
+
 
         public int GetPraiseCount(int artworkId)
         {
