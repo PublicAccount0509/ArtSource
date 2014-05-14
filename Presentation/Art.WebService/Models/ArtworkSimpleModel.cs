@@ -13,6 +13,8 @@ namespace Art.WebService.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
+        public int ImageWidth { get; set; }
+        public int ImageHeight { get; set; }
         public string ArtistName { get; set; }
 
         public int ShareCount { get; set; }
@@ -41,6 +43,8 @@ namespace Art.WebService.Models
             if (image != null)
             {
                 to.ImagePath = CommonHelper.GetUploadFileRelativePath_SlantStyle(image.ImagePath);
+                to.ImageWidth = image.Width;
+                to.ImageHeight = image.Height;
             }
 
             if (from.DefaultComment != null)

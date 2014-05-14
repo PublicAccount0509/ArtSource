@@ -67,7 +67,7 @@ namespace Art.Website.Models
 
             if (!string.IsNullOrEmpty(from.AvatarFileName))
             {
-                to.AvatarFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.AvatarFileName);
+                to.AvatarFileName = Path.Combine(ConfigSettings.Instance.FileUploadPath, from.AvatarFileName);
             }
 
             to.ArtistTypeIds = from.ArtistTypes.Select(i => i.Id).ToList();

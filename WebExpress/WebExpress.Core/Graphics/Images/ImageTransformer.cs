@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace WebExpress.Core
 
         }
 
-        public void ResizeImageToWidth(string srcPath, string destPath, int destWidth)
+        public Size ResizeImageToWidth(string srcPath, string destPath, int destWidth)
         {
             var bitmap = new Bitmap(srcPath);
             var srcWidth = bitmap.Width;
@@ -24,10 +25,10 @@ namespace WebExpress.Core
             double factor = (double)destWidth / srcWidth;
             var destHeight = (int)(srcHeight * factor);
 
-            ResizeImage(bitmap, destPath, destWidth, destHeight);
+            return ResizeImage(bitmap, destPath, destWidth, destHeight);
         }
 
-        public void ResizeImageToWidth(string srcPath, string destPath, int destWidth, int minHeight)
+        public Size ResizeImageToWidth(string srcPath, string destPath, int destWidth, int minHeight)
         {
             var bitmap = new Bitmap(srcPath);
             var srcWidth = bitmap.Width;
@@ -45,10 +46,10 @@ namespace WebExpress.Core
             var redundantWidth = srcWidth - validWidth;
 
             var srcRect = new Rectangle(redundantWidth / 2, 0, validWidth, srcHeight);
-            ResizeImage(bitmap, destPath, destWidth, destHeight, srcRect);
+            return ResizeImage(bitmap, destPath, destWidth, destHeight, srcRect);
         }
 
-        public void ResizeImageToHeight(string srcPath, string destPath, int destHeight)
+        public Size ResizeImageToHeight(string srcPath, string destPath, int destHeight)
         {
             var bitmap = new Bitmap(srcPath);
             var srcWidth = bitmap.Width;
@@ -57,10 +58,10 @@ namespace WebExpress.Core
             double factor = (double)destHeight / srcHeight;
             var destWidth = (int)(srcWidth * factor);
 
-            ResizeImage(bitmap, destPath, destWidth, destHeight);
+            return ResizeImage(bitmap, destPath, destWidth, destHeight);
         }
 
-        public void ResizeImageToSize(string srcPath, string destPath, int destWidth, int destHeight)
+        public Size ResizeImageToSize(string srcPath, string destPath, int destWidth, int destHeight)
         {
             var bitmap = new Bitmap(srcPath);
             var srcWidth = bitmap.Width;
@@ -83,34 +84,36 @@ namespace WebExpress.Core
                 srcRect = new Rectangle(redundantHeight / 2, 0, destWidth, srcHeight);
             }
 
-            ResizeImage(bitmap, destPath, destWidth, destHeight, srcRect);
+            return ResizeImage(bitmap, destPath, destWidth, destHeight, srcRect);
         }
 
-        public void ResizeImage(string srcPath, string destPath, int destWidth, int destHeight)
+        public Size ResizeImage(string srcPath, string destPath, int destWidth, int destHeight)
         {
             var bitmap = new Bitmap(srcPath);
-            ResizeImage(bitmap, destPath, destWidth, destHeight);
+            return ResizeImage(bitmap, destPath, destWidth, destHeight);
         }
 
-        public void ResizeImage(Bitmap srcBitmap, string destPath, int destWidth, int destHeight)
+        public Size ResizeImage(Bitmap srcBitmap, string destPath, int destWidth, int destHeight)
         {
             var srcRect = new Rectangle(0, 0, srcBitmap.Width, srcBitmap.Height);
-            ResizeImage(srcBitmap, destPath, destWidth, destHeight, srcRect);
+            return ResizeImage(srcBitmap, destPath, destWidth, destHeight, srcRect);
         }
 
-        public void ResizeImage(Bitmap srcBitmap, string destPath, int destWidth, int destHeight, Rectangle srcRect)
+        public Size ResizeImage(Bitmap srcBitmap, string destPath, int destWidth, int destHeight, Rectangle srcRect)
         {
-            System.IO.MemoryStream outStream = new System.IO.MemoryStream();
-            Bitmap destBitmap = new Bitmap(destWidth, destHeight);
+            var outStream = new MemoryStream();
+            var destBitmap = new Bitmap(destWidth, destHeight);
 
             destBitmap.SetResolution(72, 72);
 
-            Graphics g = Graphics.FromImage(destBitmap);
+            var g = Graphics.FromImage(destBitmap);
             g.Clear(Color.White);
-            var destRect = new Rectangle(0, 0, destWidth, destHeight);
+            var destSize = new Size(destWidth, destHeight);
+            var destRect = new Rectangle(Point.Empty, destSize);
             g.DrawImage(srcBitmap, destRect, srcRect, GraphicsUnit.Pixel);
 
             destBitmap.Save(destPath);
+            return destSize;
         }
     }
 }

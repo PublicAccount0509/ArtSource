@@ -42,7 +42,7 @@ namespace Art.Website.Models
             to.MasterpieceType = from.MasterpieceType.Name;
             if (!string.IsNullOrEmpty(from.AvatarFileName))
             {
-                to.AvatarFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.AvatarFileName);
+                to.AvatarFileName = Path.Combine(ConfigSettings.Instance.FileUploadPath, from.AvatarFileName);
             }
             return to;
         }

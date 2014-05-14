@@ -173,23 +173,39 @@ namespace Art.BussinessLogic
 
         public void Add(Artwork artwork)
         {
-            artwork.IsPublic = true;
-
-            artwork.Images = new List<ArtworkImage>();
+            artwork.IsPublic = true; 
 
             var fullFileName = CommonHelper.GetUploadFileAbsolutePath(artwork.ImageFileName);
-            var destFullFileName = string.Format("{0}/{1}_{2}{3}", Path.GetDirectoryName(fullFileName), Path.GetFileNameWithoutExtension(fullFileName), Data.Common.ArtworkImageResizeType.Size_W290_MinH240.ToString(), Path.GetExtension(fullFileName));
-
-            ImageTransformer.Instance.ResizeImageToWidth(fullFileName, destFullFileName, 290, 240);
-
-            artwork.Images = new List<ArtworkImage>();
-            artwork.Images.Add(new ArtworkImage
-            {
-                ImagePath = Path.GetFileName(destFullFileName),
-                ImageType = Data.Common.ArtworkImageResizeType.Size_W290_MinH240
-            });
+            artwork.Images = GetImages(fullFileName);
 
             _artworkRepository.Insert(artwork);
+        }
+
+        private List<ArtworkImage> GetImages(string imageFullFileName)
+        {
+            var images = new List<ArtworkImage>();
+
+            var destFullFileName = string.Format("{0}/{1}_{2}{3}", Path.GetDirectoryName(imageFullFileName), Path.GetFileNameWithoutExtension(imageFullFileName), Data.Common.ArtworkImageResizeType.Size_W290_MinH240.ToString(), Path.GetExtension(imageFullFileName));
+            var imageSize = ImageTransformer.Instance.ResizeImageToWidth(imageFullFileName, destFullFileName, 290, 240);
+            images.Add(new ArtworkImage
+            {
+                ImagePath = Path.GetFileName(destFullFileName),
+                ImageType = Data.Common.ArtworkImageResizeType.Size_W290_MinH240,
+                Width = imageSize.Width,
+                Height = imageSize.Height
+            });
+
+            destFullFileName = string.Format("{0}/{1}_{2}{3}", Path.GetDirectoryName(imageFullFileName), Path.GetFileNameWithoutExtension(imageFullFileName), Data.Common.ArtworkImageResizeType.Size_W600_H420.ToString(), Path.GetExtension(imageFullFileName));
+            imageSize = ImageTransformer.Instance.ResizeImageToSize(imageFullFileName, destFullFileName, 600, 420);
+            images.Add(new ArtworkImage
+            {
+                ImagePath = Path.GetFileName(destFullFileName),
+                ImageType = Data.Common.ArtworkImageResizeType.Size_W600_H420,
+                Width = imageSize.Width,
+                Height = imageSize.Height
+            });
+
+            return images;
         }
 
         public void Update(Artwork artwork)
@@ -254,7 +270,7 @@ namespace Art.BussinessLogic
         {
             var count = _activityShareRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
             return count;
-        } 
+        }
 
         public ActivityCollect Collect(int artworkId, int customerId)
         {

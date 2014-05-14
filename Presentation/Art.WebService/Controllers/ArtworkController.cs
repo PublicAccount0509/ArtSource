@@ -39,11 +39,13 @@ namespace Art.WebService.Controllers
             return result;
         }
 
-        public ArtworkDetailModel Detail(int artworkId,int userId)
+        public ResultModel<ArtworkDetailModel> Detail(int artworkId, int userId)
         {
             var artwork = ArtworkBussinessLogic.Instance.GetArtwork(artworkId);
+            var model = ArtworkDetailModelTranslator.Instance.Translate(artwork);
 
-            return null;
+            var result = new ResultModel<ArtworkDetailModel>((int)ArtworkDetailModelStatus.Success, string.Empty, model);
+            return result;
         }
 
         //public 

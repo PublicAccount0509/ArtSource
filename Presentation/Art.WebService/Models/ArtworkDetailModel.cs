@@ -29,6 +29,13 @@ namespace Art.WebService.Models
         public string ArtistName { get; set; }
     }
 
+    public enum ArtworkDetailModelStatus
+    { 
+        Success,
+        ArtworkNotFound,
+        UserNotFound
+    }
+
     public class ArtworkDetailModelTranslator : TranslatorBase<Artwork, ArtworkDetailModel>
     {
         public static readonly ArtworkDetailModelTranslator Instance = new ArtworkDetailModelTranslator();

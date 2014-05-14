@@ -72,7 +72,7 @@ namespace Art.Website.Handlers
                 }
             }
 
-            var folderName = ConfigSettings.Instance.UploadedFileFolder;
+            var folderName = ConfigSettings.Instance.FileUploadPath;
             var path = context.Server.MapPath(folderName);
             if (!Directory.Exists(path))
             {

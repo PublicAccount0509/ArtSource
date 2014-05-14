@@ -77,7 +77,7 @@ namespace Art.Website.Models
             to.SuitablePlaceIds = from.SuitableArtPlaces.Select(i => i.Id).ToList();
             if (!string.IsNullOrEmpty(from.ImageFileName))
             {
-                to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName);
+                to.ImageFileName = Path.Combine(ConfigSettings.Instance.FileUploadPath, from.ImageFileName);
             }
 
             to.AuctionType = from.AuctionType;

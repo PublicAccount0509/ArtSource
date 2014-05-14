@@ -45,7 +45,7 @@ namespace Art.Website.Models
             var to = new ArtworkDetailModel();
             if (!string.IsNullOrEmpty(from.ImageFileName))
             {
-                to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName);
+                to.ImageFileName = Path.Combine(ConfigSettings.Instance.FileUploadPath, from.ImageFileName);
             }
 
             to.Name = from.Name;

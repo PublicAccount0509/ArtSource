@@ -58,7 +58,7 @@ namespace Art.Website.Models
             to.ArtworkType = from.Artwork.ArtworkType.Name;
             if (!string.IsNullOrEmpty(from.Artwork.ImageFileName))
             {
-                to.ArtworkImagePath = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.Artwork.ImageFileName);
+                to.ArtworkImagePath = Path.Combine(ConfigSettings.Instance.FileUploadPath, from.Artwork.ImageFileName);
             }            
             to.Status = from.Status;
             to.PayType = from.PayType;

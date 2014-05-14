@@ -39,7 +39,7 @@ namespace Art.Website.Models
             
             if (!string.IsNullOrEmpty(from.ImageFileName))
             {
-                to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName);
+                to.ImageFileName = Path.Combine(ConfigSettings.Instance.FileUploadPath, from.ImageFileName);
             }
             to.AuctionType = from.AuctionType.ToString();
             to.IsPublic = from.IsPublic;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -11,12 +12,12 @@ namespace Art.Common
 
         private ConfigSettings() { }
 
-        public string UploadedFileFolder
+        public string FileUploadPath
         {
             get
             {
-                return System.Configuration.ConfigurationManager.AppSettings["UploadedFileFolder"];
+                return ConfigurationManager.AppSettings["FileUploadPath"];
             }
-        } 
+        }
     }
 }

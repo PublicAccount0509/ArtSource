@@ -12,13 +12,13 @@ namespace Art.Common
     {
         public static string GetUploadFileRelativePath_SlantStyle(string fileName)
         {
-            var path = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, fileName);
+            var path = Path.Combine(ConfigSettings.Instance.FileUploadPath, fileName);
             return path.Replace("\\", "/");
         }
 
         public static string GetUploadFileRelativePath(string fileName)
         {
-            return Path.Combine(ConfigSettings.Instance.UploadedFileFolder, fileName);
+            return Path.Combine(ConfigSettings.Instance.FileUploadPath, fileName);
         }
 
         public static string GetUploadFileAbsolutePath(string fileName)

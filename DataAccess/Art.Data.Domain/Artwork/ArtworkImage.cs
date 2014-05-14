@@ -11,8 +11,8 @@ namespace Art.Data.Domain
     {
         public Artwork Artwork { get; set; }
         public ArtworkImageResizeType ImageType { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public string ImagePath { get; set; }
-
-        public int MyProperty { get; set; }
     }
 }

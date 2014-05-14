@@ -206,7 +206,7 @@ namespace Art.Website.Models
             to.ArtworkName = from.Artwork.Artist.Name;
             if (!string.IsNullOrEmpty(from.Artwork.ImageFileName))
             {
-                to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.Artwork.ImageFileName);
+                to.ImageFileName = Path.Combine(ConfigSettings.Instance.FileUploadPath, from.Artwork.ImageFileName);
             }
             to.AuctionPrice = from.Artwork.AuctionPrice;
             to.BidPrice = from.BidPrice;
