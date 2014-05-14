@@ -31,26 +31,29 @@ namespace Art.WebService.Controllers
             foreach (var model in models)
             {
                 model.ShareCount = ArtworkBussinessLogic.Instance.GetShareCount(model.Id);
+                model.CollectAccount = ArtworkBussinessLogic.Instance.GetCollectCount(model.Id);
+                model.PraiseCount = ArtworkBussinessLogic.Instance.GetPraiseCount(model.Id);
             }
             return models.ToArray();
         }
+
+        //public 
 
         public SimpleResultModel Share(ShareArtworkModel model)
         {
             if (!ArtworkBussinessLogic.Instance.Exist(model.ArtworkId))
             {
-                return new SimpleResultModel(false, "指定的作品Id不存在");
+                return new SimpleResultModel((int)ShareArtworkStatus.ArtworkNotExist, "指定的作品Id不存在");
             }
 
             if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
             {
-                return new SimpleResultModel(false, "指定的用户Id不存在");
+                return new SimpleResultModel((int)ShareArtworkStatus.UserNotExist, "指定的用户Id不存在");
             }
 
             ArtworkBussinessLogic.Instance.Share(model.ArtworkId, model.UserId);
-            return new SimpleResultModel(true);
+            return SimpleResultModel.Success();
         }
-
 
 
     }

@@ -39,4 +39,14 @@ namespace Art.WebService.Models
         }
     }
 
+
+    public enum CustomerRegisterStatus:int
+    { 
+        Success = 0,
+        NickNameEmpty,
+        PhoneNumberEmpty,
+        PasswordEmpty,
+        NickNameAlreadyRegistered,
+        PhoneNumberRegistered
+    }
 }

@@ -10,4 +10,10 @@ namespace Art.WebService.Models
         public string LoginName { get; set; }
         public string Password { get; set; }
     }
+
+    public enum LoginModelStatus
+    { 
+        Success,
+        InvalidCredential
+    }
 }

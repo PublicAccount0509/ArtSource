@@ -93,7 +93,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddOrderModel.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\ArtistDetailModel.cs" />
+=======
+    <Compile Include="Models\ArtworkDetailModel.cs" />
+>>>>>>> 3b4e6fee0f9e04bace8dc90c6d0a26623e336c6e
     <Compile Include="Models\ArtworkSimpleModel.cs" />
     <Compile Include="Models\CustomerRegisterModel.cs" />
     <Compile Include="Models\DeviceType.cs" />

@@ -7,50 +7,84 @@ namespace Art.WebService.Models
 {
     public class SimpleResultModel
     {
-        public SimpleResultModel(bool isSuccess)
-            : this(isSuccess, string.Empty)
+        public SimpleResultModel(int status)
+            : this(status, string.Empty)
         {
 
         }
 
-
-        public SimpleResultModel(bool isSuccess, string message)
+        public SimpleResultModel(int status, string message)
         {
-            this.IsSuccess = isSuccess;
+            this.Status = status;
             this.Message = message;
         }
 
-        public bool IsSuccess { get; set; }
+        public static SimpleResultModel Success()
+        {
+            return new SimpleResultModel(0);
+        }
+
+        public int Status { get; set; }
         public string Message { get; set; }
     }
 
-    public class ResultModel
+    public class IntResultModel : ResultModel<int>
     {
-        public ResultModel(bool isSuccess)
-            : this(isSuccess, string.Empty, 0)
+        public IntResultModel(int status)
+            : base(status, string.Empty)
         {
 
         }
 
-        public ResultModel(bool isSuccess, string message)
-            : this(isSuccess, message, 0)
+        public IntResultModel(int status, string message)
+            : base(status, message)
         {
 
         }
-        public ResultModel(bool isSuccess, int resultId)
-            : this(isSuccess, string.Empty, resultId)
+
+        public IntResultModel(int status, int id)
+            : base(status, string.Empty, id)
         {
+
         }
 
-        public ResultModel(bool isSuccess, string message, int resultId)
+        public IntResultModel(int status, string message, int id)
+            : base(status, message, id)
         {
-            this.IsSuccess = isSuccess;
-            this.Message = message;
-            this.ResultId = resultId;
-        }
 
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
-        public int ResultId { get; set; }
+        }
     }
+
+    public class ResultModel<TResult>
+    {
+        public ResultModel(int status)
+            : this(status, string.Empty)
+        {
+
+        }
+
+        public ResultModel(int status, string message)
+        {
+            this.Status = status;
+            this.Message = message;
+        }
+
+        public ResultModel(int status, string message, TResult result)
+        {
+            this.Status = status;
+            this.Message = message;
+            this.Result = result;
+        }
+
+        public static ResultModel<TResult> Success()
+        {
+            return new ResultModel<TResult>(0);
+        }
+
+        public int Status { get; set; }
+        public string Message { get; set; }
+        public TResult Result { get; set; }
+    }
+
+
 }
