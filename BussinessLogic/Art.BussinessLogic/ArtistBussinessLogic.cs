@@ -239,6 +239,22 @@ namespace Art.BussinessLogic
         {
             _activityFollowRepository.Insert(activityFollow);
         }
+
+        /// <summary>
+        /// Deletes the follow.
+        /// </summary>
+        /// <param name="activityFollow">The activityFollow</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 5:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void DeleteFollow(ActivityFollow activityFollow)
+        {
+            var activity =
+                _activityFollowRepository.Table.FirstOrDefault(p => p.ArtistId == activityFollow.ArtistId && p.CustomerId == activityFollow.CustomerId);
+            _activityFollowRepository.Delete(activity);
+        }
         /// <summary>
         /// Gets the follows by customer identifier.
         /// </summary>

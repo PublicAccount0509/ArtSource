@@ -86,6 +86,38 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
+        /// Cancels the follow.
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        /// SimpleResultModel
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 5:26 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public SimpleResultModel CancelFollow(FollowModel model)
+        {
+            if (!ArtistBussinessLogic.Instance.Exist(model.ArtistId))
+            {
+                return new SimpleResultModel((int)FollowModelStatus.ArtistNotExist, "要取消关注的艺术家不存在");
+            }
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
+            {
+                return new SimpleResultModel((int)FollowModelStatus.UserNotExist, "无效的用户");
+            }
+            if (!ArtistBussinessLogic.Instance.ExistFollow(model.ArtistId, model.UserId))
+            {
+                return new SimpleResultModel((int)FollowModelStatus.ArtistNoFollowed, "您还没有关注该艺术家");
+            }
+            var entity = FollowModelTranslator.Instance.Translate(model);
+            ArtistBussinessLogic.Instance.DeleteFollow(entity);
+            return SimpleResultModel.Success();
+        }
+
+        /// <summary>
         /// The method will 
         /// </summary>
         /// <param name="userid">The userid</param>
