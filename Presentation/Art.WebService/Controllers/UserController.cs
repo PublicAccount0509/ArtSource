@@ -50,7 +50,7 @@ namespace Art.WebService.Controllers
         //可以使用昵称或者手机号码登录
         public SimpleResultModel Login(LoginModel model)
         {
-            var flg = CustomerBussinessLogic.Instance.ValidateLogin(model.LoginName,model.Password);
+            var flg = CustomerBussinessLogic.Instance.ValidateLogin(model.LoginName, model.Password);
             return new SimpleResultModel(flg);
         }
 
