@@ -49,9 +49,9 @@
             var shoppingCartBase = result.Deserialize<ShoppingCartBase>();
             shoppingCartBase.OrderNumber = orderId;
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", shoppingCartId));
-            CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", shoppingCartId), shoppingCartBase.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", shoppingCartId), shoppingCartBase.Serialize(), DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "base_shoppingcart_Id", orderId));
-            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "base_shoppingcart_Id", orderId), shoppingCartId, DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "base_shoppingcart_Id", orderId), shoppingCartId, DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -86,7 +86,7 @@
             var shoppingCartBase = result.Deserialize<ShoppingCartBase>();
             shoppingCartBase.IsComplete = complete;
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", shoppingCartId));
-            CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", shoppingCartId), shoppingCartBase.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", shoppingCartId), shoppingCartBase.Serialize(), DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true
@@ -193,7 +193,7 @@
                 var tempShoppingCartId = this.GetShoppingCartId(source);
                 shoppingCartIdDictionary.Add(tempShoppingCartId, true);
                 CacheUtility.GetInstance().Delete(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId));
-                CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId), shoppingCartIdDictionary.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+                CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId), shoppingCartIdDictionary.Serialize(), DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
 
                 return new CacheServicesResult<BindShoppingCartResult>
                 {
@@ -212,7 +212,7 @@
                 var tempShoppingCartId = this.GetShoppingCartId(source);
                 shoppingCartIdDictionary.Add(tempShoppingCartId, true);
                 CacheUtility.GetInstance().Delete(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId));
-                CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId), shoppingCartIdDictionary.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+                CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId), shoppingCartIdDictionary.Serialize(), DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
 
                 return new CacheServicesResult<BindShoppingCartResult>
                 {
@@ -244,13 +244,13 @@
 
                     itemShoppingCartBase.IsComplete = true;
                     CacheUtility.GetInstance().Delete(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", item));
-                    CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", item), itemShoppingCartBase.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+                    CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", item), itemShoppingCartBase.Serialize(), DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
                 }
 
                 shoppingCartIdDictionary[lastShoppingCartId] = false;
                 shoppingCartIdDictionary[shoppingCartId] = true;
                 CacheUtility.GetInstance().Delete(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId));
-                CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId), shoppingCartIdDictionary.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+                CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId), shoppingCartIdDictionary.Serialize(), DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
                 return new CacheServicesResult<BindShoppingCartResult>
                     {
                         Result = new BindShoppingCartResult
@@ -264,7 +264,7 @@
             shoppingCartIdDictionary.Add(newShoppingCartId, true);
             shoppingCartIdDictionary[shoppingCartId] = false;
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId));
-            CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId), shoppingCartIdDictionary.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}_{3}", source, "base_shoppingcart_Id", supplierId, userId), shoppingCartIdDictionary.Serialize(), DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
 
             return new CacheServicesResult<BindShoppingCartResult>
             {
@@ -297,7 +297,7 @@
                 ShoppingCartId = shoppingCartId
             };
 
-            CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", shoppingCartId), newShoppingCartBase.Serialize(), DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}_{2}", source, "base_shoppingcart_Id", shoppingCartId), newShoppingCartBase.Serialize(), DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
             return shoppingCartId;
         }
     }

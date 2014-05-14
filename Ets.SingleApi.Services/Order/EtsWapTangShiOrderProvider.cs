@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Model.Controller;
+
+namespace Ets.SingleApi.Services
 {
     using System;
     using System.Collections.Generic;
@@ -27,6 +29,26 @@
     [Transactional]
     public class EtsWapTangShiOrderProvider : TangShiOrderProvider
     {
+        /// <summary>
+        /// 字段customerEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：10/31/2013 12:24 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<CustomerEntity> customerEntityRepository;
+
+        /// <summary>
+        /// 字段supplierDishEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：2013/10/20 10:34
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository;
+
         /// <summary>
         /// 字段tableReservationEntityRepository
         /// </summary>
@@ -98,6 +120,7 @@
         /// <param name="etsWapShoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
+        /// <param name="customerEntityRepository">The customerEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -111,7 +134,7 @@
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
             IEtsWapTangShiShoppingCartProvider etsWapShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
-            ISingleApiOrdersExternalService singleApiOrdersExternalService)
+            ISingleApiOrdersExternalService singleApiOrdersExternalService, INHibernateRepository<CustomerEntity> customerEntityRepository, INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository)
             : base(orderNumberDtEntityRepository, singleApiOrdersExternalService)
         {
             this.tableReservationEntityRepository = tableReservationEntityRepository;
@@ -120,6 +143,8 @@
             this.supplierEntityRepository = supplierEntityRepository;
             this.etsWapShoppingCartProvider = etsWapShoppingCartProvider;
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
+            this.customerEntityRepository = customerEntityRepository;
+            this.supplierDishEntityRepository = supplierDishEntityRepository;
         }
 
         /// <summary>
@@ -509,6 +534,106 @@
         }
 
         /// <summary>
+        /// 保存堂食订单信息
+        /// </summary>
+        /// <param name="tangShiOrdersParameter">The tangShiOrdersParameter</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// 保存堂食订单信息
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：5/14/2014 10:40 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [Transaction(TransactionMode.RequiresNew)]
+        public override ServicesResult<string> SaveTempOrder(SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey, string appPassword)
+        {
+            if (tangShiOrdersParameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = string.Empty
+                };
+            }
+
+            var orderId = this.GetOrderNumberId(tangShiOrdersParameter.Source, appKey, appPassword);
+            if (orderId <= 0)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.General.OrderNumberNotFound,
+                    Result = string.Empty
+                };
+            }
+
+            var supplierEntity = this.supplierEntityRepository.FindSingleByExpression(p => p.SupplierId == tangShiOrdersParameter.SupplierID);
+            if (supplierEntity == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = string.Empty
+                };
+            }
+
+            var customer = this.customerEntityRepository.EntityQueryable.FirstOrDefault(p => p.LoginId == supplierEntity.Login.LoginId);
+            if (customer == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.NotFoundCustomerId,
+                    Result = string.Empty
+                };
+            }
+
+            var supplierDishIdList = tangShiOrdersParameter.SupplierDishList.Select(p => p.SupplierDishId).Distinct().Cast<int?>().ToList();
+            var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
+                                    where supplierDishEntity.Supplier.SupplierId == tangShiOrdersParameter.SupplierID
+                                          && supplierDishEntity.Online && supplierDishEntity.IsDel == false
+                                          && supplierDishIdList.Contains(supplierDishEntity.SupplierDishId)
+                                    select new
+                                    {
+                                        supplierDishEntity.SupplierCategoryId,
+                                        supplierDishEntity.DishNo,
+                                        supplierDishEntity.Price,
+                                        supplierDishEntity.SupplierDishId,
+                                        supplierDishEntity.SupplierDishName,
+                                        supplierDishEntity.SuppllierDishDescription,
+                                        supplierDishEntity.SpicyLevel,
+                                        supplierDishEntity.AverageRating,
+                                        supplierDishEntity.IsCommission,
+                                        supplierDishEntity.IsDiscount,
+                                        supplierDishEntity.Recipe,
+                                        supplierDishEntity.Recommended,
+                                        supplierDishEntity.PackagingFee,
+                                        SupplierId =
+                                    supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+                                        ImagePath = string.Empty,
+                                        DishCount = (from k in tangShiOrdersParameter.SupplierDishList
+                                                     where k.SupplierDishId == supplierDishEntity.SupplierDishId
+                                                     select k.DishCount).FirstOrDefault()
+                                    }).OrderBy(p => p.DishNo).ToList();
+
+            var customerTotalFee = supplierDishList.Sum(supplierdish => (double) (supplierdish.Price*supplierdish.DishCount));
+
+            var tableReservationId = this.SaveTempTableReservationEntity(orderId, customer.CustomerId,
+                                                                         tangShiOrdersParameter);
+            this.SaveTempOrderDetailEntity(customer.CustomerId, tableReservationId,
+                                           supplierDishList.Cast<SupplierDish>().ToList());
+            this.SavePaymentEntity(tableReservationId, (decimal) customerTotalFee,
+                                   tangShiOrdersParameter.PayMentMethodId, string.Empty);
+
+            return new ServicesResult<string>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = orderId.ToString()
+            };
+        }
+
+        /// <summary>
         /// Gets the type of the order source.
         /// </summary>
         /// <returns>
@@ -583,7 +708,63 @@
             this.tableReservationEntityRepository.Save(tableReservationEntity);
             return tableReservationEntity.TableReservationId;
         }
+        /// <summary>
+        /// 保存堂食订单信息
+        /// </summary>
+        /// <param name="orderId">The orderId</param>
+        /// <param name="customerId">The customerId</param>
+        /// <param name="tangShiOrdersParameter">The tangShiOrdersParameter</param>
+        /// <returns>
+        /// 保存堂食订单信息
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：5/14/2014 11:35 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int SaveTempTableReservationEntity(int orderId, int customerId, SaveTangShiOrdersParameter tangShiOrdersParameter)
+        {
+            var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new TableReservationEntity
+            {
+                Supplier = new SupplierEntity
+                {
+                    SupplierId = tangShiOrdersParameter.SupplierID
+                },
 
+                CustomerId = customerId,
+                OrderNumber = orderId,
+                TableStatus = 1,
+                DateReserved = DateTime.Now,
+                IsPaId = false,
+                IsRating = false,
+                Cancelled = false,
+                IsAdd = false,
+                IsDeal = true,
+                Type = 1,
+                IsReminder = true,
+                IsService = true
+            };
+
+            tableReservationEntity.Notes = tangShiOrdersParameter.Remark + tangShiOrdersParameter.TempOrderNumber;
+            //tableReservationEntity.CustomerTotal = order.CustomerTotalFee;
+            //tableReservationEntity.Total = order.TotalFee;
+            //tableReservationEntity.ConsumerAmount = order.ServiceFee;
+            //tableReservationEntity.TeaBitFee = order.TeaBitFee;
+            tableReservationEntity.ModifyDate = DateTime.Now;
+            //tableReservationEntity.NumberOfPeople = order.DinnerNumber;
+            tableReservationEntity.TabelNo = tangShiOrdersParameter.TableNo;
+            //tableReservationEntity.CouponCode = order.CouponCode;
+            //tableReservationEntity.ContactNumber = delivery.Telephone;
+            tableReservationEntity.Contactsex = tangShiOrdersParameter.CustomerSex;
+            tableReservationEntity.ContactName = tangShiOrdersParameter.CustomerName;
+            //tableReservationEntity.InvoiceRequired = order.InvoiceRequired;
+            //tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
+            tableReservationEntity.Path = tangShiOrdersParameter.Path;
+            //tableReservationEntity.TemplateId = order.Template;
+
+            this.tableReservationEntityRepository.Save(tableReservationEntity);
+            return tableReservationEntity.TableReservationId;
+        }
         /// <summary>
         /// 保存订单详情信息
         /// </summary>
@@ -611,6 +792,69 @@
                                  SupplierDishName = dish.ItemName,
                                  Total = dish.Price * dish.Quantity,
                                  SpecialInstruction = dish.Instruction,
+                                 OrderDate = DateTime.Now,
+                                 IsAdd = false,
+                                 OrderType = 1
+                             }).ToList();
+
+            this.orderDetailEntityRepository.Save(orderList);
+        }
+
+        /// <summary>
+        /// 保存订单菜品详细信息
+        /// </summary>
+        /// <param name="customerId">The customerId</param>
+        /// <param name="orderId">The orderId</param>
+        /// <param name="supplierDishList">The supplierDishList</param>
+        /// 创建者：单琪彬
+        /// 创建日期：5/14/2014 11:31 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SaveTempOrderDetailEntity(int customerId, int orderId, IEnumerable<SupplierDish> supplierDishList)
+        {
+            var removeOrderList = this.orderDetailEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.OrderId == orderId).ToList();
+            this.orderDetailEntityRepository.Remove(removeOrderList);
+
+            //var supplierDishIdList = tangShiOrdersParameter.SupplierDishList.Select(p => p.SupplierDishId).Distinct().Cast<int?>().ToList();
+            //var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
+            //                        where supplierDishEntity.Supplier.SupplierId == tangShiOrdersParameter.SupplierID
+            //                              && supplierDishEntity.Online && supplierDishEntity.IsDel == false
+            //                              && supplierDishIdList.Contains(supplierDishEntity.SupplierDishId)
+            //                        select new
+            //                        {
+            //                            supplierDishEntity.SupplierCategoryId,
+            //                            supplierDishEntity.DishNo,
+            //                            supplierDishEntity.Price,
+            //                            supplierDishEntity.SupplierDishId,
+            //                            supplierDishEntity.SupplierDishName,
+            //                            supplierDishEntity.SuppllierDishDescription,
+            //                            supplierDishEntity.SpicyLevel,
+            //                            supplierDishEntity.AverageRating,
+            //                            supplierDishEntity.IsCommission,
+            //                            supplierDishEntity.IsDiscount,
+            //                            supplierDishEntity.Recipe,
+            //                            supplierDishEntity.Recommended,
+            //                            supplierDishEntity.PackagingFee,
+            //                            SupplierId =
+            //                        supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
+            //                            ImagePath = string.Empty,
+            //                            DishCount = (from k in tangShiOrdersParameter.SupplierDishList 
+            //                                         where k.SupplierDishId == supplierDishEntity.SupplierDishId 
+            //                                         select k.DishCount).FirstOrDefault()
+            //                        }).OrderBy(p => p.DishNo).ToList();
+
+            var orderList = (from dish in supplierDishList
+                             select new OrderDetailEntity
+                             {
+                                 OrderId = orderId,
+                                 CustomerId = customerId,
+                                 SupplierDishId = dish.SupplierDishId,
+                                 Quantity = dish.DishCount,
+                                 SupplierPrice = dish.Price,
+                                 SupplierDishName = dish.SupplierDishName,
+                                 Total = dish.Price * dish.DishCount,
+                                 SpecialInstruction = dish.SuppllierDishDescription,
                                  OrderDate = DateTime.Now,
                                  IsAdd = false,
                                  OrderType = 1

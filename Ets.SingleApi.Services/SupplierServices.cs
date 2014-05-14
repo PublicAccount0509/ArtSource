@@ -1277,6 +1277,8 @@
 
             var supplierCategoryList = (from entity in tempSupplierCategoryList
                                         where entity.Category != null
+                                        && entity.Category.Isdel == false
+                                        && entity.Category.Isonline
                                         select new
                                         {
                                             entity.Category.CategoryId,

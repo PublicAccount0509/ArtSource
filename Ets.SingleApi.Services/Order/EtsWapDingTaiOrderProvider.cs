@@ -1001,5 +1001,10 @@ namespace Ets.SingleApi.Services
 
             this.deskBookingEntityRepository.Save(deskBookingEntity);
         }
+
+        public override ServicesResult<string> SaveTempOrder(SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey, string appPassword)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

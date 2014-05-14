@@ -33,7 +33,7 @@
         public CacheServicesResult<bool> SaveShoppingCartAndOrderNoLink(string source, string orderId, string shoppingcartId)
         {
             CacheUtility.GetInstance().Delete(string.Format("{0}_{1}{2}", source, "shopping_cart_orderIdAndShoppingcartId", orderId));
-            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_orderIdAndShoppingcartId", orderId), shoppingcartId, DateTime.Now.AddDays(CacheServicesCommon.ShoppingCartLongCacheTime));
+            CacheUtility.GetInstance().Add(string.Format("{0}_{1}{2}", source, "shopping_cart_orderIdAndShoppingcartId", orderId), shoppingcartId, DateTime.Now.AddHours(CacheServicesCommon.ShoppingCartCacheTime));
             return new CacheServicesResult<bool>
             {
                 Result = true

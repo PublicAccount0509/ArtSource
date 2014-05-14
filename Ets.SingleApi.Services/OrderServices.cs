@@ -193,6 +193,38 @@
         }
 
         /// <summary>
+        /// 保存堂食订单信息
+        /// </summary>
+        /// <param name="tangShiOrdersParameter"></param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// 保存堂食订单信息
+        /// </returns>
+        /// 创建者：单琪彬
+        /// 创建日期：5/14/2014 10:07 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> SaveTempOrder(SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey, string appPassword)
+        {
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == OrderType.TangShi && p.OrderProviderType.OrderSourceType == OrderSourceType.EtsWap);
+            if (orderProvider == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var result = orderProvider.SaveTempOrder(tangShiOrdersParameter, appKey, appPassword);
+            return new ServicesResult<string>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+        /// <summary>
         /// 获取订单号
         /// </summary>
         /// <param name="source">The source</param>

@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Controllers
+﻿using Ets.SingleApi.Model.Services;
+
+namespace Ets.SingleApi.Controllers
 {
     using System.Web.Http;
 
@@ -352,6 +354,66 @@
         {
             var preFix = ((OrderType)orderType).ToString();
             return string.Format("{0}{1}", preFix, this.Source);
+        }
+
+        /// <summary>
+        /// 创建堂食订单
+        /// </summary>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：5/13/2014 4:24 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public Response<string> SaveOrder(SaveTangShiOrdersRequst requst)
+        {
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Result = string.Empty,
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var getOrderResult = this.orderServices.SaveTempOrder(new SaveTangShiOrdersParameter
+            {
+                Source = requst.Source,
+                Path = requst.Path,
+                SupplierID = requst.SupplierID,
+                CustomerName = requst.CustomerName,
+                CustomerSex = requst.CustomerSex,
+                TableNo = requst.TableNo,
+                Remark = requst.Remark,
+                TempOrderNumber = requst.TempOrderNumber,
+                PayMentMethodId = requst.PayMentMethodId,
+                SupplierDishList = requst.SupplierDishList
+            },this.AppKey,this.AppPassword);
+
+            if (getOrderResult.Result == null)
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
+                    },
+                    Result = string.Empty
+                };
+           }
+
+            return new Response<string>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderResult.StatusCode
+                },
+                Result = getOrderResult.Result
+            };
         }
     }
 }

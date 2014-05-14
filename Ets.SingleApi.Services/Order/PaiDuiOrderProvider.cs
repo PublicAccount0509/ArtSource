@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Ets.SingleApi.Model;
+using Ets.SingleApi.Model.Controller;
 using Ets.SingleApi.Model.Repository;
 using Ets.SingleApi.Model.Services;
 using Ets.SingleApi.Services.IRepository;
@@ -119,6 +120,29 @@ namespace Ets.SingleApi.Services
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword)
+        {
+            return new ServicesResult<string>
+            {
+                Result = string.Empty
+            };
+        }
+
+        /// <summary>
+        /// 保存订单信息
+        /// </summary>
+        /// <param name="tangShiOrdersParameter">The tangShiOrdersParameter</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/20 16:01
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> SaveTempOrder(SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey,
+                                                    string appPassword)
         {
             return new ServicesResult<string>
             {

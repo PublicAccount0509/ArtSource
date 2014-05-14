@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Model.Controller;
+
+namespace Ets.SingleApi.Services
 {
     using System.Json;
     using System.Linq;
@@ -147,6 +149,22 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public abstract ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword);
+
+        /// <summary>
+        /// 保存订单信息
+        /// </summary>
+        /// <param name="tangShiOrdersParameter">The tangShiOrdersParameter</param>
+        /// <param name="appKey">The appKey</param>
+        /// <param name="appPassword">The appPassword</param>
+        /// <returns>
+        /// 返回结果
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/20 16:01
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public abstract ServicesResult<string> SaveTempOrder(SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey, string appPassword);
 
         /// <summary>
         /// Gets the type of the order source.
