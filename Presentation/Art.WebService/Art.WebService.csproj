@@ -79,7 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Models\DeviceType.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ResultModel.cs" />
+    <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\ShareArtworkModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
