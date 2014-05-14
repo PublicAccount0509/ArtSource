@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\ArtworkController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -92,9 +93,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddOrderModel.cs" />
+    <Compile Include="Models\ArtistDetailModel.cs" />
     <Compile Include="Models\ArtworkSimpleModel.cs" />
     <Compile Include="Models\CustomerRegisterModel.cs" />
     <Compile Include="Models\DeviceType.cs" />
+    <Compile Include="Models\FollowedModel.cs" />
+    <Compile Include="Models\FollowModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\AddressModel.cs" />

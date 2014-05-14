@@ -60,6 +60,7 @@
     <Compile Include="Comment.cs" />
     <Compile Include="CommonEnitities\Genre.cs" />
     <Compile Include="Artist\ArtistType.cs" />
+    <Compile Include="Customer\ActivityFollow.cs" />
     <Compile Include="Customer\Address.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\ActivityCollect.cs" />
