@@ -48,10 +48,14 @@ namespace Art.WebService.Controllers
 
         [HttpPost]
         //可以使用昵称或者手机号码登录
-        public SimpleResultModel Login(LoginModel model)
+        public ResultModel Login(LoginModel model)
         {
-            var flg = CustomerBussinessLogic.Instance.ValidateLogin(model.LoginName, model.Password);
-            return new SimpleResultModel(flg);
+            var customer = CustomerBussinessLogic.Instance.RetrieveCustomer(model.LoginName, model.Password);
+            if (customer == null)
+            {
+                return new ResultModel(false, "登录失败");
+            }
+            return new ResultModel(true, string.Empty, customer.Id);
         }
 
         /// <summary>
@@ -80,7 +84,7 @@ namespace Art.WebService.Controllers
             {
                 return new ResultModel(false, "用户不存在");
             }
-            
+
             var address = AddressModelTranslator.Instance.Translate(model);
             address.Customer = customer;
             if (model.IsDefault == true)
@@ -88,7 +92,7 @@ namespace Art.WebService.Controllers
                 customer.DefaultAddress = address;
             }
             var resultAdd = CustomerBussinessLogic.Instance.AddAddress(address);
-            return new ResultModel(true,resultAdd.Id);
+            return new ResultModel(true, resultAdd.Id);
         }
 
         /// <summary>

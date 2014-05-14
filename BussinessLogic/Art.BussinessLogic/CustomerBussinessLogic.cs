@@ -60,11 +60,11 @@ namespace Art.BussinessLogic
             return query.ToList();
         }
 
-        public bool ValidateLogin(string loginName, string password)
+        public Customer RetrieveCustomer(string loginName, string password)
         {
             var query = _customerRepository.Table.Where(i => i.NickName == loginName || i.PhoneNumber == loginName);
             query = query.Where(i=>i.Password == password);
-            return query.Any();
+            return query.FirstOrDefault();
         }
         /// <summary>
         /// Adds the address.
