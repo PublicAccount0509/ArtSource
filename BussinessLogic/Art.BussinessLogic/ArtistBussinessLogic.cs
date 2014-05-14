@@ -32,6 +32,22 @@ namespace Art.BussinessLogic
             var artist = _artistRepository.GetById(artistId);
             return artist;
         }
+        /// <summary>
+        /// The method will 
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>
+        /// The Boolean
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/14/2014 4:32 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public bool Exist(int id)
+        {
+            return GetArtist(id) != null;
+        }
 
         public IList<Artist> GetArtists()
         {

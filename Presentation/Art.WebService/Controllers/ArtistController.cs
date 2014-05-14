@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Http;
 using Art.BussinessLogic;
-using Art.Data.Domain;
 using Art.WebService.Models;
 
 namespace Art.WebService.Controllers
@@ -23,28 +22,34 @@ namespace Art.WebService.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public ArtistDetailModel Detail(int artistId, int? userId)
+        public ResultModel<ArtistDetailModel> Detail(int artistId, int? userId)
         {
             if (artistId == 0)
             {
-                return null;
+                return new ResultModel<ArtistDetailModel>((int) ArtistDetailModelStatus.ArtistNotExist, "艺术家不存在");
             }
             var artist = ArtistBussinessLogic.Instance.GetArtist(artistId);
             if (artist == null)
             {
-                return null;
+                return new ResultModel<ArtistDetailModel>((int) ArtistDetailModelStatus.ArtistNotExist, "艺术家不存在");
             }
             var artworks = ArtworkBussinessLogic.Instance.GetArtworksByArtistId(artistId);
-            var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks).ToArray();
-            return new ArtistDetailModel
+            var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
+            foreach (var model in models)
+            {
+                model.ShareCount = ArtworkBussinessLogic.Instance.GetShareCount(model.Id);
+                model.CollectAccount = ArtworkBussinessLogic.Instance.GetCollectCount(model.Id);
+                model.PraiseCount = ArtworkBussinessLogic.Instance.GetPraiseCount(model.Id);
+            }
+            var artistDetailModel = ArtistDetailModelTranslator.Instance.Translate(artist);
+            artistDetailModel.HasFollowed =
+                userId != null &&
+                ArtistBussinessLogic.Instance.ExistFollow(artistId, Convert.ToInt32(userId));
+            artistDetailModel.Artworks = models.ToArray();
+            return new ResultModel<ArtistDetailModel>
                 {
-                    HasFollowed =
-                        userId != null && ArtistBussinessLogic.Instance.ExistFollow(artistId, Convert.ToInt32(userId)),
-                    Honur = artist.PrizeItems,
-                    Experience = artist.School,
-                    IconPath = artist.AvatarFileName,
-                    Name = artist.Name,
-                    Artworks = models
+                    Status = (int) ArtistDetailModelStatus.Success,
+                    Result = artistDetailModel
                 };
         }
 
@@ -61,33 +66,23 @@ namespace Art.WebService.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ResultModel Follow(FollowModel model)
+        public SimpleResultModel Follow(FollowModel model)
         {
-            var entity = new ActivityFollow
-                {
-                    ArtistId = model.ArtistId,
-                    CustomerId = model.UserId,
-                    FADatetime = DateTime.Now
-                };
-            var artist = ArtistBussinessLogic.Instance.GetArtist(model.ArtistId);
-            if (artist == null)
+            if (!ArtistBussinessLogic.Instance.Exist(model.ArtistId))
             {
-                return new ResultModel(false, "要关注的艺术家不存在");
+                return new SimpleResultModel((int) FollowModelStatus.ArtistNotExist, "要关注的艺术家不存在");
             }
-            var customer = CustomerBussinessLogic.Instance.Get(model.UserId);
-            if (customer == null)
+            if (!CustomerBussinessLogic.Instance.Exist(model.UserId))
             {
-                return new ResultModel(false, "无效的用户");
+                return new SimpleResultModel((int) FollowModelStatus.UserNotExist, "无效的用户");
             }
             if (ArtistBussinessLogic.Instance.ExistFollow(model.ArtistId, model.UserId))
             {
-                return new ResultModel(false, "您已经关注了该艺术家");
+                return new SimpleResultModel((int) FollowModelStatus.ArtistAlreadyFollowed, "您已经关注了该艺术家");
             }
-
-            entity.Artist = artist;
-            entity.Customer = customer;
+            var entity = FollowModelTranslator.Instance.Translate(model);
             ArtistBussinessLogic.Instance.AddFollow(entity);
-            return new ResultModel(true);
+            return SimpleResultModel.Success();
         }
 
         /// <summary>
@@ -103,13 +98,14 @@ namespace Art.WebService.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public FollowedModel[] Followed(int userid)
+        public ResultModel<FollowedModel[]> Followed(int userid)
         {
             var follows = ArtistBussinessLogic.Instance.GetFollowsByCustomerId(userid);
-            return
-                follows.Select(
-                    p => new FollowedModel {Id = p.ArtistId, AvatarPath = p.Artist.AvatarFileName, Name = p.Artist.Name})
-                       .ToArray();
+            return new ResultModel<FollowedModel[]>
+                {
+                    Status = (int) FollowedModelStatus.Success,
+                    Result = follows.Select(p => FollowedModelTranslator.Instance.Translate(p)).ToArray()
+                };
         }
     }
 }
