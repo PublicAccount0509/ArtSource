@@ -216,5 +216,18 @@
         [Description("方法功能：保存订单信息；参数说明：shoppingCartId（购物车Id），orderType（订单类型：0 外卖，1 堂食，2 订台，3 排队，4 当面付），orderSourceType（订单来源：0 默认类型）；")]
         Response<OrderShoppingCartStatusResult> GetShoppingCartStatus(string shoppingCartId, int orderType, int orderSourceType);
 
+        /// <summary>
+        /// 创建堂食订单
+        /// </summary>
+        /// <returns></returns>
+        /// 创建者：苏建峰
+        /// 创建日期：5/13/2014 4:24 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：保存订单信息；")]
+        Response<string> SaveTangShiOrder(SaveTangShiOrdersRequst requst);
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Ets.SingleApi.Model.Services;
+﻿using System.Collections.Generic;
+using Ets.SingleApi.Model.Services;
 
 namespace Ets.SingleApi.Controllers
 {
@@ -366,7 +367,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<string> SaveOrder(SaveTangShiOrdersRequst requst)
+        public Response<string> SaveTangShiOrder(SaveTangShiOrdersRequst requst)
         {
             if (requst == null)
             {
@@ -384,15 +385,15 @@ namespace Ets.SingleApi.Controllers
             {
                 Source = requst.Source,
                 Path = requst.Path,
-                SupplierID = requst.SupplierID,
+                SupplierID = requst.SupplierId,
                 CustomerName = requst.CustomerName,
                 CustomerSex = requst.CustomerSex,
                 TableNo = requst.TableNo,
                 Remark = requst.Remark,
                 TempOrderNumber = requst.TempOrderNumber,
                 PayMentMethodId = requst.PayMentMethodId,
-                SupplierDishList = requst.SupplierDishList
-            },this.AppKey,this.AppPassword);
+                SupplierDishList = requst.SupplierDishList ?? new List<SupplierDishItem>()
+            }, this.AppKey, this.AppPassword);
 
             if (getOrderResult.Result == null)
             {
@@ -404,7 +405,7 @@ namespace Ets.SingleApi.Controllers
                     },
                     Result = string.Empty
                 };
-           }
+            }
 
             return new Response<string>
             {

@@ -611,18 +611,25 @@ namespace Ets.SingleApi.Services
                                         supplierDishEntity.PackagingFee,
                                         SupplierId =
                                     supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
-                                        ImagePath = string.Empty,
-                                        DishCount = (from k in tangShiOrdersParameter.SupplierDishList
-                                                     where k.SupplierDishId == supplierDishEntity.SupplierDishId
-                                                     select k.DishCount).FirstOrDefault()
+                                        ImagePath = string.Empty
                                     }).OrderBy(p => p.DishNo).ToList();
 
-            var customerTotalFee = supplierDishList.Sum(supplierdish => (double) (supplierdish.Price*supplierdish.DishCount));
+            var dishlist = (from supplierdish in supplierDishList
+                            select new SupplierDish
+                                {
+                                    SupplierDishId = supplierdish.SupplierDishId,
+                                    SupplierDishName = supplierdish.SupplierDishName,
+                                    SuppllierDishDescription = supplierdish.SuppllierDishDescription,
+                                    Price = supplierdish.Price,
+                                    DishCount = (from k in tangShiOrdersParameter.SupplierDishList
+                                                 where k.SupplierDishId == supplierdish.SupplierDishId
+                                                 select k.DishCount).FirstOrDefault()
+                                }).ToList();
 
-            var tableReservationId = this.SaveTempTableReservationEntity(orderId, customer.CustomerId,
-                                                                         tangShiOrdersParameter);
-            this.SaveTempOrderDetailEntity(customer.CustomerId, tableReservationId,
-                                           supplierDishList.Cast<SupplierDish>().ToList());
+            var customerTotalFee = dishlist.Sum(supplierdish => (double)(supplierdish.Price * supplierdish.DishCount));
+
+            var tableReservationId = this.SaveTempTableReservationEntity(orderId, customer.CustomerId, tangShiOrdersParameter);
+            this.SaveTempOrderDetailEntity(customer.CustomerId, tableReservationId, dishlist);
             this.SavePaymentEntity(tableReservationId, (decimal) customerTotalFee,
                                    tangShiOrdersParameter.PayMentMethodId, string.Empty);
 
