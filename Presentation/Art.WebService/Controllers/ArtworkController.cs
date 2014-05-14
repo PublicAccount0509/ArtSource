@@ -23,7 +23,7 @@ namespace Art.WebService.Controllers
         }
 
         [HttpGet]
-        public ArtworkSimpleModel[] List(int itemsCount, int pageIndex)
+        public ResultModel<ArtworkSimpleModel[]> List(int itemsCount, int pageIndex)
         {
             var paging = new PagingRequest(pageIndex, itemsCount);
             var artworks = ArtworkBussinessLogic.Instance.SearchArtworks(paging);
@@ -34,7 +34,16 @@ namespace Art.WebService.Controllers
                 model.CollectAccount = ArtworkBussinessLogic.Instance.GetCollectCount(model.Id);
                 model.PraiseCount = ArtworkBussinessLogic.Instance.GetPraiseCount(model.Id);
             }
-            return models.ToArray();
+            var result = new ResultModel<ArtworkSimpleModel[]>(0);
+            result.Result = models.ToArray();
+            return result;
+        }
+
+        public ArtworkDetailModel Detail(int artworkId,int userId)
+        {
+            var artwork = ArtworkBussinessLogic.Instance.GetArtwork(artworkId);
+
+            return null;
         }
 
         //public 

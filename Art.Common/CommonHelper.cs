@@ -10,9 +10,15 @@ namespace Art.Common
 {
     public class CommonHelper
     {
+        public static string GetUploadFileRelativePath_SlantStyle(string fileName)
+        {
+            var path = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, fileName);
+            return path.Replace("\\", "/");
+        }
+
         public static string GetUploadFileRelativePath(string fileName)
         {
-            return Path.Combine("\\", ConfigSettings.Instance.UploadedFileFolder, fileName);
+            return Path.Combine(ConfigSettings.Instance.UploadedFileFolder, fileName);
         }
 
         public static string GetUploadFileAbsolutePath(string fileName)
