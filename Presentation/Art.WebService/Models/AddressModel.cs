@@ -16,6 +16,24 @@ namespace Art.WebService.Models
         public string Detail { get; set; }
         public bool? IsDefault { get; set; }
     }
+    
+    public enum SaveAddressStatus
+    { 
+        Success,
+        DetailEmpty,
+        PhoneNumberEmpty,
+        ReceiptNameEmpty,
+        UserNotExist,
+        AddressIdNotExist
+    }
+
+    public enum DeleteAddressStatus
+    {
+        Success,
+        AddressIdNotExist
+    }
+
+
     public class AddressModelTranslator : TranslatorBase<Address, AddressModel>
     {
         public static readonly AddressModelTranslator Instance = new AddressModelTranslator();
@@ -39,4 +57,6 @@ namespace Art.WebService.Models
             return to;
         }
     }
+
+
 }

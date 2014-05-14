@@ -17,45 +17,45 @@ namespace Art.WebService.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        public ResultModel Register(CustomerRegisterModel model)
+        public IntResultModel Register(CustomerRegisterModel model)
         {
             if (string.IsNullOrEmpty(model.NickName))
             {
-                return new ResultModel(false, "昵称不能为空");
+                return new IntResultModel((int)CustomerRegisterStatus.NickNameEmpty, "昵称不能为空");
             }
             if (string.IsNullOrEmpty(model.PhoneNumber))
             {
-                return new ResultModel(false, "手机号不能为空");
+                return new IntResultModel((int)CustomerRegisterStatus.PhoneNumberEmpty, "手机号不能为空");
             }
             if (string.IsNullOrEmpty(model.Password))
             {
-                return new ResultModel(false, "密码不能为空");
+                return new IntResultModel((int)CustomerRegisterStatus.PasswordEmpty, "密码不能为空");
             }
             if (CustomerBussinessLogic.Instance.ExistNickName(model.NickName))
             {
-                return new ResultModel(false, "昵称已被注册");
+                return new IntResultModel((int)CustomerRegisterStatus.NickNameAlreadyRegistered, "昵称已被注册");
             }
             if (CustomerBussinessLogic.Instance.ExistPhoneNumber(model.PhoneNumber))
             {
-                return new ResultModel(false, "手机号已被注册");
+                return new IntResultModel((int)CustomerRegisterStatus.PhoneNumberRegistered, "手机号已被注册");
             }
 
             var customer = CustomerRegisterModelTranslator.Instance.Translate(model);
             var customerAdded = CustomerBussinessLogic.Instance.Add(customer);
 
-            return new ResultModel(true, customerAdded.Id);
+            return new IntResultModel((int)CustomerRegisterStatus.Success, string.Empty, customerAdded.Id);
         }
 
         [HttpPost]
         //可以使用昵称或者手机号码登录
-        public ResultModel Login(LoginModel model)
+        public IntResultModel Login(LoginModel model)
         {
             var customer = CustomerBussinessLogic.Instance.RetrieveCustomer(model.LoginName, model.Password);
             if (customer == null)
             {
-                return new ResultModel(false, "登录失败");
+                return new IntResultModel((int)LoginModelStatus.InvalidCredential, "登录失败");
             }
-            return new ResultModel(true, string.Empty, customer.Id);
+            return new IntResultModel((int)LoginModelStatus.Success, string.Empty, customer.Id);
         }
 
         /// <summary>
@@ -71,18 +71,19 @@ namespace Art.WebService.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ResultModel AddAddress(AddressModel model)
+        public IntResultModel AddAddress(AddressModel model)
         {
             string message;
-            if (!CheckAddressModel(model, out message))
+            var status = CheckAddressModel(model, out message);
+            if (status != SaveAddressStatus.Success)
             {
-                return new ResultModel(false, message);
+                return new IntResultModel((int)status, message);
             }
 
             var customer = CustomerBussinessLogic.Instance.Get(model.UserId);
             if (customer == null)
             {
-                return new ResultModel(false, "用户不存在");
+                return new IntResultModel((int)SaveAddressStatus.UserNotExist, "用户不存在");
             }
 
             var address = AddressModelTranslator.Instance.Translate(model);
@@ -92,7 +93,7 @@ namespace Art.WebService.Controllers
                 customer.DefaultAddress = address;
             }
             var resultAdd = CustomerBussinessLogic.Instance.AddAddress(address);
-            return new ResultModel(true, resultAdd.Id);
+            return new IntResultModel((int)SaveAddressStatus.Success, resultAdd.Id);
         }
 
         /// <summary>
@@ -108,24 +109,25 @@ namespace Art.WebService.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ResultModel EditAddress(AddressModel model)
+        public IntResultModel EditAddress(AddressModel model)
         {
             string message;
-            if (!CheckAddressModel(model, out message))
+            var status = CheckAddressModel(model, out message);
+            if (status != SaveAddressStatus.Success)
             {
-                return new ResultModel(false, message);
+                return new IntResultModel((int)status, message);
             }
 
             var address = CustomerBussinessLogic.Instance.GetAddressById(model.Id);
             if (address == null)
             {
-                return new ResultModel(false, "您想要修改的地址不存在");
+                return new IntResultModel((int)SaveAddressStatus.AddressIdNotExist, "您想要修改的地址不存在");
             }
             if (model.IsDefault == true)
             {
                 if (address.Customer == null)
                 {
-                    return new ResultModel(false, "该地址对应的用户不存在，无法设置默认地址");
+                    return new IntResultModel((int)SaveAddressStatus.UserNotExist, "该地址对应的用户不存在，无法设置默认地址");
                 }
                 address.Customer.DefaultAddressId = address.Id;
             }
@@ -133,42 +135,31 @@ namespace Art.WebService.Controllers
             address.Name = model.ReceiptName;
             address.Telephone = model.PhoneNumber;
             CustomerBussinessLogic.Instance.UpdateAddress(address);
-            return new ResultModel(true);
+            return new IntResultModel((int)SaveAddressStatus.Success);
         }
 
-        public bool CheckAddressModel(AddressModel model, out string message)
+        public SaveAddressStatus CheckAddressModel(AddressModel model, out string message)
         {
-            message = string.Empty;
-            var ret = true;
+            message = string.Empty; 
             if (string.IsNullOrEmpty(model.Detail))
             {
-                message = "地址不能为空 ";
-            }
-            else if (model.Detail.Trim().Length == 0)
-            {
                 message = "地址不能为空";
+                return SaveAddressStatus.DetailEmpty;
             }
-            else if (string.IsNullOrEmpty(model.PhoneNumber))
+            
+            if (string.IsNullOrEmpty(model.PhoneNumber))
             {
                 message = "手机号不能为空";
+                return SaveAddressStatus.PhoneNumberEmpty;
             }
-            else if (model.PhoneNumber.Trim().Length == 0)
-            {
-                message = "手机号不能为空";
-            }
-            else if (string.IsNullOrEmpty(model.ReceiptName))
+            
+            if (string.IsNullOrEmpty(model.ReceiptName))
             {
                 message = "联系人不能为空";
+                return SaveAddressStatus.ReceiptNameEmpty;
             }
-            else if (model.ReceiptName.Trim().Length == 0)
-            {
-                message = "联系人不能为空";
-            }
-            if (!"".Equals(message))
-            {
-                ret = false;
-            }
-            return ret;
+             
+            return SaveAddressStatus.Success;
         }
 
         /// <summary>
@@ -184,12 +175,12 @@ namespace Art.WebService.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public ResultModel RemoveAddress(AddressModel model)
+        public SimpleResultModel RemoveAddress(AddressModel model)
         {
             var address = CustomerBussinessLogic.Instance.GetAddressById(model.Id);
             if (address == null)
             {
-                return new ResultModel(false, "您想要删除的地址不存在");
+                return new SimpleResultModel((int)DeleteAddressStatus.AddressIdNotExist, "您想要删除的地址不存在");
             }
             if (address.Customer != null && address.Customer.DefaultAddressId == address.Id)
             {
@@ -197,7 +188,7 @@ namespace Art.WebService.Controllers
                 address.Customer.DefaultAddress = null;
             }
             CustomerBussinessLogic.Instance.RemoveAddress(address);
-            return new ResultModel(true);
+            return new SimpleResultModel((int)DeleteAddressStatus.Success);
         }
     }
 }

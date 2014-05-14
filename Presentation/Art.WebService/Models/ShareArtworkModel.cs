@@ -10,4 +10,11 @@ namespace Art.WebService.Models
         public int ArtworkId { get; set; }
         public int UserId { get; set; }
     }
+
+    public enum ShareArtworkStatus
+    { 
+        Success,
+        ArtworkNotExist,
+        UserNotExist
+    }
 }

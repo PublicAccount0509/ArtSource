@@ -92,6 +92,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddOrderModel.cs" />
+    <Compile Include="Models\ArtworkDetailModel.cs" />
     <Compile Include="Models\ArtworkSimpleModel.cs" />
     <Compile Include="Models\CustomerRegisterModel.cs" />
     <Compile Include="Models\DeviceType.cs" />
