@@ -41,11 +41,16 @@ namespace Art.BussinessLogic
             return _customerRepository.Table.ToList();
         }
 
+
+        public bool Exist(int id)
+        {
+            return Get(id) != null;
+        }
+
         public Customer Get(int id)
         {
             return _customerRepository.GetById(id);
         }
-
 
         public IList<ActivityCollect> GetActivityCollect(int customerId)
         {
