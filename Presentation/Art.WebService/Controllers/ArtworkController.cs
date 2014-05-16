@@ -68,7 +68,6 @@ namespace Art.WebService.Controllers
             ArtworkBussinessLogic.Instance.Share(model.ArtworkId, model.UserId);
             return SimpleResultModel.Success();
         } 
-         
      
         /// <summary>
         /// The method will 
@@ -164,7 +163,7 @@ namespace Art.WebService.Controllers
 
             if (!ArtworkBussinessLogic.Instance.ExistCollect(model.ArtworkId, model.UserId))
             {
-                return new SimpleResultModel((int)ActivityCancelPraiseStatus.NotPraiseYet, "用户还没有赞过该作品");
+                return new SimpleResultModel((int)ActivityCancelCollectStatus.NotCollectYet, "用户还没有收藏过该作品");
             }
 
             ArtworkBussinessLogic.Instance.CancelCollect(model.ArtworkId, model.UserId);
