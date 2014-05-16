@@ -170,5 +170,60 @@ namespace Art.WebService.Controllers
               
             return SimpleResultModel.Success();
         }
+
+        /// <summary>
+        /// Prices the information.
+        /// </summary>
+        /// <param name="artworkId">The artworkId</param>
+        /// <returns>
+        /// ResultModel{PriceInfoModel}
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/16/2014 1:19 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ResultModel<PriceInfoModel> PriceInfo(int artworkId)
+        {
+            var artwork = ArtworkBussinessLogic.Instance.GetArtwork(artworkId);
+            if (artwork == null)
+            {
+                return new ResultModel<PriceInfoModel>((int)PriceInfoStatus.ArtworkNotExist);
+            }
+            return new ResultModel<PriceInfoModel>
+                {
+                    Status = (int)PriceInfoStatus.Success,
+                    Result = PriceInfoModelTranslator.Instance.Translate(artwork)
+                };
+        }
+
+        /// <summary>
+        /// Deveries the ways.
+        /// </summary>
+        /// <param name="artworkIds">The artworkIds</param>
+        /// <returns>
+        /// ResultModel{DeveryWaysModel[]}
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/16/2014 2:24 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ResultModel<DeveryWaysModel[]> DeveryWays(int[] artworkIds)
+        {
+            if (artworkIds == null)
+            {
+                return new ResultModel<DeveryWaysModel[]>((int) DeveryWaysStatus.NoData);
+            }
+            var artworks = ArtworkBussinessLogic.Instance.DeveryWays(artworkIds);
+            return
+                new ResultModel<DeveryWaysModel[]>
+                    {
+                        Status = (int) DeveryWaysStatus.Success,
+                        Result = artworks.Select(p => DeveryWaysModelTranslator.Instance.Translate(p)).ToArray()
+                    };
+        }
     }
 }

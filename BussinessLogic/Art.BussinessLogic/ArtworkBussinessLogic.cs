@@ -355,5 +355,18 @@ namespace Art.BussinessLogic
         {
             return _artworkRepository.Table.Where(p => p.Artist.Id == artistId).ToArray();
         }
+
+        public IList<Artwork> DeveryWays(int[] artworkIds)
+        {
+            var artworks = _artworkRepository.Table;
+            //先遍历参数Id
+            return (from artworkId in artworkIds
+                    //用id去查找实体
+                    let art = (from artwork in artworks where artwork.Id == artworkId select artwork).FirstOrDefault()
+                    //实体不为空返回实体
+                    where art != null
+                    select art
+                   ).ToList();
+        }
     }
 }

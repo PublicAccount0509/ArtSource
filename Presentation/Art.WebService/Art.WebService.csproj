@@ -97,10 +97,12 @@
     <Compile Include="Models\ArtworkDetailModel.cs" />
     <Compile Include="Models\ArtworkSimpleModel.cs" />
     <Compile Include="Models\CustomerRegisterModel.cs" />
+    <Compile Include="Models\DeveryWaysModel.cs" />
     <Compile Include="Models\DeviceType.cs" />
     <Compile Include="Models\FollowedModel.cs" />
     <Compile Include="Models\FollowModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PriceInfoModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\AddressModel.cs" />
