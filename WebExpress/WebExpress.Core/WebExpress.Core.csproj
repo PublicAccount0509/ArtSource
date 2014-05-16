@@ -50,7 +50,11 @@
     <Compile Include="Graphics\Captcha\LiteralCaptcha.cs" />
     <Compile Include="Graphics\Captcha\ArithmeticCaptcha.cs" />
     <Compile Include="Graphics\ImageHelper.cs" />
+    <Compile Include="Graphics\Images\FixedSizeTransformer.cs" />
+    <Compile Include="Graphics\Images\IImageSizeTransformer.cs" />
+    <Compile Include="Graphics\Images\ImageSizeTransformerAttribute.cs" />
     <Compile Include="Graphics\Images\ImageTransformer.cs" />
+    <Compile Include="Graphics\Images\KeepMinHeightSizeTransformer.cs" />
     <Compile Include="Guards\Guard.cs" />
     <Compile Include="IValueTextEntry.cs" />
     <Compile Include="Paging\PagedList.cs" />

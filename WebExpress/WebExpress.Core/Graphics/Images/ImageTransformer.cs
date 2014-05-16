@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace WebExpress.Core
 {
-    public class ImageTransformer
+    internal class ImageSizeTransformManager
     {
-        public static readonly ImageTransformer Instance = new ImageTransformer();
-        private ImageTransformer()
+        public static readonly ImageSizeTransformManager Instance = new ImageSizeTransformManager();
+        private ImageSizeTransformManager()
         {
 
         }

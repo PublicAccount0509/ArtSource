@@ -45,7 +45,7 @@ namespace Art.WebService.Models
         public override ArtworkDetailModel Translate(Artwork from)
         {
             var to = new ArtworkDetailModel();
-            var image = from.Images.FirstOrDefault(i => i.ImageType == ArtworkImageResizeType.Size_W600_H420);
+            var image = from.Images.FirstOrDefault(i => i.ImageType == ArtworkImageResizeType.Size_BigImage);
             if (image != null)
             {
                 to.ImagePath = CommonHelper.GetUploadFileRelativePath_SlantStyle(image.ImagePath);

@@ -1,4 +1,5 @@
 ﻿using Art.Common;
+using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
 using System;
@@ -174,43 +175,50 @@ namespace Art.BussinessLogic
         public void Add(Artwork artwork)
         {
             artwork.IsPublic = true;
-
-            var fullFileName = CommonHelper.GetUploadFileAbsolutePath(artwork.ImageFileName);
-            artwork.Images = GetImages(fullFileName);
+             
+            artwork.Images = GetImages(artwork.ImageFileName);
 
             _artworkRepository.Insert(artwork);
         }
 
-        private List<ArtworkImage> GetImages(string imageFullFileName)
-        {
-            var images = new List<ArtworkImage>();
-
-            var destFullFileName = string.Format("{0}/{1}_{2}{3}", Path.GetDirectoryName(imageFullFileName), Path.GetFileNameWithoutExtension(imageFullFileName), Data.Common.ArtworkImageResizeType.Size_W290_MinH240.ToString(), Path.GetExtension(imageFullFileName));
-            var imageSize = ImageTransformer.Instance.ResizeImageToWidth(imageFullFileName, destFullFileName, 290, 240);
-            images.Add(new ArtworkImage
-            {
-                ImagePath = Path.GetFileName(destFullFileName),
-                ImageType = Data.Common.ArtworkImageResizeType.Size_W290_MinH240,
-                Width = imageSize.Width,
-                Height = imageSize.Height
-            });
-
-            destFullFileName = string.Format("{0}/{1}_{2}{3}", Path.GetDirectoryName(imageFullFileName), Path.GetFileNameWithoutExtension(imageFullFileName), Data.Common.ArtworkImageResizeType.Size_W600_H420.ToString(), Path.GetExtension(imageFullFileName));
-            imageSize = ImageTransformer.Instance.ResizeImageToSize(imageFullFileName, destFullFileName, 600, 420);
-            images.Add(new ArtworkImage
-            {
-                ImagePath = Path.GetFileName(destFullFileName),
-                ImageType = Data.Common.ArtworkImageResizeType.Size_W600_H420,
-                Width = imageSize.Width,
-                Height = imageSize.Height
-            });
-
-            return images;
-        }
-
         public void Update(Artwork artwork)
         {
+            var isImageChanged = !artwork.Images.First().ImagePath.Contains(Path.GetFileNameWithoutExtension(artwork.ImageFileName));
+            if (isImageChanged)
+            {
+                artwork.Images = GetImages(artwork.ImageFileName);
+            }
             _artworkRepository.Update(artwork);
+        }
+
+        private List<ArtworkImage> GetImages(string imageFileName)
+        {
+            var imageFullFileName = CommonHelper.GetUploadFileAbsolutePath(imageFileName);
+            var images = new List<ArtworkImage>();
+
+            var enumType = typeof(ArtworkImageResizeType);
+            var items = Enum.GetValues(enumType);
+            foreach (var item in items)
+            {
+                var mi = enumType.GetMember(item.ToString()).First();
+                var attributes = mi.GetCustomAttributes(false);
+
+                var attribute = attributes.FirstOrDefault(i => typeof(IImageFileTransformer).IsAssignableFrom(i.GetType()));
+                if (attribute != null)
+                {
+                    var transformer = attribute as IImageFileTransformer;
+                    var destFullFileName = string.Format("{0}\\{1}_{2}{3}", Path.GetDirectoryName(imageFullFileName), Path.GetFileNameWithoutExtension(imageFullFileName), item.ToString(), Path.GetExtension(imageFullFileName));
+                    var size = transformer.Transform(imageFullFileName, destFullFileName);
+                    images.Add(new ArtworkImage
+                    {
+                        ImagePath = Path.GetFileName(destFullFileName),
+                        ImageType = (ArtworkImageResizeType)(int)item,
+                        Width = size.Width,
+                        Height = size.Height
+                    });
+                }
+            }
+            return images;
         }
 
         public PagedList<Artwork> SearchArtworks(PagingRequest paging)
