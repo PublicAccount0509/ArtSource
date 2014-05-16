@@ -18,6 +18,14 @@ namespace Art.Website.Controllers
 
     public class ArtworkController : Controller
     {
+        private IArtistBussinessLogic _artistBussinessLogic;
+        private IArtworkBussinessLogic _artworkBussinessLogic;
+        public ArtworkController(IArtistBussinessLogic artistBussinessLogic, IArtworkBussinessLogic artworkBussinessLogic)
+        {
+            _artistBussinessLogic = artistBussinessLogic;
+            _artworkBussinessLogic = artworkBussinessLogic;
+        }
+
         public ActionResult Types()
         {
             var model = new ArtworkTypesModel();
@@ -29,12 +37,12 @@ namespace Art.Website.Controllers
         [LoggingFilter]
         public JsonResult DeleteArtworkType(int id)
         {
-            var artworkType = ArtworkBussinessLogic.Instance.GetArtworkType(id);
+            var artworkType = _artworkBussinessLogic.GetArtworkType(id);
             List<string> reasons;
             var model = new ResultModel(true, string.Empty);
-            if (ArtworkBussinessLogic.Instance.CanDeleteArtworkType(artworkType, out reasons))
+            if (_artworkBussinessLogic.CanDeleteArtworkType(artworkType, out reasons))
             {
-                ArtworkBussinessLogic.Instance.DeleteArtworkType(artworkType);
+                _artworkBussinessLogic.DeleteArtworkType(artworkType);
             }
             else
             {
@@ -54,7 +62,7 @@ namespace Art.Website.Controllers
             }
 
             var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
-            ArtworkBussinessLogic.Instance.AddArtworkType(artworkType);
+            _artworkBussinessLogic.AddArtworkType(artworkType);
 
             var result = new ResultModel(true, string.Empty);
             return Json(result);
@@ -70,7 +78,7 @@ namespace Art.Website.Controllers
                 return Json(new ResultModel(false, message));
             }
             var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
-            ArtworkBussinessLogic.Instance.UpdateArtworkType(artworkType);
+            _artworkBussinessLogic.UpdateArtworkType(artworkType);
 
             var result = new ResultModel(true, string.Empty);
             return Json(result);
@@ -83,7 +91,7 @@ namespace Art.Website.Controllers
                 message = "分类不可为空";
                 return false;
             }
-            var at = ArtworkBussinessLogic.Instance.GetArtworkTypeByName(model.Text);
+            var at = _artworkBussinessLogic.GetArtworkTypeByName(model.Text);
             if (at != null && at.Id != model.Id)
             {
                 message = "已存在相同名称的分类!";
@@ -140,11 +148,11 @@ namespace Art.Website.Controllers
 
         public void Test()
         {
-            var artworkType = ArtworkBussinessLogic.Instance.GetArtworkType(2);
+            var artworkType = _artworkBussinessLogic.GetArtworkType(2);
             artworkType.ArtMaterials.Remove(artworkType.ArtMaterials.First());
             artworkType.ArtMaterials.Add(new ArtMaterial { Name = "ttttttttttt" });
 
-            ArtworkBussinessLogic.Instance.UpdateArtworkType(artworkType);
+            _artworkBussinessLogic.UpdateArtworkType(artworkType);
         }
 
 
@@ -156,7 +164,7 @@ namespace Art.Website.Controllers
 
         private IList<ArtworkTypeModel> GetArtworkTypeModels()
         {
-            var artworkTypes = ArtworkBussinessLogic.Instance.GetArtworkTypes();
+            var artworkTypes = _artworkBussinessLogic.GetArtworkTypes();
             var artworkTypeModels = ArtworkTypeModelTranslator.Instance.Translate(artworkTypes);
             return artworkTypeModels;
         }
@@ -189,7 +197,7 @@ namespace Art.Website.Controllers
             }
             var artwork = ArtworkModelTranslator.Instance.Translate(model);
 
-            ArtworkBussinessLogic.Instance.Add(artwork);
+            _artworkBussinessLogic.Add(artwork);
 
             var result = new ResultModel(true, "add successfully!");
             return Json(result);
@@ -213,7 +221,7 @@ namespace Art.Website.Controllers
 
             var artwork = ArtworkModelTranslator.Instance.Translate(model);
 
-            ArtworkBussinessLogic.Instance.Update(artwork);
+            _artworkBussinessLogic.Update(artwork);
 
             var result = new ResultModel(true, "update successfully!");
 
@@ -345,7 +353,7 @@ namespace Art.Website.Controllers
 
         public ActionResult Edit(int id)
         {
-            var artwork = ArtworkBussinessLogic.Instance.GetArtwork(id);
+            var artwork = _artworkBussinessLogic.GetArtwork(id);
             Guard.IsNotNull<DataNotFoundException>(artwork);
 
             var artworkModel = ArtworkModelTranslator.Instance.Translate(artwork);
@@ -368,10 +376,10 @@ namespace Art.Website.Controllers
             }
             model.PagedArtworks = GetPagedArtworkModel(defaultCriteria);
 
-            var artists = ArtistBussinessLogic.Instance.GetArtists();
+            var artists = _artistBussinessLogic.GetArtists();
             model.Artists = IdNameModelTranslator<Artist>.Instance.Translate(artists);
 
-            var artworkTypes = ArtworkBussinessLogic.Instance.GetArtworkTypes();
+            var artworkTypes = _artworkBussinessLogic.GetArtworkTypes();
             model.ArtworkTypes = GetArtworkTypeModels();
             return View(model);
         }
@@ -384,33 +392,33 @@ namespace Art.Website.Controllers
 
         public JsonResult Delete(int id)
         {
-            var artwork = ArtworkBussinessLogic.Instance.GetArtwork(id);
-            ArtworkBussinessLogic.Instance.Delete(artwork);
+            var artwork = _artworkBussinessLogic.GetArtwork(id);
+            _artworkBussinessLogic.Delete(artwork);
             var model = new ResultModel(true, string.Empty);
             return Json(model);
         }
 
         public ActionResult Detail(int id)
         {
-            var artwork = ArtworkBussinessLogic.Instance.GetArtwork(id);
+            var artwork = _artworkBussinessLogic.GetArtwork(id);
             var model = ArtworkDetailModelTranslator.Instance.Translate(artwork);
             return View(model);
         }
 
         public JsonResult CancelPublish(int id)
         {
-            var artwork = ArtworkBussinessLogic.Instance.GetArtwork(id);
+            var artwork = _artworkBussinessLogic.GetArtwork(id);
             artwork.IsPublic = false;
-            ArtworkBussinessLogic.Instance.Update(artwork);
+            _artworkBussinessLogic.Update(artwork);
             var model = new ResultModel(true, string.Empty);
             return Json(model);
         }
 
         public JsonResult Publish(int id)
         {
-            var artwork = ArtworkBussinessLogic.Instance.GetArtwork(id);
+            var artwork = _artworkBussinessLogic.GetArtwork(id);
             artwork.IsPublic = true;
-            ArtworkBussinessLogic.Instance.Update(artwork);
+            _artworkBussinessLogic.Update(artwork);
             var model = new ResultModel(true, string.Empty);
             return Json(model);
         }
@@ -418,7 +426,7 @@ namespace Art.Website.Controllers
         private PagedArtworkModel GetPagedArtworkModel(ArtworkSearchCriteria criteria)
         {
             var artworks = new List<ArtworkSimpleModel>();
-            var pagedArtworks = ArtworkBussinessLogic.Instance.SearchArtworks(criteria.NamePart, criteria.ArtworkTypeId, criteria.ArtMaterialId, criteria.ArtistId, criteria.PagingRequest);
+            var pagedArtworks = _artworkBussinessLogic.SearchArtworks(criteria.NamePart, criteria.ArtworkTypeId, criteria.ArtMaterialId, criteria.ArtistId, criteria.PagingRequest);
             foreach (var item in pagedArtworks)
             {
                 var artwork = ArtworkSimpleModelTranslator.Instance.Translate(item);
@@ -435,19 +443,19 @@ namespace Art.Website.Controllers
             var model = new ArtworkEditModel();
             model.Artwork = artworkModel;
 
-            var artists = ArtistBussinessLogic.Instance.GetArtists();
+            var artists = _artistBussinessLogic.GetArtists();
             model.SourceArtists = IdNameModelTranslator<Artist>.Instance.Translate(artists);
 
-            var artworkTypes = ArtworkBussinessLogic.Instance.GetArtworkTypes();
+            var artworkTypes = _artworkBussinessLogic.GetArtworkTypes();
             model.SourceArtworkTypes = ArtworkTypeModelTranslator.Instance.Translate(artworkTypes);
 
-            var genres = ArtistBussinessLogic.Instance.GetGenres();
+            var genres = _artistBussinessLogic.GetGenres();
             model.SourceGenres = IdNameModelTranslator<Genre>.Instance.Translate(genres);
 
-            //var periods = ArtworkBussinessLogic.Instance.GetPeriods();
+            //var periods = _artworkBussinessLogic.GetPeriods();
             //model.SourceArtPeriods = IdNameModelTranslator<ArtPeriod>.Instance.Translate(periods);
 
-            var places = ArtworkBussinessLogic.Instance.GetPlaces();
+            var places = _artworkBussinessLogic.GetPlaces();
             model.SourceArtPlaces = IdNameModelTranslator<ArtPlace>.Instance.Translate(places);
 
             model.SourceAuctionTypes = EnumExtenstion.GetEnumItems<AuctionType>();

@@ -32,7 +32,7 @@ namespace Art.Website.Filters
                 friendlyName = (attributes[0] as ActAttribute).Feature;
             }
             var user = HttpContext.Current.User;
-            OperationLogBussinessLogic.Instance.LogOperation(100, user.Identity.Name, actionName, friendlyName, filterContext.Exception, filterContext.ExceptionHandled);
+            //OperationLogBussinessLogic.Instance.LogOperation(100, user.Identity.Name, actionName, friendlyName, filterContext.Exception, filterContext.ExceptionHandled);
 
             if (filterContext.Exception != null)
                 filterContext.HttpContext.Trace.Write("(Logging Filter)Exception thrown");

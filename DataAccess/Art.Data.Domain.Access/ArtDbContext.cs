@@ -20,8 +20,11 @@ namespace Art.Data.Domain.Access
 
     public class ArtDbContext : DbContext, IDbContext
     {
-        public static readonly ArtDbContext Instance = new ArtDbContext();
+        //public static readonly ArtDbContext Instance = new ArtDbContext();
+        public ArtDbContext()
+        {
 
+        }
         private static Dictionary<Type, EntitySetBase> _mappingCache = new Dictionary<Type, EntitySetBase>();
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

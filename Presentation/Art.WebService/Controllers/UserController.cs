@@ -11,6 +11,12 @@ namespace Art.WebService.Controllers
 {
     public class UserController : ApiController
     {
+        private ICustomerBussinessLogic _customerBussinessLogic;
+        public UserController(ICustomerBussinessLogic customerBussinessLogic)
+        {
+            _customerBussinessLogic = customerBussinessLogic;
+        }
+
         // GET api/user
         public IEnumerable<string> Get()
         {
@@ -31,17 +37,17 @@ namespace Art.WebService.Controllers
             {
                 return new IntResultModel((int)CustomerRegisterStatus.PasswordEmpty, "密码不能为空");
             }
-            if (CustomerBussinessLogic.Instance.ExistNickName(model.NickName))
+            if (_customerBussinessLogic.ExistNickName(model.NickName))
             {
                 return new IntResultModel((int)CustomerRegisterStatus.NickNameAlreadyRegistered, "昵称已被注册");
             }
-            if (CustomerBussinessLogic.Instance.ExistPhoneNumber(model.PhoneNumber))
+            if (_customerBussinessLogic.ExistPhoneNumber(model.PhoneNumber))
             {
                 return new IntResultModel((int)CustomerRegisterStatus.PhoneNumberRegistered, "手机号已被注册");
             }
 
             var customer = CustomerRegisterModelTranslator.Instance.Translate(model);
-            var customerAdded = CustomerBussinessLogic.Instance.Add(customer);
+            var customerAdded = _customerBussinessLogic.Add(customer);
 
             return new IntResultModel((int)CustomerRegisterStatus.Success, string.Empty, customerAdded.Id);
         }
@@ -50,7 +56,7 @@ namespace Art.WebService.Controllers
         //可以使用昵称或者手机号码登录
         public IntResultModel Login(LoginModel model)
         {
-            var customer = CustomerBussinessLogic.Instance.RetrieveCustomer(model.LoginName, model.Password);
+            var customer = _customerBussinessLogic.RetrieveCustomer(model.LoginName, model.Password);
             if (customer == null)
             {
                 return new IntResultModel((int)LoginModelStatus.InvalidCredential, "登录失败");
@@ -80,7 +86,7 @@ namespace Art.WebService.Controllers
                 return new IntResultModel((int)status, message);
             }
 
-            var customer = CustomerBussinessLogic.Instance.Get(model.UserId);
+            var customer = _customerBussinessLogic.Get(model.UserId);
             if (customer == null)
             {
                 return new IntResultModel((int)SaveAddressStatus.UserNotExist, "用户不存在");
@@ -92,7 +98,7 @@ namespace Art.WebService.Controllers
             {
                 customer.DefaultAddress = address;
             }
-            var resultAdd = CustomerBussinessLogic.Instance.AddAddress(address);
+            var resultAdd = _customerBussinessLogic.AddAddress(address);
             return new IntResultModel((int)SaveAddressStatus.Success, resultAdd.Id);
         }
 
@@ -118,7 +124,7 @@ namespace Art.WebService.Controllers
                 return new IntResultModel((int)status, message);
             }
 
-            var address = CustomerBussinessLogic.Instance.GetAddressById(model.Id);
+            var address = _customerBussinessLogic.GetAddressById(model.Id);
             if (address == null)
             {
                 return new IntResultModel((int)SaveAddressStatus.AddressIdNotExist, "您想要修改的地址不存在");
@@ -134,7 +140,7 @@ namespace Art.WebService.Controllers
             address.Detail = model.Detail;
             address.Name = model.ReceiptName;
             address.Telephone = model.PhoneNumber;
-            CustomerBussinessLogic.Instance.UpdateAddress(address);
+            _customerBussinessLogic.UpdateAddress(address);
             return new IntResultModel((int)SaveAddressStatus.Success);
         }
 
@@ -177,7 +183,7 @@ namespace Art.WebService.Controllers
         [HttpPost]
         public SimpleResultModel RemoveAddress(AddressModel model)
         {
-            var address = CustomerBussinessLogic.Instance.GetAddressById(model.Id);
+            var address = _customerBussinessLogic.GetAddressById(model.Id);
             if (address == null)
             {
                 return new SimpleResultModel((int)DeleteAddressStatus.AddressIdNotExist, "您想要删除的地址不存在");
@@ -187,14 +193,14 @@ namespace Art.WebService.Controllers
                 address.Customer.DefaultAddressId = null;
                 address.Customer.DefaultAddress = null;
             }
-            CustomerBussinessLogic.Instance.RemoveAddress(address);
+            _customerBussinessLogic.RemoveAddress(address);
             return new SimpleResultModel((int)DeleteAddressStatus.Success);
         }
 
         [HttpGet]
         public ResultModel<AddressModel[]> MyAddresses(int userId)
         {
-            var addresses = CustomerBussinessLogic.Instance.GetMyAddresses(userId);
+            var addresses = _customerBussinessLogic.GetMyAddresses(userId);
             var result = AddressModelTranslator.Instance.Translate(addresses);
             return new ResultModel<AddressModel[]>
             {
@@ -220,19 +226,19 @@ namespace Art.WebService.Controllers
         {
             if (string.IsNullOrEmpty(model.NewPassword))
             {
-                return new SimpleResultModel((int)ResetPasswordStatus.NewPasswordEmpty,"新密码不能为空");
+                return new SimpleResultModel((int)ResetPasswordStatus.NewPasswordEmpty, "新密码不能为空");
             }
-            var customer = CustomerBussinessLogic.Instance.Get(model.UserId);
+            var customer = _customerBussinessLogic.Get(model.UserId);
             if (customer == null)
             {
-                return new SimpleResultModel((int) ResetPasswordStatus.UserNotExist, "用户不存在");
+                return new SimpleResultModel((int)ResetPasswordStatus.UserNotExist, "用户不存在");
             }
             if (!customer.Password.Equals(model.CurrentPassword))
             {
-                return new SimpleResultModel((int)ResetPasswordStatus.InvalidCurrentPassword,"密码错误");
+                return new SimpleResultModel((int)ResetPasswordStatus.InvalidCurrentPassword, "密码错误");
             }
             customer.Password = model.NewPassword;
-            CustomerBussinessLogic.Instance.UpdateCustomer(customer);
+            _customerBussinessLogic.UpdateCustomer(customer);
             return SimpleResultModel.Success();
         }
     }

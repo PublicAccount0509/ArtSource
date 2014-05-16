@@ -1,5 +1,6 @@
 ﻿using Art.Data.Domain;
 using Art.Data.Domain.Access;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,20 @@ using WebExpress.Core.Guards;
 
 namespace Art.BussinessLogic
 {
-    public class ArtistBussinessLogic
+    public class ArtistBussinessLogic : Art.BussinessLogic.IArtistBussinessLogic
     {
         //public static readonly ArtistBussinessLogic Instance = new ArtistBussinessLogic();
 
-        private readonly IRepository<Artist> _artistRepository;
-        private readonly IRepository<ArtistType> _artistTypeRepository;
-        private readonly IRepository<Genre> _genreRepository;
-        private readonly IRepository<ActivityFollow> _activityFollowRepository;
+        private IRepository<Artist> _artistRepository;
+        private IRepository<ArtistType> _artistTypeRepository;
+        private IRepository<Genre> _genreRepository;
+        private IRepository<ActivityFollow> _activityFollowRepository;
 
-        private ArtistBussinessLogic(EfRepository<Artist> artistRepository,
-            EfRepository<ArtistType> artistTypeRepository,
-        EfRepository<Genre> genreRepository,
-        EfRepository<ActivityFollow> activityFollowRepository
+        [InjectionMethod]
+        public void Initialize(IRepository<Artist> artistRepository,
+            IRepository<ArtistType> artistTypeRepository,
+            IRepository<Genre> genreRepository,
+            IRepository<ActivityFollow> activityFollowRepository
         )
         {
             _artistRepository = artistRepository;

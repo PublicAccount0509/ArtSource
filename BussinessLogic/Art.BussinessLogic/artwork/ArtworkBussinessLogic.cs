@@ -2,6 +2,7 @@
 using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,36 +15,37 @@ using WebExpress.Core.Guards;
 
 namespace Art.BussinessLogic
 {
-    public class ArtworkBussinessLogic
+    public class ArtworkBussinessLogic : Art.BussinessLogic.IArtworkBussinessLogic
     {
         //public static readonly ArtworkBussinessLogic Instance = new ArtworkBussinessLogic();
 
-        private readonly IRepository<ArtworkType> _artworkTypeRepository;
-        private readonly IRepository<Artwork> _artworkRepository;
-        private readonly IRepository<ArtMaterial> _artMaterialRepository;
-        private readonly IRepository<ArtShape> _artShapeRepository;
-        private readonly IRepository<ArtTechnique> _artTechniqueRepository; 
-        private readonly IRepository<ArtPlace> _artPlaceRepository;
-        private readonly IRepository<ActivityShare> _activityShareRepository;
-        private readonly IRepository<ActivityCollect> _activityCollectRepository;
-        private readonly IRepository<ActivityPraise> _activityPraiseRepository;
+        private IRepository<ArtworkType> _artworkTypeRepository;
+        private IRepository<Artwork> _artworkRepository;
+        private IRepository<ArtMaterial> _artMaterialRepository;
+        private IRepository<ArtShape> _artShapeRepository;
+        private IRepository<ArtTechnique> _artTechniqueRepository;
+        private IRepository<ArtPlace> _artPlaceRepository;
+        private IRepository<ActivityShare> _activityShareRepository;
+        private IRepository<ActivityCollect> _activityCollectRepository;
+        private IRepository<ActivityPraise> _activityPraiseRepository;
 
-        private ArtworkBussinessLogic(EfRepository<ArtworkType> artworkTypeRepository,
-            EfRepository<Artwork> artworkRepository,
-            EfRepository<ArtMaterial> artMaterialRepository,
-            EfRepository<ArtShape> artShapeRepository,
-            EfRepository<ArtTechnique> artTechniqueRepository,
-            EfRepository<ArtPlace> artPlaceRepository,
-            EfRepository<ActivityShare> activityShareRepository,
-            EfRepository<ActivityCollect> activityCollectRepository,
-            EfRepository<ActivityPraise> activityPraiseRepository
+        [InjectionMethod]
+        public void Initialize(IRepository<ArtworkType> artworkTypeRepository,
+            IRepository<Artwork> artworkRepository,
+            IRepository<ArtMaterial> artMaterialRepository,
+            IRepository<ArtShape> artShapeRepository,
+            IRepository<ArtTechnique> artTechniqueRepository,
+            IRepository<ArtPlace> artPlaceRepository,
+            IRepository<ActivityShare> activityShareRepository,
+            IRepository<ActivityCollect> activityCollectRepository,
+            IRepository<ActivityPraise> activityPraiseRepository
         )
         {
             _artworkTypeRepository = artworkTypeRepository;
             _artworkRepository = artworkRepository;
             _artMaterialRepository = artMaterialRepository;
             _artShapeRepository = artShapeRepository;
-            _artTechniqueRepository = artTechniqueRepository; 
+            _artTechniqueRepository = artTechniqueRepository;
             _artPlaceRepository = artPlaceRepository;
             _activityShareRepository = activityShareRepository;
             _activityCollectRepository = activityCollectRepository;
@@ -182,7 +184,7 @@ namespace Art.BussinessLogic
         public void Add(Artwork artwork)
         {
             artwork.IsPublic = true;
-             
+
             artwork.Images = GetImages(artwork.ImageFileName);
 
             _artworkRepository.Insert(artwork);

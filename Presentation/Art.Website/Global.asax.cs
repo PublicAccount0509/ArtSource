@@ -1,5 +1,6 @@
 ﻿using Art.Data.Domain.Access;
 using Art.Data.Domain.Access.Initializers;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -19,12 +20,26 @@ namespace Art.Website
 {
     // 注意: 有关启用 IIS6 或 IIS7 经典模式的说明，
     // 请访问 http://go.microsoft.com/?LinkId=9394801
-
-    public class MvcApplication : System.Web.HttpApplication
+    public interface IContainerAccessor
     {
+        IUnityContainer Container { get; }
+    }
+    public class MvcApplication : System.Web.HttpApplication, IContainerAccessor
+    {
+        private static IUnityContainer _container;
+
+        public static IUnityContainer Container
+        {
+            get
+            {
+                return _container;
+            }
+        }
 
         protected void Application_Start()
         {
+            _container = Bootstrapper.Initialise();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -64,6 +79,11 @@ namespace Art.Website
             }
             var jsFile = HostingEnvironment.MapPath("~/Scripts/dynamicScript.js");
             File.WriteAllText(jsFile, sbJS.ToString());
+        }
+
+        IUnityContainer IContainerAccessor.Container
+        {
+            get { return Container; }
         }
     }
 }

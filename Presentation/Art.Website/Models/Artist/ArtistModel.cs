@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
+using Art.BussinessLogic;
+using Microsoft.Practices.Unity;
 
 namespace Art.Website.Models
 {
@@ -78,7 +80,8 @@ namespace Art.Website.Models
 
         public override Artist Translate(ArtistModel from)
         {
-            Artist to = from.Id > 0 ? Art.BussinessLogic.ArtistBussinessLogic.Instance.GetArtist(from.Id) : new Artist();
+            var logic = MvcApplication.Container.Resolve<IArtistBussinessLogic>();
+            Artist to = from.Id > 0 ? logic.GetArtist(from.Id) : new Artist();
             to.Gender = from.Gender;
             to.Name = from.Name;
             to.Birthday = from.Birthday;
@@ -93,8 +96,8 @@ namespace Art.Website.Models
                 to.AvatarFileName = Path.GetFileName(from.AvatarFileName);
             }
 
-            to.ArtistTypes = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetArtistTypes(from.ArtistTypeIds);
-            to.SkilledGenres = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetSkilledGenres(from.SkilledGenreIds);
+            to.ArtistTypes = logic.GetArtistTypes(from.ArtistTypeIds);
+            to.SkilledGenres = logic.GetSkilledGenres(from.SkilledGenreIds);
             return to;
         }
     }

@@ -1,4 +1,4 @@
-﻿using Autofac;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace Art.Website
 {
     public interface IDependencyRegistrar
     {
-        void Register(ContainerBuilder builder, ITypeFinder typeFinder);
+        
     }
 }

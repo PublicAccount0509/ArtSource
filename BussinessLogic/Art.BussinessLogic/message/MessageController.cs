@@ -1,6 +1,7 @@
 ﻿using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +12,22 @@ using WebExpress.Core.Guards;
 
 namespace Art.BussinessLogic
 {
-    public class MessageBussinessLogic
+    public class MessageBussinessLogic : Art.BussinessLogic.IMessageBussinessLogic
     {
         //public static readonly MessageBussinessLogic Instance = new MessageBussinessLogic();
 
-        private readonly IRepository<Comment> _commentRepository;
-        private readonly IRepository<SystemNotice> _systemNoticeRepository;
-        private readonly IRepository<Reply> _replyRepository;
-        private readonly IRepository<Artwork> _artworkRepository;
-        private readonly IRepository<Customer> _customerRepository;
+        private  IRepository<Comment> _commentRepository;
+        private  IRepository<SystemNotice> _systemNoticeRepository;
+        private  IRepository<Reply> _replyRepository;
+        private  IRepository<Artwork> _artworkRepository;
+        private  IRepository<Customer> _customerRepository;
 
-        private MessageBussinessLogic(EfRepository<Comment> commentRepository,
-            EfRepository<Reply> replyRepository,
-            EfRepository<Artwork> artworkRepository,
-            EfRepository<Customer> customerRepository,
-            EfRepository<SystemNotice> systemNoticeRepository)
+        [InjectionMethod]
+        public void Initialize(IRepository<Comment> commentRepository,
+            IRepository<Reply> replyRepository,
+            IRepository<Artwork> artworkRepository,
+            IRepository<Customer> customerRepository,
+            IRepository<SystemNotice> systemNoticeRepository)
         {
             _commentRepository = commentRepository;
             _replyRepository = replyRepository;

@@ -1,5 +1,6 @@
 ﻿using Art.Data.Domain;
 using Art.Data.Domain.Access;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,17 @@ using System.Threading.Tasks;
 
 namespace Art.BussinessLogic
 {
-    public class CustomerBussinessLogic
+    public class CustomerBussinessLogic : Art.BussinessLogic.ICustomerBussinessLogic
     {
         //public static readonly CustomerBussinessLogic Instance = new CustomerBussinessLogic();
 
-        private readonly IRepository<Customer> _customerRepository;
-        private readonly IRepository<ActivityCollect> _activityCollectRepository;
-        private readonly IRepository<Address> _addressRepository;
-        private CustomerBussinessLogic(EfRepository<Customer> customerRepository,
-            EfRepository<ActivityCollect> activityCollectRepository,
-            EfRepository<Address> addressRepository)
+        private  IRepository<Customer> _customerRepository;
+        private  IRepository<ActivityCollect> _activityCollectRepository;
+        private  IRepository<Address> _addressRepository;
+        [InjectionMethod]
+        public void Initialize(IRepository<Customer> customerRepository,
+            IRepository<ActivityCollect> activityCollectRepository,
+            IRepository<Address> addressRepository)
         {
             _customerRepository = customerRepository;
             _activityCollectRepository = activityCollectRepository;

@@ -2,6 +2,7 @@
 using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +22,17 @@ namespace Art.BussinessLogic
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class AdminUserBussinessLogic
+    public class AdminUserBussinessLogic : Art.BussinessLogic.IAdminUserBussinessLogic
     {
         //public static readonly AdminUserBussinessLogic Instance = new AdminUserBussinessLogic();
 
-        private readonly IRepository<AdminUser> _adminUserRepository;
-        private AdminUserBussinessLogic(IRepository<AdminUser> adminUserRepository)
+        private  IRepository<AdminUser> _adminUserRepository;
+        [InjectionMethod]
+        public void Initialize(IRepository<AdminUser> adminUserRepository)
         {
             _adminUserRepository = adminUserRepository;
         }
-
-        public void AddTestAdminUser()
-        {
-
-        }
+         
 
         /// <summary>
         /// Searches the admin user.
@@ -53,6 +51,20 @@ namespace Art.BussinessLogic
             var query = _adminUserRepository.Table.Where(p => (string.IsNullOrEmpty(criteria.Name) || p.Name.Contains(criteria.Name)));
             query = query.OrderByDescending(i => i.Id);
             return query.ToList();
+        }
+
+        public UserLoginResults ValidateUser(string userName, string password)
+        {
+            var user = _adminUserRepository.Table.Where(i => i.LoginName == userName).FirstOrDefault();
+            if (user == null)
+            {
+                return UserLoginResults.UserNotExist;
+            }
+            if (user.Password != password)
+            {
+                return UserLoginResults.WrongPassword;
+            }
+            return UserLoginResults.Successful;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +12,23 @@ using WebExpress.Core;
 
 namespace Art.BussinessLogic
 {
-    public class OrderBussinessLogic
+    public class OrderBussinessLogic : Art.BussinessLogic.IOrderBussinessLogic
     {
         //public static readonly OrderBussinessLogic Instance = new OrderBussinessLogic();
 
-        private readonly IRepository<Order> _orderRepository;
-        private readonly IRepository<Customer> _customerRepository;
-        private readonly IRepository<Artwork> _artworkRepository;
+        private IRepository<Order> _orderRepository;
+        private IRepository<Customer> _customerRepository;
+        private IRepository<Artwork> _artworkRepository;
 
-        private readonly IRepository<Address> _addressRepository;
+        private IRepository<Address> _addressRepository;
 
-        private readonly IRepository<AuctionBill> _auctionBillRepository;
-        private OrderBussinessLogic(EfRepository<Order> orderRepository,
-            EfRepository<Customer> customerRepository,
-            EfRepository<Address> addressRepository,
-            EfRepository<Artwork> artworkRepository,
-            EfRepository<AuctionBill> auctionBillRepository)
+        private IRepository<AuctionBill> _auctionBillRepository;
+        [InjectionMethod]
+        public void Initialize(IRepository<Order> orderRepository,
+            IRepository<Customer> customerRepository,
+            IRepository<Address> addressRepository,
+            IRepository<Artwork> artworkRepository,
+            IRepository<AuctionBill> auctionBillRepository)
         {
             _orderRepository = orderRepository;
             _customerRepository = customerRepository;
