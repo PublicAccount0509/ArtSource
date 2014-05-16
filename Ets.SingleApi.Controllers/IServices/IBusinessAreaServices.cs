@@ -117,5 +117,37 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<BusinessAreaModel> GetRegionBusinessAreaList(string source, string parentCode);
+
+        /// <summary>
+        /// 获取商圈信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">商圈Id</param>
+        /// <param name="businessAreaName">商圈名称</param>
+        /// <returns>
+        /// 返回商圈信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 5:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<BusinessAreaModel> GetBusinessArea(string source, string id, string businessAreaName);
+
+        /// <summary>
+        /// 获取区域信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">区域Id</param>
+        /// <param name="regionName">区域名称</param>
+        /// <returns>
+        /// 返回区域信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 5:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<BusinessAreaModel> GetRegion(string source, int id, string regionName);
     }
 }

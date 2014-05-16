@@ -53,5 +53,24 @@
         {
             return new ListResponse<Cuisine>();
         }
+
+        /// <summary>
+        /// 获取菜品信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cuisineName"></param>
+        /// <returns>
+        /// 返回菜品信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/14 21:45
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/Cuisine/{id}?cuisineName={cuisineName}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<Cuisine> Cuisine(string id, string cuisineName)
+        {
+            return new Response<Cuisine>();
+        }
     }
 }

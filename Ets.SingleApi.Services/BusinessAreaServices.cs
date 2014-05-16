@@ -4,7 +4,10 @@
     using System.Linq;
 
     using Ets.SingleApi.Controllers.IServices;
+    using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.IRepository;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：BusinessAreaServices
@@ -19,6 +22,26 @@
     public class BusinessAreaServices : IBusinessAreaServices
     {
         /// <summary>
+        /// 字段regionEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 5:21 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<RegionEntity> regionEntityRepository;
+
+        /// <summary>
+        /// 字段addrBusinessAreaEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 5:21 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<AddrBusinessAreaEntity> addrBusinessAreaEntityRepository;
+
+        /// <summary>
         /// 字段businessAreaList
         /// </summary>
         /// 创建者：周超
@@ -31,14 +54,21 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessAreaServices" /> class.
         /// </summary>
+        /// <param name="regionEntityRepository">The regionEntityRepository</param>
+        /// <param name="addrBusinessAreaEntityRepository">The addrBusinessAreaEntityRepository</param>
         /// <param name="businessAreaList">The businessAreaList</param>
         /// 创建者：周超
         /// 创建日期：2013/10/12 18:35
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public BusinessAreaServices(List<IBusinessArea> businessAreaList)
+        public BusinessAreaServices(
+            INHibernateRepository<RegionEntity> regionEntityRepository,
+            INHibernateRepository<AddrBusinessAreaEntity> addrBusinessAreaEntityRepository,
+            List<IBusinessArea> businessAreaList)
         {
+            this.regionEntityRepository = regionEntityRepository;
+            this.addrBusinessAreaEntityRepository = addrBusinessAreaEntityRepository;
             this.businessAreaList = businessAreaList;
         }
 
@@ -179,6 +209,102 @@
             var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.RegionBusinessArea);
             var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(parentCode);
             return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
+        }
+
+        /// <summary>
+        /// 获取商圈信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">商圈Id</param>
+        /// <param name="businessAreaName">商圈名称</param>
+        /// <returns>
+        /// 返回商圈信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 5:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<BusinessAreaModel> GetBusinessArea(string source, string id, string businessAreaName)
+        {
+            if (id.IsEmptyOrNull() && businessAreaName.IsEmptyOrNull())
+            {
+                return new ServicesResult<BusinessAreaModel>
+                    {
+                        Result = new BusinessAreaModel()
+                    };
+            }
+
+            var addrBusinessAreaEntity = this.addrBusinessAreaEntityRepository.FindSingleByExpression(p => p.BusinessAreaId == id)
+               ?? this.addrBusinessAreaEntityRepository.FindSingleByExpression(p => p.BusinessAreaName == businessAreaName);
+
+            if (addrBusinessAreaEntity == null)
+            {
+                return new ServicesResult<BusinessAreaModel>
+                {
+                    Result = new BusinessAreaModel()
+                };
+            }
+
+            var model = new BusinessAreaModel
+                {
+                    Id = addrBusinessAreaEntity.BusinessAreaId,
+                    Code = addrBusinessAreaEntity.BusinessAreaId,
+                    Name = addrBusinessAreaEntity.BusinessAreaName
+                };
+
+            return new ServicesResult<BusinessAreaModel>
+            {
+                Result = model
+            };
+        }
+
+        /// <summary>
+        /// 获取区域信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">区域Id</param>
+        /// <param name="regionName">区域名称</param>
+        /// <returns>
+        /// 返回区域信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 5:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<BusinessAreaModel> GetRegion(string source, int id, string regionName)
+        {
+            if (id <= 0 && regionName.IsEmptyOrNull())
+            {
+                return new ServicesResult<BusinessAreaModel>
+                {
+                    Result = new BusinessAreaModel()
+                };
+            }
+
+            var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Id == id)
+               ?? this.regionEntityRepository.FindSingleByExpression(p => p.Name == regionName);
+
+            if (regionEntity == null)
+            {
+                return new ServicesResult<BusinessAreaModel>
+                {
+                    Result = new BusinessAreaModel()
+                };
+            }
+
+            var model = new BusinessAreaModel
+            {
+                Id = regionEntity.Id.ToString(),
+                Code = regionEntity.Code,
+                Name = regionEntity.Name
+            };
+
+            return new ServicesResult<BusinessAreaModel>
+            {
+                Result = model
+            };
         }
     }
 }

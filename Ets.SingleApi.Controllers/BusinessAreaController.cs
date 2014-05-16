@@ -186,5 +186,103 @@
                 Result = result
             };
         }
+
+        /// <summary>
+        /// 获取商圈信息
+        /// </summary>
+        /// <param name="id">商圈Id</param>
+        /// <param name="businessAreaName">商圈名称</param>
+        /// <returns>
+        /// 返回商圈信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 5:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<BusinessArea> BusinessArea(string id, string businessAreaName)
+        {
+            var result = this.businessAreaServices.GetBusinessArea(this.Source, id ?? string.Empty, businessAreaName ?? string.Empty);
+            if (result.Result == null)
+            {
+                return new Response<BusinessArea>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = result.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : result.StatusCode
+                    },
+                    Result = new BusinessArea()
+                };
+            }
+
+            var model = new BusinessArea
+                {
+                    Id = (result.Result.Id ?? string.Empty),
+                    Name = (result.Result.Name ?? string.Empty),
+                    Code = (result.Result.Code ?? string.Empty),
+                    Depth = result.Result.Depth,
+                    ParentCode = (result.Result.ParentCode ?? string.Empty)
+                };
+
+            return new Response<BusinessArea>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                ResultTotalCount = result.ResultTotalCount,
+                Result = model
+            };
+        }
+
+        /// <summary>
+        /// 获取区域信息
+        /// </summary>
+        /// <param name="id">区域Id</param>
+        /// <param name="regionName">区域名称</param>
+        /// <returns>
+        /// 返回区域信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 5:09 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<BusinessArea> Region(int id, string regionName)
+        {
+            var result = this.businessAreaServices.GetRegion(this.Source, id, regionName ?? string.Empty);
+            if (result.Result == null)
+            {
+                return new Response<BusinessArea>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = result.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : result.StatusCode
+                    },
+                    Result = new BusinessArea()
+                };
+            }
+
+            var model = new BusinessArea
+            {
+                Id = (result.Result.Id ?? string.Empty),
+                Name = (result.Result.Name ?? string.Empty),
+                Code = (result.Result.Code ?? string.Empty),
+                Depth = result.Result.Depth,
+                ParentCode = (result.Result.ParentCode ?? string.Empty)
+            };
+
+            return new Response<BusinessArea>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                ResultTotalCount = result.ResultTotalCount,
+                Result = model
+            };
+        }
     }
 }

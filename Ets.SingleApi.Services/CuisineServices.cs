@@ -7,6 +7,7 @@
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Services.IRepository;
+    using Ets.SingleApi.Utility;
 
     /// <summary>
     /// 类名称：CuisineServices
@@ -168,6 +169,54 @@
                               }).ToList();
 
             return new ServicesResultList<CuisineModel> { ResultTotalCount = result.Count, Result = result };
+        }
+
+        /// <summary>
+        /// 获取菜品信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="id">菜品Id</param>
+        /// <param name="cuisineName">菜品名称</param>
+        /// <returns>
+        /// 返回菜品信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：5/16/2014 6:20 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<CuisineModel> GetCuisine(string source, int id, string cuisineName)
+        {
+            if (id <= 0 && cuisineName.IsEmptyOrNull())
+            {
+                return new ServicesResult<CuisineModel>
+                    {
+                        Result = new CuisineModel()
+                    };
+            }
+
+            var cuisineEntity = this.cuisineEntityRepository.FindSingleByExpression(p => p.CuisineId == id)
+                ?? this.cuisineEntityRepository.FindSingleByExpression(p => p.CuisineName == cuisineName);
+
+            if (cuisineEntity == null)
+            {
+                return new ServicesResult<CuisineModel>
+                {
+                    Result = new CuisineModel()
+                };
+            }
+
+            var model = new CuisineModel
+            {
+                CuisineId = cuisineEntity.CuisineId,
+                CuisineName = cuisineEntity.CuisineName,
+                CuisineNo = cuisineEntity.CuisineNo
+            };
+
+            return new ServicesResult<CuisineModel>
+            {
+                Result = model
+            };
         }
     }
 }

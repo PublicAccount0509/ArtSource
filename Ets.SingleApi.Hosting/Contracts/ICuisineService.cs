@@ -48,5 +48,20 @@
         [OperationContract]
         [Description("方法功能：根据城市Id获取菜品列表")]
         ListResponse<Cuisine> CityCuisineList(string cityId);
+
+        /// <summary>
+        /// 获取菜品信息
+        /// </summary>
+        /// <returns>
+        /// 返回菜品信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/14 21:45
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取菜品信息")]
+        Response<Cuisine> Cuisine(string id, string cuisineName);
     }
 }
