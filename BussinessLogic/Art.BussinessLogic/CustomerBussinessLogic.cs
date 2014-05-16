@@ -138,6 +138,20 @@ namespace Art.BussinessLogic
             //删除地址
             _addressRepository.Delete(address);
         }
+
+        /// <summary>
+        /// Updates the customer.
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// 创建者：黄磊
+        /// 创建日期：5/16/2014 10:46 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public void UpdateCustomer(Customer model)
+        {
+            _customerRepository.Update(model);
+        }
     }
 
     public enum CustomerRegisterResult

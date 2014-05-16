@@ -202,5 +202,38 @@ namespace Art.WebService.Controllers
                 Result = result.ToArray()
             };
         }
+
+        /// <summary>
+        /// Resets the password.
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        /// SimpleResultModel
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：5/16/2014 10:46 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public SimpleResultModel ResetPassword(ResetPasswordModel model)
+        {
+            if (string.IsNullOrEmpty(model.NewPassword))
+            {
+                return new SimpleResultModel((int)ResetPasswordStatus.NewPasswordEmpty,"新密码不能为空");
+            }
+            var customer = CustomerBussinessLogic.Instance.Get(model.UserId);
+            if (customer == null)
+            {
+                return new SimpleResultModel((int) ResetPasswordStatus.UserNotExist, "用户不存在");
+            }
+            if (!customer.Password.Equals(model.CurrentPassword))
+            {
+                return new SimpleResultModel((int)ResetPasswordStatus.InvalidCurrentPassword,"密码错误");
+            }
+            customer.Password = model.NewPassword;
+            CustomerBussinessLogic.Instance.UpdateCustomer(customer);
+            return SimpleResultModel.Success();
+        }
     }
 }

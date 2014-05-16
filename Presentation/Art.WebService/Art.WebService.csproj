@@ -101,9 +101,9 @@
     <Compile Include="Models\FollowedModel.cs" />
     <Compile Include="Models\FollowModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\AddressModel.cs" />
-
     <Compile Include="Models\ActivityShareModel.cs" />
     <Compile Include="Models\ActivityCollectModel.cs" />
     <Compile Include="Models\ActivityCancelCollectModel.cs" />
@@ -114,6 +114,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\debug.pubxml" />
+    <None Include="Properties\PublishProfiles\fb.pubxml" />
     <None Include="Properties\PublishProfiles\ForApp.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
