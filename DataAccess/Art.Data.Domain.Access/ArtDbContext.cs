@@ -18,11 +18,11 @@ using System.Threading.Tasks;
 namespace Art.Data.Domain.Access
 {
 
-    public class ArtDbContext : DbContext
+    public class ArtDbContext : DbContext, IDbContext
     {
         public static readonly ArtDbContext Instance = new ArtDbContext();
 
-        private static Dictionary<Type, EntitySetBase> _mappingCache =  new Dictionary<Type, EntitySetBase>();
+        private static Dictionary<Type, EntitySetBase> _mappingCache = new Dictionary<Type, EntitySetBase>();
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -48,6 +48,15 @@ namespace Art.Data.Domain.Access
             base.OnModelCreating(modelBuilder);
         }
 
+        /// <summary>
+        /// Get DbSet
+        /// </summary>
+        /// <typeparam name="TEntity">Entity type</typeparam>
+        /// <returns>DbSet</returns>
+        public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
+        {
+            return base.Set<TEntity>();
+        }
 
         public override int SaveChanges()
         {
@@ -81,7 +90,6 @@ namespace Art.Data.Domain.Access
             //http://msdn.microsoft.com/en-us/data/jj592676.aspx
             entry.State = EntityState.Detached;
         }
-
 
         private EntitySetBase GetEntitySet(Type type)
         {
@@ -121,6 +129,6 @@ namespace Art.Data.Domain.Access
             EntitySetBase es = GetEntitySet(type);
 
             return es.ElementType.KeyMembers[0].Name;
-        } 
+        }
     }
 }

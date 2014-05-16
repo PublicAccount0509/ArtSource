@@ -13,7 +13,7 @@ namespace Art.BussinessLogic
 {
     public class MessageBussinessLogic
     {
-        public static readonly MessageBussinessLogic Instance = new MessageBussinessLogic();
+        //public static readonly MessageBussinessLogic Instance = new MessageBussinessLogic();
 
         private readonly IRepository<Comment> _commentRepository;
         private readonly IRepository<SystemNotice> _systemNoticeRepository;
@@ -21,13 +21,17 @@ namespace Art.BussinessLogic
         private readonly IRepository<Artwork> _artworkRepository;
         private readonly IRepository<Customer> _customerRepository;
 
-        private MessageBussinessLogic()
+        private MessageBussinessLogic(EfRepository<Comment> commentRepository,
+            EfRepository<Reply> replyRepository,
+            EfRepository<Artwork> artworkRepository,
+            EfRepository<Customer> customerRepository,
+            EfRepository<SystemNotice> systemNoticeRepository)
         {
-            _commentRepository = new EfRepository<Comment>();
-            _replyRepository = new EfRepository<Reply>();
-            _artworkRepository = new EfRepository<Artwork>();
-            _customerRepository = new EfRepository<Customer>();
-            _systemNoticeRepository = new EfRepository<SystemNotice>();
+            _commentRepository = commentRepository;
+            _replyRepository = replyRepository;
+            _artworkRepository = artworkRepository;
+            _customerRepository = customerRepository;
+            _systemNoticeRepository = systemNoticeRepository;
         }
 
         public void AddComment()

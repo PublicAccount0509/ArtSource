@@ -13,7 +13,7 @@ namespace Art.BussinessLogic
 {
     public class OrderBussinessLogic
     {
-        public static readonly OrderBussinessLogic Instance = new OrderBussinessLogic();
+        //public static readonly OrderBussinessLogic Instance = new OrderBussinessLogic();
 
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<Customer> _customerRepository;
@@ -22,13 +22,17 @@ namespace Art.BussinessLogic
         private readonly IRepository<Address> _addressRepository;
 
         private readonly IRepository<AuctionBill> _auctionBillRepository;
-        private OrderBussinessLogic()
+        private OrderBussinessLogic(EfRepository<Order> orderRepository,
+            EfRepository<Customer> customerRepository,
+            EfRepository<Address> addressRepository,
+            EfRepository<Artwork> artworkRepository,
+            EfRepository<AuctionBill> auctionBillRepository)
         {
-            _orderRepository = new EfRepository<Order>();
-            _customerRepository = new EfRepository<Customer>();
-            _addressRepository = new EfRepository<Address>();
-            _artworkRepository = new EfRepository<Artwork>();
-            _auctionBillRepository = new EfRepository<AuctionBill>();
+            _orderRepository = orderRepository;
+            _customerRepository = customerRepository;
+            _addressRepository = addressRepository;
+            _artworkRepository = artworkRepository;
+            _auctionBillRepository = auctionBillRepository;
         }
 
 

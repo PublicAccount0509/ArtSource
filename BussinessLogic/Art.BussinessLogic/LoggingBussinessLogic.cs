@@ -10,12 +10,12 @@ namespace Art.BussinessLogic
 {
     public class OperationLogBussinessLogic
     {
-        public static readonly OperationLogBussinessLogic Instance = new OperationLogBussinessLogic();
+        //public static readonly OperationLogBussinessLogic Instance = new OperationLogBussinessLogic();
 
         private readonly IRepository<OperationLog> _operationLogRepository;
-        private OperationLogBussinessLogic()
+        private OperationLogBussinessLogic(EfRepository<OperationLog> operationLogRepository)
         {
-            _operationLogRepository = new EfRepository<OperationLog>();
+            _operationLogRepository = operationLogRepository;
         }
 
         public void LogOperation(int userId, string userName, string actionName, string friendlyActionName, Exception ex, bool exceptionHandled)

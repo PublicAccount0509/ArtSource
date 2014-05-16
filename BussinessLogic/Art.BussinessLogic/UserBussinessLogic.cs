@@ -10,12 +10,12 @@ namespace Art.BussinessLogic
 {
     public class UserBussinessLogic
     {
-        public static readonly UserBussinessLogic Instance = new UserBussinessLogic();
+        //public static readonly UserBussinessLogic Instance = new UserBussinessLogic();
 
         private readonly IRepository<AdminUser> _userRepository;
-        private UserBussinessLogic()
+        private UserBussinessLogic(IRepository<AdminUser> userRepository)
         {
-            _userRepository = new EfRepository<AdminUser>();
+            _userRepository = userRepository;
         }
 
         public UserLoginResults ValidateUser(string userName, string password)

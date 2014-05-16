@@ -15,20 +15,14 @@ namespace Art.Data.Domain.Access
     /// </summary>
     public partial class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly DbContext _context;
+        private readonly IDbContext _context;
         private IDbSet<T> _dbSet;
-
-        public EfRepository()
-            : this(ArtDbContext.Instance)
-        {
-
-        }
 
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="context">Object context</param>
-        public EfRepository(DbContext context)
+        public EfRepository(IDbContext context)
         {
             this._context = context;
         }
@@ -127,6 +121,7 @@ namespace Art.Data.Domain.Access
             {
                 if (_dbSet == null)
                 {
+                    
                     _dbSet = _context.Set<T>();
                 }
                 return _dbSet;

@@ -16,31 +16,38 @@ namespace Art.BussinessLogic
 {
     public class ArtworkBussinessLogic
     {
-        public static readonly ArtworkBussinessLogic Instance = new ArtworkBussinessLogic();
+        //public static readonly ArtworkBussinessLogic Instance = new ArtworkBussinessLogic();
 
         private readonly IRepository<ArtworkType> _artworkTypeRepository;
         private readonly IRepository<Artwork> _artworkRepository;
         private readonly IRepository<ArtMaterial> _artMaterialRepository;
         private readonly IRepository<ArtShape> _artShapeRepository;
-        private readonly IRepository<ArtTechnique> _artTechniqueRepository;
-        //private readonly IRepository<ArtPeriod> _artPeriodRepository;
+        private readonly IRepository<ArtTechnique> _artTechniqueRepository; 
         private readonly IRepository<ArtPlace> _artPlaceRepository;
         private readonly IRepository<ActivityShare> _activityShareRepository;
         private readonly IRepository<ActivityCollect> _activityCollectRepository;
         private readonly IRepository<ActivityPraise> _activityPraiseRepository;
 
-        private ArtworkBussinessLogic()
+        private ArtworkBussinessLogic(EfRepository<ArtworkType> artworkTypeRepository,
+            EfRepository<Artwork> artworkRepository,
+            EfRepository<ArtMaterial> artMaterialRepository,
+            EfRepository<ArtShape> artShapeRepository,
+            EfRepository<ArtTechnique> artTechniqueRepository,
+            EfRepository<ArtPlace> artPlaceRepository,
+            EfRepository<ActivityShare> activityShareRepository,
+            EfRepository<ActivityCollect> activityCollectRepository,
+            EfRepository<ActivityPraise> activityPraiseRepository
+        )
         {
-            _artworkTypeRepository = new EfRepository<ArtworkType>();
-            _artworkRepository = new EfRepository<Artwork>();
-            _artMaterialRepository = new EfRepository<ArtMaterial>();
-            _artShapeRepository = new EfRepository<ArtShape>();
-            _artTechniqueRepository = new EfRepository<ArtTechnique>();
-            //_artPeriodRepository = new EfRepository<ArtPeriod>();
-            _artPlaceRepository = new EfRepository<ArtPlace>();
-            _activityShareRepository = new EfRepository<ActivityShare>();
-            _activityCollectRepository = new EfRepository<ActivityCollect>();
-            _activityPraiseRepository = new EfRepository<ActivityPraise>();
+            _artworkTypeRepository = artworkTypeRepository;
+            _artworkRepository = artworkRepository;
+            _artMaterialRepository = artMaterialRepository;
+            _artShapeRepository = artShapeRepository;
+            _artTechniqueRepository = artTechniqueRepository; 
+            _artPlaceRepository = artPlaceRepository;
+            _activityShareRepository = activityShareRepository;
+            _activityCollectRepository = activityCollectRepository;
+            _activityPraiseRepository = activityPraiseRepository;
         }
 
         public List<ArtworkType> GetArtworkTypes()

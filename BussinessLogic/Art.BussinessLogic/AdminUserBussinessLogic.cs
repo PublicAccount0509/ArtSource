@@ -23,12 +23,12 @@ namespace Art.BussinessLogic
     /// ----------------------------------------------------------------------------------------
     public class AdminUserBussinessLogic
     {
-        public static readonly AdminUserBussinessLogic Instance = new AdminUserBussinessLogic();
+        //public static readonly AdminUserBussinessLogic Instance = new AdminUserBussinessLogic();
 
         private readonly IRepository<AdminUser> _adminUserRepository;
-        private AdminUserBussinessLogic()
+        private AdminUserBussinessLogic(IRepository<AdminUser> adminUserRepository)
         {
-            _adminUserRepository = new EfRepository<AdminUser>();
+            _adminUserRepository = adminUserRepository;
         }
 
         public void AddTestAdminUser()

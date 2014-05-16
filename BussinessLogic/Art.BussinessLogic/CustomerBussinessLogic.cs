@@ -10,16 +10,18 @@ namespace Art.BussinessLogic
 {
     public class CustomerBussinessLogic
     {
-        public static readonly CustomerBussinessLogic Instance = new CustomerBussinessLogic();
+        //public static readonly CustomerBussinessLogic Instance = new CustomerBussinessLogic();
 
         private readonly IRepository<Customer> _customerRepository;
         private readonly IRepository<ActivityCollect> _activityCollectRepository;
         private readonly IRepository<Address> _addressRepository;
-        private CustomerBussinessLogic()
+        private CustomerBussinessLogic(EfRepository<Customer> customerRepository,
+            EfRepository<ActivityCollect> activityCollectRepository,
+            EfRepository<Address> addressRepository)
         {
-            _customerRepository = new EfRepository<Customer>();
-            _activityCollectRepository = new EfRepository<ActivityCollect>();
-            _addressRepository = new EfRepository<Address>();
+            _customerRepository = customerRepository;
+            _activityCollectRepository = activityCollectRepository;
+            _addressRepository = addressRepository;
         }
 
         public bool ExistPhoneNumber(string phoneNumber)

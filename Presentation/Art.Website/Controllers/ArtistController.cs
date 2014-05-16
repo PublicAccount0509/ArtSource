@@ -17,6 +17,8 @@ namespace Art.Website.Controllers
     //[Authorize]
     public class ArtistController : Controller
     {
+
+
         public ActionResult Index()
         {
             return View();

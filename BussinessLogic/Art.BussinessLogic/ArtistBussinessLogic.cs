@@ -12,19 +12,23 @@ namespace Art.BussinessLogic
 {
     public class ArtistBussinessLogic
     {
-        public static readonly ArtistBussinessLogic Instance = new ArtistBussinessLogic();
+        //public static readonly ArtistBussinessLogic Instance = new ArtistBussinessLogic();
 
         private readonly IRepository<Artist> _artistRepository;
         private readonly IRepository<ArtistType> _artistTypeRepository;
         private readonly IRepository<Genre> _genreRepository;
         private readonly IRepository<ActivityFollow> _activityFollowRepository;
 
-        private ArtistBussinessLogic()
+        private ArtistBussinessLogic(EfRepository<Artist> artistRepository,
+            EfRepository<ArtistType> artistTypeRepository,
+        EfRepository<Genre> genreRepository,
+        EfRepository<ActivityFollow> activityFollowRepository
+        )
         {
-            _artistRepository = new EfRepository<Artist>();
-            _artistTypeRepository = new EfRepository<ArtistType>();
-            _genreRepository = new EfRepository<Genre>();
-            _activityFollowRepository = new EfRepository<ActivityFollow>();
+            _artistRepository = artistRepository;
+            _artistTypeRepository = artistTypeRepository;
+            _genreRepository = genreRepository;
+            _activityFollowRepository = activityFollowRepository;
         }
 
         public Artist GetArtist(int artistId)
