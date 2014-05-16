@@ -527,16 +527,16 @@ namespace Ets.SingleApi.Services
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidQueueIdCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidDirectPayIdCode,
                     Result = false
                 };
             }
 
-            if (result.OrderStateId != 0)
+            if (result.OrderStateId != 1)
             {
                 return new ServicesResult<bool>
                 {
-                    StatusCode = (int)StatusCode.Validate.InvalidCancelledQueueStateIdCode,
+                    StatusCode = (int)StatusCode.Validate.InvalidCancelledDirectPayStateIdCode,
                     Result = false
                 };
             }
