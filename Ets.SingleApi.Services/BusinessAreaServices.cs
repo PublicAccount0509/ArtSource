@@ -236,7 +236,7 @@
             }
 
             var addrBusinessAreaEntity = this.addrBusinessAreaEntityRepository.FindSingleByExpression(p => p.BusinessAreaId == id)
-               ?? this.addrBusinessAreaEntityRepository.FindSingleByExpression(p => p.BusinessAreaName == businessAreaName);
+               ?? this.addrBusinessAreaEntityRepository.FindSingleByExpression(p => p.BusinessAreaName.Contains(businessAreaName));
 
             if (addrBusinessAreaEntity == null)
             {
@@ -284,7 +284,7 @@
             }
 
             var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Id == id)
-               ?? this.regionEntityRepository.FindSingleByExpression(p => p.Name == regionName);
+               ?? this.regionEntityRepository.FindSingleByExpression(p => p.Name.Contains(regionName));
 
             if (regionEntity == null)
             {

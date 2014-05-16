@@ -196,7 +196,7 @@
             }
 
             var cuisineEntity = this.cuisineEntityRepository.FindSingleByExpression(p => p.CuisineId == id)
-                ?? this.cuisineEntityRepository.FindSingleByExpression(p => p.CuisineName == cuisineName);
+                ?? this.cuisineEntityRepository.FindSingleByExpression(p => p.CuisineName.Contains(cuisineName));
 
             if (cuisineEntity == null)
             {

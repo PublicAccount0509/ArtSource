@@ -231,7 +231,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components.config" />
+    <Content Include="config\castle\components.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="config\castle\facilities.config" />
     <Content Include="config\log4net\log.config" />
   </ItemGroup>
