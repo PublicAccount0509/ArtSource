@@ -5,6 +5,7 @@ using Art.Website.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using WebExpress.Core;
@@ -12,6 +13,8 @@ using WebExpress.Core.Guards;
 using WebExpress.Core.TypeExtensions;
 using WebExpress.Website.Exceptions;
 
+using Microsoft.Practices.Unity;
+using System.IO;
 namespace Art.Website.Controllers
 {
     //[Authorize]
@@ -111,7 +114,7 @@ namespace Art.Website.Controllers
             return Json(result);
             //return Json(new ResultModel(true, "add successfully!", 1));
         }
-        
+
 
         [HttpPost]
         public JsonResult Update(ArtistModel model)
@@ -121,7 +124,34 @@ namespace Art.Website.Controllers
             {
                 return Json(new ResultModel(false, errormagess, 0));
             }
-            var artist = ArtistTranslator.Instance.Translate(model);
+            //var artist = ArtistTranslator.Instance.Translate(model);
+            //var artist = GetArtistInfo(model);
+
+
+            //Thread.Sleep(10000);
+
+            var from = model;
+            var logic = _artistBussinessLogic;
+            Artist to = from.Id > 0 ? logic.GetArtist(from.Id) : new Artist();
+            to.Gender = from.Gender;
+            to.Name = from.Name;
+            to.Birthday = from.Birthday;
+            to.Deathday = from.Deathday;
+            to.Degree = from.Degree;
+            to.School = from.School;
+            to.PrizeItems = from.PrizeItems;
+            to.Masterpiece = from.Masterpiece;
+            to.MasterpieceTypeId = from.MasterpieceTypeId;
+            if (!string.IsNullOrEmpty(from.AvatarFileName))
+            {
+                to.AvatarFileName = Path.GetFileName(from.AvatarFileName);
+            }
+
+            to.ArtistTypes = _artistBussinessLogic.GetArtistTypes(from.ArtistTypeIds);
+            to.SkilledGenres = logic.GetSkilledGenres(from.SkilledGenreIds);
+            var artist = to;
+
+
 
             _artistBussinessLogic.Update(artist);
 
@@ -129,7 +159,30 @@ namespace Art.Website.Controllers
 
             return Json(result);
         }
+        private Artist GetArtistInfo(ArtistModel from)
+        {
+            //var logic = MvcApplication.Container.Resolve<IArtistBussinessLogic>();
+            var logic = _artistBussinessLogic;
+            Artist to = from.Id > 0 ? logic.GetArtist(from.Id) : new Artist();
+            to.Gender = from.Gender;
+            to.Name = from.Name;
+            to.Birthday = from.Birthday;
+            to.Deathday = from.Deathday;
+            to.Degree = from.Degree;
+            to.School = from.School;
+            to.PrizeItems = from.PrizeItems;
+            to.Masterpiece = from.Masterpiece;
+            to.MasterpieceTypeId = from.MasterpieceTypeId;
+            if (!string.IsNullOrEmpty(from.AvatarFileName))
+            {
+                to.AvatarFileName = Path.GetFileName(from.AvatarFileName);
+            }
 
+            to.ArtistTypes = logic.GetArtistTypes(from.ArtistTypeIds);
+            to.SkilledGenres = logic.GetSkilledGenres(from.SkilledGenreIds);
+            //Thread.Sleep(3000);
+            return to;
+        }
         /// <summary>
         /// Checks the artist model.
         /// </summary>
@@ -391,7 +444,7 @@ namespace Art.Website.Controllers
 
             return Json(result);
         }
-       
+
         /// 创建者：黄磊
         /// 创建日期：5/9/2014 5:33 PM
         /// 修改者：
@@ -411,7 +464,7 @@ namespace Art.Website.Controllers
 
             return Json(result);
         }
-        
+
         #endregion
     }
 }

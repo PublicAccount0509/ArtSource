@@ -37,7 +37,7 @@ namespace Art.Website
             //container.RegisterType(typeof(IRepository<>), typeof(EfRepository<>), new HttpContextLifetimeManager(typeof(IRepository<>)));
             container.RegisterType(typeof(IRepository<>), typeof(EfRepository<>));
             container.RegisterType<IDbContext, ArtDbContext>(new HttpContextLifetimeManager(typeof(IDbContext)));
-
+            
             container.RegisterType<IAdminUserBussinessLogic, AdminUserBussinessLogic>(new HttpContextLifetimeManager(typeof(IAdminUserBussinessLogic)));
             container.RegisterType<IArtistBussinessLogic, ArtistBussinessLogic>(new HttpContextLifetimeManager(typeof(IArtistBussinessLogic)));
             container.RegisterType<IArtworkBussinessLogic, ArtworkBussinessLogic>(new HttpContextLifetimeManager(typeof(IArtworkBussinessLogic)));
