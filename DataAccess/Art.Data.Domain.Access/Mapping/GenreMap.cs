@@ -14,7 +14,7 @@ namespace Art.Data.Domain.Access.Mapping
         {
             this.HasMany(t => t.Artists)
                  .WithMany(t => t.SkilledGenres)
-                 .Map(t => t.MapLeftKey("ArtistId").MapRightKey("GenreId"));
+                 .Map(t => t.MapLeftKey("GenreId").MapRightKey("ArtistId"));
         }
     }
 }

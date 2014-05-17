@@ -3,6 +3,7 @@ using Art.Data.Domain.Access;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -166,11 +167,16 @@ namespace Art.BussinessLogic
             {
                 return null;
             }
-
+            Trace.WriteLine(ids.Count);
+            Trace.WriteLine("1111");
             var query = from p in _artistTypeRepository.Table
                         where ids.Contains(p.Id)
                         select p;
-            return query.ToList();
+            Trace.WriteLine("222");
+            var data = query.ToList();
+            Trace.WriteLine(data.Count);
+            return data;
+
         }
 
         public ICollection<Genre> GetSkilledGenres(List<int> ids)

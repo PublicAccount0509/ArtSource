@@ -15,6 +15,7 @@ using WebExpress.Website.Exceptions;
 
 using Microsoft.Practices.Unity;
 using System.IO;
+using System.Diagnostics;
 namespace Art.Website.Controllers
 {
     //[Authorize]
@@ -125,10 +126,10 @@ namespace Art.Website.Controllers
                 return Json(new ResultModel(false, errormagess, 0));
             }
             //var artist = ArtistTranslator.Instance.Translate(model);
-            //var artist = GetArtistInfo(model);
+            ////var artist = GetArtistInfo(model);
 
 
-            //Thread.Sleep(10000);
+            ////Thread.Sleep(10000);
 
             var from = model;
             var logic = _artistBussinessLogic;
@@ -146,11 +147,17 @@ namespace Art.Website.Controllers
             {
                 to.AvatarFileName = Path.GetFileName(from.AvatarFileName);
             }
-
-            to.ArtistTypes = _artistBussinessLogic.GetArtistTypes(from.ArtistTypeIds);
+            var ret = logic.GetArtistTypes(from.ArtistTypeIds);
+            Trace.WriteLine("the ret is:" + ret.Count);
+            to.ArtistTypes = null;
+            to.ArtistTypes = ret;
+            Trace.WriteLine("then, the ret is:" + ret.Count);
             to.SkilledGenres = logic.GetSkilledGenres(from.SkilledGenreIds);
             var artist = to;
 
+
+            //var aa = artist.ArtistTypes;
+            //var bb = artist.SkilledGenres;
 
 
             _artistBussinessLogic.Update(artist);
