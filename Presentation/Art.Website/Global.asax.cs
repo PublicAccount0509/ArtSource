@@ -24,7 +24,7 @@ namespace Art.Website
     {
         IUnityContainer Container { get; }
     }
-    public class MvcApplication : System.Web.HttpApplication, IContainerAccessor
+    public class MvcApplication : System.Web.HttpApplication
     {
         private static IUnityContainer _container;
 
@@ -81,9 +81,9 @@ namespace Art.Website
             File.WriteAllText(jsFile, sbJS.ToString());
         }
 
-        IUnityContainer IContainerAccessor.Container
-        {
-            get { return Container; }
-        }
+        //IUnityContainer IContainerAccessor.Container
+        //{
+        //    get { return Container; }
+        //}
     }
 }

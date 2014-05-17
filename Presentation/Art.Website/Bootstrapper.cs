@@ -33,33 +33,38 @@ namespace Art.Website
         }
 
         public static void RegisterTypes(IUnityContainer container)
-        { 
-            container.RegisterType(typeof(IRepository<>),typeof(EfRepository<>));
-            container.RegisterType<IDbContext, ArtDbContext>(new HttpContextLifetimeManager<IDbContext>());
+        {
+            //container.RegisterType(typeof(IRepository<>), typeof(EfRepository<>), new HttpContextLifetimeManager(typeof(IRepository<>)));
+            container.RegisterType(typeof(IRepository<>), typeof(EfRepository<>));
+            container.RegisterType<IDbContext, ArtDbContext>(new HttpContextLifetimeManager(typeof(IDbContext)));
 
-
-            container.RegisterType<IAdminUserBussinessLogic, AdminUserBussinessLogic>();
-            container.RegisterType<IArtistBussinessLogic, ArtistBussinessLogic>();
-            container.RegisterType<IArtworkBussinessLogic, ArtworkBussinessLogic>();
-            container.RegisterType<IOrderBussinessLogic, OrderBussinessLogic>();
-            container.RegisterType<ICustomerBussinessLogic, CustomerBussinessLogic>();
-            container.RegisterType<IMessageBussinessLogic, MessageBussinessLogic>();
+            container.RegisterType<IAdminUserBussinessLogic, AdminUserBussinessLogic>(new HttpContextLifetimeManager(typeof(IAdminUserBussinessLogic)));
+            container.RegisterType<IArtistBussinessLogic, ArtistBussinessLogic>(new HttpContextLifetimeManager(typeof(IArtistBussinessLogic)));
+            container.RegisterType<IArtworkBussinessLogic, ArtworkBussinessLogic>(new HttpContextLifetimeManager(typeof(IArtworkBussinessLogic)));
+            container.RegisterType<IOrderBussinessLogic, OrderBussinessLogic>(new HttpContextLifetimeManager(typeof(IOrderBussinessLogic)));
+            container.RegisterType<ICustomerBussinessLogic, CustomerBussinessLogic>(new HttpContextLifetimeManager(typeof(ICustomerBussinessLogic)));
+            container.RegisterType<IMessageBussinessLogic, MessageBussinessLogic>(new HttpContextLifetimeManager(typeof(IMessageBussinessLogic)));
         }
     }
 
-    public class HttpContextLifetimeManager<T> : LifetimeManager, IDisposable
+    public class HttpContextLifetimeManager : LifetimeManager, IDisposable
     {
+        private Type _type;
+        public HttpContextLifetimeManager(Type type)
+        {
+            _type = type;
+        }
         public override object GetValue()
         {
-            return HttpContext.Current.Items[typeof(T).AssemblyQualifiedName];
+            return HttpContext.Current.Items[_type.AssemblyQualifiedName];
         }
         public override void RemoveValue()
         {
-            HttpContext.Current.Items.Remove(typeof(T).AssemblyQualifiedName);
+            HttpContext.Current.Items.Remove(_type.AssemblyQualifiedName);
         }
         public override void SetValue(object newValue)
         {
-            HttpContext.Current.Items[typeof(T).AssemblyQualifiedName] = newValue;
+            HttpContext.Current.Items[_type.AssemblyQualifiedName] = newValue;
         }
         public void Dispose()
         {
