@@ -1,11 +1,14 @@
-﻿using Art.Data.Domain.Access;
+﻿using Art.BussinessLogic;
+using Art.Data.Domain.Access;
 using Art.Data.Domain.Access.Initializers;
-using Microsoft.Practices.Unity;
+using Autofac;
+using Autofac.Integration.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Hosting;
@@ -19,16 +22,11 @@ using WebExpress.Core.TypeExtensions;
 namespace Art.Website
 {
     // 注意: 有关启用 IIS6 或 IIS7 经典模式的说明，
-    // 请访问 http://go.microsoft.com/?LinkId=9394801
-    public interface IContainerAccessor
-    {
-        IUnityContainer Container { get; }
-    }
+    // 请访问 http://go.microsoft.com/?LinkId=9394801 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static IUnityContainer _container;
-
-        public static IUnityContainer Container
+        private static IContainer _container;
+        public static IContainer Container
         {
             get
             {
@@ -38,8 +36,21 @@ namespace Art.Website
 
         protected void Application_Start()
         {
-            _container = Bootstrapper.Initialise();
+            var builder = new ContainerBuilder();
 
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterType<ArtDbContext>().As<IDbContext>().InstancePerHttpRequest();
+            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerHttpRequest();
+
+            builder.RegisterType<AdminUserBussinessLogic>().As<IAdminUserBussinessLogic>().InstancePerHttpRequest();
+            builder.RegisterType<ArtistBussinessLogic>().As<IArtistBussinessLogic>().InstancePerHttpRequest();
+            builder.RegisterType<ArtworkBussinessLogic>().As<IArtworkBussinessLogic>().InstancePerHttpRequest();
+            builder.RegisterType<OrderBussinessLogic>().As<IOrderBussinessLogic>().InstancePerHttpRequest();
+            builder.RegisterType<CustomerBussinessLogic>().As<ICustomerBussinessLogic>().InstancePerHttpRequest();
+            builder.RegisterType<MessageBussinessLogic>().As<IMessageBussinessLogic>().InstancePerHttpRequest();
+            _container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(_container));
+              
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -79,11 +90,6 @@ namespace Art.Website
             }
             var jsFile = HostingEnvironment.MapPath("~/Scripts/dynamicScript.js");
             File.WriteAllText(jsFile, sbJS.ToString());
-        }
-
-        //IUnityContainer IContainerAccessor.Container
-        //{
-        //    get { return Container; }
-        //}
+        } 
     }
 }

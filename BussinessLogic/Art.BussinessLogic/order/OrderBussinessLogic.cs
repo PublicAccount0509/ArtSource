@@ -2,7 +2,6 @@
 using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +22,7 @@ namespace Art.BussinessLogic
         private IRepository<Address> _addressRepository;
 
         private IRepository<AuctionBill> _auctionBillRepository;
-        [InjectionMethod]
-        public void Initialize(IRepository<Order> orderRepository,
+        public OrderBussinessLogic(IRepository<Order> orderRepository,
             IRepository<Customer> customerRepository,
             IRepository<Address> addressRepository,
             IRepository<Artwork> artworkRepository,

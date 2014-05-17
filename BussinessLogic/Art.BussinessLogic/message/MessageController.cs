@@ -1,7 +1,6 @@
 ﻿using Art.Data.Common;
 using Art.Data.Domain;
-using Art.Data.Domain.Access;
-using Microsoft.Practices.Unity;
+using Art.Data.Domain.Access; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +15,13 @@ namespace Art.BussinessLogic
     {
         //public static readonly MessageBussinessLogic Instance = new MessageBussinessLogic();
 
-        private  IRepository<Comment> _commentRepository;
-        private  IRepository<SystemNotice> _systemNoticeRepository;
-        private  IRepository<Reply> _replyRepository;
-        private  IRepository<Artwork> _artworkRepository;
-        private  IRepository<Customer> _customerRepository;
+        private IRepository<Comment> _commentRepository;
+        private IRepository<SystemNotice> _systemNoticeRepository;
+        private IRepository<Reply> _replyRepository;
+        private IRepository<Artwork> _artworkRepository;
+        private IRepository<Customer> _customerRepository;
 
-        [InjectionMethod]
-        public void Initialize(IRepository<Comment> commentRepository,
+        public MessageBussinessLogic(IRepository<Comment> commentRepository,
             IRepository<Reply> replyRepository,
             IRepository<Artwork> artworkRepository,
             IRepository<Customer> customerRepository,
@@ -49,7 +47,7 @@ namespace Art.BussinessLogic
             _commentRepository.Insert(comment);
         }
 
-        public void AddReply(int commentId,string repliedText)
+        public void AddReply(int commentId, string repliedText)
         {
             var reply = new Reply();
             reply.Text = repliedText;

@@ -1,6 +1,5 @@
 ﻿using Art.Data.Domain;
 using Art.Data.Domain.Access;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +12,11 @@ namespace Art.BussinessLogic
     {
         //public static readonly CustomerBussinessLogic Instance = new CustomerBussinessLogic();
 
-        private  IRepository<Customer> _customerRepository;
-        private  IRepository<ActivityCollect> _activityCollectRepository;
-        private  IRepository<Address> _addressRepository;
-        [InjectionMethod]
-        public void Initialize(IRepository<Customer> customerRepository,
+        private IRepository<Customer> _customerRepository;
+        private IRepository<ActivityCollect> _activityCollectRepository;
+        private IRepository<Address> _addressRepository;
+
+        public CustomerBussinessLogic(IRepository<Customer> customerRepository,
             IRepository<ActivityCollect> activityCollectRepository,
             IRepository<Address> addressRepository)
         {

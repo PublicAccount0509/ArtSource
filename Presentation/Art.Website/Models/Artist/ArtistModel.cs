@@ -8,8 +8,8 @@ using System.Linq;
 using System.Web;
 using WebExpress.Core;
 using Art.BussinessLogic;
-using Microsoft.Practices.Unity;
-
+using Autofac;
+using System.Web.Mvc;
 namespace Art.Website.Models
 {
     public class ArtistModel
@@ -80,7 +80,8 @@ namespace Art.Website.Models
 
         public override Artist Translate(ArtistModel from)
         {
-            var logic = MvcApplication.Container.Resolve<IArtistBussinessLogic>();
+            var logic = DependencyResolver.Current.GetService<IArtistBussinessLogic>();
+
             Artist to = from.Id > 0 ? logic.GetArtist(from.Id) : new Artist();
             to.Gender = from.Gender;
             to.Name = from.Name;
@@ -96,9 +97,33 @@ namespace Art.Website.Models
                 to.AvatarFileName = Path.GetFileName(from.AvatarFileName);
             }
 
-            to.ArtistTypes = logic.GetArtistTypes(from.ArtistTypeIds);
-            to.SkilledGenres = logic.GetSkilledGenres(from.SkilledGenreIds);
+            var allArtistTypes = logic.GetArtistTypes();
+            ParseItems(to.ArtistTypes, from.ArtistTypeIds, allArtistTypes); 
+
+            var allGenres = logic.GetGenres();
+            ParseItems(to.SkilledGenres, from.SkilledGenreIds, allGenres);
             return to;
+        }
+
+        private void ParseItems<T>(ICollection<T> correntItems, IList<int> finalItemIds, ICollection<T> all) where T : BaseEntity
+        {
+            foreach (var item in all)
+            {
+                if (finalItemIds.Contains(item.Id))
+                {
+                    if (!correntItems.Any(i => i.Id == item.Id))
+                    {
+                        correntItems.Add(item);
+                    }
+                }
+                else
+                {
+                    if (correntItems.Any(i => i.Id == item.Id))
+                    {
+                        correntItems.Remove(item);
+                    }
+                }
+            }
         }
     }
 }

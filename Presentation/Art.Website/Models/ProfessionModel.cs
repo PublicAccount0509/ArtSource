@@ -1,11 +1,12 @@
 ﻿using Art.BussinessLogic;
 using Art.Data.Domain;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
+using Autofac;
+using System.Web.Mvc;
 
 namespace Art.Website.Models
 {
@@ -31,8 +32,8 @@ namespace Art.Website.Models
         {
             ArtistType to;
             if (from.Id > 0)
-            { 
-                var logic = MvcApplication.Container.Resolve<IArtistBussinessLogic>();
+            {
+                var logic = DependencyResolver.Current.GetService<IArtistBussinessLogic>();
                 to = logic.GetArtistType(from.Id);
             }
             else

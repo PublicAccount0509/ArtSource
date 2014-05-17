@@ -2,7 +2,6 @@
 using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +25,12 @@ namespace Art.BussinessLogic
     {
         //public static readonly AdminUserBussinessLogic Instance = new AdminUserBussinessLogic();
 
-        private  IRepository<AdminUser> _adminUserRepository;
-        [InjectionMethod]
-        public void Initialize(IRepository<AdminUser> adminUserRepository)
+        private IRepository<AdminUser> _adminUserRepository;
+        public AdminUserBussinessLogic(IRepository<AdminUser> adminUserRepository)
         {
             _adminUserRepository = adminUserRepository;
         }
-         
+
 
         /// <summary>
         /// Searches the admin user.

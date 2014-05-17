@@ -8,8 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
-using Microsoft.Practices.Unity;
-
+using Autofac;
+using System.Web.Mvc;
 namespace Art.Website.Models
 {
     public class ArtworkModel
@@ -102,8 +102,8 @@ namespace Art.Website.Models
         
         public override Artwork Translate(ArtworkModel from)
         {
-            var artistLogic = MvcApplication.Container.Resolve<IArtistBussinessLogic>();
-            var artworkLogic = MvcApplication.Container.Resolve<IArtworkBussinessLogic>();
+            var artistLogic = DependencyResolver.Current.GetService<IArtistBussinessLogic>();
+            var artworkLogic = DependencyResolver.Current.GetService<IArtworkBussinessLogic>();
 
             Artwork to = from.Id > 0 ? artworkLogic.GetArtwork(from.Id) : new Artwork();
             to.Id = from.Id;

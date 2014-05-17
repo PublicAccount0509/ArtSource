@@ -1,6 +1,5 @@
 ﻿using Art.Data.Domain;
 using Art.Data.Domain.Access;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +12,8 @@ namespace Art.BussinessLogic
     {
         //public static readonly OperationLogBussinessLogic Instance = new OperationLogBussinessLogic();
 
-        private   IRepository<OperationLog> _operationLogRepository;
-        [InjectionMethod]
-        public void Initialize(IRepository<OperationLog> operationLogRepository)
+        private IRepository<OperationLog> _operationLogRepository;
+        public OperationLogBussinessLogic(IRepository<OperationLog> operationLogRepository)
         {
             _operationLogRepository = operationLogRepository;
         }

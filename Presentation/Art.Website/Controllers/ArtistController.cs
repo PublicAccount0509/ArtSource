@@ -12,8 +12,7 @@ using WebExpress.Core;
 using WebExpress.Core.Guards;
 using WebExpress.Core.TypeExtensions;
 using WebExpress.Website.Exceptions;
-
-using Microsoft.Practices.Unity;
+using Autofac;
 using System.IO;
 using System.Diagnostics;
 namespace Art.Website.Controllers
@@ -125,40 +124,7 @@ namespace Art.Website.Controllers
             {
                 return Json(new ResultModel(false, errormagess, 0));
             }
-            //var artist = ArtistTranslator.Instance.Translate(model);
-            ////var artist = GetArtistInfo(model);
-
-
-            ////Thread.Sleep(10000);
-
-            var from = model;
-            var logic = _artistBussinessLogic;
-            Artist to = from.Id > 0 ? logic.GetArtist(from.Id) : new Artist();
-            to.Gender = from.Gender;
-            to.Name = from.Name;
-            to.Birthday = from.Birthday;
-            to.Deathday = from.Deathday;
-            to.Degree = from.Degree;
-            to.School = from.School;
-            to.PrizeItems = from.PrizeItems;
-            to.Masterpiece = from.Masterpiece;
-            to.MasterpieceTypeId = from.MasterpieceTypeId;
-            if (!string.IsNullOrEmpty(from.AvatarFileName))
-            {
-                to.AvatarFileName = Path.GetFileName(from.AvatarFileName);
-            }
-            var ret = logic.GetArtistTypes(from.ArtistTypeIds);
-            Trace.WriteLine("the ret is:" + ret.Count);
-            to.ArtistTypes = null;
-            to.ArtistTypes = ret;
-            Trace.WriteLine("then, the ret is:" + ret.Count);
-            to.SkilledGenres = logic.GetSkilledGenres(from.SkilledGenreIds);
-            var artist = to;
-
-
-            //var aa = artist.ArtistTypes;
-            //var bb = artist.SkilledGenres;
-
+            var artist = ArtistTranslator.Instance.Translate(model);
 
             _artistBussinessLogic.Update(artist);
 
@@ -168,8 +134,7 @@ namespace Art.Website.Controllers
         }
         private Artist GetArtistInfo(ArtistModel from)
         {
-            //var logic = MvcApplication.Container.Resolve<IArtistBussinessLogic>();
-            var logic = _artistBussinessLogic;
+            var logic = DependencyResolver.Current.GetService<IArtistBussinessLogic>();
             Artist to = from.Id > 0 ? logic.GetArtist(from.Id) : new Artist();
             to.Gender = from.Gender;
             to.Name = from.Name;

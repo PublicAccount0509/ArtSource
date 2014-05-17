@@ -1,12 +1,12 @@
 ﻿using Art.BussinessLogic;
-using Art.Data.Domain;
-using Microsoft.Practices.Unity;
+using Art.Data.Domain; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
-
+using Autofac;
+using System.Web.Mvc;
 namespace Art.Website.Models
 {
     public class ArtworkTypesModel
@@ -52,7 +52,7 @@ namespace Art.Website.Models
 
         public override ArtworkType Translate(ArtworkTypeModel from)
         {
-            var logic = MvcApplication.Container.Resolve<IArtworkBussinessLogic>();
+            var logic = DependencyResolver.Current.GetService<IArtworkBussinessLogic>();
             var to = new ArtworkType();
             if (from.Id > 0)
             {

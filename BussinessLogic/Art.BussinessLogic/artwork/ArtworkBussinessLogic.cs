@@ -2,7 +2,6 @@
 using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,8 +28,7 @@ namespace Art.BussinessLogic
         private IRepository<ActivityCollect> _activityCollectRepository;
         private IRepository<ActivityPraise> _activityPraiseRepository;
 
-        [InjectionMethod]
-        public void Initialize(IRepository<ArtworkType> artworkTypeRepository,
+        public ArtworkBussinessLogic(IRepository<ArtworkType> artworkTypeRepository,
             IRepository<Artwork> artworkRepository,
             IRepository<ArtMaterial> artMaterialRepository,
             IRepository<ArtShape> artShapeRepository,

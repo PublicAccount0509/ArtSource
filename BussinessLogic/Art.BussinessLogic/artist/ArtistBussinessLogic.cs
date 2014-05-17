@@ -1,6 +1,5 @@
 ﻿using Art.Data.Domain;
 using Art.Data.Domain.Access;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,8 +20,7 @@ namespace Art.BussinessLogic
         private IRepository<Genre> _genreRepository;
         private IRepository<ActivityFollow> _activityFollowRepository;
 
-        [InjectionMethod]
-        public void Initialize(IRepository<Artist> artistRepository,
+        public ArtistBussinessLogic(IRepository<Artist> artistRepository,
             IRepository<ArtistType> artistTypeRepository,
             IRepository<Genre> genreRepository,
             IRepository<ActivityFollow> activityFollowRepository
