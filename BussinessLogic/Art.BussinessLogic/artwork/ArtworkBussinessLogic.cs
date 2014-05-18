@@ -1,4 +1,5 @@
-﻿using Art.Common;
+﻿using Art.BussinessLogic.Entities;
+using Art.Common;
 using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
@@ -228,9 +229,54 @@ namespace Art.BussinessLogic
             return images;
         }
 
-        public PagedList<Artwork> SearchArtworks(PagingRequest paging)
+        public PagedList<Artwork> SearchArtworks(ArtworkSearchCriteria criteria)
         {
-            return SearchArtworks(null, null, null, null, paging);
+            Guard.IsNotNull<ArgumentNullException>(criteria.PagingRequest, "PagingRequest");
+
+            var query = _artworkRepository.Table;
+            if (!string.IsNullOrEmpty(criteria.NamePart))
+            {
+                query = query.Where(i => i.Name.Contains(criteria.NamePart));
+            }
+
+            if (criteria.ArtworkTypeId.HasValue)
+            {
+                query = query.Where(i => i.ArtworkType.Id == criteria.ArtworkTypeId.Value);
+            }
+
+            if (criteria.ArtMaterialId.HasValue)
+            {
+                query = query.Where(i => i.ArtMaterial.Id == criteria.ArtMaterialId.Value);
+            }
+
+            if (criteria.ArtistId.HasValue)
+            {
+                query = query.Where(i => i.Artist.Id == criteria.ArtistId.Value);
+            }
+
+            if (criteria.CollectionCustomerId.HasValue)
+            {
+                query = from a in query
+                        join ac in _activityCollectRepository.Table
+                        on a.Id equals ac.ArtworkId
+                        where ac.CustomerId == criteria.CollectionCustomerId.Value
+                        select a;
+            }
+
+            if (criteria.PraiseCustomerId.HasValue)
+            {
+                query = from a in query
+                        join ac in _activityPraiseRepository.Table
+                        on a.Id equals ac.ArtworkId
+                        where ac.CustomerId == criteria.PraiseCustomerId.Value
+                        select a;
+            }
+
+            query = query.OrderBy(i => i.Id);
+
+            var result = new PagedList<Artwork>(query, criteria.PagingRequest.PageIndex, criteria.PagingRequest.PageSize);
+
+            return result;
         }
 
         public PagedList<Artwork> SearchArtworks(string namePart, int? artworkTypeId, int? artMaterialId, int? artistId, PagingRequest paging)

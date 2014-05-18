@@ -244,5 +244,6 @@ namespace Art.WebService.Controllers
             //TODO:send sms
             return SimpleResultModel.Conclude(SendCheckCodeStatus.Success);
         }
+
     }
 }

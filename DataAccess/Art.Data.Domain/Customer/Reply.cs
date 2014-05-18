@@ -7,18 +7,7 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Domain
 {
-    public class Comment:BaseEntity
-    {
-        public string Text { get; set; }
-        public CommentState State { get; set; }
-
-        public virtual Customer Customer { get; set; }
-        public virtual Artwork Artwork { get; set; }
-
-        public DateTime FADateTime { get; set; }
-    }
-
-    public class Reply:BaseEntity
+    public class Reply : BaseEntity
     {
         public string Text { get; set; }
         public Comment Comment { get; set; }

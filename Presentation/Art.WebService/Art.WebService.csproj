@@ -106,22 +106,24 @@
     <Compile Include="Models\ArtistDetailModel.cs" />
     <Compile Include="Models\ArtworkDetailModel.cs" />
     <Compile Include="Models\ArtworkSimpleModel.cs" />
-    <Compile Include="Models\CustomerRegisterModel.cs" />
+    <Compile Include="Models\Customer\CommentedArtwork.cs" />
+    <Compile Include="Models\Customer\CustomerRegisterModel.cs" />
     <Compile Include="Models\DeveryWaysModel.cs" />
     <Compile Include="Models\DeviceType.cs" />
-    <Compile Include="Models\FollowedModel.cs" />
-    <Compile Include="Models\FollowModel.cs" />
-    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\Acitivity\FollowedModel.cs" />
+    <Compile Include="Models\Acitivity\FollowModel.cs" />
+    <Compile Include="Models\Customer\LoginModel.cs" />
     <Compile Include="Models\PriceInfoModel.cs" />
-    <Compile Include="Models\ResetPasswordModel.cs" />
+    <Compile Include="Models\Customer\ResetPasswordModel.cs" />
     <Compile Include="Models\ResultModel\ResultModel.cs" />
     <Compile Include="Models\Address\UpdateAddressModel.cs" />
-    <Compile Include="Models\ActivityShareModel.cs" />
-    <Compile Include="Models\ActivityCollectModel.cs" />
-    <Compile Include="Models\ActivityCancelCollectModel.cs" />
-    <Compile Include="Models\ActivityPraiseModel.cs" />
-    <Compile Include="Models\ActivityCancelPraiseModel.cs" />
-    <Compile Include="Models\SendCheckCodeStatus.cs" />
+    <Compile Include="Models\Acitivity\ActivityShareModel.cs" />
+    <Compile Include="Models\Acitivity\ActivityCollectModel.cs" />
+    <Compile Include="Models\Acitivity\ActivityCancelCollectModel.cs" />
+    <Compile Include="Models\Acitivity\ActivityPraiseModel.cs" />
+    <Compile Include="Models\Acitivity\ActivityCancelPraiseModel.cs" />
+    <Compile Include="Models\Customer\SendCheckCodeStatus.cs" />
+    <Compile Include="Models\StandaloneStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +145,10 @@
     <ProjectReference Include="..\..\Art.Common\Art.Common.csproj">
       <Project>{8043328c-37ea-4788-b45e-79a3f46ca26d}</Project>
       <Name>Art.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BussinessLogic\Art.BussinessLogic.Entities\Art.BussinessLogic.Entities.csproj">
+      <Project>{92477c11-e258-4aa6-b004-a03b0e0bb483}</Project>
+      <Name>Art.BussinessLogic.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BussinessLogic\Art.BussinessLogic\Art.BussinessLogic.csproj">
       <Project>{6db25716-e246-475d-aec3-513107464dbc}</Project>

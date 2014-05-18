@@ -8,21 +8,24 @@ using System.Threading.Tasks;
 
 namespace Art.BussinessLogic
 {
-    public class CustomerBussinessLogic : Art.BussinessLogic.ICustomerBussinessLogic
+    public class CustomerBussinessLogic : ICustomerBussinessLogic
     {
         //public static readonly CustomerBussinessLogic Instance = new CustomerBussinessLogic();
 
         private IRepository<Customer> _customerRepository;
         private IRepository<ActivityCollect> _activityCollectRepository;
         private IRepository<Address> _addressRepository;
+        private IRepository<Comment> _commentRepository;
 
         public CustomerBussinessLogic(IRepository<Customer> customerRepository,
             IRepository<ActivityCollect> activityCollectRepository,
-            IRepository<Address> addressRepository)
+            IRepository<Address> addressRepository,
+            IRepository<Comment> commentRepository)
         {
             _customerRepository = customerRepository;
             _activityCollectRepository = activityCollectRepository;
             _addressRepository = addressRepository;
+            _commentRepository = commentRepository;
         }
 
         public bool ExistPhoneNumber(string phoneNumber)
@@ -154,6 +157,11 @@ namespace Art.BussinessLogic
         public void UpdateCustomer(Customer model)
         {
             _customerRepository.Update(model);
+        }
+
+        public IList<Comment> GetComments(int customerId)
+        {
+            return _commentRepository.Table.Where(i=>i.Customer.Id == customerId).ToList();
         }
     }
 

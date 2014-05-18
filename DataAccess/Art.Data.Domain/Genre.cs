@@ -11,7 +11,7 @@ namespace Art.Data.Domain
 {
     public class Genre : BaseEntity, IIdNameEntry
     { 
-        [StringLength(30)]
+        [StringLength(40)]
         public string Name { get; set; }
 
         public ICollection<Artist> Artists { get; set; }

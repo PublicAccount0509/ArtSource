@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.BussinessLogic.Entities;
 using Art.WebService.Models;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Art.WebService.Controllers
         public IEnumerable<ArtworkSimpleModel> Get()
         {
             var paging = new PagingRequest(0, 10);
-            var aa = _artworkBussinessLogic.SearchArtworks(paging);
+            var aa = _artworkBussinessLogic.SearchArtworks(new ArtworkSearchCriteria(paging));
             //var dd =  ArtworkSimpleModel.Instance.Translate(aa);
             return null;
 
@@ -38,17 +39,9 @@ namespace Art.WebService.Controllers
         public ResultModel<ArtworkSimpleModel[]> List(int itemsCount, int pageIndex)
         {
             var paging = new PagingRequest(pageIndex, itemsCount);
-            var artworks = _artworkBussinessLogic.SearchArtworks(paging);
-            var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
-            foreach (var model in models)
-            {
-                model.ShareCount = _artworkBussinessLogic.GetShareCount(model.Id);
-                model.CollectAccount = _artworkBussinessLogic.GetCollectCount(model.Id);
-                model.PraiseCount = _artworkBussinessLogic.GetPraiseCount(model.Id);
-            }
-
-            var result = models.ToArray();
-            return ResultModel<ArtworkSimpleModel[]>.Conclude(GetArtworkListStatus.Success, result);
+            var criteria = new ArtworkSearchCriteria(paging);
+            var result = SearchArtwork(criteria);
+            return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
 
         [HttpGet]
@@ -147,6 +140,41 @@ namespace Art.WebService.Controllers
             return SimpleResultModel.Conclude(ActivityCollectStatus.Success);
         }
 
+        [HttpGet]
+        //获取所有评价过的作品
+        public ResultModel<CommentedArtworkModel[]> Commented(int userId)
+        {
+            var comments = _customerBussinessLogic.GetComments(userId);
+            var models = CommentedArtworkModelTranslator.Instance.Translate(comments);
+            return ResultModel<CommentedArtworkModel[]>.Conclude(StandaloneStatus.Success, models.ToArray());
+        } 
+
+        /// <summary>
+        /// 获取所有收藏的作品
+        /// </summary> 
+        [HttpGet]
+        public ResultModel<ArtworkSimpleModel[]> Collected(int userId, int itemsCount, int pageIndex)
+        {
+            var paging = new PagingRequest(pageIndex, itemsCount);
+            var criteria = new ArtworkSearchCriteria(paging) { CollectionCustomerId = userId };
+
+            var result = SearchArtwork(criteria);
+            return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
+        }
+
+        /// <summary>
+        /// 获取所有赞过的作品
+        /// </summary> 
+        [HttpGet]
+        public ResultModel<ArtworkSimpleModel[]> Praised(int userId, int itemsCount, int pageIndex)
+        {
+            var paging = new PagingRequest(pageIndex, itemsCount);
+            var criteria = new ArtworkSearchCriteria(paging) { PraiseCustomerId = userId };
+
+            var result = SearchArtwork(criteria);
+            return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
+        }
+
         /// <summary>
         /// Cancels the collect.
         /// </summary>
@@ -235,6 +263,22 @@ namespace Art.WebService.Controllers
 
             var result = artworks.Select(p => DeveryWaysModelTranslator.Instance.Translate(p)).ToArray();
             return ResultModel<DeveryWaysModel[]>.Conclude(DeveryWaysStatus.Success, result);
+        }
+
+
+        private ArtworkSimpleModel[] SearchArtwork(ArtworkSearchCriteria criteria)
+        {
+            var artworks = _artworkBussinessLogic.SearchArtworks(criteria);
+
+            var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
+            foreach (var model in models)
+            {
+                model.ShareCount = _artworkBussinessLogic.GetShareCount(model.Id);
+                model.CollectAccount = _artworkBussinessLogic.GetCollectCount(model.Id);
+                model.PraiseCount = _artworkBussinessLogic.GetPraiseCount(model.Id);
+            }
+
+            return models.ToArray();
         }
     }
 }
