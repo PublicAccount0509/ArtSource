@@ -140,14 +140,7 @@ namespace Art.WebService.Controllers
             return SimpleResultModel.Conclude(ActivityCollectStatus.Success);
         }
 
-        [HttpGet]
-        //获取所有评价过的作品
-        public ResultModel<CommentedArtworkModel[]> Commented(int userId)
-        {
-            var comments = _customerBussinessLogic.GetComments(userId);
-            var models = CommentedArtworkModelTranslator.Instance.Translate(comments);
-            return ResultModel<CommentedArtworkModel[]>.Conclude(StandaloneStatus.Success, models.ToArray());
-        } 
+
 
         /// <summary>
         /// 获取所有收藏的作品
@@ -161,6 +154,17 @@ namespace Art.WebService.Controllers
             var result = SearchArtwork(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
+
+
+        [HttpGet]
+        //获取所有评价过的作品
+        public ResultModel<CommentedArtworkModel[]> Commented(int userId)
+        {
+            var comments = _customerBussinessLogic.GetComments(userId);
+            var models = CommentedArtworkModelTranslator.Instance.Translate(comments);
+            return ResultModel<CommentedArtworkModel[]>.Conclude(StandaloneStatus.Success, models.ToArray());
+        }
+
 
         /// <summary>
         /// 获取所有赞过的作品
