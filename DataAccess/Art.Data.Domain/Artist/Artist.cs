@@ -50,6 +50,8 @@ namespace Art.Data.Domain
         public virtual ICollection<Genre> SkilledGenres { get; set; }
 
         public virtual ArtworkType MasterpieceType { get; set; }
+         
+        public virtual List<ArtistImage> Images { get; set; }
     }
      
 }

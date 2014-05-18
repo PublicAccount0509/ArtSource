@@ -34,7 +34,7 @@ namespace Art.BussinessLogic
         int GetPraiseCount(int artworkId);
         int GetShareCount(int artworkId);
         ActivityPraise Praise(int artworkId, int customerId);
-        PagedList<Artwork> SearchArtworks(string namePart, int? artworkTypeId, int? artMaterialId, int? artistId, WebExpress.Core.PagingRequest paging);
+        //PagedList<Artwork> SearchArtworks(string namePart, int? artworkTypeId, int? artMaterialId, int? artistId, WebExpress.Core.PagingRequest paging);
         PagedList<Artwork> SearchArtworks(ArtworkSearchCriteria criteria);
         ActivityShare Share(int artworkId, int customerId);
         void Update(Artwork artwork);

@@ -1,4 +1,5 @@
-﻿using Art.Data.Domain;
+﻿using Art.BussinessLogic.Entities;
+using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
 using WebExpress.Core;
@@ -27,7 +28,7 @@ namespace Art.BussinessLogic
         Genre GetGenre(int id);
         Genre[] GetGenres();
         ICollection<Genre> GetSkilledGenres(List<int> ids);
-        PagedList<Artist> SearchArtists(string namePart, int? artistTypeId, PagingRequest paging);
+        PagedList<Artist> SearchArtists(ArtistSearchCriteria criteria);
         void Update(Artist artist);
         void UpdateArtistType(ArtistType artistType);
     }

@@ -9,11 +9,12 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using WebExpress.Core;
-using WebExpress.Core.Guards; 
+using WebExpress.Core.Guards;
 using WebExpress.Website.Exceptions;
 using Autofac;
 using System.IO;
 using System.Diagnostics;
+using Art.BussinessLogic.Entities;
 namespace Art.Website.Controllers
 {
     //[Authorize]
@@ -261,16 +262,21 @@ namespace Art.Website.Controllers
         #endregion
 
         #region List Page
-        public ActionResult List(ArtistSearchCriteria criteria)
+        public ActionResult List(ArtistSearchCriteriaModel criteria)
         {
             var model = GetPagedArtistModel(criteria);
             return PartialView("_List", model);
         }
 
-        private PagedArtistModel GetPagedArtistModel(ArtistSearchCriteria criteria)
+        private PagedArtistModel GetPagedArtistModel(ArtistSearchCriteriaModel model)
         {
             var artistItems = new List<ArtistItem>();
-            var pagedArtists = _artistBussinessLogic.SearchArtists(criteria.NamePart, criteria.ArtistTypeId, criteria.PagingRequest);
+            var criteria = new ArtistSearchCriteria(model.PagingRequest)
+            {
+                ArtistTypeId = model.ArtistTypeId,
+                NamePart = model.NamePart
+            };
+            var pagedArtists = _artistBussinessLogic.SearchArtists(criteria);
             foreach (var item in pagedArtists)
             {
                 var artist = ArtistItemTranslator.Instance.Translate(item);
@@ -278,8 +284,8 @@ namespace Art.Website.Controllers
                 artistItems.Add(artist);
             }
 
-            var model = new PagedArtistModel(artistItems, pagedArtists.PagingResult);
-            return model;
+            var result = new PagedArtistModel(artistItems, pagedArtists.PagingResult);
+            return result;
         }
 
         [HttpGet]
@@ -287,7 +293,7 @@ namespace Art.Website.Controllers
         {
             var model = new ArtistManageModel();
 
-            var defaultCriteria = new ArtistSearchCriteria(10);
+            var defaultCriteria = new ArtistSearchCriteriaModel(10);
             model.PagedArtists = GetPagedArtistModel(defaultCriteria);
 
             var types = _artistBussinessLogic.GetArtistTypes();

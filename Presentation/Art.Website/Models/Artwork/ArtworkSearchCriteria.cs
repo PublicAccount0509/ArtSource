@@ -6,14 +6,14 @@ using WebExpress.Core;
 
 namespace Art.Website.Models
 {
-    public class ArtworkSearchCriteria
+    public class ArtworkSearchCriteriaModel
     {
-        public ArtworkSearchCriteria()
+        public ArtworkSearchCriteriaModel()
             : this(20)
         {
 
         }
-        public ArtworkSearchCriteria(int pageSize)
+        public ArtworkSearchCriteriaModel(int pageSize)
         {
             PagingRequest = new PagingRequest(0, pageSize);
         }

@@ -21,5 +21,6 @@ namespace Art.BussinessLogic
         void UpdateCustomer(Customer model);
 
         IList<Comment> GetComments(int customerId);
+        Comment AddComment(Comment comment);
     }
 }

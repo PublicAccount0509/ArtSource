@@ -155,6 +155,29 @@ namespace Art.WebService.Controllers
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
 
+        [HttpPost]
+        public SimpleResultModel Comment(CommentModel model)
+        {
+            if (string.IsNullOrEmpty(model.Content))
+            {
+                return SimpleResultModel.Conclude(CustomerCommentStatus.ContentEmpty);
+            }
+
+            if (!_artworkBussinessLogic.Exist(model.ArtworkId))
+            {
+                return SimpleResultModel.Conclude(CustomerCommentStatus.InvalidArtworkId);
+            }
+
+            if (!_customerBussinessLogic.Exist(model.UserId))
+            {
+                return SimpleResultModel.Conclude(CustomerCommentStatus.InvalidUserId);
+            }
+
+            var comment = CommentModelTranslator.Instance.Translate(model);
+            _customerBussinessLogic.AddComment(comment);
+
+            return SimpleResultModel.Conclude(CustomerCommentStatus.Success);
+        }
 
         [HttpGet]
         //获取所有评价过的作品

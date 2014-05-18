@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Artist\Artist.cs" />
+    <Compile Include="Artist\ArtistImage.cs" />
     <Compile Include="Artwork\ArtPlace.cs" />
     <Compile Include="Artwork\ArtTechnique.cs" />
     <Compile Include="Artwork\Artwork.cs" />

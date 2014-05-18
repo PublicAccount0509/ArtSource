@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Http;
 using Art.BussinessLogic;
 using Art.WebService.Models;
+using WebExpress.Core;
+using Art.BussinessLogic.Entities;
 
 namespace Art.WebService.Controllers
 {
@@ -18,6 +20,17 @@ namespace Art.WebService.Controllers
             _artistBussinessLogic = artistBussinessLogic;
             _artworkBussinessLogic = artworkBussinessLogic;
             _customerBussinessLogic = customerBussinessLogic;
+        }
+
+
+        [HttpGet]
+        public ResultModel<ArtistSimpleModel[]> List(int itemsCount, int pageIndex)
+        {
+            var paging = new PagingRequest(pageIndex, itemsCount);
+            var criteria = new ArtistSearchCriteria(paging);
+            var artworks = _artistBussinessLogic.SearchArtists(criteria);
+            var result = ArtistSimpleModelTranslator.Instance.Translate(artworks);
+            return ResultModel<ArtistSimpleModel[]>.Conclude(StandaloneStatus.Success, result.ToArray());
         }
 
 
@@ -40,7 +53,7 @@ namespace Art.WebService.Controllers
             var artist = _artistBussinessLogic.GetArtist(artistId);
             if (artist == null)
             {
-                return   ResultModel<ArtistDetailModel>.Conclude(ArtistDetailModelStatus.ArtistNotExist);;//, "艺术家不存在");
+                return ResultModel<ArtistDetailModel>.Conclude(ArtistDetailModelStatus.ArtistNotExist); ;//, "艺术家不存在");
             }
             var artworks = _artworkBussinessLogic.GetArtworksByArtistId(artistId);
             var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
@@ -142,12 +155,12 @@ namespace Art.WebService.Controllers
         {
             if (!_customerBussinessLogic.Exist(userid))
             {
-                return ResultModel<FollowedModel[]>.Conclude(GetFollowedArtistsStatus.InvalidUserId); 
+                return ResultModel<FollowedModel[]>.Conclude(GetFollowedArtistsStatus.InvalidUserId);
             }
 
             var follows = _artistBussinessLogic.GetFollowsByCustomerId(userid);
             var result = follows.Select(p => FollowedModelTranslator.Instance.Translate(p)).ToArray();
-            return ResultModel<FollowedModel[]>.Conclude(GetFollowedArtistsStatus.Success,result);
+            return ResultModel<FollowedModel[]>.Conclude(GetFollowedArtistsStatus.Success, result);
         }
     }
 }

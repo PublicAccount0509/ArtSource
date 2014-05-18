@@ -1,4 +1,5 @@
-﻿using Art.Data.Domain;
+﻿using Art.BussinessLogic.Entities;
+using Art.Data.Domain;
 using Art.Data.Domain.Access;
 using System;
 using System.Collections.Generic;
@@ -60,24 +61,24 @@ namespace Art.BussinessLogic
             return artists;
         }
 
-        public PagedList<Artist> SearchArtists(string namePart, int? artistTypeId, PagingRequest paging)
+        public PagedList<Artist> SearchArtists(ArtistSearchCriteria criteria)
         {
-            Guard.IsNotNull<ArgumentNullException>(paging, "paging");
+            Guard.IsNotNull<ArgumentNullException>(criteria.PagingRequest, "PagingRequest");
 
             var query = _artistRepository.Table;
-            if (!string.IsNullOrEmpty(namePart))
+            if (!string.IsNullOrEmpty(criteria.NamePart))
             {
-                query = query.Where(i => i.Name.Contains(namePart));
+                query = query.Where(i => i.Name.Contains(criteria.NamePart));
             }
 
-            if (artistTypeId.HasValue)
+            if (criteria.ArtistTypeId.HasValue)
             {
-                query = query.Where(i => i.ArtistTypes.Any(p => p.Id == artistTypeId.Value));
+                query = query.Where(i => i.ArtistTypes.Any(p => p.Id == criteria.ArtistTypeId.Value));
             }
 
             query = query.OrderBy(i => i.Id);
 
-            var result = new PagedList<Artist>(query, paging.PageIndex, paging.PageSize);
+            var result = new PagedList<Artist>(query, criteria.PagingRequest.PageIndex, criteria.PagingRequest.PageSize);
 
             return result;
         }

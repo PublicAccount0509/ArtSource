@@ -104,8 +104,10 @@
     <Compile Include="Models\AddOrderModel.cs" />
     <Compile Include="Models\Address\AddAddressModel.cs" />
     <Compile Include="Models\ArtistDetailModel.cs" />
-    <Compile Include="Models\ArtworkDetailModel.cs" />
-    <Compile Include="Models\ArtworkSimpleModel.cs" />
+    <Compile Include="Models\Artist\ArtistSimpleModel.cs" />
+    <Compile Include="Models\Artwork\ArtworkDetailModel.cs" />
+    <Compile Include="Models\Artwork\ArtworkSimpleModel.cs" />
+    <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\Customer\CommentedArtwork.cs" />
     <Compile Include="Models\Customer\CustomerRegisterModel.cs" />
     <Compile Include="Models\DeveryWaysModel.cs" />

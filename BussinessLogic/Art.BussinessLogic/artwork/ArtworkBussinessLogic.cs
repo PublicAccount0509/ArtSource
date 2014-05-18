@@ -279,7 +279,7 @@ namespace Art.BussinessLogic
             return result;
         }
 
-        public PagedList<Artwork> SearchArtworks(string namePart, int? artworkTypeId, int? artMaterialId, int? artistId, PagingRequest paging)
+        private PagedList<Artwork> SearchArtworks(string namePart, int? artworkTypeId, int? artMaterialId, int? artistId, PagingRequest paging)
         {
             Guard.IsNotNull<ArgumentNullException>(paging, "paging");
 

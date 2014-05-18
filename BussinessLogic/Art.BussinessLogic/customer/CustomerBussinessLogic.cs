@@ -161,7 +161,13 @@ namespace Art.BussinessLogic
 
         public IList<Comment> GetComments(int customerId)
         {
-            return _commentRepository.Table.Where(i=>i.Customer.Id == customerId).ToList();
+            return _commentRepository.Table.Where(i => i.Customer.Id == customerId).ToList();
+        }
+
+        public Comment AddComment(Comment comment)
+        {
+            var result = _commentRepository.Insert(comment);
+            return result;
         }
     }
 

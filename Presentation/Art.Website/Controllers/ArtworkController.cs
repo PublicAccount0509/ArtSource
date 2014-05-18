@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.BussinessLogic.Entities;
 using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Website.Common;
@@ -56,9 +57,9 @@ namespace Art.Website.Controllers
         public JsonResult AddArtworkType(ArtworkTypeModel model)
         {
             string message;
-            if (!ValidateArtworkType(model,out message))
+            if (!ValidateArtworkType(model, out message))
             {
-                return Json(new ResultModel(false,message));
+                return Json(new ResultModel(false, message));
             }
 
             var artworkType = ArtworkTypeModelTranslator.Instance.Translate(model);
@@ -368,7 +369,7 @@ namespace Art.Website.Controllers
             var model = new ArtworkManageModel();
 
 
-            var defaultCriteria = new ArtworkSearchCriteria(10);
+            var defaultCriteria = new ArtworkSearchCriteriaModel(10);
             int artistId;
             if (int.TryParse(Request.QueryString["ArtistId"], out artistId))
             {
@@ -384,7 +385,7 @@ namespace Art.Website.Controllers
             return View(model);
         }
 
-        public PartialViewResult List(ArtworkSearchCriteria criteria)
+        public PartialViewResult List(ArtworkSearchCriteriaModel criteria)
         {
             var model = GetPagedArtworkModel(criteria);
             return PartialView("_List", model);
@@ -423,10 +424,17 @@ namespace Art.Website.Controllers
             return Json(model);
         }
 
-        private PagedArtworkModel GetPagedArtworkModel(ArtworkSearchCriteria criteria)
+        private PagedArtworkModel GetPagedArtworkModel(ArtworkSearchCriteriaModel criteriaModel)
         {
             var artworks = new List<ArtworkSimpleModel>();
-            var pagedArtworks = _artworkBussinessLogic.SearchArtworks(criteria.NamePart, criteria.ArtworkTypeId, criteria.ArtMaterialId, criteria.ArtistId, criteria.PagingRequest);
+            var criteria = new ArtworkSearchCriteria(criteriaModel.PagingRequest)
+            {
+                NamePart = criteriaModel.NamePart,
+                ArtworkTypeId = criteriaModel.ArtworkTypeId,
+                ArtMaterialId = criteriaModel.ArtMaterialId,
+                ArtistId = criteriaModel.ArtistId
+            };
+            var pagedArtworks = _artworkBussinessLogic.SearchArtworks(criteria);
             foreach (var item in pagedArtworks)
             {
                 var artwork = ArtworkSimpleModelTranslator.Instance.Translate(item);
