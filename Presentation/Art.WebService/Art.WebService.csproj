@@ -109,12 +109,14 @@
     <Compile Include="Models\Artwork\ArtworkSimpleModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\Customer\CommentedArtwork.cs" />
+    <Compile Include="Models\Customer\CustomerProfile.cs" />
     <Compile Include="Models\Customer\CustomerRegisterModel.cs" />
     <Compile Include="Models\DeveryWaysModel.cs" />
     <Compile Include="Models\DeviceType.cs" />
     <Compile Include="Models\Acitivity\FollowedModel.cs" />
     <Compile Include="Models\Acitivity\FollowModel.cs" />
     <Compile Include="Models\Customer\LoginModel.cs" />
+    <Compile Include="Models\Order\AddToShopCartModel.cs" />
     <Compile Include="Models\PriceInfoModel.cs" />
     <Compile Include="Models\Customer\ResetPasswordModel.cs" />
     <Compile Include="Models\ResultModel\ResultModel.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Models\Acitivity\ActivityCancelPraiseModel.cs" />
     <Compile Include="Models\Customer\SendCheckCodeStatus.cs" />
     <Compile Include="Models\StandaloneStatus.cs" />
+    <Compile Include="Models\PackingWayModel .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

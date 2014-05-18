@@ -245,5 +245,7 @@ namespace Art.WebService.Controllers
             return SimpleResultModel.Conclude(SendCheckCodeStatus.Success);
         }
 
+
+
     }
 }

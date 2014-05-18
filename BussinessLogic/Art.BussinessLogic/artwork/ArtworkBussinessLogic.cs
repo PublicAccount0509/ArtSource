@@ -135,6 +135,11 @@ namespace Art.BussinessLogic
             return artworks;
         }
 
+        public IList<Artwork> GetArtworks(int[] ids)
+        {
+            var artworks = _artworkRepository.Table.Where(i => ids.Contains(i.Id)).ToList();
+            return artworks;
+        }
 
         public ArtMaterial GetArtMaterial(int id)
         {
@@ -393,13 +398,12 @@ namespace Art.BussinessLogic
             return _activityCollectRepository.Table.Any(p => p.ArtworkId == artworkId && p.CustomerId == customerId);
         }
 
-
-
         public int GetPraiseCount(int artworkId)
         {
             var count = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
             return count;
         }
+
         /// <summary>
         /// Gets the artworks by artist identifier.
         /// </summary>
@@ -417,17 +421,17 @@ namespace Art.BussinessLogic
             return _artworkRepository.Table.Where(p => p.Artist.Id == artistId).ToArray();
         }
 
-        public IList<Artwork> DeveryWays(int[] artworkIds)
-        {
-            var artworks = _artworkRepository.Table;
-            //先遍历参数Id
-            return (from artworkId in artworkIds
-                    //用id去查找实体
-                    let art = (from artwork in artworks where artwork.Id == artworkId select artwork).FirstOrDefault()
-                    //实体不为空返回实体
-                    where art != null
-                    select art
-                   ).ToList();
-        }
+        //public IList<Artwork> DeveryWays(int[] artworkIds)
+        //{
+        //    var artworks = _artworkRepository.Table;
+        //    //先遍历参数Id
+        //    return (from artworkId in artworkIds
+        //            //用id去查找实体
+        //            let art = (from artwork in artworks where artwork.Id == artworkId select artwork).FirstOrDefault()
+        //            //实体不为空返回实体
+        //            where art != null
+        //            select art
+        //           ).ToList();
+        //}
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Mapping\Order\OrderItemMap.cs" />
     <Compile Include="Mapping\ReplyMap.cs" />
     <Compile Include="Mapping\SystemNoticeMap.cs" />
+    <Compile Include="Mapping\ShopCartMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerDataProvider.cs" />
   </ItemGroup>

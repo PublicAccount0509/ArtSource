@@ -19,15 +19,7 @@ namespace Art.WebService.Models
     {
         public DeliveryType DeliveryType { get; set; }
         public string Name { get; set; }
-        public decimal Fee { get; set; }
-    }
-
-    public enum DeveryWaysStatus
-    {
-        Success,
-
-        [DisplayText("无效的请求参数")]
-        InvalidArtworkIds
+        public decimal? Fee { get; set; }
     }
 
     public class DeveryWaysModelTranslator : TranslatorBase<Artwork, DeveryWaysModel>
@@ -37,30 +29,34 @@ namespace Art.WebService.Models
         public override DeveryWaysModel Translate(Artwork from)
         {
             var ways = new List<WaysModel>();
-            if (from.FeeDeliveryLocal != null)
+
+            if (from.FeeDeliveryLocal.HasValue)
             {
                 ways.Add(new WaysModel
                     {
                         DeliveryType = DeliveryType.市内,
-                        Name = "室内",
-                        Fee = Convert.ToDecimal(from.FeeDeliveryLocal)
+                        Name = DeliveryType.市内.ToString(),
+                        Fee = from.FeeDeliveryLocal.Value
                     });
             }
-            if (from.FeeDeliveryNonlocal != null)
+
+            if (from.FeeDeliveryNonlocal.HasValue)
             {
                 ways.Add(new WaysModel
                     {
                         DeliveryType = DeliveryType.外地,
-                        Name = "外地",
-                        Fee = Convert.ToDecimal(from.FeeDeliveryNonlocal)
+                        Name = DeliveryType.外地.ToString(),
+                        Fee = from.FeeDeliveryNonlocal.Value
                     });
             }
+
             ways.Add(new WaysModel
                 {
                     DeliveryType = DeliveryType.自提,
-                    Name = "自提",
-                    Fee = 0
+                    Name = DeliveryType.自提.ToString(),
+                    Fee = null
                 });
+
             var to = new DeveryWaysModel
                 {
                     ArtworkId = from.Id,

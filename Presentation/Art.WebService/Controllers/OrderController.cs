@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Art.BussinessLogic;
+using Art.WebService.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,21 +11,43 @@ namespace Art.WebService.Controllers
 {
     public class OrderController : ApiController
     {
-        // GET api/order
-        public IEnumerable<string> Get()
+        private IArtistBussinessLogic _artistBussinessLogic;
+        private IArtworkBussinessLogic _artworkBussinessLogic;
+        private ICustomerBussinessLogic _customerBussinessLogic;
+        private IOrderBussinessLogic _orderBussinessLogic;
+        public OrderController(IArtistBussinessLogic artistBussinessLogic,
+            IArtworkBussinessLogic artworkBussinessLogic,
+            ICustomerBussinessLogic customerBussinessLogic,
+            IOrderBussinessLogic orderBussinessLogic)
         {
-            return new string[] { "value1", "value2" };
+            _artistBussinessLogic = artistBussinessLogic;
+            _artworkBussinessLogic = artworkBussinessLogic;
+            _customerBussinessLogic = customerBussinessLogic;
+            _orderBussinessLogic = orderBussinessLogic;
         }
 
-        // GET api/order/5
-        public string Get(int id)
+        /// <summary>
+        /// 放到购物车
+        /// </summary>
+        public IntResultModel AddToShopCart(AddToShopCartModel model)
         {
-            return "value";
-        }
+            if (!_artworkBussinessLogic.Exist(model.ArtworkId))
+            {
+                return IntResultModel.Conclude(AddToShopCartStatus.InvalidArtworkId);
+            }
 
-        // POST api/order
-        public void Post([FromBody]string value)
-        {
+            if (!_customerBussinessLogic.Exist(model.UserId))
+            {
+                return IntResultModel.Conclude(AddToShopCartStatus.InvalidUserId);
+            }
+
+            var item = _orderBussinessLogic.GetShoppingCart(model.ArtworkId, model.UserId);
+            if (item != null)
+            {
+                return IntResultModel.Conclude(AddToShopCartStatus.AlreadyAdded);
+            }
+            var result = _orderBussinessLogic.AddShoppingCartItem(model.ArtworkId, model.UserId);
+            return IntResultModel.Conclude(AddToShopCartStatus.Success, result.Id);
         }
 
         // PUT api/order/5

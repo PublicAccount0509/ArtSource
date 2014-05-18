@@ -11,15 +11,15 @@ using WebExpress.Core;
 
 namespace Art.BussinessLogic
 {
-    public class OrderBussinessLogic : Art.BussinessLogic.IOrderBussinessLogic
+    public class OrderBussinessLogic : IOrderBussinessLogic
     {
         //public static readonly OrderBussinessLogic Instance = new OrderBussinessLogic();
 
         private IRepository<Order> _orderRepository;
         private IRepository<Customer> _customerRepository;
         private IRepository<Artwork> _artworkRepository;
-
         private IRepository<Address> _addressRepository;
+        private IRepository<ShoppingCartItem> _ShoppingCartRepository;
 
         private IRepository<AuctionBill> _auctionBillRepository;
         public OrderBussinessLogic(IRepository<Order> orderRepository,
@@ -120,12 +120,11 @@ namespace Art.BussinessLogic
         public PagedList<AuctionBill> SearchAuction(AuctionSearchCriteria criteria)
         {
             var query = _auctionBillRepository.Table;
-            query =
-                query.Where(p =>
-                    //(!criteria.StartDate.HasValue || p.BidDateTime >= criteria.StartDate.Value.BeginOfDay())
-                    //&& (!criteria.EndDate.HasValue || p.BidDateTime <= criteria.EndDate.Value.EndOfDay())
+            query = query.Where(p =>
                             (criteria.ArtistsId == null || p.Artwork.Artist.Id == criteria.ArtistsId)
                             && (criteria.ArtworkId == null || p.ArtworkId == criteria.ArtworkId));
+
+
             if (criteria.StartDate.HasValue)
             {
                 var dateBegin = criteria.StartDate.Value.BeginOfDay();
@@ -255,6 +254,26 @@ namespace Art.BussinessLogic
             //order.DeliveryInfo.Status = DeliveryStatus.已发货;
 
             _orderRepository.Update(order);
+        }
+
+
+        public ShoppingCartItem AddShoppingCartItem(int artworkId, int customerId)
+        {
+            var item = new ShoppingCartItem
+            {
+                ArtworkId = artworkId,
+                CustomerId = customerId,
+                FADateTime = DateTime.Now
+            };
+            var result = _ShoppingCartRepository.Insert(item);
+            return result;
+        }
+
+
+        public ShoppingCartItem GetShoppingCart(int artworkId, int customerId)
+        {
+           var item = _ShoppingCartRepository.Table.FirstOrDefault(i=>i.ArtworkId== artworkId && i.CustomerId==customerId);
+           return item;
         }
     }
 }

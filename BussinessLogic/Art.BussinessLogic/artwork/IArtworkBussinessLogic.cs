@@ -14,7 +14,6 @@ namespace Art.BussinessLogic
         ActivityCollect Collect(int artworkId, int customerId);
         void Delete(Artwork artwork);
         bool DeleteArtworkType(ArtworkType artworkType);
-        IList<Artwork> DeveryWays(int[] artworkIds);
         bool Exist(int id);
         bool ExistCollect(int artworkId, int customerId);
         bool ExistPraise(int artworkId, int customerId);
@@ -24,7 +23,8 @@ namespace Art.BussinessLogic
         ArtShape GetArtShape(int id);
         ArtTechnique GetArtTechnique(int id);
         Artwork GetArtwork(int id);
-        IList<Art.Data.Domain.Artwork> GetArtworks();
+        IList<Artwork> GetArtworks();
+        IList<Artwork> GetArtworks(int[] artworkIds);
         Artwork[] GetArtworksByArtistId(int artistId);
         ArtworkType GetArtworkType(int id);
         ArtworkType GetArtworkTypeByName(string name);

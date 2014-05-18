@@ -278,20 +278,23 @@ namespace Art.WebService.Controllers
         [HttpGet]
         public ResultModel<DeveryWaysModel[]> DeveryWays(int[] artworkIds)
         {
-            if (artworkIds == null)
-            {
-                return ResultModel<DeveryWaysModel[]>.Conclude(DeveryWaysStatus.InvalidArtworkIds);
-            }
-            var artworks = _artworkBussinessLogic.DeveryWays(artworkIds);
-            if (artworks.Count != artworkIds.Length)
-            {
-                return ResultModel<DeveryWaysModel[]>.Conclude(DeveryWaysStatus.InvalidArtworkIds);
-            }
+            var artworks = _artworkBussinessLogic.GetArtworks(artworkIds);
 
-            var result = artworks.Select(p => DeveryWaysModelTranslator.Instance.Translate(p)).ToArray();
-            return ResultModel<DeveryWaysModel[]>.Conclude(DeveryWaysStatus.Success, result);
+            var result = DeveryWaysModelTranslator.Instance.Translate(artworks).ToArray();
+
+            return ResultModel<DeveryWaysModel[]>.Conclude(StandaloneStatus.Success, result);
+        }   
+
+        [HttpGet]
+        //获取包装方式
+        public ResultModel<ArtworkPackingWayModel> PackingWays(int artworkId)
+        {
+            var artwork = _artworkBussinessLogic.GetArtwork(artworkId);
+
+            var result = ArtworkPackingWayModelTranslator.Instance.Translate(artwork);
+
+            return ResultModel<ArtworkPackingWayModel>.Conclude(StandaloneStatus.Success, result);
         }
-
 
         private ArtworkSimpleModel[] SearchArtwork(ArtworkSearchCriteria criteria)
         {
