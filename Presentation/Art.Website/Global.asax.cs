@@ -17,7 +17,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Xml.Linq;
-using WebExpress.Core.TypeExtensions;
+using WebExpress.Core; 
 
 namespace Art.Website
 {

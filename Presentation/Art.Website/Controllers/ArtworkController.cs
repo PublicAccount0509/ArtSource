@@ -9,8 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebExpress.Core;
 using WebExpress.Core.Guards;
-using WebExpress.Core.TypeExtensions;
 using WebExpress.Website.Exceptions;
 
 namespace Art.Website.Controllers

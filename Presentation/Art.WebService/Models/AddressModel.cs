@@ -30,6 +30,8 @@ namespace Art.WebService.Models
     public enum DeleteAddressStatus
     {
         Success,
+
+        [DisplayText("您想要删除的地址不存在")]
         AddressIdNotExist
     }
 

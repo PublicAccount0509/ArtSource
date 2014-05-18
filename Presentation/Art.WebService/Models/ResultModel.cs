@@ -7,21 +7,27 @@ namespace Art.WebService.Models
 {
     public class SimpleResultModel
     {
-        public SimpleResultModel(int status)
+        private SimpleResultModel(int status)
             : this(status, string.Empty)
         {
 
         }
 
-        public SimpleResultModel(int status, string message)
+        private SimpleResultModel(int status, string message)
         {
             this.Status = status;
             this.Message = message;
         }
 
-        public static SimpleResultModel Success()
+        //public static SimpleResultModel Success()
+        //{
+        //    return new SimpleResultModel(0);
+        //}
+
+        public static SimpleResultModel Result(Enum status)
         {
-            return new SimpleResultModel(0);
+            var enumItem = WebExpress.Core.EnumExtenstion.GetEnumItem(status.GetType(), status);
+            return new SimpleResultModel(enumItem.Value, enumItem.Text);
         }
 
         public int Status { get; set; }

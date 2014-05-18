@@ -14,11 +14,31 @@ namespace Art.WebService.Models
     public enum FollowModelStatus
     {
         Success,
+
+        [DisplayText("艺术家不存在")]
         ArtistNotExist,
+
+        [DisplayText("无效的用户")]
         UserNotExist,
+
+        [DisplayText("您已经关注了该艺术家")]
         ArtistAlreadyFollowed,
+    }
+
+    public enum CancelFollowStatus
+    {
+        Success,
+
+        [DisplayText("艺术家不存在")]
+        ArtistNotExist,
+
+        [DisplayText("无效的用户")]
+        UserNotExist,
+
+        [DisplayText("您还没有关注该艺术家")]
         NotFollowYet
     }
+
 
     public class FollowModelTranslator : TranslatorBase<ActivityFollow, FollowModel>
     {

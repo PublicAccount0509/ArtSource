@@ -16,8 +16,14 @@ namespace Art.WebService.Models
     public enum ActivityShareStatus
     { 
         Success,
+
+        [DisplayText("指定的作品Id不存在")]
         ArtworkNotExist,
+
+        [DisplayText("指定的用户Id不存在")]
         UserNotExist,
+
+
         ArtistAlreadyShared
     }
     //public class ShareArtworkModelTranslator : TranslatorBase<ActivityShare, ShareArtworkModel>

@@ -11,7 +11,7 @@ namespace Art.WebService.Controllers
         private IArtistBussinessLogic _artistBussinessLogic;
         private IArtworkBussinessLogic _artworkBussinessLogic;
         private ICustomerBussinessLogic _customerBussinessLogic;
-        public ArtistController(IArtistBussinessLogic artistBussinessLogic, 
+        public ArtistController(IArtistBussinessLogic artistBussinessLogic,
             IArtworkBussinessLogic artworkBussinessLogic,
             ICustomerBussinessLogic customerBussinessLogic)
         {
@@ -83,19 +83,20 @@ namespace Art.WebService.Controllers
         {
             if (!_artistBussinessLogic.Exist(model.ArtistId))
             {
-                return new SimpleResultModel((int)FollowModelStatus.ArtistNotExist, "要关注的艺术家不存在");
+                return SimpleResultModel.Result(FollowModelStatus.ArtistNotExist);//, "要关注的艺术家不存在");
             }
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
-                return new SimpleResultModel((int)FollowModelStatus.UserNotExist, "无效的用户");
+                return SimpleResultModel.Result(FollowModelStatus.UserNotExist);//, "无效的用户");
             }
             if (_artistBussinessLogic.ExistFollow(model.ArtistId, model.UserId))
             {
-                return new SimpleResultModel((int)FollowModelStatus.ArtistAlreadyFollowed, "您已经关注了该艺术家");
+                return SimpleResultModel.Result(FollowModelStatus.ArtistAlreadyFollowed);//, "您已经关注了该艺术家");
             }
             var entity = FollowModelTranslator.Instance.Translate(model);
             _artistBussinessLogic.AddFollow(entity);
-            return SimpleResultModel.Success();
+
+            return SimpleResultModel.Result(FollowModelStatus.Success);
         }
 
         /// <summary>
@@ -115,19 +116,21 @@ namespace Art.WebService.Controllers
         {
             if (!_artistBussinessLogic.Exist(model.ArtistId))
             {
-                return new SimpleResultModel((int)FollowModelStatus.ArtistNotExist, "要取消关注的艺术家不存在");
+                return SimpleResultModel.Result(CancelFollowStatus.ArtistNotExist);//, "要取消关注的艺术家不存在");
             }
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
-                return new SimpleResultModel((int)FollowModelStatus.UserNotExist, "无效的用户");
+                return SimpleResultModel.Result(CancelFollowStatus.UserNotExist);//, "无效的用户");
             }
             if (!_artistBussinessLogic.ExistFollow(model.ArtistId, model.UserId))
             {
-                return new SimpleResultModel((int)FollowModelStatus.NotFollowYet, "您还没有关注该艺术家");
+                return SimpleResultModel.Result(CancelFollowStatus.NotFollowYet);//, "您还没有关注该艺术家");
             }
+
             var entity = FollowModelTranslator.Instance.Translate(model);
             _artistBussinessLogic.DeleteFollow(entity);
-            return SimpleResultModel.Success();
+
+            return SimpleResultModel.Result(CancelFollowStatus.Success);
         }
 
         /// <summary>

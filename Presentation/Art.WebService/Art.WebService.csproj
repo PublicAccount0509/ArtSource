@@ -120,6 +120,7 @@
     <Compile Include="Models\ActivityCancelCollectModel.cs" />
     <Compile Include="Models\ActivityPraiseModel.cs" />
     <Compile Include="Models\ActivityCancelPraiseModel.cs" />
+    <Compile Include="Models\SendCheckCodeStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

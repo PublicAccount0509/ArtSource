@@ -186,7 +186,7 @@ namespace Art.WebService.Controllers
             var address = _customerBussinessLogic.GetAddressById(model.Id);
             if (address == null)
             {
-                return new SimpleResultModel((int)DeleteAddressStatus.AddressIdNotExist, "您想要删除的地址不存在");
+                return SimpleResultModel.Result(DeleteAddressStatus.AddressIdNotExist);
             }
             if (address.Customer != null && address.Customer.DefaultAddressId == address.Id)
             {
@@ -194,7 +194,8 @@ namespace Art.WebService.Controllers
                 address.Customer.DefaultAddress = null;
             }
             _customerBussinessLogic.RemoveAddress(address);
-            return new SimpleResultModel((int)DeleteAddressStatus.Success);
+
+            return SimpleResultModel.Result(DeleteAddressStatus.Success);
         }
 
         [HttpGet]
@@ -226,20 +227,30 @@ namespace Art.WebService.Controllers
         {
             if (string.IsNullOrEmpty(model.NewPassword))
             {
-                return new SimpleResultModel((int)ResetPasswordStatus.NewPasswordEmpty, "新密码不能为空");
+                return SimpleResultModel.Result(ResetPasswordStatus.NewPasswordEmpty);//, "新密码不能为空");
             }
             var customer = _customerBussinessLogic.Get(model.UserId);
             if (customer == null)
             {
-                return new SimpleResultModel((int)ResetPasswordStatus.UserNotExist, "用户不存在");
+                return SimpleResultModel.Result(ResetPasswordStatus.UserNotExist);//, "用户不存在");
             }
             if (!customer.Password.Equals(model.CurrentPassword))
             {
-                return new SimpleResultModel((int)ResetPasswordStatus.InvalidCurrentPassword, "密码错误");
+                return SimpleResultModel.Result(ResetPasswordStatus.InvalidCurrentPassword);
             }
             customer.Password = model.NewPassword;
             _customerBussinessLogic.UpdateCustomer(customer);
-            return SimpleResultModel.Success();
+
+            return SimpleResultModel.Result(ResetPasswordStatus.Success);
+        }
+
+        public SimpleResultModel CheckCode(string PhoneNumber)
+        {
+            if (string.IsNullOrEmpty(PhoneNumber))
+            {
+                return SimpleResultModel.Result(SendCheckCodeStatus.InvlidPhoneNumber);
+            }
+            return null;
         }
     }
 }
