@@ -1,4 +1,6 @@
 ﻿using Art.Data.Domain.Access;
+using Autofac;
+using Autofac.Integration.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,14 @@ namespace Art.WebService
     {
         protected void Application_Start()
         {
+
+            var builder = new ContainerBuilder(); 
+            var dependencyRegistar = new DependencyRegistrar();
+            dependencyRegistar.Register(builder);
+            var container = builder.Build(); 
+            var resolver = new AutofacWebApiDependencyResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = resolver;
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             IDataProvider dataProvider = new SqlServerDataProvider();
