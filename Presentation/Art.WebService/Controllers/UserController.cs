@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.Common;
 using Art.WebService.Models;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace Art.WebService.Controllers
             var customer = _customerBussinessLogic.RetrieveCustomer(model.LoginName, model.Password);
             if (customer == null)
             {
-                return IntResultModel.Conclude(LoginModelStatus.InvalidCredential);//, "登录失败");
+                return IntResultModel.Conclude(LoginModelStatus.InvalidCredential);
             }
             return IntResultModel.Conclude(LoginModelStatus.Success, customer.Id);
         }
@@ -236,11 +237,12 @@ namespace Art.WebService.Controllers
         [HttpGet]
         public SimpleResultModel CheckCode(string PhoneNumber)
         {
-            if (string.IsNullOrEmpty(PhoneNumber))
+            if (!CommonValidator.IsValidPhoneNumber(PhoneNumber))
             {
                 return SimpleResultModel.Conclude(SendCheckCodeStatus.InvlidPhoneNumber);
             }
-            return null;
+            //TODO:send sms
+            return SimpleResultModel.Conclude(SendCheckCodeStatus.Success);
         }
     }
 }
