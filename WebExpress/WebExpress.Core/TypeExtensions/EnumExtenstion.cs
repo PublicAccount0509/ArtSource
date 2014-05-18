@@ -21,7 +21,7 @@ namespace WebExpress.Core
             var mi = enumType.GetMember(name).First();
             var dtAttribute = mi.GetCustomAttributes(typeof(DisplayTextAttribute), false).FirstOrDefault();
 
-            var text = name;
+            var text = string.Empty;
             if (dtAttribute != null)
             {
                 text = (dtAttribute as DisplayTextAttribute).DisplayText;
@@ -36,18 +36,8 @@ namespace WebExpress.Core
             var result = new List<IEnumItem>();
             foreach (var item in items)
             {
-                var name = item.ToString();
-
-                var mi = enumType.GetMember(name).First();
-                var dtAttribute = mi.GetCustomAttributes(typeof(DisplayTextAttribute), false).FirstOrDefault();
-
-                var text = name;
-                if (dtAttribute != null)
-                {
-                    text = (dtAttribute as DisplayTextAttribute).DisplayText;
-                }
-                var vt = new EnumItem { Value = (int)item, Name = item.ToString(), Text = text };
-                result.Add(vt);
+                var enumItem = GetEnumItem(enumType, item as Enum);
+                result.Add(enumItem);
             }
             return result.ToArray();
         }

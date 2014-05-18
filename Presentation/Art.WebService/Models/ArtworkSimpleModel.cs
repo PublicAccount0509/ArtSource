@@ -27,6 +27,11 @@ namespace Art.WebService.Models
 
     }
 
+    public enum GetArtworkListStatus
+    {
+        Success,
+    }
+
     public class ArtworkSimpleModelTranslator : TranslatorBase<Artwork, ArtworkSimpleModel>
     {
         public static readonly ArtworkSimpleModelTranslator Instance = new ArtworkSimpleModelTranslator

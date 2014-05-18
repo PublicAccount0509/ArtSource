@@ -46,9 +46,9 @@ namespace Art.WebService.Controllers
                 model.CollectAccount = _artworkBussinessLogic.GetCollectCount(model.Id);
                 model.PraiseCount = _artworkBussinessLogic.GetPraiseCount(model.Id);
             }
-            var result = new ResultModel<ArtworkSimpleModel[]>(0);
-            result.Result = models.ToArray();
-            return result;
+
+            var result = models.ToArray();
+            return ResultModel<ArtworkSimpleModel[]>.Conclude(GetArtworkListStatus.Success, result);
         }
 
         [HttpGet]
@@ -60,7 +60,7 @@ namespace Art.WebService.Controllers
             {
                 model.HasPraised = _artworkBussinessLogic.ExistPraise(artworkId, userId.Value);
             }
-            var result = new ResultModel<ArtworkDetailModel>((int)ArtworkDetailModelStatus.Success, string.Empty, model);
+            var result = ResultModel<ArtworkDetailModel>.Conclude(ArtworkDetailModelStatus.Success, model);
             return result;
         }
 
@@ -69,16 +69,16 @@ namespace Art.WebService.Controllers
         {
             if (!_artworkBussinessLogic.Exist(model.ArtworkId))
             {
-                return SimpleResultModel.Result(ActivityShareStatus.ArtworkNotExist);//, "指定的作品Id不存在");
+                return SimpleResultModel.Conclude(ActivityShareStatus.ArtworkNotExist);//, "指定的作品Id不存在");
             }
 
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
-                return SimpleResultModel.Result(ActivityShareStatus.UserNotExist);//, "指定的用户Id不存在");
+                return SimpleResultModel.Conclude(ActivityShareStatus.UserNotExist);//, "指定的用户Id不存在");
             }
 
             _artworkBussinessLogic.Share(model.ArtworkId, model.UserId);
-            return SimpleResultModel.Result(ActivityShareStatus.Success);
+            return SimpleResultModel.Conclude(ActivityShareStatus.Success);
         }
 
         /// <summary>
@@ -97,20 +97,20 @@ namespace Art.WebService.Controllers
         {
             if (!_artworkBussinessLogic.Exist(model.ArtworkId))
             {
-                return SimpleResultModel.Result(ActivityPraiseStatus.ArtworkNotExist);//, "指定的作品不存在");
+                return SimpleResultModel.Conclude(ActivityPraiseStatus.ArtworkNotExist);//, "指定的作品不存在");
             }
 
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
-                return SimpleResultModel.Result(ActivityPraiseStatus.UserNotExist);//, "指定的用户不存在");
+                return SimpleResultModel.Conclude(ActivityPraiseStatus.UserNotExist);//, "指定的用户不存在");
             }
 
             if (_artworkBussinessLogic.ExistPraise(model.ArtworkId, model.UserId))
             {
-                return SimpleResultModel.Result(ActivityPraiseStatus.AlreadyPraised);//, "您已经赞过该作品");
+                return SimpleResultModel.Conclude(ActivityPraiseStatus.AlreadyPraised);//, "您已经赞过该作品");
             }
             _artworkBussinessLogic.Praise(model.ArtworkId, model.UserId);
-            return SimpleResultModel.Result(ActivityPraiseStatus.Success);
+            return SimpleResultModel.Conclude(ActivityPraiseStatus.Success);
         }
 
         /// <summary>
@@ -130,21 +130,21 @@ namespace Art.WebService.Controllers
         {
             if (!_artworkBussinessLogic.Exist(model.ArtworkId))
             {
-                return SimpleResultModel.Result(ActivityCollectStatus.ArtworkNotExist);//, "指定的作品不存在");
+                return SimpleResultModel.Conclude(ActivityCollectStatus.ArtworkNotExist);//, "指定的作品不存在");
             }
 
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
-                return SimpleResultModel.Result(ActivityCollectStatus.UserNotExist);//, "指定的用户不存在");
+                return SimpleResultModel.Conclude(ActivityCollectStatus.UserNotExist);//, "指定的用户不存在");
             }
             if (_artworkBussinessLogic.ExistCollect(model.ArtworkId, model.UserId))
             {
-                return SimpleResultModel.Result(ActivityCollectStatus.AlreadyCollected);//, "您已经收藏过该作品");
+                return SimpleResultModel.Conclude(ActivityCollectStatus.AlreadyCollected);//, "您已经收藏过该作品");
             }
 
             _artworkBussinessLogic.Collect(model.ArtworkId, model.UserId);
 
-            return SimpleResultModel.Result(ActivityCollectStatus.Success);
+            return SimpleResultModel.Conclude(ActivityCollectStatus.Success);
         }
 
         /// <summary>
@@ -164,23 +164,23 @@ namespace Art.WebService.Controllers
         {
             if (!_artworkBussinessLogic.Exist(model.ArtworkId))
             {
-                return SimpleResultModel.Result(ActivityCancelCollectStatus.ArtworkNotExist);
+                return SimpleResultModel.Conclude(ActivityCancelCollectStatus.ArtworkNotExist);
             }
 
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
 
-                return SimpleResultModel.Result(ActivityCancelCollectStatus.UserNotExist);
+                return SimpleResultModel.Conclude(ActivityCancelCollectStatus.UserNotExist);
             }
 
             if (!_artworkBussinessLogic.ExistCollect(model.ArtworkId, model.UserId))
             {
-                return SimpleResultModel.Result(ActivityCancelCollectStatus.NotCollectYet);
+                return SimpleResultModel.Conclude(ActivityCancelCollectStatus.NotCollectYet);
             }
 
             _artworkBussinessLogic.CancelCollect(model.ArtworkId, model.UserId);
 
-            return SimpleResultModel.Result(ActivityCancelCollectStatus.Success);
+            return SimpleResultModel.Conclude(ActivityCancelCollectStatus.Success);
         }
 
         /// <summary>
@@ -201,13 +201,11 @@ namespace Art.WebService.Controllers
             var artwork = _artworkBussinessLogic.GetArtwork(artworkId);
             if (artwork == null)
             {
-                return new ResultModel<PriceInfoModel>((int)PriceInfoStatus.ArtworkNotExist);
+                return ResultModel<PriceInfoModel>.Conclude(PriceInfoStatus.ArtworkNotExist);
             }
-            return new ResultModel<PriceInfoModel>
-                {
-                    Status = (int)PriceInfoStatus.Success,
-                    Result = PriceInfoModelTranslator.Instance.Translate(artwork)
-                };
+
+            var result = PriceInfoModelTranslator.Instance.Translate(artwork);
+            return ResultModel<PriceInfoModel>.Conclude(PriceInfoStatus.Success, result);
         }
 
         /// <summary>
@@ -227,15 +225,16 @@ namespace Art.WebService.Controllers
         {
             if (artworkIds == null)
             {
-                return new ResultModel<DeveryWaysModel[]>((int)DeveryWaysStatus.NoData);
+                return ResultModel<DeveryWaysModel[]>.Conclude(DeveryWaysStatus.InvalidArtworkIds);
             }
             var artworks = _artworkBussinessLogic.DeveryWays(artworkIds);
-            return
-                new ResultModel<DeveryWaysModel[]>
-                    {
-                        Status = (int)DeveryWaysStatus.Success,
-                        Result = artworks.Select(p => DeveryWaysModelTranslator.Instance.Translate(p)).ToArray()
-                    };
+            if (artworks.Count != artworkIds.Length)
+            {
+                return ResultModel<DeveryWaysModel[]>.Conclude(DeveryWaysStatus.InvalidArtworkIds);
+            }
+
+            var result = artworks.Select(p => DeveryWaysModelTranslator.Instance.Translate(p)).ToArray();
+            return ResultModel<DeveryWaysModel[]>.Conclude(DeveryWaysStatus.Success, result);
         }
     }
 }

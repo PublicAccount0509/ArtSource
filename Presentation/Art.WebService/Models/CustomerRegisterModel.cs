@@ -43,10 +43,20 @@ namespace Art.WebService.Models
     public enum CustomerRegisterStatus:int
     { 
         Success = 0,
+
+        [DisplayText("昵称不能为空")]
         NickNameEmpty,
+
+        [DisplayText("手机号不能为空")]
         PhoneNumberEmpty,
+
+        [DisplayText("密码不能为空")]
         PasswordEmpty,
+
+        [DisplayText("昵称已被注册")]
         NickNameAlreadyRegistered,
+
+        [DisplayText("手机号已被注册")]
         PhoneNumberRegistered
     }
 }

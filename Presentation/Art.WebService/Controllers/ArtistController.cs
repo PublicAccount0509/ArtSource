@@ -37,14 +37,10 @@ namespace Art.WebService.Controllers
         [HttpGet]
         public ResultModel<ArtistDetailModel> Detail(int artistId, int? userId)
         {
-            if (artistId == 0)
-            {
-                return new ResultModel<ArtistDetailModel>((int)ArtistDetailModelStatus.ArtistNotExist, "艺术家不存在");
-            }
             var artist = _artistBussinessLogic.GetArtist(artistId);
             if (artist == null)
             {
-                return new ResultModel<ArtistDetailModel>((int)ArtistDetailModelStatus.ArtistNotExist, "艺术家不存在");
+                return   ResultModel<ArtistDetailModel>.Conclude(ArtistDetailModelStatus.ArtistNotExist);;//, "艺术家不存在");
             }
             var artworks = _artworkBussinessLogic.GetArtworksByArtistId(artistId);
             var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
@@ -59,11 +55,7 @@ namespace Art.WebService.Controllers
                 userId != null &&
                 _artistBussinessLogic.ExistFollow(artistId, Convert.ToInt32(userId));
             artistDetailModel.Artworks = models.ToArray();
-            return new ResultModel<ArtistDetailModel>
-                {
-                    Status = (int)ArtistDetailModelStatus.Success,
-                    Result = artistDetailModel
-                };
+            return ResultModel<ArtistDetailModel>.Conclude(ArtistDetailModelStatus.Success, artistDetailModel);
         }
 
         /// <summary>
@@ -83,20 +75,20 @@ namespace Art.WebService.Controllers
         {
             if (!_artistBussinessLogic.Exist(model.ArtistId))
             {
-                return SimpleResultModel.Result(FollowModelStatus.ArtistNotExist);//, "要关注的艺术家不存在");
+                return SimpleResultModel.Conclude(FollowModelStatus.ArtistNotExist);//, "要关注的艺术家不存在");
             }
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
-                return SimpleResultModel.Result(FollowModelStatus.UserNotExist);//, "无效的用户");
+                return SimpleResultModel.Conclude(FollowModelStatus.UserNotExist);//, "无效的用户");
             }
             if (_artistBussinessLogic.ExistFollow(model.ArtistId, model.UserId))
             {
-                return SimpleResultModel.Result(FollowModelStatus.ArtistAlreadyFollowed);//, "您已经关注了该艺术家");
+                return SimpleResultModel.Conclude(FollowModelStatus.ArtistAlreadyFollowed);//, "您已经关注了该艺术家");
             }
             var entity = FollowModelTranslator.Instance.Translate(model);
             _artistBussinessLogic.AddFollow(entity);
 
-            return SimpleResultModel.Result(FollowModelStatus.Success);
+            return SimpleResultModel.Conclude(FollowModelStatus.Success);
         }
 
         /// <summary>
@@ -116,21 +108,21 @@ namespace Art.WebService.Controllers
         {
             if (!_artistBussinessLogic.Exist(model.ArtistId))
             {
-                return SimpleResultModel.Result(CancelFollowStatus.ArtistNotExist);//, "要取消关注的艺术家不存在");
+                return SimpleResultModel.Conclude(CancelFollowStatus.ArtistNotExist);//, "要取消关注的艺术家不存在");
             }
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
-                return SimpleResultModel.Result(CancelFollowStatus.UserNotExist);//, "无效的用户");
+                return SimpleResultModel.Conclude(CancelFollowStatus.UserNotExist);//, "无效的用户");
             }
             if (!_artistBussinessLogic.ExistFollow(model.ArtistId, model.UserId))
             {
-                return SimpleResultModel.Result(CancelFollowStatus.NotFollowYet);//, "您还没有关注该艺术家");
+                return SimpleResultModel.Conclude(CancelFollowStatus.NotFollowYet);//, "您还没有关注该艺术家");
             }
 
             var entity = FollowModelTranslator.Instance.Translate(model);
             _artistBussinessLogic.DeleteFollow(entity);
 
-            return SimpleResultModel.Result(CancelFollowStatus.Success);
+            return SimpleResultModel.Conclude(CancelFollowStatus.Success);
         }
 
         /// <summary>
@@ -148,12 +140,14 @@ namespace Art.WebService.Controllers
         [HttpGet]
         public ResultModel<FollowedModel[]> Followed(int userid)
         {
-            var follows = _artistBussinessLogic.GetFollowsByCustomerId(userid);
-            return new ResultModel<FollowedModel[]>
+            if (!_customerBussinessLogic.Exist(userid))
             {
-                Status = (int)FollowedModelStatus.Success,
-                Result = follows.Select(p => FollowedModelTranslator.Instance.Translate(p)).ToArray()
-            };
+                return ResultModel<FollowedModel[]>.Conclude(GetFollowedArtistsStatus.InvalidUserId); 
+            }
+
+            var follows = _artistBussinessLogic.GetFollowsByCustomerId(userid);
+            var result = follows.Select(p => FollowedModelTranslator.Instance.Translate(p)).ToArray();
+            return ResultModel<FollowedModel[]>.Conclude(GetFollowedArtistsStatus.Success,result);
         }
     }
 }

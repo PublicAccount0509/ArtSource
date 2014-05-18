@@ -17,6 +17,8 @@ namespace Art.WebService.Models
     public enum ArtistDetailModelStatus
     {
         Success,
+
+        [DisplayText("艺术家不存在")]
         ArtistNotExist
     }
     public class ArtistDetailModelTranslator : TranslatorBase<Artist, ArtistDetailModel>

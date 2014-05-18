@@ -25,7 +25,9 @@ namespace Art.WebService.Models
     public enum DeveryWaysStatus
     {
         Success,
-        NoData
+
+        [DisplayText("无效的请求参数")]
+        InvalidArtworkIds
     }
 
     public class DeveryWaysModelTranslator : TranslatorBase<Artwork, DeveryWaysModel>

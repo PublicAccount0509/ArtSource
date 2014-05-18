@@ -11,9 +11,11 @@ namespace Art.WebService.Models
         public string Name { get; set; } // 作家名字
     }
 
-    public enum FollowedModelStatus
+    public enum GetFollowedArtistsStatus
     {
-        Success
+        Success,
+        [DisplayText("指定的用户不存在")]
+        InvalidUserId
     }
 
     public class FollowedModelTranslator : TranslatorBase<ActivityFollow, FollowedModel>

@@ -102,6 +102,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddOrderModel.cs" />
+    <Compile Include="Models\Address\AddAddressModel.cs" />
     <Compile Include="Models\ArtistDetailModel.cs" />
     <Compile Include="Models\ArtworkDetailModel.cs" />
     <Compile Include="Models\ArtworkSimpleModel.cs" />
@@ -113,8 +114,8 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PriceInfoModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
-    <Compile Include="Models\ResultModel.cs" />
-    <Compile Include="Models\AddressModel.cs" />
+    <Compile Include="Models\ResultModel\ResultModel.cs" />
+    <Compile Include="Models\Address\UpdateAddressModel.cs" />
     <Compile Include="Models\ActivityShareModel.cs" />
     <Compile Include="Models\ActivityCollectModel.cs" />
     <Compile Include="Models\ActivityCancelCollectModel.cs" />
