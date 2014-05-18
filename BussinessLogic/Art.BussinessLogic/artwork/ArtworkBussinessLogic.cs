@@ -189,6 +189,19 @@ namespace Art.BussinessLogic
         {
             artwork.IsPublic = true;
 
+            while (true)
+            {
+                //产生作品的8位身份证号, 第一位是1，后面的随机
+                var strIdNumber = "1" + new Random().Next(9999999).ToString("D7");
+                var idNumber = Int32.Parse(strIdNumber);
+                if (_artworkRepository.Table.Any(i => i.IdentityNumber == idNumber))
+                {
+                    continue;
+                }
+                artwork.IdentityNumber = idNumber;
+                break;
+            }
+
             artwork.Images = GetImages(artwork.ImageFileName);
 
             _artworkRepository.Insert(artwork);

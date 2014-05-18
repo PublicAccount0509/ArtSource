@@ -76,7 +76,7 @@
     <Compile Include="Order\OrderPayInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AdminUser.cs" />
-    <Compile Include="ShopCart.cs" />
+    <Compile Include="ShoppingCartItem.cs" />
     <Compile Include="UserLoginResults.cs" />
     <Compile Include="Artwork\ArtPeriod.cs" />
     <Compile Include="SystemNotice.cs" />

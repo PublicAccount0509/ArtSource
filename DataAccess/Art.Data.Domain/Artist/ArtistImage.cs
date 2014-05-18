@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Domain
 {
-    public class ArtistImage
+    public class ArtistImage:BaseEntity
     {
         public Artist Artist { get; set; }
         public ArtistImageType ImageType { get; set; }
