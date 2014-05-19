@@ -140,6 +140,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">区域Id</param>
         /// <param name="regionName">区域名称</param>
+        /// <param name="parentCode">父节点编码</param>
         /// <returns>
         /// 返回区域信息
         /// </returns>
@@ -148,6 +149,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<BusinessAreaModel> GetRegion(string source, int id, string regionName);
+        ServicesResult<BusinessAreaModel> GetRegion(string source, int id, string regionName, string parentCode);
     }
 }

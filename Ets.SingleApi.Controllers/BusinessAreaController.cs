@@ -241,6 +241,7 @@
         /// </summary>
         /// <param name="id">区域Id</param>
         /// <param name="regionName">区域名称</param>
+        /// <param name="parentCode">The parentCode</param>
         /// <returns>
         /// 返回区域信息
         /// </returns>
@@ -250,9 +251,9 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<BusinessArea> Region(int id, string regionName)
+        public Response<BusinessArea> Region(int id = 0, string regionName = null, string parentCode = null)
         {
-            var result = this.businessAreaServices.GetRegion(this.Source, id, regionName ?? string.Empty);
+            var result = this.businessAreaServices.GetRegion(this.Source, id, regionName ?? string.Empty, parentCode ?? string.Empty);
             if (result.Result == null)
             {
                 return new Response<BusinessArea>
