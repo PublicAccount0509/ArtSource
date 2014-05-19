@@ -10,20 +10,13 @@ namespace Art.Data.Common
 {
     public enum ArtistImageType
     {
-        [KeepMinHeightSizeTransformer(290, 240)]
-        Size_W290_MinH240,
+        [FixedSizeTransformer(88, 88)]
+        Size_W88_H88,//个人中心
 
-        [FixedSizeTransformer(ConfigSettings.MINWIDTH_UPLOADEDARTWORKIMAGE, ConfigSettings.MINHEIGHT_UPLOADEDARTWORKIMAGE)]
-        Size_BigImage,
+        [FixedSizeTransformer(68, 68)]
+        Size_W68_H68,//作品详情
 
-        [FixedSizeTransformer(128, 100)]
-        Size_W128_H100,
-
-        [FixedSizeTransformer(180, 140)]
-        Size_W180_H140
+        [FixedSizeTransformer(44, 44)]
+        Size_W44_H44 //瀑布流头像
     }
-
-
-
-
 }

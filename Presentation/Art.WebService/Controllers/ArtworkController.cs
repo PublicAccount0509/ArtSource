@@ -275,8 +275,8 @@ namespace Art.WebService.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [HttpGet]
-        public ResultModel<DeveryWaysModel[]> DeveryWays(int[] artworkIds)
+        [HttpPost]
+        public ResultModel<DeveryWaysModel[]> DeliveryWays(int[] artworkIds)
         {
             var artworks = _artworkBussinessLogic.GetArtworks(artworkIds);
 

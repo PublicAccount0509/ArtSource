@@ -59,7 +59,7 @@ namespace Art.WebService.Models
 
         public override Address Translate(UpdateAddressModel from)
         {
-            var logic = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ICustomerBussinessLogic)) as ICustomerBussinessLogic;
+            var logic = GlobalConfiguration.Configuration.DependencyResolver.BeginScope().GetService(typeof(ICustomerBussinessLogic)) as ICustomerBussinessLogic;
 
             var to = logic.GetAddressById(from.Id);
             to.Name = from.ReceiptName;

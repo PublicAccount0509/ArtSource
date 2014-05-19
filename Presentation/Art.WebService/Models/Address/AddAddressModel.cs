@@ -42,23 +42,13 @@ namespace Art.WebService.Models
 
         public override AddAddressModel Translate(Address from)
         {
-            //var to = new AddAddressModel();
-            //to.PhoneNumber = from.Telephone;
-            //to.ReceiptName = from.Name;
-            //to.UserId = from.Customer.Id;
-            //to.Detail = from.Detail;
-            //if (from.Customer.DefaultAddressId.HasValue)
-            //{
-            //    to.IsDefault = from.Customer.DefaultAddressId.Value == from.Id;
-            //}
-            //return to;
             throw new NotImplementedException();
         }
 
         public override Address Translate(AddAddressModel from)
-        {
-            var logic = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ICustomerBussinessLogic)) as ICustomerBussinessLogic;
-
+        { 
+            var logic = GlobalConfiguration.Configuration.DependencyResolver.BeginScope().GetService(typeof(ICustomerBussinessLogic)) as ICustomerBussinessLogic;
+            
             var to = new Address();
             to.Name = from.ReceiptName;
             to.Detail = from.Detail;

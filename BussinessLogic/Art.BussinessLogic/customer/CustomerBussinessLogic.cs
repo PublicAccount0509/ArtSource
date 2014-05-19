@@ -166,6 +166,7 @@ namespace Art.BussinessLogic
 
         public Comment AddComment(Comment comment)
         {
+            comment.FADateTime = DateTime.Now;
             var result = _commentRepository.Insert(comment);
             return result;
         }
