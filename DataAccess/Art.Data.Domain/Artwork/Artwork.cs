@@ -9,6 +9,10 @@ namespace Art.Data.Domain
 {
     public class Artwork : BaseEntity, ISoftDelete
     {
+        public Artwork()
+        {
+            SuitableArtPlaces = new List<ArtPlace>();
+        }
         public int IdentityNumber { get; set; }
         public string Name { get; set; }
         public virtual Artist Artist { get; set; }

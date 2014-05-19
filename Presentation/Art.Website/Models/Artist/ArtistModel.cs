@@ -10,6 +10,7 @@ using WebExpress.Core;
 using Art.BussinessLogic;
 using Autofac;
 using System.Web.Mvc;
+using Art.Data.Domain.Access;
 namespace Art.Website.Models
 {
     public class ArtistModel
@@ -98,32 +99,13 @@ namespace Art.Website.Models
             }
 
             var allArtistTypes = logic.GetArtistTypes();
-            ParseItems(to.ArtistTypes, from.ArtistTypeIds, allArtistTypes); 
+            EfHelper.ParseItems(to.ArtistTypes, from.ArtistTypeIds, allArtistTypes); 
 
             var allGenres = logic.GetGenres();
-            ParseItems(to.SkilledGenres, from.SkilledGenreIds, allGenres);
+            EfHelper.ParseItems(to.SkilledGenres, from.SkilledGenreIds, allGenres);
             return to;
         }
 
-        private void ParseItems<T>(ICollection<T> correntItems, IList<int> finalItemIds, ICollection<T> all) where T : BaseEntity
-        {
-            foreach (var item in all)
-            {
-                if (finalItemIds.Contains(item.Id))
-                {
-                    if (!correntItems.Any(i => i.Id == item.Id))
-                    {
-                        correntItems.Add(item);
-                    }
-                }
-                else
-                {
-                    if (correntItems.Any(i => i.Id == item.Id))
-                    {
-                        correntItems.Remove(item);
-                    }
-                }
-            }
-        }
+        
     }
 }

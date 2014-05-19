@@ -30,7 +30,7 @@ namespace Art.BussinessLogic
         ArtworkType GetArtworkTypeByName(string name);
         List<Art.Data.Domain.ArtworkType> GetArtworkTypes();
         int GetCollectCount(int artworkId);
-        ICollection<ArtPlace> GetPlaces();
+        ICollection<ArtPlace> GetArtPlaces();
         int GetPraiseCount(int artworkId);
         int GetShareCount(int artworkId);
         ActivityPraise Praise(int artworkId, int customerId);

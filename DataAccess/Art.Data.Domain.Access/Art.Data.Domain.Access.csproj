@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ArtDbContext.cs" />
     <Compile Include="EfRepository.cs" />
+    <Compile Include="Helpers\EfHelper.cs" />
     <Compile Include="IDataProvider.cs" />
     <Compile Include="IDbContext.cs" />
     <Compile Include="Initializers\ArtDropCreateDatabaseIfModelChanges.cs" />
