@@ -158,18 +158,6 @@ namespace Art.BussinessLogic
         {
             _customerRepository.Update(model);
         }
-
-        public IList<Comment> GetComments(int customerId)
-        {
-            return _commentRepository.Table.Where(i => i.Customer.Id == customerId).ToList();
-        }
-
-        public Comment AddComment(Comment comment)
-        {
-            comment.FADateTime = DateTime.Now;
-            var result = _commentRepository.Insert(comment);
-            return result;
-        }
     }
 
     public enum CustomerRegisterResult

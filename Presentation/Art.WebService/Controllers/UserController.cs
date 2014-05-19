@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.BussinessLogic.Entities;
 using Art.Common;
 using Art.WebService.Models;
 using System;
@@ -7,15 +8,22 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebExpress.Core;
 
 namespace Art.WebService.Controllers
 {
     public class UserController : ApiController
     {
         private ICustomerBussinessLogic _customerBussinessLogic;
-        public UserController(ICustomerBussinessLogic customerBussinessLogic)
+        private IArtworkBussinessLogic _artworkBussinessLogic;
+        private IArtistBussinessLogic _artistBussinessLogic;
+        public UserController(ICustomerBussinessLogic customerBussinessLogic,
+            IArtworkBussinessLogic artworkBussinessLogic,
+            IArtistBussinessLogic artistBussinessLogic)
         {
             _customerBussinessLogic = customerBussinessLogic;
+            _artworkBussinessLogic = artworkBussinessLogic;
+            _artistBussinessLogic = artistBussinessLogic;
         }
 
         // GET api/user
@@ -56,13 +64,13 @@ namespace Art.WebService.Controllers
             return IntResultModel.Conclude(CustomerRegisterStatus.Success, customerAdded.Id);
         }
 
-        [HttpPost]
         /// <summary>
         /// 用户登录
         /// 
         /// 可以使用昵称或者手机号码登录
         /// </summary>
         [ActionStatus(typeof(LoginModelStatus))]
+        [HttpPost]
         public IntResultModel Login(LoginModel model)
         {
             var customer = _customerBussinessLogic.RetrieveCustomer(model.LoginName, model.Password);
@@ -248,7 +256,45 @@ namespace Art.WebService.Controllers
             return SimpleResultModel.Conclude(SendCheckCodeStatus.Success);
         }
 
+        [ActionStatus(typeof(GetCustomerProfileStatus))]
+        [HttpGet]
+        public ResultModel<CustomerProfile> Profile(int userId)
+        {
+            var customer = _customerBussinessLogic.Get(userId);
+            if (customer == null)
+            {
+                ResultModel<CustomerProfile>.Conclude(GetCustomerProfileStatus.InvalidUserId);
+            }
+            var result = CustomerProfileTranslator.Instance.Translate(customer);
+
+            result.CollectCount = _artworkBussinessLogic.GetCollectCount(userId);
+            result.PraiseCount = _artworkBussinessLogic.GetCollectCount(userId);
+            result.CommentCount = _artworkBussinessLogic.GetCommentCount(userId);
+            result.FollowCount = _artistBussinessLogic.GetFollowCount(userId);
+
+            result.ArtIndex = 3;
+
+            var paging = new PagingRequest(0, 4);
+            var criteria = new ArtworkSearchCriteria(paging) { CollectionCustomerId = userId };
+            result.LatestCollectArtworks = SearchArtworkAndAttachCount(criteria);
+
+            return ResultModel<CustomerProfile>.Conclude(GetCustomerProfileStatus.Success, result);
+        }
 
 
+        private ArtworkSimpleModel[] SearchArtworkAndAttachCount(ArtworkSearchCriteria criteria)
+        {
+            var artworks = _artworkBussinessLogic.SearchArtworks(criteria);
+
+            var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
+            foreach (var model in models)
+            {
+                model.ShareCount = _artworkBussinessLogic.GetSharedCount(model.Id);
+                model.CollectAccount = _artworkBussinessLogic.GetCollectedCount(model.Id);
+                model.PraiseCount = _artworkBussinessLogic.GetPraisedCount(model.Id);
+            }
+
+            return models.ToArray();
+        }
     }
 }

@@ -16,12 +16,13 @@ namespace Art.WebService.Tests
     public class UserControllerTest
     {
         UserController _controller;
-        ICustomerBussinessLogic _logic;
+        ICustomerBussinessLogic _logic1;
         [SetUp]
         public void Setup()
         {
-            _logic = MockRepository.GenerateMock<ICustomerBussinessLogic>();
-            _controller = new WebService.Controllers.UserController(_logic);
+            //_logic1 = MockRepository.GenerateMock<ICustomerBussinessLogic>();
+            //var _logic2 = MockRepository.GenerateMock<IArtworkBussinessLogic>();
+            //_controller = new WebService.Controllers.UserController(_logic1, _logic2);
         }
 
         [Test]
@@ -49,7 +50,7 @@ namespace Art.WebService.Tests
 
             customer.PhoneNumber = "13488738363";
 
-            _logic.Expect(i => i.Add(new Customer())).Return(new Customer());
+            _logic1.Expect(i => i.Add(new Customer())).Return(new Customer());
             var result2 = _controller.Register(customer);
             Assert.AreEqual((int)CustomerRegisterStatus.Success, result2.Status);
         }

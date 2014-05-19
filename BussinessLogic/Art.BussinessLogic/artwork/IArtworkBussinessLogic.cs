@@ -29,13 +29,21 @@ namespace Art.BussinessLogic
         ArtworkType GetArtworkType(int id);
         ArtworkType GetArtworkTypeByName(string name);
         List<Art.Data.Domain.ArtworkType> GetArtworkTypes();
-        int GetCollectCount(int artworkId);
+        
         ICollection<ArtPlace> GetArtPlaces();
-        int GetPraiseCount(int artworkId);
-        int GetShareCount(int artworkId);
+        int GetCollectedCount(int artworkId);
+        int GetCollectCount(int customerId);
+        int GetPraisedCount(int artworkId);
+        int GetPraiseCount(int customerId);
+        int GetSharedCount(int artworkId);
+        int GetShareCount(int customerId);
+
+        int GetCommentCount(int customerId); 
+        IList<Comment> GetComments(int customerId);
+        Comment AddComment(Comment comment);
+
         ActivityPraise Praise(int artworkId, int customerId);
         void CancelPraise(int artworkId, int customerId);
-        //PagedList<Artwork> SearchArtworks(string namePart, int? artworkTypeId, int? artMaterialId, int? artistId, WebExpress.Core.PagingRequest paging);
         PagedList<Artwork> SearchArtworks(ArtworkSearchCriteria criteria);
         ActivityShare Share(int artworkId, int customerId);
         void Update(Artwork artwork);

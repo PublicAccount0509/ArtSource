@@ -15,7 +15,7 @@ using WebExpress.Core.Guards;
 
 namespace Art.BussinessLogic
 {
-    public class ArtworkBussinessLogic : Art.BussinessLogic.IArtworkBussinessLogic
+    public class ArtworkBussinessLogic : IArtworkBussinessLogic
     {
         //public static readonly ArtworkBussinessLogic Instance = new ArtworkBussinessLogic();
 
@@ -363,7 +363,7 @@ namespace Art.BussinessLogic
             return result;
         }
 
-        public int GetShareCount(int artworkId)
+        public int GetSharedCount(int artworkId)
         {
             return _activityShareRepository.Table.Count(i => i.ArtworkId == artworkId);
         }
@@ -384,9 +384,28 @@ namespace Art.BussinessLogic
             _activityCollectRepository.Delete(entity);
         }
 
-        public int GetCollectCount(int artworkId)
+        public int GetCollectedCount(int artworkId)
         {
             var count = _activityCollectRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
+            return count;
+        }
+         
+
+        public int GetCollectCount(int customerId)
+        {
+            var count = _activityCollectRepository.Table.Where(i => i.CustomerId == customerId).Count();
+            return count;
+        }
+
+        public int GetPraiseCount(int customerId)
+        {
+            var count = _activityPraiseRepository.Table.Where(i => i.CustomerId == customerId).Count();
+            return count;
+        }
+
+        public int GetShareCount(int customerId)
+        {
+            var count = _activityShareRepository.Table.Where(i => i.CustomerId == customerId).Count();
             return count;
         }
 
@@ -416,7 +435,7 @@ namespace Art.BussinessLogic
             return _activityCollectRepository.Table.Any(p => p.ArtworkId == artworkId && p.CustomerId == customerId);
         }
 
-        public int GetPraiseCount(int artworkId)
+        public int GetPraisedCount(int artworkId)
         {
             var count = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
             return count;
@@ -437,6 +456,24 @@ namespace Art.BussinessLogic
         public Artwork[] GetArtworksByArtistId(int artistId)
         {
             return _artworkRepository.Table.Where(p => p.Artist.Id == artistId).ToArray();
+        } 
+
+        public int GetCommentCount(int customerId)
+        {
+            var count = _commentRepository.Table.Where(i => i.CustomerId == customerId).Count();
+            return count;
+        }
+         
+        public IList<Comment> GetComments(int customerId)
+        {
+            return _commentRepository.Table.Where(i => i.Customer.Id == customerId).ToList();
+        }
+
+        public Comment AddComment(Comment comment)
+        {
+            comment.FADateTime = DateTime.Now;
+            var result = _commentRepository.Insert(comment);
+            return result;
         }
 
         //public IList<Artwork> DeveryWays(int[] artworkIds)
@@ -451,5 +488,6 @@ namespace Art.BussinessLogic
         //            select art
         //           ).ToList();
         //}
+
     }
 }

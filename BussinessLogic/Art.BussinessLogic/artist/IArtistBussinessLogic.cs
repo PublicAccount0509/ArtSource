@@ -10,6 +10,8 @@ namespace Art.BussinessLogic
         Artist Add(Artist artist);
         void Add(ArtistType artistType);
         void AddFollow(ActivityFollow activityFollow);
+        ActivityFollow[] GetFollowsByCustomerId(int customerId);
+        int GetFollowCount(int customerId);
         bool CanUnpublish(Artist artist);
         bool CanUnpublish(Artist artist, out List<string> reasons);
         void Delete(Artist artist);
@@ -24,7 +26,6 @@ namespace Art.BussinessLogic
         ArtistType[] GetArtistTypes();
         ICollection<Art.Data.Domain.ArtistType> GetArtistTypes(List<int> ids);
         ArtistType[] GetArtistTypes(int artistId);
-        ActivityFollow[] GetFollowsByCustomerId(int customerId);
         Genre GetGenre(int id);
         Genre[] GetGenres();
         ICollection<Genre> GetSkilledGenres(List<int> ids);

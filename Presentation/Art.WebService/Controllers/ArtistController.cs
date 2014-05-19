@@ -61,9 +61,9 @@ namespace Art.WebService.Controllers
             var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
             foreach (var model in models)
             {
-                model.ShareCount = _artworkBussinessLogic.GetShareCount(model.Id);
-                model.CollectAccount = _artworkBussinessLogic.GetCollectCount(model.Id);
-                model.PraiseCount = _artworkBussinessLogic.GetPraiseCount(model.Id);
+                model.ShareCount = _artworkBussinessLogic.GetSharedCount(model.Id);
+                model.CollectAccount = _artworkBussinessLogic.GetCollectedCount(model.Id);
+                model.PraiseCount = _artworkBussinessLogic.GetPraisedCount(model.Id);
             }
             var artistDetailModel = ArtistDetailModelTranslator.Instance.Translate(artist);
             artistDetailModel.HasFollowed =

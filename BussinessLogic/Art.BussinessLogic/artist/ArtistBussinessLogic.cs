@@ -15,7 +15,7 @@ using WebExpress.Core.Guards;
 
 namespace Art.BussinessLogic
 {
-    public class ArtistBussinessLogic : Art.BussinessLogic.IArtistBussinessLogic
+    public class ArtistBussinessLogic : IArtistBussinessLogic
     {
         //public static readonly ArtistBussinessLogic Instance = new ArtistBussinessLogic();
 
@@ -297,6 +297,12 @@ namespace Art.BussinessLogic
         public ActivityFollow[] GetFollowsByCustomerId(int customerId)
         {
             return _activityFollowRepository.Table.Where(p => p.CustomerId == customerId).ToArray();
+        } 
+
+        public int GetFollowCount(int customerId)
+        {
+            var count = _activityFollowRepository.Table.Where(i => i.CustomerId == customerId).Count();
+            return count;
         }
     }
 }

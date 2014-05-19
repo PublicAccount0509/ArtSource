@@ -34,7 +34,7 @@ namespace Art.WebService.Controllers
         {
             var paging = new PagingRequest(pageIndex, itemsCount);
             var criteria = new ArtworkSearchCriteria(paging);
-            var result = SearchArtwork(criteria);
+            var result = SearchArtworkAndAttachCount(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
 
@@ -57,7 +57,7 @@ namespace Art.WebService.Controllers
                 MinPrice = model.MinPrice,
                 MaxPrice = model.MaxPrice,
             };
-            var result = SearchArtwork(criteria);
+            var result = SearchArtworkAndAttachCount(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
 
@@ -209,7 +209,7 @@ namespace Art.WebService.Controllers
             var paging = new PagingRequest(pageIndex, itemsCount);
             var criteria = new ArtworkSearchCriteria(paging) { CollectionCustomerId = userId };
 
-            var result = SearchArtwork(criteria);
+            var result = SearchArtworkAndAttachCount(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
 
@@ -236,7 +236,7 @@ namespace Art.WebService.Controllers
             }
 
             var comment = CommentModelTranslator.Instance.Translate(model);
-            _customerBussinessLogic.AddComment(comment);
+            _artworkBussinessLogic.AddComment(comment);
 
             return SimpleResultModel.Conclude(CustomerCommentStatus.Success);
         }
@@ -248,7 +248,7 @@ namespace Art.WebService.Controllers
         [HttpGet]
         public ResultModel<CommentedArtworkModel[]> Commented(int userId)
         {
-            var comments = _customerBussinessLogic.GetComments(userId);
+            var comments = _artworkBussinessLogic.GetComments(userId);
             var models = CommentedArtworkModelTranslator.Instance.Translate(comments);
             return ResultModel<CommentedArtworkModel[]>.Conclude(StandaloneStatus.Success, models.ToArray());
         }
@@ -263,7 +263,7 @@ namespace Art.WebService.Controllers
             var paging = new PagingRequest(pageIndex, itemsCount);
             var criteria = new ArtworkSearchCriteria(paging) { PraiseCustomerId = userId };
 
-            var result = SearchArtwork(criteria);
+            var result = SearchArtworkAndAttachCount(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
 
@@ -355,16 +355,16 @@ namespace Art.WebService.Controllers
             return ResultModel<ArtworkPackingWayModel>.Conclude(StandaloneStatus.Success, result);
         }
 
-        private ArtworkSimpleModel[] SearchArtwork(ArtworkSearchCriteria criteria)
+        private ArtworkSimpleModel[] SearchArtworkAndAttachCount(ArtworkSearchCriteria criteria)
         {
             var artworks = _artworkBussinessLogic.SearchArtworks(criteria);
 
             var models = ArtworkSimpleModelTranslator.Instance.Translate(artworks);
             foreach (var model in models)
             {
-                model.ShareCount = _artworkBussinessLogic.GetShareCount(model.Id);
-                model.CollectAccount = _artworkBussinessLogic.GetCollectCount(model.Id);
-                model.PraiseCount = _artworkBussinessLogic.GetPraiseCount(model.Id);
+                model.ShareCount = _artworkBussinessLogic.GetSharedCount(model.Id);
+                model.CollectAccount = _artworkBussinessLogic.GetCollectedCount(model.Id);
+                model.PraiseCount = _artworkBussinessLogic.GetPraisedCount(model.Id);
             }
 
             return models.ToArray();

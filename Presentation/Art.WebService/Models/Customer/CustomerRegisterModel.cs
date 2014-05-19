@@ -39,11 +39,7 @@ namespace Art.WebService.Models
         public static readonly CustomerRegisterModelTranslator Instance = new CustomerRegisterModelTranslator();
 
         public override CustomerRegisterModel Translate(Customer from)
-        {
-            //var to = new CustomerRegisterModel();
-            //to.Id = from.Id;
-            //to.Name = from.Name;
-            //return to;
+        { 
             throw new NotImplementedException();
         }
 
