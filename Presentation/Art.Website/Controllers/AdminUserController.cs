@@ -11,6 +11,12 @@ namespace Art.Website.Controllers
 {
     public class AdminUserController : Controller
     {
+        private IAdminUserBussinessLogic _adminUserBussinessLogic;
+        public AdminUserController(IAdminUserBussinessLogic logic)
+        {
+            _adminUserBussinessLogic = logic;
+        }
+
 
         /// <summary>
         /// The method will 
@@ -36,7 +42,7 @@ namespace Art.Website.Controllers
         }
         private IList<AdminUserModel> GetAdminUsers(AdminUserSearchCriteria criteria)
         {
-            var adminUsers = AdminUserBussinessLogic.Instance.SearchAdminUser(criteria);
+            var adminUsers = _adminUserBussinessLogic.SearchAdminUser(criteria);
             var adminUserModels = adminUsers.Select(item => AdminUserModelTranslator.Instance.Translate(item)).ToList();
             return adminUserModels;
         }

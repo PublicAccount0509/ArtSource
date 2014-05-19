@@ -21,6 +21,11 @@ namespace Art.Data.Domain.Access.Mapping
                  .Map(t => t.MapLeftKey("ArtworkId").MapRightKey("ArtPlaceId"));
 
 
+            this.HasMany(i => i.Comments)
+            .WithRequired(i => i.Artwork)
+            .Map(x => x.MapKey("ArtworkId"));
+
+
         }
     }
 }

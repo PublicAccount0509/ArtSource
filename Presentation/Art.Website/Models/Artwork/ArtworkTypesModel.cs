@@ -1,11 +1,12 @@
 ﻿using Art.BussinessLogic;
-using Art.Data.Domain;
+using Art.Data.Domain; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
-
+using Autofac;
+using System.Web.Mvc;
 namespace Art.Website.Models
 {
     public class ArtworkTypesModel
@@ -51,10 +52,11 @@ namespace Art.Website.Models
 
         public override ArtworkType Translate(ArtworkTypeModel from)
         {
+            var logic = DependencyResolver.Current.GetService<IArtworkBussinessLogic>();
             var to = new ArtworkType();
             if (from.Id > 0)
             {
-                to = ArtworkBussinessLogic.Instance.GetArtworkType(from.Id);
+                to = logic.GetArtworkType(from.Id);
             }
             to.Name = from.Text;
 
@@ -65,7 +67,7 @@ namespace Art.Website.Models
             {
                 if (item.Id > 0)
                 {
-                    var artwork = ArtworkBussinessLogic.Instance.GetArtMaterial(item.Id);
+                    var artwork = logic.GetArtMaterial(item.Id);
                     artwork.Name = item.Text;
                     to.ArtMaterials.Add(artwork);
                 }
@@ -84,7 +86,7 @@ namespace Art.Website.Models
             {
                 if (item.Id > 0)
                 {
-                    var artshape = ArtworkBussinessLogic.Instance.GetArtShape(item.Id);
+                    var artshape = logic.GetArtShape(item.Id);
                     artshape.Name = item.Text;
                     to.ArtShapes.Add(artshape);
                 }
@@ -103,9 +105,9 @@ namespace Art.Website.Models
             {
                 if (item.Id > 0)
                 {
-                    var technique = ArtworkBussinessLogic.Instance.GetArtTechnique(item.Id);
+                    var technique = logic.GetArtTechnique(item.Id);
                     technique.Name = item.Text;
-                    to.ArtTechniques.Add(ArtworkBussinessLogic.Instance.GetArtTechnique(item.Id));
+                    to.ArtTechniques.Add(logic.GetArtTechnique(item.Id));
                 }
                 else
                 {

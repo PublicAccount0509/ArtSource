@@ -8,7 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
-
+using Autofac;
+using System.Web.Mvc;
 namespace Art.Website.Models
 {
     public class ArtworkModel
@@ -98,24 +99,27 @@ namespace Art.Website.Models
 
             return to;
         }
-
+        
         public override Artwork Translate(ArtworkModel from)
         {
-            Artwork to = from.Id > 0 ? ArtworkBussinessLogic.Instance.GetArtwork(from.Id) : new Artwork();
+            var artistLogic = DependencyResolver.Current.GetService<IArtistBussinessLogic>();
+            var artworkLogic = DependencyResolver.Current.GetService<IArtworkBussinessLogic>();
+
+            Artwork to = from.Id > 0 ? artworkLogic.GetArtwork(from.Id) : new Artwork();
             to.Id = from.Id;
             to.Name = from.Name;
-            to.Artist = ArtistBussinessLogic.Instance.GetArtist(from.ArtistId);
+            to.Artist = artistLogic.GetArtist(from.ArtistId);
             to.Institution = from.Institution;
             to.Size = from.Size;
-            to.ArtworkType = ArtworkBussinessLogic.Instance.GetArtworkType(from.ArtworkTypeId);
-            to.ArtMaterial = ArtworkBussinessLogic.Instance.GetArtMaterial(from.ArtMaterialId);
-            to.ArtShape = from.ArtShapeId == null ? null : ArtworkBussinessLogic.Instance.GetArtShape(from.ArtShapeId.Value);
-            to.ArtTechnique = from.ArtTechniqueId == null ? null : ArtworkBussinessLogic.Instance.GetArtTechnique(from.ArtTechniqueId.Value);
+            to.ArtworkType = artworkLogic.GetArtworkType(from.ArtworkTypeId);
+            to.ArtMaterial = artworkLogic.GetArtMaterial(from.ArtMaterialId);
+            to.ArtShape = from.ArtShapeId == null ? null : artworkLogic.GetArtShape(from.ArtShapeId.Value);
+            to.ArtTechnique = from.ArtTechniqueId == null ? null : artworkLogic.GetArtTechnique(from.ArtTechniqueId.Value);
 
             to.ArtYear = from.ArtYear;// ArtworkBussinessLogic.Instance.GetPeriod(from.ArtYear);
-            to.Genre = ArtistBussinessLogic.Instance.GetGenre(from.GenreId);
+            to.Genre = artistLogic.GetGenre(from.GenreId);
             to.CreationInspiration = from.CreationInspiration;
-            to.SuitableArtPlaces = ArtworkBussinessLogic.Instance.GetArtPlaces(from.SuitablePlaceIds);
+            to.SuitableArtPlaces = artworkLogic.GetArtPlaces(from.SuitablePlaceIds);
             if (!string.IsNullOrEmpty(from.ImageFileName))
             {
                 //to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName);

@@ -10,10 +10,19 @@ namespace Art.Website.Controllers
 {
     public class MessageController : Controller
     {
+        private IMessageBussinessLogic _messageBussinessLogic;
+        private ICustomerBussinessLogic _customerBussinessLogic;
+        public MessageController(IMessageBussinessLogic messageBussinessLogic, ICustomerBussinessLogic customerBussinessLogic)
+        {
+            _messageBussinessLogic = messageBussinessLogic;
+            _customerBussinessLogic = customerBussinessLogic;
+        }
+
+
         [HttpGet]
         public ActionResult List()
         {
-            var activities = CustomerBussinessLogic.Instance.GetActivityCollect(1);
+            var activities = _customerBussinessLogic.GetActivityCollect(1);
 
 
             var model = new MessageModel();
@@ -32,15 +41,15 @@ namespace Art.Website.Controllers
 
         public JsonResult DeleteNotices(int[] noticeIds)
         {
-            var notices = MessageBussinessLogic.Instance.GetSystemNotices(noticeIds);
-            MessageBussinessLogic.Instance.DeleteSystemNotices(notices.ToArray());
+            var notices = _messageBussinessLogic.GetSystemNotices(noticeIds);
+            _messageBussinessLogic.DeleteSystemNotices(notices.ToArray());
             var model = new ResultModel(true, string.Empty);
             return Json(model);
         }
 
         private PagedSystemNoticeModel GetPagedSystemNoticeModel(SystemNoticeSearchCriteria criteria)
         {
-            var pagedSystemNotice = MessageBussinessLogic.Instance.SearchSystemNotice(criteria.StartDate, criteria.EndDate, criteria.PagingRequest);
+            var pagedSystemNotice = _messageBussinessLogic.SearchSystemNotice(criteria.StartDate, criteria.EndDate, criteria.PagingRequest);
             var notices = SystemNoticeModelTranslator.Instance.Translate(pagedSystemNotice.ToList());
             var model = new PagedSystemNoticeModel(notices, pagedSystemNotice.PagingResult);
             return model;
@@ -48,7 +57,7 @@ namespace Art.Website.Controllers
 
         public JsonResult Publish(string title, string content)
         {
-            MessageBussinessLogic.Instance.PublishSystemNotice(title, content);
+            _messageBussinessLogic.PublishSystemNotice(title, content);
             var result = new ResultModel(true, string.Empty);
             return Json(result);
         }
@@ -57,7 +66,7 @@ namespace Art.Website.Controllers
         #region For Comment
         private PagedCommentModel GetPagedCommentModel(CommentSearchCriteria criteria)
         {
-            var pagedComments = MessageBussinessLogic.Instance.SearchComments(criteria.StartDate, criteria.EndDate, criteria.State, criteria.PagingRequest);
+            var pagedComments = _messageBussinessLogic.SearchComments(criteria.StartDate, criteria.EndDate, criteria.State, criteria.PagingRequest);
             var notices = CommentModelTranslator.Instance.Translate(pagedComments.ToList());
             var model = new PagedCommentModel(notices, pagedComments.PagingResult);
             return model;
@@ -71,23 +80,23 @@ namespace Art.Website.Controllers
 
         public JsonResult Approve(int commentId)
         {
-            var comment = MessageBussinessLogic.Instance.GetComment(commentId);
-            MessageBussinessLogic.Instance.Approve(comment);
+            var comment = _messageBussinessLogic.GetComment(commentId);
+            _messageBussinessLogic.Approve(comment);
             var result = new ResultModel(true, string.Empty);
             return Json(result);
         }
 
         public JsonResult UnApprove(int commentId)
         {
-            var comment = MessageBussinessLogic.Instance.GetComment(commentId);
-            MessageBussinessLogic.Instance.UnApprove(comment);
+            var comment = _messageBussinessLogic.GetComment(commentId);
+            _messageBussinessLogic.UnApprove(comment);
             var result = new ResultModel(true, string.Empty);
             return Json(result);
         }
 
         public JsonResult Reply(int commentId, string repliedText)
         {
-            MessageBussinessLogic.Instance.AddReply(commentId, repliedText);
+            _messageBussinessLogic.AddReply(commentId, repliedText);
             var result = new ResultModel(true, string.Empty);
             return Json(result);
         }

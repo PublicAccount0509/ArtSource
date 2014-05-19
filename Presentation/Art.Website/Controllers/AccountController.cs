@@ -19,10 +19,12 @@ namespace Art.Website.Controllers
     public class AccountController : Controller
     {
         private IAuthenticationService _authenticationService;
-        public AccountController()
+        private IAdminUserBussinessLogic _adminUserBussinessLogic;
+        public AccountController(IAdminUserBussinessLogic logic)
         {
+            _adminUserBussinessLogic = logic;
             _authenticationService = new FormAuthenticationService();
-        }
+        } 
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -42,7 +44,7 @@ namespace Art.Website.Controllers
             }
             if (ModelState.IsValid)
             {
-                var loginResult = UserBussinessLogic.Instance.ValidateUser(model.UserName, model.Password);
+                var loginResult = _adminUserBussinessLogic.ValidateUser(model.UserName, model.Password);
                 switch (loginResult)
                 {
                     case Art.Data.Domain.UserLoginResults.Successful:

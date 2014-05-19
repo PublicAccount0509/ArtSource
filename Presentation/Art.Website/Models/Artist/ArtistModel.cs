@@ -7,7 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
-
+using Art.BussinessLogic;
+using Autofac;
+using System.Web.Mvc;
 namespace Art.Website.Models
 {
     public class ArtistModel
@@ -78,7 +80,9 @@ namespace Art.Website.Models
 
         public override Artist Translate(ArtistModel from)
         {
-            Artist to = from.Id > 0 ? Art.BussinessLogic.ArtistBussinessLogic.Instance.GetArtist(from.Id) : new Artist();
+            var logic = DependencyResolver.Current.GetService<IArtistBussinessLogic>();
+
+            Artist to = from.Id > 0 ? logic.GetArtist(from.Id) : new Artist();
             to.Gender = from.Gender;
             to.Name = from.Name;
             to.Birthday = from.Birthday;
@@ -93,9 +97,33 @@ namespace Art.Website.Models
                 to.AvatarFileName = Path.GetFileName(from.AvatarFileName);
             }
 
-            to.ArtistTypes = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetArtistTypes(from.ArtistTypeIds);
-            to.SkilledGenres = Art.BussinessLogic.ArtistBussinessLogic.Instance.GetSkilledGenres(from.SkilledGenreIds);
+            var allArtistTypes = logic.GetArtistTypes();
+            ParseItems(to.ArtistTypes, from.ArtistTypeIds, allArtistTypes); 
+
+            var allGenres = logic.GetGenres();
+            ParseItems(to.SkilledGenres, from.SkilledGenreIds, allGenres);
             return to;
+        }
+
+        private void ParseItems<T>(ICollection<T> correntItems, IList<int> finalItemIds, ICollection<T> all) where T : BaseEntity
+        {
+            foreach (var item in all)
+            {
+                if (finalItemIds.Contains(item.Id))
+                {
+                    if (!correntItems.Any(i => i.Id == item.Id))
+                    {
+                        correntItems.Add(item);
+                    }
+                }
+                else
+                {
+                    if (correntItems.Any(i => i.Id == item.Id))
+                    {
+                        correntItems.Remove(item);
+                    }
+                }
+            }
         }
     }
 }

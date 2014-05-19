@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
+using Autofac;
+using System.Web.Mvc;
 
 namespace Art.Website.Models
 {
@@ -31,7 +33,8 @@ namespace Art.Website.Models
             ArtistType to;
             if (from.Id > 0)
             {
-                to = ArtistBussinessLogic.Instance.GetArtistType(from.Id);
+                var logic = DependencyResolver.Current.GetService<IArtistBussinessLogic>();
+                to = logic.GetArtistType(from.Id);
             }
             else
             {

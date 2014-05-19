@@ -13,6 +13,18 @@ namespace Art.Website.Controllers
 { 
     public class OrderController : Controller
     {
+        private IArtistBussinessLogic _artistBussinessLogic;
+        private IArtworkBussinessLogic _artworkBussinessLogic;
+        private IOrderBussinessLogic _orderBussinessLogic;
+        public OrderController(IArtistBussinessLogic artistBussinessLogic, 
+            IArtworkBussinessLogic artworkBussinessLogic,
+            IOrderBussinessLogic orderBussinessLogic)
+        {
+            _artistBussinessLogic = artistBussinessLogic;
+            _artworkBussinessLogic = artworkBussinessLogic;
+            _orderBussinessLogic = orderBussinessLogic;
+        }
+
         public ActionResult Test()
         {
             var model = new AddOrderModel();
@@ -29,7 +41,7 @@ namespace Art.Website.Controllers
 
             var order = AddOrderModelTranslator.Instance.Translate(model);
 
-            var result = OrderBussinessLogic.Instance.AddOrder(order);
+            var result = _orderBussinessLogic.AddOrder(order);
             return View();
         }
 
@@ -57,7 +69,7 @@ namespace Art.Website.Controllers
 
         private PagedOrderModel GetPagedOrderModel(OrderSearchCriteria criteria)
         {
-            var pagedOrders = OrderBussinessLogic.Instance.SearchOrders(criteria);
+            var pagedOrders = _orderBussinessLogic.SearchOrders(criteria);
             var simpleOrders = new List<OrderSimpleModel>();
             foreach (var item in pagedOrders)
             {
@@ -71,7 +83,7 @@ namespace Art.Website.Controllers
 
         //public JsonResult Deliver(DeliverInfoModel model)
         //{
-        //    OrderBussinessLogic.Instance.Deliver(model.Id, model.DeliveryCompany, model.DeliveryNumber);
+        //    _orderBussinessLogic.Deliver(model.Id, model.DeliveryCompany, model.DeliveryNumber);
         //    return Json(new ResultModel(true, ""));
         //}
 
@@ -141,7 +153,7 @@ namespace Art.Website.Controllers
         [HttpPost]
         public JsonResult AuctionAccept(int id)
         {
-            var bussResult = OrderBussinessLogic.Instance.AuctionAccept(id);
+            var bussResult = _orderBussinessLogic.AuctionAccept(id);
             var result = new ResultModel(bussResult, "");
             return Json(result);
         }
@@ -161,7 +173,7 @@ namespace Art.Website.Controllers
         [HttpPost]
         public JsonResult AuctionRefuse(int id)
         {
-            var bussResult = OrderBussinessLogic.Instance.AuctionRefuse(id);
+            var bussResult = _orderBussinessLogic.AuctionRefuse(id);
             var result = new ResultModel(bussResult, "");
             return Json(result);
         }
@@ -180,7 +192,7 @@ namespace Art.Website.Controllers
         /// ----------------------------------------------------------------------------------------
         private PagedAuctionModel GetPagedAuctionModel(AuctionSearchCriteria criteria)
         {
-            var pagedOrders = OrderBussinessLogic.Instance.SearchAuction(criteria);
+            var pagedOrders = _orderBussinessLogic.SearchAuction(criteria);
             //foreach (var item in pagedOrders)
             //{
             //    var simpleOrder = AuctionSimpleModelTranslator.Instance.Translate(item);
@@ -206,7 +218,7 @@ namespace Art.Website.Controllers
         /// ----------------------------------------------------------------------------------------
         private List<ArtistModel> GetArtists()
         {
-            var artists = ArtistBussinessLogic.Instance.GetArtists();
+            var artists = _artistBussinessLogic.GetArtists();
             return artists.Select(item => ArtistTranslator.Instance.Translate(item)).ToList();
         }
 
@@ -223,7 +235,7 @@ namespace Art.Website.Controllers
         /// ----------------------------------------------------------------------------------------
         private List<ArtworkModel> GetArtworks()
         {
-            var artworks = ArtworkBussinessLogic.Instance.GetArtworks();
+            var artworks = _artworkBussinessLogic.GetArtworks();
             return artworks.Select(item => ArtworkModelTranslator.Instance.Translate(item)).ToList();
         }
 
@@ -246,13 +258,13 @@ namespace Art.Website.Controllers
         /// ----------------------------------------------------------------------------------------
         public ActionResult Detail(int id)
         {
-            var result = OrderBussinessLogic.Instance.GetOrderById(id);
+            var result = _orderBussinessLogic.GetOrderById(id);
             if (result == null)
             {
                 return View(new OrderDetailModel());
             }
             var model = OrderDetailModelTranslator.Instance.Translate(result);
-            var address = OrderBussinessLogic.Instance.GetAddress(result.ReceiptAddressId);
+            var address = _orderBussinessLogic.GetAddress(result.ReceiptAddressId);
             if (address != null)
             {
                 model.ReceiptAddress = AddressModelTranslator.Instance.Translate(address);

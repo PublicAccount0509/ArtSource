@@ -9,6 +9,7 @@ namespace Art.Data.Domain
 {
     public class Artwork : BaseEntity, ISoftDelete
     {
+        public int IdentityNumber { get; set; }
         public string Name { get; set; }
         public virtual Artist Artist { get; set; }
         public string Institution { get; set; }
@@ -46,6 +47,8 @@ namespace Art.Data.Domain
         public virtual ArtTechnique ArtTechnique { get; set; }
 
         public virtual List<Comment> Comments { get; set; }
+
+        public int? DefaultCommentId { get; set; }
         public virtual Comment DefaultComment { get; set; }
 
         public virtual List<ArtworkImage> Images { get; set; }

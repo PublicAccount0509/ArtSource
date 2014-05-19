@@ -3,10 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebExpress.Core;
-using WebExpress.Core.Enums;
-using WebExpress.Core.TypeExtensions;
-
+using WebExpress.Core; 
 namespace Art.Website.Models
 {
     public class ArtistEditModel

@@ -18,6 +18,6 @@ namespace Art.Data.Domain
 
         public DateTime FADateTime { get; set; }
 
-        public string Test { get; set; }
+        public string Test2 { get; set; }
     }
 }

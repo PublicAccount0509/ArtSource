@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebExpress.Core.Enums
+namespace WebExpress.Core
 {
     public class EnumItem : IEnumItem, IValueTextEntry
     {

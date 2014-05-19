@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminUser\AdminUserSearchCriteria.cs" />
+    <Compile Include="ArtworkSearchCriteria.cs" />
     <Compile Include="Order\AuctionSearchCriteria.cs" />
     <Compile Include="Order\OrderSearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ArtistSearchCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DataAccess\Art.Data.Common\Art.Data.Common.csproj">
