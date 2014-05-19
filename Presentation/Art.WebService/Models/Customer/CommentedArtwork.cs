@@ -28,7 +28,7 @@ namespace Art.WebService.Models
             var image = from.Artwork.Images.Where(i => i.ImageType == Data.Common.ArtworkImageResizeType.Size_W180_H140).FirstOrDefault();
             if (image != null)
             {
-                to.ArtworkImagePath = Path.Combine(ConfigSettings.Instance.FileUploadPath, image.ImagePath);                
+                to.ArtworkImagePath = CommonHelper.GetUploadFileRelativePath_SlantStyle(image.ImagePath);
             }
             return to;
         }
