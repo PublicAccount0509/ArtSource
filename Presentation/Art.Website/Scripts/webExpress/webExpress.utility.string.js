@@ -10,6 +10,7 @@
 		function _init() {
 		    _self.padLeft = padLeft;
 		    _self.padRight = padRight;
+            _self.isNullOrEmpty
 		}
 
 		function padRight(str, totalWidth, padChar) { 

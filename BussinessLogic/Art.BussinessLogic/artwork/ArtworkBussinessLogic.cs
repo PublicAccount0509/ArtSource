@@ -385,7 +385,7 @@ namespace Art.BussinessLogic
 
         public int GetCollectCount(int artworkId)
         {
-            var count = _activityShareRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
+            var count = _activityCollectRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
             return count;
         }
 
