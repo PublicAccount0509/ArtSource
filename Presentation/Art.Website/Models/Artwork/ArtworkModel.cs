@@ -10,6 +10,7 @@ using System.Web;
 using WebExpress.Core;
 using Autofac;
 using System.Web.Mvc;
+using Art.Data.Domain.Access;  
 namespace Art.Website.Models
 {
     public class ArtworkModel
@@ -53,6 +54,8 @@ namespace Art.Website.Models
 
         public bool FeeDeliveryNonlocalEnabled { get; set; }
         public decimal? FeeDeliveryNonlocal { get; set; }
+
+        public bool AtTop { get; set; }
     }
 
     public class ArtworkModelTranslator : TranslatorBase<Artwork, ArtworkModel>
@@ -96,7 +99,7 @@ namespace Art.Website.Models
             to.FeePackageGeneralEnabled = from.FeePackageGeneral.HasValue;
             to.FeeDeliveryLocalEnabled = from.FeeDeliveryLocal.HasValue;
             to.FeeDeliveryNonlocalEnabled = from.FeeDeliveryNonlocal.HasValue;
-
+            to.AtTop = from.AtTopDatetime.HasValue;
             return to;
         }
         
@@ -118,8 +121,10 @@ namespace Art.Website.Models
 
             to.ArtYear = from.ArtYear;// ArtworkBussinessLogic.Instance.GetPeriod(from.ArtYear);
             to.Genre = artistLogic.GetGenre(from.GenreId);
-            to.CreationInspiration = from.CreationInspiration;
-            to.SuitableArtPlaces = artworkLogic.GetArtPlaces(from.SuitablePlaceIds);
+            to.CreationInspiration = from.CreationInspiration; 
+            //to.SuitableArtPlaces = artworkLogic.GetArtPlaces(from.SuitablePlaceIds);
+            var allPlaces = artworkLogic.GetArtPlaces();
+            EfHelper.ParseItems(to.SuitableArtPlaces, from.SuitablePlaceIds, allPlaces); 
             if (!string.IsNullOrEmpty(from.ImageFileName))
             {
                 //to.ImageFileName = Path.Combine(ConfigSettings.Instance.UploadedFileFolder, from.ImageFileName);
@@ -136,6 +141,20 @@ namespace Art.Website.Models
             to.FeeDeliveryLocal = from.FeeDeliveryLocalEnabled ? from.FeeDeliveryLocal : null;
             to.FeeDeliveryNonlocal = from.FeeDeliveryNonlocalEnabled ? from.FeeDeliveryNonlocal : null;
 
+            if (to.AtTopDatetime.HasValue)
+            {
+                if (!from.AtTop)
+                {
+                    to.AtTopDatetime = null;
+                }
+            }
+            else
+            {
+                if (from.AtTop)
+                {
+                    to.AtTopDatetime = DateTime.Now;
+                }
+            }
             return to;
         }
     }

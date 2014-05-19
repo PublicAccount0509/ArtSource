@@ -54,7 +54,12 @@ namespace Art.WebService.Controllers
         }
 
         [HttpPost]
-        //可以使用昵称或者手机号码登录
+        /// <summary>
+        /// 用户登录
+        /// 
+        /// 可以使用昵称或者手机号码登录
+        /// </summary>
+        [ActionStatus(typeof(LoginModelStatus))]
         public IntResultModel Login(LoginModel model)
         {
             var customer = _customerBussinessLogic.RetrieveCustomer(model.LoginName, model.Password);

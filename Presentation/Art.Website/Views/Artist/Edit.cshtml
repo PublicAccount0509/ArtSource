@@ -116,7 +116,7 @@
                         <span>
                             <input type="checkbox" value="@Model.SourceArtistTypes[i].Id" />@Model.SourceArtistTypes[i].Name</span>    
                     }
-                    <label for="@PropName(i => i.Artist.ArtistTypeIds)" class="error t-errormessage">请填写得过奖项</label>
+                    <label for="@PropName(i => i.Artist.ArtistTypeIds)" class="error t-errormessage">请选择流派</label>
                 </dd>
             </dl>
             <dl class="beGoodAt clearfix mandatory" property-name="@PropName(i => i.Artist.SkilledGenreIds)" control-type="simpleCheckbox">

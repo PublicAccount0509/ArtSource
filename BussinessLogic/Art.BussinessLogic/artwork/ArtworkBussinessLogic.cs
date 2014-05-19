@@ -21,6 +21,7 @@ namespace Art.BussinessLogic
 
         private IRepository<ArtworkType> _artworkTypeRepository;
         private IRepository<Artwork> _artworkRepository;
+        private IRepository<Comment> _commentRepository;
         private IRepository<ArtMaterial> _artMaterialRepository;
         private IRepository<ArtShape> _artShapeRepository;
         private IRepository<ArtTechnique> _artTechniqueRepository;
@@ -37,7 +38,8 @@ namespace Art.BussinessLogic
             IRepository<ArtPlace> artPlaceRepository,
             IRepository<ActivityShare> activityShareRepository,
             IRepository<ActivityCollect> activityCollectRepository,
-            IRepository<ActivityPraise> activityPraiseRepository
+            IRepository<ActivityPraise> activityPraiseRepository,
+            IRepository<Comment> commentRepository
         )
         {
             _artworkTypeRepository = artworkTypeRepository;
@@ -49,6 +51,7 @@ namespace Art.BussinessLogic
             _activityShareRepository = activityShareRepository;
             _activityCollectRepository = activityCollectRepository;
             _activityPraiseRepository = activityPraiseRepository;
+            _commentRepository = commentRepository;
         }
 
         public List<ArtworkType> GetArtworkTypes()
@@ -166,7 +169,7 @@ namespace Art.BussinessLogic
         //    return _artPeriodRepository.Table.ToList();
         //}
 
-        public ICollection<ArtPlace> GetPlaces()
+        public ICollection<ArtPlace> GetArtPlaces()
         {
             return _artPlaceRepository.Table.ToList();
         }
@@ -331,6 +334,10 @@ namespace Art.BussinessLogic
 
         public void Delete(Artwork artwork)
         {
+            foreach (var comment in artwork.Comments)
+            {
+                _commentRepository.Delete(comment);
+            }
             _artworkRepository.Delete(artwork);
         }
 
@@ -385,7 +392,7 @@ namespace Art.BussinessLogic
 
         public int GetCollectCount(int artworkId)
         {
-            var count = _activityShareRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
+            var count = _activityCollectRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
             return count;
         }
 

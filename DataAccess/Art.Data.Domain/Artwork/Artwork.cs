@@ -9,6 +9,11 @@ namespace Art.Data.Domain
 {
     public class Artwork : BaseEntity, ISoftDelete
     {
+        public Artwork()
+        {
+            SuitableArtPlaces = new List<ArtPlace>();
+        }
+
         public int IdentityNumber { get; set; }
         public string Name { get; set; }
         public virtual Artist Artist { get; set; }
@@ -29,7 +34,6 @@ namespace Art.Data.Domain
 
         public bool IsPublic { get; set; }
 
-
         public decimal? FeePackageGeneral { get; set; }
 
         public decimal? FeePackageFine { get; set; }
@@ -38,6 +42,7 @@ namespace Art.Data.Domain
 
         public decimal? FeeDeliveryNonlocal { get; set; }
 
+        public DateTime? AtTopDatetime { get; set; }
 
         public virtual ICollection<ArtPlace> SuitableArtPlaces { get; set; }
 
