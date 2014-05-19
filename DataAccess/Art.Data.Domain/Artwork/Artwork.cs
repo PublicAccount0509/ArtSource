@@ -34,7 +34,6 @@ namespace Art.Data.Domain
 
         public bool IsPublic { get; set; }
 
-
         public decimal? FeePackageGeneral { get; set; }
 
         public decimal? FeePackageFine { get; set; }
@@ -42,7 +41,6 @@ namespace Art.Data.Domain
         public decimal? FeeDeliveryLocal { get; set; }
 
         public decimal? FeeDeliveryNonlocal { get; set; }
-
 
         public virtual ICollection<ArtPlace> SuitableArtPlaces { get; set; }
 
