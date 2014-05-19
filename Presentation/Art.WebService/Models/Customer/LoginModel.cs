@@ -6,6 +6,9 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 用户登录数据
+    /// </summary>
     public class LoginModel
     {
         /// <summary>
