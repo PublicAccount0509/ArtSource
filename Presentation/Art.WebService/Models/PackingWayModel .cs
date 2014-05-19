@@ -8,10 +8,22 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 包装方式数据
+    /// </summary>
     public class ArtworkPackingWayModel 
     {
+        /// <summary>
+        /// 作品Id
+        /// </summary>
         public int ArtworkId { get; set; }
+        /// <summary>
+        /// 作品名称
+        /// </summary>
         public string ArtworkName { get; set; }
+        /// <summary>
+        /// 包装方式
+        /// </summary>
         public PackingWay[] Ways { get; set; }
     }
 

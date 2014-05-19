@@ -441,7 +441,11 @@ namespace Art.BussinessLogic
             var result = _activityPraiseRepository.Insert(entity);
             return result;
         }
-
+        public void CancelPraise(int artworkId, int customerId)
+        {
+            var entity = _activityPraiseRepository.Table.Where(i => i.ArtworkId == artworkId && i.CustomerId == customerId).FirstOrDefault();
+            _activityPraiseRepository.Delete(entity);
+        }
 
         public bool ExistCollect(int artworkId, int customerId)
         {

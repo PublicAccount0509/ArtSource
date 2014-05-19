@@ -22,7 +22,10 @@ namespace Art.WebService.Controllers
             _customerBussinessLogic = customerBussinessLogic;
         }
 
-
+        /// <summary>
+        /// 获取所有艺术家列表
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
         [HttpGet]
         public ResultModel<ArtistSimpleModel[]> List()
         {
@@ -38,18 +41,14 @@ namespace Art.WebService.Controllers
 
 
         /// <summary>
-        /// The method will 
+        /// 获取艺术家
         /// </summary>
-        /// <param name="artistId">The artistId</param>
-        /// <param name="userId">The userId</param>
-        /// <returns>
-        /// The ArtistDetailModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 2:38 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(ArtistDetailModelStatus))]
         [HttpGet]
         public ResultModel<ArtistDetailModel> Detail(int artistId, int? userId)
         {
@@ -75,17 +74,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// The method will 
+        /// 关注艺术家
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// The ResultModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 2:38 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(FollowModelStatus))]
         [HttpPost]
         public SimpleResultModel Follow(FollowModel model)
         {
@@ -108,17 +104,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// Cancels the follow.
+        /// 取消关注
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// SimpleResultModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 5:26 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(CancelFollowStatus))]
         [HttpPost]
         public SimpleResultModel CancelFollow(FollowModel model)
         {
@@ -142,17 +135,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// The method will 
+        /// 获取所有关注的艺术家
         /// </summary>
-        /// <param name="userid">The userid</param>
-        /// <returns>
-        /// The FollowedModel[][]
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 2:37 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(GetFollowedArtistsStatus))]
         [HttpGet]
         public ResultModel<FollowedModel[]> Followed(int userid)
         {

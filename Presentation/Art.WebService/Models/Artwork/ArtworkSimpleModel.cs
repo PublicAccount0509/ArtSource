@@ -8,21 +8,58 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 作品数据
+    /// </summary>
     public class ArtworkSimpleModel
     {
+        /// <summary>
+        /// 作品Id
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// 作品名称
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// 图片地址
+        /// </summary>
         public string ImagePath { get; set; }
+        /// <summary>
+        /// 图像宽度
+        /// </summary>
         public int ImageWidth { get; set; }
+        /// <summary>
+        /// 图像高度
+        /// </summary>
         public int ImageHeight { get; set; }
+        /// <summary>
+        /// 作家名称
+        /// </summary>
         public string ArtistName { get; set; }
-
+        /// <summary>
+        /// 分享总次数
+        /// </summary>
         public int ShareCount { get; set; }
+        /// <summary>
+        /// 收藏总次数
+        /// </summary>
         public int CollectAccount { get; set; }
+        /// <summary>
+        /// 点赞总次数
+        /// </summary>
         public int PraiseCount { get; set; }
-
+        /// <summary>
+        /// 评论用户Id
+        /// </summary>
         public int CommentUserId { get; set; }
+        /// <summary>
+        /// 评论用户头像地址
+        /// </summary>
         public string CommentUserIconPath { get; set; }
+        /// <summary>
+        /// 评论内容
+        /// </summary>
         public string CommentContent { get; set; }
 
     }

@@ -7,12 +7,30 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 注册用户数据
+    /// </summary>
     public class CustomerRegisterModel
     {
+        /// <summary>
+        /// 昵称
+        /// </summary>
         public string NickName { get; set; }
+        /// <summary>
+        /// 手机
+        /// </summary>
         public string PhoneNumber { get; set; }
+        /// <summary>
+        /// 密码
+        /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// 验证码
+        /// </summary>
         public string CheckCode { get; set; }
+        /// <summary>
+        /// 0 ios 1 android
+        /// </summary>
         public DeviceType DeviceType { get; set; }
     }
 

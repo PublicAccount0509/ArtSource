@@ -4,11 +4,23 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 获取所有关注的艺术家数据
+    /// </summary>
     public class FollowedModel
     {
-        public int Id { get; set; } // 作家id
-        public string AvatarPath { get; set; } //  作家头像路径
-        public string Name { get; set; } // 作家名字
+        /// <summary>
+        /// 作家id
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// 作家头像路径
+        /// </summary>
+        public string AvatarPath { get; set; }
+        /// <summary>
+        /// 作家名字
+        /// </summary>
+        public string Name { get; set; }
     }
 
     public enum GetFollowedArtistsStatus

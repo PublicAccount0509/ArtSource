@@ -8,10 +8,22 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 获取所有艺术家列表数据
+    /// </summary>
     public class ArtistSimpleModel
     {
+        /// <summary>
+        /// 艺术家Id
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// 艺术家名称
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// 头像地址
+        /// </summary>
         public string IconPath { get; set; }
     }
 

@@ -35,6 +35,10 @@ namespace Art.WebService.Controllers
 
         }
 
+        /// <summary>
+        /// 获取首页艺术品列表
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
         [HttpGet]
         public ResultModel<ArtworkSimpleModel[]> List(int itemsCount, int pageIndex)
         {
@@ -44,6 +48,10 @@ namespace Art.WebService.Controllers
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
 
+        /// <summary>
+        /// 获取作品详情
+        /// </summary>
+        [ActionStatus(typeof(ArtworkDetailModelStatus))]
         [HttpGet]
         public ResultModel<ArtworkDetailModel> Detail(int artworkId, int? userId)
         {
@@ -57,7 +65,10 @@ namespace Art.WebService.Controllers
             return result;
         }
 
-        ////public  
+        /// <summary>
+        /// 分享作品
+        /// </summary>
+        [ActionStatus(typeof(ActivityShareStatus))]
         public SimpleResultModel Share(ActivityShareModel model)
         {
             if (!_artworkBussinessLogic.Exist(model.ArtworkId))
@@ -75,17 +86,15 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// The method will 
+        /// 赞作品
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// The SimpleResultModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 5:53 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(ActivityPraiseStatus))]
+        [HttpPost]
         public SimpleResultModel Praise(ActivityPraiseModel model)
         {
             if (!_artworkBussinessLogic.Exist(model.ArtworkId))
@@ -105,19 +114,42 @@ namespace Art.WebService.Controllers
             _artworkBussinessLogic.Praise(model.ArtworkId, model.UserId);
             return SimpleResultModel.Conclude(ActivityPraiseStatus.Success);
         }
-
         /// <summary>
-        /// The method will 
+        /// 取消赞
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// The SimpleResultModel
-        /// </returns>
+        [ActionStatus(typeof(ActivityCancelPraiseStatus))]
+        [HttpPost]
+        public SimpleResultModel CancelPraise(ActivityPraiseModel model)
+        {
+            if (!_artworkBussinessLogic.Exist(model.ArtworkId))
+            {
+                return SimpleResultModel.Conclude(ActivityCancelPraiseStatus.ArtworkNotExist);
+            }
+
+            if (!_customerBussinessLogic.Exist(model.UserId))
+            {
+
+                return SimpleResultModel.Conclude(ActivityCancelPraiseStatus.UserNotExist);
+            }
+
+            if (!_artworkBussinessLogic.ExistPraise(model.ArtworkId, model.UserId))
+            {
+                return SimpleResultModel.Conclude(ActivityCancelPraiseStatus.NotPraised);
+            }
+
+            _artworkBussinessLogic.CancelPraise(model.ArtworkId, model.UserId);
+
+            return SimpleResultModel.Conclude(ActivityCancelPraiseStatus.Success);
+        }
+        /// <summary>
+        /// 收藏作品
+        /// </summary>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 6:24 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(ActivityCollectStatus))]
         [HttpPost]
         public SimpleResultModel Collect(ActivityCollectModel model)
         {
@@ -144,7 +176,8 @@ namespace Art.WebService.Controllers
 
         /// <summary>
         /// 获取所有收藏的作品
-        /// </summary> 
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
         [HttpGet]
         public ResultModel<ArtworkSimpleModel[]> Collected(int userId, int itemsCount, int pageIndex)
         {
@@ -155,6 +188,10 @@ namespace Art.WebService.Controllers
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
 
+        /// <summary>
+        /// 评论作品
+        /// </summary>
+        [ActionStatus(typeof(CustomerCommentStatus))]
         [HttpPost]
         public SimpleResultModel Comment(CommentModel model)
         {
@@ -179,8 +216,11 @@ namespace Art.WebService.Controllers
             return SimpleResultModel.Conclude(CustomerCommentStatus.Success);
         }
 
+        /// <summary>
+        /// 获取所有评价过的作品
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
         [HttpGet]
-        //获取所有评价过的作品
         public ResultModel<CommentedArtworkModel[]> Commented(int userId)
         {
             var comments = _customerBussinessLogic.GetComments(userId);
@@ -191,7 +231,8 @@ namespace Art.WebService.Controllers
 
         /// <summary>
         /// 获取所有赞过的作品
-        /// </summary> 
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
         [HttpGet]
         public ResultModel<ArtworkSimpleModel[]> Praised(int userId, int itemsCount, int pageIndex)
         {
@@ -203,17 +244,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// Cancels the collect.
+        /// 取消收藏
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// SimpleResultModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 7:01 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(ActivityCancelCollectStatus))]
         [HttpPost]
         public SimpleResultModel CancelCollect(ActivityCancelCollectModel model)
         {
@@ -239,17 +277,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// Prices the information.
+        /// 获取艺术品价格
         /// </summary>
-        /// <param name="artworkId">The artworkId</param>
-        /// <returns>
-        /// ResultModel{PriceInfoModel}
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/16/2014 1:19 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(PriceInfoStatus))]
         [HttpGet]
         public ResultModel<PriceInfoModel> PriceInfo(int artworkId)
         {
@@ -264,18 +299,15 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// Deveries the ways.
+        /// 获取配送方式
         /// </summary>
-        /// <param name="artworkIds">The artworkIds</param>
-        /// <returns>
-        /// ResultModel{DeveryWaysModel[]}
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/16/2014 2:24 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
+        [ActionStatus(typeof(StandaloneStatus))]
         public ResultModel<DeveryWaysModel[]> DeliveryWays(int[] artworkIds)
         {
             var artworks = _artworkBussinessLogic.GetArtworks(artworkIds);
@@ -283,10 +315,13 @@ namespace Art.WebService.Controllers
             var result = DeveryWaysModelTranslator.Instance.Translate(artworks).ToArray();
 
             return ResultModel<DeveryWaysModel[]>.Conclude(StandaloneStatus.Success, result);
-        }   
+        }
 
+        /// <summary>
+        /// 获取包装方式
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
         [HttpGet]
-        //获取包装方式
         public ResultModel<ArtworkPackingWayModel> PackingWays(int artworkId)
         {
             var artwork = _artworkBussinessLogic.GetArtwork(artworkId);
