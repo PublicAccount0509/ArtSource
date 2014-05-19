@@ -42,6 +42,8 @@ namespace Art.Data.Domain
 
         public decimal? FeeDeliveryNonlocal { get; set; }
 
+        public DateTime? AtTopDatetime { get; set; }
+
         public virtual ICollection<ArtPlace> SuitableArtPlaces { get; set; }
 
         public virtual ArtworkType ArtworkType { get; set; }

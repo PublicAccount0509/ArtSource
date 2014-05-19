@@ -155,7 +155,7 @@
 
             if (model.Artwork.Id == 0) {
                 model.Artwork.AuctionPrice = "";
-                model.Artwork.AuctionType = art.config.enums.AuctionTypes.一口价;
+                model.Artwork.AuctionType = art.config.enums.AuctionTypes.一口价.Value;
             }
 
             model.SourceArtMaterials = getArtworkTypeSubItem(artworkType, "ArtMaterials");
