@@ -17,12 +17,16 @@ namespace Art.WebService.Tests
     {
         UserController _controller;
         ICustomerBussinessLogic _logic1;
+        IArtworkBussinessLogic _logic2;
+        IArtistBussinessLogic _logic3;
         [SetUp]
         public void Setup()
         {
-            //_logic1 = MockRepository.GenerateMock<ICustomerBussinessLogic>();
-            //var _logic2 = MockRepository.GenerateMock<IArtworkBussinessLogic>();
-            //_controller = new WebService.Controllers.UserController(_logic1, _logic2);
+            _logic1 = MockRepository.GenerateMock<ICustomerBussinessLogic>();
+            _logic2 = MockRepository.GenerateMock<IArtworkBussinessLogic>();
+            _logic3 = MockRepository.GenerateMock<IArtistBussinessLogic>();
+
+            _controller = new WebService.Controllers.UserController(_logic1, _logic2, _logic3);
         }
 
         [Test]
@@ -41,7 +45,7 @@ namespace Art.WebService.Tests
 
         [Test]
         public void Register_Test()
-        { 
+        {
             var customer = new CustomerRegisterModel();
             customer.NickName = "wgj";
             customer.Password = "p@ssw0rd";
@@ -50,9 +54,25 @@ namespace Art.WebService.Tests
 
             customer.PhoneNumber = "13488738363";
 
-            _logic1.Expect(i => i.Add(new Customer())).Return(new Customer());
+            _logic1.Stub(i => i.Add(Arg<Customer>.Is.Anything)).Return(new Customer());
+
             var result2 = _controller.Register(customer);
             Assert.AreEqual((int)CustomerRegisterStatus.Success, result2.Status);
+        }
+
+        [Test]
+        public void AddAddressTest()
+        {
+            var model = new AddAddressModel
+            {
+                Detail = "abcdef",
+                PhoneNumber = "13433334444",
+                ReceiptName = "dda",
+                UserId = 1
+            };
+
+           var addressAdded =   _controller.AddAddress(model);
+           Assert.NotNull(addressAdded);
         }
 
     }

@@ -56,9 +56,6 @@
   <ItemGroup>
     <Content Include="core\webExpress.js" />
     <Content Include="scripts\jquery-1.8.2.js" />
-    <Content Include="scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="scripts\jquery-2.1.1.js" />
-    <Content Include="scripts\jquery-2.1.1.min.js" />
     <Content Include="utility\webExpress.utility.ajax.js" />
     <Content Include="utility\webExpress.utility.js" />
     <Content Include="_references.js" />
@@ -66,7 +63,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
