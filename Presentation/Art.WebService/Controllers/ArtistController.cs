@@ -24,7 +24,6 @@ namespace Art.WebService.Controllers
 
 
         [HttpGet]
-
         public ResultModel<ArtistSimpleModel[]> List()
         {
             var pageIndex = 0;

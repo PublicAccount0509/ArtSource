@@ -14,6 +14,7 @@ namespace Art.Website.Models
     { 
         public int Id { get; set; }
         public string Name { get; set; }
+        public int IdentityNumber { get; set; }
         public string ImageFileName { get; set; }
         public string ArtistName { get; set; } 
         public string ArtworkType { get; set; }
@@ -32,6 +33,7 @@ namespace Art.Website.Models
             var to = new ArtworkSimpleModel();
             to.Id = from.Id;
             to.Name = from.Name;
+            to.IdentityNumber = from.IdentityNumber;
             to.ArtistName = from.Artist.Name;             
             to.ArtworkType = from.ArtworkType.Name;
             to.ArtMaterial = from.ArtMaterial.Name;            

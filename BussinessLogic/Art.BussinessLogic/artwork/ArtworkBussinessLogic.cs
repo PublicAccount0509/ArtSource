@@ -166,7 +166,7 @@ namespace Art.BussinessLogic
         //    return _artPeriodRepository.Table.ToList();
         //}
 
-        public ICollection<ArtPlace> GetPlaces()
+        public ICollection<ArtPlace> GetArtPlaces()
         {
             return _artPlaceRepository.Table.ToList();
         }
