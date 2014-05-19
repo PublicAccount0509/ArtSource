@@ -3,8 +3,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="t-grid">
     <thead>
         <tr class="theadbg">
-            <th align="center" class="zpname">作品名称</th>
-            <th align="center" class="zpimg">作品图片</th>
+            <th align="center" class="zpinfo">作品信息</th> 
             <th align="center" class="zuozhe">作者</th>
             <th align="center" class="zplx">作品类型</th>
             <th align="center" class="zpcailiao">作品材质</th>
@@ -19,27 +18,38 @@
         {
             var item = Model.Artworks[i];
             <tr RecordId="@item.Id">
-                <td align="center" class="zpname">@item.Name</td>
-                <td align="center" class="zpimg">
-                    <img src="/@item.ImageFileName" width="50px" height="50px" /></td>
+                <td align="center" class="zpinfo">
+                    <div class="imgbox">
+                        <img src="/@item.ImageFileName" width="50px" height="50px"/>
+                    </div>
+                    <div class="zpt-info">
+                        <p class="title">作品名称：@item.Name</p>
+                        <p class="zpid">作品编号：@item.IdentityNumber.ToString()</p>
+                    </div>
+                </td> 
                 <td align="center" class="zuozhe">@item.ArtistName</td>
                 <td align="center" class="zplx">@item.ArtworkType</td>
                 <td align="center" class="zpcailiao">@item.ArtMaterial</td>
                 <td align="center" class="zpticai">@item.Genre</td>
                 <td align="center" class="paimailx">@item.AuctionType</td>
                 <td align="center" class="zt">@(item.IsPublic ? "已发布" : "未发布")</td>
-                <td align="center" class="caozuo">   
-                    <a href="/Artwork/Edit/@item.Id" target="_blank"><img src="/icon/bianji.png" align="top" />编辑</a>
-                    <a href="javascript:void(0)" class="J_deletezpBtn"><img src="/icon/shanchu.png" align="top" />删除</a>
+                <td align="center" class="caozuo">
+                    <a href="/Artwork/Edit/@item.Id" target="_blank">
+                        <img src="/icon/bianji.png" align="top" />编辑</a>
+                    <a href="javascript:void(0)" class="J_deletezpBtn">
+                        <img src="/icon/shanchu.png" align="top" />删除</a>
                     @if (item.IsPublic)
                     {
-                        <a href="javascript:void(0)" class="J_cancelBtn"><img src="/icon/quxiaofabu.png" align="top" />取消发布</a>    
+                        <a href="javascript:void(0)" class="J_cancelBtn">
+                            <img src="/icon/quxiaofabu.png" align="top" />取消发布</a>    
                     }
                     else
                     {
-                        <a href="javascript:void(0)" class="J_issueBtn"><img src="/icon/fabu.png" align="top" />发布</a>    
+                        <a href="javascript:void(0)" class="J_issueBtn">
+                            <img src="/icon/fabu.png" align="top" />发布</a>    
                     }
-                    <a href="/Artwork/Detail/@item.Id"  target="_blank"><img src="/icon/chakaninfo.png" align="top" />查看</a>
+                    <a href="/Artwork/Detail/@item.Id"  target="_blank">
+                        <img src="/icon/chakaninfo.png" align="top" />查看</a>
                 </td>
             </tr>
         }
