@@ -7,9 +7,18 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 艺术品价格数据
+    /// </summary>
     public class PriceInfoModel
     {
+        /// <summary>
+        /// 单价
+        /// </summary>
         public decimal Price { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public decimal FeePackageGeneral { get; set; }
         public decimal FeepackageFine { get; set; }
         public decimal FeeDeliveryLocal { get; set; }

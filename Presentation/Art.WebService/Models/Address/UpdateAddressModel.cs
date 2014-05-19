@@ -9,12 +9,30 @@ using Art.BussinessLogic;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 编辑地址数据
+    /// </summary>
     public class UpdateAddressModel
     {
+        /// <summary>
+        /// 地址Id
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// 收货人姓名
+        /// </summary>
         public string ReceiptName { get; set; }
+        /// <summary>
+        /// 联系电话
+        /// </summary>
         public string PhoneNumber { get; set; }
+        /// <summary>
+        /// 详细地址
+        /// </summary>
         public string Detail { get; set; }
+        /// <summary>
+        /// 是否是默认地址
+        /// </summary>
         public bool IsDefault { get; set; }
     }
       

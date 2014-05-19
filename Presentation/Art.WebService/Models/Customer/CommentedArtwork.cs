@@ -13,10 +13,22 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 评价过的作品数据
+    /// </summary>
     public class CommentedArtworkModel
     {
+        /// <summary>
+        /// 作品图地址
+        /// </summary>
         public string ArtworkImagePath { get; set; }
+        /// <summary>
+        /// 评论时间
+        /// </summary>
         public DateTime CommentDateTime { get; set; }
+        /// <summary>
+        /// 内容
+        /// </summary>
         public string Content { get; set; }
     }
 

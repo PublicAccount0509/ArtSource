@@ -5,9 +5,18 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 取消关注数据
+    /// </summary>
     public class FollowModel
     {
+        /// <summary>
+        /// 艺术家Id
+        /// </summary>
         public int ArtistId { get; set; }
+        /// <summary>
+        /// 用户Id
+        /// </summary>
         public int UserId { get; set; }
     }
 

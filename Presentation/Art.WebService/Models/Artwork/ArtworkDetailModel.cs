@@ -9,25 +9,74 @@ using Art.Common;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 获取作品详情
+    /// </summary>
     public class ArtworkDetailModel
     {
+        /// <summary>
+        /// 图片地址
+        /// </summary>
         public string ImagePath { get; set; }
+        /// <summary>
+        /// 是否赞过
+        /// </summary>
         public bool HasPraised { get; set; }
-
+        /// <summary>
+        /// 拍卖类型
+        /// </summary>
         public int AuctionType { get; set; }
+        /// <summary>
+        /// 拍卖数量
+        /// </summary>
         public int AuctionCount { get; set; }
+        /// <summary>
+        /// 开始时间
+        /// </summary>
         public DateTime? StartDateTime { get; set; }
+        /// <summary>
+        /// 结束时间
+        /// </summary>
         public DateTime? EndDateTime { get; set; }
+        /// <summary>
+        /// 大小
+        /// </summary>
         public string Size { get; set; }
+        /// <summary>
+        /// 创作年代
+        /// </summary>
         public int CreationYear { get; set; }
+        /// <summary>
+        /// 作品分类
+        /// </summary>
         public string ArtworkType { get; set; }
+        /// <summary>
+        /// 材质
+        /// </summary>
         public string Material { get; set; }
+        /// <summary>
+        /// 技术手法
+        /// </summary>
         public string Technique { get; set; }
+        /// <summary>
+        /// 适用空间
+        /// </summary>
         public string FitPlaces { get; set; }
+        /// <summary>
+        /// 创作灵感
+        /// </summary>
         public string Inspiration { get; set; }
+        /// <summary>
+        /// 作家Id
+        /// </summary>
         public int ArtistId { get; set; }
+        /// <summary>
+        /// 作家名称
+        /// </summary>
         public string ArtistName { get; set; }
-
+        /// <summary>
+        /// 单价
+        /// </summary>
         public decimal Price { get; set; }
     }
 

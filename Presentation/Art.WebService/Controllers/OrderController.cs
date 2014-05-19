@@ -29,6 +29,7 @@ namespace Art.WebService.Controllers
         /// <summary>
         /// 放到购物车
         /// </summary>
+        [ActionStatus(typeof(AddToShopCartStatus))]
         public IntResultModel AddToShopCart(AddToShopCartModel model)
         {
             if (!_artworkBussinessLogic.Exist(model.ArtworkId))

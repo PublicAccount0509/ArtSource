@@ -6,9 +6,18 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 收藏作品数据
+    /// </summary>
     public class ActivityCollectModel
     {
+        /// <summary>
+        /// 作品Id
+        /// </summary>
         public int ArtworkId { get; set; }
+        /// <summary>
+        /// 用户Id
+        /// </summary>
         public int UserId { get; set; }
     }
 

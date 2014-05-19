@@ -23,7 +23,10 @@ namespace Art.WebService.Controllers
         {
             return new string[] { "value1", "value2" };
         }
-
+        /// <summary>
+        /// 注册用户
+        /// </summary>
+        [ActionStatus(typeof(CustomerRegisterStatus))]
         public IntResultModel Register(CustomerRegisterModel model)
         {
             if (string.IsNullOrEmpty(model.NickName))
@@ -71,17 +74,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// Adds the address.
+        /// 添加地址
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// ResultModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 10:34 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(AddAddressStatus))]
         [HttpPost]
         public IntResultModel AddAddress(AddAddressModel model)
         {
@@ -117,17 +117,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// Edits the address.
+        /// 编辑地址
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// ResultModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 10:53 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(UpdateAddressStatus))]
         [HttpPost]
         public SimpleResultModel EditAddress(UpdateAddressModel model)
         {
@@ -166,17 +163,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// Removes the address.
+        /// 删除地址
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// ResultModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/14/2014 11:01 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(DeleteAddressStatus))]
         [HttpPost]
         public SimpleResultModel RemoveAddress(int id)
         {
@@ -196,7 +190,10 @@ namespace Art.WebService.Controllers
 
             return SimpleResultModel.Conclude(DeleteAddressStatus.Success);
         }
-
+        /// <summary>
+        /// 获取所有我的地址
+        /// </summary>
+        [ActionStatus(typeof(GetMyAddressesStatus))]
         [HttpGet]
         public ResultModel<AddAddressModel[]> MyAddresses(int userId)
         {
@@ -206,17 +203,14 @@ namespace Art.WebService.Controllers
         }
 
         /// <summary>
-        /// Resets the password.
+        /// 重置密码
         /// </summary>
-        /// <param name="model">The model</param>
-        /// <returns>
-        /// SimpleResultModel
-        /// </returns>
         /// 创建者：黄磊
         /// 创建日期：5/16/2014 10:46 AM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        [ActionStatus(typeof(ResetPasswordStatus))]
         [HttpPost]
         public SimpleResultModel ResetPassword(ResetPasswordModel model)
         {
@@ -239,6 +233,10 @@ namespace Art.WebService.Controllers
             return SimpleResultModel.Conclude(ResetPasswordStatus.Success);
         }
 
+        /// <summary>
+        /// 请求动态验证码
+        /// </summary>
+        [ActionStatus(typeof(SendCheckCodeStatus))]
         [HttpGet]
         public SimpleResultModel CheckCode(string PhoneNumber)
         {

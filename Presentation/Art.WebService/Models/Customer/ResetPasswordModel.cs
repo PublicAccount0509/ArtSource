@@ -6,10 +6,22 @@ using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
+    /// <summary>
+    /// 重置密码数据
+    /// </summary>
     public class ResetPasswordModel
     {
+        /// <summary>
+        /// 用户Id
+        /// </summary>
         public int UserId { get; set; }
+        /// <summary>
+        /// 用户密码
+        /// </summary>
         public string CurrentPassword { get; set; }
+        /// <summary>
+        /// 新密码
+        /// </summary>
         public string NewPassword { get; set; }
     }
     public enum ResetPasswordStatus
