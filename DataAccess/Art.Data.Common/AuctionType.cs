@@ -9,6 +9,7 @@ namespace Art.Data.Common
 {
     public enum AuctionType:int
     {
+        [DisplayText("一口价")]
         一口价 = 1,
 
         [DisplayText("竞价拍--上升价格拍")]
