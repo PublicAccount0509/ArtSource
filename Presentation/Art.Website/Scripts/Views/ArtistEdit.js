@@ -86,13 +86,13 @@
             }, "请填写日期");
 
             jQuery.validator.addMethod("DeathdayValidate", function (value, element) {
-                if (viewModel.Artist.Deathday == "") {
+                if (webExpress.utility.string.isNullOrEmpty(viewModel.Artist.Deathday)) {
                     return true;
                 }
                 var re = /^\d{4}-\d{1,2}-\d{1,2}$/;
                 return re.test(viewModel.Artist.Birthday);
             }, "请填写日期");
-            
+
 
             options.rules["Artist.Birthday"] = { DateValidate: true };
             options.rules["Artist.Deathday"] = { DeathdayValidate: true };
@@ -134,7 +134,7 @@
         }
 
         function save(model) {
-            var isEditModel = model.Artist.Id > 0 ;
+            var isEditModel = model.Artist.Id > 0;
             var url = isEditModel ? "/Artist/Update" : "/Artist/Add";
             webExpress.utility.ajax.request(url, model.Artist,
             function (response) {
@@ -146,7 +146,7 @@
                     console.dir(response);
                     _adminJs.openwinbox('#J_add-openbox');
                 }
-                
+
             },
             function () {
                 alert("error");
