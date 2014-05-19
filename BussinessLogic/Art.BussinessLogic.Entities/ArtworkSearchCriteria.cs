@@ -22,6 +22,12 @@ namespace Art.BussinessLogic.Entities
         public int? CollectionCustomerId { get; set; }
         public int? PraiseCustomerId { get; set; }
 
+        public int? BeginYear { get; set; }
+        public int? EndYear { get; set; }
+        public int? ArtworkType { get; set; }
+        public int? MinPrice { get; set; }
+        public int? MaxPrice { get; set; }
+
         public PagingRequest PagingRequest { get; set; }
     }
 }

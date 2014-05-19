@@ -222,39 +222,7 @@ namespace Art.BussinessLogic
                 artwork.Images = ImageInfosTranslator.Instance.TranslateToArtworkImage(images);
             }
             _artworkRepository.Update(artwork);
-        }
-
-        //private List<ArtworkImage> GenerateArtworkImages(string imageFileName)
-        //{
-        //    var imageFullFileName = CommonHelper.GetUploadFileAbsolutePath(imageFileName);
-        //    var images = new List<ArtworkImage>();
-
-        //    var enumType = typeof(ArtworkImageResizeType);
-        //    var items = Enum.GetValues(enumType);
-        //    foreach (var item in items)
-        //    {
-        //        var mi = enumType.GetMember(item.ToString()).First();
-        //        var attributes = mi.GetCustomAttributes(false);
-
-        //        var attribute = attributes.FirstOrDefault(i => typeof(IImageFileTransformer).IsAssignableFrom(i.GetType()));
-        //        if (attribute != null)
-        //        {
-        //            var transformer = attribute as IImageFileTransformer;
-        //            var destFullFileName = string.Format("{0}\\{1}_{2}{3}", Path.GetDirectoryName(imageFullFileName), Path.GetFileNameWithoutExtension(imageFullFileName), item.ToString(), Path.GetExtension(imageFullFileName));
-        //            var size = transformer.Transform(imageFullFileName, destFullFileName);
-        //            images.Add(new ArtworkImage
-        //            {
-        //                ImagePath = Path.GetFileName(destFullFileName),
-        //                ImageType = (ArtworkImageResizeType)(int)item,
-        //                Width = size.Width,
-        //                Height = size.Height
-        //            });
-        //        }
-        //    }
-        //    return images;
-        //}
-
-
+        } 
 
         public PagedList<Artwork> SearchArtworks(ArtworkSearchCriteria criteria)
         {
@@ -279,6 +247,26 @@ namespace Art.BussinessLogic
             if (criteria.ArtistId.HasValue)
             {
                 query = query.Where(i => i.Artist.Id == criteria.ArtistId.Value);
+            }
+
+            if (criteria.BeginYear.HasValue)
+            {
+                query = query.Where(i=>i.ArtYear >= criteria.BeginYear.Value);
+            }
+
+            if (criteria.EndYear.HasValue)
+            {
+                query = query.Where(i => i.ArtYear <= criteria.EndYear.Value);
+            }
+
+            if (criteria.MinPrice.HasValue)
+            {
+                query = query.Where(i => i.AuctionPrice >= criteria.MinPrice.Value);
+            }
+
+            if (criteria.MaxPrice.HasValue)
+            {
+                query = query.Where(i => i.AuctionPrice <= criteria.MaxPrice.Value);
             }
 
             if (criteria.CollectionCustomerId.HasValue)

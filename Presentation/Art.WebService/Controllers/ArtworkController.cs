@@ -25,16 +25,6 @@ namespace Art.WebService.Controllers
             _customerBussinessLogic = customerBussinessLogic;
         }
 
-        // GET api/<controller>
-        public IEnumerable<ArtworkSimpleModel> Get()
-        {
-            var paging = new PagingRequest(0, 10);
-            var aa = _artworkBussinessLogic.SearchArtworks(new ArtworkSearchCriteria(paging));
-            //var dd =  ArtworkSimpleModel.Instance.Translate(aa);
-            return null;
-
-        }
-
         /// <summary>
         /// 获取首页艺术品列表
         /// </summary>
@@ -46,6 +36,41 @@ namespace Art.WebService.Controllers
             var criteria = new ArtworkSearchCriteria(paging);
             var result = SearchArtwork(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
+        }
+
+        /// <summary>
+        /// 获取艺术品列表
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [ActionStatus(typeof(StandaloneStatus))]
+        [HttpGet]
+        public ResultModel<ArtworkSimpleModel[]> Search(ArtworkSearchCriteriaModel model)
+        {
+            var paging = new PagingRequest(0, int.MaxValue);
+            var criteria = new ArtworkSearchCriteria(paging)
+            {
+                NamePart = model.ArtworkNamePart,
+                ArtworkTypeId = model.ArtworkTypeId,
+                BeginYear = model.BeginYear,
+                EndYear = model.EndYear,
+                MinPrice = model.MinPrice,
+                MaxPrice = model.MaxPrice,
+            };
+            var result = SearchArtwork(criteria);
+            return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
+        }
+
+        /// <summary>
+        /// 获取作品分类列表
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
+        [HttpGet]
+        public ResultModel<ArtworkTypeSimpleModel[]> List()
+        {
+            var artworkTypes = _artworkBussinessLogic.GetArtworkTypes();
+            var result = ArtworkTypeSimpleModelTranslator.Instance.Translate(artworkTypes);
+            return ResultModel<ArtworkTypeSimpleModel[]>.Conclude(StandaloneStatus.Success, result.ToArray());
         }
 
         /// <summary>
@@ -114,6 +139,7 @@ namespace Art.WebService.Controllers
             _artworkBussinessLogic.Praise(model.ArtworkId, model.UserId);
             return SimpleResultModel.Conclude(ActivityPraiseStatus.Success);
         }
+
         /// <summary>
         /// 取消赞
         /// </summary>
@@ -141,6 +167,7 @@ namespace Art.WebService.Controllers
 
             return SimpleResultModel.Conclude(ActivityCancelPraiseStatus.Success);
         }
+
         /// <summary>
         /// 收藏作品
         /// </summary>
@@ -171,8 +198,6 @@ namespace Art.WebService.Controllers
 
             return SimpleResultModel.Conclude(ActivityCollectStatus.Success);
         }
-
-
 
         /// <summary>
         /// 获取所有收藏的作品
@@ -227,7 +252,6 @@ namespace Art.WebService.Controllers
             var models = CommentedArtworkModelTranslator.Instance.Translate(comments);
             return ResultModel<CommentedArtworkModel[]>.Conclude(StandaloneStatus.Success, models.ToArray());
         }
-
 
         /// <summary>
         /// 获取所有赞过的作品

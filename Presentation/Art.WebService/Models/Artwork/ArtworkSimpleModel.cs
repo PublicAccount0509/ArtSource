@@ -66,8 +66,7 @@ namespace Art.WebService.Models
 
     public class ArtworkSimpleModelTranslator : TranslatorBase<Artwork, ArtworkSimpleModel>
     {
-        public static readonly ArtworkSimpleModelTranslator Instance = new ArtworkSimpleModelTranslator
-            ();
+        public static readonly ArtworkSimpleModelTranslator Instance = new ArtworkSimpleModelTranslator();
 
         public override ArtworkSimpleModel Translate(Artwork from)
         {

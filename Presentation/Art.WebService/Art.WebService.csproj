@@ -114,7 +114,9 @@
     <Compile Include="Models\ArtistDetailModel.cs" />
     <Compile Include="Models\Artist\ArtistSimpleModel.cs" />
     <Compile Include="Models\Artwork\ArtworkDetailModel.cs" />
+    <Compile Include="Models\Artwork\ArtworkSearchCriteriaModel.cs" />
     <Compile Include="Models\Artwork\ArtworkSimpleModel.cs" />
+    <Compile Include="Models\Artwork\ArtworkTypeSimpleModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\Customer\CommentedArtwork.cs" />
     <Compile Include="Models\Customer\CustomerProfile.cs" />
