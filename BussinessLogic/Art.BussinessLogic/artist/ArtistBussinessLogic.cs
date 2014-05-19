@@ -1,9 +1,12 @@
 ﻿using Art.BussinessLogic.Entities;
+using Art.Common;
+using Art.Data.Common;
 using Art.Data.Domain;
 using Art.Data.Domain.Access;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -128,12 +131,25 @@ namespace Art.BussinessLogic
         public Artist Add(Artist artist)
         {
             artist.IsPublic = true;
+
+            var imageFullFileName = CommonHelper.GetUploadFileAbsolutePath(artist.AvatarFileName);
+            var images = BussinessLogicHelper.GenerateImages<ArtistImageType>(imageFullFileName);
+            artist.Images = ImageInfosTranslator.Instance.TranslateToArtistImage(images);
+
             var result = _artistRepository.Insert(artist);
             return result;
         }
 
         public void Update(Artist artist)
         {
+            var isImageChanged = !artist.Images.First().ImagePath.Contains(Path.GetFileNameWithoutExtension(artist.AvatarFileName));
+            if (isImageChanged)
+            {
+                var imageFullFileName = CommonHelper.GetUploadFileAbsolutePath(artist.AvatarFileName);
+                var images = BussinessLogicHelper.GenerateImages<ArtworkImageResizeType>(imageFullFileName);
+                artist.Images = ImageInfosTranslator.Instance.TranslateToArtistImage(images);
+            }
+
             _artistRepository.Update(artist);
         }
 

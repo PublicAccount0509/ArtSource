@@ -51,12 +51,12 @@ namespace Art.Data.Domain
         public virtual ArtShape ArtShape { get; set; }
         public virtual ArtTechnique ArtTechnique { get; set; }
 
-        public virtual List<Comment> Comments { get; set; }
+        public virtual IList<Comment> Comments { get; set; }
 
         public int? DefaultCommentId { get; set; }
         public virtual Comment DefaultComment { get; set; }
 
-        public virtual List<ArtworkImage> Images { get; set; }
+        public virtual IList<ArtworkImage> Images { get; set; }
     }
 
 }

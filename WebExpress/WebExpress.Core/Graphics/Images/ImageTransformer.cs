@@ -69,19 +69,19 @@ namespace WebExpress.Core
 
             double factorWidth = (double)destWidth / srcWidth;
             double factorHeight = (double)destHeight / srcHeight;
-            var invalidFactor = Math.Pow(factorWidth, factorHeight);
+            var invalidFactor = Math.Max(factorWidth, factorHeight);
             Rectangle srcRect;
             if (factorWidth > factorHeight)
             {
                 var validHeight = (int)(destHeight / invalidFactor);
                 var redundantHeight = srcHeight - validHeight;
-                srcRect = new Rectangle(0, redundantHeight / 2, destWidth, srcHeight);
+                srcRect = new Rectangle(0, redundantHeight / 2, srcWidth, validHeight);
             }
             else
             {
                 var validWidth = (int)(destWidth / invalidFactor);
-                var redundantHeight = srcWidth - validWidth;
-                srcRect = new Rectangle(redundantHeight / 2, 0, destWidth, srcHeight);
+                var redundantWidth = srcWidth - validWidth;
+                srcRect = new Rectangle(redundantWidth / 2, 0, validWidth, srcHeight);
             }
 
             return ResizeImage(bitmap, destPath, destWidth, destHeight, srcRect);
