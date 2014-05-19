@@ -24,9 +24,13 @@ namespace Art.WebService.Controllers
 
 
         [HttpGet]
-        public ResultModel<ArtistSimpleModel[]> List(int itemsCount, int pageIndex)
+
+        public ResultModel<ArtistSimpleModel[]> List()
         {
+            var pageIndex = 0;
+            var itemsCount = int.MaxValue;
             var paging = new PagingRequest(pageIndex, itemsCount);
+
             var criteria = new ArtistSearchCriteria(paging);
             var artworks = _artistBussinessLogic.SearchArtists(criteria);
             var result = ArtistSimpleModelTranslator.Instance.Translate(artworks);
