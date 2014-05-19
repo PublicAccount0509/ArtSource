@@ -26,7 +26,7 @@ namespace Art.WebService.Models
 			var image = from.Artwork.Images.Where(i => i.ImageType == Data.Common.ArtworkImageResizeType.Size_W180_H140).FirstOrDefault();
 			if (image != null)
 			{
-				//to.ArtworkImagePath = image.ImagePath;
+				to.ArtworkImagePath = image.ImagePath;
 			}
 			return to;
 		}
