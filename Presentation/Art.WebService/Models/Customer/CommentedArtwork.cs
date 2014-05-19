@@ -1,6 +1,8 @@
-﻿using Art.Data.Domain;
+﻿using Art.Common;
+using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using WebExpress.Core;
@@ -26,7 +28,7 @@ namespace Art.WebService.Models
             var image = from.Artwork.Images.Where(i => i.ImageType == Data.Common.ArtworkImageResizeType.Size_W180_H140).FirstOrDefault();
             if (image != null)
             {
-                to.ArtworkImagePath = image.ImagePath;
+                to.ArtworkImagePath = Path.Combine(ConfigSettings.Instance.FileUploadPath, image.ImagePath);                
             }
             return to;
         }
