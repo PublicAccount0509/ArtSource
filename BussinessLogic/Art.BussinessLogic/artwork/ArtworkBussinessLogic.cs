@@ -232,7 +232,7 @@ namespace Art.BussinessLogic
         public PagedList<Artwork> SearchArtworks(ArtworkSearchCriteria criteria)
         {
             Guard.IsNotNull<ArgumentNullException>(criteria.PagingRequest, "PagingRequest");
-
+            var hasOrdered = false;
             var query = _artworkRepository.Table;
             if (!string.IsNullOrEmpty(criteria.NamePart))
             {
@@ -285,7 +285,10 @@ namespace Art.BussinessLogic
                         join ac in _activityCollectRepository.Table
                         on a.Id equals ac.ArtworkId
                         where ac.CustomerId == criteria.CollectionCustomerId.Value
+                        orderby ac.Id descending
                         select a;
+
+                hasOrdered = true;
             }
 
             if (criteria.PraiseCustomerId.HasValue)
@@ -298,18 +301,30 @@ namespace Art.BussinessLogic
             }
 
             var firstOrderByItem = criteria.OrderByItems.FirstOrDefault();
-            if (firstOrderByItem == null)
+            if (firstOrderByItem == null && !hasOrdered)
             {
                 firstOrderByItem = new OrderByItem<Artwork>(i => i.Id, SortOrder.Descending);
             }
 
-            query = query.ObjectSort(firstOrderByItem.KeySelector, firstOrderByItem.Direction);
+            if (firstOrderByItem !=null)
+            { 
+                if (hasOrdered)
+                {
+                    query = (query as IOrderedQueryable<Artwork>).ThenObjectSort(firstOrderByItem.KeySelector, firstOrderByItem.Direction);
+                }
+                else
+                {
+                    query = query.ObjectSort(firstOrderByItem.KeySelector, firstOrderByItem.Direction);
+                }
+            }
+
 
             var orderedQuery = query as IOrderedQueryable<Artwork>;
 
             for (int i = 1; i < criteria.OrderByItems.Count; i++)
             {
                 var item = criteria.OrderByItems[i];
+
                 orderedQuery = orderedQuery.ThenObjectSort(item.KeySelector, firstOrderByItem.Direction);
             }
 

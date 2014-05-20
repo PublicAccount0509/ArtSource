@@ -228,7 +228,7 @@ namespace Art.WebService.Controllers
         {
             var paging = new PagingRequest(pageIndex, itemsCount);
             var criteria = new ArtworkSearchCriteria(paging) { CollectionCustomerId = userId };
-
+            
             var result = SearchArtworkAndAttachCount(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
