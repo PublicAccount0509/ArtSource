@@ -158,6 +158,11 @@ namespace Art.BussinessLogic
         {
             _customerRepository.Update(model);
         }
+
+        public IList<Comment> GetCommons(int userId)
+        {
+            return _commentRepository.Table.Where(p => p.Customer.Id == userId).ToList();
+        }
     }
 
     public enum CustomerRegisterResult
