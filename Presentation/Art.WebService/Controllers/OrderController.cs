@@ -55,13 +55,52 @@ namespace Art.WebService.Controllers
         /// 获取购物车商品列表
         /// </summary>
         [ActionStatus(typeof(StandaloneStatus))]
-        [HttpPost]
+        [HttpGet]
         public ResultModel<MyShopCartItemModel[]> MyShopCart(GetToShopCartModel model)
         {
             var list = _orderBussinessLogic.GetShoppingCartItems(model.UserId);
             //var results = list.Select(p => MyShopCartModelTranslator.Instance.Translate(p)).ToArray();
             var results = MyShopCartModelTranslator.Instance.Translate(list).ToArray();
             return ResultModel<MyShopCartItemModel[]>.Conclude(StandaloneStatus.Success, results);
+        }
+
+        /// <summary>
+        /// 新增订单
+        /// </summary>
+        [ActionStatus(typeof(AddOrderStatus))]
+        [HttpPost]
+        public IntResultModel Add(AddOrderModel model)
+        {
+            if (!_customerBussinessLogic.Exist(model.UserId))
+            {
+                return IntResultModel.Conclude(AddOrderStatus.InvalidUserId);
+            }
+
+            var artwork = _artworkBussinessLogic.GetArtwork(model.ArtworkId);
+            if (artwork == null)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.InvalidArtworkId);
+            }
+
+            if (!artwork.IsPublic)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.ArtworkUnPublished);
+            }
+
+            var orders = _orderBussinessLogic.GetOrdersByArtworkId(model.ArtworkId);
+            if (orders.Any(i => i.Status == Data.Common.OrderStatus.生成中 ||
+                i.Status == Data.Common.OrderStatus.待处理 ||
+                i.Status == Data.Common.OrderStatus.完成 ||
+                i.Status == Data.Common.OrderStatus.已发货 ||
+                i.Status == Data.Common.OrderStatus.已接受))
+            {
+                return IntResultModel.Conclude(AddOrderStatus.ArtworkPurchased);
+            } 
+
+            var order = AddOrderModelTranslator.Instance.Translate(model);
+            var result = _orderBussinessLogic.AddOrder(order);
+
+            return IntResultModel.Conclude(AddOrderStatus.Success, result.Id);
         }
     }
 }
