@@ -69,13 +69,17 @@ namespace Art.WebService.Controllers
         /// <summary>
         /// 获取订单详情
         /// </summary>
-        [ActionStatus(typeof(StandaloneStatus))]
+        [ActionStatus(typeof(OrderDetailStatus))]
         [HttpGet]
         public ResultModel<OrderDetailModel> Detail(int orderId)
         {
             var order = _orderBussinessLogic.GetOrderById(orderId);
+            if (order == null)
+            {
+                return ResultModel<OrderDetailModel>.Conclude(OrderDetailStatus.NotExist);
+            }
             var result = OrderDetailModelTranslator.Instance.Translate(order);
-            return ResultModel<OrderDetailModel>.Conclude(StandaloneStatus.Success, result);
+            return ResultModel<OrderDetailModel>.Conclude(OrderDetailStatus.Success, result);
         }
 
         /// <summary>
