@@ -1,6 +1,7 @@
 ﻿using Art.BussinessLogic.Entities;
 using Art.Data.Domain;
 using System;
+using System.Collections.Generic;
 using WebExpress.Core;
 namespace Art.BussinessLogic
 {
@@ -20,5 +21,7 @@ namespace Art.BussinessLogic
         ShoppingCartItem AddShoppingCartItem(int artworkId, int customerId);
 
         ShoppingCartItem GetShoppingCart(int artworkId, int customerId);
+
+        IList<ShoppingCartItem> GetShoppingCartItems(int id);
     }
 }

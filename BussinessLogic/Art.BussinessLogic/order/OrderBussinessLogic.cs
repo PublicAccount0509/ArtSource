@@ -19,7 +19,7 @@ namespace Art.BussinessLogic
         private IRepository<Customer> _customerRepository;
         private IRepository<Artwork> _artworkRepository;
         private IRepository<Address> _addressRepository;
-        private IRepository<ShoppingCartItem> _ShoppingCartRepository;
+        private IRepository<ShoppingCartItem> _shoppingCartRepository;
 
         private IRepository<AuctionBill> _auctionBillRepository;
         public OrderBussinessLogic(IRepository<Order> orderRepository,
@@ -265,15 +265,22 @@ namespace Art.BussinessLogic
                 CustomerId = customerId,
                 FADateTime = DateTime.Now
             };
-            var result = _ShoppingCartRepository.Insert(item);
+            var result = _shoppingCartRepository.Insert(item);
             return result;
         }
 
 
         public ShoppingCartItem GetShoppingCart(int artworkId, int customerId)
         {
-           var item = _ShoppingCartRepository.Table.FirstOrDefault(i=>i.ArtworkId== artworkId && i.CustomerId==customerId);
+           var item = _shoppingCartRepository.Table.FirstOrDefault(i=>i.ArtworkId== artworkId && i.CustomerId==customerId);
            return item;
+        }
+
+
+        public IList<ShoppingCartItem> GetShoppingCartItems(int customerId)
+        {
+            var list = _shoppingCartRepository.Table.Where(p => p.CustomerId == customerId).ToList();
+            return list;
         }
     }
 }
