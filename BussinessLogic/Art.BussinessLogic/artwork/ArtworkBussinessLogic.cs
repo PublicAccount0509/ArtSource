@@ -294,9 +294,10 @@ namespace Art.BussinessLogic
             if (criteria.PraiseCustomerId.HasValue)
             {
                 query = from a in query
-                        join ac in _activityPraiseRepository.Table
-                        on a.Id equals ac.ArtworkId
-                        where ac.CustomerId == criteria.PraiseCustomerId.Value
+                        join ap in _activityPraiseRepository.Table
+                        on a.Id equals ap.ArtworkId
+                        where ap.CustomerId == criteria.PraiseCustomerId.Value
+                        orderby ap.Id descending
                         select a;
             }
 
