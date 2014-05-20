@@ -319,7 +319,6 @@ namespace Art.BussinessLogic
                 }
             }
 
-
             var orderedQuery = query as IOrderedQueryable<Artwork>;
 
             for (int i = 1; i < criteria.OrderByItems.Count; i++)

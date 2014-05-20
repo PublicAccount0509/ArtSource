@@ -15,7 +15,7 @@
     <h2 class="crumbs">您所在位置：作品管理 > @_viewFeature
     </h2>
     <div class="addbox">
-        <form action="/Files.axd" method="post" enctype="multipart/form-data" target="iframeFileUpload">
+        <form action="/Files.axd?object=artwork" method="post" enctype="multipart/form-data" target="iframeFileUpload">
             <dl class="clearfix control-group mandatory" property-name="@PropName(i => i.Artwork.Name)" control-type="simpleTextbox">
                 <dt><i>*</i>作品名称:</dt>
                 <dd>
