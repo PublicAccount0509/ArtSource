@@ -48,5 +48,6 @@ namespace Art.BussinessLogic
         ActivityShare Share(int artworkId, int customerId);
         void Update(Artwork artwork);
         void UpdateArtworkType(ArtworkType artworkType);
+        IList<ShoppingCartItem> GetShoppingCartItems(int id);
     }
 }

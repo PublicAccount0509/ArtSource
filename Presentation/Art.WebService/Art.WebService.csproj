@@ -117,6 +117,8 @@
     <Compile Include="Models\Artwork\ArtworkSearchCriteriaModel.cs" />
     <Compile Include="Models\Artwork\ArtworkSimpleModel.cs" />
     <Compile Include="Models\Artwork\ArtworkTypeSimpleModel.cs" />
+    <Compile Include="Models\Artwork\GetToShopCartModel.cs" />
+    <Compile Include="Models\Artwork\MyShopCartModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\Customer\CommentedArtwork.cs" />
     <Compile Include="Models\Customer\CustomerProfile.cs" />

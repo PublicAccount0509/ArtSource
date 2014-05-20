@@ -29,6 +29,7 @@ namespace Art.BussinessLogic
         private IRepository<ActivityShare> _activityShareRepository;
         private IRepository<ActivityCollect> _activityCollectRepository;
         private IRepository<ActivityPraise> _activityPraiseRepository;
+        private IRepository<ShoppingCartItem> _shoppingCartRepository;
 
         public ArtworkBussinessLogic(IRepository<ArtworkType> artworkTypeRepository,
             IRepository<Artwork> artworkRepository,
@@ -39,7 +40,8 @@ namespace Art.BussinessLogic
             IRepository<ActivityShare> activityShareRepository,
             IRepository<ActivityCollect> activityCollectRepository,
             IRepository<ActivityPraise> activityPraiseRepository,
-            IRepository<Comment> commentRepository
+            IRepository<Comment> commentRepository,
+            IRepository<ShoppingCartItem> shoppingCartRepository
         )
         {
             _artworkTypeRepository = artworkTypeRepository;
@@ -52,6 +54,7 @@ namespace Art.BussinessLogic
             _activityCollectRepository = activityCollectRepository;
             _activityPraiseRepository = activityPraiseRepository;
             _commentRepository = commentRepository;
+            _shoppingCartRepository = shoppingCartRepository;
         }
 
         public List<ArtworkType> GetArtworkTypes()
@@ -489,5 +492,10 @@ namespace Art.BussinessLogic
         //           ).ToList();
         //}
 
+        public IList<ShoppingCartItem> GetShoppingCartItems(int id)
+        {
+            var list = _shoppingCartRepository.Table.Where(p => p.Id == id).ToList();
+            return list;
+        }
     }
 }

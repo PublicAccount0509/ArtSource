@@ -369,5 +369,18 @@ namespace Art.WebService.Controllers
 
             return models.ToArray();
         }
+
+        /// <summary>
+        /// 获取购物车商品列表
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
+        [HttpPost]
+        public ResultModel<MyShopCartItemModel[]> MyShopCart(GetToShopCartModel model)
+        {
+            var list = _artworkBussinessLogic.GetShoppingCartItems(model.UserId);
+            //var results = list.Select(p => MyShopCartModelTranslator.Instance.Translate(p)).ToArray();
+            var results = MyShopCartModelTranslator.Instance.Translate(list).ToArray();
+            return ResultModel<MyShopCartItemModel[]>.Conclude(StandaloneStatus.Success, results);
+        }
     }
 }
