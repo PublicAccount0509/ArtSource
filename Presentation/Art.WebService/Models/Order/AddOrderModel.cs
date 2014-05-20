@@ -26,17 +26,29 @@ namespace Art.WebService.Models
 
     public enum AddOrderStatus
     {
+        InvalidAuctionType,
+
+        InvoiceType,
+
+        InvalidInvoiceType,
+
+        InvalidPackingType,
+
         InvalidUserId,
 
-        
+        InvalidAddressId,
+
         InvalidArtworkId,
+
+        NotSupportedDeliveryType,
+
+        NotSupportedPackageType,
 
         [DisplayText("该商品未发布")]
         ArtworkUnPublished,
 
         [DisplayText("该商品已被出售")]
         ArtworkPurchased,
-
 
         Success
     }

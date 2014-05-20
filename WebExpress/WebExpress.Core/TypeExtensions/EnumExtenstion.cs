@@ -41,5 +41,10 @@ namespace WebExpress.Core
             }
             return result.ToArray();
         }
+
+        public static bool OwnElement<TEnum>(object element) where TEnum : struct
+        {
+            return Enum.IsDefined(typeof(TEnum), element);
+        }
     }
 }
