@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic;
+using Art.Data.Common;
 using Art.WebService.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebExpress.Core;
 
 namespace Art.WebService.Controllers
 {
@@ -94,9 +96,34 @@ namespace Art.WebService.Controllers
         [HttpPost]
         public IntResultModel Add(AddOrderModel model)
         {
+            if (!EnumExtenstion.OwnElement<AuctionType>(model.AuctionType))
+            {
+                return IntResultModel.Conclude(AddOrderStatus.InvalidAuctionType);
+            }
+
+            if (!EnumExtenstion.OwnElement<DeliveryType>(model.DeliveryType))
+            {
+                return IntResultModel.Conclude(AddOrderStatus.InvalidAuctionType);
+            }
+
+            if (!EnumExtenstion.OwnElement<InvoiceType>(model.InvoiceType))
+            {
+                return IntResultModel.Conclude(AddOrderStatus.InvalidInvoiceType);
+            }
+
+            if (!EnumExtenstion.OwnElement<PackingType>(model.PackingType))
+            {
+                return IntResultModel.Conclude(AddOrderStatus.InvalidPackingType);
+            }
+
             if (!_customerBussinessLogic.Exist(model.UserId))
             {
                 return IntResultModel.Conclude(AddOrderStatus.InvalidUserId);
+            }
+
+            if (_customerBussinessLogic.GetAddressById(model.ReceiptAddressId) ==null)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.InvalidAddressId);
             }
 
             var artwork = _artworkBussinessLogic.GetArtwork(model.ArtworkId);
@@ -110,6 +137,24 @@ namespace Art.WebService.Controllers
                 return IntResultModel.Conclude(AddOrderStatus.ArtworkUnPublished);
             }
 
+            if (model.DeliveryType == DeliveryType.市内 && !artwork.FeeDeliveryLocal.HasValue)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.NotSupportedDeliveryType);
+            }
+            else  if (model.DeliveryType == DeliveryType.外地 && !artwork.FeeDeliveryNonlocal.HasValue)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.NotSupportedDeliveryType);
+            }
+
+            if (model.PackingType == PackingType.一般包装 && !artwork.FeePackageGeneral.HasValue)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.NotSupportedPackageType);
+            }
+            else if (model.PackingType == PackingType.精包装 && !artwork.FeePackageFine.HasValue)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.NotSupportedPackageType);
+            }
+
             var orders = _orderBussinessLogic.GetOrdersByArtworkId(model.ArtworkId);
             if (orders.Any(i => i.Status == Data.Common.OrderStatus.生成中 ||
                 i.Status == Data.Common.OrderStatus.待处理 ||
@@ -118,7 +163,7 @@ namespace Art.WebService.Controllers
                 i.Status == Data.Common.OrderStatus.已接受))
             {
                 return IntResultModel.Conclude(AddOrderStatus.ArtworkPurchased);
-            } 
+            }
 
             var order = AddOrderModelTranslator.Instance.Translate(model);
             var result = _orderBussinessLogic.AddOrder(order);
