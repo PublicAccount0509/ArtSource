@@ -44,10 +44,10 @@ namespace Art.WebService.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [ActionStatus(typeof(StandaloneStatus))]
-        [HttpGet]
+        [HttpPost]
         public ResultModel<ArtworkSimpleModel[]> Search(ArtworkSearchCriteriaModel model)
         {
-            var paging = new PagingRequest(0, int.MaxValue);
+            var paging = new PagingRequest(model.PageIndex, model.ItemsCount);
             var criteria = new ArtworkSearchCriteria(paging)
             {
                 NamePart = model.ArtworkNamePart,
