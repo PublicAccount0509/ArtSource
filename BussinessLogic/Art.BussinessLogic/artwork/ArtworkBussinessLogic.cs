@@ -274,6 +274,11 @@ namespace Art.BussinessLogic
                 query = query.Where(i => i.AuctionPrice <= criteria.MaxPrice.Value);
             }
 
+            if (criteria.FromDate.HasValue)
+            {
+                query = query.Where(i => i.FADateTime >= criteria.FromDate);
+            }
+
             if (criteria.CollectionCustomerId.HasValue)
             {
                 query = from a in query

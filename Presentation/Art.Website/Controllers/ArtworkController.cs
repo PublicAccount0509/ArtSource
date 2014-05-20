@@ -375,6 +375,7 @@ namespace Art.Website.Controllers
             {
                 defaultCriteria.ArtistId = artistId;
             }
+
             model.PagedArtworks = GetPagedArtworkModel(defaultCriteria);
 
             var artists = _artistBussinessLogic.GetArtists();
@@ -462,8 +463,8 @@ namespace Art.Website.Controllers
 
             //var periods = _artworkBussinessLogic.GetPeriods();
             //model.SourceArtPeriods = IdNameModelTranslator<ArtPeriod>.Instance.Translate(periods);
-             
-            var places = _artworkBussinessLogic.GetArtPlaces(); 
+
+            var places = _artworkBussinessLogic.GetArtPlaces();
             model.SourceArtPlaces = IdNameModelTranslator<ArtPlace>.Instance.Translate(places);
 
             model.SourceAuctionTypes = EnumExtenstion.GetEnumItems<AuctionType>();

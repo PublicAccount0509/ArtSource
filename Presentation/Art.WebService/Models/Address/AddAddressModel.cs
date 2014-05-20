@@ -60,13 +60,6 @@ namespace Art.WebService.Models
 
         public override AddAddressModel Translate(Address from)
         {
-            //var to = new AddAddressModel();
-            //to.UserId = from.Customer.Id;
-            //to.Detail = from.Detail;
-            //to.ReceiptName = from.Name;
-            //to.PhoneNumber = from.Telephone;
-            //to.IsDefault = from.Customer.DefaultAddressId == from.Id;
-            //return to;
             throw new NotImplementedException();
         }
 

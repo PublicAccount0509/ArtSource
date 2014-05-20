@@ -51,6 +51,7 @@ namespace Art.Data.Domain
         public virtual ArtTechnique ArtTechnique { get; set; }
 
         public virtual IList<Comment> Comments { get; set; }
+        public virtual IList<ActivityPraise> Praises { get; set; }
 
         public int? DefaultCommentId { get; set; }
         public virtual Comment DefaultComment { get; set; }

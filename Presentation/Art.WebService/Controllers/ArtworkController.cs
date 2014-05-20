@@ -1,5 +1,6 @@
 ﻿using Art.BussinessLogic;
 using Art.BussinessLogic.Entities;
+using Art.Data.Domain;
 using Art.WebService.Models;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,8 @@ namespace Art.WebService.Controllers
         {
             var paging = new PagingRequest(pageIndex, itemsCount);
             var criteria = new ArtworkSearchCriteria(paging);
+            criteria.OrderByItems.Add(new OrderByItem<Artwork>(i => i.AtTopDatetime.Value, System.Data.SqlClient.SortOrder.Descending));
+            criteria.OrderByItems.Add(new OrderByItem<Artwork>(i => i.Id, System.Data.SqlClient.SortOrder.Descending));
             var result = SearchArtworkAndAttachCount(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }
@@ -57,6 +60,23 @@ namespace Art.WebService.Controllers
                 MinPrice = model.MinPrice,
                 MaxPrice = model.MaxPrice,
             };
+            if (model.OrderByField.HasValue)
+            {
+                switch (model.OrderByField.Value)
+                {
+                    case OrderByField.Hot:
+                        criteria.OrderByItems.Add(new OrderByItem<Artwork>(i => i.Praises.Count, System.Data.SqlClient.SortOrder.Descending));
+                        break;
+                    case OrderByField.New:
+                        criteria.FromDate = DateTime.Now.AddMonths(-1);
+                        break;
+                    case OrderByField.Price:
+                        criteria.OrderByItems.Add(new OrderByItem<Artwork>(i => i.AuctionPrice, System.Data.SqlClient.SortOrder.Descending));
+                        break;
+                    default:
+                        break;
+                }
+            }
             var result = SearchArtworkAndAttachCount(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }

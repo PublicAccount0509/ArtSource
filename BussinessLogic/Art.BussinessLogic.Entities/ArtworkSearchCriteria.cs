@@ -32,6 +32,8 @@ namespace Art.BussinessLogic.Entities
         public int? MinPrice { get; set; }
         public int? MaxPrice { get; set; }
 
+        public DateTime? FromDate { get; set; }
+
         public IList<OrderByItem<Artwork>> OrderByItems { get; set; }
         public PagingRequest PagingRequest { get; set; }
     }
@@ -47,5 +49,5 @@ namespace Art.BussinessLogic.Entities
         public Expression<Func<TEntity, object>> KeySelector { get; private set; }
         public SortOrder Direction { get; private set; }
     }
-     
+
 }
