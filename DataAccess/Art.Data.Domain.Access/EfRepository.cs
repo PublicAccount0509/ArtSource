@@ -41,6 +41,12 @@ namespace Art.Data.Domain.Access
 
                 this.BbSet.Add(entity);
 
+                var entityTracker = entity as IEntityTracker;
+                if (entityTracker != null)
+                {
+                    entityTracker.FADateTime = DateTime.Now;
+                }
+
                 this._context.SaveChanges();
 
                 return entity;
@@ -65,6 +71,12 @@ namespace Art.Data.Domain.Access
             {
                 if (entity == null)
                     throw new ArgumentNullException("entity");
+
+                var entityTracker = entity as IEntityTracker;
+                if (entityTracker != null)
+                {
+                    entityTracker.LCDateTime = DateTime.Now;
+                }
 
                 this._context.SaveChanges();
             }
@@ -121,7 +133,7 @@ namespace Art.Data.Domain.Access
             {
                 if (_dbSet == null)
                 {
-                    
+
                     _dbSet = _context.Set<T>();
                 }
                 return _dbSet;

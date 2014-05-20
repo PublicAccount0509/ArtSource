@@ -9,7 +9,7 @@ using System.Web.Http;
 using Art.BussinessLogic;
 
 namespace Art.WebService.Models
-{ 
+{
     /// <summary>
     /// 用户地址数据
     /// </summary>
@@ -60,13 +60,20 @@ namespace Art.WebService.Models
 
         public override AddAddressModel Translate(Address from)
         {
+            //var to = new AddAddressModel();
+            //to.UserId = from.Customer.Id;
+            //to.Detail = from.Detail;
+            //to.ReceiptName = from.Name;
+            //to.PhoneNumber = from.Telephone;
+            //to.IsDefault = from.Customer.DefaultAddressId == from.Id;
+            //return to;
             throw new NotImplementedException();
         }
 
         public override Address Translate(AddAddressModel from)
-        { 
+        {
             var logic = GlobalConfiguration.Configuration.DependencyResolver.BeginScope().GetService(typeof(ICustomerBussinessLogic)) as ICustomerBussinessLogic;
-            
+
             var to = new Address();
             to.Name = from.ReceiptName;
             to.Detail = from.Detail;

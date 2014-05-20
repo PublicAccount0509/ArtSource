@@ -26,13 +26,15 @@ namespace Art.BussinessLogic
             IRepository<Customer> customerRepository,
             IRepository<Address> addressRepository,
             IRepository<Artwork> artworkRepository,
-            IRepository<AuctionBill> auctionBillRepository)
+            IRepository<AuctionBill> auctionBillRepository,
+            IRepository<ShoppingCartItem> shoppingCartRepository)
         {
             _orderRepository = orderRepository;
             _customerRepository = customerRepository;
             _addressRepository = addressRepository;
             _artworkRepository = artworkRepository;
             _auctionBillRepository = auctionBillRepository;
+            _shoppingCartRepository = shoppingCartRepository;
         }
 
 
@@ -91,7 +93,7 @@ namespace Art.BussinessLogic
 
         public IList<Order> GetOrderListByCustomerId(int customerId)
         {
-            return _orderRepository.Table.Where(p=>p.Customer.Id == customerId).ToList();
+            return _orderRepository.Table.Where(p => p.Customer.Id == customerId).ToList();
         }
         /// <summary>
         /// Gets the address.
@@ -283,7 +285,7 @@ namespace Art.BussinessLogic
             var list = _shoppingCartRepository.Table.Where(p => p.CustomerId == customerId).ToList();
             return list;
         }
-         
+
         public IList<Order> GetOrdersByArtworkId(int artworkId)
         {
             var orders = _orderRepository.Table.Where(i => i.ArtworkId == artworkId).ToList();
@@ -294,6 +296,6 @@ namespace Art.BussinessLogic
         {
             var orders = _orderRepository.Table.Where(i => i.ArtworkId == artworkId && i.Status == status).ToList();
             return orders;
-        } 
+        }
     }
 }

@@ -58,9 +58,9 @@ namespace Art.WebService.Controllers
         /// </summary>
         [ActionStatus(typeof(StandaloneStatus))]
         [HttpGet]
-        public ResultModel<MyShopCartItemModel[]> MyShopCart(GetToShopCartModel model)
+        public ResultModel<MyShopCartItemModel[]> MyShopCart(int userId)
         {
-            var list = _orderBussinessLogic.GetShoppingCartItems(model.UserId);
+            var list = _orderBussinessLogic.GetShoppingCartItems(userId);
             //var results = list.Select(p => MyShopCartModelTranslator.Instance.Translate(p)).ToArray();
             var results = MyShopCartModelTranslator.Instance.Translate(list).ToArray();
             return ResultModel<MyShopCartItemModel[]>.Conclude(StandaloneStatus.Success, results);

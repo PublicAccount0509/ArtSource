@@ -118,7 +118,7 @@ namespace Art.WebService.Controllers
             address.Customer = customer;
             if (model.IsDefault == true)
             {
-                customer.DefaultAddress = address;
+                address.Customer.DefaultAddress = address;
             }
             var resultAdd = _customerBussinessLogic.AddAddress(address);
             return IntResultModel.Conclude(AddAddressStatus.Success, resultAdd.Id);
@@ -203,11 +203,11 @@ namespace Art.WebService.Controllers
         /// </summary>
         [ActionStatus(typeof(GetMyAddressesStatus))]
         [HttpGet]
-        public ResultModel<AddAddressModel[]> MyAddresses(int userId)
+        public ResultModel<AddressDetailModel[]> MyAddresses(int userId)
         {
             var addresses = _customerBussinessLogic.GetMyAddresses(userId);
-            var result = AddAddressModelTranslator.Instance.Translate(addresses);
-            return ResultModel<AddAddressModel[]>.Conclude(GetMyAddressesStatus.Success, result.ToArray());
+            var result = AddressDetailModelTranslator.Instance.Translate(addresses);
+            return ResultModel<AddressDetailModel[]>.Conclude(GetMyAddressesStatus.Success, result.ToArray());
         }
 
         /// <summary>

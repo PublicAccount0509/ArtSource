@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Art.Data.Domain
 {
-    public class Artwork : BaseEntity, ISoftDelete
+    public class Artwork : BaseEntity, ISoftDelete, IEntityTracker
     {
         public Artwork()
         {
@@ -24,7 +24,6 @@ namespace Art.Data.Domain
         public decimal AuctionPrice { get; set; }
         public DateTime? StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }
-
 
         //public virtual ArtPeriod ArtPeriod { get; set; }
         public virtual int ArtYear { get; set; }
@@ -57,6 +56,11 @@ namespace Art.Data.Domain
         public virtual Comment DefaultComment { get; set; }
 
         public virtual IList<ArtworkImage> Images { get; set; }
+
+        public DateTime FADateTime { get; set; }
+        public string FAUserName { get; set; }
+        public DateTime? LCDateTime { get; set; }
+        public string LCUserName { get; set; }
     }
 
 }

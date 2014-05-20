@@ -62,6 +62,10 @@
       <Project>{449228d3-3f33-445a-8733-1ae940671d41}</Project>
       <Name>Art.Data.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DataAccess\Art.Data.Domain\Art.Data.Domain.Entities.csproj">
+      <Project>{83e133a9-e8f3-4ecb-b4ec-5a163f3ad3d1}</Project>
+      <Name>Art.Data.Domain.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\WebExpress\WebExpress.Core\WebExpress.Core.csproj">
       <Project>{c5637d1e-9a03-481e-876a-76b615d860ec}</Project>
       <Name>WebExpress.Core</Name>

@@ -5,6 +5,7 @@ using Art.Data.Domain;
 using Art.Data.Domain.Access;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -291,15 +292,23 @@ namespace Art.BussinessLogic
                         select a;
             }
 
+            var firstOrderByItem = criteria.OrderByItems.FirstOrDefault();
+            if (firstOrderByItem == null)
+            {
+                firstOrderByItem = new OrderByItem<Artwork>(i => i.Id, SortOrder.Descending);
+            }
 
-            query = query.OrderByDescending(i => i.AtTopDatetime);
+            query = query.ObjectSort(firstOrderByItem.KeySelector, firstOrderByItem.Direction);
 
+            var orderedQuery = query as IOrderedQueryable<Artwork>;
 
+            for (int i = 1; i < criteria.OrderByItems.Count; i++)
+            {
+                var item = criteria.OrderByItems[i];
+                orderedQuery = orderedQuery.ThenObjectSort(item.KeySelector, firstOrderByItem.Direction);
+            }
 
-
-            query = query.OrderBy(i => i.Id);
-
-            var result = new PagedList<Artwork>(query, criteria.PagingRequest.PageIndex, criteria.PagingRequest.PageSize);
+            var result = new PagedList<Artwork>(orderedQuery, criteria.PagingRequest.PageIndex, criteria.PagingRequest.PageSize);
 
             return result;
         }
