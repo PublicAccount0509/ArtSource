@@ -62,7 +62,11 @@ namespace Art.WebService.Models
         /// </summary>
         public string Note { get; set; }
     }
-
+    public enum OrderDetailStatus
+    {
+        Success,
+        NotExist
+    }
     public class OrderDetailModelTranslator : TranslatorBase<Order, OrderDetailModel>
     {
         public static readonly OrderDetailModelTranslator Instance = new OrderDetailModelTranslator();
