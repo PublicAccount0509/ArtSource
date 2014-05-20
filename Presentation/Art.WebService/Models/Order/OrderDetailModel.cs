@@ -79,9 +79,9 @@ namespace Art.WebService.Models
             to.Note = from.Note;
             to.PackingWay = from.PackingType;
             to.PayWay = from.PayStatus;
-            //to.ReceiptDetailAddress = from.ReceiptAddress.Detail;
-            //to.ReceiptName= from.ReceiptAddress.Name;
-            //to.ReceiptPhoneNumber = from.ReceiptAddress.Telephone;
+            to.ReceiptDetailAddress = from.ReceiptAddress.Detail;
+            to.ReceiptName = from.ReceiptAddress.Name;
+            to.ReceiptPhoneNumber = from.ReceiptAddress.Telephone;
             return to;
         }
 

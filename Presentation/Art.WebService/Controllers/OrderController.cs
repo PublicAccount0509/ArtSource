@@ -77,6 +77,7 @@ namespace Art.WebService.Controllers
             var result = OrderDetailModelTranslator.Instance.Translate(order);
             return ResultModel<OrderDetailModel>.Conclude(StandaloneStatus.Success, result);
         }
+
         /// 新增订单
         /// </summary>
         [ActionStatus(typeof(AddOrderStatus))]

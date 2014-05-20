@@ -44,7 +44,7 @@ namespace Art.WebService.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [ActionStatus(typeof(StandaloneStatus))]
-        [HttpGet]
+        [HttpPost]
         public ResultModel<ArtworkSimpleModel[]> Search(ArtworkSearchCriteriaModel model)
         {
             var paging = new PagingRequest(0, int.MaxValue);

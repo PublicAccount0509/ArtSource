@@ -10,7 +10,7 @@ namespace Art.Data.Domain
 {
     public class SystemNotice : BaseEntity
     {
-        [MaxLength(400)]
+        [MaxLength(500)]
         public string Title { get; set; }
         public string Content { get; set; }
         public bool IsSuccessful { get; set; }

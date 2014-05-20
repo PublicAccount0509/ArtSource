@@ -46,8 +46,8 @@ namespace Art.Data.Domain
         [ForeignKey("ArtworkId")]
         public virtual Artwork Artwork { get; set; }
 
-        //[ForeignKey("ReceiptAddressId")]
-        //public virtual Address ReceiptAddress { get; set; }
+        [ForeignKey("ReceiptAddressId")]
+        public virtual Address ReceiptAddress { get; set; }
 
         public virtual PayStatus PayStatus { get; set; }
 
