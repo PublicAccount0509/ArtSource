@@ -76,6 +76,7 @@
     <Compile Include="TypeExtensions\DateTimeExtension.cs" />
     <Compile Include="TypeExtensions\EnumExtenstion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeExtensions\IComparableExtension.cs" />
     <Compile Include="ValueTextEntry.cs" />
   </ItemGroup>
   <ItemGroup>

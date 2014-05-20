@@ -256,6 +256,9 @@ namespace Art.WebService.Controllers
             return SimpleResultModel.Conclude(SendCheckCodeStatus.Success);
         }
 
+        /// <summary>
+        /// 我乐意的数据
+        /// </summary>
         [ActionStatus(typeof(GetCustomerProfileStatus))]
         [HttpGet]
         public ResultModel<CustomerProfile> Profile(int userId)
@@ -272,7 +275,10 @@ namespace Art.WebService.Controllers
             result.CommentCount = _artworkBussinessLogic.GetCommentCount(userId);
             result.FollowCount = _artistBussinessLogic.GetFollowCount(userId);
 
-            result.ArtIndex = 3;
+            var shareCount = _artworkBussinessLogic.GetShareCount(userId);
+
+            var score = (result.CollectCount + result.PraiseCount + shareCount) * 0.5;
+            result.ArtIndex = GetHeartCount(score);
 
             var paging = new PagingRequest(0, 4);
             var criteria = new ArtworkSearchCriteria(paging) { CollectionCustomerId = userId };
@@ -280,7 +286,38 @@ namespace Art.WebService.Controllers
 
             return ResultModel<CustomerProfile>.Conclude(GetCustomerProfileStatus.Success, result);
         }
+         
+        private int GetHeartCount(double score)
+        {
+            var intScore = (int)score;
+            var heartCount = 0;
 
+            if (heartCount.InRange(4, 10))
+            {
+                heartCount = 1;
+            }
+            else if (heartCount.InRange(11, 40))
+            {
+                heartCount = 2;
+            }
+            else if (heartCount.InRange(41, 90))
+            {
+                heartCount = 3;
+            }
+            else if (heartCount.InRange(91, 150))
+            {
+                heartCount = 4;
+            }
+            else if (heartCount.InRange(151, 250))
+            {
+                heartCount = 5;
+            }
+            else
+            {
+                heartCount = 5;
+            } 
+            return intScore;
+        } 
 
         private ArtworkSimpleModel[] SearchArtworkAndAttachCount(ArtworkSearchCriteria criteria)
         {
