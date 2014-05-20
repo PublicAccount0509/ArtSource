@@ -54,8 +54,7 @@ namespace Art.WebService.Models
 
     public class CommentModelTranslator : TranslatorBase<Comment, CommentModel>
     {
-        public static readonly CommentModelTranslator Instance = new CommentModelTranslator
-            ();
+        public static readonly CommentModelTranslator Instance = new CommentModelTranslator();
 
         public override CommentModel Translate(Comment from)
         {

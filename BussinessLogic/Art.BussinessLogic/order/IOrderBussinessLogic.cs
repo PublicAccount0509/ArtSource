@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic.Entities;
+using Art.Data.Common;
 using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
@@ -23,5 +24,9 @@ namespace Art.BussinessLogic
         ShoppingCartItem GetShoppingCart(int artworkId, int customerId);
 
         IList<ShoppingCartItem> GetShoppingCartItems(int id);
+
+        IList<Order> GetOrdersByArtworkId(int artworkId);
+
+        IList<Order> GetOrdersByArtworkId(int artworkId, OrderStatus status);
     }
 }

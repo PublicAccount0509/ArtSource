@@ -256,7 +256,6 @@ namespace Art.BussinessLogic
             _orderRepository.Update(order);
         }
 
-
         public ShoppingCartItem AddShoppingCartItem(int artworkId, int customerId)
         {
             var item = new ShoppingCartItem
@@ -269,18 +268,28 @@ namespace Art.BussinessLogic
             return result;
         }
 
-
         public ShoppingCartItem GetShoppingCart(int artworkId, int customerId)
         {
-           var item = _shoppingCartRepository.Table.FirstOrDefault(i=>i.ArtworkId== artworkId && i.CustomerId==customerId);
-           return item;
+            var item = _shoppingCartRepository.Table.FirstOrDefault(i => i.ArtworkId == artworkId && i.CustomerId == customerId);
+            return item;
         }
-
 
         public IList<ShoppingCartItem> GetShoppingCartItems(int customerId)
         {
             var list = _shoppingCartRepository.Table.Where(p => p.CustomerId == customerId).ToList();
             return list;
         }
+         
+        public IList<Order> GetOrdersByArtworkId(int artworkId)
+        {
+            var orders = _orderRepository.Table.Where(i => i.ArtworkId == artworkId).ToList();
+            return orders;
+        }
+
+        public IList<Order> GetOrdersByArtworkId(int artworkId, OrderStatus status)
+        {
+            var orders = _orderRepository.Table.Where(i => i.ArtworkId == artworkId && i.Status == status).ToList();
+            return orders;
+        } 
     }
 }
