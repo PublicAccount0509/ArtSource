@@ -225,7 +225,7 @@ namespace Art.BussinessLogic
                 artwork.Images = ImageInfosTranslator.Instance.TranslateToArtworkImage(images);
             }
             _artworkRepository.Update(artwork);
-        } 
+        }
 
         public PagedList<Artwork> SearchArtworks(ArtworkSearchCriteria criteria)
         {
@@ -254,7 +254,7 @@ namespace Art.BussinessLogic
 
             if (criteria.BeginYear.HasValue)
             {
-                query = query.Where(i=>i.ArtYear >= criteria.BeginYear.Value);
+                query = query.Where(i => i.ArtYear >= criteria.BeginYear.Value);
             }
 
             if (criteria.EndYear.HasValue)
@@ -289,6 +289,11 @@ namespace Art.BussinessLogic
                         where ac.CustomerId == criteria.PraiseCustomerId.Value
                         select a;
             }
+
+            //query = query.OrderByDescending(i => i.AtTopDatetime);
+
+
+
 
             query = query.OrderBy(i => i.Id);
 
@@ -392,7 +397,7 @@ namespace Art.BussinessLogic
             var count = _activityCollectRepository.Table.Where(i => i.ArtworkId == artworkId).Count();
             return count;
         }
-         
+
 
         public int GetCollectCount(int customerId)
         {
@@ -459,14 +464,14 @@ namespace Art.BussinessLogic
         public Artwork[] GetArtworksByArtistId(int artistId)
         {
             return _artworkRepository.Table.Where(p => p.Artist.Id == artistId).ToArray();
-        } 
+        }
 
         public int GetCommentCount(int customerId)
         {
             var count = _commentRepository.Table.Where(i => i.CustomerId == customerId).Count();
             return count;
         }
-         
+
         public IList<Comment> GetComments(int customerId)
         {
             return _commentRepository.Table.Where(i => i.Customer.Id == customerId).ToList();

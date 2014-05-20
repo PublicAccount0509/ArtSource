@@ -109,7 +109,7 @@ namespace Art.WebService.Controllers
                 return IntResultModel.Conclude(AddOrderStatus.InvalidUserId);
             }
 
-            if (_customerBussinessLogic.GetAddressById(model.ReceiptAddressId) ==null)
+            if (_customerBussinessLogic.GetAddressById(model.ReceiptAddressId) == null)
             {
                 return IntResultModel.Conclude(AddOrderStatus.InvalidAddressId);
             }
@@ -129,7 +129,7 @@ namespace Art.WebService.Controllers
             {
                 return IntResultModel.Conclude(AddOrderStatus.NotSupportedDeliveryType);
             }
-            else  if (model.DeliveryType == DeliveryType.外地 && !artwork.FeeDeliveryNonlocal.HasValue)
+            else if (model.DeliveryType == DeliveryType.外地 && !artwork.FeeDeliveryNonlocal.HasValue)
             {
                 return IntResultModel.Conclude(AddOrderStatus.NotSupportedDeliveryType);
             }
