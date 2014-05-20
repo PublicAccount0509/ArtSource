@@ -130,6 +130,7 @@
     <Compile Include="Models\Acitivity\FollowModel.cs" />
     <Compile Include="Models\Customer\LoginModel.cs" />
     <Compile Include="Models\Order\AddToShopCartModel.cs" />
+    <Compile Include="Models\Order\OrderDetailModel.cs" />
     <Compile Include="Models\PriceInfoModel.cs" />
     <Compile Include="Models\Customer\ResetPasswordModel.cs" />
     <Compile Include="Models\ResultModel\ResultModel.cs" />
