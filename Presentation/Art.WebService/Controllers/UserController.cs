@@ -286,7 +286,6 @@ namespace Art.WebService.Controllers
 
             return ResultModel<CustomerProfile>.Conclude(GetCustomerProfileStatus.Success, result);
         }
-         
         private int GetHeartCount(double score)
         {
             var intScore = (int)score;
@@ -315,9 +314,9 @@ namespace Art.WebService.Controllers
             else
             {
                 heartCount = 5;
-            } 
+            }
             return intScore;
-        } 
+        }
 
         private ArtworkSimpleModel[] SearchArtworkAndAttachCount(ArtworkSearchCriteria criteria)
         {

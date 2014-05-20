@@ -16,6 +16,7 @@ namespace Art.BussinessLogic
         Address GetAddress(int id);
         AuctionBill GetAuctionBillById(int id);
         Order GetOrderById(int id);
+        IList<Order> GetOrderListByCustomerId(int customerId);
         PagedList<AuctionBill> SearchAuction(AuctionSearchCriteria criteria);
         PagedList<Order> SearchOrders(OrderSearchCriteria criteria);
 

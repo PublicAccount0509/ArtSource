@@ -89,6 +89,10 @@ namespace Art.BussinessLogic
             return _orderRepository.GetById(id);
         }
 
+        public IList<Order> GetOrderListByCustomerId(int customerId)
+        {
+            return _orderRepository.Table.Where(p=>p.Customer.Id == customerId).ToList();
+        }
         /// <summary>
         /// Gets the address.
         /// </summary>
