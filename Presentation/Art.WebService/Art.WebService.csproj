@@ -123,6 +123,7 @@
     <Compile Include="Models\Customer\CommentedArtwork.cs" />
     <Compile Include="Models\Customer\CustomerProfile.cs" />
     <Compile Include="Models\Customer\CustomerRegisterModel.cs" />
+    <Compile Include="Models\Customer\MyCommentModel.cs" />
     <Compile Include="Models\DeveryWaysModel.cs" />
     <Compile Include="Models\DeviceType.cs" />
     <Compile Include="Models\Acitivity\FollowedModel.cs" />

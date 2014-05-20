@@ -333,5 +333,17 @@ namespace Art.WebService.Controllers
 
             return models.ToArray();
         }
+
+        /// <summary>
+        /// 获取我的评价信息
+        /// </summary>
+        [ActionStatus(typeof(StandaloneStatus))]
+        [HttpGet]
+        public ResultModel<MyCommentModel[]> MyComments(int userId)
+        {
+            var list = _customerBussinessLogic.GetCommons(userId);
+            var results = MyCommentModelTranslator.Instance.Translate(list).ToArray();
+            return ResultModel<MyCommentModel[]>.Conclude(StandaloneStatus.Success, results);
+        }
     }
 }

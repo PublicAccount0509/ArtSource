@@ -19,5 +19,6 @@ namespace Art.BussinessLogic
         Customer RetrieveCustomer(string loginName, string password);
         void UpdateAddress(Address address);
         void UpdateCustomer(Customer model);
+        IList<Comment> GetCommons(int userId);
     }
 }
