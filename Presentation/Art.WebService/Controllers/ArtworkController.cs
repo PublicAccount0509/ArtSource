@@ -66,7 +66,7 @@ namespace Art.WebService.Controllers
         /// </summary>
         [ActionStatus(typeof(StandaloneStatus))]
         [HttpGet]
-        public ResultModel<ArtworkTypeSimpleModel[]> List()
+        public ResultModel<ArtworkTypeSimpleModel[]> ArtworkTypeList()
         {
             var artworkTypes = _artworkBussinessLogic.GetArtworkTypes();
             var result = ArtworkTypeSimpleModelTranslator.Instance.Translate(artworkTypes);
