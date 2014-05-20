@@ -492,9 +492,9 @@ namespace Art.BussinessLogic
         //           ).ToList();
         //}
 
-        public IList<ShoppingCartItem> GetShoppingCartItems(int id)
+        public IList<ShoppingCartItem> GetShoppingCartItems(int customerId)
         {
-            var list = _shoppingCartRepository.Table.Where(p => p.Id == id).ToList();
+            var list = _shoppingCartRepository.Table.Where(p => p.CustomerId == customerId).ToList();
             return list;
         }
     }
