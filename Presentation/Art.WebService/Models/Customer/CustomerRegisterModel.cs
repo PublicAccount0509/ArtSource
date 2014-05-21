@@ -35,7 +35,7 @@ namespace Art.WebService.Models
         /// </summary>
         public string CheckCode { get; set; }
         /// <summary>
-        /// 0 ios 1 android
+        /// 1 ios 2 android
         /// </summary>
         public DeviceType DeviceType { get; set; }
     }
@@ -52,9 +52,13 @@ namespace Art.WebService.Models
         public override Customer Translate(CustomerRegisterModel from)
         {
             var to = new Customer();
+
             to.NickName = from.NickName;
             to.Password = from.Password;
             to.PhoneNumber = from.PhoneNumber;
+            to.Gender = from.Gender;
+            to.DeviceType = from.DeviceType;
+
             return to;
         }
     }

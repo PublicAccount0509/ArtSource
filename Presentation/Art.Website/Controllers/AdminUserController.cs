@@ -9,6 +9,7 @@ using Art.Website.Models;
 
 namespace Art.Website.Controllers
 {
+    [Authorize]
     public class AdminUserController : Controller
     {
         private IAdminUserBussinessLogic _adminUserBussinessLogic;

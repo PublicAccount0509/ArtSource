@@ -57,6 +57,7 @@
     <Compile Include="Degree.cs" />
     <Compile Include="DeliveryMode.cs" />
     <Compile Include="DeliveryStatus.cs" />
+    <Compile Include="DeviceType.cs" />
     <Compile Include="FeeType.cs" />
     <Compile Include="Genders.cs" />
     <Compile Include="IIdNameEntry.cs" />

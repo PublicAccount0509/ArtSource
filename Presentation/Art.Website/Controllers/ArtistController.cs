@@ -17,7 +17,7 @@ using System.Diagnostics;
 using Art.BussinessLogic.Entities;
 namespace Art.Website.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ArtistController : Controller
     {
         private IArtistBussinessLogic _artistBussinessLogic;

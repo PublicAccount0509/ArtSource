@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Art.Data.Common;
+using Art.WebService.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,15 +14,19 @@ namespace Art.Data.Domain
     {
         [Required]
         public string NickName { get; set; }
-        
+
         [Required]
         public string PhoneNumber { get; set; }
 
         [Required]
         public string Password { get; set; }
 
+        public Genders Gender { get; set; }
+
+        public DeviceType DeviceType { get; set; }
+
         public string AvatarPath { get; set; }
-         
+
         public int? DefaultAddressId { get; set; }
 
         public virtual Address DefaultAddress { get; set; }

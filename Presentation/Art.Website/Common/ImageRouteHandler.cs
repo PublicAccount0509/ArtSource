@@ -37,8 +37,8 @@ namespace Art.Website.Common
         }
 
         public void ProcessRequest(HttpContext context)
-        {  
-            var path = string.Format("~/Content/images/{0}/{1}", _category, _fileName);
+        {
+            var path = string.Format("~/Content/i/{0}", _fileName);
             string filepath = context.Server.MapPath(path);
 
             if (!File.Exists(filepath))

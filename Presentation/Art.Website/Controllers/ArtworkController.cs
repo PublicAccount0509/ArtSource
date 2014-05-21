@@ -16,7 +16,7 @@ using WebExpress.Website.Exceptions;
 
 namespace Art.Website.Controllers
 {
-
+    [Authorize]
     public class ArtworkController : Controller
     {
         private IArtistBussinessLogic _artistBussinessLogic;
