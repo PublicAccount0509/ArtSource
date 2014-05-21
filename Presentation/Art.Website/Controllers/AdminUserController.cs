@@ -50,6 +50,19 @@ namespace Art.Website.Controllers
         [HttpPost]
         public JsonResult Add(AdminUserModel model)
         {
+            var checkResult = CheckModel(model);
+            if (!checkResult.IsSuccess)
+            {
+                return Json(checkResult);
+            }
+            if (string.IsNullOrEmpty(model.PassWord))
+            {
+                return Json(new ResultModel(false, "密码不能为空"));
+            }
+            if (model.PassWord.Length < 6)
+            {
+                return Json(new ResultModel(false, "密码不能小于6位"));
+            }
             var seachByLoginNameResult = _adminUserBussinessLogic.GetUserByLoginName(model.LoginName);
             if (seachByLoginNameResult != null)
             {
@@ -64,6 +77,11 @@ namespace Art.Website.Controllers
         [HttpPost]
         public JsonResult Edit(AdminUserModel model)
         {
+            var checkResult = CheckModel(model);
+            if (!checkResult.IsSuccess)
+            {
+                return Json(checkResult);
+            }
             var resultEntity = _adminUserBussinessLogic.GetById(model.Id);
             if (resultEntity == null)
             {
@@ -83,6 +101,18 @@ namespace Art.Website.Controllers
             _adminUserBussinessLogic.UpdateAdminUser(resultEntity);
             var result = new ResultModel(true, string.Empty);
             return Json(result);
+        }
+        public ResultModel CheckModel(AdminUserModel model)
+        {
+            if (string.IsNullOrEmpty(model.Name))
+            {
+                return new ResultModel(false, "姓名不能为空");
+            }
+            if (string.IsNullOrEmpty(model.LoginName))
+            {
+                return new ResultModel(false,"登录名不能为空");
+            }
+            return new ResultModel(true, string.Empty);
         }
         [HttpPost]
         public JsonResult Delete(int id)

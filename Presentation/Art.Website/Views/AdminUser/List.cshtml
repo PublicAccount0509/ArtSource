@@ -31,17 +31,21 @@
             <tr>
                 <td class="title-text"><i class="t-important">*</i>姓名:</td>
                 <td class="title-inp">
-                    <input id="txtName_Add" value="" name="" type="text" class="title-inp" /></td>
+                    <input id="txtName_Add" value="" name="" type="text" class="title-inp" />
+                    <span class="t-errormessage" id="txtName_Add_error" style="display: none;"></span>
+                </td>
             </tr>
             <tr>
                 <td class="title-text"><i class="t-important">*</i>登录名:</td>
                 <td class="title-inp">
-                    <input id="txtLoginName_Add" value="" name="" type="text" class="title-inp" /></td>
+                    <input id="txtLoginName_Add" value="" name="" type="text" class="title-inp" />
+                    <span class="t-errormessage" id="txtLoginName_Add_error" style="display: none;"></span>
+                </td>
             </tr>
             <tr>
                 <td class="title-text"><i class="t-important">*</i>登陆密码:</td>
                 <td class="title-inp">
-                    <input id="txtPassWord_Add" value="" name="" type="text" class="title-inp" /></td>
+                    <input id="txtPassWord_Add" value="" name="" type="password" class="title-inp" /><span class="t-errormessage" id="txtPassWord_Add_error" style="display: none;"></span></td>
             </tr>
             <tr>
                 <td class="title-text">职位:</td>
@@ -55,8 +59,8 @@
             </tr>
         </table>
         <p class="btnbox">
-            <input id="btnAdd" value="添加用户" type="button" class="J_closebox closebox" />
-
+            <input id="btnAdd" value="添加用户" type="button" class="closebox" />
+            <input value="取消" type="button" class="J_closebox closebox" />
         </p>
     </div>
     <!--end-->
@@ -106,12 +110,16 @@
             <tr>
                 <td class="title-text"><i class="t-important">*</i>姓名:</td>
                 <td class="title-inp">
-                    <input id="txtName_edit" value="土豆" name="" type="text" class="title-inp" /></td>
+                    <input id="txtName_edit" value="土豆" name="" type="text" class="title-inp" />
+                    <span class="t-errormessage" id="txtName_edit_error" style="display: none;"></span>
+                </td>
             </tr>
             <tr>
                 <td class="title-text"><i class="t-important">*</i>用户名:</td>
                 <td class="title-inp">
-                    <input id="txtLoginName_edit" value="得意的飘" name="" type="text" class="title-inp" /></td>
+                    <input id="txtLoginName_edit" value="得意的飘" name="" type="text" class="title-inp" />
+                    <span class="t-errormessage" id="txtLoginName_edit_error" style="display: none;"></span>
+                </td>
             </tr> 
             <tr>
                 <td class="title-text">职位:</td>
@@ -121,11 +129,11 @@
             <tr>
                 <td class="title-text">联系方式:</td>
                 <td class="title-inp">
-                    <input id="Contact_edit" value="138888888" name="" type="text" class="title-inp" /></td>
+                    <input id="txtContact_edit" value="138888888" name="" type="text" class="title-inp" /></td>
             </tr>
         </table>
         <p class="btnbox">
-            <input id="btnEditAdminUser" value="确定" type="button" class="J_closebox closebox" />
+            <input id="btnEditAdminUser" value="确定" type="button" class="closebox" />
             <input value="取消" type="button" class="J_closebox closebox" />
         </p>
     </div>
@@ -198,7 +206,7 @@
 
         </div>
         <p class="btnbox">
-            <input value="确定" type="button" class="J_closebox closebox" />
+            <input value="确定" type="button" class="closebox" />
             <input value="取消" type="button" class="J_closebox closebox" />
         </p>
     </div>
@@ -225,7 +233,7 @@
 
         </table>
         <p class="btnbox">
-            <input id="btnConfirmUpPassword" value="确定" type="button" class="J_closebox closebox" />
+            <input id="btnConfirmUpPassword" value="确定" type="button" class="closebox" />
             <input value="取消" type="button" class="J_closebox closebox" />
         </p>
     </div>
@@ -245,6 +253,12 @@
         });
         //添加用户
         $('#J_adduser').click(function () {
+            $("#txtName_Add").val("");
+            $("#txtLoginName_Add").val("");
+            $("#txtPassWord_Add").val("");
+            $("#txtPosition_Add").val("");
+            $("#txtContact_Add").val("");
+            hideModelError("Add");
             adminjs.openwinbox('#J_addUserBox');
             return false;
         });
@@ -270,16 +284,18 @@
 
         //编辑用户
         $(document).on("click", ".J_compile", function () {
+            hideModelError("edit");
             var tr = $(this).closest("tr");
             adminUserId = tr.attr("AdminUserId");
             $("#txtName_edit").val(tr.attr("AdminUserName"));
             $("#txtLoginName_edit").val(tr.attr("AdminUserLoginName"));
             $("#txtPassWord_edit").val(tr.attr("AdminUserPassWord"));
             $("#txtPosition_edit").val(tr.attr("AdminUserPosition"));
-            $("#Contact_edit").val(tr.attr("AdminUserContact"));
+            $("#txtContact_edit").val(tr.attr("AdminUserContact"));
             adminjs.openwinbox('#J_compileBox');
             return false;
         });
+        //确认修改密码
         $("#btnConfirmUpPassword").click(function () {
             $("#txtconpassworderror").hide();
             $("#txtypassworderror").hide();
@@ -316,6 +332,7 @@
                 Password: ypassword,
                 NewPassword: newpassword
             });
+            adminjs.closewinbox('.add-openbox');
             //alert(ymm + "  sssss");
             //if (ymm == false) {
             //    $("#txtypassworderror").show();
@@ -323,34 +340,81 @@
             //    return;
             //}
         });
+        //确认添加
         $("#btnAdd").click(function () {
+            hideModelError("Add");
             var addModel = {
                 Id: adminUserId,
                 Name: $("#txtName_Add").val(),
                 LoginName: $("#txtLoginName_Add").val(),
                 PassWord: $("#txtPassWord_Add").val(),
                 Position: $("#txtPosition_Add").val(),
-                Contact: $("#Contact_Add").val()
+                Contact: $("#txtContact_Add").val()
             };
+            if (!chekAdminUserModel(addModel, "Add")) {
+                return;
+            }
             viewInstance.addAdminUser(addModel);
+            adminjs.closewinbox('.add-openbox');
         });
         //验证
-        function chekAdminUserModel(model) {
-            
+        function chekAdminUserModel(model, op) {
+            if (model.Name == "") {
+                $("#txtName_" + op + "_error").text("姓名不能为空");
+                $("#txtName_" + op + "_error").show();
+                $("#txtName_" + op).focus();
+                return false;
+            }
+            if (model.LoginName == "") {
+                $("#txtLoginName_" + op + "_error").text("登陆名不能为空");
+                $("#txtLoginName_" + op + "_error").show();
+                $("#txtLoginName_" + op).focus();
+                return false;
+            }
+            if (op == "Add") {
+                if (model.PassWord == "") {
+                    $("#txtPassWord_" + op + "_error").text("密码不能为空");
+                    $("#txtPassWord_" + op + "_error").show();
+                    $("#txtPassWord_" + op).focus();
+                    return false;
+                }
+                if (model.PassWord.length < 6) {
+                    $("#txtPassWord_" + op + "_error").text("密码不能小于6位");
+                    $("#txtPassWord_" + op + "_error").show();
+                    $("#txtPassWord_" + op).focus();
+                    return false;
+                }
+            }
+            return true;
         }
+
+        function hideModelError(op) {
+            $("#txtName_" + op + "_error").hide();
+            $("#txtLoginName_" + op + "_error").hide();
+            if (op == "Add") {
+                $("#txtPassWord_" + op + "_error").hide();
+            }
+        }
+
         $("#btnDelete").click(function () {
             viewInstance.deleteAdminUser(adminUserId);
         });
+        //确认修改
         $(document).on("click", "#btnEditAdminUser", function () {
+            hideModelError("edit");
             var editModel = {
                 Id: adminUserId,
                 Name: $("#txtName_edit").val(),
                 LoginName: $("#txtLoginName_edit").val(),
                 PassWord: $("#txtPassWord_edit").val(),
                 Position: $("#txtPosition_edit").val(),
-                Contact: $("#Contact_edit").val()
+                Contact: $("#txtContact_edit").val()
             };
+            if (!chekAdminUserModel(editModel, "edit")) {
+                return;
+            }
             viewInstance.updateAdminUser(editModel);
+            adminjs.closewinbox('.add-openbox');
         });
         //权限设置
         $(document).on("click", ".J_qxset", function() {
@@ -364,14 +428,10 @@
             adminUserId = tr.attr("AdminUserId");
             adminjs.openwinbox('#J_xgPasswordBox');
             return false;
-
         });
         //权限设置下拉菜单
         adminjs.slidedownList('.J_downlist', '.J_showSetList');
         adminjs.clickCheck('.J_checkbtn', '.J_showSetList');
-
-
-
     })
 
 </script>
