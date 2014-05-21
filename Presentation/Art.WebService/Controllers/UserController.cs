@@ -252,7 +252,9 @@ namespace Art.WebService.Controllers
             {
                 return SimpleResultModel.Conclude(SendCheckCodeStatus.InvlidPhoneNumber);
             }
-            
+
+            var randomCode = new Random().Next(10000).ToString("D4");
+            ArtCaching.Instance.Add(PhoneNumber, randomCode);
             //TODO:send sms
             return SimpleResultModel.Conclude(SendCheckCodeStatus.Success);
         }
