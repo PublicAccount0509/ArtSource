@@ -1,6 +1,7 @@
 ﻿using Art.BussinessLogic;
 using Art.BussinessLogic.Entities;
 using Art.Common;
+using Art.Data.Common;
 using Art.WebService.Models;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,11 @@ namespace Art.WebService.Controllers
         [ActionStatus(typeof(CustomerRegisterStatus))]
         public IntResultModel Register(CustomerRegisterModel model)
         {
+            if (!EnumExtenstion.OwnElement<Genders>(model.Gender))
+            {
+                return IntResultModel.Conclude(CustomerRegisterStatus.InvalidGender);
+            }
+
             if (string.IsNullOrEmpty(model.NickName))
             {
                 return IntResultModel.Conclude(CustomerRegisterStatus.NickNameEmpty);

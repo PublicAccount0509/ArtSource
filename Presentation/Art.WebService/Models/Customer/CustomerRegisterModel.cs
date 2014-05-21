@@ -1,4 +1,5 @@
-﻿using Art.Data.Domain;
+﻿using Art.Data.Common;
+using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,11 @@ namespace Art.WebService.Models
     /// </summary>
     public class CustomerRegisterModel
     {
+        /// <summary>
+        /// 性别
+        /// </summary>
+        public Genders Gender { get; set; }
+
         /// <summary>
         /// 昵称
         /// </summary>
@@ -57,6 +63,9 @@ namespace Art.WebService.Models
     public enum CustomerRegisterStatus : int
     {
         Success = 0,
+
+        [DisplayText("性别无效")]
+        InvalidGender,
 
         [DisplayText("昵称不能为空")]
         NickNameEmpty,
