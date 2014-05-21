@@ -39,7 +39,7 @@ namespace Art.WebService.Models
         public static readonly CustomerRegisterModelTranslator Instance = new CustomerRegisterModelTranslator();
 
         public override CustomerRegisterModel Translate(Customer from)
-        { 
+        {
             throw new NotImplementedException();
         }
 
@@ -54,8 +54,8 @@ namespace Art.WebService.Models
     }
 
 
-    public enum CustomerRegisterStatus:int
-    { 
+    public enum CustomerRegisterStatus : int
+    {
         Success = 0,
 
         [DisplayText("昵称不能为空")]
@@ -66,6 +66,9 @@ namespace Art.WebService.Models
 
         [DisplayText("密码不能为空")]
         PasswordEmpty,
+
+        [DisplayText("验证码不正确")]
+        IncorrectCheckCode,
 
         [DisplayText("昵称已被注册")]
         NickNameAlreadyRegistered,
