@@ -7,7 +7,8 @@
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/Views/AuctionList.js"></script>
 <script src="~/Scripts/Extension/kendo.Extension.js"></script>
-<script src="~/Scripts/webExpress/webExpress.controls.adpaters.js"></script>
+<script src="~/Scripts/webExpress/webExpress.ui.control.adapter.js"></script>
+<script src="~/Scripts/Views/base/Pager.js"></script>
 
 <div class="conterbox orderManage auctionManage">
         <h2 class="crumbs">
@@ -95,7 +96,11 @@
                 </div>
             </div>*@
         </div>
-    </div><div class="auctionManage">
+    </div>
+
+
+
+<div class="auctionManage">
     <!--接受弹框 start-->
     <div id="J_yesBox" class="add-openbox">
         <h2>接受提示<a class="J_closebox xbtn" href=""></a></h2>
@@ -116,7 +121,10 @@
             <input type="button" class="J_closebox closebox" value="取消">
         </p>
     </div>
-    </div><script>
+    </div>
+
+
+<script>
     var adminjs = new adminglass(); //实例化后台类
     $(document).ready(function () {
         var auctionId;
@@ -158,4 +166,4 @@
             viewInstance.auctionAccept(auctionId);
         });
     });
-</script>
+</script>

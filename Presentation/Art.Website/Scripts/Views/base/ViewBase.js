@@ -11,7 +11,7 @@
 
         function attachBindingAttribute() {
             var properties = $("[property-name]");
-            var controlAdapters = webExpress.controls.adpaters;
+            var controlAdapters = webExpress.ui.control.adapter;
             for (var i = 0; i < properties.length; i++) {
                 var $property = $(properties[i]);
                 $property.addClass("control-group");

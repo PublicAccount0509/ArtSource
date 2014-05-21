@@ -4,6 +4,7 @@
     ViewBag.Title = "作品管理";
 }
 <script src="~/Scripts/Views/ArtworkList.js"></script>
+<script src="~/Scripts/Views/base/Pager.js"></script>
 
 <div class="conterbox atrworkManage">
     <h2 class="crumbs">您所在位置：作品管理 > 作品管理
@@ -98,6 +99,7 @@
             
 
         var viewInstance = new art.ui.view.ArtworkList();
+        viewInstance.init();
         var domResolver = new art.ui.view.DomResolver();
 
 

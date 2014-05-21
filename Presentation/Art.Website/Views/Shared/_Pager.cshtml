@@ -3,7 +3,7 @@
 <div class="grid-pager clearfix">
     <div class="t-status-text">显示记录@(Model.RecordCount)条,共@(Model.TotalCount)条</div>
     <div class="t-pager t-reset">
-        <a href="#" class="t-link">
+        <a href="javascript:void(0)" class="t-link">
             <!--变灰不可选-->
             @*<span class="t-icon t-arrow-first-gray">first</span>*@
             <!--变高亮可选
@@ -18,7 +18,7 @@
                 <span class="t-icon t-arrow-first-gray">first</span>
             }
         </a>
-        <a href="#" class="t-link">
+        <a href="javascript:void(0)" class="t-link">
 
             @if (Model.HasPreviousPage)
             {
@@ -43,7 +43,7 @@
             }
 
         </div>
-        <a href="#" class="t-link">
+        <a href="javascript:void(0)" class="t-link">
 
             @if (Model.HasNextPage)
             {
@@ -56,7 +56,7 @@
                 <span class="t-icon t-arrow-next-gray">next</span>
             }
         </a>
-        <a href="#" class="t-link">
+        <a href="javascript:void(0)" class="t-link">
             @if (Model.HasNextPage)
             {
                 <!--高亮可选-->

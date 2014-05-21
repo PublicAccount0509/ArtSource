@@ -1,5 +1,5 @@
 ﻿/// <reference path="_references.views.js" />
-/// <reference path="../webExpress/webExpress.controls.adpaters.js" />
+/// <reference path="../webExpress/webExpress.ui.control.adapter.js" />
  
 
 (function () {
@@ -14,6 +14,8 @@
         var _currentPageIndex = 0;
 
         function _init() {
+            _self.init = init;
+
             _self.remove = remove;
 
             _self.publish = publish;
@@ -23,6 +25,10 @@
             _self.search = search;
 
             _self.refresh = refresh;
+        }
+
+        function init() {
+            art.ui.control.Pager.enablePaging(document, refresh);
         }
 
         function remove(artworkId) {

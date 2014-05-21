@@ -3,7 +3,7 @@
 webExpress.ui = {};
 webExpress.ui.view = {};
 
-webExpress.controls = {};
+webExpress.ui.control = {};
 
 webExpress.config = {};
 webExpress.config.enums = {};

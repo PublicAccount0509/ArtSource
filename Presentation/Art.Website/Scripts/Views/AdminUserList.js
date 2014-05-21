@@ -1,5 +1,5 @@
 ﻿/// <reference path="_references.views.js" />
-/// <reference path="../webExpress/webExpress.controls.adpaters.js" />
+/// <reference path="../webExpress/webExpress.ui.control.adapter.js" />
 
 (function () {
     art.ui.view.AdminUserList = AdminUserListClass;

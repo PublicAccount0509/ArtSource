@@ -429,8 +429,9 @@
     <Content Include="Scripts\Views\_references.views.js" />
     <Content Include="Scripts\Views\AuctionList.js" />
     <Content Include="Scripts\Views\AdminUserList.js" />
-    <Content Include="Scripts\webExpress\webExpress.control.confirmWindow.js" />
-    <Content Include="Scripts\webExpress\webExpress.controls.adpaters.js" />
+    <Content Include="Scripts\Views\base\Pager.js" />
+    <Content Include="Scripts\webExpress\webExpress.ui.control.confirmWindow.js" />
+    <Content Include="Scripts\webExpress\webExpress.ui.control.adpater.js" />
     <Content Include="Scripts\webExpress\webExpress.js" />
     <Content Include="Scripts\webExpress\webExpress.utility.ajax.js" />
     <Content Include="Scripts\webExpress\webExpress.utility.js" />

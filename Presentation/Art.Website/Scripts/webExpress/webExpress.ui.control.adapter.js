@@ -1,5 +1,5 @@
 ﻿
-webExpress.controls.adpaters = new AdapterClass();
+webExpress.ui.control.adapter = new AdapterClass();
 function AdapterClass() {
     var _self = this;
 

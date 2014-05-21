@@ -39,9 +39,14 @@ namespace Art.Website.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
+            var captcha = Session["captcha"];
+            if (captcha == null)
+            {
+                ModelState.AddModelError("", "验证码不正确");
+            }
             if (model.Captcha != Session["captcha"].ToString())
             {
-                ModelState.AddModelError("", "验证码输入不正确");
+                ModelState.AddModelError("", "验证码不正确");
             }
 
             if (model.UserName.ToLower() == "admin" )

@@ -1,5 +1,5 @@
 ﻿/// <reference path="_references.views.js" />
-/// <reference path="../webExpress/webExpress.controls.adpaters.js" />
+/// <reference path="../webExpress/webExpress.ui.control.adapter.js" />
 
 (function () {
     window.art.ui.view.AuctionListClass = AuctionListClass;
@@ -7,7 +7,6 @@
         var _self = this;
         var DEFAULT_PAGESIZE = 10;
         var _searchCriteria = { PagingRequest: { PageIndex: 0, PageSize: DEFAULT_PAGESIZE } };
-        //var currentPageIndex = 0;
         window.art.ui.view.ViewBase.call(self);
         function _init() {
             _self.init = init;
@@ -19,30 +18,8 @@
 
         function init() {
             $("#btnSearch").click(search);
-            $(document).on("click", ".grid-pager a[pageIndex]", function () {
-                var pageIndex = $(this).attr("pageIndex");
-                refresh(pageIndex);
-            });
-
-            $(document).on("click", ".t-arrow-prev", function () {
-                var pageIndex = _searchCriteria.PagingRequest.PageIndex - 1;
-                refresh(pageIndex);
-            });
             
-            $(document).on("click", ".t-arrow-next", function () {
-                var pageIndex = _searchCriteria.PagingRequest.PageIndex + 1;
-                refresh(pageIndex);
-            });
-            $(document).on("click", ".t-arrow-last", function () {
-                var pageIndex = parseInt($(this).attr("pageIndex")) - 1;
-                refresh(pageIndex);
-            });
-            $(document).on("click", ".t-arrow-first", function () {
-                refresh(0);
-            });
-            $(document).on("click", ".t-refresh", function () {
-                refresh();
-            });
+            art.ui.control.Pager.enablePaging(document, refresh);
         }
 
         function search() {
@@ -72,6 +49,7 @@
                 }
             });
         }
+
         function auctionRefuse(id, onSuccess) {
             var pData = { "id": id };
             var url = "/Order/AuctionRefuse";
@@ -86,6 +64,7 @@
                 }
             });
         }
+
         function refresh(pageIndex) {
             var url = "/Order/AuctionList";
             if (pageIndex !== undefined) {
