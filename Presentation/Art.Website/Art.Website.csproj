@@ -238,6 +238,7 @@
     <Compile Include="Models\Common\FileUploadModel.cs" />
     <Compile Include="Models\Common\IdNameModel.cs" />
     <Compile Include="Models\Common\SaveResult.cs" />
+    <Compile Include="Models\Customer\ResetPasswordModel.cs" />
     <Compile Include="Models\GenreModel.cs" />
     <Compile Include="Models\Home\SummaryModel.cs" />
     <Compile Include="Models\Message\CommentModel.cs" />
@@ -486,7 +487,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authorization\" />
-    <Folder Include="Models\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
