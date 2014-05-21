@@ -239,6 +239,11 @@ namespace Art.BussinessLogic
                 query = query.Where(i => i.Name.Contains(criteria.NamePart));
             }
 
+            if (criteria.IsPublic.HasValue)
+            {
+                query = query.Where(i => i.IsPublic == criteria.IsPublic.Value);
+            }
+
             if (criteria.ArtworkTypeId.HasValue)
             {
                 query = query.Where(i => i.ArtworkType.Id == criteria.ArtworkTypeId.Value);

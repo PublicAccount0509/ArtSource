@@ -18,6 +18,8 @@ namespace Art.BussinessLogic.Entities
             this.OrderByItems = new List<OrderByItem<Artwork>>();
         }
 
+        public bool? IsPublic { get; set; }
+
         public string NamePart { get; set; }
         public int? ArtworkTypeId { get; set; }
         public int? ArtMaterialId { get; set; }

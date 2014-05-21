@@ -34,7 +34,11 @@ namespace Art.WebService.Controllers
         public ResultModel<ArtworkSimpleModel[]> List(int itemsCount, int pageIndex)
         {
             var paging = new PagingRequest(pageIndex, itemsCount);
-            var criteria = new ArtworkSearchCriteria(paging);
+            var criteria = new ArtworkSearchCriteria(paging)
+            {
+                IsPublic = true
+            };
+
             criteria.OrderByItems.Add(new OrderByItem<Artwork>(i => i.AtTopDatetime.Value, System.Data.SqlClient.SortOrder.Descending));
             criteria.OrderByItems.Add(new OrderByItem<Artwork>(i => i.Id, System.Data.SqlClient.SortOrder.Descending));
             var result = SearchArtworkAndAttachCount(criteria);
