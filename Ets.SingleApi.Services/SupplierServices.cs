@@ -391,7 +391,7 @@
                 PublicTransport = tempSupplier.PublicTransport,
                 LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
                                         this.supplierImageEntityRepository.EntityQueryable.Where(
-                                            p => p.Supplier.SupplierId == supplierId && p.Online == true)
+                                            p => p.Supplier.SupplierId == supplierId && p.Online == true && p.Position == 100)
                                             .Select(p => p.ImagePath)
                                             .FirstOrDefault()),
                 SupplierFeatureList = supplierFeatureList,
@@ -1031,7 +1031,7 @@
 
             var supplierIdList = tempSupplierList.Select(p => p.SupplierId).ToList();
             var supplierImageList = this.supplierImageEntityRepository.EntityQueryable.Where(
-                p => supplierIdList.Contains(p.Supplier.SupplierId) && p.Online == true)
+                p => supplierIdList.Contains(p.Supplier.SupplierId) && p.Online == true && p.Position == 100)
                                         .Select(p => new
                                         {
                                             p.Supplier.SupplierId,
