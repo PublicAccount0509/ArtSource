@@ -38,6 +38,9 @@ namespace Art.Website.Models
             var to = new AdminUser();
             to.Id = from.Id;
             to.Name = from.Name;
+            to.LoginName = from.LoginName;
+            to.Password = from.PassWord;
+            to.Contact = from.Contact;
             to.Position = from.Position;
             return to;
         }

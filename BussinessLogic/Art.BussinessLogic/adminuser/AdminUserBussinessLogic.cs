@@ -51,6 +51,37 @@ namespace Art.BussinessLogic
             return query.ToList();
         }
 
+        /// <summary>
+        /// 登陆名存在
+        /// </summary>
+        public bool CheakUserByLoginName(string loginName)
+        {
+            return _adminUserRepository.Table.Any(p => p.LoginName == loginName);
+        }
+        /// <summary>
+        /// 登陆名存在
+        /// </summary>
+        public AdminUser GetUserByLoginName(string loginName)
+        {
+            return _adminUserRepository.Table.FirstOrDefault(p => p.LoginName == loginName);
+        }
+        public AdminUser GetById(int adminUserId)
+        {
+            return _adminUserRepository.GetById(adminUserId);
+        }
+        public void AddAdminUser(AdminUser adminUser)
+        {
+            _adminUserRepository.Insert(adminUser);
+        }
+        public void UpdateAdminUser(AdminUser adminUser)
+        {
+            _adminUserRepository.Update(adminUser);
+        }
+        public void DeleteAdminUser(AdminUser adminUser)
+        {
+            _adminUserRepository.Delete(adminUser);
+        }
+
         public UserLoginResults ValidateUser(string userName, string password)
         {
             var user = _adminUserRepository.Table.Where(i => i.LoginName == userName).FirstOrDefault();

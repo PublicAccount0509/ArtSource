@@ -31,31 +31,31 @@
             <tr>
                 <td class="title-text"><i class="t-important">*</i>姓名:</td>
                 <td class="title-inp">
-                    <input value="" name="" type="text" class="title-inp" /></td>
+                    <input id="txtName_Add" value="" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
                 <td class="title-text"><i class="t-important">*</i>登录名:</td>
                 <td class="title-inp">
-                    <input value="" name="" type="text" class="title-inp" /></td>
+                    <input id="txtLoginName_Add" value="" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
                 <td class="title-text"><i class="t-important">*</i>登陆密码:</td>
                 <td class="title-inp">
-                    <input value="" name="" type="text" class="title-inp" /></td>
+                    <input id="txtPassWord_Add" value="" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
                 <td class="title-text">职位:</td>
                 <td class="title-inp">
-                    <input value="" name="" type="text" class="title-inp" /></td>
+                    <input id="txtPosition_Add" value="" name="" type="text" class="title-inp" /></td>
             </tr>
             <tr>
                 <td class="title-text">联系方式:</td>
                 <td class="title-inp">
-                    <input value="" name="" type="text" class="title-inp" /></td>
+                    <input id="txtContact_Add" value="" name="" type="text" class="title-inp" /></td>
             </tr>
         </table>
         <p class="btnbox">
-            <input value="添加用户" type="button" class="J_closebox closebox" />
+            <input id="btnAdd" value="添加用户" type="button" class="J_closebox closebox" />
 
         </p>
     </div>
@@ -67,7 +67,7 @@
             确定删除该用户吗？删除后，该作品不可恢复。请谨慎操作！
         </p>
         <p class="btnbox">
-            <input value="确定" type="button" class="J_closebox closebox" />
+            <input id="btnDelete" value="确定" type="button" class="J_closebox closebox" />
             <input value="取消" type="button" class="J_closebox closebox" />
         </p>
     </div>
@@ -210,22 +210,22 @@
             <tr>
                 <td class="title-text">原密码:</td>
                 <td class="title-inp">
-                    <input value="" name="" type="text" class="title-inp" id="J_ypassword" /><span class="t-errormessage">原密码错误</span></td>
+                    <input value="" name="" type="password" class="title-inp" id="J_ypassword" /><span class="t-errormessage" id="txtypassworderror" style="display: none;">原密码错误</span></td>
             </tr>
             <tr>
                 <td class="title-text">新密码:</td>
                 <td class="title-inp">
-                    <input value="" name="" type="text" class="title-inp" /></td>
+                    <input id="J_newpassword" value="" name="" type="password" class="title-inp" /><span class="t-errormessage" id="txtnewpassworderror" style="display: none;"></span></td>
             </tr>
             <tr>
                 <td class="title-text">确认密码:</td>
                 <td class="title-inp">
-                    <input value="" name="" type="text" class="title-inp" /></td>
+                    <input id="J_conpassword" value="" name="" type="password" class="title-inp" /><span class="t-errormessage" id="txtconpassworderror" style="display: none;">两次密码输入不一致</span></td>
             </tr>
 
         </table>
         <p class="btnbox">
-            <input value="确定" type="button" class="J_confirm" />
+            <input id="btnConfirmUpPassword" value="确定" type="button" class="J_closebox closebox" />
             <input value="取消" type="button" class="J_closebox closebox" />
         </p>
     </div>
@@ -248,11 +248,10 @@
             adminjs.openwinbox('#J_addUserBox');
             return false;
         });
-        $("#btnEditAdminUser").click(function() {
-            viewInstance.updateAdminUser();
-        });
         //删除
-        $(document).on("click", ".J_dele", function() {
+        $(document).on("click", ".J_dele", function () {
+            var tr = $(this).closest("tr");
+            adminUserId = tr.attr("AdminUserId");
             adminjs.openwinbox('#J_deleUserBox');
             return false;
         });
@@ -281,7 +280,78 @@
             adminjs.openwinbox('#J_compileBox');
             return false;
         });
-
+        $("#btnConfirmUpPassword").click(function () {
+            $("#txtconpassworderror").hide();
+            $("#txtypassworderror").hide();
+            $("#txtnewpassworderror").hide();
+            var ypassword = $("#J_ypassword").val();
+            var newpassword = $("#J_newpassword").val();
+            var conpassword = $("#J_conpassword").val();
+            if (ypassword == "") {
+                $("#txtypassworderror").text("请输入原密码");
+                $("#txtypassworderror").show();
+                $("#J_ypassword").focus();
+                return;
+            }
+            if (newpassword == "") {
+                $("#txtnewpassworderror").text("新密码不能为空");
+                $("#txtnewpassworderror").show();
+                $("#J_newpassword").focus();
+                return;
+            }
+            if (newpassword.length < 6) {
+                $("#txtnewpassworderror").text("新密码不能小于6位");
+                $("#txtnewpassworderror").show();
+                $("#J_newpassword").focus();
+                return;
+            }
+            if (conpassword != newpassword) {
+                $("#txtconpassworderror").text("两次密码输入不一致");
+                $("#txtconpassworderror").show();
+                $("#J_conpassword").focus();
+                return;
+            }
+            viewInstance.resetPassword({
+                Id: adminUserId,
+                Password: ypassword,
+                NewPassword: newpassword
+            });
+            //alert(ymm + "  sssss");
+            //if (ymm == false) {
+            //    $("#txtypassworderror").show();
+            //    $("#J_ypassword").focus();
+            //    return;
+            //}
+        });
+        $("#btnAdd").click(function () {
+            var addModel = {
+                Id: adminUserId,
+                Name: $("#txtName_Add").val(),
+                LoginName: $("#txtLoginName_Add").val(),
+                PassWord: $("#txtPassWord_Add").val(),
+                Position: $("#txtPosition_Add").val(),
+                Contact: $("#Contact_Add").val()
+            };
+            viewInstance.addAdminUser(addModel);
+        });
+        //验证
+        function chekAdminUserModel(model) {
+            
+        }
+        $("#btnDelete").click(function () {
+            viewInstance.deleteAdminUser(adminUserId);
+        });
+        $(document).on("click", "#btnEditAdminUser", function () {
+            var editModel = {
+                Id: adminUserId,
+                Name: $("#txtName_edit").val(),
+                LoginName: $("#txtLoginName_edit").val(),
+                PassWord: $("#txtPassWord_edit").val(),
+                Position: $("#txtPosition_edit").val(),
+                Contact: $("#Contact_edit").val()
+            };
+            viewInstance.updateAdminUser(editModel);
+        });
         //权限设置
         $(document).on("click", ".J_qxset", function() {
             adminjs.openwinbox('#J_qxsetBox');
@@ -289,7 +359,9 @@
         });
 
             //修改密码
-        $(document).on("click", ".J_xgPassword", function() {
+        $(document).on("click", ".J_xgPassword", function () {
+            var tr = $(this).closest("tr");
+            adminUserId = tr.attr("AdminUserId");
             adminjs.openwinbox('#J_xgPasswordBox');
             return false;
 
