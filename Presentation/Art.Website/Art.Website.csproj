@@ -256,6 +256,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SqlServer.Indexes.sql" />
+    <Content Include="Content\fromwangying\admin.css" />
+    <Content Include="Content\fromwangying\datepicker.css" />
+    <Content Include="Content\fromwangying\header.css" />
     <Content Include="Content\images\icon\img-x.psd" />
     <Content Include="Content\images\icon\sprite-icon.psd" />
     <Content Include="favicon.ico" />
@@ -388,6 +391,9 @@
     <None Include="Properties\PublishProfiles\fb.pubxml" />
     <None Include="Properties\PublishProfiles\forApp.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\fromwangying\admin.js" />
+    <Content Include="Scripts\fromwangying\datepicker.js" />
+    <Content Include="Scripts\fromwangying\jquery.min.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
