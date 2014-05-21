@@ -240,6 +240,7 @@
     <Compile Include="Models\Common\SaveResult.cs" />
     <Compile Include="Models\GenreModel.cs" />
     <Compile Include="Models\Home\SummaryModel.cs" />
+    <Compile Include="Models\IIdentityModel.cs" />
     <Compile Include="Models\Message\CommentModel.cs" />
     <Compile Include="Models\Message\CommentSearchCriteria.cs" />
     <Compile Include="Models\Message\MessageModel.cs" />

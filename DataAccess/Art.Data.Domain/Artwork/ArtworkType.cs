@@ -12,6 +12,12 @@ namespace Art.Data.Domain
 {
     public class ArtworkType : BaseEntity, ISoftDelete, IIdNameEntry
     {
+        public ArtworkType()
+        {
+            ArtMaterials = new List<ArtMaterial>();
+            ArtShapes = new List<ArtShape>();
+            ArtTechniques = new List<ArtTechnique>();
+        }
         [MaxLength(50)]
         public string Name { get; set; }
 
