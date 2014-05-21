@@ -1351,6 +1351,12 @@
                          PackagingFee = supplierDishEntity.PackagingFee
                      }).ToList();
 
+
+                if (dishList.Count == 0)
+                {
+                    continue;
+                }
+
                 list.Add(new SupplierCuisineModel
                 {
                     CategoryId = supplierCategory.CategoryId,
