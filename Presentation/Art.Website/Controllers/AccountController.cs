@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Drawing.Drawing2D;
 using Art.BussinessLogic;
+using WebExpress.Core;
 
 namespace Art.Website.Controllers
 { 
@@ -69,6 +70,14 @@ namespace Art.Website.Controllers
             _authenticationService.SignOut();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public FileContentResult CaptchaImage()
+        {
+            var captcha = new LiteralCaptcha(80, 25, 4);
+            var bytes = captcha.Generate();
+            Session["captcha"] = captcha.Captcha;
+            return new FileContentResult(bytes, "image/jpeg"); ;
         }
 
         private ActionResult RedirectToLocal(string returnUrl)
