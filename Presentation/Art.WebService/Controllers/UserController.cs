@@ -39,11 +39,11 @@ namespace Art.WebService.Controllers
         {
             if (string.IsNullOrEmpty(model.NickName))
             {
-                return IntResultModel.Conclude(CustomerRegisterStatus.NickNameEmpty);//, "昵称不能为空");
+                return IntResultModel.Conclude(CustomerRegisterStatus.NickNameEmpty);
             }
             if (string.IsNullOrEmpty(model.PhoneNumber))
             {
-                return IntResultModel.Conclude(CustomerRegisterStatus.PhoneNumberEmpty);//, "手机号不能为空");
+                return IntResultModel.Conclude(CustomerRegisterStatus.PhoneNumberEmpty);
             }
             if (string.IsNullOrEmpty(model.Password))
             {
@@ -51,11 +51,15 @@ namespace Art.WebService.Controllers
             }
             if (_customerBussinessLogic.ExistNickName(model.NickName))
             {
-                return IntResultModel.Conclude(CustomerRegisterStatus.NickNameAlreadyRegistered);//, "昵称已被注册");
+                return IntResultModel.Conclude(CustomerRegisterStatus.NickNameAlreadyRegistered);
             }
             if (_customerBussinessLogic.ExistPhoneNumber(model.PhoneNumber))
             {
-                return IntResultModel.Conclude(CustomerRegisterStatus.PhoneNumberRegistered);//, "手机号已被注册");
+                return IntResultModel.Conclude(CustomerRegisterStatus.PhoneNumberRegistered);
+            }
+            if (model.CheckCode != ArtApiCaching.Instance.Get(model.PhoneNumber))
+            {
+                return IntResultModel.Conclude(CustomerRegisterStatus.IncorrectCheckCode);
             }
 
             var customer = CustomerRegisterModelTranslator.Instance.Translate(model);
@@ -254,9 +258,27 @@ namespace Art.WebService.Controllers
             }
 
             var randomCode = new Random().Next(10000).ToString("D4");
-            ArtCaching.Instance.Add(PhoneNumber, randomCode);
-            //TODO:send sms
-            return SimpleResultModel.Conclude(SendCheckCodeStatus.Success);
+
+            var sms = new SmsService.Sms();
+            var msg = string.Format(ArtApiConfig.Instance.SmsContent, randomCode);
+            try
+            {
+                var ret = sms.SendSmsSaveLog(PhoneNumber, msg, "local", -1, false);
+                if (ret == "发送成功")
+                {
+                    ArtApiCaching.Instance.Add(PhoneNumber, randomCode);
+                    return SimpleResultModel.Conclude(SendCheckCodeStatus.Success);
+                }
+                else
+                {
+                    return SimpleResultModel.Conclude(SendCheckCodeStatus.SendFailure);
+                }
+            }
+            catch (Exception)
+            {
+                return SimpleResultModel.Conclude(SendCheckCodeStatus.SendFailure);
+            }
+
         }
 
         /// <summary>
