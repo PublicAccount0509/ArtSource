@@ -28,22 +28,31 @@ namespace Art.WebService.Models
 
     public enum AddOrderStatus
     {
-        InvalidAuctionType,
+        [DisplayText("参数无效")]
+        ArgumentNull,
 
-        InvoiceType,
+        [DisplayText("无效的拍卖方式")]
+        InvalidAuctionType, 
 
+        [DisplayText("无效的发票类型")]
         InvalidInvoiceType,
 
+        [DisplayText("无效的包装方式")]
         InvalidPackingType,
 
+        [DisplayText("无效的用户")]
         InvalidUserId,
 
+        [DisplayText("无效的地址")]
         InvalidAddressId,
 
+        [DisplayText("无效的作品")]
         InvalidArtworkId,
 
+        [DisplayText("不支持该物流方式")]
         NotSupportedDeliveryType,
 
+        [DisplayText("不支持该包装方式")]
         NotSupportedPackageType,
 
         [DisplayText("订单的价格，运费，或包装费与当前商品不一致")]

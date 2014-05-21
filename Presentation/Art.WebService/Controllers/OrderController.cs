@@ -100,6 +100,11 @@ namespace Art.WebService.Controllers
         [HttpPost]
         public IntResultModel Add(AddOrderModel model)
         {
+            if (model == null)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.ArgumentNull);
+            }
+
             if (!EnumExtenstion.OwnElement<AuctionType>(model.AuctionType))
             {
                 return IntResultModel.Conclude(AddOrderStatus.InvalidAuctionType);
