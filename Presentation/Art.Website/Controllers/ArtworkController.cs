@@ -21,10 +21,14 @@ namespace Art.Website.Controllers
     {
         private IArtistBussinessLogic _artistBussinessLogic;
         private IArtworkBussinessLogic _artworkBussinessLogic;
-        public ArtworkController(IArtistBussinessLogic artistBussinessLogic, IArtworkBussinessLogic artworkBussinessLogic)
+        private IOrderBussinessLogic _orderBussinessLogic;
+        public ArtworkController(IArtistBussinessLogic artistBussinessLogic,
+            IArtworkBussinessLogic artworkBussinessLogic,
+            IOrderBussinessLogic orderBussinessLogic)
         {
             _artistBussinessLogic = artistBussinessLogic;
             _artworkBussinessLogic = artworkBussinessLogic;
+            _orderBussinessLogic = orderBussinessLogic;
         }
 
         public ActionResult Types()
@@ -395,6 +399,10 @@ namespace Art.Website.Controllers
         public JsonResult Delete(int id)
         {
             var artwork = _artworkBussinessLogic.GetArtwork(id);
+            if (artwork.IsPublic)
+            {
+                return Json(new ResultModel(false, "艺术品已发布，不能删除！"));
+            }
             _artworkBussinessLogic.Delete(artwork);
             var model = new ResultModel(true, string.Empty);
             return Json(model);
@@ -410,6 +418,21 @@ namespace Art.Website.Controllers
         public JsonResult CancelPublish(int id)
         {
             var artwork = _artworkBussinessLogic.GetArtwork(id);
+            if (artwork == null)
+            {
+                return Json(new ResultModel(false, "该商品不存在，取消发布失败！"));
+            }
+            var orders = _orderBussinessLogic.GetOrdersByArtworkId(id);
+            if (orders.Any(i => i.Status == OrderStatus.待处理 
+                || i.Status == OrderStatus.生成中
+                || i.Status == OrderStatus.完成
+                || i.Status == OrderStatus.已发货
+                || i.Status == OrderStatus.已接受
+                || i.Status == OrderStatus.生成中))
+            {
+                return Json(new ResultModel(false, "该商品已生成订单，取消发布失败！"));
+            }
+
             artwork.IsPublic = false;
             _artworkBussinessLogic.Update(artwork);
             var model = new ResultModel(true, string.Empty);

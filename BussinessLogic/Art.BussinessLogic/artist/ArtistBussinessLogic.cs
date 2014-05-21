@@ -157,25 +157,7 @@ namespace Art.BussinessLogic
         {
             _artistRepository.Delete(artist);
         }
-
-        public bool CanUnpublish(Artist artist)
-        {
-            List<string> reasons;
-            return CanUnpublish(artist, out reasons);
-        }
-
-        public bool CanUnpublish(Artist artist, out List<string> reasons)
-        {
-            reasons = new List<string>();
-            if (artist.Name == "齐白石")
-            {
-                reasons.Add("齐白石老人不能取消发布");
-
-                return false;
-            }
-            return true;
-        }
-
+          
         public ICollection<ArtistType> GetArtistTypes(List<int> ids)
         {
             if (ids == null)

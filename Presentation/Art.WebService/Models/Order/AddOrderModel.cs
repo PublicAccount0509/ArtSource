@@ -44,6 +44,9 @@ namespace Art.WebService.Models
 
         NotSupportedPackageType,
 
+        [DisplayText("aaaaaaa")]
+        PriceChanged,
+
         [DisplayText("该商品未发布")]
         ArtworkUnPublished,
 

@@ -11,12 +11,12 @@ using WebExpress.Core;
 namespace Art.Website.Models
 {
     public class ArtworkSimpleModel
-    { 
+    {
         public int Id { get; set; }
         public string Name { get; set; }
         public int IdentityNumber { get; set; }
         public string ImageFileName { get; set; }
-        public string ArtistName { get; set; } 
+        public string ArtistName { get; set; }
         public string ArtworkType { get; set; }
         public string ArtMaterial { get; set; }
         public string Genre { get; set; }
@@ -34,11 +34,11 @@ namespace Art.Website.Models
             to.Id = from.Id;
             to.Name = from.Name;
             to.IdentityNumber = from.IdentityNumber;
-            to.ArtistName = from.Artist.Name;             
+            to.ArtistName = from.Artist.Name;
             to.ArtworkType = from.ArtworkType.Name;
-            to.ArtMaterial = from.ArtMaterial.Name;            
+            to.ArtMaterial = from.ArtMaterial.Name;
             to.Genre = from.Genre.Name;
-            
+
             if (!string.IsNullOrEmpty(from.ImageFileName))
             {
                 to.ImageFileName = Path.Combine(ConfigSettings.Instance.FileUploadPath, from.ImageFileName);

@@ -58,6 +58,15 @@ namespace Art.Website.Controllers
         public JsonResult Delete(int id)
         {
             var artist = _artistBussinessLogic.GetArtist(id);
+            if (artist.IsPublic)
+            {
+                return Json(new ResultModel(false, "该艺术家已发布，不能删除！"));
+            }
+
+            if (artist.Artworks.Any())
+            {
+                return Json(new ResultModel(false, "该艺术家有作品，不能删除！"));
+            }
             _artistBussinessLogic.Delete(artist);
             var model = new ResultModel(true, string.Empty);
             return Json(model);
@@ -75,18 +84,15 @@ namespace Art.Website.Controllers
         public JsonResult UnPublish(int id)
         {
             var artist = _artistBussinessLogic.GetArtist(id);
-            List<string> reasons;
-            var model = new ResultModel(true, string.Empty);
-            if (_artistBussinessLogic.CanUnpublish(artist, out reasons))
+            if (artist.Artworks.Any(i => i.IsPublic))
             {
-                artist.IsPublic = false;
-                _artistBussinessLogic.Update(artist);
+                return Json(new ResultModel(false, "该艺术家有已发布的作品，不能删除！"));
             }
-            else
-            {
-                model = new ResultModel(false, string.Join(",", reasons));
-            }
-            return Json(model);
+
+            artist.IsPublic = false;
+            _artistBussinessLogic.Update(artist);
+
+            return Json(new ResultModel(true, string.Empty));
         }
 
         public ViewResult Add()
@@ -280,7 +286,7 @@ namespace Art.Website.Controllers
             foreach (var item in pagedArtists)
             {
                 var artist = ArtistItemTranslator.Instance.Translate(item);
-                artist.CanUnPublish = _artistBussinessLogic.CanUnpublish(item);
+                artist.CanUnPublish = true;// _artistBussinessLogic.CanUnpublish(item);
                 artistItems.Add(artist);
             }
 

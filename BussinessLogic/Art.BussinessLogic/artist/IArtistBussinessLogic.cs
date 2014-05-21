@@ -12,8 +12,6 @@ namespace Art.BussinessLogic
         void AddFollow(ActivityFollow activityFollow);
         ActivityFollow[] GetFollowsByCustomerId(int customerId);
         int GetFollowCount(int customerId);
-        bool CanUnpublish(Artist artist);
-        bool CanUnpublish(Artist artist, out List<string> reasons);
         void Delete(Artist artist);
         void DeleteArtistType(ArtistType artistType);
         void DeleteFollow(ActivityFollow activityFollow);

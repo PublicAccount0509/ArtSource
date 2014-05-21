@@ -83,6 +83,9 @@ namespace Art.WebService.Models
     public enum ArtworkDetailModelStatus
     {
         Success,
+        
+        [DisplayText("该商品已下架")]
+        ArtworkNotPublished,
         ArtworkNotFound,
         UserNotFound
     }
