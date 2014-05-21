@@ -359,6 +359,18 @@ namespace Art.Website.Controllers
         public ActionResult Edit(int id)
         {
             var artwork = _artworkBussinessLogic.GetArtwork(id);
+
+            var orders = _orderBussinessLogic.GetOrdersByArtworkId(id);
+            if (orders.Any(i => i.Status == OrderStatus.待处理
+                || i.Status == OrderStatus.生成中
+                || i.Status == OrderStatus.完成
+                || i.Status == OrderStatus.已发货
+                || i.Status == OrderStatus.已接受
+                || i.Status == OrderStatus.生成中))
+            {
+                return Json(new ResultModel(false, "该商品已生成订单，不能编辑！"));
+            }
+
             Guard.IsNotNull<DataNotFoundException>(artwork);
 
             var artworkModel = ArtworkModelTranslator.Instance.Translate(artwork);
@@ -423,7 +435,7 @@ namespace Art.Website.Controllers
                 return Json(new ResultModel(false, "该商品不存在，取消发布失败！"));
             }
             var orders = _orderBussinessLogic.GetOrdersByArtworkId(id);
-            if (orders.Any(i => i.Status == OrderStatus.待处理 
+            if (orders.Any(i => i.Status == OrderStatus.待处理
                 || i.Status == OrderStatus.生成中
                 || i.Status == OrderStatus.完成
                 || i.Status == OrderStatus.已发货
