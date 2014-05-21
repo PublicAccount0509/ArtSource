@@ -515,6 +515,33 @@ namespace Art.BussinessLogic
             return result;
         }
 
+        public decimal GetArtworkFeePacking(Artwork artwork, PackingType packingType)
+        {
+            if (packingType == PackingType.一般包装)
+            {
+                return artwork.FeePackageGeneral.Value;
+            }
+            else
+            {
+                return artwork.FeePackageFine.Value;
+            }
+        }
+
+        public decimal GetArtworkFeeDelivery(Artwork artwork, DeliveryType deliveryType)
+        {
+            if (deliveryType == DeliveryType.市内)
+            {
+                return artwork.FeeDeliveryLocal.Value;
+            }
+            else if (deliveryType == DeliveryType.外地)
+            {
+                return artwork.FeeDeliveryNonlocal.Value;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         //public IList<Artwork> DeveryWays(int[] artworkIds)
         //{
         //    var artworks = _artworkRepository.Table;

@@ -136,6 +136,13 @@ namespace Art.WebService.Controllers
                 return IntResultModel.Conclude(AddOrderStatus.InvalidArtworkId);
             }
 
+            if (model.Price != artwork.AuctionPrice
+            || model.FeePacking != _artworkBussinessLogic.GetArtworkFeePacking(artwork, model.PackingType)
+            || model.FeeDelivery != _artworkBussinessLogic.GetArtworkFeeDelivery(artwork, model.DeliveryType))
+            {
+                return IntResultModel.Conclude(AddOrderStatus.IncorrectPrice);
+            }
+
             if (!artwork.IsPublic)
             {
                 return IntResultModel.Conclude(AddOrderStatus.ArtworkUnPublished);

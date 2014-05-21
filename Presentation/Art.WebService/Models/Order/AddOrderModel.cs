@@ -14,6 +14,8 @@ namespace Art.WebService.Models
         public int ArtworkId { get; set; }
         public int ReceiptAddressId { get; set; }
         public decimal Price { get; set; }
+        public decimal FeePacking { get; set; }
+        public decimal FeeDelivery { get; set; }
 
         public AuctionType AuctionType { get; set; }
         public PackingType PackingType { get; set; }
@@ -44,8 +46,8 @@ namespace Art.WebService.Models
 
         NotSupportedPackageType,
 
-        [DisplayText("aaaaaaa")]
-        PriceChanged,
+        [DisplayText("订单的价格，运费，或包装费与当前商品不一致")]
+        IncorrectPrice,
 
         [DisplayText("该商品未发布")]
         ArtworkUnPublished,
@@ -79,6 +81,9 @@ namespace Art.WebService.Models
 
             to.InvoiceType = from.InvoiceType;
             to.InvoiceCompanyName = from.InvoiceCompanyName;
+
+            to.FeeDelivery = from.FeeDelivery;
+            to.FeePackage = from.FeePacking;
 
             to.Note = from.Note;
 

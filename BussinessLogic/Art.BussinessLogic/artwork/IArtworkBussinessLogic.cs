@@ -1,4 +1,5 @@
 ﻿using Art.BussinessLogic.Entities;
+using Art.Data.Common;
 using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
@@ -48,5 +49,9 @@ namespace Art.BussinessLogic
         ActivityShare Share(int artworkId, int customerId);
         void Update(Artwork artwork);
         void UpdateArtworkType(ArtworkType artworkType);
+
+        decimal GetArtworkFeePacking(Artwork artwork, PackingType packingType);
+
+        decimal GetArtworkFeeDelivery(Artwork artwork, DeliveryType deliveryType);
     }
 }
