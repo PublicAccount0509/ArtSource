@@ -8,7 +8,8 @@
         var _self = this;
         var _searchCriteria;
         //var currentPageIndex = 0;
-        window.art.ui.view.ViewBase.call(self);
+        window.art.ui.view.ViewBase.call(_self);
+
         function _init() {
             _self.init = init;
             _self.refresh = refresh;
@@ -30,6 +31,7 @@
             };
             refresh();
         }
+
         function updateAdminUser(model) {
             var url = "/AdminUser/Edit" ;
             webExpress.utility.ajax.request(url, model,
@@ -43,6 +45,7 @@
                 }
             });
         }
+
         function addAdminUser(model) {
             var url = "/AdminUser/Add";
             webExpress.utility.ajax.request(url, model,
@@ -81,6 +84,7 @@
                 }
             });
         }
+
         function resetPassword(model) {
             var checkpasswordurl = "/AdminUser/CheckPassword";
             var resetPasswordurl = "/AdminUser/ResetPassword";
@@ -103,6 +107,7 @@
                     }
                 });
         }
+
         function refresh() {
             var url = "/AdminUser/List";
             webExpress.utility.ajax.request(url, _searchCriteria,

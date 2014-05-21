@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="ActionStatusAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ArtCaching.cs" />
     <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\ArtworkController.cs" />
     <Compile Include="Controllers\ControllerHelper.cs" />
