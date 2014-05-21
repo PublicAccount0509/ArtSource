@@ -71,7 +71,6 @@
         //        });
         //}
         function deleteAdminUser(id) {
-            alert("delete " + id);
             var url = "/AdminUser/Delete";
             webExpress.utility.ajax.request(url, {id : id },
             function (response) {
