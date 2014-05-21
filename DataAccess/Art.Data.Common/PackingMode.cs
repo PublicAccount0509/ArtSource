@@ -9,6 +9,6 @@ namespace Art.Data.Common
     public enum PackingType
     {
         一般包装 = 1,
-        精包装
+        精包装 = 2
     }
 }

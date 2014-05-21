@@ -100,6 +100,11 @@ namespace Art.WebService.Controllers
         [HttpPost]
         public IntResultModel Add(AddOrderModel model)
         {
+            if (model == null)
+            {
+                return IntResultModel.Conclude(AddOrderStatus.ArgumentNull);
+            }
+
             if (!EnumExtenstion.OwnElement<AuctionType>(model.AuctionType))
             {
                 return IntResultModel.Conclude(AddOrderStatus.InvalidAuctionType);
@@ -115,7 +120,7 @@ namespace Art.WebService.Controllers
                 return IntResultModel.Conclude(AddOrderStatus.InvalidInvoiceType);
             }
 
-            if (!EnumExtenstion.OwnElement<PackingType>(model.PackingType))
+            if (!EnumExtenstion.OwnElement<PackingType>(model.PackageType))
             {
                 return IntResultModel.Conclude(AddOrderStatus.InvalidPackingType);
             }
@@ -137,7 +142,7 @@ namespace Art.WebService.Controllers
             }
 
             if (model.Price != artwork.AuctionPrice
-            || model.FeePacking != _artworkBussinessLogic.GetArtworkFeePacking(artwork, model.PackingType)
+            || model.FeePackage != _artworkBussinessLogic.GetArtworkFeePacking(artwork, model.PackageType)
             || model.FeeDelivery != _artworkBussinessLogic.GetArtworkFeeDelivery(artwork, model.DeliveryType))
             {
                 return IntResultModel.Conclude(AddOrderStatus.IncorrectPrice);
@@ -157,11 +162,11 @@ namespace Art.WebService.Controllers
                 return IntResultModel.Conclude(AddOrderStatus.NotSupportedDeliveryType);
             }
 
-            if (model.PackingType == PackingType.一般包装 && !artwork.FeePackageGeneral.HasValue)
+            if (model.PackageType == PackingType.一般包装 && !artwork.FeePackageGeneral.HasValue)
             {
                 return IntResultModel.Conclude(AddOrderStatus.NotSupportedPackageType);
             }
-            else if (model.PackingType == PackingType.精包装 && !artwork.FeePackageFine.HasValue)
+            else if (model.PackageType == PackingType.精包装 && !artwork.FeePackageFine.HasValue)
             {
                 return IntResultModel.Conclude(AddOrderStatus.NotSupportedPackageType);
             }

@@ -1,5 +1,5 @@
 ﻿using Art.BussinessLogic;
-using Art.Data.Domain; 
+using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,73 +50,104 @@ namespace Art.Website.Models
             return to;
         }
 
+        private void RemoveDomainItems(ICollection<BaseEntity> domainItems, ICollection<IIdentityModel> modelItems)
+        {
+            foreach (var domainItem in domainItems)
+            {
+                if (modelItems.Any(i => i.Id == domainItem.Id))
+                {
+                    domainItems.Remove(domainItem);
+                }
+            }
+        }
+
         public override ArtworkType Translate(ArtworkTypeModel from)
         {
             var logic = DependencyResolver.Current.GetService<IArtworkBussinessLogic>();
-            var to = new ArtworkType();
-            if (from.Id > 0)
-            {
-                to = logic.GetArtworkType(from.Id);
-            }
+
+            var to = from.Id > 0 ? logic.GetArtworkType(from.Id) : new ArtworkType();
+
             to.Name = from.Text;
 
+            #region ArtMaterials
 
-            to.ArtMaterials = new List<ArtMaterial>();
-
-            foreach (var item in from.ArtMaterials)
+            //delete 
+            var removingItems = to.ArtMaterials.Where(i => !from.ArtMaterials.Any(p => p.Id == i.Id)).ToList();
+            foreach (var domainItem in removingItems)
             {
-                if (item.Id > 0)
+                to.ArtMaterials.Remove(domainItem);
+            }
+
+            //add and update
+            foreach (var modelItem in from.ArtMaterials)
+            {
+                if (modelItem.Id > 0)
                 {
-                    var artwork = logic.GetArtMaterial(item.Id);
-                    artwork.Name = item.Text;
-                    to.ArtMaterials.Add(artwork);
+                    var material = to.ArtMaterials.Single(i => i.Id == modelItem.Id);
+                    material.Name = modelItem.Text;
                 }
                 else
                 {
                     to.ArtMaterials.Add(new ArtMaterial
                     {
-                        Name = item.Text,
+                        Name = modelItem.Text,
                     });
                 }
             }
+            #endregion
 
-
-            to.ArtShapes = new List<ArtShape>();
-            foreach (var item in from.ArtShapes)
+            #region ArtShapes
+            //delete
+            var removingShapes = to.ArtShapes.Where(i => !from.ArtShapes.Any(p => p.Id == i.Id)).ToList();
+            foreach (var domainItem in removingShapes)
             {
-                if (item.Id > 0)
+                to.ArtShapes.Remove(domainItem);
+            }
+
+            //add and update
+            foreach (var modelItem in from.ArtShapes)
+            {
+                if (modelItem.Id > 0)
                 {
-                    var artshape = logic.GetArtShape(item.Id);
-                    artshape.Name = item.Text;
-                    to.ArtShapes.Add(artshape);
+                    var domainItem = to.ArtShapes.Single(i => i.Id == modelItem.Id);
+                    domainItem.Name = modelItem.Text;
                 }
                 else
                 {
                     to.ArtShapes.Add(new ArtShape
                     {
-                        Name = item.Text,
+                        Name = modelItem.Text,
                     });
                 }
             }
+            #endregion
 
-
-            to.ArtTechniques = new List<ArtTechnique>();
-            foreach (var item in from.ArtTechniques)
+            #region ArtTechniques
+            //delete 
+            var removingTechniques = to.ArtTechniques.Where(i => !from.ArtTechniques.Any(p => p.Id == i.Id)).ToList();
+            foreach (var domainItem in removingTechniques)
             {
-                if (item.Id > 0)
+                to.ArtTechniques.Remove(domainItem);
+            }
+
+            //add and update
+            foreach (var modelItem in from.ArtTechniques)
+            {
+                if (modelItem.Id > 0)
                 {
-                    var technique = logic.GetArtTechnique(item.Id);
-                    technique.Name = item.Text;
-                    to.ArtTechniques.Add(logic.GetArtTechnique(item.Id));
+                    var domainItem = to.ArtTechniques.Single(i => i.Id == modelItem.Id);
+                    domainItem.Name = modelItem.Text;
                 }
                 else
                 {
                     to.ArtTechniques.Add(new ArtTechnique
                     {
-                        Name = item.Text,
+                        Name = modelItem.Text,
                     });
                 }
             }
+            #endregion
+
             return to;
         }
     }

@@ -14,11 +14,19 @@ namespace Art.WebService.Models
         public int ArtworkId { get; set; }
         public int ReceiptAddressId { get; set; }
         public decimal Price { get; set; }
-        public decimal FeePacking { get; set; }
+
+        /// <summary>
+        /// 包装费
+        /// </summary>
+        public decimal FeePackage { get; set; }
+
+        /// <summary>
+        /// 运费
+        /// </summary>
         public decimal FeeDelivery { get; set; }
 
         public AuctionType AuctionType { get; set; }
-        public PackingType PackingType { get; set; }
+        public PackingType PackageType { get; set; }
         public DeliveryType DeliveryType { get; set; }
         public InvoiceType InvoiceType { get; set; }
         public string InvoiceCompanyName { get; set; }
@@ -28,22 +36,31 @@ namespace Art.WebService.Models
 
     public enum AddOrderStatus
     {
-        InvalidAuctionType,
+        [DisplayText("参数无效")]
+        ArgumentNull,
 
-        InvoiceType,
+        [DisplayText("无效的拍卖方式")]
+        InvalidAuctionType, 
 
+        [DisplayText("无效的发票类型")]
         InvalidInvoiceType,
 
+        [DisplayText("无效的包装方式")]
         InvalidPackingType,
 
+        [DisplayText("无效的用户")]
         InvalidUserId,
 
+        [DisplayText("无效的地址")]
         InvalidAddressId,
 
+        [DisplayText("无效的作品")]
         InvalidArtworkId,
 
+        [DisplayText("不支持该物流方式")]
         NotSupportedDeliveryType,
 
+        [DisplayText("不支持该包装方式")]
         NotSupportedPackageType,
 
         [DisplayText("订单的价格，运费，或包装费与当前商品不一致")]
@@ -77,13 +94,13 @@ namespace Art.WebService.Models
 
             to.AuctionType = from.AuctionType;
             to.DeliveryType = from.DeliveryType;
-            to.PackingType = from.PackingType;
+            to.PackingType = from.PackageType;
 
             to.InvoiceType = from.InvoiceType;
             to.InvoiceCompanyName = from.InvoiceCompanyName;
 
             to.FeeDelivery = from.FeeDelivery;
-            to.FeePackage = from.FeePacking;
+            to.FeePackage = from.FeePackage;
 
             to.Note = from.Note;
 

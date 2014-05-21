@@ -8,8 +8,8 @@ namespace Art.Data.Common
 {
     public enum InvoiceType
     {
-        None,
-        个人,
-        单位
+        无 = 0,
+        个人 = 1,
+        单位 = 2
     }
 }

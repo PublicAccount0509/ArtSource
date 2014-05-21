@@ -93,7 +93,7 @@
             _searchCriteria = {
                 NamePart: $("#txtName").val(),
                 ArtworkTypeId: $("#ddlArtworkType option:selected").val(),
-                ArtistId: $("#ddlArtMaterial option:selected").val(),
+                ArtistId: $("#ddlArtist option:selected").val(),
                 ArtMaterialId: $("#ddlArtist option:selected").val(),
                 PagingRequest: {
                     PageSize: DEFAULT_PAGESIZE

@@ -7,7 +7,7 @@ using WebExpress.Core;
 
 namespace Art.Website.Models
 {
-    public class ArtMaterialModel
+    public class ArtMaterialModel:IIdentityModel
     {
         public int Id { get; set; }
         public string Text { get; set; }
