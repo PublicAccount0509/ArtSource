@@ -13,7 +13,7 @@
             <span class="name">作品名称：<input type="text" value="" id="txtName" class="searchinp" /></span>
             <span class="fl">作品分类：
                     <select id="ddlArtworkType">
-                        <option value="">全部</option>
+                        <option value="">未填</option>
                         @for (int i = 0; i < Model.ArtworkTypes.Count; i++)
                         {
                             var item = Model.ArtworkTypes[i];
@@ -23,11 +23,12 @@
             </span>
             <span class="tc">作品材质：
                     <select id="ddlArtMaterial" data-bind="source:ArtMaterials" data-value-field="Id" data-text-field="Text">
+                        <option value="">未填</option>
                     </select>
             </span>
             <span class="zz" id="ddlArtist">作者：
                     <select name="">
-                        <option value="">全部</option>
+                        <option value="">未填</option>
                         @for (int i = 0; i < Model.Artists.Count; i++)
                         {
                             var item = Model.Artists[i];
@@ -79,7 +80,7 @@
 <div class="add-openbox" id="J_deletezpBox">
     <h2>删除作品提示<a href="javascript:void(0)" class="J_closebox xbtn"></a></h2>
     <p class="l-textinfo">
-        确定删除该作品吗？删除后，该作品不可恢复！。请谨慎操作！
+        确定删除该作品吗？
     </p>
     <p class="btnbox">
         <input value="确定" type="button" class="J_closebox confirmDelete" />

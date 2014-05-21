@@ -14,11 +14,19 @@ namespace Art.WebService.Models
         public int ArtworkId { get; set; }
         public int ReceiptAddressId { get; set; }
         public decimal Price { get; set; }
-        public decimal FeePacking { get; set; }
+
+        /// <summary>
+        /// 包装费
+        /// </summary>
+        public decimal FeePackage { get; set; }
+
+        /// <summary>
+        /// 运费
+        /// </summary>
         public decimal FeeDelivery { get; set; }
 
         public AuctionType AuctionType { get; set; }
-        public PackingType PackingType { get; set; }
+        public PackingType PackageType { get; set; }
         public DeliveryType DeliveryType { get; set; }
         public InvoiceType InvoiceType { get; set; }
         public string InvoiceCompanyName { get; set; }
@@ -86,13 +94,13 @@ namespace Art.WebService.Models
 
             to.AuctionType = from.AuctionType;
             to.DeliveryType = from.DeliveryType;
-            to.PackingType = from.PackingType;
+            to.PackingType = from.PackageType;
 
             to.InvoiceType = from.InvoiceType;
             to.InvoiceCompanyName = from.InvoiceCompanyName;
 
             to.FeeDelivery = from.FeeDelivery;
-            to.FeePackage = from.FeePacking;
+            to.FeePackage = from.FeePackage;
 
             to.Note = from.Note;
 
