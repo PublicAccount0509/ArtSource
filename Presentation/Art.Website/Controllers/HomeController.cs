@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Art.Website.Controllers
 {
+
     public class HomeController : Controller
     {
         public ActionResult Index()

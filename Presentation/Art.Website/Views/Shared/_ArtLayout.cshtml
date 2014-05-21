@@ -59,12 +59,12 @@
             <div class="logo">
             </div>
             <div class="login-info">
-                <span>右右</span>您好，欢迎使用
+                <span>@HttpContext.Current.User.Identity.Name</span>您好，欢迎使用
             </div>
 
             <div class="links">
 
-                <a href="#">退出</a>
+                <a href="/Account/LogOff">退出</a>
             </div>
 
             <nav class="header-menu" id="J_downListBox">
