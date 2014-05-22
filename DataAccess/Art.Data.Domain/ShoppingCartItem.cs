@@ -13,6 +13,8 @@ namespace Art.Data.Domain
 
         public int CustomerId { get; set; }
 
+        public decimal Price { get; set; }
+
         public DateTime FADateTime { get; set; }
 
         [ForeignKey("ArtworkId")]

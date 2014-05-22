@@ -265,10 +265,12 @@ namespace Art.BussinessLogic
 
         public ShoppingCartItem AddShoppingCartItem(int artworkId, int customerId)
         {
+            var artwork = _artworkRepository.GetById(artworkId);
             var item = new ShoppingCartItem
             {
                 ArtworkId = artworkId,
                 CustomerId = customerId,
+                Price = artwork.AuctionPrice,
                 FADateTime = DateTime.Now
             };
             var result = _shoppingCartRepository.Insert(item);

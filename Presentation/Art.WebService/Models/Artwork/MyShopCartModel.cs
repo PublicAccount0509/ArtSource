@@ -50,7 +50,7 @@ namespace Art.WebService.Models
             to.ArtworkId = from.ArtworkId;
             to.ImagePath = CommonHelper.GetUploadFileRelativePath_SlantStyle(from.Artwork.ImageFileName);
             to.Name = from.Artwork.Name;
-            to.Price = from.Artwork.AuctionPrice;
+            to.Price = from.Price;  //from.Artwork.AuctionPrice;
             return to;
         }
 
