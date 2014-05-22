@@ -622,7 +622,7 @@ namespace Ets.SingleApi.Services
                                 {
                                     SupplierDishId = supplierdish.SupplierDishId,
                                     SupplierDishName = supplierdish.SupplierDishName,
-                                    SuppllierDishDescription = supplierdish.SuppllierDishDescription,
+                                    //SuppllierDishDescription = supplierdish.SuppllierDishDescription,
                                     Price = supplierdish.Price,
                                     DishCount = (from k in tangShiOrdersParameter.SupplierDishList
                                                  where k.SupplierDishId == supplierdish.SupplierDishId
@@ -826,34 +826,6 @@ namespace Ets.SingleApi.Services
         {
             var removeOrderList = this.orderDetailEntityRepository.FindByExpression(p => p.CustomerId == customerId && p.OrderId == orderId).ToList();
             this.orderDetailEntityRepository.Remove(removeOrderList);
-
-            //var supplierDishIdList = tangShiOrdersParameter.SupplierDishList.Select(p => p.SupplierDishId).Distinct().Cast<int?>().ToList();
-            //var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
-            //                        where supplierDishEntity.Supplier.SupplierId == tangShiOrdersParameter.SupplierID
-            //                              && supplierDishEntity.Online && supplierDishEntity.IsDel == false
-            //                              && supplierDishIdList.Contains(supplierDishEntity.SupplierDishId)
-            //                        select new
-            //                        {
-            //                            supplierDishEntity.SupplierCategoryId,
-            //                            supplierDishEntity.DishNo,
-            //                            supplierDishEntity.Price,
-            //                            supplierDishEntity.SupplierDishId,
-            //                            supplierDishEntity.SupplierDishName,
-            //                            supplierDishEntity.SuppllierDishDescription,
-            //                            supplierDishEntity.SpicyLevel,
-            //                            supplierDishEntity.AverageRating,
-            //                            supplierDishEntity.IsCommission,
-            //                            supplierDishEntity.IsDiscount,
-            //                            supplierDishEntity.Recipe,
-            //                            supplierDishEntity.Recommended,
-            //                            supplierDishEntity.PackagingFee,
-            //                            SupplierId =
-            //                        supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
-            //                            ImagePath = string.Empty,
-            //                            DishCount = (from k in tangShiOrdersParameter.SupplierDishList 
-            //                                         where k.SupplierDishId == supplierDishEntity.SupplierDishId 
-            //                                         select k.DishCount).FirstOrDefault()
-            //                        }).OrderBy(p => p.DishNo).ToList();
 
             var orderList = (from dish in supplierDishList
                              select new OrderDetailEntity
