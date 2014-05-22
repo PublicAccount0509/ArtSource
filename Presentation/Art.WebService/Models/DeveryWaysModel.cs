@@ -34,6 +34,14 @@ namespace Art.WebService.Models
         public decimal? Fee { get; set; }
     }
 
+    public enum GetDeveryWaysStatus
+    {
+        Success,
+
+        [DisplayText("参数无效")]
+        InvalidArgument
+    }
+
     public class DeveryWaysModelTranslator : TranslatorBase<Artwork, DeveryWaysModel>
     {
         public static readonly DeveryWaysModelTranslator Instance = new DeveryWaysModelTranslator();

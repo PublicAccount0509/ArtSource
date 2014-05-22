@@ -16,18 +16,26 @@ namespace Art.WebService.Models
         /// 作品Id
         /// </summary>
         public int ArtworkId { get; set; }
+
         /// <summary>
         /// 作品图
         /// </summary>
         public string ImagePath { get; set; }
+
         /// <summary>
         /// 名称
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// 作家
         /// </summary>
         public string ArtistName { get; set; }
+
+        /// <summary>
+        /// 价格
+        /// </summary>
+        public decimal Price { get; set; }
     }
 
     public class MyShopCartModelTranslator : TranslatorBase<ShoppingCartItem, MyShopCartItemModel>
@@ -41,6 +49,7 @@ namespace Art.WebService.Models
             to.ArtworkId = from.ArtworkId;
             to.ImagePath = from.Artwork.ImageFileName;
             to.Name = from.Artwork.Name;
+            to.Price = from.Artwork.AuctionPrice;
             return to;
         }
 

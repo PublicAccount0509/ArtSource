@@ -34,6 +34,14 @@ namespace Art.WebService.Models
         public decimal? Fee { get; set; }
     }
 
+    public enum GetArtworkPackingWayStatus
+    { 
+        Success,
+
+        [DisplayText("参数无效")]
+        InvalidArgument
+    }
+
     public class ArtworkPackingWayModelTranslator : TranslatorBase<Artwork, ArtworkPackingWayModel>
     {
         public static readonly ArtworkPackingWayModelTranslator Instance = new ArtworkPackingWayModelTranslator();
