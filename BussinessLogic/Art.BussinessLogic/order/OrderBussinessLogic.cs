@@ -298,5 +298,12 @@ namespace Art.BussinessLogic
             var orders = _orderRepository.Table.Where(i => i.ArtworkId == artworkId && i.Status == status).ToList();
             return orders;
         }
+
+        public AuctionBill AddAuction(AuctionBill auctionBill)
+        {
+            auctionBill.BidDateTime = DateTime.Now;
+            auctionBill.AuctionResult = AuctionResult.None;
+            return _auctionBillRepository.Insert(auctionBill);
+        }
     }
 }

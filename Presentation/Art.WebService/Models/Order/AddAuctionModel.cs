@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Art.Data.Common;
-using WebExpress.Core;
 using Art.Data.Domain;
+using WebExpress.Core;
 
 namespace Art.WebService.Models
 {
@@ -45,15 +42,44 @@ namespace Art.WebService.Models
     {
         Success,
 
+        [DisplayText("参数无效")]
+        ArgumentNull,
+
+        [DisplayText("无效的用户")]
         InvalidUser,
 
+        [DisplayText("无效的作品")]
         InvalidArtwork,
 
         [DisplayText("无效的拍卖方式")]
         InvalidAuctionType,
 
+        [DisplayText("无效的原始价")]
+        InvalidOriginalPrice,
+
         [DisplayText("无效的出价")]
         InvalidBidPrice
     }
 
+    public class AddAuctionModelTranslator : TranslatorBase<AuctionBill, AddAuctionModel>
+    {
+        public static readonly AddAuctionModelTranslator Instance = new AddAuctionModelTranslator();
+
+        public override AddAuctionModel Translate(AuctionBill from)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override AuctionBill Translate(AddAuctionModel from)
+        {
+            var to = new AuctionBill();
+            to.ArtworkId = from.ArtworkId;
+            to.BidPrice = from.BidPrice;
+            to.CustomerId = from.UserId;
+            to.OriginalPrice = from.OriginalPrice;
+            to.CustumerMessage = from.Note;
+            to.AuctionType = from.AuctionType;
+            return to;
+        }
+    }
 }

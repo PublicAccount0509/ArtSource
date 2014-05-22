@@ -29,5 +29,6 @@ namespace Art.BussinessLogic
         IList<Order> GetOrdersByArtworkId(int artworkId);
 
         IList<Order> GetOrdersByArtworkId(int artworkId, OrderStatus status);
+        AuctionBill AddAuction(AuctionBill auctionBill);
     }
 }

@@ -93,7 +93,7 @@ namespace Art.WebService.Controllers
             var results = OrderListModelTranslator.Instance.Translate(list).ToArray();
             return ResultModel<OrderListModel[]>.Conclude(StandaloneStatus.Success, results);
         }
-
+        /// <summary>
         /// 新增订单
         /// </summary>
         [ActionStatus(typeof(AddOrderStatus))]
@@ -185,6 +185,58 @@ namespace Art.WebService.Controllers
             var result = _orderBussinessLogic.AddOrder(order);
 
             return IntResultModel.Conclude(AddOrderStatus.Success, result.Id);
+        }
+
+        /// <summary>
+        /// 新增一次拍卖
+        /// </summary>
+        [ActionStatus(typeof (AddAuctionStatus))]
+        [HttpPost]
+        public IntResultModel AddAuction(AddAuctionModel model)
+        {
+            if (model == null)
+            {
+                return IntResultModel.Conclude(AddAuctionStatus.ArgumentNull);
+            }
+
+            if (!_customerBussinessLogic.Exist(model.UserId))
+            {
+                return IntResultModel.Conclude(AddAuctionStatus.InvalidUser);
+            }
+
+            if (!_artworkBussinessLogic.Exist(model.ArtworkId))
+            {
+                return IntResultModel.Conclude(AddAuctionStatus.InvalidArtwork);
+            }
+
+            //只能是增价拍或减价拍
+            if (model.AuctionType != AuctionType.减价拍 && model.AuctionType != AuctionType.增价拍)
+            {
+                return IntResultModel.Conclude(AddAuctionStatus.InvalidAuctionType);
+            }
+
+            if (model.OriginalPrice <= 0)
+            {
+                return IntResultModel.Conclude(AddAuctionStatus.InvalidOriginalPrice);
+            }
+
+            if (model.BidPrice <= 0)
+            {
+                return IntResultModel.Conclude(AddAuctionStatus.InvalidBidPrice);
+            }
+
+            if (model.AuctionType == AuctionType.减价拍 && model.BidPrice > model.OriginalPrice)
+            {
+                return IntResultModel.Conclude(AddAuctionStatus.InvalidBidPrice);
+            }
+
+            if (model.AuctionType == AuctionType.增价拍 && model.BidPrice < model.OriginalPrice)
+            {
+                return IntResultModel.Conclude(AddAuctionStatus.InvalidBidPrice);
+            }
+
+            var inserResult = _orderBussinessLogic.AddAuction(AddAuctionModelTranslator.Instance.Translate(model));
+            return IntResultModel.Conclude(AddAuctionStatus.Success, inserResult.Id);
         }
     }
 }
