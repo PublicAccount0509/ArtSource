@@ -744,7 +744,7 @@ namespace Ets.SingleApi.Services
 
                 CustomerId = customerId,
                 OrderNumber = orderId,
-                TableStatus = 1,
+                TableStatus = 2,
                 DateReserved = DateTime.Now,
                 IsPaId = false,
                 IsRating = false,
