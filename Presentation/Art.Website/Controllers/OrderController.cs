@@ -153,6 +153,7 @@ namespace Art.Website.Controllers
         [HttpPost]
         public JsonResult AuctionAccept(int id)
         {
+            System.Threading.Thread.Sleep(5000);
             var bussResult = _orderBussinessLogic.AuctionAccept(id);
             var result = new ResultModel(bussResult, "");
             return Json(result);

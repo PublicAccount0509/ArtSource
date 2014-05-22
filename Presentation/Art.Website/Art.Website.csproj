@@ -261,8 +261,10 @@
     <Content Include="Content\fromwangying\admin.css" />
     <Content Include="Content\fromwangying\datepicker.css" />
     <Content Include="Content\fromwangying\header.css" />
+    <Content Include="Content\images\loading.gif" />
     <Content Include="Content\i\img-x.psd" />
     <Content Include="Content\i\sprite-icon.psd" />
+    <Content Include="Content\jquery.loadmask.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Handlers\FileUploadHandler.ashx" />
@@ -403,6 +405,8 @@
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.loadmask.js" />
+    <Content Include="Scripts\jquery.loadmask.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
@@ -430,8 +434,8 @@
     <Content Include="Scripts\Views\AuctionList.js" />
     <Content Include="Scripts\Views\AdminUserList.js" />
     <Content Include="Scripts\Views\base\Pager.js" />
+    <Content Include="Scripts\webExpress\webExpress.ui.control.adapter.js" />
     <Content Include="Scripts\webExpress\webExpress.ui.control.confirmWindow.js" />
-    <Content Include="Scripts\webExpress\webExpress.ui.control.adpater.js" />
     <Content Include="Scripts\webExpress\webExpress.js" />
     <Content Include="Scripts\webExpress\webExpress.utility.ajax.js" />
     <Content Include="Scripts\webExpress\webExpress.utility.js" />

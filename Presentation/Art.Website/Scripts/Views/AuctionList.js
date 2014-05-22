@@ -39,6 +39,7 @@
             var pData = { "id": id };
             var url = "/Order/AuctionAccept";
             webExpress.utility.ajax.request(url, pData, function (data) {
+
                 if (data.IsSuccess) {
                     if (onSuccess) {
                         onSuccess();
