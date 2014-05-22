@@ -1,4 +1,5 @@
-﻿using Art.Data.Domain;
+﻿using Art.Common;
+using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,18 +17,26 @@ namespace Art.WebService.Models
         /// 作品Id
         /// </summary>
         public int ArtworkId { get; set; }
+
         /// <summary>
         /// 作品图
         /// </summary>
         public string ImagePath { get; set; }
+
         /// <summary>
         /// 名称
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// 作家
         /// </summary>
         public string ArtistName { get; set; }
+
+        /// <summary>
+        /// 价格
+        /// </summary>
+        public decimal Price { get; set; }
     }
 
     public class MyShopCartModelTranslator : TranslatorBase<ShoppingCartItem, MyShopCartItemModel>
@@ -39,8 +48,9 @@ namespace Art.WebService.Models
             var to = new MyShopCartItemModel();
             to.ArtistName = from.Artwork.Artist.Name;
             to.ArtworkId = from.ArtworkId;
-            to.ImagePath = from.Artwork.ImageFileName;
+            to.ImagePath = CommonHelper.GetUploadFileRelativePath_SlantStyle(from.Artwork.ImageFileName);
             to.Name = from.Artwork.Name;
+            to.Price = from.Artwork.AuctionPrice;
             return to;
         }
 

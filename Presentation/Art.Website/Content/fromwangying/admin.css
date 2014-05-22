@@ -174,12 +174,12 @@ table{border-collapse: collapse;}
 .atrworkManage .managebox .searchbox .searchbtn{}
 .atrworkManage .managebox .zpname{width:15%}
 .atrworkManage .managebox .zpimg{width:9.8%;padding:0.2%;}
-.atrworkManage .managebox .zpinfo{width:20%;}
+.atrworkManage .managebox .zpinfo{min-width:325px;}
 .atrworkManage .managebox .zpinfo img{width:80px;height:80px;display:block;margin:5px;}
 .atrworkManage .managebox .zpinfo div{float:left;margin-right:10px;}
 .atrworkManage .managebox .zpt-info{text-align:left}
 .atrworkManage .managebox .zpt-info p{margin-top:5px;}
-.atrworkManage .managebox .zpt-info .title{font-weight:bold}
+.atrworkManage .managebox .zpt-info .title{font-weight:bold;width:205px;}
 .atrworkManage .managebox .zpt-info .zpid{color:#808080}
 .atrworkManage .managebox .zuozhe{width:10%}
 .atrworkManage .managebox .zplx{width:10%}

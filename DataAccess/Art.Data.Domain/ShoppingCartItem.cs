@@ -10,6 +10,7 @@ namespace Art.Data.Domain
     public class ShoppingCartItem : BaseEntity
     {
         public int ArtworkId { get; set; }
+
         public int CustomerId { get; set; }
 
         public DateTime FADateTime { get; set; }

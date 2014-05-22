@@ -354,29 +354,69 @@ namespace Art.WebService.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [HttpPost]
-        [ActionStatus(typeof(StandaloneStatus))]
-        public ResultModel<DeveryWaysModel[]> DeliveryWays(int[] artworkIds)
+        [HttpGet]
+        [ActionStatus(typeof(GetDeveryWaysStatus))]
+        public ResultModel<DeveryWaysModel[]> DeliveryWays(string artworkIds)
         {
-            var artworks = _artworkBussinessLogic.GetArtworks(artworkIds);
+            if (artworkIds == null)
+            {
+                return ResultModel<DeveryWaysModel[]>.Conclude(GetDeveryWaysStatus.InvalidArgument);
+            }
+
+            var strIds = artworkIds.Split(',');
+            var intIds = new List<int>();
+            for (int i = 0; i < strIds.Length; i++)
+            {
+                int id;
+                if (int.TryParse(strIds[i], out id))
+                {
+                    intIds.Add(id);
+                }
+                else
+                {
+                    return ResultModel<DeveryWaysModel[]>.Conclude(GetDeveryWaysStatus.InvalidArgument);
+                }
+            }
+
+            var artworks = _artworkBussinessLogic.GetArtworks(intIds.ToArray());
 
             var result = DeveryWaysModelTranslator.Instance.Translate(artworks).ToArray();
 
-            return ResultModel<DeveryWaysModel[]>.Conclude(StandaloneStatus.Success, result);
+            return ResultModel<DeveryWaysModel[]>.Conclude(GetDeveryWaysStatus.Success, result);
         }
 
         /// <summary>
         /// 获取包装方式
         /// </summary>
-        [ActionStatus(typeof(StandaloneStatus))]
+        [ActionStatus(typeof(GetArtworkPackingWayStatus))]
         [HttpGet]
-        public ResultModel<ArtworkPackingWayModel> PackingWays(int artworkId)
+        public ResultModel<ArtworkPackingWayModel[]> PackingWays(string artworkIds)
         {
-            var artwork = _artworkBussinessLogic.GetArtwork(artworkId);
+            if (artworkIds == null)
+            {
+                return ResultModel<ArtworkPackingWayModel[]>.Conclude(GetArtworkPackingWayStatus.InvalidArgument);
+            }
 
-            var result = ArtworkPackingWayModelTranslator.Instance.Translate(artwork);
+            var strIds = artworkIds.Split(',');
+            var intIds = new List<int>();
+            for (int i = 0; i < strIds.Length; i++)
+            {
+                int id;
+                if (int.TryParse(strIds[i], out id))
+                {
+                    intIds.Add(id);
+                }
+                else
+                {
+                    return ResultModel<ArtworkPackingWayModel[]>.Conclude(GetArtworkPackingWayStatus.InvalidArgument);
+                }
+            }
 
-            return ResultModel<ArtworkPackingWayModel>.Conclude(StandaloneStatus.Success, result);
+            var artworks = _artworkBussinessLogic.GetArtworks(intIds.ToArray());
+
+            var result = ArtworkPackingWayModelTranslator.Instance.Translate(artworks);
+
+            return ResultModel<ArtworkPackingWayModel[]>.Conclude(GetArtworkPackingWayStatus.Success, result.ToArray());
         }
 
         private ArtworkSimpleModel[] SearchArtworkAndAttachCount(ArtworkSearchCriteria criteria)
