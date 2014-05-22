@@ -1,4 +1,5 @@
-﻿using Art.Data.Domain;
+﻿using Art.Common;
+using Art.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace Art.WebService.Models
             var to = new MyShopCartItemModel();
             to.ArtistName = from.Artwork.Artist.Name;
             to.ArtworkId = from.ArtworkId;
-            to.ImagePath = from.Artwork.ImageFileName;
+            to.ImagePath = CommonHelper.GetUploadFileRelativePath_SlantStyle(from.Artwork.ImageFileName);
             to.Name = from.Artwork.Name;
             to.Price = from.Artwork.AuctionPrice;
             return to;

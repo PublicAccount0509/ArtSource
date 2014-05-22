@@ -218,7 +218,7 @@ namespace Art.BussinessLogic
             return true;
         }
 
-        
+
         public Order AddOrder(Order order)
         {
             order.FADateTime = DateTime.Now;
@@ -306,10 +306,24 @@ namespace Art.BussinessLogic
             return _auctionBillRepository.Insert(auctionBill);
         }
 
-
         public IList<Order> GetOrders()
         {
             return _orderRepository.Table.ToList();
+        }
+
+        public IList<Order> GetOrdersByStatus(OrderStatus status)
+        {
+            return _orderRepository.Table.Where(i => i.Status == status).ToList();
+        }
+
+        public void CloseOrder(Order order)
+        {
+            if (order.PayStatus == PayStatus.支付成功)
+            {
+                return;
+            }
+            order.Status = OrderStatus.已关闭;
+            _orderRepository.Update(order);
         }
     }
 }

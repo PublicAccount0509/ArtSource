@@ -14,7 +14,6 @@ namespace Art.WebService
     {
         protected void Application_Start()
         {
-
             var builder = new ContainerBuilder(); 
             var dependencyRegistar = new DependencyRegistrar();
             dependencyRegistar.Register(builder);
@@ -26,6 +25,8 @@ namespace Art.WebService
 
             IDataProvider dataProvider = new SqlServerDataProvider();
             dataProvider.InitDatabase(string.Empty);
+
+            ArtApiJobManager.Start();
         }
     }
 }

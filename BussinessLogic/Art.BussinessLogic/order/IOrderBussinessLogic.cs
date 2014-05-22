@@ -9,6 +9,9 @@ namespace Art.BussinessLogic
     public interface IOrderBussinessLogic
     {
         Order AddOrder(Order order);
+
+        void CloseOrder(Order order);
+
         void AddTestOrders();
         bool AuctionAccept(int id);
         bool AuctionRefuse(int id);
@@ -27,6 +30,8 @@ namespace Art.BussinessLogic
         IList<ShoppingCartItem> GetShoppingCartItems(int id);
 
         IList<Order> GetOrders();
+
+        IList<Order> GetOrdersByStatus(OrderStatus status);
 
         IList<Order> GetOrdersByArtworkId(int artworkId);
 
