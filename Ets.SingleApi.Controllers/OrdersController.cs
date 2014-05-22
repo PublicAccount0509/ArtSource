@@ -422,7 +422,7 @@ namespace Ets.SingleApi.Controllers
                 Remark = requst.Remark,
                 TempOrderNumber = requst.TempOrderNumber,
                 PayMentMethodId = requst.PayMentMethodId,
-                SupplierDishList = requst.SupplierDishList ?? new List<SupplierDishItem>()
+                SupplierDishList = requst.SupplierDishList.Deserialize<List<SupplierDishItem>>() ?? new List<SupplierDishItem>()
             }, this.AppKey, this.AppPassword);
 
             if (getOrderResult.Result == null)
