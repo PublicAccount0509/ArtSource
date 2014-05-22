@@ -121,6 +121,7 @@ namespace Ets.SingleApi.Services
         /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
         /// <param name="customerEntityRepository">The customerEntityRepository</param>
+        /// <param name="supplierDishEntityRepository">The supplierDishEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -134,7 +135,9 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
             IEtsWapTangShiShoppingCartProvider etsWapShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
-            ISingleApiOrdersExternalService singleApiOrdersExternalService, INHibernateRepository<CustomerEntity> customerEntityRepository, INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository)
+            ISingleApiOrdersExternalService singleApiOrdersExternalService, 
+            INHibernateRepository<CustomerEntity> customerEntityRepository, 
+            INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository)
             : base(orderNumberDtEntityRepository, singleApiOrdersExternalService)
         {
             this.tableReservationEntityRepository = tableReservationEntityRepository;
@@ -374,7 +377,7 @@ namespace Ets.SingleApi.Services
                 ContactName = tableReservationEntity.ContactName,
                 ContactNumber = tableReservationEntity.ContactNumber,
                 Contactsex = gender,
-                TabelNo =tableReservationEntity.TabelNo,
+                TabelNo = tableReservationEntity.TabelNo,
                 TeaBitFee = (tableReservationEntity.TeaBitFee ?? 0).ToString("#0.00"),
                 ServiceFee = (tableReservationEntity.ConsumerAmount ?? 0).ToString("#0.00"),
                 Coupon = coupon.ToString("#0.00"),//折扣
@@ -626,11 +629,11 @@ namespace Ets.SingleApi.Services
                                                  select k.DishCount).FirstOrDefault()
                                 }).ToList();
 
-            var customerTotalFee = dishlist.Sum(supplierdish => (double)(supplierdish.Price * supplierdish.DishCount));
+            var customerTotalFee = dishlist.Sum(supplierdish => (supplierdish.Price * supplierdish.DishCount));
 
-            var tableReservationId = this.SaveTempTableReservationEntity(orderId, customer.CustomerId, tangShiOrdersParameter);
+            var tableReservationId = this.SaveTempTableReservationEntity(orderId, customer.CustomerId, customerTotalFee, tangShiOrdersParameter);
             this.SaveTempOrderDetailEntity(customer.CustomerId, tableReservationId, dishlist);
-            this.SavePaymentEntity(tableReservationId, (decimal) customerTotalFee,
+            this.SavePaymentEntity(tableReservationId, customerTotalFee,
                                    tangShiOrdersParameter.PayMentMethodId, string.Empty);
 
             return new ServicesResult<string>
@@ -720,6 +723,7 @@ namespace Ets.SingleApi.Services
         /// </summary>
         /// <param name="orderId">The orderId</param>
         /// <param name="customerId">The customerId</param>
+        /// <param name="customerTotalFee">The customerTotalFee</param>
         /// <param name="tangShiOrdersParameter">The tangShiOrdersParameter</param>
         /// <returns>
         /// 保存堂食订单信息
@@ -729,7 +733,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private int SaveTempTableReservationEntity(int orderId, int customerId, SaveTangShiOrdersParameter tangShiOrdersParameter)
+        private int SaveTempTableReservationEntity(int orderId, int customerId, decimal customerTotalFee, SaveTangShiOrdersParameter tangShiOrdersParameter)
         {
             var tableReservationEntity = this.tableReservationEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId) ?? new TableReservationEntity
             {
@@ -753,8 +757,8 @@ namespace Ets.SingleApi.Services
             };
 
             tableReservationEntity.Notes = tangShiOrdersParameter.Remark + tangShiOrdersParameter.TempOrderNumber;
-            //tableReservationEntity.CustomerTotal = order.CustomerTotalFee;
-            //tableReservationEntity.Total = order.TotalFee;
+            tableReservationEntity.CustomerTotal = customerTotalFee;
+            tableReservationEntity.Total = customerTotalFee;
             //tableReservationEntity.ConsumerAmount = order.ServiceFee;
             //tableReservationEntity.TeaBitFee = order.TeaBitFee;
             tableReservationEntity.ModifyDate = DateTime.Now;
