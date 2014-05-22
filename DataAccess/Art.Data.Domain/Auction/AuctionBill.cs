@@ -26,5 +26,7 @@ namespace Art.Data.Domain
         public virtual Artwork Artwork { get; set; }
 
         public virtual Customer Customer { get; set; }
+
+        public virtual AuctionType AuctionType { get; set; }
     }
 }
