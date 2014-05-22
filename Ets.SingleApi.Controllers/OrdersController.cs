@@ -307,6 +307,36 @@ namespace Ets.SingleApi.Controllers
         }
 
         /// <summary>
+        /// 更新订单的支付方式
+        /// </summary>
+        /// <param name="orderId">订单号</param>
+        /// <param name="paymentMethodId">支付方式Id</param>
+        /// <param name="payBank">区分银行</param>
+        /// <param name="orderType">订单类型</param>
+        /// <param name="orderSourceType">来源</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：5/20/2014 1:46 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<bool> ModifyOrderPaymentMethodByOrderId(int orderId, int paymentMethodId, string payBank, int orderType, int orderSourceType = 0)
+        {
+            var saveOrderPaIdResult = this.orderServices.ModifyOrderPaymentMethodByOrderId(this.GetSource(orderType), orderId, paymentMethodId, payBank, orderType, orderSourceType);
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveOrderPaIdResult.StatusCode
+                },
+                Result = saveOrderPaIdResult.Result
+            };
+        }
+
+        /// <summary>
         /// Gets the order is complete is paid by shopping cart identifier.
         /// </summary>
         /// <param name="shoppingCartId">The shoppingCartIdDefault documentation</param>

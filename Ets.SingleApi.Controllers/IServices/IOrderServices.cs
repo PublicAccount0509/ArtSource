@@ -173,6 +173,25 @@ namespace Ets.SingleApi.Controllers.IServices
         ServicesResult<bool> ModifyOrderPaymentMethod(string source, string shoppingCartId, int paymentMethodId, string payBank, int orderType, int orderSourceType);
 
         /// <summary>
+        /// 更新订单的支付方式
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderId">订单号</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
+        /// <param name="payBank">The payBankDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：5/20/2014 1:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> ModifyOrderPaymentMethodByOrderId(string source, int orderId, int paymentMethodId, string payBank, int orderType, int orderSourceType);
+
+        /// <summary>
         /// 查询订单是否完成，订单是否已支付
         /// </summary>
         /// <param name="source">The sourceDefault documentation</param>

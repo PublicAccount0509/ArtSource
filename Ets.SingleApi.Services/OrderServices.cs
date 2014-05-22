@@ -442,6 +442,78 @@
         }
 
         /// <summary>
+        /// 更新订单的支付方式
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderId">订单号</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
+        /// <param name="payBank">The payBankDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <param name="orderSourceType">Type of the order source.</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：5/20/2014 1:37 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> ModifyOrderPaymentMethodByOrderId(string source, int orderId, int paymentMethodId, string payBank,
+                                                                int orderType, int orderSourceType)
+        {
+
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
+            if (orderProvider == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+            
+            //保存订单支付方式
+            var saveOrderPaymentMethodResult = orderBaseProvider.SaveOrderPaymentMethod(source, orderId, paymentMethodId, payBank);
+            if (saveOrderPaymentMethodResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = saveOrderPaymentMethodResult.StatusCode
+                };
+            }
+
+            //获取购物车Id 通过订单号
+            var shoppingCartBase = this.shoppingCartBaseCacheServices.GetShoppingCartId(source, orderId);
+            if (shoppingCartBase != null && shoppingCartBase.StatusCode == (int)StatusCode.Succeed.Ok && shoppingCartBase.Result != null)
+            {
+                var shoppingCartId = shoppingCartBase.Result;
+
+                //修改购物车中订单支付状态
+                var result = orderProvider.ModifyOrderPaymentMethod(source, shoppingCartId, paymentMethodId, payBank);
+
+                return new ServicesResult<bool>
+                {
+                    StatusCode = result.StatusCode,
+                    Result = result.Result
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = saveOrderPaymentMethodResult.StatusCode,
+                Result = saveOrderPaymentMethodResult.Result
+            };
+        }
+
+        /// <summary>
         /// 查询订单是否完成，订单是否已支付
         /// </summary>
         /// <param name="source">The sourceDefault documentation</param>
