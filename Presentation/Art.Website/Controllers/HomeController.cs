@@ -13,9 +13,9 @@ namespace Art.Website.Controllers
 
     public class HomeController : Controller
     {
-        private IArtistBussinessLogic _artistBussinessLogic;
-        private IArtworkBussinessLogic _artworkBussinessLogic;
-        private IOrderBussinessLogic _orderBussinessLogic;
+        private readonly IArtistBussinessLogic _artistBussinessLogic;
+        private readonly IArtworkBussinessLogic _artworkBussinessLogic;
+        private readonly IOrderBussinessLogic _orderBussinessLogic;
         public HomeController(IArtistBussinessLogic artistBussinessLogic, 
             IArtworkBussinessLogic artworkBussinessLogic,
             IOrderBussinessLogic orderBussinessLogic)

@@ -18,6 +18,8 @@ namespace Art.BussinessLogic.Entities
 
         public PayStatus? PayResult { get; set; }
 
+        public bool? IsPaid { get; set; }
+
         public string OrderNumber { get; set; }
          
         public PagingRequest PagingRequest { get; set; }

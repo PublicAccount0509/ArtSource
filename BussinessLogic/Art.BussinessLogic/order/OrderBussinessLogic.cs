@@ -68,6 +68,22 @@ namespace Art.BussinessLogic
                 query = query.Where(i => i.Status == criteria.Status.Value);
             }
 
+            if (criteria.IsPaid.HasValue)
+            {
+                query = criteria.IsPaid.Value
+                            ? query.Where(i => i.PayStatus == PayStatus.支付成功)
+                            : query.Where(i => i.PayStatus == PayStatus.支付失败);
+            }
+
+            //var query =
+            //    _orderRepository.Table.Where(
+            //        p => (!criteria.StartDate.HasValue || p.FADateTime >= criteria.StartDate.Value.BeginOfDay())
+            //             && (!criteria.EndDate.HasValue || p.FADateTime <= criteria.EndDate.Value.EndOfDay())
+            //             && (string.IsNullOrEmpty(criteria.OrderNumber) || p.OrderNumber == criteria.OrderNumber)
+            //             && (!criteria.Status.HasValue || p.Status == criteria.Status.Value))
+            //                    .OrderByDescending(p => p.Id);
+
+
             query = query.OrderByDescending(i => i.Id);
 
             var result = new PagedList<Order>(query, criteria.PagingRequest.PageIndex, criteria.PagingRequest.PageSize);
@@ -90,7 +106,10 @@ namespace Art.BussinessLogic
         {
             return _orderRepository.GetById(id);
         }
-
+        public void UpdateOrder(Order model)
+        {
+            _orderRepository.Update(model);
+        }
         public IList<Order> GetOrderListByCustomerId(int customerId)
         {
             return _orderRepository.Table.Where(p => p.Customer.Id == customerId).ToList();
