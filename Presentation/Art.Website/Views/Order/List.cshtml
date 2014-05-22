@@ -18,11 +18,14 @@
                            订单状态：
                            <select id="ddlOrderStatus" class="inptexth">
                                <option selected="selected" value="">全部</option>
-                               <option value="">待处理</option>
-                               <option value="">接受订单</option>
-                               <option value="">订单完成</option>
-                               <option value="">订单失败</option>
-                               <option value="">订单关闭</option>
+                               <option value="1">生成中</option>
+                               <option value="2">待处理</option>
+                               <option value="3">接受订单</option>
+                               <option value="4">已发货</option>
+                               <option value="5">订单完成</option>
+                               <option value="6">已拒绝</option>
+                               <option value="7">已退款</option>
+                               <option value="8">已关闭</option>
                            </select>
                        </td>
                        <td>
@@ -36,7 +39,6 @@
                        <td>订单号：<input type="text" id="txtOrderNumber" class="inptexth orderw"/><input type="button" value="查询" id="btnSearch" class="btn"/></td>
                    </tr>
                </from>
-
         </table>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="item-hd">
             <tr>
@@ -48,7 +50,6 @@
                 <td class="w20">操作</td>
             </tr>
         </table>
-
         <div class="data">
             @Html.Partial("_List", Model.PagedOrders)
         </div>
@@ -59,22 +60,20 @@
     <div class="add-openbox" id="J_nobox">
         <h2>拒绝理由<a href="" class="J_closebox xbtn"></a></h2>
         <p class="textinfo">
-            <textarea class="J_noTextarea">输入拒绝理由</textarea>
+            <textarea id="txtRefuseMessage" class="J_noTextarea">输入拒绝理由</textarea>
         </p>
         <p class="btnbox">
-            <input value="提交" type="button" class="J_closebox closebox" />
-
+            <input id="btnConfirmRefuse" value="提交" type="button" class="closebox" />
         </p>
     </div>
     <!--退款弹框 start-->
     <div class="add-openbox" id="J_refundbox">
         <h2>输入退款信息<a href="" class="J_closebox xbtn"></a></h2>
         <p class="textinfo">
-            <textarea class="J_noTextarea">输入退款信息，买家姓名、退款账号等信息</textarea>
+            <textarea id="txtRefundMessage" class="J_noTextarea">输入退款信息，买家姓名、退款账号等信息</textarea>
         </p>
         <p class="btnbox">
-            <input value="提交" type="button" class="J_closebox closebox" />
-
+            <input id="btnConfirmRefund" value="提交" type="button" class="closebox" />
         </p>
     </div>
 
@@ -84,8 +83,7 @@
         <p class="textinfo">物流公司:<input class="wuliuinp J_wuliuinp" id="txtCompanyName" value="例如：圆通物流" name="" /></p>
         <p class="textinfo">物流单号:<input class="wuliuinp J_wuliuinp" id="txtBillNumber" value="例如：9016080878" name="" /></p>
         <p class="btnbox">
-            <input value="提交" id="btnDelivery" type="button" class="J_closebox closebox" />
-
+            <input value="提交" id="btnDelivery" type="button" class="closebox" />
         </p>
     </div>
     <!--end-->
@@ -94,38 +92,30 @@
 @section scripts{
     <script src="~/Scripts/Views/OrderList.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             //日历控件
-            var adminjs = new adminglass();//实例化后台类
+            var adminjs = new adminglass(); //实例化后台类
             adminjs.datepickerbox('#startdate', '#enddate');
             //关闭弹层
-            $('.J_closebox').click(function () {
+            $('.J_closebox').click(function() {
                 adminjs.closewinbox('.add-openbox');
-                return false
-            })
+                return false;
+            });
             //买家留言
             adminjs.hoveritem('.J_showMsg', '.J_userMsg');
 
-            //拒绝弹框
-            $('.J_noBtn').click(function () {
-                adminjs.openwinbox('#J_nobox');
-                return false;
-            });
-              
-            //退款弹框
-            $('.J_refundBtn').click(function () {
-                adminjs.openwinbox('#J_refundbox');
-                return false;
-            });
+            ////拒绝弹框
+            //$(document).on('click', "#aOrderRefuse", function() {
+            //    adminjs.openwinbox('#J_nobox');
+            //    return false;
+            //});
 
-            //物流弹框
-            $('.J_wuliuBtn').click(function () {
-                adminjs.openwinbox('#J_wuliubox');
-                return false;
-            });
+            //拒绝弹框input文字交互
+            adminjs.inpFocusBlur('.J_noTextarea');
 
+            adminjs.inpFocusBlur('.J_wuliuinp');
             var viewInstance = new art.ui.view.OrderList();
             viewInstance.init();
-        })
+        });
     </script>
 }

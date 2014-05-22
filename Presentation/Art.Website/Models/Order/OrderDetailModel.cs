@@ -67,7 +67,7 @@ namespace Art.Website.Models
             to.OrderNumber = from.OrderNumber;
             //TODO 其他信息
             to.OtherMessage = (string.IsNullOrEmpty(from.RefundMessage) ? "" : "拒绝订单理由：" + from.RefuseMessage)
-                + (string.IsNullOrEmpty(from.RefundMessage) ? "" : "退款信息：" + from.RefundMessage);
+                + (string.IsNullOrEmpty(from.RefundMessage) ? "" : " 退款信息：" + from.RefundMessage);
             to.PackingType = from.PackingType;
             to.PayStatus = from.PayStatus;
             to.PayType = from.PayType;

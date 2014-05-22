@@ -13,9 +13,9 @@ namespace Art.Website.Controllers
 { 
     public class OrderController : Controller
     {
-        private IArtistBussinessLogic _artistBussinessLogic;
-        private IArtworkBussinessLogic _artworkBussinessLogic;
-        private IOrderBussinessLogic _orderBussinessLogic;
+        private readonly IArtistBussinessLogic _artistBussinessLogic;
+        private readonly IArtworkBussinessLogic _artworkBussinessLogic;
+        private readonly IOrderBussinessLogic _orderBussinessLogic;
         public OrderController(IArtistBussinessLogic artistBussinessLogic, 
             IArtworkBussinessLogic artworkBussinessLogic,
             IOrderBussinessLogic orderBussinessLogic)
@@ -70,22 +70,109 @@ namespace Art.Website.Controllers
         private PagedOrderModel GetPagedOrderModel(OrderSearchCriteria criteria)
         {
             var pagedOrders = _orderBussinessLogic.SearchOrders(criteria);
-            var simpleOrders = new List<OrderSimpleModel>();
-            foreach (var item in pagedOrders)
-            {
-                var simpleOrder = OrderSimpleModelTranslator.Instance.Translate(item);
-                simpleOrders.Add(simpleOrder);
-            }
-
+            var simpleOrders = OrderSimpleModelTranslator.Instance.Translate(pagedOrders) as List<OrderSimpleModel>;
             var model = new PagedOrderModel(simpleOrders, pagedOrders.PagingResult);
             return model;
         }
 
-        //public JsonResult Deliver(DeliverInfoModel model)
-        //{
-        //    _orderBussinessLogic.Deliver(model.Id, model.DeliveryCompany, model.DeliveryNumber);
-        //    return Json(new ResultModel(true, ""));
-        //}
+        /// <summary>
+        /// 接受
+        /// </summary>
+        [HttpPost]
+        public JsonResult Accept(UpDateOrderModel model)
+        {
+            var order = _orderBussinessLogic.GetOrderById(model.Id);
+            if (order == null)
+            {
+                return Json(new ResultModel(false, "无法找到请求的订单"));
+            }
+            if (order.Status != OrderStatus.待处理)
+            {
+                return Json(new ResultModel(false, "订单状态无法更改"));
+            }
+            order.Status = OrderStatus.已接受;
+            _orderBussinessLogic.UpdateOrder(order);
+            return Json(new ResultModel(true, string.Empty));
+        }
+
+        /// <summary>
+        /// 拒绝
+        /// </summary>
+        [HttpPost]
+        public JsonResult Refuse(UpDateOrderModel model)
+        {
+            if (string.IsNullOrEmpty(model.RefuseMessage))
+            {
+                return Json(new ResultModel(false, "拒绝原因必须输入"));
+            }
+            var order = _orderBussinessLogic.GetOrderById(model.Id);
+            if (order == null)
+            {
+                return Json(new ResultModel(false, "无法找到请求的订单"));
+            }
+            if (order.Status != OrderStatus.待处理)
+            {
+                return Json(new ResultModel(false, "订单状态无法更改"));
+            }
+            order.Status = OrderStatus.已拒绝;
+            order.RefuseMessage = model.RefuseMessage;
+            _orderBussinessLogic.UpdateOrder(order);
+            return Json(new ResultModel(true, string.Empty));
+        }
+
+        /// <summary>
+        /// 退款
+        /// </summary>
+        [HttpPost]
+        public JsonResult Refund(UpDateOrderModel model)
+        {
+            if (string.IsNullOrEmpty(model.RefundMessage))
+            {
+                return Json(new ResultModel(false, "退款原因必须输入"));
+            }
+            var order = _orderBussinessLogic.GetOrderById(model.Id);
+            if (order == null)
+            {
+                return Json(new ResultModel(false, "无法找到请求的订单"));
+            }
+            if (order.Status != OrderStatus.已拒绝)
+            {
+                return Json(new ResultModel(false, "订单状态无法更改"));
+            }
+            order.Status = OrderStatus.已退款;
+            order.RefundMessage = model.RefundMessage;
+            _orderBussinessLogic.UpdateOrder(order);
+            return Json(new ResultModel(true, string.Empty));
+        }
+
+        /// <summary>
+        /// 等待发货
+        /// </summary>
+        public JsonResult Deliver(UpDateOrderModel model)
+        {
+            if (string.IsNullOrEmpty(model.DeliveryCompany))
+            {
+                return Json(new ResultModel(false, "物流公司不可为空"));
+            }
+            if (string.IsNullOrEmpty(model.DeliveryNumber))
+            {
+                return Json(new ResultModel(false, "物流单号不可为空"));
+            }
+            var order = _orderBussinessLogic.GetOrderById(model.Id);
+            if (order == null)
+            {
+                return Json(new ResultModel(false, "无法找到请求的订单"));
+            }
+            if (order.Status != OrderStatus.已接受)
+            {
+                return Json(new ResultModel(false, "订单状态无法更改"));
+            }
+            order.DeliveryCompany = model.DeliveryCompany;
+            order.DeliveryNumber = model.DeliveryNumber;
+            order.Status = OrderStatus.已发货;
+            _orderBussinessLogic.UpdateOrder(order);
+            return Json(new ResultModel(true, string.Empty));
+        }
 
         /// <summary>
         /// Auctions the list.
