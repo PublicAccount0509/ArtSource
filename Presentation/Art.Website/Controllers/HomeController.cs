@@ -1,25 +1,51 @@
-﻿using Art.Website.Models;
+﻿using Art.BussinessLogic;
+using Art.Data.Common;
+using Art.Website.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebExpress.Core;
 
 namespace Art.Website.Controllers
 {
 
     public class HomeController : Controller
     {
+        private IArtistBussinessLogic _artistBussinessLogic;
+        private IArtworkBussinessLogic _artworkBussinessLogic;
+        private IOrderBussinessLogic _orderBussinessLogic;
+        public HomeController(IArtistBussinessLogic artistBussinessLogic, 
+            IArtworkBussinessLogic artworkBussinessLogic,
+            IOrderBussinessLogic orderBussinessLogic)
+        {
+            _artistBussinessLogic = artistBussinessLogic;
+            _artworkBussinessLogic = artworkBussinessLogic;
+            _orderBussinessLogic = orderBussinessLogic;
+        }
+
         public ActionResult Index()
         {
-            var model = new SummaryModel();
-            //model.ArtistCount = 100;
-            //model.ArtworkCountLastest = 200;
-            //model.ArtworkCountOffline = 300;
-            //model.ArtworkCountOnline = 400;
-            //model.ArtworkCountxxxxxxx = 500;
-            //model.TransactionCountToday = 600;
-            //model.TransactionCountTotal = 700;
+            var allArtist = _artistBussinessLogic.GetArtists();
+            var allArtwork = _artworkBussinessLogic.GetArtworks();
+            var allorder = _orderBussinessLogic.GetOrders();
+            var model = new SummaryModel
+                {
+                    ArtistCount = allArtist.Count,
+                    ArtistCountOnline = allArtist.Count(p => p.IsPublic),
+                    ArtistCountOffline = allArtist.Count(p => !p.IsPublic),
+                    ArtworkCountNewWeek = allArtwork.Count(p => p.FADateTime >= DateTime.Now.AddDays(-7).BeginOfDay()),
+                    ArtworkCount = allArtwork.Count,
+                    ArtworkCountOffline = allArtwork.Count(p => !p.IsPublic),
+                    ArtworkCountOnline = allArtwork.Count(p => p.IsPublic),
+                    TransactionCountToday =
+                        allorder.Count(p =>
+                            p.PayStatus == PayStatus.支付成功 &&
+                            p.FADateTime.ToShortDateString() == DateTime.Now.ToShortDateString()),
+                    TransactionCountTotal = allorder.Count(p => p.PayStatus == PayStatus.支付成功)
+                };
+
             return View(model);
         }
 

@@ -305,5 +305,11 @@ namespace Art.BussinessLogic
             auctionBill.AuctionResult = AuctionResult.None;
             return _auctionBillRepository.Insert(auctionBill);
         }
+
+
+        public IList<Order> GetOrders()
+        {
+            return _orderRepository.Table.ToList();
+        }
     }
 }

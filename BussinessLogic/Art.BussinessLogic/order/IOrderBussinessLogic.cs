@@ -26,6 +26,8 @@ namespace Art.BussinessLogic
 
         IList<ShoppingCartItem> GetShoppingCartItems(int id);
 
+        IList<Order> GetOrders();
+
         IList<Order> GetOrdersByArtworkId(int artworkId);
 
         IList<Order> GetOrdersByArtworkId(int artworkId, OrderStatus status);

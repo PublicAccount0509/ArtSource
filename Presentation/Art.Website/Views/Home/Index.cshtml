@@ -7,10 +7,12 @@
     <div class="author">
         <h2 class="titlestyle"><span class="titleIcon"></span><span>签约艺术家</span></h2>
         @*<p>目前签约艺术家共<span>@Model.ArtistCount</span>人，在线拍卖作品<span>@Model.ArtworkCountOnline</span>副</p>*@
+        <p style="color: #AD1B32;"><span>目前签约艺术家共<label>@Model.ArtistCount</label>个，上架艺术家<label>@Model.ArtistCountOnline</label>个，下架艺术家<label>@Model.ArtistCountOffline</label>个</span></p>
     </div>
     <div class="production">
         <h2 class="titlestyle"><span class="titleIcon"></span><span>作品</span></h2>
         @*<p>最新上传作品共<span>@Model.ArtworkCountLastest</span>副，上架总数共<span>@Model.ArtworkCountxxxxxxx</span>副，下线作品共<span>@Model.ArtworkCountOffline</span>副</p>*@
+        <p style="color: #AD1B32;"><span>最新上传作品<label>@Model.ArtworkCountNewWeek</label>副，上架作品<label>@Model.ArtworkCountOnline</label>副，下架作品<label>@Model.ArtworkCountOffline</label>副，作品总数为：<label>@Model.ArtworkCount</label>副。</span></p>
     </div>
     <div class="orderlist">
         <h2 class="titlestyle"><span class="titleIcon"></span><span>订单统计</span></h2>
