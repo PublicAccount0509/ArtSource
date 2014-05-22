@@ -38,8 +38,9 @@
         function auctionAccept(id, onSuccess) {
             var pData = { "id": id };
             var url = "/Order/AuctionAccept";
+            $(".wabPage").mask("正在处理...");
             webExpress.utility.ajax.request(url, pData, function (data) {
-
+                $(".wabPage").unmask();
                 if (data.IsSuccess) {
                     if (onSuccess) {
                         onSuccess();
@@ -48,6 +49,8 @@
                 } else {
                     alert("操作失败");
                 }
+            }, function () {
+                $(".wabPage").unmask();
             });
         }
 
