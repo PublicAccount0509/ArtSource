@@ -13,13 +13,13 @@ namespace Art.Website.Controllers
         public ActionResult Index()
         {
             var model = new SummaryModel();
-            model.ArtistCount = 100;
-            model.ArtworkCountLastest = 200;
-            model.ArtworkCountOffline = 300;
-            model.ArtworkCountOnline = 400;
-            model.ArtworkCountxxxxxxx = 500;
-            model.TransactionCountToday = 600;
-            model.TransactionCountTotal = 700;
+            //model.ArtistCount = 100;
+            //model.ArtworkCountLastest = 200;
+            //model.ArtworkCountOffline = 300;
+            //model.ArtworkCountOnline = 400;
+            //model.ArtworkCountxxxxxxx = 500;
+            //model.TransactionCountToday = 600;
+            //model.TransactionCountTotal = 700;
             return View(model);
         }
 
