@@ -265,6 +265,7 @@
         /// <param name="source">The source</param>
         /// <param name="id">区域Id</param>
         /// <param name="regionName">区域名称</param>
+        /// <param name="parentCode">父节点编码</param>
         /// <returns>
         /// 返回区域信息
         /// </returns>
@@ -273,7 +274,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<BusinessAreaModel> GetRegion(string source, int id, string regionName)
+        public ServicesResult<BusinessAreaModel> GetRegion(string source, int id, string regionName, string parentCode)
         {
             if (id <= 0 && regionName.IsEmptyOrNull())
             {
@@ -284,7 +285,7 @@
             }
 
             var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Id == id)
-               ?? this.regionEntityRepository.FindSingleByExpression(p => p.Name.Contains(regionName));
+               ?? this.regionEntityRepository.FindSingleByExpression(p => p.Name.Contains(regionName) && p.Code.StartsWith(parentCode));
 
             if (regionEntity == null)
             {
