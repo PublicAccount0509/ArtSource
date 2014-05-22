@@ -13,6 +13,8 @@ namespace Art.Data.Domain
 
         public int CustomerId { get; set; }
 
+        public decimal OriginalPrice { get; set; }
+
         public decimal BidPrice { get; set; }
 
         public string CustumerMessage { get; set; }
