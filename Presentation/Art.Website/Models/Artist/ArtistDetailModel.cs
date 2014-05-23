@@ -34,7 +34,7 @@ namespace Art.Website.Models
             to.Name = from.Name;
             to.Gender = from.Gender == Genders.Male ? "男" : "女";
             to.Birthday = from.Birthday;
-            to.School = from.School222;
+            to.School = from.School;
             to.Prizes = from.PrizeItems.Split(',');
             to.ArtistTypeNames = from.ArtistTypes.Select(i => i.Name).ToArray();
             to.SkilledGenres = from.SkilledGenres.Select(i => i.Name).ToArray() ;

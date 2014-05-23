@@ -147,7 +147,7 @@ namespace Art.Website.Controllers
             to.Birthday = from.Birthday;
             to.Deathday = from.Deathday;
             to.Degree = from.Degree;
-            to.School222 = from.School;
+            to.School = from.School;
             to.PrizeItems = from.PrizeItems;
             to.Masterpiece = from.Masterpiece;
             to.MasterpieceTypeId = from.MasterpieceTypeId;

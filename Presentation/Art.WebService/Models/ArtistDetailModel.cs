@@ -51,7 +51,7 @@ namespace Art.WebService.Models
             var to = new ArtistDetailModel
                 {
                     Honur = from.PrizeItems,
-                    Experience = from.School222,
+                    Experience = from.School,
                     IconPath = from.AvatarFileName,
                     Name = from.Name
                 };
