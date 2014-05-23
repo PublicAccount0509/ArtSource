@@ -43,8 +43,10 @@ namespace Art.Website.Controllers
             if (captcha == null)
             {
                 ModelState.AddModelError("", "验证码不正确");
+                return View(model);
             }
-            if (model.Captcha != Session["captcha"].ToString())
+
+            if (model.Captcha != captcha.ToString())
             {
                 ModelState.AddModelError("", "验证码不正确");
             }
