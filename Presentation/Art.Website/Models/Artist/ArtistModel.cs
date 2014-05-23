@@ -63,7 +63,7 @@ namespace Art.Website.Models
             to.Birthday = from.Birthday;
             to.Deathday = from.Deathday;
             to.Degree = from.Degree;
-            to.School = from.School;
+            to.School = from.School222;
             to.PrizeItems = from.PrizeItems;
             to.Masterpiece = from.Masterpiece;
             to.MasterpieceTypeId = from.MasterpieceTypeId;
@@ -89,7 +89,7 @@ namespace Art.Website.Models
             to.Birthday = from.Birthday;
             to.Deathday = from.Deathday;
             to.Degree = from.Degree;
-            to.School = from.School;
+            to.School222 = from.School;
             to.PrizeItems = from.PrizeItems;
             to.Masterpiece = from.Masterpiece;
             to.MasterpieceTypeId = from.MasterpieceTypeId;

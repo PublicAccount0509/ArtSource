@@ -16,5 +16,9 @@ namespace Art.Data.Domain
 
         public string FAUserName { get; set; }
         public DateTime FADateTime { get; set; }
+
+        public string Test { get; set; }
+        public string Test2 { get; set; }
+        public string Test3 { get; set; }
     }
 }

@@ -23,7 +23,9 @@ namespace Art.Data.Domain.Access
                 sqlCommands = ParseCommands(sqlCommandFile);
             }
             
-            Database.SetInitializer(new ArtDropCreateDatabaseIfModelChanges(sqlCommands));  
+            //var x = System.Data.Entity.MigrateDatabaseToLatestVersion<ArtDbContext, System.Data.Entity>;
+            //Database.SetInitializer(new ArtCreateDatabaseIfNotExists(sqlCommands));  
+            Database.SetInitializer<ArtDbContext>(null);
         }
 
         private string[] ParseCommands(string filePath)

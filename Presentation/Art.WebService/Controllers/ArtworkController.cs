@@ -105,11 +105,20 @@ namespace Art.WebService.Controllers
         public ResultModel<ArtworkDetailModel> Detail(int artworkId, int? userId)
         {
             var artwork = _artworkBussinessLogic.GetArtwork(artworkId);
+            if (artwork == null)
+            {
+                return ResultModel<ArtworkDetailModel>.Conclude(ArtworkDetailModelStatus.ArtworkNotFound);
+            }
             var model = ArtworkDetailModelTranslator.Instance.Translate(artwork);
             if (userId.HasValue)
             {
                 model.HasPraised = _artworkBussinessLogic.ExistPraise(artworkId, userId.Value);
             }
+
+            model.ShareCount = _artworkBussinessLogic.GetSharedCount(artworkId);
+            model.CollectAccount = _artworkBussinessLogic.GetCollectedCount(artworkId);
+            model.PraiseCount = _artworkBussinessLogic.GetPraisedCount(artworkId);
+
             var result = ResultModel<ArtworkDetailModel>.Conclude(ArtworkDetailModelStatus.Success, model);
             return result;
         }
@@ -232,7 +241,7 @@ namespace Art.WebService.Controllers
         {
             var paging = new PagingRequest(pageIndex, itemsCount);
             var criteria = new ArtworkSearchCriteria(paging) { CollectionCustomerId = userId };
-            
+
             var result = SearchArtworkAndAttachCount(criteria);
             return ResultModel<ArtworkSimpleModel[]>.Conclude(StandaloneStatus.Success, result);
         }

@@ -15,6 +15,11 @@ namespace Art.WebService.Models
     public class ArtworkDetailModel
     {
         /// <summary>
+        /// 作品名称
+        /// </summary>
+        public string ArtworkName { get; set; }
+
+        /// <summary>
         /// 图片地址
         /// </summary>
         public string ImagePath { get; set; }
@@ -78,6 +83,27 @@ namespace Art.WebService.Models
         /// 单价
         /// </summary>
         public decimal Price { get; set; }
+
+        /// <summary>
+        /// 分享数量
+        /// </summary>
+        public int ShareCount { get; set; }
+
+        /// <summary>
+        /// 收藏数量
+        /// </summary>
+        public int CollectAccount { get; set; }
+
+        /// <summary>
+        /// 赞数量
+        /// </summary>
+        public int PraiseCount { get; set; }
+
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        public bool IsPublic { get; set; }
+
     }
 
     public enum ArtworkDetailModelStatus
@@ -86,7 +112,10 @@ namespace Art.WebService.Models
         
         [DisplayText("该商品已下架")]
         ArtworkNotPublished,
+
+        [DisplayText("作品不存在")]
         ArtworkNotFound,
+
         UserNotFound
     }
 
@@ -115,6 +144,8 @@ namespace Art.WebService.Models
             to.ArtistId = from.Artist.Id;
             to.ArtistName = from.Artist.Name;
             to.Price = from.AuctionPrice;
+            to.ArtworkName = from.Name;
+            to.IsPublic = from.IsPublic;
             return to;
         }
 

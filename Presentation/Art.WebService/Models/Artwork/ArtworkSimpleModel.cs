@@ -62,6 +62,10 @@ namespace Art.WebService.Models
         /// </summary>
         public string CommentContent { get; set; }
 
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        public bool IsPublic { get; set; }
     }
 
     public class ArtworkSimpleModelTranslator : TranslatorBase<Artwork, ArtworkSimpleModel>
@@ -89,6 +93,8 @@ namespace Art.WebService.Models
                 to.CommentUserIconPath = CommonHelper.GetUploadFileRelativePath(from.DefaultComment.Customer.AvatarPath);
                 to.CommentContent = from.DefaultComment.Text;
             }
+
+            to.IsPublic = from.IsPublic;
 
             return to;
         }

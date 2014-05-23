@@ -38,7 +38,6 @@ namespace Art.Data.Domain
 
         public int MasterpieceTypeId { get; set; }
 
-        [MaxLength(30)]
         public string PrizeItems { get; set; }
 
         public Genders Gender { get; set; }
