@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.WebService", "Presentat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8AF8D09A-79C9-4D49-A3B6-B3B50B04179B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.Common", "Art.Common\Art.Common.csproj", "{8043328C-37EA-4788-B45E-79A3F46CA26D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.Common", "Common\Art.Common\Art.Common.csproj", "{8043328C-37EA-4788-B45E-79A3F46CA26D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art.WebService.Tests", "Tests\Art.WebService.Tests\Art.WebService.Tests.csproj", "{142E1A42-59DB-4A0F-9696-A572F168A9F8}"
 EndProject

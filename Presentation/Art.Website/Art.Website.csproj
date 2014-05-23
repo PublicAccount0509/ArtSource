@@ -503,7 +503,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Art.Common\Art.Common.csproj">
+    <ProjectReference Include="..\..\Common\Art.Common\Art.Common.csproj">
       <Project>{8043328c-37ea-4788-b45e-79a3f46ca26d}</Project>
       <Name>Art.Common</Name>
     </ProjectReference>
