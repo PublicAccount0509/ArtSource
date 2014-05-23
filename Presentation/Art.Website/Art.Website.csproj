@@ -435,6 +435,7 @@
     <Content Include="Scripts\Views\AuctionList.js" />
     <Content Include="Scripts\Views\AdminUserList.js" />
     <Content Include="Scripts\Views\base\Pager.js" />
+    <Content Include="Scripts\Views\ArtistList.js" />
     <Content Include="Scripts\webExpress\webExpress.ui.control.adapter.js" />
     <Content Include="Scripts\webExpress\webExpress.ui.control.confirmWindow.js" />
     <Content Include="Scripts\webExpress\webExpress.js" />
