@@ -504,6 +504,7 @@
                 };
             }
 
+            //旧密码不正确，则报错
             var oldPassword = parameter.OldPassword;
             if (!string.Equals(loginEntity.Password, oldPassword.Md5(), StringComparison.OrdinalIgnoreCase))
             {
@@ -514,7 +515,18 @@
                 };
             }
 
-            loginEntity.Password = parameter.NewPasswrod.Md5();
+            //新密码与旧密码一样，则报错
+            var newPassword = parameter.NewPasswrod.Md5();
+            if (newPassword == loginEntity.Password)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.NewPasswordNotSameOldPassword,
+                    Result = false
+                };
+            }
+
+            loginEntity.Password = newPassword;
             this.loginEntityRepository.Save(loginEntity);
 
             if (!parameter.IsSendSms)

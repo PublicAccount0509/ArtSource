@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using Ets.SingleApi.Model;
+using Ets.SingleApi.Model.ExternalServices;
 using Ets.SingleApi.Model.Repository;
 using Ets.SingleApi.Model.Services;
+using Ets.SingleApi.Services.IExternalServices;
 using Ets.SingleApi.Services.IRepository;
 using Ets.SingleApi.Utility;
 
@@ -48,12 +50,18 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<PaymentEntity> paymentEntityRepository;
 
+        private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
+
+        private readonly ISynchronousOrderExternalServices synchronousOrderExternalServices;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="paymentEntityRepository"></param>
+        /// <param name="supplierEntityRepository"></param>
+        /// <param name="synchronousOrderExternalServices"></param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -62,11 +70,15 @@ namespace Ets.SingleApi.Services
         public WaiMaiOrderBaseProvider(
             INHibernateRepository<DeliveryEntity> deliveryEntityRepository,
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
-            INHibernateRepository<PaymentEntity> paymentEntityRepository)
+            INHibernateRepository<PaymentEntity> paymentEntityRepository,
+            INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            ISynchronousOrderExternalServices synchronousOrderExternalServices)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.orderNumberDcEntityRepository = orderNumberDcEntityRepository;
             this.paymentEntityRepository = paymentEntityRepository;
+            this.supplierEntityRepository = supplierEntityRepository;
+            this.synchronousOrderExternalServices = synchronousOrderExternalServices;
         }
 
         /// <summary>
@@ -180,6 +192,22 @@ namespace Ets.SingleApi.Services
 
             deliveryEntity.IsPaId = true;
             this.deliveryEntityRepository.Save(deliveryEntity);
+
+            var supplier = this.supplierEntityRepository.FindSingleByExpression(c => c.SupplierId == deliveryEntity.SupplierId);
+            if (supplier == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = false
+                };
+            }
+
+            //同步金百万数据
+            if (supplier.SupplierGroupId == 3)
+            {
+                this.synchronousOrderExternalServices.SynchronousWaiMaiOrderPaymentStatusToJinBaiWan(orderId, true);
+            }
 
             return new ServicesResult<bool>
             {

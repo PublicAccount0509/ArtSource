@@ -63,5 +63,24 @@ namespace Ets.SingleApi.ExternalServices
                 return (ConfigurationManager.AppSettings["SingleApiServer"] ?? string.Empty).Trim('/', '\\');
             }
         }
+
+        /// <summary>
+        /// Gets the open API server.
+        /// </summary>
+        /// <value>
+        /// The open API server.
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：5/22/2014 4:45 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static string OpenApiServer
+        {
+            get
+            {
+                return (ConfigurationManager.AppSettings["OpenApiServer"] ?? string.Empty).Trim('/', '\\');
+            }
+        }
     }
 }

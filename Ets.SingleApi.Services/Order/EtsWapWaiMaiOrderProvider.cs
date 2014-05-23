@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using Ets.SingleApi.Model.ExternalServices;
+
+namespace Ets.SingleApi.Services
 {
     using System;
     using System.Collections.Generic;
@@ -148,6 +150,19 @@
         private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
         /// <summary>
+        /// 同步订单数据
+        /// </summary>
+        /// 创建者：王巍
+        /// 创建日期：5/22/2014 5:19 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly ISynchronousOrderExternalServices synchronousOrderExternalServices;
+
+        private readonly INHibernateRepository<LoginEntity> loginEntity;
+        private readonly INHibernateRepository<CustomerEntity> customerEntity;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
         /// </summary>
         /// <param name="deliveryEntityRepository">The deliveryEntityRepository</param>
@@ -164,6 +179,9 @@
         /// <param name="etsWapShoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
+        /// <param name="synchronousOrderExternalServices"></param>
+        /// <param name="loginEntity"></param>
+        /// <param name="customerEntity"></param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -183,7 +201,10 @@
             IDistance distance,
             IEtsWapShoppingCartProvider etsWapShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
-            ISingleApiOrdersExternalService singleApiOrdersExternalService)
+            ISingleApiOrdersExternalService singleApiOrdersExternalService,
+            ISynchronousOrderExternalServices synchronousOrderExternalServices,
+            INHibernateRepository<LoginEntity> loginEntity,
+            INHibernateRepository<CustomerEntity> customerEntity)
             : base(orderNumberDcEntityRepository, singleApiOrdersExternalService)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
@@ -198,6 +219,9 @@
             this.distance = distance;
             this.etsWapShoppingCartProvider = etsWapShoppingCartProvider;
             this.shoppingCartBaseCacheServices = shoppingCartBaseCacheServices;
+            this.synchronousOrderExternalServices = synchronousOrderExternalServices;
+            this.loginEntity = loginEntity;
+            this.customerEntity = customerEntity;
         }
 
         /// <summary>
@@ -623,6 +647,20 @@
 
             this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
             this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
+
+            //同步金百万信息(金百万 集团Id == 3)
+            if (supplierEntity.SupplierGroupId == 3)
+            {
+                var deliveryRequest = GetSynchronousWaiMaiOrder(deliveryId);
+                this.synchronousOrderExternalServices.SynchronousWaiMaiOrderToJinBaiWan(deliveryRequest,
+                                                                                        new SingleApiExternalServiceAuthenParameter
+                                                                                            {
+                                                                                                AppKey = appKey,
+                                                                                                AppPassword = appPassword,
+                                                                                                Source = source
+                                                                                            });
+            }
+
             return new ServicesResult<string>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
@@ -799,7 +837,7 @@
                 return deliveryEntity.DeliveryId;
             }
 
-             var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty);
+            var customerLocation = distance.GetLocation(string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty);
             if (customerLocation == null)
             {
                 this.deliveryEntityRepository.Save(deliveryEntity);
@@ -925,6 +963,114 @@
         public override ServicesResult<string> SaveTempOrder(SaveTangShiOrdersParameter tangShiOrdersParameter, string appKey, string appPassword)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取同步数据
+        /// </summary>
+        /// <param name="deliveryId">The deliveryIdDefault documentation</param>
+        /// <returns>
+        /// DeliveryRequest
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：5/22/2014 6:19 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private DeliveryRequest GetSynchronousWaiMaiOrder(int deliveryId)
+        {
+            var payment = this.paymentEntityRepository.FindSingleByExpression(c => c.Delivery.DeliveryId == deliveryId);
+            if (payment == null)
+            {
+                return null;
+            }
+            var delivery = this.deliveryEntityRepository.FindSingleByExpression(c => c.DeliveryId == deliveryId);
+            if (delivery == null)
+            {
+                return null;
+            }
+
+            var address = this.deliveryAddressEntityRepository.EntityQueryable.FirstOrDefault(p => p.DeliveryAddressId == delivery.DeliveryAddressId);
+            if (address == null)
+            {
+                return null;
+            }
+            var customer = this.customerEntity.FindSingleByExpression(c => c.CustomerId == delivery.CustomerId);
+            if (customer == null)
+            {
+                return null;
+            }
+
+            var user = this.loginEntity.FindSingleByExpression(c => c.LoginId == customer.LoginId);
+            if (user == null)
+            {
+                return null;
+            }
+            var detailInfo =
+                this.orderEntityRepository.FindByExpression(
+                    p => p.CustomerId == delivery.CustomerId && p.Delivery.DeliveryId == deliveryId).ToList();
+            if (detailInfo.Count <= 0)
+            {
+                return null;
+            }
+            var deliveryDate = delivery.DeliveryDate ?? DateTime.Now;
+            var result = new DeliveryRequest
+                {
+                    source = delivery.Template.Value,
+                    areaid = delivery.AreaId ?? 0,
+                    customertotal = delivery.CustomerTotal,
+                    delivercharge = delivery.DeliverCharge,
+                    deliverydate = deliveryDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                    deliverymethodid = delivery.DeliveryMethodId,
+                    etstakeprice = delivery.EtsTakeFoodAmount,
+                    invoicetitle = delivery.InvoiceTitle,
+                    orderno = delivery.OrderNumber,
+                    orderstatus = delivery.OrderStatusId,
+                    packagingfee = delivery.PackagingFee,
+                    path = delivery.Path.Value,
+                    invoicetype = string.Empty,
+                    remark = delivery.DeliveryInstruction,
+                    supplierid = delivery.SupplierId,
+                    total = delivery.Total,
+                    paytype = payment.PaymentTypeId,
+                    pay = new pay
+                        {
+                            amount = payment.Amount,
+                            methodid = payment.PaymentMethodId
+                        },
+                    address = new address
+                        {
+                            addr1 = address.Address1,
+                            addr2 = address.Address2,
+                            addrbuilding = address.AddressBuilding,
+                            addrdetail = address.AddressDetail,
+                            id = address.DeliveryAddressId,
+                            name = address.Recipient,
+                            regioncode = string.Empty,
+                            sex = address.Sex,
+                            tel = address.Telephone
+                        },
+                    user = new user
+                        {
+                            source = delivery.Template.Value,
+                            path = delivery.Path.Value,
+                            email = customer.Email,
+                            levelid = user.Level.LevelId,
+                            mobel = customer.Mobile,
+                            password = user.Password,
+                            username = user.Username
+                        },
+                    detail = detailInfo.Select(supplierDishInfo => new detail
+                        {
+                            id = supplierDishInfo.SupplierDishId,
+                            name = supplierDishInfo.SupplierDishName,
+                            note = supplierDishInfo.Note,
+                            number = supplierDishInfo.Quantity,
+                            price = supplierDishInfo.SupplierPrice
+                        }).ToList()
+                };
+
+            return result;
         }
     }
 }

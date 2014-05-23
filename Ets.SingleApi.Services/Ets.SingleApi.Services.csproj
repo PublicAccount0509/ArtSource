@@ -106,6 +106,7 @@
     <Compile Include="IDetailServices\IWaiMaiOrderDetailServices.cs" />
     <Compile Include="IDetailServices\ISupplierDetailServices.cs" />
     <Compile Include="IExternalServices\ISingleApiOrdersExternalService.cs" />
+    <Compile Include="IExternalServices\ISynchronousOrderExternalServices.cs" />
     <Compile Include="Login\AuthTeleLogin.cs" />
     <Compile Include="Login\OAuthLogin.cs" />
     <Compile Include="Login\TelephoneNumLogin.cs" />

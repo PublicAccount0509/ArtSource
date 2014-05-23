@@ -120,10 +120,16 @@
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
     <Compile Include="DetailServices\DetailServicesResultList.cs" />
+    <Compile Include="ExternalServices\SynchronousOrderWaiMai\Address.cs" />
     <Compile Include="ExternalServices\ExternalServiceResult.cs" />
     <Compile Include="ExternalServices\IExternalUrlParameter.cs" />
     <Compile Include="ExternalServices\OrderNumberExternalUrlParameter.cs" />
+    <Compile Include="ExternalServices\SynchronousOrderWaiMai\Pay.cs" />
     <Compile Include="ExternalServices\SingleApiExternalServiceAuthenParameter.cs" />
+    <Compile Include="ExternalServices\SynchronousOrderWaiMai\Detail.cs" />
+    <Compile Include="ExternalServices\SynchronousOrderExternalServiceResult.cs" />
+    <Compile Include="ExternalServices\SynchronousOrderWaiMai\DeliveryRequest.cs" />
+    <Compile Include="ExternalServices\SynchronousOrderWaiMai\User.cs" />
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Mapping\Repository\BaiDuAppLightEntity.cs" />
     <Compile Include="Mapping\Repository\CustomizationOptionEntity.cs" />
