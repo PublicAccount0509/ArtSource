@@ -95,144 +95,18 @@
 <div class="add-openbox zjinfoclass" id="J_zjIinfoBox">
 </div>
 <!--end-->
-
+<script src="~/Scripts/Views/ArtistList.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-
-        var adminjs = new adminglass();//实例化后台js类
+    $(document).ready(function() {
+        var adminjs = new adminglass(); //实例化后台js类
         //关闭弹层
-        $(document).on("click", ".J_closebox", function () {
+        $(document).on("click", ".J_closebox", function() {
             var box = $(this).closest(".add-openbox");
             adminjs.closewinbox(box);
         });
         //input文字交互
         adminjs.inpFocusBlur('.J_addflinp');
-         
-        //删除分类
-        $(document).on("click", ".J_deleteflBtn", function () {
-            adminjs.openwinbox('#J_deletelistBox');
-            return false;
-        });
-        //删除艺术家
-
-        $(".data").on("click", ".J_deletezzBtn", function () {
-            adminjs.openwinbox('#J_deletezzBox');
-            currentElement = $(this);
-            return false;
-        });
-
-
-        art.ui.control.Pager.enablePaging(document, refresh);
-
-        $("#btnDelete").click(function () {
-            var url = currentElement.attr("url");
-            var btn = this;
-            webExpress.utility.ajax.request(url, null, function (data) {
-                if (data.IsSuccess) {
-                    adminjs.closewinbox($(btn).closest(".add-openbox"));
-                    refresh(currentPageIndex);
-                }
-                else {
-                    alert(data.Message);
-                }
-            },
-            function () {
-                alert(0);
-            }
-            );
-        });
-
-        //取消发布
-        $(document).on("click", ".J_cancelBtn", function () {
-            adminjs.openwinbox('#J_cancelBox');
-            currentElement = $(this);
-            return false;
-        });
-
-        //发布
-        var currentElement;
-        $(document).on("click", '.J_issueBtn', function () {
-            adminjs.openwinbox('#J_issueBox');
-            currentElement = $(this);
-            return false;
-        });
-
-        $("#btnUnPublishOK").click(function () {
-            var url = currentElement.attr("url");
-            webExpress.utility.ajax.request(url, null, function (data) {
-                if (data.IsSuccess) {
-                    refresh();
-                }
-                else {
-                    alert(data.Message);
-                }
-            },
-            function () {
-                alert(0);
-            }
-            );
-        });
-
-        $("#btnPublishOK").click(function () {
-            var url = currentElement.attr("url");
-            webExpress.utility.ajax.request(url, null, function (data) {
-                if (data.IsSuccess) {
-                    refresh();
-                }
-                else {
-                    alert(data.Message);
-                }
-            },
-            function () {
-                alert(0);
-            }
-            );
-        });
-
-        //查看作者
-        $(document).on("click", '.J_zjIinfo', function () {
-            var url = $(this).attr("url");
-            webExpress.utility.ajax.request(url, null,
-            function (data, status) {
-                $("#J_zjIinfoBox").html(data);
-                adminjs.closewinbox();
-                adminjs.openwinbox('#J_zjIinfoBox');
-            },
-            function () {
-                alert("error!");
-            }
-            );
-
-            return false;
-        });
-        $('#btnOK').click(function () {
-            alert(1);
-        })
-
-        $("#btnSearch").click(function () {
-            currentNamePart = $("#txtNamePart").val();
-            currentArtistTypeId = $("#selectArtistTypeId").val();
-            refresh(0);
-        });
-
-    })
-
-    var currentPageIndex = 0;
-    var currentNamePart = "";
-    var currentArtistTypeId = null;
-    function refresh(pageIndex) {
-        var url = "/Artist/List";
-        var criteria = { NamePart: currentNamePart, ArtistTypeId: currentArtistTypeId, PagingRequest: { PageIndex: pageIndex, PageSize: 10 } };
-        webExpress.utility.ajax.request(url, criteria,
-            function (data) {
-                $(".data").html(data);
-
-            }
-            , function (data) {
-                $(".data").html(data.responseText);
-                currentPageIndex = pageIndex;
-            });
-    }
-
-
+        var viewInstance = new art.ui.view.ArtistList();
+        viewInstance.init();
+    });
 </script>
