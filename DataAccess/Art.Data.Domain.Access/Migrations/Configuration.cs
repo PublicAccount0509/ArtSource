@@ -9,7 +9,7 @@ namespace Art.Data.Domain.Access.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "Art.Data.Domain.Access.ArtDbContext";
         }
 

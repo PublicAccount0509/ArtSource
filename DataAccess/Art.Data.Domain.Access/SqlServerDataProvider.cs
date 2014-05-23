@@ -1,7 +1,9 @@
 ﻿using Art.Data.Domain.Access.Initializers;
+using Art.Data.Domain.Access.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,11 +23,12 @@ namespace Art.Data.Domain.Access
             else
             {
                 sqlCommands = ParseCommands(sqlCommandFile);
-            }
-            
-            //var x = System.Data.Entity.MigrateDatabaseToLatestVersion<ArtDbContext, System.Data.Entity>;
+            } 
+            var migrate = new System.Data.Entity.MigrateDatabaseToLatestVersion<ArtDbContext, Configuration>();
+            Database.SetInitializer(migrate);
             //Database.SetInitializer(new ArtCreateDatabaseIfNotExists(sqlCommands));  
-            Database.SetInitializer<ArtDbContext>(null);
+            
+            //Database.SetInitializer<ArtDbContext>(null);
         }
 
         private string[] ParseCommands(string filePath)
