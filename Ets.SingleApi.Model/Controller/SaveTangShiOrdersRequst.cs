@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Ets.SingleApi.Model.Controller
+﻿namespace Ets.SingleApi.Model.Controller
 {
     /// <summary>
     /// 类名称：SaveTangShiOrdersParameter
@@ -123,6 +121,6 @@ namespace Ets.SingleApi.Model.Controller
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public List<SupplierDishItem> SupplierDishList { get; set; }
+        public string SupplierDishList { get; set; }
     }
 }
