@@ -4,7 +4,7 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security; 
+using System.Web.Security;
 using WebMatrix.WebData;
 using Art.Website.Models;
 using Art.Website.Authentication;
@@ -16,7 +16,7 @@ using Art.BussinessLogic;
 using WebExpress.Core;
 
 namespace Art.Website.Controllers
-{ 
+{
     public class AccountController : Controller
     {
         private IAuthenticationService _authenticationService;
@@ -25,7 +25,7 @@ namespace Art.Website.Controllers
         {
             _adminUserBussinessLogic = logic;
             _authenticationService = new FormAuthenticationService();
-        } 
+        }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -51,15 +51,15 @@ namespace Art.Website.Controllers
                 ModelState.AddModelError("", "验证码不正确");
             }
 
-            if (model.UserName.ToLower() == "admin" )
+            if (model.UserName.ToLower() == "admin")
             {
                 if (model.Password == "123456")
                 {
                     _authenticationService.SignIn(model.UserName, model.RememberMe);
-                    return RedirectToLocal(returnUrl);    
+                    return RedirectToLocal(returnUrl);
                 }
                 else
-                { 
+                {
                     ModelState.AddModelError("", "密码错误！");
                 }
             }
