@@ -515,16 +515,7 @@
                 };
             }
 
-            //新密码与旧密码一样，则报错
             var newPassword = parameter.NewPasswrod.Md5();
-            if (newPassword == loginEntity.Password)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Validate.NewPasswordNotSameOldPassword,
-                    Result = false
-                };
-            }
 
             loginEntity.Password = newPassword;
             this.loginEntityRepository.Save(loginEntity);
