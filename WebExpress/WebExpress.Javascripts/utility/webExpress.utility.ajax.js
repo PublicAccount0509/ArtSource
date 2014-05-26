@@ -20,7 +20,6 @@
 		        contentType: "application/json",
 		        data: data,
 		        url: url,
-		        dataType: "json",
 		        success: successHandler,
 		        error: errorHandler
 		    };

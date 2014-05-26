@@ -24,10 +24,10 @@ namespace Art.Data.Domain.Access
             {
                 sqlCommands = ParseCommands(sqlCommandFile);
             } 
-            var migrate = new System.Data.Entity.MigrateDatabaseToLatestVersion<ArtDbContext, Configuration>();
-            Database.SetInitializer(migrate);
+            //var migrate = new System.Data.Entity.MigrateDatabaseToLatestVersion<ArtDbContext, Configuration>();
+            //Database.SetInitializer(migrate);
             //Database.SetInitializer(new ArtCreateDatabaseIfNotExists(sqlCommands));  
-            
+            Database.SetInitializer(new ArtDropCreateDatabaseIfModelChanges(sqlCommands));  
             //Database.SetInitializer<ArtDbContext>(null);
         }
 

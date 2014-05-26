@@ -55,9 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="core\webExpress.js" />
+    <Content Include="core\webExpress.ui.control.adapter.js" />
+    <Content Include="core\webExpress.ui.control.confirmWindow.js" />
     <Content Include="scripts\jquery-1.8.2.js" />
     <Content Include="utility\webExpress.utility.ajax.js" />
     <Content Include="utility\webExpress.utility.js" />
+    <Content Include="utility\webExpress.utility.string.js" />
+    <Content Include="utility\webExpress.utility.url.js" />
     <Content Include="_references.js" />
   </ItemGroup>
   <ItemGroup>

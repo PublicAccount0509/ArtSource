@@ -22,8 +22,7 @@ namespace Art.BussinessLogic
         ArtistType GetArtistType(int id);
         ArtistType GetArtistTypeByName(string name);
         ArtistType[] GetArtistTypes();
-        ICollection<Art.Data.Domain.ArtistType> GetArtistTypes(List<int> ids);
-        ArtistType[] GetArtistTypes(int artistId);
+        ICollection<Art.Data.Domain.ArtistType> GetArtistTypes(List<int> ids); 
         Genre GetGenre(int id);
         Genre[] GetGenres();
         ICollection<Genre> GetSkilledGenres(List<int> ids);

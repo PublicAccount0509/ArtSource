@@ -86,14 +86,6 @@ namespace Art.BussinessLogic
             return result;
         }
 
-        public ArtistType[] GetArtistTypes(int artistId)
-        {
-            var profs = from p in _artistTypeRepository.Table
-                        where p.Id == 1 || p.Id == 2
-                        select p;
-            return profs.ToArray();
-        }
-
         public ArtistType[] GetArtistTypes()
         {
             var types = _artistTypeRepository.Table.ToArray();
@@ -157,7 +149,7 @@ namespace Art.BussinessLogic
         {
             _artistRepository.Delete(artist);
         }
-          
+
         public ICollection<ArtistType> GetArtistTypes(List<int> ids)
         {
             if (ids == null)
@@ -279,7 +271,7 @@ namespace Art.BussinessLogic
         public ActivityFollow[] GetFollowsByCustomerId(int customerId)
         {
             return _activityFollowRepository.Table.Where(p => p.CustomerId == customerId).ToArray();
-        } 
+        }
 
         public int GetFollowCount(int customerId)
         {
