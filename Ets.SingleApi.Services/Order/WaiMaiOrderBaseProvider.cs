@@ -206,7 +206,11 @@ namespace Ets.SingleApi.Services
             //同步金百万数据
             if (supplier.SupplierGroupId == 3)
             {
-                this.synchronousOrderExternalServices.SynchronousWaiMaiOrderPaymentStatusToJinBaiWan(orderId, true);
+                var payment = this.paymentEntityRepository.FindSingleByExpression(c => c.Delivery.DeliveryId == deliveryEntity.DeliveryId);
+                if (payment != null)
+                {
+                    this.synchronousOrderExternalServices.SynchronousWaiMaiOrderPaymentStatusToJinBaiWan(orderId, true, payment.PaymentMethodId);
+                }
             }
 
             return new ServicesResult<bool>
@@ -263,6 +267,14 @@ namespace Ets.SingleApi.Services
             paymentEntity.PaymentMethodId = paymentMethodId;
             paymentEntity.PayBank = payBank;
             this.paymentEntityRepository.Save(paymentEntity);
+
+            //金百万同步数据 更改订单支付方式
+            var supplier = this.supplierEntityRepository.FindSingleByExpression(c => c.SupplierId == deliveryEntity.SupplierId);
+            if (supplier != null && supplier.SupplierGroupId == 3)
+            {
+                this.synchronousOrderExternalServices.SynchronousWaiMaiOrderPaymentStatusToJinBaiWan(orderId, deliveryEntity.IsPaId ?? false, paymentMethodId);
+            }
+
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,

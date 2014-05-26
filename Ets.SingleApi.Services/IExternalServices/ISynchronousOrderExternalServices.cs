@@ -33,6 +33,7 @@
         /// </summary>
         /// <param name="orderId">The orderIdDefault documentation</param>
         /// <param name="isPaid">The  isPaid indicates whether</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
         /// <returns>
         /// SynchronousOrderExternalServiceResult
         /// </returns>
@@ -41,6 +42,6 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        SynchronousOrderExternalServiceResult SynchronousWaiMaiOrderPaymentStatusToJinBaiWan(int orderId,bool isPaid);
+        SynchronousOrderExternalServiceResult SynchronousWaiMaiOrderPaymentStatusToJinBaiWan(int orderId, bool isPaid, int paymentMethodId);
     }
 }

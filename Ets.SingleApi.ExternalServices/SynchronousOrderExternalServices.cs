@@ -51,6 +51,7 @@ namespace Ets.SingleApi.ExternalServices
         /// </summary>
         /// <param name="orderId">The orderIdDefault documentation</param>
         /// <param name="isPaid">The  isPaid indicates whether</param>
+        /// <param name="paymentMethodId">The paymentMethodIdDefault documentation</param>
         /// <returns>
         /// SynchronousOrderExternalServiceResult
         /// </returns>
@@ -59,12 +60,12 @@ namespace Ets.SingleApi.ExternalServices
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public SynchronousOrderExternalServiceResult SynchronousWaiMaiOrderPaymentStatusToJinBaiWan(int orderId, bool isPaid)
+        public SynchronousOrderExternalServiceResult SynchronousWaiMaiOrderPaymentStatusToJinBaiWan(int orderId, bool isPaid, int paymentMethodId)
         {
             using (var client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-                var url = string.Format("edit/{0}/IsPaid?ispaid={1}", orderId, isPaid ? "1" : "0");
+                var url = string.Format("edit/{0}/IsPaid?ispaid={1}&paymentMethodId={2}", orderId, isPaid ? "1" : "0", paymentMethodId);
                 var addrress = string.Format("{0}/{1}", ExternalServicesCommon.OpenApiServer, url.Trim('/', '\\'));
                 var result = client.UploadString(addrress, "PUT", string.Empty);
 
