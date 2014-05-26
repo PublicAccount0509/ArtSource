@@ -36,7 +36,7 @@ namespace Ets.SingleApi.ExternalServices
         {
             using (var client = ExternalServicesCommon.CreateSingleApiWebClient(authenParameter))
             {
-                var url = string.Format("DeliveryService/wm/CreateDelivery?json={0}", deliveryRequest.Serialize());
+                var url = string.Format("CreateDelivery?json={0}", deliveryRequest.Serialize());
                 var addrress = string.Format("{0}/{1}", ExternalServicesCommon.OpenApiServer, url.Trim('/', '\\'));
                 var result = client.UploadString(addrress, string.Empty);
                 return new SynchronousOrderExternalServiceResult
@@ -64,7 +64,7 @@ namespace Ets.SingleApi.ExternalServices
             using (var client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-                var url = string.Format("DeliveryService/wm/edit/{0}/IsPaid?ispaid={1}", orderId, isPaid ? "1" : "0");
+                var url = string.Format("edit/{0}/IsPaid?ispaid={1}", orderId, isPaid ? "1" : "0");
                 var addrress = string.Format("{0}/{1}", ExternalServicesCommon.OpenApiServer, url.Trim('/', '\\'));
                 var result = client.UploadString(addrress, "PUT", string.Empty);
 
