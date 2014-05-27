@@ -273,6 +273,7 @@
     <Content Include="Config\EnumSettings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\a.pubxml" />
     <Content Include="Content\i\01.png" />
     <Content Include="Content\i\02.png" />
