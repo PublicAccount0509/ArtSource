@@ -12,23 +12,7 @@ namespace WebExpress.Core
         public static IEnumItem[] GetEnumItems<T>()
         {
             return GetEnumItems(typeof(T));
-        }
-
-        public static IEnumItem GetEnumItem(Type enumType, Enum item)
-        {
-            var name = item.ToString();
-
-            var mi = enumType.GetMember(name).First();
-            var dtAttribute = mi.GetCustomAttributes(typeof(DisplayTextAttribute), false).FirstOrDefault();
-
-            var text = string.Empty;
-            if (dtAttribute != null)
-            {
-                text = (dtAttribute as DisplayTextAttribute).DisplayText;
-            }
-            var enumItem = new EnumItem { Value = Convert.ToInt32(item), Name = item.ToString(), Text = text };
-            return enumItem;
-        }
+        } 
 
         public static IEnumItem[] GetEnumItems(Type enumType)
         {
@@ -40,6 +24,22 @@ namespace WebExpress.Core
                 result.Add(enumItem);
             }
             return result.ToArray();
+        }
+
+        public static IEnumItem GetEnumItem(Type enumType, Enum item)
+        {
+            var name = item.ToString();
+
+            var mi = enumType.GetMember(name).First();
+            var dtAttribute = mi.GetCustomAttributes(typeof(DisplayTextAttribute), false).FirstOrDefault();
+
+            var text = name;
+            if (dtAttribute != null)
+            {
+                text = (dtAttribute as DisplayTextAttribute).DisplayText;
+            }
+            var enumItem = new EnumItem { Value = Convert.ToInt32(item), Name = item.ToString(), Text = text };
+            return enumItem;
         }
 
         public static bool OwnElement<TEnum>(object element) where TEnum : struct

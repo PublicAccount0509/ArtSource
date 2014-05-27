@@ -13,7 +13,5 @@ namespace WebExpress.Core
         public string Text { get; set; }
 
         public int Value { get; set; }
-
-        public int? Order { get; set; }
     }
 }

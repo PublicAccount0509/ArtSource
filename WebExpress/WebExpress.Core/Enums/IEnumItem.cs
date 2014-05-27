@@ -16,12 +16,15 @@ namespace WebExpress.Core
         /// </summary>
         string Name { get; }
 
-
-        string Text { get; }
-
         /// <summary>
         /// Get the value of enum item.
         /// </summary>
         int Value { get; }
+
+        /// <summary>
+        /// Display text
+        /// </summary>
+        string Text { get; set; }
+
     }
 }

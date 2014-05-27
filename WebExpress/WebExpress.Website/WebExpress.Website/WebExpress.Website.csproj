@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -85,6 +86,8 @@
   <ItemGroup>
     <Compile Include="App_Start\PreApplicationCode.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DynamicScript\EnumTypeScriptWriter.cs" />
+    <Compile Include="DynamicScript\IDynamicScriptWriter.cs" />
     <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Exceptions\DataNotFoundException.cs" />
     <Compile Include="Exceptions\PageNotFoundException.cs" />
@@ -98,6 +101,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WebExpress.Core\WebExpress.Core.csproj">
+      <Project>{c5637d1e-9a03-481e-876a-76b615d860ec}</Project>
+      <Name>WebExpress.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

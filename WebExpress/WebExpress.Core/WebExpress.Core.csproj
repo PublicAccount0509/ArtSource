@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
@@ -53,6 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigManager\StandaloneConfigBase.cs" />
+    <Compile Include="Configuration\EnumSettings\EnumConfigManager.cs" />
+    <Compile Include="Configuration\EnumSettings\EnumItem\EnumItemElement.cs" />
+    <Compile Include="Configuration\EnumSettings\EnumItem\EnumItemElementCollection.cs" />
+    <Compile Include="Configuration\EnumSettings\EnumSettingSection.cs" />
+    <Compile Include="Configuration\EnumSettings\EnumType\EnumTypeElementCollection.cs" />
+    <Compile Include="Configuration\EnumSettings\EnumType\EnumTypeElement.cs" />
     <Compile Include="DisplayTextAttribute.cs" />
     <Compile Include="Enums\EnumItem.cs" />
     <Compile Include="Enums\IEnumItem.cs" />
