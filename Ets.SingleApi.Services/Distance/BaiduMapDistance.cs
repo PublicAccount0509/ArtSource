@@ -91,7 +91,7 @@
                 return null;
             }
 
-            var location = jsonValue[key].ContainsKey("location") ? jsonValue["result"]["location"] : null;
+            var location = jsonValue[key].ContainsKey("location") ? jsonValue[key]["location"] : null;
             if (location == null)
             {
                 return null;
