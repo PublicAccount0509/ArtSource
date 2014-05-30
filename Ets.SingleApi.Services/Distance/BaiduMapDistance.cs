@@ -76,17 +76,22 @@
             //{"status":0,"result":[]}
             //{"status":0,"result":{"location":{"lng":116.48336573873,"lat":39.909466006532},"precise":1,"confidence":70,"level":"\u5730\u4ea7\u5c0f\u533a"}}
             var jsonValue = JsonValue.Parse(result);
-            if (jsonValue == null || jsonValue["result"] == null)
+            if (jsonValue == null)
             {
                 return null;
             }
 
-            if (jsonValue["result"].JsonType == JsonType.Array)
+            var key = jsonValue.ContainsKey("msg") ? "results" : "result";
+            if (jsonValue[key] == null)
+            {
+                return null;
+            }
+            if (jsonValue[key].JsonType == JsonType.Array)
             {
                 return null;
             }
 
-            var location = jsonValue["result"].ContainsKey("location") ? jsonValue["result"]["location"] : null;
+            var location = jsonValue[key].ContainsKey("location") ? jsonValue["result"]["location"] : null;
             if (location == null)
             {
                 return null;
