@@ -184,6 +184,11 @@
             };
         }
 
+        public PaymentResult<bool> Verify(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 取得返回状态码
         /// </summary>

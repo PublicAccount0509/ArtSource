@@ -26,7 +26,7 @@ namespace Ets.SingleApi.Services.Payment
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static bool VerifySignature(BaiFuBaoReturnParameter retrunData)
+        public static bool VerifySignature(BaiFuBaoPaymentBackgroundNoticeData retrunData)
         {
             var dictionary = new SortedList<string, string>(StringComparer.OrdinalIgnoreCase);
             dictionary["bank_no"] = retrunData.bank_no;

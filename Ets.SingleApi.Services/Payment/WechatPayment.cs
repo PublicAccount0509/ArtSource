@@ -101,5 +101,9 @@
                 };
         }
 
+        public PaymentResult<bool> Verify(IPaymentData parameter)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

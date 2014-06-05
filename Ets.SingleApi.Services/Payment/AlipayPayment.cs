@@ -8,6 +8,7 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using Ets.SingleApi.Model;
+using Ets.SingleApi.Services.Payment;
 using Ets.SingleApi.Utility;
 
 namespace Ets.SingleApi.Services
@@ -63,10 +64,7 @@ namespace Ets.SingleApi.Services
             {
                 return new PaymentResult<string> { Result = string.Empty, StatusCode = (int)StatusCode.System.InvalidPaymentRequest };
             }
-
-            //后台通知地址
-            alipayPaymentData.NotifyUrl = Controllers.ControllersCommon.AlipayBackgroundNoticeUrl;
-
+            
             //获取授权Token
             var token = AlipayPaymentCommon.RequestToken(alipayPaymentData);
 
@@ -136,6 +134,39 @@ namespace Ets.SingleApi.Services
                 StatusCode = (int)StatusCode.UmPayment.Ok,
                 Result = true
             };
+        }
+
+        /// <summary>
+        /// 验证签名
+        /// </summary>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/4/2014 11:31 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public PaymentResult<bool> Verify(IPaymentData parameter)
+        {
+            var alipayPaymentBackgroundNoticeData = parameter as AlipayPaymentBackgroundNoticeData;
+
+            if (alipayPaymentBackgroundNoticeData == null)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+                    Result = false
+                };
+            }
+            var verifyResult = AlipayPaymentCommon.VerifyNotify(alipayPaymentBackgroundNoticeData.Request, alipayPaymentBackgroundNoticeData.Sign);
+            
+            return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = verifyResult
+                };
         }
     }
 }

@@ -73,7 +73,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string ReturnUrl { get; set; }
+        public string BackgroundNoticeUrl { get; set; }
         /// <summary>
         /// Gets or sets the UserId of BaiFuBaoPaymentRequst
         /// </summary>

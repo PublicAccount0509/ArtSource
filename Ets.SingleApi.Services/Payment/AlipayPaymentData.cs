@@ -25,7 +25,7 @@ namespace Ets.SingleApi.Services
         private readonly string merchantUrl;
 
         public AlipayPaymentData(string orderNo, string orderName, string amount,
-                                 string callBackUrl, string merchantUrl)
+                                 string callBackUrl, string merchantUrl, string notifyUrl)
         {
             //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
@@ -85,7 +85,7 @@ namespace Ets.SingleApi.Services
             this.callBackUrl = callBackUrl;
 
             //服务器异步通知页面路径
-            //this.notifyUrl = notifyUrl;
+            this.notifyUrl = notifyUrl;
 
             //操作中断返回地址
             this.merchantUrl = merchantUrl;
@@ -108,6 +108,6 @@ namespace Ets.SingleApi.Services
         public string CallBackUrl { get { return callBackUrl; } }
         public string MerchantUrl { get { return merchantUrl; } }
 
-        public string NotifyUrl { get; set; }
+        public string NotifyUrl { get { return notifyUrl; } }
     }
 }

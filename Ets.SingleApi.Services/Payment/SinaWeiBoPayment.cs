@@ -54,10 +54,7 @@ namespace Ets.SingleApi.Services
             {
                 return new PaymentResult<string> { Result = string.Empty, StatusCode = (int)StatusCode.System.InvalidPaymentRequest };
             }
-
-            //后台通知地址
-            alipayPaymentData.NotifyUrl = Controllers.ControllersCommon.AlipayBackgroundNoticeUrl;
-
+            
             //获取授权Token
             var token = AlipayPaymentCommon.RequestToken(alipayPaymentData);
             
@@ -118,6 +115,11 @@ namespace Ets.SingleApi.Services
                 StatusCode = (int)StatusCode.UmPayment.Ok,
                 Result = true
             };
+        }
+
+        public PaymentResult<bool> Verify(IPaymentData parameter)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

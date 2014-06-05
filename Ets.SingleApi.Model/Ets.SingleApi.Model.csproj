@@ -116,6 +116,9 @@
     <Compile Include="Controller\DirectPayDetail.cs" />
     <Compile Include="Controller\TelephoneNumLoginRequst.cs" />
     <Compile Include="Controller\TelephoneNumLoginResult.cs" />
+    <Compile Include="Controller\BaiFuBaoPaymentBackgroundNoticeRequst.cs" />
+    <Compile Include="Controller\AlipayPaymentVerifyRequst.cs" />
+    <Compile Include="Controller\AlipayPaymentBackgroundNoticeRequst.cs" />
     <Compile Include="CouponCodeType.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
@@ -237,6 +240,7 @@
     <Compile Include="Services\SaveDirectPayParameter.cs" />
     <Compile Include="Services\TelephoneNumLoginParameter.cs" />
     <Compile Include="Services\CancelDirectPayParameter.cs" />
+    <Compile Include="Services\AlipayPaymentReturnParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />

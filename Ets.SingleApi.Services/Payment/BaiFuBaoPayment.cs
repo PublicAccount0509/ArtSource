@@ -68,7 +68,7 @@ namespace Ets.SingleApi.Services
             subpara.unit_amount = amount;//单价
             subpara.unit_count = "1";//数量
             subpara.page_url = baiFuBaoPaymentQueryData.PageUrl;//前台通知
-            subpara.return_url = ControllersCommon.BaiFuBaoBackgroundNoticeUrl;//后台通知
+            subpara.return_url = baiFuBaoPaymentQueryData.BackgroundNoticeUrl;//后台通知
 
             subpara.bank_no = "301";
             subpara.expire_time = DateTime.Now.AddDays(2).ToString("yyyyMMddHHmmss");
@@ -136,6 +136,29 @@ namespace Ets.SingleApi.Services
                 StatusCode = (int)StatusCode.UmPayment.Ok,
                 Result = true
             };
+        }
+
+        /// <summary>
+        /// 验证签名
+        /// </summary>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/4/2014 11:31 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public PaymentResult<bool> Verify(IPaymentData parameter)
+        {
+            var baiFuBaoPaymentBackgroundNoticeData = parameter as BaiFuBaoPaymentBackgroundNoticeData;
+
+            return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = BaiFuBaoPaymentCommon.VerifySignature(baiFuBaoPaymentBackgroundNoticeData)
+                } ;
         }
 
         /// <summary>

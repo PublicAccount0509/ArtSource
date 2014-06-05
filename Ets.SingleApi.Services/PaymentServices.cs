@@ -303,7 +303,8 @@ namespace Ets.SingleApi.Services
                 OrderId = parameter.OrderId.ToString(),
                 GoodsName = parameter.GoodsName,
                 Amount = parameter.Amount,
-                PageUrl = parameter.PageUrl
+                PageUrl = parameter.PageUrl,
+                BackgroundNoticeUrl = parameter.BackgroundNoticeUrl
             });
 
             if (result == null)
@@ -425,8 +426,89 @@ namespace Ets.SingleApi.Services
             };
         }
 
+        /// <summary>
+        /// 百付宝支付后台回调验证签名
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/4/2014 4:03 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> BaiFuBaoPaymentVerify(string source, BaiFuBaoReturnParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
 
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.BaiFuBaoPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
 
+            var baiFuBaoPaymentBackgroundNoticeData = new BaiFuBaoPaymentBackgroundNoticeData
+                {
+                    bank_no = parameter.bank_no,
+                    sp_no = parameter.sp_no,
+                    order_no = parameter.order_no,
+                    bfb_order_no = parameter.bfb_order_no,
+                    bfb_order_create_time = parameter.bfb_order_create_time,
+                    pay_time = parameter.pay_time,
+                    pay_type = parameter.pay_type,
+                    unit_amount = parameter.unit_amount,
+                    unit_count = parameter.unit_count,
+                    transport_amount = parameter.transport_amount,
+                    total_amount = parameter.total_amount,
+                    fee_amount = parameter.fee_amount,
+                    currency = parameter.currency,
+                    buyer_sp_username = parameter.buyer_sp_username,
+                    pay_result = parameter.pay_result,
+                    input_charset = parameter.input_charset,
+                    version = parameter.version,
+                    sign_method = parameter.sign_method,
+                    sign = parameter.sign,
+                    extra = parameter.extra
+                };
+
+            var verifyResult = payment.Verify(baiFuBaoPaymentBackgroundNoticeData);
+
+            if (verifyResult == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            if (verifyResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = verifyResult.Result,
+                    StatusCode = verifyResult.StatusCode
+                };
+            }
+
+            return new ServicesResult<bool>
+            {
+                Result = verifyResult.Result,
+                StatusCode = verifyResult.StatusCode
+            };
+        }
+        
         /// <summary>
         /// 获取支付宝支付请求Url
         /// </summary>
@@ -496,7 +578,8 @@ namespace Ets.SingleApi.Services
                 parameter.OrderName,
                 parameter.Amount,
                 parameter.CallBackUrl,
-                parameter.MerchantUrl));
+                parameter.MerchantUrl,
+                parameter.BackgroundNoticeUrl));
 
             if (result == null)
             {
@@ -607,123 +690,25 @@ namespace Ets.SingleApi.Services
         }
 
         /// <summary>
-        /// 获取新浪微博支付请求Url
+        /// 百付宝支付后台回调验证签名
         /// </summary>
         /// <param name="source">The sourceDefault documentation</param>
         /// <param name="parameter">The parameterDefault documentation</param>
         /// <returns>
-        /// 新浪微博支付请求Url
+        /// Boolean}
         /// </returns>
         /// 创建者：王巍
-        /// 创建日期：2/14/2014 9:55 AM
+        /// 创建日期：6/4/2014 6:00 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> SinaWeiBoPayment(string source, SinaWeiBoPaymentParameter parameter)
-        {
-            if (parameter == null)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
-            }
-
-            var orderType = (OrderType)parameter.OrderType;
-            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
-            if (orderBaseProvider == null)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
-                };
-            }
-
-            var existResult = orderBaseProvider.Exist(source, parameter.OrderId);
-            if (existResult == null || existResult.Result == 0)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
-                };
-            }
-
-            if (existResult.Result == 1)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.Validate.DoublePayment
-                };
-            }
-
-            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.AlipayPayment);
-            if (payment == null)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
-                };
-            }
-
-            var result = payment.Payment(new AlipayPaymentData(
-                parameter.OrderId.ToString(),
-                parameter.OrderName,
-                parameter.Amount,
-                parameter.CallBackUrl,
-                parameter.MerchantUrl));
-
-            if (result == null)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
-                };
-            }
-
-            return new ServicesResult<string>
-            {
-                Result = result.Result,
-                StatusCode = result.StatusCode
-            };
-        }
-
-        /// <summary>
-        /// 新浪微博支付状态
-        /// </summary>
-        /// <param name="source">The sourceDefault documentation</param>
-        /// <param name="parameter">The parameterDefault documentation</param>
-        /// <returns>
-        /// The Boolean}
-        /// </returns>
-        /// 创建者：王巍
-        /// 创建日期：2/11/2014 1:46 PM
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SinaWeiBoPaymentState(string source, SinaWeiBoPaymentStateParameter parameter)
+        public ServicesResult<bool> AlipayPaymentVerify(string source, AlipayPaymentReturnParameter parameter)
         {
             if (parameter == null)
             {
                 return new ServicesResult<bool>
                 {
                     StatusCode = (int)StatusCode.System.InvalidRequest
-                };
-            }
-
-            var orderType = (OrderType)parameter.OrderType;
-            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
-            if (orderBaseProvider == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
                 };
             }
 
@@ -737,16 +722,15 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            //验证签名，订单状态为支付
-            var result = payment.QueryState(new AlipayPaymentQueryData
-            {
-                NotSign = parameter.NotSign,
-                Sign = parameter.Sign,
-                OrderId = parameter.OrderId,
-                Result = parameter.Result
-            });
+            var alipayPaymentBackgroundNoticeData = new AlipayPaymentBackgroundNoticeData
+                {
+                    Request = parameter.Request,
+                    Sign = parameter.Sign
+                };
 
-            if (result == null)
+            var verifyResult = payment.Verify(alipayPaymentBackgroundNoticeData);
+
+            if (verifyResult == null)
             {
                 return new ServicesResult<bool>
                 {
@@ -754,36 +738,200 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            if (result.StatusCode != (int)StatusCode.Succeed.Ok)
+            if (verifyResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<bool>
                 {
-                    Result = result.Result,
-                    StatusCode = result.StatusCode
+                    Result = verifyResult.Result,
+                    StatusCode = verifyResult.StatusCode
                 };
             }
-
-            //订单是否存在
-            var orderId = int.Parse(parameter.OrderId);
-            var existResult = orderBaseProvider.Exist(source, orderId);
-            if (existResult == null || existResult.Result == 0)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
-                };
-            }
-
-            //保存订单支付完成
-            var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, orderId, true);
 
             return new ServicesResult<bool>
             {
-                Result = saveOrderPaidResult.Result,
-                StatusCode = saveOrderPaidResult.StatusCode
+                Result = verifyResult.Result,
+                StatusCode = verifyResult.StatusCode
             };
         }
+
+        ///// <summary>
+        ///// 获取新浪微博支付请求Url
+        ///// </summary>
+        ///// <param name="source">The sourceDefault documentation</param>
+        ///// <param name="parameter">The parameterDefault documentation</param>
+        ///// <returns>
+        ///// 新浪微博支付请求Url
+        ///// </returns>
+        ///// 创建者：王巍
+        ///// 创建日期：2/14/2014 9:55 AM
+        ///// 修改者：
+        ///// 修改时间：
+        ///// ----------------------------------------------------------------------------------------
+        //public ServicesResult<string> SinaWeiBoPayment(string source, SinaWeiBoPaymentParameter parameter)
+        //{
+        //    if (parameter == null)
+        //    {
+        //        return new ServicesResult<string>
+        //        {
+        //            Result = string.Empty,
+        //            StatusCode = (int)StatusCode.System.InvalidRequest
+        //        };
+        //    }
+
+        //    var orderType = (OrderType)parameter.OrderType;
+        //    var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
+        //    if (orderBaseProvider == null)
+        //    {
+        //        return new ServicesResult<string>
+        //        {
+        //            Result = string.Empty,
+        //            StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+        //        };
+        //    }
+
+        //    var existResult = orderBaseProvider.Exist(source, parameter.OrderId);
+        //    if (existResult == null || existResult.Result == 0)
+        //    {
+        //        return new ServicesResult<string>
+        //        {
+        //            Result = string.Empty,
+        //            StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+        //        };
+        //    }
+
+        //    if (existResult.Result == 1)
+        //    {
+        //        return new ServicesResult<string>
+        //        {
+        //            Result = string.Empty,
+        //            StatusCode = (int)StatusCode.Validate.DoublePayment
+        //        };
+        //    }
+
+        //    var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.AlipayPayment);
+        //    if (payment == null)
+        //    {
+        //        return new ServicesResult<string>
+        //        {
+        //            Result = string.Empty,
+        //            StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+        //        };
+        //    }
+
+        //    var result = payment.Payment(new AlipayPaymentData(
+        //        parameter.OrderId.ToString(),
+        //        parameter.OrderName,
+        //        parameter.Amount,
+        //        parameter.CallBackUrl,
+        //        parameter.MerchantUrl));
+
+        //    if (result == null)
+        //    {
+        //        return new ServicesResult<string>
+        //        {
+        //            Result = string.Empty,
+        //            StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+        //        };
+        //    }
+
+        //    return new ServicesResult<string>
+        //    {
+        //        Result = result.Result,
+        //        StatusCode = result.StatusCode
+        //    };
+        //}
+
+        ///// <summary>
+        ///// 新浪微博支付状态
+        ///// </summary>
+        ///// <param name="source">The sourceDefault documentation</param>
+        ///// <param name="parameter">The parameterDefault documentation</param>
+        ///// <returns>
+        ///// The Boolean}
+        ///// </returns>
+        ///// 创建者：王巍
+        ///// 创建日期：2/11/2014 1:46 PM
+        ///// 修改者：
+        ///// 修改时间：
+        ///// ----------------------------------------------------------------------------------------
+        //public ServicesResult<bool> SinaWeiBoPaymentState(string source, SinaWeiBoPaymentStateParameter parameter)
+        //{
+        //    if (parameter == null)
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            StatusCode = (int)StatusCode.System.InvalidRequest
+        //        };
+        //    }
+
+        //    var orderType = (OrderType)parameter.OrderType;
+        //    var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
+        //    if (orderBaseProvider == null)
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            Result = false,
+        //            StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+        //        };
+        //    }
+
+        //    var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.AlipayPayment);
+        //    if (payment == null)
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            Result = false,
+        //            StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+        //        };
+        //    }
+
+        //    //验证签名，订单状态为支付
+        //    var result = payment.QueryState(new AlipayPaymentQueryData
+        //    {
+        //        NotSign = parameter.NotSign,
+        //        Sign = parameter.Sign,
+        //        OrderId = parameter.OrderId,
+        //        Result = parameter.Result
+        //    });
+
+        //    if (result == null)
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+        //        };
+        //    }
+
+        //    if (result.StatusCode != (int)StatusCode.Succeed.Ok)
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            Result = result.Result,
+        //            StatusCode = result.StatusCode
+        //        };
+        //    }
+
+        //    //订单是否存在
+        //    var orderId = int.Parse(parameter.OrderId);
+        //    var existResult = orderBaseProvider.Exist(source, orderId);
+        //    if (existResult == null || existResult.Result == 0)
+        //    {
+        //        return new ServicesResult<bool>
+        //        {
+        //            Result = false,
+        //            StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+        //        };
+        //    }
+
+        //    //保存订单支付完成
+        //    var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, orderId, true);
+
+        //    return new ServicesResult<bool>
+        //    {
+        //        Result = saveOrderPaidResult.Result,
+        //        StatusCode = saveOrderPaidResult.StatusCode
+        //    };
+        //}
 
 
         /// <summary>

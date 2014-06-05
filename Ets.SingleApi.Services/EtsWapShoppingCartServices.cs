@@ -1011,10 +1011,19 @@ namespace Ets.SingleApi.Services
                                           ? 0
                                           : supplier.FixedDeliveryCharge) : supplier.FixedDeliveryCharge;
             var canDelivery = totalfee >= supplier.DelMinOrderAmount;
-            var deliveryMethodId = !canDelivery ? ServicesCommon.PickUpDeliveryMethodId : order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
+
+            var deliveryMethodId = canDelivery ? (order.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId) : ServicesCommon.PickUpDeliveryMethodId;
+            if (!saveDeliveryMethodId)
+            {
+                deliveryMethodId = canDelivery ? ServicesCommon.DefaultDeliveryMethodId : ServicesCommon.PickUpDeliveryMethodId;
+            }
+
             var fixedDeliveryFee = deliveryMethodId != ServicesCommon.PickUpDeliveryMethodId ? fixedDeliveryCharge : 0;
+
             var total = totalfee + fixedDeliveryFee + packagingFee;
             var customerTotal = total - coupon;
+
+
 
             if (saveDeliveryMethodId)
             {

@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Controllers
+﻿using System.Collections.Generic;
+
+namespace Ets.SingleApi.Controllers
 {
     using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
@@ -197,7 +199,8 @@
                 GoodsName = requst.GoodsName,
                 Amount = requst.Amount,
                 OrderType = requst.OrderType,
-                PageUrl = requst.PageUrl
+                PageUrl = requst.PageUrl,
+                BackgroundNoticeUrl = requst.BackgroundNoticeUrl
             });
 
             return new Response<string>
@@ -251,6 +254,81 @@
             };
         }
 
+        /// <summary>
+        /// 百付宝支付后台回调验证签名
+        /// </summary>
+        /// <param name="request">The requestDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/4/2014 5:40 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public Response<bool> BaiFuBaoPaymentVerify(BaiFuBaoPaymentBackgroundNoticeRequst request)
+        {
+            if (request == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var baiFuBaoReturnParameter = new BaiFuBaoReturnParameter
+                {
+                    bank_no = request.bank_no,
+                    sp_no = request.sp_no,
+                    order_no = request.order_no,
+                    bfb_order_no = request.bfb_order_no,
+                    bfb_order_create_time = request.bfb_order_create_time,
+                    pay_time = request.pay_time,
+                    pay_type = request.pay_type,
+                    unit_amount = request.unit_amount,
+                    unit_count = request.unit_count,
+                    transport_amount = request.transport_amount,
+                    total_amount = request.total_amount,
+                    fee_amount = request.fee_amount,
+                    currency = request.currency,
+                    buyer_sp_username = request.buyer_sp_username,
+                    pay_result = request.pay_result,
+                    input_charset = request.input_charset,
+                    version = request.version,
+                    sign_method = request.sign_method,
+                    sign = request.sign,
+                    extra = request.extra
+                };
+
+            var baiFuBaoPaymentVerifyResult = this.paymentServices.BaiFuBaoPaymentVerify(this.Source,baiFuBaoReturnParameter);
+
+            if (baiFuBaoPaymentVerifyResult == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = baiFuBaoPaymentVerifyResult.StatusCode
+                },
+                Result = baiFuBaoPaymentVerifyResult.Result
+            };
+        }
+
+
         [HttpPost]
         [TokenFilter]
         public Response<string> AlipayPayment(AlipayPaymentRequst requst)
@@ -286,7 +364,8 @@
                 Amount = requst.Amount,
                 OrderType = requst.OrderType,
                 CallBackUrl = requst.CallBackUrl,
-                MerchantUrl = requst.MerchantUrl
+                MerchantUrl = requst.MerchantUrl,
+                BackgroundNoticeUrl = requst.BackgroundNoticeUrl
             });
 
             return new Response<string>
@@ -343,58 +422,22 @@
                 Result = result.Result
             };
         }
-
+        
+        /// <summary>
+        /// 支付宝支付后台回调验证签名
+        /// </summary>
+        /// <param name="requst">The requstDefault documentation</param>
+        /// <returns>
+        /// Response{System.Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/4/2014 5:41 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public Response<string> SinaWeiBoPayment(SinaWeiBoPaymentRequst requst)
-        {
-            if (requst == null)
-            {
-                return new Response<string>
-                {
-                    Result = string.Empty,
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
-                };
-            }
-
-            if (!this.ValidateUserId(requst.UserId))
-            {
-                return new Response<string>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    },
-                    Result = string.Empty
-                };
-            }
-
-            var baiFuBaoPaymentResult = this.paymentServices.SinaWeiBoPayment(this.Source, new SinaWeiBoPaymentParameter
-            {
-                OrderId = requst.OrderId,
-                OrderName = requst.OrderName,
-                Amount = requst.Amount,
-                OrderType = requst.OrderType,
-                CallBackUrl = requst.CallBackUrl,
-                MerchantUrl = requst.MerchantUrl
-            });
-
-            return new Response<string>
-            {
-                Result = baiFuBaoPaymentResult.Result,
-                Message = new ApiMessage
-                {
-                    StatusCode = baiFuBaoPaymentResult.StatusCode
-                }
-            };
-        }
-
-        [HttpPost]
-        [TokenFilter]
-        public Response<bool> SinaWeiBoPaymentState(SinaWeiBoPaymentStateRequst requst)
+        public Response<bool> AlipayPaymentVerify(AlipayPaymentBackgroundNoticeRequst requst)
         {
             if (requst == null)
             {
@@ -407,25 +450,31 @@
                 };
             }
 
-            if (!this.ValidateUserId(requst.UserId))
+            var parameters = new Dictionary<string, string>
+                {
+                    {"service", requst.Service},
+                    {"sign", requst.Sign},
+                    {"sec_id", requst.SecId},
+                    {"v", requst.V},
+                    {"notify_data", requst.NotifyData}
+                };
+
+            var result = this.paymentServices.AlipayPaymentVerify(this.Source, new AlipayPaymentReturnParameter
+            {
+               Request = parameters,
+                Sign = requst.Sign
+            });
+
+            if (result == null)
             {
                 return new Response<bool>
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     }
                 };
             }
-
-            var result = this.paymentServices.SinaWeiBoPaymentState(this.Source, new SinaWeiBoPaymentStateParameter
-            {
-                NotSign = requst.NotSign,
-                Sign = requst.Sign,
-                OrderId = requst.OrderId,
-                Result = requst.Result,
-                OrderType = requst.OrderType
-            });
 
             return new Response<bool>
             {
@@ -436,6 +485,99 @@
                 Result = result.Result
             };
         }
+
+        //[HttpPost]
+        //[TokenFilter]
+        //public Response<string> SinaWeiBoPayment(SinaWeiBoPaymentRequst requst)
+        //{
+        //    if (requst == null)
+        //    {
+        //        return new Response<string>
+        //        {
+        //            Result = string.Empty,
+        //            Message = new ApiMessage
+        //            {
+        //                StatusCode = (int)StatusCode.System.InvalidRequest
+        //            }
+        //        };
+        //    }
+
+        //    if (!this.ValidateUserId(requst.UserId))
+        //    {
+        //        return new Response<string>
+        //        {
+        //            Message = new ApiMessage
+        //            {
+        //                StatusCode = (int)StatusCode.OAuth.AccessDenied
+        //            },
+        //            Result = string.Empty
+        //        };
+        //    }
+
+        //    var baiFuBaoPaymentResult = this.paymentServices.SinaWeiBoPayment(this.Source, new SinaWeiBoPaymentParameter
+        //    {
+        //        OrderId = requst.OrderId,
+        //        OrderName = requst.OrderName,
+        //        Amount = requst.Amount,
+        //        OrderType = requst.OrderType,
+        //        CallBackUrl = requst.CallBackUrl,
+        //        MerchantUrl = requst.MerchantUrl
+        //    });
+
+        //    return new Response<string>
+        //    {
+        //        Result = baiFuBaoPaymentResult.Result,
+        //        Message = new ApiMessage
+        //        {
+        //            StatusCode = baiFuBaoPaymentResult.StatusCode
+        //        }
+        //    };
+        //}
+
+        //[HttpPost]
+        //[TokenFilter]
+        //public Response<bool> SinaWeiBoPaymentState(SinaWeiBoPaymentStateRequst requst)
+        //{
+        //    if (requst == null)
+        //    {
+        //        return new Response<bool>
+        //        {
+        //            Message = new ApiMessage
+        //            {
+        //                StatusCode = (int)StatusCode.System.InvalidRequest
+        //            }
+        //        };
+        //    }
+
+        //    if (!this.ValidateUserId(requst.UserId))
+        //    {
+        //        return new Response<bool>
+        //        {
+        //            Message = new ApiMessage
+        //            {
+        //                StatusCode = (int)StatusCode.OAuth.AccessDenied
+        //            }
+        //        };
+        //    }
+
+        //    var result = this.paymentServices.SinaWeiBoPaymentState(this.Source, new SinaWeiBoPaymentStateParameter
+        //    {
+        //        NotSign = requst.NotSign,
+        //        Sign = requst.Sign,
+        //        OrderId = requst.OrderId,
+        //        Result = requst.Result,
+        //        OrderType = requst.OrderType
+        //    });
+
+        //    return new Response<bool>
+        //    {
+        //        Message = new ApiMessage
+        //        {
+        //            StatusCode = result.StatusCode
+        //        },
+        //        Result = result.Result
+        //    };
+        //}
 
 
         [HttpPost]

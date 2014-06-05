@@ -75,6 +75,18 @@
         /// ----------------------------------------------------------------------------------------
         public string MerchantUrl { get; set; }
         /// <summary>
+        /// 支付宝支付后台回调地址
+        /// </summary>
+        /// <value>
+        /// The BackgroundNoticeUrl
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：6/5/2014 9:36 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string BackgroundNoticeUrl { get; set; }
+        /// <summary>
         /// Gets or sets the UserId of BaiFuBaoPaymentPostData
         /// </summary>
         /// <value>

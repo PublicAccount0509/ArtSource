@@ -152,6 +152,8 @@
     <Compile Include="Payment\WechatPaymentData.cs" />
     <Compile Include="Payment\SinaWeiBoPayment.cs" />
     <Compile Include="Payment\SinaWeiBoPaymentCommon.cs" />
+    <Compile Include="Payment\BaiFuBaoPaymentBackgroundNoticeData.cs" />
+    <Compile Include="Payment\AlipayPaymentBackgroundNoticeData.cs" />
     <Compile Include="SendPassword\EmailSendPassword.cs" />
     <Compile Include="SendPassword\ISendPassword.cs" />
     <Compile Include="IDetailServices\ISmsDetailServices.cs" />

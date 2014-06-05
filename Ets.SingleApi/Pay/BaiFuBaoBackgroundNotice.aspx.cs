@@ -9,7 +9,7 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var returnData = new BaiFuBaoReturnParameter
+            var returnData = new BaiFuBaoPaymentBackgroundNoticeData
             {
                 bank_no = Request["bank_no"],
                 sp_no = Request["sp_no"],

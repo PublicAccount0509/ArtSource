@@ -54,5 +54,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         PaymentResult<bool> QueryState(IPaymentData parameter);
+
+        /// <summary>
+        /// 验证签名
+        /// </summary>
+        /// <param name="parameter">The parameterDefault documentation</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/4/2014 11:31 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        PaymentResult<bool> Verify(IPaymentData parameter);
     }
 }
