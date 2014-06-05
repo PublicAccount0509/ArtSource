@@ -640,6 +640,18 @@ namespace Ets.SingleApi.Services
                 ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order)
                 : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order);
 
+            var deliveryInfo = this.deliveryEntityRepository.FindSingleByExpression(p => p.DeliveryId == deliveryId);
+
+            //判断餐厅与送餐地址距离是否超范围(单位:米)
+            if (deliveryInfo.DeliveryDistance > ServicesCommon.DeliveryMaxDistance)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.MoreThanDeliveryMaxDistance,
+                    Result = string.Empty
+                };
+            }
+
             var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
             this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);

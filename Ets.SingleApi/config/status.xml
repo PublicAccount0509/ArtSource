@@ -80,6 +80,7 @@
   <item code="40046" message="该当面付已过期，无法取消"></item>
   <item code="40047" message="该当面付号已经取消，无法再次取消"></item>
   <item code="40048" message="新密码不能与旧密码相同"></item>
+  <item code="40049" message="送餐地址已超出所选的餐厅最大配送距离，请进行修改！"></item>
   <!--定位-->
   <item code="50000" message="无效地址"></item>
   <item code="50001" message="无效城市名"></item>

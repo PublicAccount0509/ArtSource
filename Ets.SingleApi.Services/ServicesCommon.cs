@@ -2432,5 +2432,32 @@
                 return result;
             }
         }
+
+        /// <summary>
+        /// 送餐最大距离(单位:米)
+        /// </summary>
+        /// <value>
+        /// 送餐最大距离(单位:米)
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：6/5/2014 6:04 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int DeliveryMaxDistance
+        {
+            get
+            {
+                var deliveryMaxDistance = ConfigurationManager.AppSettings["DeliveryMaxDistance"] ?? "3000";
+                int result;
+                if (!int.TryParse(deliveryMaxDistance, out result))
+                {
+                    result = 3000;
+                }
+
+                return result;
+            }
+        }
+
     }
 }
