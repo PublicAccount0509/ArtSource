@@ -161,6 +161,7 @@ namespace Ets.SingleApi.Services
 
         private readonly INHibernateRepository<LoginEntity> loginEntity;
         private readonly INHibernateRepository<CustomerEntity> customerEntity;
+        private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
@@ -182,6 +183,7 @@ namespace Ets.SingleApi.Services
         /// <param name="synchronousOrderExternalServices"></param>
         /// <param name="loginEntity"></param>
         /// <param name="customerEntity"></param>
+        /// <param name="supplierFeatureEntityRepository"></param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -204,7 +206,8 @@ namespace Ets.SingleApi.Services
             ISingleApiOrdersExternalService singleApiOrdersExternalService,
             ISynchronousOrderExternalServices synchronousOrderExternalServices,
             INHibernateRepository<LoginEntity> loginEntity,
-            INHibernateRepository<CustomerEntity> customerEntity)
+            INHibernateRepository<CustomerEntity> customerEntity,
+            INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository)
             : base(orderNumberDcEntityRepository, singleApiOrdersExternalService)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
@@ -222,6 +225,7 @@ namespace Ets.SingleApi.Services
             this.synchronousOrderExternalServices = synchronousOrderExternalServices;
             this.loginEntity = loginEntity;
             this.customerEntity = customerEntity;
+            this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
         }
 
         /// <summary>
@@ -472,6 +476,26 @@ namespace Ets.SingleApi.Services
             if (result.InvoiceTitle.IsEmptyOrNull())
             {
                 result.InvoiceTitle = ServicesCommon.EmptyInvoiceTitle;
+            }
+
+            //设置餐厅电话
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true)
+                                          .Select(p => new SupplierFeatureModel
+                                          {
+                                              SupplierFeatureId = p.SupplierFeatureId,
+                                              FeatureName = p.Feature.Feature,
+                                              FeatureId = p.Feature.FeatureId
+                                          }).ToList();
+            var cooperationWaimaiList =
+                ServicesCommon.CooperationWaimaiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p))
+                              .ToList();
+            var cooperationTangshiList =
+                ServicesCommon.CooperationTangshiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p))
+                              .ToList();
+            if (cooperationWaimaiList.All(p => p) || cooperationTangshiList.All(p => p))
+            {
+                result.Telephone = ServicesCommon.CooperationHotline;
             }
 
             return new ServicesResult<IOrderDetailModel>
