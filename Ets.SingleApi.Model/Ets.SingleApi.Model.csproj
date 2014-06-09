@@ -168,8 +168,10 @@
     <Compile Include="Mapping\Repository\SupplierGroupPlatformEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupTemplateEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierPlatformRelationEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierThirdActivitiesEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\TableTypeEntity.cs" />
+    <Compile Include="Mapping\Repository\ThirdActivitiesEntity.cs" />
     <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\UserFeedbackEntity.cs" />
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="Services\TelephoneNumLoginParameter.cs" />
     <Compile Include="Services\CancelDirectPayParameter.cs" />
     <Compile Include="Services\AlipayPaymentReturnParameter.cs" />
+    <Compile Include="Services\GetSearchActivitiesSupplierListParameter.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
@@ -706,6 +709,10 @@
     <EmbeddedResource Include="Mapping\DirectPayEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\OrderNumberDpEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\PaymentDirectEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\SupplierThirdActivitiesEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\ThirdActivitiesEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

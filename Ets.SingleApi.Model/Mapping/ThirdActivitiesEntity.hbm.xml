@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.ThirdActivitiesEntity, Ets.SingleApi.Model" table="ThirdActivities" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="ActivitieId" column="ActivitieId" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="ActivitieName" column="ActivitieName" type="String" />
+		<property name="ActivitieContent" column="ActivitieContent" type="String" />
+		<property name="BeginDate" column="BeginDate" type="Timestamp" />
+		<property name="EndDate" column="EndDate" type="Timestamp" />
+		<property name="IsDelete" column="IsDelete" type="Boolean" />
+		<property name="CreateDate" column="CreateDate" type="Timestamp" />
+		<property name="LinkUrl" column="LinkUrl" type="String" not-null="false" />
+		<property name="ActivitieOrganizers" column="ActivitieOrganizers" type="String" not-null="false" />
+		<!--The foreign keys-->
+		<bag name="SupplierThirdActivitiesList" cascade="none" lazy="true" table="SupplierThirdActivities">
+			<key column="ThirdActivitieId" />
+			<one-to-many class="Ets.SingleApi.Model.Repository.SupplierThirdActivitiesEntity, Ets.SingleApi.Model" />
+		</bag>
+	</class>
+</hibernate-mapping>

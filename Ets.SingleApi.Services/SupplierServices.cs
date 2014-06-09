@@ -1172,6 +1172,87 @@
         }
 
         /// <summary>
+        /// Gets the search group supplier list.
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// ServicesResultList{GroupSupplierModel}
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/29/2013 10:33 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<GroupSupplierModel> GetSearchActivitiesSupplierList(string source,
+                                                                                 GetSearchActivitiesSupplierListParameter
+                                                                                     parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                {
+                    Result = new List<GroupSupplierModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var list = this.supplierEntityRepository.NamedQuery("Pro_QuerySearchActivitiesSupplierList")
+                           .SetInt32("FeatureId", parameter.FeatureId ?? -1)
+                           .SetInt32("ActivitiesId", parameter.ActivitiesId)
+                           .SetInt32("CityId", parameter.CityId ?? -1)
+                           .SetDouble("UserLat", parameter.UserLat)
+                           .SetDouble("UserLong", parameter.UserLong)
+                           .SetInt32("PageIndex", parameter.PageIndex ?? -1)
+                           .SetInt32("PageSize", parameter.PageSize)
+                           .SetDouble("Distance", parameter.Distance ?? -1)
+                           .List<GroupSupplierModelEntity>();
+
+            var supplierList = (from entity in list
+                                select new GroupSupplierModel
+                                {
+                                    SupplierId = entity.SupplierId,
+                                    SupplierName = entity.SupplierName,
+                                    Address = entity.Address,
+                                    Telephone = entity.Telephone,
+                                    BaIduLat = entity.BaIduLat,
+                                    BaIduLong = entity.BaIduLong,
+                                    SupplierDescription = entity.SupplierDescription,
+                                    Averageprice = entity.Averageprice,
+                                    ParkingInfo = entity.ParkingInfo,
+                                    LogoUrl = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, entity.LogoUrl),
+                                    IsOpenDoor = entity.IsOpenDoor,
+                                    Distance = entity.Distance,
+                                    DateJoined = entity.DateJoined,
+                                }).ToList();
+
+            var supplierIdList = supplierList.Select(p => p.SupplierId).ToList();
+            var supplierFeatureList =
+                this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                    p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
+                    .Select(
+                        p => new { p.SupplierFeatureId, p.Supplier.SupplierId, p.Feature.Feature, p.Feature.FeatureId })
+                    .ToList();
+
+            foreach (var supplier in supplierList)
+            {
+                supplier.SupplierFeatureList = supplierFeatureList.Where(p => p.SupplierId == supplier.SupplierId)
+                                                                  .Select(p =>
+                                                                          new SupplierFeatureModel
+                                                                          {
+                                                                              FeatureId = p.FeatureId,
+                                                                              FeatureName = p.Feature,
+                                                                              SupplierFeatureId =
+                                                                                  p.SupplierFeatureId
+                                                                          }).ToList();
+            }
+            return new ServicesResultList<GroupSupplierModel>
+            {
+                Result = supplierList
+            };
+        }
+
+        /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>
         /// <param name="source">The source</param>

@@ -140,6 +140,21 @@
         ServicesResultList<GroupSupplierModel> GetSearchGroupSupplierList(string source, GetSearchGroupSupplierListParameter parameter);
 
         /// <summary>
+        /// Gets the search group supplier list.
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// ServicesResultList{GroupSupplierModel}
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：12/29/2013 10:33 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<GroupSupplierModel> GetSearchActivitiesSupplierList(string source, GetSearchActivitiesSupplierListParameter parameter);
+
+        /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>
         /// <param name="source">The source</param>

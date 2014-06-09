@@ -460,6 +460,99 @@ namespace Ets.SingleApi.Controllers
                 };
         }
 
+
+        /// <summary>
+        /// 获取餐厅分店信息
+        /// </summary>
+        /// <param name="activitiesId">The activitiesId</param>
+        /// <param name="userLat">The userLat</param>
+        /// <param name="userLong">The userLong</param>
+        /// <param name="featureId">The featureId</param>
+        /// <param name="cityId">The cityId</param>
+        /// <param name="pageSize">每页显示的数量</param>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="distance">The distance</param>
+        /// <returns>
+        /// The GetSupplierResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 23:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<GroupSupplier> SearchActivitiesSupplierList(int activitiesId, double? userLat = null,
+                                                                   double? userLong = null, int? featureId = -1,
+                                                                   int? cityId = null, int pageSize = 10,
+                                                                   int? pageIndex = null, double? distance = null)
+        {
+            var getGroupSupplierListResult = this.supplierServices.GetSearchActivitiesSupplierList(this.Source,
+                                                                                              new GetSearchActivitiesSupplierListParameter
+                                                                                              {
+                                                                                                  FeatureId = featureId == -1
+                                                                                                          ? null
+                                                                                                          : featureId,
+                                                                                                  ActivitiesId =
+                                                                                                      activitiesId,
+                                                                                                  CityId = cityId,
+                                                                                                  UserLat =
+                                                                                                      userLat ?? -1,
+                                                                                                  UserLong =
+                                                                                                      userLong ?? -1,
+                                                                                                  PageIndex =
+                                                                                                      pageIndex,
+                                                                                                  PageSize =
+                                                                                                      pageSize,
+                                                                                                  Distance = distance
+                                                                                              });
+
+            if (getGroupSupplierListResult.Result == null || getGroupSupplierListResult.Result.Count == 0)
+            {
+                return new ListResponse<GroupSupplier>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode =
+                            getGroupSupplierListResult.StatusCode == (int)StatusCode.Succeed.Ok
+                                ? (int)StatusCode.Succeed.Empty
+                                : getGroupSupplierListResult.StatusCode
+                    },
+                    Result = new List<GroupSupplier>()
+                };
+            }
+
+            var result = getGroupSupplierListResult.Result.Select(p => new GroupSupplier
+            {
+                SupplierId = p.SupplierId,
+                SupplierName = p.SupplierName ?? string.Empty,
+                SupplierDescription = p.SupplierDescription ?? string.Empty,
+                BaIduLat = p.BaIduLat ?? string.Empty,
+                BaIduLong = p.BaIduLong ?? string.Empty,
+                Address = p.Address ?? string.Empty,
+                Averageprice = p.Averageprice ?? 0,
+                ParkingInfo = p.ParkingInfo ?? string.Empty,
+                Telephone = p.Telephone ?? string.Empty,
+                LogoUrl = p.LogoUrl ?? string.Empty,
+                Distance = p.Distance ?? -1,
+                SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
+                {
+                    SupplierFeatureId = q.SupplierFeatureId,
+                    FeatureId = q.FeatureId,
+                    FeatureName = q.FeatureName ?? string.Empty
+                }).ToList()
+            }).ToList();
+
+            return new ListResponse<GroupSupplier>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getGroupSupplierListResult.StatusCode
+                },
+                ResultTotalCount = getGroupSupplierListResult.ResultTotalCount,
+                Result = result
+            };
+        }
+
         /// <summary>
         /// 获取餐厅已经开通的功能列表
         /// </summary>
