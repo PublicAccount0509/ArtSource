@@ -287,6 +287,11 @@
     exec Pro_QuerySearchGroupSupplierList :FeatureId,:SupplierGroupId,:CityId,:UserLat,:UserLong,:PageIndex,:PageSize,:FeatureIdList,:SupplierIdList
   </sql-query>
 
+  <sql-query name="Pro_QuerySearchActivitiesSupplierList">
+    <return class="Ets.SingleApi.Model.Repository.GroupSupplierModelEntity,Ets.SingleApi.Model"/>
+    exec Pro_QuerySearchActivitiesSupplierList :FeatureId,:ActivitiesId,:CityId,:UserLat,:UserLong,:PageIndex,:PageSize,:Distance
+  </sql-query>
+
   <sql-query name="Pro_CalculateSpaceLatLong">
     <return-scalar column="SpaceLatLong" type="BinaryBlob" />
     exec Pro_CalculateSpaceLatLong :UserLat,:UserLong
