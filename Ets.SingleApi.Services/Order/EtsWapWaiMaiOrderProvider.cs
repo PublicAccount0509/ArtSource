@@ -667,7 +667,7 @@ namespace Ets.SingleApi.Services
             var deliveryInfo = this.deliveryEntityRepository.FindSingleByExpression(p => p.DeliveryId == deliveryId);
 
             //判断餐厅与送餐地址距离是否超范围(单位:米)
-            if (deliveryInfo.DeliveryDistance > ServicesCommon.DeliveryMaxDistance)
+            if (deliveryInfo.DeliveryDistance > ServicesCommon.DeliveryMaxDistance && ServicesCommon.DeliveryMaxDistanceEnable)
             {
                 return new ServicesResult<string>
                 {

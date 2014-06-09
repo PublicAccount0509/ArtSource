@@ -2434,6 +2434,25 @@
         }
 
         /// <summary>
+        /// 是否启用送餐最大距离(单位:米)判断
+        /// </summary>
+        /// <value>
+        /// 是否启用送餐最大距离(单位:米)判断
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：6/9/2014 2:59 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static bool DeliveryMaxDistanceEnable
+        {
+            get
+            {
+                return string.Equals(ConfigurationManager.AppSettings["DeliveryMaxDistanceEnable"], "true", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
         /// 送餐最大距离(单位:米)
         /// </summary>
         /// <value>
