@@ -660,14 +660,11 @@ namespace Ets.SingleApi.Services
 
             var cashCommisionFee = supplierEntity.CashCommisionFee ?? 0;
             var customerId = customer.CustomerId;
-            var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
-                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order)
-                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order);
-
-            var deliveryInfo = this.deliveryEntityRepository.FindSingleByExpression(p => p.DeliveryId == deliveryId);
+            var distanceResult = this.GetDistance(supplier.SupplierId, customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2));
+            var deliveryDistance = distanceResult.DeliveryDistance ?? 0;
 
             //判断餐厅与送餐地址距离是否超范围(单位:米)
-            if (deliveryInfo.DeliveryDistance > ServicesCommon.DeliveryMaxDistance)
+            if ((distanceResult == null || deliveryDistance > ServicesCommon.DeliveryMaxDistance) && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 return new ServicesResult<string>
                 {
@@ -675,6 +672,10 @@ namespace Ets.SingleApi.Services
                     Result = string.Empty
                 };
             }
+
+            var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
+                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order)
+                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order);
 
             var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
             this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
@@ -890,6 +891,51 @@ namespace Ets.SingleApi.Services
             deliveryEntity.DeliveryDistance = distance.GetDistance(customerLocation, new Location { Lat = baIduLat, Lng = baIduLong }, GaussSphere.Beijing54);
             this.deliveryEntityRepository.Save(deliveryEntity);
             return deliveryEntity.DeliveryId;
+        }
+
+        /// <summary>
+        /// 计算送餐距离
+        /// </summary>
+        /// <param name="supplierId">The supplierId</param>
+        /// <param name="address">The address</param>
+        /// <returns>
+        /// dynamic
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：6/9/2014 3:55 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private dynamic GetDistance(int supplierId, string address)
+        {
+            //计算送餐距离
+            var supplierLocation = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
+                  .Select(p => new { p.BaIduLat, p.BaIduLong })
+                  .FirstOrDefault();
+
+            if (supplierLocation == null)
+            {
+                return null;
+            }
+
+            var customerLocation = distance.GetLocation(address, string.Empty);
+            if (customerLocation == null)
+            {
+                return null;
+            }
+
+            double baIduLat;
+            double baIduLong;
+            double.TryParse(supplierLocation.BaIduLat, out baIduLat);
+            double.TryParse(supplierLocation.BaIduLong, out baIduLong);
+
+            var deliveryDistance = distance.GetDistance(customerLocation, new Location { Lat = baIduLat, Lng = baIduLong }, GaussSphere.Beijing54);
+            return new
+                {
+                    customerLocation.Lat,
+                    customerLocation.Lng,
+                    DeliveryDistance = deliveryDistance
+                };
         }
 
         /// <summary>
