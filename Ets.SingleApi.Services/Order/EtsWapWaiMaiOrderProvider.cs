@@ -663,8 +663,7 @@ namespace Ets.SingleApi.Services
             var distanceResult = this.GetDistance(supplier.SupplierId, customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2));
             var deliveryDistance = distanceResult.DeliveryDistance ?? 0;
 
-            //判断餐厅与送餐地址距离是否超范围(单位:米)
-            if ((distanceResult == null || deliveryDistance > ServicesCommon.DeliveryMaxDistance) && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
+            if ((distanceResult == null || deliveryDistance > ServicesCommon.DeliveryMaxDistance) && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId && ServicesCommon.DeliveryMaxDistanceEnable)
             {
                 return new ServicesResult<string>
                 {
