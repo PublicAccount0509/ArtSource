@@ -199,6 +199,13 @@
                 };
             }
 
+            //餐厅可以开发票
+            shoppingCartSupplier.CanInvoice =
+                supplierFeatureEntityRepository.EntityQueryable.Any(
+                    c =>
+                    c.Supplier.SupplierId == supplierId && c.IsEnabled == true &&
+                    c.Feature.FeatureId == ServicesCommon.SupplierFeatureCanInvoiceFeatureId);
+
             shoppingCartSupplier.IsPackLadder = this.supplierFeatureEntityRepository.EntityQueryable.Any(p => p.Supplier.SupplierId == supplierId && p.IsEnabled == true && p.Feature.FeatureId == ServicesCommon.PackageFeatureId);
             var suppTimeTableDisplayList = (from entity in this.suppTimeTableDisplayEntityRepository.EntityQueryable
                                             where entity.SupplierId == supplierId
@@ -231,6 +238,7 @@
             var serviceTime = timeTableDisplayList.Aggregate(string.Empty, (current, timeTableDisplay) => string.Format("{0} {1:t}-{2:t}", current, timeTableDisplay.OpenTime, timeTableDisplay.CloseTime));
             shoppingCartSupplier.ServiceTime = serviceTime.Trim();
             this.etsWapShoppingCartCacheServices.SaveShoppingCartSupplier(source, shoppingCartSupplier);
+
             return new ServicesResult<ShoppingCartSupplier>
             {
                 Result = shoppingCartSupplier

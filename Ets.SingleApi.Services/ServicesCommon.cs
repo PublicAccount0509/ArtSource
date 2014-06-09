@@ -2459,5 +2459,30 @@
             }
         }
 
+        /// <summary>
+        /// 餐厅可以开发票功能id
+        /// </summary>
+        /// <value>
+        /// 餐厅可以开发票功能id
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：6/9/2014 10:24 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int SupplierFeatureCanInvoiceFeatureId
+        {
+            get
+            {
+                var canInvoiceFeatureId = ConfigurationManager.AppSettings["SupplierFeatureCanInvoiceFeatureId"] ?? "27";
+                int result;
+                if (!int.TryParse(canInvoiceFeatureId, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
     }
 }
