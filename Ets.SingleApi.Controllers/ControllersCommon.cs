@@ -24,7 +24,7 @@ namespace Ets.SingleApi.Controllers
             {
                 var waiMaiFeatureId = ConfigurationManager.AppSettings["WaiMaiFeatureId"] ?? "1";
                 int result;
-                if (!int.TryParse(waiMaiFeatureId, out result))
+                if (!Int32.TryParse(waiMaiFeatureId, out result))
                 {
                     result = 1;
                 }
@@ -50,7 +50,7 @@ namespace Ets.SingleApi.Controllers
             {
                 var dingTaiFeatureId = ConfigurationManager.AppSettings["DingTaiFeatureId"] ?? "2";
                 int result;
-                if (!int.TryParse(dingTaiFeatureId, out result))
+                if (!Int32.TryParse(dingTaiFeatureId, out result))
                 {
                     result = 2;
                 }
@@ -76,7 +76,7 @@ namespace Ets.SingleApi.Controllers
             {
                 var tangShiFeatureId = ConfigurationManager.AppSettings["TangShiFeatureId"] ?? "9";
                 int result;
-                if (!int.TryParse(tangShiFeatureId, out result))
+                if (!Int32.TryParse(tangShiFeatureId, out result))
                 {
                     result = 9;
                 }
@@ -102,7 +102,7 @@ namespace Ets.SingleApi.Controllers
             {
                 var paiDuiFeatureId = ConfigurationManager.AppSettings["PaiDuiFeatureId"] ?? "59";
                 int result;
-                if (!int.TryParse(paiDuiFeatureId, out result))
+                if (!Int32.TryParse(paiDuiFeatureId, out result))
                 {
                     result = 9;
                 }
@@ -128,7 +128,7 @@ namespace Ets.SingleApi.Controllers
             {
                 var quickDeliveryMethod = ConfigurationManager.AppSettings["QuickDeliveryType"] ?? "1";
                 int result;
-                if (!int.TryParse(quickDeliveryMethod, out result))
+                if (!Int32.TryParse(quickDeliveryMethod, out result))
                 {
                     result = 1;
                 }
@@ -154,7 +154,7 @@ namespace Ets.SingleApi.Controllers
             {
                 var assignDeliveryMethod = ConfigurationManager.AppSettings["AssignDeliveryType"] ?? "2";
                 int result;
-                if (!int.TryParse(assignDeliveryMethod, out result))
+                if (!Int32.TryParse(assignDeliveryMethod, out result))
                 {
                     result = 2;
                 }
@@ -180,7 +180,7 @@ namespace Ets.SingleApi.Controllers
             {
                 var defaultGender = ConfigurationManager.AppSettings["DefaultGender"] ?? "0";
                 int result;
-                if (!int.TryParse(defaultGender, out result))
+                if (!Int32.TryParse(defaultGender, out result))
                 {
                     result = 0;
                 }
@@ -204,7 +204,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return string.Equals(ConfigurationManager.AppSettings["ApplicationValidationEnabled"], "true", StringComparison.OrdinalIgnoreCase);
+                return String.Equals(ConfigurationManager.AppSettings["ApplicationValidationEnabled"], "true", StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -223,7 +223,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return (ConfigurationManager.AppSettings["DefaultAppKey"] ?? string.Empty).Trim();
+                return (ConfigurationManager.AppSettings["DefaultAppKey"] ?? String.Empty).Trim();
             }
         }
 
@@ -242,7 +242,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return (ConfigurationManager.AppSettings["DefaultAppPassword"] ?? string.Empty).Trim();
+                return (ConfigurationManager.AppSettings["DefaultAppPassword"] ?? String.Empty).Trim();
             }
         }
 
@@ -261,7 +261,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return (ConfigurationManager.AppSettings["EmptyInvoiceTitle"] ?? string.Empty).Trim();
+                return (ConfigurationManager.AppSettings["EmptyInvoiceTitle"] ?? String.Empty).Trim();
             }
         }
 
@@ -280,7 +280,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return (ConfigurationManager.AppSettings["UnkownSource"] ?? string.Empty).Trim();
+                return (ConfigurationManager.AppSettings["UnkownSource"] ?? String.Empty).Trim();
             }
         }
 
@@ -299,7 +299,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return (ConfigurationManager.AppSettings["OpenCityList"] ?? string.Empty).Split(',').ToList();
+                return (ConfigurationManager.AppSettings["OpenCityList"] ?? String.Empty).Split(',').ToList();
             }
         }
 
@@ -331,7 +331,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                var result = (ConfigurationManager.AppSettings["BaiFuBaoMerchantAcctId"] ?? string.Empty).Trim();
+                var result = (ConfigurationManager.AppSettings["BaiFuBaoMerchantAcctId"] ?? String.Empty).Trim();
                 return result.Length == 0 ? "9000100008" : result;
             }
         }
@@ -351,7 +351,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return (ConfigurationManager.AppSettings["BaiFuBaoBackgroundNoticeUrl"] ?? string.Empty).Trim().TrimEnd('/', '\\');
+                return (ConfigurationManager.AppSettings["BaiFuBaoBackgroundNoticeUrl"] ?? String.Empty).Trim().TrimEnd('/', '\\');
             }
         }
 
@@ -395,7 +395,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return (ConfigurationManager.AppSettings["AlipayPartnerId"] ?? string.Empty).Trim().TrimEnd('/', '\\');
+                return (ConfigurationManager.AppSettings["AlipayPartnerId"] ?? String.Empty).Trim().TrimEnd('/', '\\');
             }
         }
         /// <summary>
@@ -443,7 +443,7 @@ namespace Ets.SingleApi.Controllers
         {
             get
             {
-                return (ConfigurationManager.AppSettings["AlipayBackgroundNoticeUrl"] ?? string.Empty).Trim().TrimEnd('/', '\\');
+                return (ConfigurationManager.AppSettings["AlipayBackgroundNoticeUrl"] ?? String.Empty).Trim().TrimEnd('/', '\\');
             }
         }
 
@@ -495,5 +495,32 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public const string ConstWechatPaymentPartnerId = "1218067401";
+
+
+        /// <summary>
+        /// 百度统计用AppId
+        /// </summary>
+        /// <value>
+        /// The bai du statistics application identifier.
+        /// </value>
+        /// 创建者：王巍
+        /// 创建日期：6/10/2014 9:22 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static int BaiDuStatisticsAppId
+        {
+            get
+            {
+                var baiDuStatisticsAppId = ConfigurationManager.AppSettings["BaiDuStatisticsAppId"] ?? "100011";
+                int result;
+                if (!Int32.TryParse(baiDuStatisticsAppId, out result))
+                {
+                    result = 1;
+                }
+
+                return result;
+            }
+        }
     }
 }

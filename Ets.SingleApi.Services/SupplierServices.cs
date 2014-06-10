@@ -3230,5 +3230,81 @@
                 Result = supplierDesk.DeskNo
             };
         }
+
+        /// <summary>
+        /// 百度轻应用统计
+        /// </summary>
+        /// <param name="date">The dateDefault documentation</param>
+        /// <returns>
+        /// ServicesResult{BaiDuLightStatisticsModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/9/2014 7:39 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<BaiDuLightStatisticsModel> LightStatisticsForBaiDu(string date)
+        {
+
+            if (date == null)
+            {
+                return new ServicesResultList<BaiDuLightStatisticsModel>
+                {
+                    Result = new List<BaiDuLightStatisticsModel>(),
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var beginDate = Convert.ToDateTime(string.Format("{0} 00:00:00", date));
+            var endDate = beginDate.AddDays(1);
+
+            var list =
+                this.supplierEntityRepository.NamedQuery("Pro_ETaoShiLightStatisticsData")
+                    .SetDateTime("BeginDate", beginDate)
+                    .SetDateTime("EndDate", endDate)
+                    .List<ETaoShiLightStatisticsDataModelEntity>();
+
+            var result = (from entity in list
+                          select new ETaoShiLightStatisticsDataModelEntity
+                          {
+                              DeliveryDate = entity.DeliveryDate,
+                              PaymentMethod = entity.PaymentMethod,
+                              IsPaid = entity.IsPaid,
+                              CompleteStatus = entity.CompleteStatus,
+                              OrderCount = entity.OrderCount,
+                              CustomerTotal = entity.CustomerTotal,
+                              Total = entity.Total
+                          }).ToList();
+
+            var baiDuLightStatisticsModelList = new List<BaiDuLightStatisticsModel>
+                {
+                    new BaiDuLightStatisticsModel
+                        {
+                            total_count = result.Sum(s => s.OrderCount),
+                            online_count = result.Where(c => c.PaymentMethod == 0).Sum(s => s.OrderCount),
+                            offline_count = result.Where(c => c.PaymentMethod == 1).Sum(s => s.OrderCount),
+                            pay_suc_count = result.Where(c => c.IsPaid == 1).Sum(s => s.OrderCount),
+                            pay_fail_count = result.Where(c => c.IsPaid == 0).Sum(s => s.OrderCount),
+                            online_pay_suc_count = result.Where(c => c.PaymentMethod == 0 && c.IsPaid == 1).Sum(s => s.OrderCount),
+                            online_pay_fail_count =result.Where(c => c.PaymentMethod == 0 && c.IsPaid == 0).Sum(s => s.OrderCount),
+                            offline_pay_suc_count =result.Where(c => c.PaymentMethod == 1 && c.IsPaid == 1).Sum(s => s.OrderCount),
+                            offline_pay_fail_count =result.Where(c => c.PaymentMethod == 1 && c.IsPaid == 0).Sum(s => s.OrderCount),
+
+                            pay_suc_incomes = result.Where(c => c.IsPaid == 1).Sum(s => s.CustomerTotal).ToString(),
+                            pay_fail_incomes = result.Where(c => c.IsPaid == 0).Sum(s => s.CustomerTotal).ToString(),
+                            online_pay_suc_incomes =result.Where(c => c.PaymentMethod == 0 && c.IsPaid == 1).Sum(s => s.CustomerTotal).ToString(),
+                            online_pay_fail_incomes =result.Where(c => c.PaymentMethod == 0 && c.IsPaid == 0).Sum(s => s.CustomerTotal).ToString(),
+                            offline_pay_suc_incomes =result.Where(c => c.PaymentMethod == 1 && c.IsPaid == 1).Sum(s => s.CustomerTotal).ToString(),
+                            offline_pay_fail_incomes =result.Where(c => c.PaymentMethod == 1 && c.IsPaid == 0).Sum(s => s.CustomerTotal).ToString()
+                        }
+                };
+
+            return new ServicesResultList<BaiDuLightStatisticsModel>
+            {
+                Result = baiDuLightStatisticsModelList,
+                StatusCode = (int)StatusCode.Succeed.Ok
+            };
+        }
+
     }
 }

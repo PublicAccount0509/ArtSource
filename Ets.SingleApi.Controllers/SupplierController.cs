@@ -1854,5 +1854,111 @@ namespace Ets.SingleApi.Controllers
                 Result = result
             };
         }
+
+        /// <summary>
+        /// 为百度轻应用提供统计结果
+        /// </summary>
+        /// <param name="date">The dateDefault documentation</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/9/2014 6:58 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<string> LightStatisticsForBaiDu(string date)
+        {
+            var lightStatisticsForBaiDuResult = this.supplierServices.LightStatisticsForBaiDu(date);
+            if (lightStatisticsForBaiDuResult == null)
+            {
+                return new Response<string>();
+            }
+            if (lightStatisticsForBaiDuResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new Response<string>();
+            }
+
+            var baiDuLightStatisticsOrderResultList = new List<BaiDuLightStatisticsOrderResult>();
+            foreach (var lightStatistics in lightStatisticsForBaiDuResult.Result)
+            {
+                var baiDuLightStatisticsCountsResult = new BaiDuLightStatisticsCountsResult
+                    {
+                        total_count = lightStatistics.total_count,
+                        online_count = lightStatistics.online_count,
+                        offline_count = lightStatistics.offline_count,
+                        pay_suc_count = lightStatistics.pay_suc_count,
+                        pay_discount_suc_count = 0,
+                        pay_coupon_suc_count = 0,
+                        pay_fail_count = lightStatistics.pay_fail_count,
+                        pay_discount_fail_count = 0,
+                        pay_coupon_fail_count = 0,
+                        online_pay_suc_count = lightStatistics.online_pay_suc_count,
+                        online_pay_discount_suc_count = 0,
+                        online_pay_coupon_suc_count = 0,
+                        online_pay_fail_count = lightStatistics.online_pay_fail_count,
+                        online_pay_discount_fail_count = 0,
+                        online_pay_coupon_fail_count = 0,
+                        offline_pay_suc_count = lightStatistics.online_pay_suc_count,
+                        offline_pay_discount_suc_count = 0,
+                        offline_pay_coupon_suc_count = 0,
+                        offline_pay_fail_count = lightStatistics.online_pay_fail_count,
+                        offline_pay_discount_fail_count = 0,
+                        offline_pay_coupon_fail_count = 0
+                    };
+
+                var baiDuLightStatisticsIncomesResult = new BaiDuLightStatisticsIncomesResult
+                    {
+                        pay_suc_incomes = lightStatistics.pay_suc_incomes,
+                        pay_discount_suc_incomes = string.Empty,
+                        pay_coupon_suc_incomes = string.Empty,
+                        pay_fail_incomes = lightStatistics.pay_fail_incomes,
+                        pay_discount_fail_incomes = string.Empty,
+                        pay_coupon_fail_incomes = string.Empty,
+                        online_pay_suc_incomes = lightStatistics.online_pay_suc_incomes,
+                        online_pay_discount_suc_incomes = string.Empty,
+                        online_pay_coupon_suc_incomes = string.Empty,
+                        online_pay_fail_incomes = lightStatistics.online_pay_fail_incomes,
+                        online_pay_discount_fail_incomes = string.Empty,
+                        online_pay_coupon_fail_incomes = string.Empty,
+                        offline_pay_suc_incomes = lightStatistics.offline_pay_suc_incomes,
+                        offline_pay_discount_suc_incomes = string.Empty,
+                        offline_pay_coupon_suc_incomes = string.Empty,
+                        offline_pay_fail_incomes = lightStatistics.offline_pay_fail_incomes,
+                        offline_pay_discount_fail_incomes = string.Empty,
+                        offline_pay_coupon_fail_incomes = string.Empty
+                    };
+
+                var baiDuLightStatisticsOrderResult = new BaiDuLightStatisticsOrderResult
+                    {
+                        bd_ref_id = string.Empty,
+                        bd_from_id = string.Empty,
+                        bd_channel_id = string.Empty,
+                        bd_subpage = string.Empty,
+                        counts = baiDuLightStatisticsCountsResult,
+                        incomes = baiDuLightStatisticsIncomesResult
+                    };
+
+                baiDuLightStatisticsOrderResultList.Add(baiDuLightStatisticsOrderResult);
+
+            }
+            var baiDuLightStatisticsResult = new BaiDuLightStatisticsResult
+                {
+                    appid =ControllersCommon.BaiDuStatisticsAppId,
+                    date = date,
+                    lostfields = "bd_ref_id|bd_from_id|bd_channel_id|bd_subpage|pay_discount_suc_count|pay_coupon_suc_count|pay_discount_fail_count|pay_coupon_fail_count|"+
+                                 "online_pay_discount_suc_count|online_pay_coupon_suc_count|online_pay_discount_fail_count|online_pay_coupon_fail_count|offline_pay_discount_suc_count|"+
+                                 "offline_pay_coupon_suc_count|offline_pay_discount_fail_count|offline_pay_coupon_fail_count|pay_discount_suc_incomes|pay_coupon_suc_incomes|"+
+                                 "pay_discount_fail_incomes|pay_coupon_fail_incomes|online_pay_discount_suc_incomes|online_pay_coupon_suc_incomes|online_pay_discount_fail_incomes|online_pay_coupon_fail_incomes|"+
+                                 "offline_pay_discount_suc_incomes|offline_pay_coupon_suc_incomes|offline_pay_discount_fail_incomes|offline_pay_coupon_fail_incomes",
+                    orders = baiDuLightStatisticsOrderResultList
+                };
+
+            return new Response<string>()
+                {
+                    Result = baiDuLightStatisticsResult.Serialize(),
+                };
+        }
     }
 }

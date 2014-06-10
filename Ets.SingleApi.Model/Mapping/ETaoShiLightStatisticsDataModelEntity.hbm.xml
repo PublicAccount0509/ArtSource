@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Ets.SingleApi.Model.Repository.ETaoShiLightStatisticsDataModelEntity,Ets.SingleApi.Model">
+    <id name="id" type="Int32" >
+      <generator class="assigned"/>
+    </id>
+    <property name="DeliveryDate" type="DateTime" />
+    <property name="PaymentMethod" type="Int32" />
+    <property name="IsPaid" type="Int32" />
+    <property name="CompleteStatus" type="Int32" />
+    <property name="OrderCount" type="Int32" />
+    <property name="CustomerTotal" type="Int32" />
+    <property name="Total" type="Int32" />
+  </class>
+</hibernate-mapping>

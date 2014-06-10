@@ -45,6 +45,10 @@
     <Compile Include="CacheServices\CacheServicesListResult.cs" />
     <Compile Include="Controller\AlipayPaymentRequst.cs" />
     <Compile Include="Controller\AlipayPaymentStateRequst.cs" />
+    <Compile Include="Controller\BaiDuLightStatistics\BaiDuLightStatisticsResult.cs" />
+    <Compile Include="Controller\BaiDuLightStatistics\BaiDuLightStatisticsOrderResult.cs" />
+    <Compile Include="Controller\BaiDuLightStatistics\BaiDuLightStatisticsCountsResult.cs" />
+    <Compile Include="Controller\BaiDuLightStatistics\BaiDuLightStatisticsIncomesResult.cs" />
     <Compile Include="Controller\BaiFuBaoPaymentRequst.cs" />
     <Compile Include="Controller\CancelDirectPayRequest.cs" />
     <Compile Include="Controller\CancelQueueRequst.cs" />
@@ -175,10 +179,12 @@
     <Compile Include="Mapping\Repository\TimeTableEntity.cs" />
     <Compile Include="Mapping\Repository\UserFeedbackEntity.cs" />
     <Compile Include="Mapping\Repository\WxToEtsEntity.cs" />
+    <Compile Include="Mapping\Repository\ETaoShiLightStatisticsDataModelEntity.cs" />
     <Compile Include="OrderProviderType.cs" />
     <Compile Include="OrderSourceType.cs" />
     <Compile Include="Services\AlipayPaymentParameter.cs" />
     <Compile Include="Services\AlipayPaymentStateParameter.cs" />
+    <Compile Include="Services\BaiDuLightStatistics\BaiDuLightStatisticsModel.cs" />
     <Compile Include="Services\BaiFuBaoPaymentParameter.cs" />
     <Compile Include="Services\BaiFuBaoPaymentStateParameter.cs" />
     <Compile Include="Services\BaiFuBaoReturnParameter.cs" />
@@ -713,6 +719,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Mapping\SupplierThirdActivitiesEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\ThirdActivitiesEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\ETaoShiLightStatisticsDataModelEntity.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

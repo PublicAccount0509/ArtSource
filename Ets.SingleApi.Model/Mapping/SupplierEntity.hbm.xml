@@ -296,4 +296,9 @@
     <return-scalar column="SpaceLatLong" type="BinaryBlob" />
     exec Pro_CalculateSpaceLatLong :UserLat,:UserLong
   </sql-query>
+
+  <sql-query name="Pro_ETaoShiLightStatisticsData">
+    <return class="Ets.SingleApi.Model.Repository.ETaoShiLightStatisticsDataModelEntity,Ets.SingleApi.Model"/>
+    exec Pro_ETaoShiLightStatisticsData :BeginDate,:EndDate
+  </sql-query>
 </hibernate-mapping>

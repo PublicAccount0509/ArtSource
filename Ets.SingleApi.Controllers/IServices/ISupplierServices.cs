@@ -516,5 +516,19 @@
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<SupplierRecommendedDishModel> GetRecommendedDish(string source, int supplierId, int? pageIndex,
                                                                             int? pageSize);
+
+        /// <summary>
+        /// 百度轻应用统计
+        /// </summary>
+        /// <param name="date">The dateDefault documentation</param>
+        /// <returns>
+        /// ServicesResultList{BaiDuLightStatisticsModel}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/9/2014 8:15 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<BaiDuLightStatisticsModel> LightStatisticsForBaiDu(string date);
     }
 }
