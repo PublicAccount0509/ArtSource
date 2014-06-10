@@ -1,4 +1,6 @@
-﻿namespace Ets.SingleApi.Services
+﻿using System;
+
+namespace Ets.SingleApi.Services
 {
     using System.Linq;
 
@@ -119,7 +121,8 @@
             }
 
             password = password.Md5();
-            if (loginEntity.Password != password)
+            //密码校验不区分大小写
+            if (!string.Equals(loginEntity.Password, password, StringComparison.OrdinalIgnoreCase))
             {
                 return new LoginData
                 {
