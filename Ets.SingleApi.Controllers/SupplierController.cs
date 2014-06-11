@@ -1868,16 +1868,16 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<string> LightStatisticsForBaiDu(string date)
+        public BaiDuLightStatisticsResult LightStatisticsForBaiDu(string date)
         {
             var lightStatisticsForBaiDuResult = this.supplierServices.LightStatisticsForBaiDu(date);
             if (lightStatisticsForBaiDuResult == null)
             {
-                return new Response<string>();
+                return new BaiDuLightStatisticsResult();
             }
             if (lightStatisticsForBaiDuResult.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return new Response<string>();
+                return new BaiDuLightStatisticsResult();
             }
 
             var baiDuLightStatisticsOrderResultList = new List<BaiDuLightStatisticsOrderResult>();
@@ -1955,10 +1955,7 @@ namespace Ets.SingleApi.Controllers
                     orders = baiDuLightStatisticsOrderResultList
                 };
 
-            return new Response<string>()
-                {
-                    Result = baiDuLightStatisticsResult.Serialize(),
-                };
+            return baiDuLightStatisticsResult;
         }
     }
 }
