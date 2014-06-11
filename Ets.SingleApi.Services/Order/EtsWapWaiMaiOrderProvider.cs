@@ -660,16 +660,26 @@ namespace Ets.SingleApi.Services
 
             var cashCommisionFee = supplierEntity.CashCommisionFee ?? 0;
             var customerId = customer.CustomerId;
-            var distanceResult = this.GetDistance(supplier.SupplierId, customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2));
-            var deliveryDistance = distanceResult.DeliveryDistance ?? 0;
 
-            if ((distanceResult == null || deliveryDistance > ServicesCommon.DeliveryMaxDistance) && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId && ServicesCommon.DeliveryMaxDistanceEnable)
+            //送餐地址坐标信息
+            var customerLocation = distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty);
+            
+            //若有送餐地址坐标信息，则取 餐厅坐标 与 送餐坐标 的距离
+            if (customerLocation != null)
             {
-                return new ServicesResult<string>
+                //餐厅地址与送餐地址距离
+                var distanceResult = this.GetDistance(supplier.SupplierId, customerLocation);
+                var deliveryDistance = distanceResult.DeliveryDistance ?? 0;
+
+                //餐厅没有地址
+                if ((distanceResult == null || deliveryDistance > ServicesCommon.DeliveryMaxDistance) && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId && ServicesCommon.DeliveryMaxDistanceEnable)
                 {
-                    StatusCode = (int)StatusCode.Validate.MoreThanDeliveryMaxDistance,
-                    Result = string.Empty
-                };
+                    return new ServicesResult<string>
+                    {
+                        StatusCode = (int)StatusCode.Validate.MoreThanDeliveryMaxDistance,
+                        Result = string.Empty
+                    };
+                }
             }
 
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
@@ -896,7 +906,7 @@ namespace Ets.SingleApi.Services
         /// 计算送餐距离
         /// </summary>
         /// <param name="supplierId">The supplierId</param>
-        /// <param name="address">The address</param>
+        /// <param name="customerLocation">送餐地址位置信息</param>
         /// <returns>
         /// dynamic
         /// </returns>
@@ -905,7 +915,7 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        private dynamic GetDistance(int supplierId, string address)
+        private dynamic GetDistance(int supplierId, Location customerLocation)
         {
             //计算送餐距离
             var supplierLocation = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierId == supplierId)
@@ -913,12 +923,6 @@ namespace Ets.SingleApi.Services
                   .FirstOrDefault();
 
             if (supplierLocation == null)
-            {
-                return null;
-            }
-
-            var customerLocation = distance.GetLocation(address, string.Empty);
-            if (customerLocation == null)
             {
                 return null;
             }
