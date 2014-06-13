@@ -663,16 +663,24 @@ namespace Ets.SingleApi.Services
 
             //送餐地址坐标信息
             var customerLocation = distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty);
-            
+
             //若有送餐地址坐标信息，则取 餐厅坐标 与 送餐坐标 的距离
             if (customerLocation != null)
             {
                 //餐厅地址与送餐地址距离
                 var distanceResult = this.GetDistance(supplier.SupplierId, customerLocation);
-                var deliveryDistance = distanceResult.DeliveryDistance ?? 0;
+                var deliveryDistance = distanceResult == null ? 0 : distanceResult.DeliveryDistance;
 
-                //餐厅没有地址
-                if ((distanceResult == null || deliveryDistance > ServicesCommon.DeliveryMaxDistance) && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId && ServicesCommon.DeliveryMaxDistanceEnable)
+                // 餐厅配置送餐半径（单位：公里）
+                var freeMiles = supplierEntity.FreeMiles;
+
+                // 最大送餐半径： 若“餐厅配置的送餐半径”为 0，则取 配置文件中配置的最大送餐半径；反正，则去“餐厅配置的送餐半径”。
+                var maxDeliveryDistance = freeMiles == 0 ? ServicesCommon.DeliveryMaxDistance : freeMiles * 1000;
+
+                //（餐厅没有地址 或 超过最大送餐半径）且 配送方式是“送餐” 且 开启送餐最大距离判断
+                if ((distanceResult == null || deliveryDistance > double.Parse(maxDeliveryDistance.ToString()))
+                    && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId
+                    && ServicesCommon.DeliveryMaxDistanceEnable)
                 {
                     return new ServicesResult<string>
                     {
