@@ -530,5 +530,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<BaiDuLightStatisticsModel> LightStatisticsForBaiDu(string date);
+
+        /// <summary>
+        /// 获取支付方式列表
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="platformId">平台Id</param>
+        /// <returns>
+        /// 支付方式列表
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/16/2014 11:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<PaymentMethodModel> GetPaymentMethodList(string source, int supplierId, int platformId);
     }
 }

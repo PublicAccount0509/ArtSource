@@ -214,6 +214,9 @@
         /// ----------------------------------------------------------------------------------------
         private readonly ISupplierDetailServices supplierDetailServices;
 
+        private readonly INHibernateRepository<SupplierPlatformPaymentMethodRelationEntity> supplierPlatformPaymentMethodRelationEntity;
+        private readonly INHibernateRepository<PlatformPaymentRelationEntity> platformPaymentRelationEntity;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SupplierServices" /> class.
         /// </summary>
@@ -236,6 +239,8 @@
         /// <param name="deskBookingEntityRepository">The deskBookingEntityRepository</param>
         /// <param name="supplierDeskEntityRepository">The supplierDeskEntityRepository</param>
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
+        /// <param name="supplierPlatformPaymentMethodRelationEntity">餐厅平台支付方式表</param>
+        /// <param name="platformPaymentRelationEntity">平台支付方式列表</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
         /// 修改者：
@@ -260,7 +265,9 @@
             INHibernateRepository<DeskTypeEntity> deskTypeEntityRepository,
             INHibernateRepository<DeskBookingEntity> deskBookingEntityRepository,
             INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository,
-            ISupplierDetailServices supplierDetailServices)
+            ISupplierDetailServices supplierDetailServices,
+            INHibernateRepository<SupplierPlatformPaymentMethodRelationEntity> supplierPlatformPaymentMethodRelationEntity,
+            INHibernateRepository<PlatformPaymentRelationEntity> platformPaymentRelationEntity)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
@@ -281,6 +288,8 @@
             this.deskBookingEntityRepository = deskBookingEntityRepository;
             this.supplierDeskEntityRepository = supplierDeskEntityRepository;
             this.supplierDetailServices = supplierDetailServices;
+            this.supplierPlatformPaymentMethodRelationEntity = supplierPlatformPaymentMethodRelationEntity;
+            this.platformPaymentRelationEntity = platformPaymentRelationEntity;
         }
 
         /// <summary>
@@ -3306,5 +3315,67 @@
             };
         }
 
+        /// <summary>
+        /// 获取支付方式列表
+        /// 
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="platformId">平台Id</param>
+        /// <returns>
+        /// 支付方式列表
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/16/2014 11:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<PaymentMethodModel> GetPaymentMethodList(string source, int supplierId, int platformId)
+        {
+            /*判断餐厅Id是否存在*/
+            if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
+            {
+                return new ServicesResultList<PaymentMethodModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
+                    Result = new List<PaymentMethodModel>()
+                };
+            }
+
+            //餐厅平台支付方式列表
+            var supplierPlatformPaymentMethodList =
+                (from entity in this.supplierPlatformPaymentMethodRelationEntity.EntityQueryable
+                 where entity.SupplierId == supplierId && entity.PlatformId == platformId
+                 select new PaymentMethodModel{PaymentMethodId = entity.PaymentMethodId ?? 0}).ToList();
+
+            if (supplierPlatformPaymentMethodList.Count > 0)
+            {
+                return new ServicesResultList<PaymentMethodModel>
+                {
+                    ResultTotalCount = supplierPlatformPaymentMethodList.Count,
+                    Result = supplierPlatformPaymentMethodList
+                };
+            }
+
+            //平台支付方式列表
+            var platformPaymentList =
+                (from entity in this.platformPaymentRelationEntity.EntityQueryable
+                 where entity.PlatformId == platformId
+                 select new PaymentMethodModel { PaymentMethodId = entity.PaymentMethodId ?? 0 }).ToList();
+            if (platformPaymentList.Count > 0)
+            {
+                return new ServicesResultList<PaymentMethodModel>
+                {
+                    ResultTotalCount = platformPaymentList.Count,
+                    Result = platformPaymentList
+                };
+            }
+
+            return new ServicesResultList<PaymentMethodModel>
+            {
+                StatusCode = (int)StatusCode.Succeed.Empty,
+                Result = new List<PaymentMethodModel>()
+            };
+        }
     }
 }

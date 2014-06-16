@@ -1945,17 +1945,60 @@ namespace Ets.SingleApi.Controllers
             }
             var baiDuLightStatisticsResult = new BaiDuLightStatisticsResult
                 {
-                    appid =ControllersCommon.BaiDuStatisticsAppId,
+                    appid = ControllersCommon.BaiDuStatisticsAppId,
                     date = date,
-                    lostfields = "bd_ref_id|bd_from_id|bd_channel_id|bd_subpage|pay_discount_suc_count|pay_coupon_suc_count|pay_discount_fail_count|pay_coupon_fail_count|"+
-                                 "online_pay_discount_suc_count|online_pay_coupon_suc_count|online_pay_discount_fail_count|online_pay_coupon_fail_count|offline_pay_discount_suc_count|"+
-                                 "offline_pay_coupon_suc_count|offline_pay_discount_fail_count|offline_pay_coupon_fail_count|pay_discount_suc_incomes|pay_coupon_suc_incomes|"+
-                                 "pay_discount_fail_incomes|pay_coupon_fail_incomes|online_pay_discount_suc_incomes|online_pay_coupon_suc_incomes|online_pay_discount_fail_incomes|online_pay_coupon_fail_incomes|"+
+                    lostfields = "bd_ref_id|bd_from_id|bd_channel_id|bd_subpage|pay_discount_suc_count|pay_coupon_suc_count|pay_discount_fail_count|pay_coupon_fail_count|" +
+                                 "online_pay_discount_suc_count|online_pay_coupon_suc_count|online_pay_discount_fail_count|online_pay_coupon_fail_count|offline_pay_discount_suc_count|" +
+                                 "offline_pay_coupon_suc_count|offline_pay_discount_fail_count|offline_pay_coupon_fail_count|pay_discount_suc_incomes|pay_coupon_suc_incomes|" +
+                                 "pay_discount_fail_incomes|pay_coupon_fail_incomes|online_pay_discount_suc_incomes|online_pay_coupon_suc_incomes|online_pay_discount_fail_incomes|online_pay_coupon_fail_incomes|" +
                                  "offline_pay_discount_suc_incomes|offline_pay_coupon_suc_incomes|offline_pay_discount_fail_incomes|offline_pay_coupon_fail_incomes",
                     orders = baiDuLightStatisticsOrderResultList
                 };
 
             return baiDuLightStatisticsResult;
+        }
+
+        /// <summary>
+        /// 获取支付方式列表
+        /// </summary>
+        /// <param name="supplierId">餐厅Id</param>
+        /// <param name="platformId">平台Id</param>
+        /// <returns>
+        /// 支付方式列表
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/16/2014 11:32 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ListResponse<PaymentMethodResult> GetPaymentMethodList(int supplierId, int platformId)
+        {
+            var list = this.supplierServices.GetPaymentMethodList(this.Source, supplierId, platformId);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<PaymentMethodResult>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode =
+                            list.StatusCode == (int)StatusCode.Succeed.Ok
+                                ? (int)StatusCode.Succeed.Empty
+                                : list.StatusCode
+                    },
+                    Result = new List<PaymentMethodResult>()
+                };
+            }
+
+            var result = list.Result.Select(p => new PaymentMethodResult { PaymentMethodId = p.PaymentMethodId }).ToList();
+
+            return new ListResponse<PaymentMethodResult>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                Result = result
+            };
         }
     }
 }

@@ -123,6 +123,7 @@
     <Compile Include="Controller\BaiFuBaoPaymentBackgroundNoticeRequst.cs" />
     <Compile Include="Controller\AlipayPaymentVerifyRequst.cs" />
     <Compile Include="Controller\AlipayPaymentBackgroundNoticeRequst.cs" />
+    <Compile Include="Controller\PaymentMethodResult.cs" />
     <Compile Include="CouponCodeType.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Mapping\Repository\PackageSelectedEntity.cs" />
     <Compile Include="Mapping\Repository\PaymentDirectEntity.cs" />
     <Compile Include="Mapping\Repository\PaymentRecordEntity.cs" />
+    <Compile Include="Mapping\Repository\PlatformPaymentRelationEntity.cs" />
     <Compile Include="Mapping\Repository\QueueDeskTypeLockLogEntity.cs" />
     <Compile Include="Mapping\Repository\QueueEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierCouponCustomerEntity.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="Mapping\Repository\SupplierGroupLogoImageEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupPlatformEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupTemplateEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierPlatformPaymentMethodRelationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierPlatformRelationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierThirdActivitiesEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierTimeTableEntity.cs" />
@@ -250,6 +253,7 @@
     <Compile Include="Services\CancelDirectPayParameter.cs" />
     <Compile Include="Services\AlipayPaymentReturnParameter.cs" />
     <Compile Include="Services\GetSearchActivitiesSupplierListParameter.cs" />
+    <Compile Include="Services\PaymentMethodModel.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />
@@ -724,6 +728,10 @@
     <EmbeddedResource Include="Mapping\ETaoShiLightStatisticsDataModelEntity.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\PlatformPaymentRelationEntity.hbm.xml" />
+    <EmbeddedResource Include="Mapping\SupplierPlatformPaymentMethodRelationEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
