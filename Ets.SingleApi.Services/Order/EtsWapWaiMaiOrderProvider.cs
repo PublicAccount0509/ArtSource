@@ -162,6 +162,7 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<LoginEntity> loginEntity;
         private readonly INHibernateRepository<CustomerEntity> customerEntity;
         private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
+        private readonly INHibernateRepository<DeliveryBaiFuBaoCouponEntity> deliveryBaiFuBaoCouponEntityRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
@@ -184,6 +185,7 @@ namespace Ets.SingleApi.Services
         /// <param name="loginEntity"></param>
         /// <param name="customerEntity"></param>
         /// <param name="supplierFeatureEntityRepository"></param>
+        /// <param name="deliveryBaiFuBaoCouponEntityRepository"></param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -207,7 +209,8 @@ namespace Ets.SingleApi.Services
             ISynchronousOrderExternalServices synchronousOrderExternalServices,
             INHibernateRepository<LoginEntity> loginEntity,
             INHibernateRepository<CustomerEntity> customerEntity,
-            INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository)
+            INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
+            INHibernateRepository<DeliveryBaiFuBaoCouponEntity> deliveryBaiFuBaoCouponEntityRepository)
             : base(orderNumberDcEntityRepository, singleApiOrdersExternalService)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
@@ -226,6 +229,7 @@ namespace Ets.SingleApi.Services
             this.loginEntity = loginEntity;
             this.customerEntity = customerEntity;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
+            this.deliveryBaiFuBaoCouponEntityRepository = deliveryBaiFuBaoCouponEntityRepository;
         }
 
         /// <summary>
@@ -437,6 +441,35 @@ namespace Ets.SingleApi.Services
             var shoppingCartResult = this.shoppingCartBaseCacheServices.GetShoppingCartId(source, orderId);
             var shoppingCartId = shoppingCartResult == null ? string.Empty : shoppingCartResult.Result;
 
+            //获取 百付宝优惠支付信息
+            var deliveryBaiFuBaoCouponEntity = this.deliveryBaiFuBaoCouponEntityRepository.EntityQueryable.FirstOrDefault(c => c.DeliveryId == deliveryEntity.DeliveryId);
+
+            //支付现金金额,优惠金额,立减金额 单位：分
+            decimal paidAmount = 0, coupons = 0, promotion = 0;
+
+            if (deliveryBaiFuBaoCouponEntity != null)
+            {
+                var strPaidAmount = deliveryBaiFuBaoCouponEntity.PaIdAmount;
+                decimal.TryParse(strPaidAmount, out paidAmount);
+                if (paidAmount != 0)
+                {
+                    paidAmount = paidAmount / 100;
+                }
+                var strCoupons = deliveryBaiFuBaoCouponEntity.Coupons;
+                decimal.TryParse(strCoupons, out coupons);
+                if (coupons != 0)
+                {
+                    coupons = coupons / 100;
+                }
+                var strPromotion = deliveryBaiFuBaoCouponEntity.Promotion;
+                decimal.TryParse(strPromotion, out promotion);
+                if (promotion != 0)
+                {
+                    promotion = promotion / 100;
+                }
+            }
+
+
             var result = new WaiMaiOrderDetailModel
             {
                 ShoppingCartId = shoppingCartId,
@@ -470,7 +503,10 @@ namespace Ets.SingleApi.Services
                 DeliveryCustomerGender = gender,
                 Coupon = coupon.ToString("#0.00"),//折扣
                 CustomerTotal = customerTotal.ToString("#0.00"),//总价 折扣后
-                Total = total.ToString("#0.00")//总价 未折扣
+                Total = total.ToString("#0.00"),//总价 未折扣
+                PaidAmount = paidAmount == 0 ? string.Empty : paidAmount.ToString("#0.00"),  //
+                Coupons = coupons == 0 ? string.Empty : coupons.ToString("#0.00"),        //
+                Promotion = promotion == 0 ? string.Empty : promotion.ToString("#0.00")     //
             };
 
             if (result.InvoiceTitle.IsEmptyOrNull())

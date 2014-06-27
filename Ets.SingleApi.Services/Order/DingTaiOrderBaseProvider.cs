@@ -335,5 +335,10 @@ namespace Ets.SingleApi.Services
                 Result = true
             };
         }
+
+        public ServicesResult<bool> SavDeliveryBaiFuBaoCoupon(string source, int orderId, string paidAmount, string coupons, string promotion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

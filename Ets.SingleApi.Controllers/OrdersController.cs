@@ -446,5 +446,36 @@ namespace Ets.SingleApi.Controllers
                 Result = getOrderResult.Result
             };
         }
+
+        /// <summary>
+        /// 保存百付宝优惠支付返回，支付现金金额，优惠金额，立减金额，所有单位为“分”
+        /// </summary>
+        /// <param name="orderId">The orderIdDefault documentation</param>
+        /// <param name="paidAmount">The paidAmountDefault documentation</param>
+        /// <param name="coupons">The couponsDefault documentation</param>
+        /// <param name="promotion">The promotionDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/26/2014 9:25 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<bool> SavDeliveryBaiFuBaoCoupon(int orderId, string paidAmount, string coupons, string promotion, int orderType)
+        {
+            var saveOrderPaIdResult = this.orderServices.SavDeliveryBaiFuBaoCoupon(this.GetSource(orderType), orderId, paidAmount, coupons, promotion, orderType);
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = saveOrderPaIdResult.StatusCode
+                },
+                Result = saveOrderPaIdResult.Result
+            };
+        }
     }
 }

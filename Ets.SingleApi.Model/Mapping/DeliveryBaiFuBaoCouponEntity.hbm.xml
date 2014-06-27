@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.DeliveryBaiFuBaoCouponEntity, Ets.SingleApi.Model" table="DeliveryBaiFuBaoCoupon" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="DeliveryId" column="DeliveryId" type="Int32" >
+			<generator class="assigned"/>
+		</id>
+		<!--The propertys-->
+		<property name="PaIdAmount" column="PaidAmount" type="String" not-null="false" />
+		<property name="Coupons" column="Coupons" type="String" not-null="false" />
+		<property name="Promotion" column="Promotion" type="String" not-null="false" />
+	</class>
+</hibernate-mapping>

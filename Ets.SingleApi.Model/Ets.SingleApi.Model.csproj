@@ -141,6 +141,7 @@
     <Compile Include="IOrderDetailModel.cs" />
     <Compile Include="Mapping\Repository\BaiDuAppLightEntity.cs" />
     <Compile Include="Mapping\Repository\CustomizationOptionEntity.cs" />
+    <Compile Include="Mapping\Repository\DeliveryBaiFuBaoCouponEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryChargeForExtraMilesEntity.cs" />
     <Compile Include="Mapping\Repository\DeliveryCouponEntity.cs" />
@@ -732,6 +733,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Mapping\PlatformPaymentRelationEntity.hbm.xml" />
     <EmbeddedResource Include="Mapping\SupplierPlatformPaymentMethodRelationEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\DeliveryBaiFuBaoCouponEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

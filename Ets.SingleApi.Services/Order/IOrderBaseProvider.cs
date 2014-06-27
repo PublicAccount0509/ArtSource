@@ -119,5 +119,23 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> CancelOrder(string source, int orderId);
+
+        /// <summary>
+        /// 保存百付宝优惠支付返回，支付现金金额，优惠金额，立减金额，所有单位为“分”
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderId">订单号</param>
+        /// <param name="paidAmount">支付现金金额 单位:分</param>
+        /// <param name="coupons">优惠金额 单位:分</param>
+        /// <param name="promotion">立减金额 单位:分</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/26/2014 9:21 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<bool> SavDeliveryBaiFuBaoCoupon(string source, int orderId, string paidAmount, string coupons, string promotion);
     }
 }

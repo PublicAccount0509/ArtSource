@@ -549,6 +549,44 @@
         }
 
         /// <summary>
+        /// 保存百付宝优惠支付返回，支付现金金额，优惠金额，立减金额，所有单位为“分”
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderId">The orderIdDefault documentation</param>
+        /// <param name="paidAmount">The paidAmountDefault documentation</param>
+        /// <param name="coupons">The couponsDefault documentation</param>
+        /// <param name="promotion">The promotionDefault documentation</param>
+        /// <param name="orderType">Type of the order.</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/26/2014 9:19 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SavDeliveryBaiFuBaoCoupon(string source, int orderId, string paidAmount, string coupons, string promotion,
+                                                        int orderType)
+        {
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == (OrderType)orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var result = orderBaseProvider.SavDeliveryBaiFuBaoCoupon(source, orderId,paidAmount,coupons,promotion);
+
+            return new ServicesResult<bool>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
         /// 从本地获取订单号
         /// </summary>
         /// <param name="source">The source</param>

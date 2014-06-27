@@ -51,6 +51,7 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<PaymentEntity> paymentEntityRepository;
 
         private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
+        private readonly INHibernateRepository<DeliveryBaiFuBaoCouponEntity> deliveryBaiFuBaoCouponEntity;
 
         private readonly ISynchronousOrderExternalServices synchronousOrderExternalServices;
 
@@ -61,6 +62,7 @@ namespace Ets.SingleApi.Services
         /// <param name="orderNumberDcEntityRepository">The orderNumberDcEntityRepository</param>
         /// <param name="paymentEntityRepository"></param>
         /// <param name="supplierEntityRepository"></param>
+        /// <param name="deliveryBaiFuBaoCouponEntity"></param>
         /// <param name="synchronousOrderExternalServices"></param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
@@ -72,12 +74,14 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<OrderNumberDcEntity> orderNumberDcEntityRepository,
             INHibernateRepository<PaymentEntity> paymentEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
+            INHibernateRepository<DeliveryBaiFuBaoCouponEntity> deliveryBaiFuBaoCouponEntity,
             ISynchronousOrderExternalServices synchronousOrderExternalServices)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
             this.orderNumberDcEntityRepository = orderNumberDcEntityRepository;
             this.paymentEntityRepository = paymentEntityRepository;
             this.supplierEntityRepository = supplierEntityRepository;
+            this.deliveryBaiFuBaoCouponEntity = deliveryBaiFuBaoCouponEntity;
             this.synchronousOrderExternalServices = synchronousOrderExternalServices;
         }
 
@@ -372,6 +376,52 @@ namespace Ets.SingleApi.Services
 
             deliveryEntity.Cancelled = true;
             this.deliveryEntityRepository.Save(deliveryEntity);
+            return new ServicesResult<bool>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = true
+            };
+        }
+
+        /// <summary>
+        /// 保存百付宝优惠支付返回，支付现金金额，优惠金额，立减金额，所有单位为“分”
+        /// </summary>
+        /// <param name="source">The sourceDefault documentation</param>
+        /// <param name="orderId">订单号</param>
+        /// <param name="paidAmount">支付现金金额 单位:分</param>
+        /// <param name="coupons">优惠金额 单位:分</param>
+        /// <param name="promotion">立减金额 单位:分</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：王巍
+        /// 创建日期：6/26/2014 9:21 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> SavDeliveryBaiFuBaoCoupon(string source, int orderId, string paidAmount, string coupons, string promotion)
+        {
+            var deliveryEntity = this.deliveryEntityRepository.FindSingleByExpression(p => p.OrderNumber == orderId);
+            if (deliveryEntity == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = false
+                };
+            }
+            //保存百付宝优惠支付返回，支付现金金额，优惠金额，立减金额，所有单位为“分”
+            var deliveryBaiFuBaoCouponEntityResult = this.deliveryBaiFuBaoCouponEntity.EntityQueryable.FirstOrDefault(c => c.DeliveryId == deliveryEntity.DeliveryId) 
+                ?? new DeliveryBaiFuBaoCouponEntity
+                {
+                    DeliveryId = deliveryEntity.DeliveryId
+                };
+            deliveryBaiFuBaoCouponEntityResult.PaIdAmount = paidAmount;
+            deliveryBaiFuBaoCouponEntityResult.Coupons = coupons;
+            deliveryBaiFuBaoCouponEntityResult.Promotion = promotion;
+
+            this.deliveryBaiFuBaoCouponEntity.Save(deliveryBaiFuBaoCouponEntityResult);
+
             return new ServicesResult<bool>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
