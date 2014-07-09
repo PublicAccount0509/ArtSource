@@ -698,7 +698,8 @@ namespace Ets.SingleApi.Services
             var customerId = customer.CustomerId;
 
             //送餐地址坐标信息
-            var customerLocation = distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty);
+            var customerLocation = distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty)??
+                                   distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}", customerAddressEntity.Address1), string.Empty);
 
             //若有送餐地址坐标信息，则取 餐厅坐标 与 送餐坐标 的距离
             if (customerLocation != null)
