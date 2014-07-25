@@ -665,6 +665,7 @@
                                               && entity.TimeTableDisplayId == timeTable.TimeTableDisplayId
                                               && timeTable.OpenTime != null
                                               && timeTable.CloseTime != null
+                                        orderby timeTable.OpenTime
                                         select new
                                             {
                                                 entity.Day,
@@ -692,7 +693,7 @@
                     var startDate = item.OpenTime.Value.AddMinutes(ServicesCommon.ServiceTimeBeginReadyTime);
                     var endDate = item.CloseTime.Value.AddMinutes(ServicesCommon.ServiceTimeEndReadyTime);
                     string.Format("原始营业时间-日期：{0}，开始时间：{1:t}，结束时间：{2:t}", serviceDate.ToString("yyyy-MM-dd"), startDate, endDate).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
-                    
+
                     if (onlyActive)
                     {
                         var date = startDate.ToString("yyyy-MM-dd");
@@ -779,6 +780,7 @@
                                          from timeTable in this.timeTableEntityRepository.EntityQueryable
                                          where entity.SupplierId == supplierId
                                                && entity.TimeTableId == timeTable.TimeTableId
+                                         orderby timeTable.OpenTime
                                          select new
                                              {
                                                  entity.Day,
@@ -928,7 +930,7 @@
                         // 12:00 加 (0 + 1)* 15 分钟
                         var newStartDate =
                             DateTime.Parse(startDate.ToString("yyyy-MM-dd HH:00:ss"))
-                                    .AddMinutes((deviation + 1)*ServicesCommon.DeliveryTimeInterval);
+                                    .AddMinutes((deviation + 1) * ServicesCommon.DeliveryTimeInterval);
                         startDate = newStartDate;
                     }
 
