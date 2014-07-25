@@ -348,7 +348,8 @@
                                     supplierEntity.PackLadder,
                                     supplierEntity.Fax,
                                     supplierEntity.Email,
-                                    supplierEntity.RegionCode
+                                    supplierEntity.RegionCode,
+                                    supplierEntity.OrderHotline
                                 }).FirstOrDefault();
 
             if (tempSupplier == null)
@@ -407,6 +408,9 @@
                 RecommendedDishList = new List<SupplierRecommendedDishModel>()
             };
 
+            /**** 餐厅热线电话 BEGIN ****/
+
+            // 合作商户开通的功能，在配置列表中，则
             var cooperationWaimaiList =
                 ServicesCommon.CooperationWaimaiFeatures.Select(p => supplierFeatureList.Any(q => q.FeatureId == p))
                               .ToList();
@@ -415,8 +419,14 @@
                               .ToList();
             if (cooperationWaimaiList.All(p => p) || cooperationTangshiList.All(p => p))
             {
-                supplier.Telephone = ServicesCommon.CooperationHotline;
+                // 该餐厅配送类型(26 易淘送，61 趣活快送，62 易代送，其他为自送）
+                if (supplierFeatureList.Any(c => c.FeatureId == 26 || c.FeatureId == 61 || c.FeatureId == 62))
+                {
+                    supplier.Telephone = tempSupplier.OrderHotline;
+                }
             }
+
+            /**** 餐厅热线电话 END ****/
 
             if (supplier.SupplierGroupId != null &&
                 !ServicesCommon.TestSupplierGroupId.Contains(supplier.SupplierGroupId.Value))
