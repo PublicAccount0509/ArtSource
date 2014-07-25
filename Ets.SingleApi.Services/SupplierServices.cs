@@ -419,8 +419,8 @@
                               .ToList();
             if (cooperationWaimaiList.All(p => p) || cooperationTangshiList.All(p => p))
             {
-                // 该餐厅配送类型(26 易淘送，61 趣活快送，62 易代送，其他为自送）
-                if (supplierFeatureList.Any(c => c.FeatureId == 26 || c.FeatureId == 61 || c.FeatureId == 62))
+                // 该餐厅配送类型(26 易淘送，61 趣活快送，62 易代送，63 美食送，其他为自送）
+                if (supplierFeatureList.Any(c => c.FeatureId == 26 || c.FeatureId == 61 || c.FeatureId == 62 || c.FeatureId == 63))
                 {
                     supplier.Telephone = tempSupplier.OrderHotline;
                 }
