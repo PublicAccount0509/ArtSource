@@ -221,7 +221,8 @@
                             AccessToken = accessToken,
                             RefreshToken = refreshToken,
                             UserId = loginData.LoginId,
-                            TokenType = CommonUtility.GetTokenType()
+                            TokenType = CommonUtility.GetTokenType(),
+                            SupplierId = loginData.SupplierId
                         }
                 };
         }
@@ -795,6 +796,11 @@
                 return LoginWay.Email;
             }
 
+            if (!requst.UserName.IsEmptyOrNull())
+            {
+                return LoginWay.SupplierUser;
+            }
+
             return LoginWay.UnKnow;
         }
 
@@ -821,6 +827,11 @@
             if (loginWay == LoginWay.Email)
             {
                 return requst.Email;
+            }
+
+            if (loginWay == LoginWay.SupplierUser)
+            {
+                return requst.UserName;
             }
 
             return string.Empty;

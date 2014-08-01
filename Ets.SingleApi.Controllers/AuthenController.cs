@@ -73,7 +73,7 @@
                     };
             }
 
-            if (requst.Telephone.IsEmptyOrNull() && requst.Email.IsEmptyOrNull())
+            if (requst.Telephone.IsEmptyOrNull() && requst.Email.IsEmptyOrNull() && requst.UserName.IsEmptyOrNull())
             {
                 return new Response<LoginResult>
                 {
@@ -100,6 +100,7 @@
             var loginResult = this.authenServices.Login(this.Source, new LoginParameter
                         {
                             Email = (requst.Email ?? string.Empty).Trim(),
+                            UserName = (requst.UserName ?? string.Empty).Trim(),
                             Password = (requst.Password ?? string.Empty).Trim(),
                             Telephone = (requst.Telephone ?? string.Empty).Trim(),
                             AppKey = (this.AppKey ?? string.Empty).Trim()
@@ -122,7 +123,8 @@
                     UserId = loginResult.Result.UserId,
                     AccessToken = loginResult.Result.AccessToken ?? string.Empty,
                     RefreshToken = loginResult.Result.RefreshToken ?? string.Empty,
-                    TokenType = loginResult.Result.TokenType ?? string.Empty
+                    TokenType = loginResult.Result.TokenType ?? string.Empty,
+                    SupplierId = loginResult.Result.SupplierId
                 };
 
             return new Response<LoginResult>
