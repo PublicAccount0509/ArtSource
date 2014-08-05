@@ -1050,6 +1050,16 @@ namespace Ets.SingleApi.Model.Repository
         private bool? isFullFree;
 
         /// <summary>
+        /// The IsSelfSupport
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/10/13 14:01:30
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        private int? isSelfSupport;
+
+        /// <summary>
         /// The BundleList
         /// </summary>
         /// Creator:周超
@@ -3622,6 +3632,27 @@ namespace Ets.SingleApi.Model.Repository
             set
             {
                 this.isFullFree = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether mapping the IsFullFree of SupplierEntity table in the database.
+        /// </summary>
+        /// Creator:周超
+        /// Creation Date:2013/10/13 14:01:30
+        /// Modifier:
+        /// Last Modified:
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? IsSelfSupport
+        {
+            get
+            {
+                return this.isSelfSupport;
+            }
+
+            set
+            {
+                this.isSelfSupport = value;
             }
         }
 

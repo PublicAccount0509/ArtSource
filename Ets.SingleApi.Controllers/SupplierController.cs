@@ -274,7 +274,8 @@ namespace Ets.SingleApi.Controllers
                     DelMinOrderAmount = getSupplierSimpleResult.Result.DelMinOrderAmount ?? 0,
                     FreeDeliveryLine = getSupplierSimpleResult.Result.FreeDeliveryLine ?? 0,
                     BaIduLat = getSupplierSimpleResult.Result.BaIduLat,
-                    BaIduLong = getSupplierSimpleResult.Result.BaIduLong
+                    BaIduLong = getSupplierSimpleResult.Result.BaIduLong,
+                    IsSelfSupport = getSupplierSimpleResult.Result.IsSelfSupport ?? 0
                 };
 
             return new Response<SupplierSimple>

@@ -109,6 +109,7 @@
     <property name="Channel" column="Channel" type="String" not-null="false" />
     <property name="MenuLayout" column="MenuLayout" type="Int32" not-null="false" />
     <property name="IsFullFree" column="IsFullFree" type="Boolean" not-null="false" />
+    <property name="IsSelfSupport" column="IsSelfSupport" type="Int32" not-null="false" />
     <!--The foreign keys-->
     <bag name="BundleList" cascade="none" lazy="true" table="Bundle">
       <key column="SupplierID" />

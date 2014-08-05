@@ -582,7 +582,8 @@
                                     supplierEntity.PackLadder,
                                     supplierEntity.Fax,
                                     supplierEntity.Email,
-                                    supplierEntity.RegionCode
+                                    supplierEntity.RegionCode,
+                                    supplierEntity.IsSelfSupport
                                 }).FirstOrDefault();
 
             if (tempSupplier == null)
@@ -613,7 +614,8 @@
                 FreeDeliveryLine = tempSupplier.FreeDeliveryLine,
                 DelMinOrderAmount = tempSupplier.DelMinOrderAmount,
                 BaIduLat = baIduLat,
-                BaIduLong = baIduLong
+                BaIduLong = baIduLong,
+                IsSelfSupport = tempSupplier.IsSelfSupport
             };
 
             return new ServicesResult<SupplierSimpleModel>
