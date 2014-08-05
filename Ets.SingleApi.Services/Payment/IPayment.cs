@@ -41,6 +41,21 @@
         /// ----------------------------------------------------------------------------------------
         PaymentResult<string> Payment(IPaymentData parameter);
 
+
+        /// <summary>
+        /// 二维码支付功能
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/5 17:10
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        PaymentResult<string> PaymentQr(IPaymentData parameter);
+
         /// <summary>
         /// 查询支付状态
         /// </summary>

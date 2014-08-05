@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Ets.SingleApi.Model.Services;
+﻿
 
 namespace Ets.SingleApi.Controllers
 {
-    using System.Web.Http;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
+    using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System.Collections.Generic;
+    using System.Web.Http;
 
     /// <summary>
     /// 类名称：OrdersController
@@ -33,17 +33,29 @@ namespace Ets.SingleApi.Controllers
         private readonly IOrderServices orderServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrdersController"/> class.
+        /// 字段paymentServices
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/5 17:44
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IPaymentServices paymentServices;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrdersController" /> class.
         /// </summary>
         /// <param name="orderServices">The orderServices</param>
+        /// <param name="paymentServices">The paymentServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 17:57
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public OrdersController(IOrderServices orderServices)
+        public OrdersController(IOrderServices orderServices, IPaymentServices paymentServices)
         {
             this.orderServices = orderServices;
+            this.paymentServices = paymentServices;
         }
 
         /// <summary>
@@ -437,6 +449,21 @@ namespace Ets.SingleApi.Controllers
                 };
             }
 
+            if (getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok)
+            {
+                var wechatPaymentQrResult = this.paymentServices.WechatPaymentQr(this.Source, new WechatPaymentParameterQr
+                {
+                    Productid = getOrderResult.Result
+                });
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = wechatPaymentQrResult.StatusCode
+                    },
+                    Result = wechatPaymentQrResult.Result
+                };
+            }
             return new Response<string>
             {
                 Message = new ApiMessage

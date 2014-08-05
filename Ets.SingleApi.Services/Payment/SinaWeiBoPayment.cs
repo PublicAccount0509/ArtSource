@@ -121,5 +121,11 @@ namespace Ets.SingleApi.Services
         {
             throw new System.NotImplementedException();
         }
+
+
+        public PaymentResult<string> PaymentQr(IPaymentData parameter)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

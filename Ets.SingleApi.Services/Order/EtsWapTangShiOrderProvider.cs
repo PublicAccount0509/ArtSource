@@ -135,8 +135,8 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
             IEtsWapTangShiShoppingCartProvider etsWapShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
-            ISingleApiOrdersExternalService singleApiOrdersExternalService, 
-            INHibernateRepository<CustomerEntity> customerEntityRepository, 
+            ISingleApiOrdersExternalService singleApiOrdersExternalService,
+            INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository)
             : base(orderNumberDtEntityRepository, singleApiOrdersExternalService)
         {
@@ -771,6 +771,7 @@ namespace Ets.SingleApi.Services
             //tableReservationEntity.InvoiceRequired = order.InvoiceRequired;
             //tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
             tableReservationEntity.Path = tangShiOrdersParameter.Path;
+            tableReservationEntity.TemplateId = tangShiOrdersParameter.Source;
             //tableReservationEntity.TemplateId = order.Template;
 
             this.tableReservationEntityRepository.Save(tableReservationEntity);

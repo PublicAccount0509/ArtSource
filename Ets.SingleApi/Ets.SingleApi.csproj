@@ -262,6 +262,7 @@
     <Content Include="config\castle\components\caches.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\htjnew.singleapi.pubxml" />
     <None Include="Properties\PublishProfiles\htjsingle.pubxml" />
   </ItemGroup>
   <PropertyGroup>

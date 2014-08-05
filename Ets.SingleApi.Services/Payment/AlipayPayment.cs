@@ -168,5 +168,11 @@ namespace Ets.SingleApi.Services
                     Result = verifyResult
                 };
         }
+
+
+        public PaymentResult<string> PaymentQr(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

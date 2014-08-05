@@ -3,7 +3,6 @@
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Services.Payment;
     using Ets.SingleApi.Utility;
-    using System.Threading.Tasks;
 
 
     /// <summary>
@@ -65,6 +64,35 @@
             return new PaymentResult<string> { Result = requestPaymentJsonStr, StatusCode = (int)StatusCode.Succeed.Ok };
         }
 
+        /// <summary>
+        /// 二维码支付功能
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/5 17:10
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public PaymentResult<string> PaymentQr(IPaymentData parameter)
+        {
+            var paymentData = parameter as WechatPaymentDataQr;
+
+            if (paymentData == null)
+            {
+                return new PaymentResult<string> { Result = string.Empty, StatusCode = (int)StatusCode.System.InvalidPaymentRequest };
+            }
+
+            var paymentQr = new WechatPaymentCommon.PaymentQr(paymentData.Productid);
+
+
+            string requestPaymentJsonStr = paymentQr.ToPaymentQr();
+
+            return new PaymentResult<string> { Result = requestPaymentJsonStr, StatusCode = (int)StatusCode.Succeed.Ok };
+        }
+
         public PaymentResult<bool> QueryState(IPaymentData parameter)
         {
             var wechatPaymentQueryData = parameter as WechatPaymentQueryData;
@@ -105,5 +133,8 @@
         {
             throw new System.NotImplementedException();
         }
+
+
+
     }
 }

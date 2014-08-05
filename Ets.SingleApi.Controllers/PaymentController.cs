@@ -579,6 +579,47 @@ namespace Ets.SingleApi.Controllers
         //    };
         //}
 
+        /// <summary>
+        /// 生成二维码支付
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/5 16:55
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public Response<string> WechatPaymentQr(WechatPaymentRequestQr requst)
+        {
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Result = string.Empty,
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var wechatPaymentQrResult = this.paymentServices.WechatPaymentQr(this.Source, new WechatPaymentParameterQr
+            {
+                Productid = requst.OrderNo
+            });
+            return new Response<string>
+            {
+                Result = wechatPaymentQrResult.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = wechatPaymentQrResult.StatusCode
+                }
+            };
+        }
 
         [HttpPost]
         [TokenFilter]

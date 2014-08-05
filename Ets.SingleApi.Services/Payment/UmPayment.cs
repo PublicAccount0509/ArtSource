@@ -272,5 +272,11 @@
                 }
             }
         }
+
+
+        public PaymentResult<string> PaymentQr(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

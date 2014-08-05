@@ -198,7 +198,7 @@ namespace Ets.SingleApi.Controllers.IServices
         ServicesResult<bool> WeChatPaymentState(string source, WechatPaymentStateParameter parameter);
 
         /// <summary>
-        /// Wechats the payment delivery notify.
+        /// 微信外卖支付回调通知
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
@@ -210,6 +210,21 @@ namespace Ets.SingleApi.Controllers.IServices
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<bool> WechatPaymentDeliveryNotify(string source, WechatPaymentStateParameter parameter);
+
+        /// <summary>
+        /// 微信二维码支付
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/5 16:57
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> WechatPaymentQr(string source, WechatPaymentParameterQr parameter);
 
     }
 }

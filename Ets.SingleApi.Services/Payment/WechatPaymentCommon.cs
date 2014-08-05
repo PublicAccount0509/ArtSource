@@ -26,6 +26,167 @@ namespace Ets.SingleApi.Services.Payment
     /// ----------------------------------------------------------------------------------------
     public class WechatPaymentCommon
     {
+        /// <summary>
+        /// 类名称：PaymentQr
+        /// 命名空间：Ets.SingleApi.Services.Payment.WechatPaymentCommon
+        /// 类功能：二维码支付
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/5 17:19
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public class PaymentQr
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="PaymentQr"/> class.
+            /// </summary>
+            /// <param name="_productid">The _productid</param>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:24
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public PaymentQr(string _productid)
+            {
+                this.appid = ControllersCommon.ConstWechatPaymentAppId;
+                this.appkey = ControllersCommon.ConstWechatPaymentPaySignKey;
+                this.noncestr = Guid.NewGuid().ToString("N");
+                this.timestamp = (DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds.ToString("#");
+                this.productid = _productid;
+            }
+
+            /// <summary>
+            /// Gets the appid.
+            /// </summary>
+            /// <value>
+            /// The appid.
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:20
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string appid { get; internal set; }
+
+            /// <summary>
+            /// Gets the appkey.
+            /// </summary>
+            /// <value>
+            /// The appkey.
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:21
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string appkey { get; internal set; }
+
+            /// <summary>
+            /// Gets the noncestr.
+            /// </summary>
+            /// <value>
+            /// The noncestr.
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:21
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string noncestr { get; set; }
+
+            /// <summary>
+            /// Gets or sets the timestamp of PaymentQr
+            /// </summary>
+            /// <value>
+            /// The timestamp
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:21
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string timestamp { get; set; }
+
+            /// <summary>
+            /// Gets or sets the productid of PaymentQr
+            /// </summary>
+            /// <value>
+            /// The productid
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:22
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string productid { get; set; }
+
+            /// <summary>
+            /// Builds the pay sign.
+            /// </summary>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:25
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            private string BuildPaySign()
+            {
+                var string1 = BrandWechatPaySign.AsciiOrderAscKeyToLower(new Dictionary<string, string>
+                                                                                {
+                                                                                    { "appid",this.appid },
+                                                                                    { "appkey", this.appkey },
+                                                                                    { "noncestr", this.noncestr },
+                                                                                    { "timestamp", this.timestamp },
+                                                                                    { "productid", this.productid }
+                                                                                });
+                return BrandWechatPaySign.Sha1String1(string1);
+            }
+
+            /// <summary>
+            /// To the payment qr.
+            /// </summary>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:30
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string ToPaymentQr()
+            {
+                // "weixin://wxpay/bizpayurl?sign=" + sign + "&appid=" + TenpayUtil.appid + "&productid=" + productid + "&timeStamp=" + timeStamp + "&nonceStr=" + nonceStr;
+                var sign = this.BuildPaySign();
+
+                const string Template = "weixin://wxpay/bizpayurl?sign={0}&appid={1}&productid={2}&timeStamp={3}&nonceStr={4}";
+                return string.Format(Template, sign, this.appid, this.productid, this.timestamp, this.noncestr);
+            }
+
+            /// <summary>
+            /// Returns a <see cref="System.String" /> that represents this instance.
+            /// </summary>
+            /// <returns>
+            /// A <see cref="System.String" /> that represents this instance.
+            /// </returns>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:31
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            override public string ToString()
+            {
+                string str = String.Empty;
+                str = String.Concat(str, "appid = ", appid, "\r\n");
+                //str = String.Concat(str, "appkey = ", appkey, "\r\n");
+                str = String.Concat(str, "noncestr = ", noncestr, "\r\n");
+                str = String.Concat(str, "timestamp = ", timestamp, "\r\n");
+                str = String.Concat(str, "productid = ", productid, "\r\n");
+                return str;
+            }
+        }
 
         //JSAPI 支付接口（getBrandWCPayRequest）定义
         public class BrandWcPayRequest
@@ -417,13 +578,18 @@ namespace Ets.SingleApi.Services.Payment
             /// 修改者：
             /// 修改时间：
             /// ----------------------------------------------------------------------------------------
-            private static Dictionary<string, string> AsciiOrderAscByColumnDic(Dictionary<string, string> sourceDic, Func<string, string> func = null)
+            private static SortedDictionary<string, string> AsciiOrderAscByColumnDic(Dictionary<string, string> sourceDic, Func<string, string> func = null)
             {
                 var keys = sourceDic.Keys.ToArray();
                 Array.Sort(keys, string.CompareOrdinal);
 
-                return keys.ToDictionary(item => item, item => func != null ? func(sourceDic[item]) : sourceDic[item]);
-                //return sourceDic.Keys.ToDictionary(item => item, item => (int)Encoding.UTF8.GetBytes(item)[0]).OrderBy(item => item.Value).ToDictionary(item => item.Key, item => func != null ? func(sourceDic[item.Key]) : sourceDic[item.Key]);
+                var sortedDict = new SortedDictionary<string, string>();
+                foreach (var key in keys)
+                {
+                    sortedDict.Add(key, func != null ? func(sourceDic[key]) : sourceDic[key]);
+                }
+                return sortedDict;
+                //return keys.ToDictionary(item => item, item => func != null ? func(sourceDic[item]) : sourceDic[item]);
             }
         }
 
