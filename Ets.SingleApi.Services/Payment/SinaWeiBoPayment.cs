@@ -3,6 +3,8 @@ using Ets.SingleApi.Utility;
 
 namespace Ets.SingleApi.Services
 {
+    using Ets.SingleApi.Services.Payment;
+
     /// <summary>
     /// 类名称：SinaWeiBoPayment
     /// 命名空间：Ets.SingleApi.Services.Payment
@@ -124,6 +126,12 @@ namespace Ets.SingleApi.Services
 
 
         public PaymentResult<string> PaymentQr(IPaymentData parameter)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public PaymentResult<WechatResponsePaymentDataQrPackage> PaymentQrPackage(IPaymentData parameter)
         {
             throw new System.NotImplementedException();
         }

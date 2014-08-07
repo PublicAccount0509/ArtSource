@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Services
 {
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Services.Payment;
 
     /// <summary>
     /// 接口名称：IPayment
@@ -55,6 +56,21 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         PaymentResult<string> PaymentQr(IPaymentData parameter);
+
+
+        /// <summary>
+        /// 二维码支付获取package
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 10:43
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        PaymentResult<WechatResponsePaymentDataQrPackage> PaymentQrPackage(IPaymentData parameter);
 
         /// <summary>
         /// 查询支付状态

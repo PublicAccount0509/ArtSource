@@ -1,7 +1,7 @@
-﻿using Ets.SingleApi.Model.Controller;
-
+﻿
 namespace Ets.SingleApi.Controllers.IServices
 {
+    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
@@ -226,5 +226,19 @@ namespace Ets.SingleApi.Controllers.IServices
         /// ----------------------------------------------------------------------------------------
         ServicesResult<string> WechatPaymentQr(string source, WechatPaymentParameterQr parameter);
 
+        /// <summary>
+        /// Wechats the payment qr package.
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 10:36
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> WechatPaymentQrPackage(string source, WechatPaymentParameterQrPackage parameter);
     }
 }

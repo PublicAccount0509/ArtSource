@@ -4,9 +4,11 @@ namespace Ets.SingleApi.Services
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Xml;
 
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
 
@@ -508,7 +510,7 @@ namespace Ets.SingleApi.Services
                 StatusCode = verifyResult.StatusCode
             };
         }
-        
+
         /// <summary>
         /// 获取支付宝支付请求Url
         /// </summary>
@@ -903,6 +905,85 @@ namespace Ets.SingleApi.Services
         }
 
 
+        /// <summary>
+        /// Wechats the payment qr package.
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// ServicesResult{WechatResponsePaymentDataQrPackage}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 16:17
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> WechatPaymentQrPackage(string source, WechatPaymentParameterQrPackage parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.WechatPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            var responsePaymentData = payment.PaymentQrPackage(new WechatPaymentDataQrPackage
+                                                      {
+                                                          AppId = parameter.AppId,
+                                                          AppSignature = parameter.AppSignature,
+                                                          IsSubscribe = parameter.IsSubscribe,
+                                                          NonceStr = parameter.NonceStr,
+                                                          OpenId = parameter.OpenId,
+                                                          ProductId = parameter.ProductId,
+                                                          SignMethod = parameter.SignMethod,
+                                                          TimeStamp = parameter.TimeStamp,
+                                                          SpbillCreateIp = parameter.SpbillCreateIp,
+                                                          TotalFee = parameter.TotalFee,
+                                                          IsConfirm = parameter.IsConfirm,
+                                                          IsPaid = parameter.IsPaid,
+                                                          OrderType = parameter.OrderType
+                                                      });
+
+            if (responsePaymentData == null || responsePaymentData.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            var xmlDoc = new XmlDocument();
+            var result = new WechatPaymentResponseQrPackage
+                                                        {
+                                                            AppId = xmlDoc.CreateCDataSection(responsePaymentData.Result.AppId),
+                                                            NonceStr = xmlDoc.CreateCDataSection(responsePaymentData.Result.NonceStr),
+                                                            TimeStamp = responsePaymentData.Result.TimeStamp,
+                                                            Package = xmlDoc.CreateCDataSection(responsePaymentData.Result.Package),
+                                                            RetCode = responsePaymentData.Result.RetCode,
+                                                            RetErrMsg = xmlDoc.CreateCDataSection(responsePaymentData.Result.RetErrMsg),
+                                                            SignMethod = xmlDoc.CreateCDataSection(responsePaymentData.Result.SignMethod),
+                                                            AppSignature = xmlDoc.CreateCDataSection(responsePaymentData.Result.AppSignature)
+                                                        };
+
+            return new ServicesResult<string>
+            {
+                Result = XmlSerializationUtility<WechatPaymentResponseQrPackage>.XmlSerialize(result),
+                StatusCode = responsePaymentData.StatusCode
+            };
+        }
         /// <summary>
         /// 微信 支付状态
         /// </summary>

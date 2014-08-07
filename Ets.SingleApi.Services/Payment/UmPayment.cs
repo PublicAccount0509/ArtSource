@@ -4,6 +4,7 @@
     using System.Collections;
 
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Services.Payment;
     using Ets.SingleApi.Utility;
 
     /// <summary>
@@ -275,6 +276,12 @@
 
 
         public PaymentResult<string> PaymentQr(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public PaymentResult<WechatResponsePaymentDataQrPackage> PaymentQrPackage(IPaymentData parameter)
         {
             throw new NotImplementedException();
         }

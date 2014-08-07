@@ -125,6 +125,7 @@ namespace Ets.SingleApi.Controllers
             };
         }
 
+
         /// <summary>
         /// 保存订单信息
         /// </summary>
@@ -449,7 +450,7 @@ namespace Ets.SingleApi.Controllers
                 };
             }
 
-            if (getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok)
+            if (getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok && requst.IsQr)
             {
                 var wechatPaymentQrResult = this.paymentServices.WechatPaymentQr(this.Source, new WechatPaymentParameterQr
                 {

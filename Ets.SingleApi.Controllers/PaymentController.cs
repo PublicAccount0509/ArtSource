@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
+﻿
 
 namespace Ets.SingleApi.Controllers
 {
+    using System.Net.Http;
+    using System.ServiceModel.Channels;
+    using System.Web;
+
     using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
+    using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System.Collections.Generic;
     using System.Web.Http;
 
     /// <summary>
@@ -21,6 +27,7 @@ namespace Ets.SingleApi.Controllers
     /// ----------------------------------------------------------------------------------------
     public class PaymentController : SingleApiController
     {
+
         /// <summary>
         /// 字段paymentServices
         /// </summary>
@@ -32,18 +39,29 @@ namespace Ets.SingleApi.Controllers
         private readonly IPaymentServices paymentServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentController"/> class.
+        /// 字段orderServices
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 12:00
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IOrderServices orderServices;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaymentController" /> class.
         /// </summary>
         /// <param name="paymentServices">The paymentServices</param>
+        /// <param name="orderServices">The orderServices</param>
         /// 创建者：周超
         /// 创建日期：10/28/2013 4:01 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public PaymentController(
-            IPaymentServices paymentServices)
+        public PaymentController(IPaymentServices paymentServices, IOrderServices orderServices)
         {
             this.paymentServices = paymentServices;
+            this.orderServices = orderServices;
         }
 
         /// <summary>
@@ -305,7 +323,7 @@ namespace Ets.SingleApi.Controllers
                     extra = request.extra
                 };
 
-            var baiFuBaoPaymentVerifyResult = this.paymentServices.BaiFuBaoPaymentVerify(this.Source,baiFuBaoReturnParameter);
+            var baiFuBaoPaymentVerifyResult = this.paymentServices.BaiFuBaoPaymentVerify(this.Source, baiFuBaoReturnParameter);
 
             if (baiFuBaoPaymentVerifyResult == null)
             {
@@ -422,7 +440,7 @@ namespace Ets.SingleApi.Controllers
                 Result = result.Result
             };
         }
-        
+
         /// <summary>
         /// 支付宝支付后台回调验证签名
         /// </summary>
@@ -461,7 +479,7 @@ namespace Ets.SingleApi.Controllers
 
             var result = this.paymentServices.AlipayPaymentVerify(this.Source, new AlipayPaymentReturnParameter
             {
-               Request = parameters,
+                Request = parameters,
                 Sign = requst.Sign
             });
 
@@ -484,6 +502,368 @@ namespace Ets.SingleApi.Controllers
                 },
                 Result = result.Result
             };
+        }
+
+
+        /// <summary>
+        /// 生成二维码支付
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/5 16:55
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public Response<string> WechatPaymentQr(WechatPaymentRequestQr requst)
+        {
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Result = string.Empty,
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            var wechatPaymentQrResult = this.paymentServices.WechatPaymentQr(this.Source, new WechatPaymentParameterQr
+            {
+                Productid = requst.OrderNo
+            });
+            return new Response<string>
+            {
+                Result = wechatPaymentQrResult.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = wechatPaymentQrResult.StatusCode
+                }
+            };
+        }
+
+        /// <summary>
+        /// Wechats the payment qr package.
+        /// </summary>
+        /// <returns>
+        /// String
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 9:47
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public string WechatPaymentQrPackage()
+        {
+            var content = this.Request.Content.ReadAsStringAsync().Result;
+            if (string.IsNullOrEmpty(content)) return string.Empty;
+
+            var request = XmlSerializationUtility<WechatPaymentRequestQrPackage>.XmlDeserialize(content);
+
+            var orderEntity = this.orderServices.GetOrderBase(this.Source, int.Parse(request.ProductId.Value), (int)OrderType.TangShi, (int)OrderSourceType.EtsWap);
+            if (orderEntity.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return string.Empty;
+            }
+
+            var wechatPaymentQrPackageResult = this.paymentServices.WechatPaymentQrPackage(this.Source, new WechatPaymentParameterQrPackage
+                                                                                                            {
+                                                                                                                AppId = request.AppId.Value,
+                                                                                                                AppSignature = request.AppSignature.Value,
+                                                                                                                IsSubscribe = request.IsSubscribe,
+                                                                                                                NonceStr = request.NonceStr.Value,
+                                                                                                                OpenId = request.OpenId.Value,
+                                                                                                                ProductId = request.ProductId.Value,
+                                                                                                                SignMethod = request.SignMethod.Value,
+                                                                                                                TimeStamp = request.TimeStamp,
+                                                                                                                SpbillCreateIp =GetClientIp(Request),
+                                                                                                                TotalFee = orderEntity.Result.CustomerTotal,
+                                                                                                                IsConfirm = orderEntity.Result.IsConfirm,
+                                                                                                                IsPaid = orderEntity.Result.IsPaId,
+                                                                                                                OrderType = (int)OrderType.TangShi
+                                                                                                            });
+            return wechatPaymentQrPackageResult.Result;
+        }
+
+        /// <summary>
+        /// Gets the client ip.
+        /// </summary>
+        /// <param name="request">The request</param>
+        /// <returns>
+        /// String
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 15:39
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private string GetClientIp(HttpRequestMessage request)
+        {
+            if (request.Properties.ContainsKey("MS_HttpContext"))
+            {
+                return ((HttpContextWrapper)request.Properties["MS_HttpContext"]).Request.UserHostAddress;
+            }
+            else if (request.Properties.ContainsKey(RemoteEndpointMessageProperty.Name))
+            {
+                RemoteEndpointMessageProperty prop;
+                prop = (RemoteEndpointMessageProperty)request.Properties[RemoteEndpointMessageProperty.Name];
+                return prop.Address;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// 微信JS原生支付
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 9:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public Response<string> WechatPayment(WechatPaymentRequest requst)
+        {
+            if (requst == null)
+            {
+                return new Response<string>
+                {
+                    Result = string.Empty,
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    },
+                    Result = string.Empty
+                };
+            }
+
+
+            var wechatPaymentResult = this.paymentServices.WechatPayment(this.Source, new WechatPaymentParameter
+            {
+                Amount = requst.Amount,
+                Attach = requst.Attach,
+                Body = requst.Body,
+                NotifyUrl = requst.NotifyUrl,
+                OrderId = requst.OrderId,
+                OrderType = requst.OrderType,
+                SpbillCreateIp = requst.SpbillCreateIp,
+                WechatId = requst.WechatId
+            });
+
+            return new Response<string>
+            {
+                Result = wechatPaymentResult.Result,
+                Message = new ApiMessage
+                {
+                    StatusCode = wechatPaymentResult.StatusCode
+                }
+            };
+        }
+
+        /// <summary>
+        /// 查询微信支付状态
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// The Boolean}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 9:36
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public Response<bool> WechatPaymentState(WechatPaymentStateRequest requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+
+
+            var result = this.paymentServices.WeChatPaymentState(this.Source, new WechatPaymentStateParameter
+            {
+                OrderId = requst.OrderId,
+                OrderType = requst.OrderType,
+                sign_type = requst.sign_type,
+                service_version = requst.service_version,
+                input_charset = requst.input_charset,
+                sign = requst.sign,
+                sign_key_index = requst.sign_key_index,
+                trade_mode = requst.trade_mode,
+                trade_state = requst.trade_state,
+                pay_info = requst.pay_info,
+                partner = requst.partner,
+                bank_type = requst.bank_type,
+                bank_billno = requst.bank_billno,
+                total_fee = requst.total_fee,
+                fee_type = requst.fee_type,
+                notify_id = requst.notify_id,
+                transaction_id = requst.transaction_id,
+                out_trade_no = requst.out_trade_no,
+                attach = requst.attach,
+                time_end = requst.time_end,
+                transport_fee = requst.transport_fee,
+                product_fee = requst.product_fee,
+                discount = requst.discount,
+                buyer_alias = requst.buyer_alias,
+                OpenId = requst.OpenId,
+                AppId = requst.AppId,
+                IsSubscribe = requst.IsSubscribe,
+                TimeStamp = requst.TimeStamp,
+                NonceStr = requst.NonceStr,
+                AppSignature = requst.AppSignature,
+                SignMethod = requst.SignMethod
+            });
+
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// 微信外卖支付回调通知
+        /// </summary>
+        /// <param name="requst">The requst</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 9:36
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        [TokenFilter]
+        public Response<bool> WechatPaymentDeliveryNotify(WechatPaymentStateRequest requst)
+        {
+            if (requst == null)
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.System.InvalidRequest
+                    }
+                };
+            }
+
+            if (!this.ValidateUserId(requst.UserId))
+            {
+                return new Response<bool>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = (int)StatusCode.OAuth.AccessDenied
+                    }
+                };
+            }
+            var result = this.paymentServices.WechatPaymentDeliveryNotify(this.Source, new WechatPaymentStateParameter
+                {
+                    OrderId = requst.OrderId,
+                    OrderType = requst.OrderType,
+                    sign_type = requst.sign_type,
+                    service_version = requst.service_version,
+                    input_charset = requst.input_charset,
+                    sign = requst.sign,
+                    sign_key_index = requst.sign_key_index,
+                    trade_mode = requst.trade_mode,
+                    trade_state = requst.trade_state,
+                    pay_info = requst.pay_info,
+                    partner = requst.partner,
+                    bank_type = requst.bank_type,
+                    bank_billno = requst.bank_billno,
+                    total_fee = requst.total_fee,
+                    fee_type = requst.fee_type,
+                    notify_id = requst.notify_id,
+                    transaction_id = requst.transaction_id,
+                    out_trade_no = requst.out_trade_no,
+                    attach = requst.attach,
+                    time_end = requst.time_end,
+                    transport_fee = requst.transport_fee,
+                    product_fee = requst.product_fee,
+                    discount = requst.discount,
+                    buyer_alias = requst.buyer_alias,
+                    OpenId = requst.OpenId,
+                    AppId = requst.AppId,
+                    IsSubscribe = requst.IsSubscribe,
+                    TimeStamp = requst.TimeStamp,
+                    NonceStr = requst.NonceStr,
+                    AppSignature = requst.AppSignature,
+                    SignMethod = requst.SignMethod
+                });
+            return new Response<bool>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                Result = result.Result
+            };
+        }
+
+        /// <summary>
+        /// Wechats the payment notify.
+        /// </summary>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <returns>
+        /// String
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 16:05
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpPost]
+        public string WechatPaymentNotify(string orderType)
+        {
+            return "success";
         }
 
         //[HttpPost]
@@ -578,240 +958,5 @@ namespace Ets.SingleApi.Controllers
         //        Result = result.Result
         //    };
         //}
-
-        /// <summary>
-        /// 生成二维码支付
-        /// </summary>
-        /// <param name="requst">The requst</param>
-        /// <returns>
-        /// String}
-        /// </returns>
-        /// 创建者：孟祺宙
-        /// 创建日期：2014/8/5 16:55
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        [HttpPost]
-        [TokenFilter]
-        public Response<string> WechatPaymentQr(WechatPaymentRequestQr requst)
-        {
-            if (requst == null)
-            {
-                return new Response<string>
-                {
-                    Result = string.Empty,
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
-                };
-            }
-
-            var wechatPaymentQrResult = this.paymentServices.WechatPaymentQr(this.Source, new WechatPaymentParameterQr
-            {
-                Productid = requst.OrderNo
-            });
-            return new Response<string>
-            {
-                Result = wechatPaymentQrResult.Result,
-                Message = new ApiMessage
-                {
-                    StatusCode = wechatPaymentQrResult.StatusCode
-                }
-            };
-        }
-
-        [HttpPost]
-        [TokenFilter]
-        public Response<string> WechatPayment(WechatPaymentRequest requst)
-        {
-            if (requst == null)
-            {
-                return new Response<string>
-                {
-                    Result = string.Empty,
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
-                };
-            }
-
-            if (!this.ValidateUserId(requst.UserId))
-            {
-                return new Response<string>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    },
-                    Result = string.Empty
-                };
-            }
-
-
-            var wechatPaymentResult = this.paymentServices.WechatPayment(this.Source, new WechatPaymentParameter
-            {
-                Amount = requst.Amount,
-                Attach = requst.Attach,
-                Body = requst.Body,
-                NotifyUrl = requst.NotifyUrl,
-                OrderId = requst.OrderId,
-                OrderType = requst.OrderType,
-                SpbillCreateIp = requst.SpbillCreateIp,
-                WechatId = requst.WechatId
-            });
-
-            return new Response<string>
-            {
-                Result = wechatPaymentResult.Result,
-                Message = new ApiMessage
-                {
-                    StatusCode = wechatPaymentResult.StatusCode
-                }
-            };
-        }
-
-        [HttpPost]
-        [TokenFilter]
-        public Response<bool> WechatPaymentState(WechatPaymentStateRequest requst)
-        {
-            if (requst == null)
-            {
-                return new Response<bool>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
-                };
-            }
-
-            if (!this.ValidateUserId(requst.UserId))
-            {
-                return new Response<bool>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    }
-                };
-            }
-
-
-            var result = this.paymentServices.WeChatPaymentState(this.Source, new WechatPaymentStateParameter
-            {
-                OrderId = requst.OrderId,
-                OrderType = requst.OrderType,
-                sign_type = requst.sign_type,
-                service_version = requst.service_version,
-                input_charset = requst.input_charset,
-                sign = requst.sign,
-                sign_key_index = requst.sign_key_index,
-                trade_mode = requst.trade_mode,
-                trade_state = requst.trade_state,
-                pay_info = requst.pay_info,
-                partner = requst.partner,
-                bank_type = requst.bank_type,
-                bank_billno = requst.bank_billno,
-                total_fee = requst.total_fee,
-                fee_type = requst.fee_type,
-                notify_id = requst.notify_id,
-                transaction_id = requst.transaction_id,
-                out_trade_no = requst.out_trade_no,
-                attach = requst.attach,
-                time_end = requst.time_end,
-                transport_fee = requst.transport_fee,
-                product_fee = requst.product_fee,
-                discount = requst.discount,
-                buyer_alias = requst.buyer_alias,
-                OpenId = requst.OpenId,
-                AppId = requst.AppId,
-                IsSubscribe = requst.IsSubscribe,
-                TimeStamp = requst.TimeStamp,
-                NonceStr = requst.NonceStr,
-                AppSignature = requst.AppSignature,
-                SignMethod = requst.SignMethod
-            });
-
-            return new Response<bool>
-            {
-                Message = new ApiMessage
-                {
-                    StatusCode = result.StatusCode
-                },
-                Result = result.Result
-            };
-        }
-
-        [HttpPost]
-        [TokenFilter]
-        public Response<bool> WechatPaymentDeliveryNotify(WechatPaymentStateRequest requst)
-        {
-            if (requst == null)
-            {
-                return new Response<bool>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.System.InvalidRequest
-                    }
-                };
-            }
-
-            if (!this.ValidateUserId(requst.UserId))
-            {
-                return new Response<bool>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    }
-                };
-            }
-            var result = this.paymentServices.WechatPaymentDeliveryNotify(this.Source, new WechatPaymentStateParameter
-                {
-                    OrderId = requst.OrderId,
-                    OrderType = requst.OrderType,
-                    sign_type = requst.sign_type,
-                    service_version = requst.service_version,
-                    input_charset = requst.input_charset,
-                    sign = requst.sign,
-                    sign_key_index = requst.sign_key_index,
-                    trade_mode = requst.trade_mode,
-                    trade_state = requst.trade_state,
-                    pay_info = requst.pay_info,
-                    partner = requst.partner,
-                    bank_type = requst.bank_type,
-                    bank_billno = requst.bank_billno,
-                    total_fee = requst.total_fee,
-                    fee_type = requst.fee_type,
-                    notify_id = requst.notify_id,
-                    transaction_id = requst.transaction_id,
-                    out_trade_no = requst.out_trade_no,
-                    attach = requst.attach,
-                    time_end = requst.time_end,
-                    transport_fee = requst.transport_fee,
-                    product_fee = requst.product_fee,
-                    discount = requst.discount,
-                    buyer_alias = requst.buyer_alias,
-                    OpenId = requst.OpenId,
-                    AppId = requst.AppId,
-                    IsSubscribe = requst.IsSubscribe,
-                    TimeStamp = requst.TimeStamp,
-                    NonceStr = requst.NonceStr,
-                    AppSignature = requst.AppSignature,
-                    SignMethod = requst.SignMethod
-                });
-            return new Response<bool>
-            {
-                Message = new ApiMessage
-                {
-                    StatusCode = result.StatusCode
-                },
-                Result = result.Result
-            };
-        }
-
     }
 }

@@ -187,5 +187,11 @@ namespace Ets.SingleApi.Services
         {
             throw new NotImplementedException();
         }
+
+
+        public PaymentResult<WechatResponsePaymentDataQrPackage> PaymentQrPackage(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

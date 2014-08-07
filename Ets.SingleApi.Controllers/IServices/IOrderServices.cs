@@ -51,6 +51,25 @@ namespace Ets.SingleApi.Controllers.IServices
         /// ----------------------------------------------------------------------------------------
         ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId, int orderType, int orderSourceType);
 
+
+        /// <summary>
+        /// 取得订单详情
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">订单号</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
+        /// <returns>
+        /// ServicesResult{IOrderModel}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 13:48
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<TangShiOrderBaseModel> GetOrderBase(string source, int orderId, int orderType, int orderSourceType);
+
+
         /// <summary>
         /// 保存订单信息
         /// </summary>

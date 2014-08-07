@@ -107,6 +107,8 @@
     <Compile Include="Controller\EtsWapTangShiShoppingCartShoppingRequst.cs" />
     <Compile Include="Controller\WechatPaymentRequest.cs" />
     <Compile Include="Controller\WechatPaymentRequestQr.cs" />
+    <Compile Include="Controller\WechatPaymentRequestQrPackage.cs" />
+    <Compile Include="Controller\WechatPaymentResponseQrPackage.cs" />
     <Compile Include="Controller\WechatPaymentStateRequest.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartDeskRequst.cs" />
     <Compile Include="Controller\EtsWapDingTaiShoppingCartOrderConfirmRequst.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Controller\AlipayPaymentVerifyRequst.cs" />
     <Compile Include="Controller\AlipayPaymentBackgroundNoticeRequst.cs" />
     <Compile Include="Controller\PaymentMethodResult.cs" />
+    <Compile Include="Controller\WechatTableReservationPaymentStateRequest.cs" />
     <Compile Include="CouponCodeType.cs" />
     <Compile Include="DefaultServicesResult.cs" />
     <Compile Include="DeliveryMethodType.cs" />
@@ -218,6 +221,7 @@
     <Compile Include="Services\SupplierDeliveryTimeModel.cs" />
     <Compile Include="Controller\UserToken.cs" />
     <Compile Include="Services\SupplierSimpleModel.cs" />
+    <Compile Include="Services\TangShiOrderBaseModel.cs" />
     <Compile Include="Services\UserToken.cs" />
     <Compile Include="Services\PackageDishModel.cs" />
     <Compile Include="Services\PackageCuisineModel.cs" />
@@ -234,6 +238,7 @@
     <Compile Include="Services\TangShiOrderDishModel.cs" />
     <Compile Include="Services\WechatPaymentParameter.cs" />
     <Compile Include="Services\WechatPaymentParameterQr.cs" />
+    <Compile Include="Services\WechatPaymentParameterQrPackage.cs" />
     <Compile Include="Services\WechatPaymentStateParameter.cs" />
     <Compile Include="Services\QueueDeskModel.cs" />
     <Compile Include="Services\GetQueueDeskListParameter.cs" />
