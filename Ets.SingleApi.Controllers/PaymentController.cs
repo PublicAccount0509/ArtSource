@@ -2,9 +2,11 @@
 
 namespace Ets.SingleApi.Controllers
 {
+    using System;
     using System.Net.Http;
     using System.ServiceModel.Channels;
     using System.Web;
+    using System.Xml.Serialization;
 
     using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
@@ -582,7 +584,7 @@ namespace Ets.SingleApi.Controllers
                                                                                                                 ProductId = request.ProductId.Value,
                                                                                                                 SignMethod = request.SignMethod.Value,
                                                                                                                 TimeStamp = request.TimeStamp,
-                                                                                                                SpbillCreateIp =GetClientIp(Request),
+                                                                                                                SpbillCreateIp = GetClientIp(Request),
                                                                                                                 TotalFee = orderEntity.Result.CustomerTotal,
                                                                                                                 IsConfirm = orderEntity.Result.IsConfirm,
                                                                                                                 IsPaid = orderEntity.Result.IsPaId,
@@ -852,19 +854,91 @@ namespace Ets.SingleApi.Controllers
         /// Wechats the payment notify.
         /// </summary>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="requst">The requst</param>
         /// <returns>
         /// String
         /// </returns>
-        /// 创建者：孟祺宙 
+        /// 创建者：孟祺宙
         /// 创建日期：2014/8/6 16:05
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public string WechatPaymentNotify(string orderType)
+        public string WechatPaymentNotify(int orderType, [FromUri] WechatPaymentNotifyRequest requst)
         {
+            string.Format("===============================\r\n THE WechatPaymentNotify \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+
+            var postContentXml = Request.Content.ReadAsStringAsync().Result;
+            var paymentNotifyXml = XmlSerializationUtility<WechatPaymentNotifyXml>.XmlDeserialize(postContentXml);
+
+            var paymentState = new WechatPaymentStateParameter
+                                   {
+                                       OrderId = int.Parse(requst.out_trade_no),
+                                       OrderType = orderType,
+                                       sign_type = requst.sign_type,
+                                       input_charset = requst.input_charset,
+                                       sign = requst.sign,
+                                       trade_mode = requst.trade_mode,
+                                       trade_state = requst.trade_state,
+                                       partner = requst.partner,
+                                       bank_type = requst.bank_type,
+                                       bank_billno = requst.bank_billno,
+                                       total_fee = requst.total_fee,
+                                       fee_type = requst.fee_type,
+                                       notify_id = requst.notify_id,
+                                       transaction_id = requst.transaction_id,
+                                       out_trade_no = requst.out_trade_no,
+                                       attach = requst.attach,
+                                       time_end = requst.time_end,
+                                       transport_fee = requst.transport_fee,
+                                       product_fee = requst.product_fee,
+                                       discount = requst.discount,
+                                       OpenId = paymentNotifyXml.OpenId,
+                                       AppId = paymentNotifyXml.AppId,
+                                       IsSubscribe = paymentNotifyXml.IsSubscribe,
+                                       TimeStamp = paymentNotifyXml.TimeStamp,
+                                       NonceStr = paymentNotifyXml.NonceStr,
+                                       AppSignature = paymentNotifyXml.AppSignature,
+                                       SignMethod = paymentNotifyXml.SignMethod
+                                   };
+
+            var paymentStateResult = this.paymentServices.WeChatPaymentState(this.Source, paymentState);
+            if (paymentStateResult == null || paymentStateResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                string.Format("===============================\r\n THE WechatPaymentNotify WeChatPaymentState Fail 01 \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                var flag = TryChangeOrderState(this.Source, paymentState);
+                if (!flag) return "fail";
+            }
+            string.Format("===============================\r\n THE WechatPaymentNotify WeChatPaymentState Success \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+            var paymentNotifyResult = this.paymentServices.WechatPaymentDeliveryNotify(this.Source, paymentState);
+
+            if (paymentNotifyResult == null || paymentNotifyResult.StatusCode != (int)StatusCode.Succeed.Ok || !paymentNotifyResult.Result)
+            {
+                return "fail";
+            }
+            string.Format("===============================\r\n THE WechatPaymentNotify WechatPaymentDeliveryNotify Success \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
             return "success";
         }
+        /// <summary>
+        /// 如果查询订单或者更改订单失败，再试一次修改
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="wechatPaymentState">State of the wechat payment.</param>
+        /// <returns>
+        /// The Boolean
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/7 14:11
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [NonAction]
+        private bool TryChangeOrderState(string source, WechatPaymentStateParameter wechatPaymentState)
+        {
+            var paymentStateResult = this.paymentServices.WeChatPaymentState(source, wechatPaymentState);
+            return paymentStateResult != null && paymentStateResult.StatusCode == (int)StatusCode.Succeed.Ok;
+        }
+
 
         //[HttpPost]
         //[TokenFilter]

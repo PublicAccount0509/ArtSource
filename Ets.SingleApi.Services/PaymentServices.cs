@@ -1134,7 +1134,7 @@ namespace Ets.SingleApi.Services
             string out_trade_no = parameter.out_trade_no,
                    transaction_id = parameter.transaction_id,
                    openId = parameter.OpenId;
-            var isNotify = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.DeliveryNotify(out_trade_no, transaction_id, openId);
+            var isNotify = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.Notify(out_trade_no, transaction_id, openId);
 
             if (!isNotify)
             {

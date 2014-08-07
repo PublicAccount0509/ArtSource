@@ -396,8 +396,10 @@ namespace Ets.SingleApi.Services.Payment
                 // "weixin://wxpay/bizpayurl?sign=" + sign + "&appid=" + TenpayUtil.appid + "&productid=" + productid + "&timeStamp=" + timeStamp + "&nonceStr=" + nonceStr;
                 var sign = this.BuildPaySign();
 
-                const string Template = "weixin://wxpay/bizpayurl?sign={0}&appid={1}&productid={2}&timeStamp={3}&nonceStr={4}";
-                return string.Format(Template, sign, this.appid, this.productid, this.timestamp, this.noncestr);
+                string qr = string.Format("weixin://wxpay/bizpayurl?sign={0}&appid={1}&productid={2}&timeStamp={3}&nonceStr={4}", sign, this.appid, this.productid, this.timestamp, this.noncestr);
+
+                string template = "{ \"Qr\": \"$$Qr$$\", \"OrderId\": \"$$OrderId$$\" }";
+                return template.Replace("$$Qr$$", qr).Replace("$$OrderId$$", this.productid);
             }
 
             /// <summary>
@@ -941,7 +943,7 @@ namespace Ets.SingleApi.Services.Payment
             /// 修改者：
             /// 修改时间：
             /// ----------------------------------------------------------------------------------------
-            public static bool DeliveryNotify(string out_trade_no, string transid, string openid)
+            public static bool Notify(string out_trade_no, string transid, string openid)
             {
                 var dic = new Dictionary<string, string>
                 {

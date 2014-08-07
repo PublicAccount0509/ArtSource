@@ -105,6 +105,8 @@
     <Compile Include="Controller\EtsWapTangShiShoppingCartOrderRequst.cs" />
     <Compile Include="Controller\EtsWapTangShiShoppingCartRequst.cs" />
     <Compile Include="Controller\EtsWapTangShiShoppingCartShoppingRequst.cs" />
+    <Compile Include="Controller\WechatPaymentNotifyRequest.cs" />
+    <Compile Include="Controller\WechatPaymentNotifyXml.cs" />
     <Compile Include="Controller\WechatPaymentRequest.cs" />
     <Compile Include="Controller\WechatPaymentRequestQr.cs" />
     <Compile Include="Controller\WechatPaymentRequestQrPackage.cs" />
