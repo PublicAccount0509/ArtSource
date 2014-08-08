@@ -33,6 +33,9 @@
     <Reference Include="Castle.Services.Transaction">
       <HintPath>..\lib\Castle.Services.Transaction.dll</HintPath>
     </Reference>
+    <Reference Include="Ets.MessagePlat">
+      <HintPath>E:\静态页\Dll\Dll\Ets.MessagePlat.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -157,6 +160,7 @@
     <Compile Include="Payment\AlipayPaymentBackgroundNoticeData.cs" />
     <Compile Include="Payment\WechatPaymentDataQr.cs" />
     <Compile Include="Payment\WechatPaymentDataQrPackage.cs" />
+    <Compile Include="Payment\WechatPaymentPushService.cs" />
     <Compile Include="Payment\WechatResponsePaymentDataQrPackage.cs" />
     <Compile Include="SendPassword\EmailSendPassword.cs" />
     <Compile Include="SendPassword\ISendPassword.cs" />

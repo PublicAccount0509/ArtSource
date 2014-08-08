@@ -16,6 +16,7 @@ namespace Ets.SingleApi.Controllers
     using Ets.SingleApi.Utility;
     using System.Collections.Generic;
     using System.Web.Http;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// 类名称：PaymentController

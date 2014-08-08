@@ -11,6 +11,7 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// 类名称：PaymentServices
@@ -1101,6 +1102,7 @@ namespace Ets.SingleApi.Services
             var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, orderId, true);
             string.Format("===============================\r\n THE WeChatPaymentState Success \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
 
+            Task.Factory.StartNew(() => { new WechatPaymentPushService().NotifyMsg(orderId); });
             return new ServicesResult<bool>
             {
                 Result = saveOrderPaidResult.Result,
