@@ -46,12 +46,18 @@ namespace Ets.SingleApi.Services.Payment
             template.TransmissionContent = JsonConvert.SerializeObject(new
                                                                            {
                                                                                StatusCode = (int)StatusCode.Succeed.Ok,
-                                                                               OrderId = orderId
+                                                                               OrderId = orderId,
+                                                                               IsPaid = true
                                                                            });
 
             //通知模板
             NotificationTemplate notify = new NotificationTemplate();
-            notify.NotifyContent = JsonConvert.SerializeObject("1111");
+            notify.NotifyContent = JsonConvert.SerializeObject(new
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                OrderId = orderId,
+                IsPaid = true
+            });
             notify.NotifyVoice = "default";
             notify.NotifyTitle = "xxx";
             NotifyAction action = new NotifyAction();
