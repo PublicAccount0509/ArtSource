@@ -1,7 +1,6 @@
 ﻿
 namespace Ets.SingleApi.Controllers.IServices
 {
-    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
@@ -227,7 +226,7 @@ namespace Ets.SingleApi.Controllers.IServices
         ServicesResult<string> WechatPaymentQr(string source, WechatPaymentParameterQr parameter);
 
         /// <summary>
-        /// Wechats the payment qr package.
+        /// 微信二维码支付回调 package
         /// </summary>
         /// <param name="source">The source</param>
         /// <param name="parameter">The parameter</param>
@@ -240,5 +239,20 @@ namespace Ets.SingleApi.Controllers.IServices
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResult<string> WechatPaymentQrPackage(string source, WechatPaymentParameterQrPackage parameter);
+
+        /// <summary>
+        /// 推送APP
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="pushAppParameter">The pushAppParameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/11 17:26
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> PushApp(string source, PushAppParameter pushAppParameter);
     }
 }

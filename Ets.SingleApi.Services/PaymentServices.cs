@@ -2,16 +2,15 @@
 
 namespace Ets.SingleApi.Services
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
+    using System.Xml;
 
     /// <summary>
     /// 类名称：PaymentServices
@@ -1102,7 +1101,7 @@ namespace Ets.SingleApi.Services
             var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, orderId, true);
             string.Format("===============================\r\n THE WeChatPaymentState Success \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
 
-            Task.Factory.StartNew(() => { new WechatPaymentPushService().NotifyMsg(orderId); });
+
             return new ServicesResult<bool>
             {
                 Result = saveOrderPaidResult.Result,
@@ -1133,10 +1132,10 @@ namespace Ets.SingleApi.Services
                     StatusCode = (int)StatusCode.System.InvalidRequest
                 };
             }
-            string out_trade_no = parameter.out_trade_no,
-                   transaction_id = parameter.transaction_id,
+            string outTradeNo = parameter.out_trade_no,
+                   transactionId = parameter.transaction_id,
                    openId = parameter.OpenId;
-            var isNotify = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.Notify(out_trade_no, transaction_id, openId);
+            var isNotify = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.Notify(outTradeNo, transactionId, openId);
 
             if (!isNotify)
             {
@@ -1152,11 +1151,6 @@ namespace Ets.SingleApi.Services
                     Result = true
                 };
         }
-
-
-
-
-
         #region
         ///// <summary>
         ///// 获取新浪微博支付请求Url
@@ -1338,5 +1332,28 @@ namespace Ets.SingleApi.Services
         //}
         #endregion
 
+
+        /// <summary>
+        /// 推送APP
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="pushAppParameter">The pushAppParameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/11 17:26
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> PushApp(string source, PushAppParameter pushAppParameter)
+        {
+            var result = new WechatPaymentPushService().NotifyMsg(pushAppParameter.OrderId);
+            return new ServicesResult<string>
+                       {
+                           StatusCode = (int)StatusCode.Succeed.Ok,
+                           Result = result
+                       };
+        }
     }
 }

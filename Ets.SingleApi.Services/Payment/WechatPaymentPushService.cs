@@ -3,7 +3,6 @@ namespace Ets.SingleApi.Services.Payment
 {
     using Ets.MessagePlat.Services;
     using Ets.SingleApi.Utility;
-
     using Newtonsoft.Json;
 
     /// <summary>
@@ -30,7 +29,7 @@ namespace Ets.SingleApi.Services.Payment
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public bool NotifyMsg(int orderId)
+        public string NotifyMsg(string orderId)
         {
             IEtsPush push = new IEtsPush();
             //单推消息类型
@@ -84,7 +83,7 @@ namespace Ets.SingleApi.Services.Payment
             target.ClientId = "user_0";
             //单推
             IPushResult ret = push.pushMessageToSingle(message, target);
-            return ret.result;
+            return ret.message;
         }
     }
 

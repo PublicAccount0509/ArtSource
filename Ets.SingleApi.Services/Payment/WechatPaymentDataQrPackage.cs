@@ -182,5 +182,6 @@ namespace Ets.SingleApi.Services.Payment
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public int OrderType { get; set; }
+
     }
 }

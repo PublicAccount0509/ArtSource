@@ -496,7 +496,6 @@ namespace Ets.SingleApi.Controllers
         /// ----------------------------------------------------------------------------------------
         public const string ConstWechatPaymentPartnerId = "1219830301";
 
-
         /// <summary>
         /// 百度统计用AppId
         /// </summary>

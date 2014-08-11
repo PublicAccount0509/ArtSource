@@ -69,7 +69,7 @@ namespace Ets.SingleApi.Services.Payment
                 this.SignMethod = paymentData.SignMethod;
 
                 this.NonceStr = Guid.NewGuid().ToString("N");
-                this.TimeStamp = (DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds.ToString("#");
+                this.TimeStamp = WinDateToLinuxDate(DateTime.Now).ToString();
 
                 this.AppKey = ControllersCommon.ConstWechatPaymentPaySignKey;
             }
@@ -287,7 +287,8 @@ namespace Ets.SingleApi.Services.Payment
                 this.appid = ControllersCommon.ConstWechatPaymentAppId;
                 this.appkey = ControllersCommon.ConstWechatPaymentPaySignKey;
                 this.noncestr = Guid.NewGuid().ToString("N");
-                this.timestamp = (DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds.ToString("#");
+                this.timestamp = WinDateToLinuxDate(DateTime.Now).ToString();
+                //(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds.ToString("#");
                 this.productid = _productid;
             }
 
@@ -399,6 +400,9 @@ namespace Ets.SingleApi.Services.Payment
                 string qr = string.Format("weixin://wxpay/bizpayurl?sign={0}&appid={1}&productid={2}&timeStamp={3}&nonceStr={4}", sign, this.appid, this.productid, this.timestamp, this.noncestr);
 
                 string template = "{ \"Qr\": \"$$Qr$$\", \"OrderId\": \"$$OrderId$$\" }";
+
+
+                // string.Format("===============================\r\n THE SaveTangShiOrder 002 \r\n {0} \r\n===============================", this.ToString()).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                 return template.Replace("$$Qr$$", qr).Replace("$$OrderId$$", this.productid);
             }
 
@@ -528,7 +532,7 @@ namespace Ets.SingleApi.Services.Payment
                 this.attach = _attach;
                 this.partner = ControllersCommon.ConstWechatPaymentPartnerId;
                 this.out_trade_no = _out_trade_no;
-                this.total_fee = ((int)Math.Round(_total_fee * 100)).ToString();//元转成分
+                this.total_fee = "1";//((int)Math.Round(_total_fee * 100)).ToString();//元转成分
                 this.fee_type = "1";
                 this.notify_url = _notify_url;
                 this.spbill_create_ip = _spbill_create_ip;
@@ -904,9 +908,8 @@ namespace Ets.SingleApi.Services.Payment
                                         "\", \"timestamp\":\"" + timestamp + "\", \"app_signature\":\"" +
                                         app_signature +
                                         "\", \"sign_method\":\"sha1\" }";
-                string access_token = GetAccessToken();
 
-                string.Format("\r\n===============================\r\n THE QueryState Call Wechat OrderQuery BEGIN \r\n {0} \r\n {1}\r\n===============================\r\n", access_token, postJsonString).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                string access_token = GetAccessToken();
 
                 string resultJson = HttpRequestPost(postJsonString,
                                                     string.Format(
@@ -921,7 +924,6 @@ namespace Ets.SingleApi.Services.Payment
                 string ret_code = jsonObject["order_info"]["ret_code"].ToString();
                 string trade_state = jsonObject["order_info"]["trade_state"].ToString();
 
-                string.Format("\r\n===============================\r\n THE QueryState Call Wechat OrderQuery END \r\n {0} \r\n \r\n===============================\r\n", resultJson).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
 
 
                 return ret_code == "0" && trade_state == "0";
@@ -965,8 +967,6 @@ namespace Ets.SingleApi.Services.Payment
 
                 string resultJson = HttpRequestPost(postJsonString, string.Format("https://api.weixin.qq.com/pay/delivernotify?access_token={0}", access_token), (ex) => string.Format("===============================\r\n THE DeliveryNotify _HTTP_POST_EX \r\n {0} \r\n {1} \r\n===============================", ex.Message, ex.ToString(), ex.StackTrace).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info));
 
-                string.Format("===============================\r\n THE DeliveryNotify _HTTP_POST_END \r\n {0} \r\n===============================", resultJson).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);//==
-
                 JObject jObject = JObject.Parse(resultJson);
                 return jObject["errcode"].ToString() == "0";
             }
@@ -984,9 +984,9 @@ namespace Ets.SingleApi.Services.Payment
             /// ----------------------------------------------------------------------------------------
             private static string GetAccessToken()
             {
-                string retJson = HttpRequestGetRetString(string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", ControllersCommon.ConstWechatPaymentAppId, ControllersCommon.ConstWechatPaymentAppSecret), (content) => content);
-                JsonValue jsonValue = JsonValue.Parse(retJson);
-                return jsonValue["access_token"];
+                    string retJson = HttpRequestGetRetString(string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", ControllersCommon.ConstWechatPaymentAppId, ControllersCommon.ConstWechatPaymentAppSecret), (content) => content);
+                    JsonValue jsonValue = JsonValue.Parse(retJson);
+                    return jsonValue["access_token"];
             }
 
             /// <summary>

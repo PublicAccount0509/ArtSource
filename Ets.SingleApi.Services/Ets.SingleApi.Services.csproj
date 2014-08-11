@@ -184,7 +184,7 @@
     <Compile Include="ShoppingCart\IEtsWapDingTaiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\EtsWapPaiDuiShoppingCartProvider.cs" />
     <Compile Include="ShoppingCart\IEtsWapPaiDuiShoppingCartProvider.cs" />
-    <Compile Include="WechatPaymentQueryData.cs" />
+    <Compile Include="Payment\WechatPaymentQueryData.cs" />
     <Compile Include="SmsServices.cs" />
     <Compile Include="SupplierServices.cs" />
     <Compile Include="UsersServices.cs" />

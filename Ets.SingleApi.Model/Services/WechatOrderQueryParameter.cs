@@ -2,29 +2,28 @@
 namespace Ets.SingleApi.Model.Services
 {
     /// <summary>
-    /// 类名称：WechatPaymentParameterQr
+    /// 类名称：WechatOrderQueryParameter
     /// 命名空间：Ets.SingleApi.Model.Services
-    /// 类功能：微信二维码支付订单查询
+    /// 类功能：微信支付订单查询，请求参数
     /// </summary>
     /// 创建者：孟祺宙 
-    /// 创建日期：2014/8/5 16:58
+    /// 创建日期：2014/8/11 15:12
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class WechatPaymentParameterQr
+    public class WechatOrderQueryParameter
     {
         /// <summary>
-        /// 订单号
+        /// Gets or sets the OrderNumber of WechatOrderQueryParameter
         /// </summary>
         /// <value>
-        /// The Productid
+        /// The OrderNumber
         /// </value>
         /// 创建者：孟祺宙 
-        /// 创建日期：2014/8/5 16:59
+        /// 创建日期：2014/8/11 15:12
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string Productid { get; set; }
+        public int OrderNumber { get; set; }
     }
-
 }

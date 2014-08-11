@@ -3,10 +3,6 @@
 namespace Ets.SingleApi.Controllers
 {
     using System;
-    using System.Net.Http;
-    using System.ServiceModel.Channels;
-    using System.Web;
-    using System.Xml.Serialization;
 
     using Ets.SingleApi.Controllers.Filters;
     using Ets.SingleApi.Controllers.IServices;
@@ -15,8 +11,12 @@ namespace Ets.SingleApi.Controllers
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
     using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.ServiceModel.Channels;
+    using System.Text;
+    using System.Web;
     using System.Web.Http;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// 类名称：PaymentController
@@ -562,17 +562,23 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public string WechatPaymentQrPackage()
+        public HttpResponseMessage WechatPaymentQrPackage()
         {
+
+
             var content = this.Request.Content.ReadAsStringAsync().Result;
-            if (string.IsNullOrEmpty(content)) return string.Empty;
+            if (string.IsNullOrEmpty(content)) return new HttpResponseMessage() { StatusCode = HttpStatusCode.Unauthorized };
+
+
 
             var request = XmlSerializationUtility<WechatPaymentRequestQrPackage>.XmlDeserialize(content);
+
+
 
             var orderEntity = this.orderServices.GetOrderBase(this.Source, int.Parse(request.ProductId.Value), (int)OrderType.TangShi, (int)OrderSourceType.EtsWap);
             if (orderEntity.StatusCode != (int)StatusCode.Succeed.Ok)
             {
-                return string.Empty;
+                return new HttpResponseMessage() { StatusCode = HttpStatusCode.Forbidden };
             }
 
             var wechatPaymentQrPackageResult = this.paymentServices.WechatPaymentQrPackage(this.Source, new WechatPaymentParameterQrPackage
@@ -591,7 +597,14 @@ namespace Ets.SingleApi.Controllers
                                                                                                                 IsPaid = orderEntity.Result.IsPaId,
                                                                                                                 OrderType = (int)OrderType.TangShi
                                                                                                             });
-            return wechatPaymentQrPackageResult.Result;
+
+            string.Format("===============================\r\n THE WechatPaymentQrPackage RET \r\n {0}===============================", wechatPaymentQrPackageResult.Result).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+            //  return ;
+            return new HttpResponseMessage
+                       {
+                           Content = new StringContent(wechatPaymentQrPackageResult.Result, Encoding.UTF8, "application/xml"),
+                           StatusCode = HttpStatusCode.OK
+                       };
         }
 
         /// <summary>
@@ -852,9 +865,8 @@ namespace Ets.SingleApi.Controllers
         }
 
         /// <summary>
-        /// Wechats the payment notify.
+        /// 二维码扫描支付成功回调
         /// </summary>
-        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <param name="requst">The requst</param>
         /// <returns>
         /// String
@@ -865,17 +877,16 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public string WechatPaymentNotify(int orderType, [FromUri] WechatPaymentNotifyRequest requst)
+        public string WechatPaymentNotify([FromUri] WechatPaymentNotifyRequest requst)
         {
-            string.Format("===============================\r\n THE WechatPaymentNotify \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
-
+            //<param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
             var postContentXml = Request.Content.ReadAsStringAsync().Result;
             var paymentNotifyXml = XmlSerializationUtility<WechatPaymentNotifyXml>.XmlDeserialize(postContentXml);
 
             var paymentState = new WechatPaymentStateParameter
                                    {
                                        OrderId = int.Parse(requst.out_trade_no),
-                                       OrderType = orderType,
+                                       OrderType = int.Parse(requst.attach),
                                        sign_type = requst.sign_type,
                                        input_charset = requst.input_charset,
                                        sign = requst.sign,
@@ -910,8 +921,17 @@ namespace Ets.SingleApi.Controllers
                 var flag = TryChangeOrderState(this.Source, paymentState);
                 if (!flag) return "fail";
             }
-            string.Format("===============================\r\n THE WechatPaymentNotify WeChatPaymentState Success \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
             var paymentNotifyResult = this.paymentServices.WechatPaymentDeliveryNotify(this.Source, paymentState);
+
+            try
+            {
+                var pushAppResult = this.paymentServices.PushApp(this.Source, new PushAppParameter { OrderId = requst.out_trade_no });
+                string.Format("===============================\r\n THE WechatPaymentNotify WeChatPaymentState PushApp \r\n {0}\r\n===============================",pushAppResult.Result).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+            }
+            catch (Exception ex)
+            {
+                string.Format("===============================\r\n THE WechatPaymentNotify WeChatPaymentState PushApp ERR \r\n {0}\r\n===============================", ex.Message).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+            }
 
             if (paymentNotifyResult == null || paymentNotifyResult.StatusCode != (int)StatusCode.Succeed.Ok || !paymentNotifyResult.Result)
             {

@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Services
 {
+    using System;
+
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Services.Payment;
     using Ets.SingleApi.Utility;
@@ -121,8 +123,8 @@
                 return new PaymentResult<WechatResponsePaymentDataQrPackage> { Result = new WechatResponsePaymentDataQrPackage(), StatusCode = (int)StatusCode.System.Unauthorized };
             }
 
-            var notifyUrl = "http://htjnew.singleapi.etaoshi.com/payment/WechatPaymentNotify/" + paymentData.OrderType.ToString();
-            var package = new WechatPaymentCommon.PackAgeEntity("黄太吉，快速点餐机", "", int.Parse(paymentData.ProductId), paymentData.TotalFee, notifyUrl, paymentData.SpbillCreateIp, null, null, null, null).BuildPackAge();
+            const string NotifyUrl = "http://htjnew.singleapi.etaoshi.com/api/payment/WechatPaymentNotify/";
+            var package = new WechatPaymentCommon.PackAgeEntity("黄太吉传统美食，堂食", paymentData.OrderType.ToString(), int.Parse(paymentData.ProductId), paymentData.TotalFee, NotifyUrl, paymentData.SpbillCreateIp, null, null, null, null).BuildPackAge();
 
             int retcode = 0;
             string reterrmsg = "获取订单信息成功";
@@ -171,17 +173,23 @@
                     StatusCode = (int)StatusCode.System.InvalidPaymentRequest
                 };
             }
-            var isdsd = WechatPaymentCommon.BrandWechatPayCallBack.ValidateAppSignature(wechatPaymentQueryData);
 
-            if (!isdsd)
+            if (!string.IsNullOrEmpty(wechatPaymentQueryData.AppSignature))
             {
-                return new PaymentResult<bool>
+                var isdsd = WechatPaymentCommon.BrandWechatPayCallBack.ValidateAppSignature(wechatPaymentQueryData);
+
+                if (!isdsd)
                 {
-                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
-                    Result = false
-                };
+                    return new PaymentResult<bool>
+                               {
+                                   StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+                                   Result = false
+                               };
+                }
             }
+
             var isPayment = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.OrderQuery(wechatPaymentQueryData.out_trade_no);
+
             if (!isPayment)
             {
                 return new PaymentResult<bool>

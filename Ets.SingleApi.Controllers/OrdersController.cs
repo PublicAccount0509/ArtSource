@@ -124,24 +124,26 @@ namespace Ets.SingleApi.Controllers
                 Result = getOrderResult.Result
             };
         }
+
         /// <summary>
-        /// 取得订单详情
+        ///  主动查询订单基本状态，如未支付则去查询微信端
         /// </summary>
         /// <param name="id">订单号</param>
         /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
         /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞 3 etswap</param>
         /// <returns>
-        /// 返回结果
+        /// Response{TangShiOrderBaseModel}
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/23/2013 9:26 PM
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/11 15:00
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpGet]
-        public Response<TangShiOrderBaseModel> GetOrderBase(int id, int orderType, int orderSourceType = 3)
+        public Response<TangShiOrderBaseModel> GetOrderWithWechat(int id, int orderType, int orderSourceType = 3)
         {
             var getOrderResult = this.orderServices.GetOrderBase(this.GetSource(orderType), id, orderType, orderSourceType);
+
             if (getOrderResult.Result == null)
             {
                 return new Response<TangShiOrderBaseModel>
@@ -151,6 +153,17 @@ namespace Ets.SingleApi.Controllers
                         StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
                     }
                 };
+            }
+            //如果库内未支付则去查询微信端
+            if (!getOrderResult.Result.IsPaId)
+            {
+                var result = this.paymentServices.WeChatPaymentState(this.Source, new WechatPaymentStateParameter
+                                                                                      {
+                                                                                          OrderId = id,
+                                                                                          out_trade_no = id.ToString(),
+                                                                                          OrderType = orderType
+                                                                                      });
+                getOrderResult.Result.IsPaId = result.Result;//==
             }
 
             return new Response<TangShiOrderBaseModel>
@@ -494,6 +507,7 @@ namespace Ets.SingleApi.Controllers
                 {
                     Productid = getOrderResult.Result
                 });
+                string.Format("===============================\r\n THE SaveTangShiOrder \r\n {0} \r\n===============================", wechatPaymentQrResult.Result).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                 return new Response<string>
                 {
                     Message = new ApiMessage

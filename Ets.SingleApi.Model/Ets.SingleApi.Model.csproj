@@ -211,6 +211,7 @@
     <Compile Include="Services\LocationCity.cs" />
     <Compile Include="Services\OrderBDInfo.cs" />
     <Compile Include="Services\ParameterBase.cs" />
+    <Compile Include="Services\PushAppParameter.cs" />
     <Compile Include="Services\QueueModel.cs" />
     <Compile Include="Services\QueueDetailModel.cs" />
     <Compile Include="Services\SaveQueueDeskParameter.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Services\EtsWapShoppingCartModel.cs" />
     <Compile Include="Services\TangShiOrderDetailModel.cs" />
     <Compile Include="Services\TangShiOrderDishModel.cs" />
+    <Compile Include="Services\WechatOrderQueryParameter.cs" />
     <Compile Include="Services\WechatPaymentParameter.cs" />
     <Compile Include="Services\WechatPaymentParameterQr.cs" />
     <Compile Include="Services\WechatPaymentParameterQrPackage.cs" />
