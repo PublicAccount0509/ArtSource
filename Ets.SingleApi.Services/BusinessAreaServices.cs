@@ -21,6 +21,17 @@
     /// ----------------------------------------------------------------------------------------
     public class BusinessAreaServices : IBusinessAreaServices
     {
+
+        /// <summary>
+        /// 字段supplierEntityRepository
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/7/25 15:48
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierEntity> supplierEntityRepository;
+
         /// <summary>
         /// 字段regionEntityRepository
         /// </summary>
@@ -51,9 +62,11 @@
         /// ----------------------------------------------------------------------------------------
         private readonly List<IBusinessArea> businessAreaList;
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessAreaServices" /> class.
         /// </summary>
+        /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
         /// <param name="regionEntityRepository">The regionEntityRepository</param>
         /// <param name="addrBusinessAreaEntityRepository">The addrBusinessAreaEntityRepository</param>
         /// <param name="businessAreaList">The businessAreaList</param>
@@ -63,14 +76,68 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public BusinessAreaServices(
+            INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<RegionEntity> regionEntityRepository,
             INHibernateRepository<AddrBusinessAreaEntity> addrBusinessAreaEntityRepository,
             List<IBusinessArea> businessAreaList)
         {
+            this.supplierEntityRepository = supplierEntityRepository;
             this.regionEntityRepository = regionEntityRepository;
             this.addrBusinessAreaEntityRepository = addrBusinessAreaEntityRepository;
             this.businessAreaList = businessAreaList;
         }
+
+
+        /// <summary>
+        ///  获取城市列表信息 根据suppliergroupid
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="provinceCode">The provinceCode</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <returns>
+        /// ServicesResultList{BusinessAreaModel}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/7/25 16:07
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<BusinessAreaModel> GetCityListBySupplierGroupId(string source, string provinceCode, int supplierGroupId)
+        {
+            var queryable = this.supplierEntityRepository.EntityQueryable.Where(p => p.SupplierGroupId == supplierGroupId && p.Login.IsEnabled);
+            var q = from p in queryable group p by p.RegionCode into g select g;
+            var regionCodes = q.Select(item => item.Key).ToList();
+
+            var citys = this.regionEntityRepository.EntityQueryable.Where(item => regionCodes.Contains(item.Code)).Select(item => item.CityId).ToList();
+            var codes = this.regionEntityRepository.EntityQueryable.Where(item => citys.Contains(item.Id)).Select(item => item.Code).ToList();
+
+
+            var queryableSource = this.regionEntityRepository.EntityQueryable.Where(item => codes.Contains(item.Code)).ToList();
+
+            var list = queryableSource.Select(p => new BusinessAreaModel
+            {
+                Id = p.Id.ToString(),
+                Name = p.Name,
+                BriefName = p.BriefName,
+                ChnName = p.ChnName,
+                EnName = p.EnName,
+                BriefJPing = p.BriefJPing,
+                BriefQPing = p.BriefQPing,
+                Depth = p.Depth,
+                Code = p.Code,
+                Host = p.Host,
+                JPing = p.JPing,
+                QPing = p.QPing,
+                ParentId = p.F
+            }).ToList();
+            //var businessArea = this.businessAreaList.FirstOrDefault(p => p.AreaType == AreaType.City);
+            //var list = businessArea == null ? new List<BusinessAreaModel>() : businessArea.GetBusinessAreaData(provinceCode);
+
+            //list = list.Where(item => codes.Contains(item.Code)).ToList();
+
+            return new ServicesResultList<BusinessAreaModel> { ResultTotalCount = list.Count, Result = list };
+        }
+
 
         /// <summary>
         /// 获取国家列表信息
@@ -307,5 +374,50 @@
                 Result = model
             };
         }
+
+        /// <summary>
+        /// 根据regioncode获取城市名称
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="regionCode">The regionCode</param>
+        /// <returns>
+        /// The ServicesResult{BusinessAreaModel}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/7/28 18:11
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<BusinessAreaModel> BusinessCityName(string source, int regionCode)
+        {
+            var cityEntity = this.regionEntityRepository.EntityQueryable.First(item => item.Code == regionCode.ToString());
+
+            var codeEntity = this.regionEntityRepository.EntityQueryable.First(item => cityEntity.Id == item.Id);
+
+            var p = this.regionEntityRepository.EntityQueryable.First(item => codeEntity.Code == item.Code);
+
+            var entity = new BusinessAreaModel
+                       {
+                           Id = p.Id.ToString(),
+                           Name = p.Name,
+                           BriefName = p.BriefName,
+                           ChnName = p.ChnName,
+                           EnName = p.EnName,
+                           BriefJPing = p.BriefJPing,
+                           BriefQPing = p.BriefQPing,
+                           Depth = p.Depth,
+                           Code = p.Code,
+                           Host = p.Host,
+                           JPing = p.JPing,
+                           QPing = p.QPing,
+                           ParentId = p.F
+                       };
+            return new ServicesResult<BusinessAreaModel>
+                       {
+                           ResultTotalCount = 1,
+                           Result = entity
+                       };
+        }
+
     }
 }
