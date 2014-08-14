@@ -183,5 +183,17 @@ namespace Ets.SingleApi.Services.Payment
         /// ----------------------------------------------------------------------------------------
         public int OrderType { get; set; }
 
+        /// <summary>
+        /// 设备号或者 MAC
+        /// </summary>
+        /// <value>
+        /// The DeviceNumber
+        /// </value>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/14 9:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string DeviceNumber { get; set; }
     }
 }

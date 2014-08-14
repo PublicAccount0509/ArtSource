@@ -435,7 +435,8 @@ namespace Ets.SingleApi.Services
                                  TableStatus = tableReservationEntity.TableStatus,
                                  CustomerTotal = tableReservationEntity.CustomerTotal.Value,
                                  IsConfirm = paymentEntity != null,
-                                 IsPaId = tableReservationEntity.IsPaId.HasValue ? tableReservationEntity.IsPaId.Value : false
+                                 IsPaId = tableReservationEntity.IsPaId.HasValue ? tableReservationEntity.IsPaId.Value : false,
+                                 DeviceNumber = tableReservationEntity.ContactName //设备号或者MAC
                              };
 
             return new ServicesResult<TangShiOrderBaseModel>
@@ -804,6 +805,7 @@ namespace Ets.SingleApi.Services
                 IsService = true
             };
 
+            tableReservationEntity.ContactName = tangShiOrdersParameter.DeviceNumber;
             tableReservationEntity.Notes = tangShiOrdersParameter.Remark + tangShiOrdersParameter.TempOrderNumber;
             tableReservationEntity.CustomerTotal = customerTotalFee;
             tableReservationEntity.Total = customerTotalFee;
@@ -815,7 +817,7 @@ namespace Ets.SingleApi.Services
             //tableReservationEntity.CouponCode = order.CouponCode;
             //tableReservationEntity.ContactNumber = delivery.Telephone;
             tableReservationEntity.Contactsex = tangShiOrdersParameter.CustomerSex;
-            tableReservationEntity.ContactName = tangShiOrdersParameter.CustomerName;
+            //tableReservationEntity.ContactName = tangShiOrdersParameter.CustomerName;
             //tableReservationEntity.InvoiceRequired = order.InvoiceRequired;
             //tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
             tableReservationEntity.Path = tangShiOrdersParameter.Path;

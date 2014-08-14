@@ -474,7 +474,7 @@ namespace Ets.SingleApi.Controllers
                     }
                 };
             }
-
+            
             var getOrderResult = this.orderServices.SaveTempOrder(new SaveTangShiOrdersParameter
             {
                 Source = requst.Source,
@@ -486,7 +486,8 @@ namespace Ets.SingleApi.Controllers
                 Remark = requst.Remark,
                 TempOrderNumber = requst.TempOrderNumber,
                 PayMentMethodId = requst.PayMentMethodId,
-                SupplierDishList = requst.SupplierDishList.Deserialize<List<SupplierDishItem>>() ?? new List<SupplierDishItem>()
+                SupplierDishList = requst.SupplierDishList.Deserialize<List<SupplierDishItem>>() ?? new List<SupplierDishItem>(),
+                DeviceNumber = requst.DeviceNumber
             }, this.AppKey, this.AppPassword);
 
             if (getOrderResult.Result == null)

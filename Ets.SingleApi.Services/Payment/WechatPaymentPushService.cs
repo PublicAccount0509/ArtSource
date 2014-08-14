@@ -21,6 +21,7 @@ namespace Ets.SingleApi.Services.Payment
         /// Notifies the MSG.
         /// </summary>
         /// <param name="orderId">The orderId</param>
+        /// <param name="deviceNumber">The deviceNumber</param>
         /// <returns>
         /// String
         /// </returns>
@@ -29,7 +30,7 @@ namespace Ets.SingleApi.Services.Payment
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string NotifyMsg(string orderId)
+        public string NotifyMsg(string orderId, string deviceNumber)
         {
             IEtsPush push = new IEtsPush();
             //单推消息类型
@@ -79,7 +80,7 @@ namespace Ets.SingleApi.Services.Payment
             message.qosInfo = 1;    //1、2一样 推送并离线保存 3 务必收到
             message.pushType = 1;   //推送类型1-推送、2-通知
             Target target = new Target();
-            target.AppId = "H4F6RA9322000071";
+            target.AppId = deviceNumber;//"0022f485fcc4";//PAD:H4F6RA9322000071 
             target.ClientId = "user_0";
             //单推
             IPushResult ret = push.pushMessageToSingle(message, target);

@@ -124,7 +124,7 @@
             }
 
             const string NotifyUrl = "http://htjnew.singleapi.etaoshi.com/api/payment/WechatPaymentNotify/";
-            var package = new WechatPaymentCommon.PackAgeEntity("黄太吉传统美食，堂食", paymentData.OrderType.ToString(), int.Parse(paymentData.ProductId), paymentData.TotalFee, NotifyUrl, paymentData.SpbillCreateIp, null, null, null, null).BuildPackAge();
+            var package = new WechatPaymentCommon.PackAgeEntity("黄太吉传统美食，堂食", string.Format("{0}||{1}", paymentData.OrderType.ToString(), paymentData.DeviceNumber), int.Parse(paymentData.ProductId), paymentData.TotalFee, NotifyUrl, paymentData.SpbillCreateIp, null, null, null, null).BuildPackAge();
 
             int retcode = 0;
             string reterrmsg = "获取订单信息成功";

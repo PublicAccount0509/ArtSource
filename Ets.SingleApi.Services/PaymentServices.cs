@@ -953,7 +953,8 @@ namespace Ets.SingleApi.Services
                                                           TotalFee = parameter.TotalFee,
                                                           IsConfirm = parameter.IsConfirm,
                                                           IsPaid = parameter.IsPaid,
-                                                          OrderType = parameter.OrderType
+                                                          OrderType = parameter.OrderType,
+                                                          DeviceNumber = parameter.DeviceNumber
                                                       });
 
             if (responsePaymentData == null || responsePaymentData.StatusCode != (int)StatusCode.Succeed.Ok)
@@ -1348,7 +1349,12 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         public ServicesResult<string> PushApp(string source, PushAppParameter pushAppParameter)
         {
-            var result = new WechatPaymentPushService().NotifyMsg(pushAppParameter.OrderId);
+            if (pushAppParameter == null || string.IsNullOrEmpty(pushAppParameter.DeviceNumber)) return new ServicesResult<string>
+                                                                                                            {
+                                                                                                                StatusCode = (int)StatusCode.Succeed.Empty
+                                                                                                            };
+
+            var result = new WechatPaymentPushService().NotifyMsg(pushAppParameter.OrderId, pushAppParameter.DeviceNumber);
             return new ServicesResult<string>
                        {
                            StatusCode = (int)StatusCode.Succeed.Ok,
