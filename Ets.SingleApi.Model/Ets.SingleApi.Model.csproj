@@ -220,6 +220,9 @@
     <Compile Include="Services\GetSearchSupplierListParameter.cs" />
     <Compile Include="Services\SupplierCouponModel.cs" />
     <Compile Include="Services\SupplierCouponParameter.cs" />
+    <Compile Include="Services\SupplierDishCustomizationModel.cs" />
+    <Compile Include="Services\SupplierDishCustomizationOptionModel.cs" />
+    <Compile Include="Services\SupplierDishOptionGroupModel.cs" />
     <Compile Include="Services\SupplierServiceTimeModel.cs" />
     <Compile Include="Services\SupplierDeliveryTimeModel.cs" />
     <Compile Include="Controller\UserToken.cs" />
