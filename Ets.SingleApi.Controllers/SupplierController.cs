@@ -2,15 +2,14 @@
 
 namespace Ets.SingleApi.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Http;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Http;
 
     /// <summary>
     /// 类名称：SupplierController
