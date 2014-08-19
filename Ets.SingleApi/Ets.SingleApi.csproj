@@ -239,7 +239,9 @@
     <Content Include="config\log4net\log.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\castle\components\repository.config" />
+    <Content Include="config\castle\components\repository.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\castle\components\interceptor.config">
