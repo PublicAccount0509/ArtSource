@@ -1407,8 +1407,7 @@
                         item.Category.CategoryId,
                         item.Category.CategoryName,
                         item.Category.CategoryNo,
-                        item.SupplierId,
-                        item.SupplierCategoryId
+                        item.SupplierId
                     }).OrderBy(item => item.CategoryNo).ToArray();
 
             var categoryIdList = supplierCategorys.Select(p => p.CategoryId).Distinct().Cast<int?>().ToArray();
@@ -1417,86 +1416,128 @@
                                   where
                                       item.Supplier.SupplierId == supplierId && item.Online && item.IsDel == false
                                       && categoryIdList.Contains(item.SupplierCategoryId)
-                                  group item by item.SupplierCategoryId
-                                      into g
-                                      select new { key = g.Key, val = g }).ToArray();
+                                  select new
+                                             {
+                                                 item.SupplierCategoryId,
+                                                 item.DishNo,
+                                                 item.Price,
+                                                 item.SupplierDishId,
+                                                 item.SupplierDishName,
+                                                 item.SuppllierDishDescription,
+                                                 item.SpicyLevel,
+                                                 item.AverageRating,
+                                                 item.IsCommission,
+                                                 item.IsDiscount,
+                                                 item.Recipe,
+                                                 item.Recommended,
+                                                 item.PackagingFee,
+                                                 SupplierId = item.Supplier == null ? 0 : item.Supplier.SupplierId,
+                                                 ImagePath = string.Empty
+                                             }).ToArray();
 
-            var supplierDishDic = supplierDishes.ToDictionary(item => item.key, item => item.val.Select(
-                k => new
-                    {
-                        k.SupplierCategoryId,
-                        k.DishNo,
-                        k.Price,
-                        k.SupplierDishId,
-                        k.SupplierDishName,
-                        k.SuppllierDishDescription,
-                        k.SpicyLevel,
-                        k.AverageRating,
-                        k.IsCommission,
-                        k.IsDiscount,
-                        k.Recipe,
-                        k.Recommended,
-                        k.PackagingFee,
-                        SupplierId = k.Supplier == null ? 0 : k.Supplier.SupplierId,
-                        ImagePath = string.Empty
-                    }
-                ).ToArray());
+            var supplierDishDic =
+                (from p in supplierDishes group p by p.SupplierCategoryId into g select g).ToDictionary(
+                    item => item.Key, item => item.ToArray());
+                
+                //supplierDisheSource.ToDictionary(item => item.key, item => item.val.Select(
+                //k => new
+                //    {
+                //        k.SupplierCategoryId,
+                //        k.DishNo,
+                //        k.Price,
+                //        k.SupplierDishId,
+                //        k.SupplierDishName,
+                //        k.SuppllierDishDescription,
+                //        k.SpicyLevel,
+                //        k.AverageRating,
+                //        k.IsCommission,
+                //        k.IsDiscount,
+                //        k.Recipe,
+                //        k.Recommended,
+                //        k.PackagingFee,
+                //        SupplierId = k.Supplier == null ? 0 : k.Supplier.SupplierId,
+                //        ImagePath = string.Empty
+                //    }
+                //).ToArray());
 
 
-            var supplierDishIds = supplierDishDic.Values.SelectMany(i => i).Select(p => p.SupplierCategoryId).ToArray();
+            var supplierDishIds = supplierDishes.Select(item => item.SupplierDishId).ToArray();
+                //supplierDishDic.Values.SelectMany(i => i).Select(p => p.SupplierDishId).ToArray();
 
-            var supplierDishImages = this.supplierDishImageEntityRepository.EntityQueryable.Where(item => supplierDishIds.Contains(item.SupplierDishId) && item.Online == true).Select(item => new { item.SupplierDishId, item.ImagePath }).ToDictionary(item => item.SupplierDishId, item => item.ImagePath).ToArray();
+            var supplierDishImageDic = this.supplierDishImageEntityRepository.EntityQueryable.Where(item => supplierDishIds.Contains(item.SupplierDishId) && item.Online == true).Select(item => new { item.SupplierDishId, item.ImagePath }).ToDictionary(item => item.SupplierDishId, item => item.ImagePath);
 
             var supplierDishOptionGroups = (from p in supplierDishCustomizationEntity.EntityQueryable
-                                           where supplierDishIds.Contains(p.SupplierDishId)
-                                           from k in this.optionGroupEntity.EntityQueryable
-                                           where k.OptionGroupId == p.OptionGroupId
-                                           select new SupplierDishOptionGroupModel
-                                                      {
-                                                          SupplierDishId = p.SupplierDishId,
-                                                          OptionGroupId = k.OptionGroupId,
-                                                          OptionGroupTitle = k.OptionGroupTitle,
-                                                          IsMultiple = k.IsMultiple.HasValue && k.IsMultiple.Value,
-                                                          SupplierDishCustomizationOption = (from i in k.CustomizationOptionList
-                                                                                             select new SupplierDishCustomizationOptionModel
-                                                                                                        {
-                                                                                                            OptionId = i.OptionId,
-                                                                                                            OptionGroupId = k.OptionGroupId,
-                                                                                                            OptionTitle = i.OptionTitle,
-                                                                                                            Price = i.Price.HasValue ? i.Price.Value : 0m
-                                                                                                        }).ToArray()
-                                                      }).ToArray();
-            var s = "1";
+                                            where supplierDishIds.Contains(p.SupplierDishId)
+                                            from k in this.optionGroupEntity.EntityQueryable
+                                            where k.OptionGroupId == p.OptionGroupId
+                                            select new SupplierDishOptionGroupModel
+                                                       {
+                                                           SupplierDishId = p.SupplierDishId,
+                                                           OptionGroupId = k.OptionGroupId,
+                                                           OptionGroupTitle = k.OptionGroupTitle,
+                                                           IsMultiple = k.IsMultiple.HasValue && k.IsMultiple.Value
+                                                       }).ToArray();
+
+            var optionGroupIds = supplierDishOptionGroups.Select(item => item.OptionGroupId).ToArray();
+            var customizationOptions = (from p in this.customizationOptionEntity.EntityQueryable
+                                        where optionGroupIds.Contains(p.OptionGroup.OptionGroupId)
+                                        select new SupplierDishCustomizationOptionModel
+                                                   {
+                                                       OptionId = p.OptionId,
+                                                       OptionGroupId = p.OptionGroup.OptionGroupId,
+                                                       OptionTitle = p.OptionTitle,
+                                                       Price = p.Price.HasValue ? p.Price.Value : 0m
+                                                   }).ToArray();
+
+            var customizationOptionDic =
+                (from p in customizationOptions
+                 group p by p.OptionGroupId
+                     into g
+                     select new { key = g.Key, val = g.ToArray() }).ToDictionary(item => item.key, item => item.val);
+
+
             var optionGroupDic = (from p in supplierDishOptionGroups
                                   group p by p.SupplierDishId
                                       into g
-                                      select new { key = g.Key, val = g.Select(k => k).ToArray() }).ToDictionary(
-                                      item => item.key, item => item.val);
+                                      select new
+                                      {
+                                          key = g.Key,
+                                          val = from i in g
+                                                select new SupplierDishOptionGroupModel
+                                                           {
+                                                               SupplierDishId = i.SupplierDishId,
+                                                               OptionGroupId = i.OptionGroupId,
+                                                               OptionGroupTitle = i.OptionGroupTitle,
+                                                               IsMultiple = i.IsMultiple,
+                                                               SupplierDishCustomizationOption = customizationOptionDic.ContainsKey(i.OptionGroupId) ? customizationOptionDic[i.OptionGroupId] : new SupplierDishCustomizationOptionModel[0]
+                                                           }
+                                      }).ToDictionary(
+                                      item => item.key, item => item.val.ToArray());
 
-            //var list = (from cate in supplierCategorys
-            //        select new SupplierCuisineModel
-            //        {
-            //            CategoryId = cate.CategoryId,
-            //            CategoryName = cate.CategoryName,
-            //            SupplierDishList = supplierDishDic[cate.SupplierCategoryId].Select(
-            //            p => new SupplierDishModel
-            //                     {
-            //                         Price = p.Price,
-            //                         ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishImageDic.ContainsKey(p.SupplierDishId) ? supplierDishImageDic[p.SupplierDishId] : string.Empty),
-            //                         SupplierDishId = p.SupplierDishId,
-            //                         SupplierDishName = p.SupplierDishName,
-            //                         SuppllierDishDescription = p.SuppllierDishDescription,
-            //                         AverageRating = p.AverageRating,
-            //                         IsCommission = p.IsCommission,
-            //                         IsDiscount = p.IsDiscount,
-            //                         Recipe = p.Recipe,
-            //                         Recommended = p.Recommended,
-            //                         PackagingFee = p.PackagingFee,
-            //                         SupplierDishOptionGroup = optionGroupDic.ContainsKey(p.SupplierDishId) ? optionGroupDic[p.SupplierDishId] : new SupplierDishOptionGroupModel[0]
-            //                     }).ToList()
-            //        }).ToList();
+            var list = (from cate in supplierCategorys
+                        select new SupplierCuisineModel
+                        {
+                            CategoryId = cate.CategoryId,
+                            CategoryName = cate.CategoryName,
+                            SupplierDishList = supplierDishDic.ContainsKey(cate.CategoryId) ? supplierDishDic[cate.CategoryId].Select(
+                            p => new SupplierDishModel
+                                     {
+                                         Price = p.Price,
+                                         ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishImageDic.ContainsKey(p.SupplierDishId) ? supplierDishImageDic[p.SupplierDishId] : string.Empty),
+                                         SupplierDishId = p.SupplierDishId,
+                                         SupplierDishName = p.SupplierDishName,
+                                         SuppllierDishDescription = p.SuppllierDishDescription,
+                                         AverageRating = p.AverageRating,
+                                         IsCommission = p.IsCommission,
+                                         IsDiscount = p.IsDiscount,
+                                         Recipe = p.Recipe,
+                                         Recommended = p.Recommended,
+                                         PackagingFee = p.PackagingFee,
+                                         SupplierDishOptionGroup = optionGroupDic.ContainsKey(p.SupplierDishId) ? optionGroupDic[p.SupplierDishId] : new SupplierDishOptionGroupModel[0]
+                                     }).ToList() : new List<SupplierDishModel>()
+                        }).ToList();
 
-            var list = new List<SupplierCuisineModel>();
+            //var list = new List<SupplierCuisineModel>();
             return new ServicesResultList<SupplierCuisineModel>
             {
                 ResultTotalCount = list.Count,

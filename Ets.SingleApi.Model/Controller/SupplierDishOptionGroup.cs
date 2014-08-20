@@ -1,7 +1,6 @@
 ﻿
-namespace Ets.SingleApi.Model.Services
+namespace Ets.SingleApi.Model.Controller
 {
-
 
     /// <summary>
     /// 类名称：SupplierDishOptionGroupModel
@@ -13,7 +12,7 @@ namespace Ets.SingleApi.Model.Services
     /// 修改者：
     /// 修改时间：
     /// ----------------------------------------------------------------------------------------
-    public class SupplierDishOptionGroupModel
+    public class SupplierDishOptionGroup
     {
         /// <summary>
         /// Gets or sets the SupplierDishId of SupplierDishOptionGroupModel
@@ -127,7 +126,7 @@ namespace Ets.SingleApi.Model.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public SupplierDishCustomizationOptionModel[] SupplierDishCustomizationOption;
+        public SupplierDishCustomizationOption[] SupplierDishCustomizationOption;
 
 
     }
