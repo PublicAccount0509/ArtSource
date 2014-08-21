@@ -11,7 +11,11 @@
 		<property name="OptionGroupTitle" column="OptionGroupTitle" type="String" />
 		<property name="Description" column="Description" type="String" not-null="false" />
 		<property name="IsMultiple" column="IsMultiple" type="Boolean" not-null="false" />
-		<!--The foreign keys-->
+    <property name="OptionUnit" column="OptionUnit" type="String" not-null="false" />
+    <property name="FreeNum" column="FreeNum" type="Int32" not-null="false" />
+    <property name="IsMandatory" column="IsMandatory" type="Boolean" not-null="false" />
+    <property name="SortID" column="SortID" type="Int32" not-null="false" />
+    <!--The foreign keys-->
 		<bag name="CustomizationOptionList" cascade="none" lazy="true" table="CustomizationOption">
 			<key column="OptionGroupID" />
 			<one-to-many class="Ets.SingleApi.Model.Repository.CustomizationOptionEntity, Ets.SingleApi.Model" />

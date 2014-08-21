@@ -1438,31 +1438,8 @@
             var supplierDishDic =
                 (from p in supplierDishes group p by p.SupplierCategoryId into g select g).ToDictionary(
                     item => item.Key, item => item.ToArray());
-                
-                //supplierDisheSource.ToDictionary(item => item.key, item => item.val.Select(
-                //k => new
-                //    {
-                //        k.SupplierCategoryId,
-                //        k.DishNo,
-                //        k.Price,
-                //        k.SupplierDishId,
-                //        k.SupplierDishName,
-                //        k.SuppllierDishDescription,
-                //        k.SpicyLevel,
-                //        k.AverageRating,
-                //        k.IsCommission,
-                //        k.IsDiscount,
-                //        k.Recipe,
-                //        k.Recommended,
-                //        k.PackagingFee,
-                //        SupplierId = k.Supplier == null ? 0 : k.Supplier.SupplierId,
-                //        ImagePath = string.Empty
-                //    }
-                //).ToArray());
-
 
             var supplierDishIds = supplierDishes.Select(item => item.SupplierDishId).ToArray();
-                //supplierDishDic.Values.SelectMany(i => i).Select(p => p.SupplierDishId).ToArray();
 
             var supplierDishImageDic = this.supplierDishImageEntityRepository.EntityQueryable.Where(item => supplierDishIds.Contains(item.SupplierDishId) && item.Online == true).Select(item => new { item.SupplierDishId, item.ImagePath }).ToDictionary(item => item.SupplierDishId, item => item.ImagePath);
 
@@ -1475,7 +1452,9 @@
                                                            SupplierDishId = p.SupplierDishId,
                                                            OptionGroupId = k.OptionGroupId,
                                                            OptionGroupTitle = k.OptionGroupTitle,
-                                                           IsMultiple = k.IsMultiple.HasValue && k.IsMultiple.Value
+                                                           IsMultiple = k.IsMultiple.HasValue && k.IsMultiple.Value,
+                                                           FreeNum = k.FreeNum.HasValue ? k.FreeNum.Value : 0,
+                                                           IsMandatory = k.IsMandatory.HasValue && k.IsMandatory.Value
                                                        }).ToArray();
 
             var optionGroupIds = supplierDishOptionGroups.Select(item => item.OptionGroupId).ToArray();
