@@ -309,19 +309,41 @@ namespace Ets.SingleApi.Controllers
                                                              int? cityId = null, int pageSize = 10,
                                                              int? pageIndex = null)
         {
-            var getGroupSupplierListResult = this.supplierServices.GetGroupSupplierList(this.Source,
-                                                                                        new GetGroupSupplierListParameter
-                                                                                            {
-                                                                                                FeatureId =
-                                                                                                    featureId == -1
-                                                                                                        ? null
-                                                                                                        : featureId,
-                                                                                                SupplierGroupId =
-                                                                                                    supplierGroupId,
-                                                                                                CityId = cityId,
-                                                                                                PageIndex = pageIndex,
-                                                                                                PageSize = pageSize
-                                                                                            });
+            var getGroupSupplierListResult = supplierGroupId == 17
+                                                 ? this.supplierServices.GetGroupSupplierListByHtj(this.Source,
+                                                                                              new GetGroupSupplierListParameter
+                                                                                                  {
+                                                                                                      FeatureId =
+                                                                                                          featureId ==
+                                                                                                          -1
+                                                                                                              ? null
+                                                                                                              : featureId,
+                                                                                                      SupplierGroupId =
+                                                                                                          supplierGroupId,
+                                                                                                      CityId = cityId,
+                                                                                                      PageIndex =
+                                                                                                          pageIndex,
+                                                                                                      PageSize =
+                                                                                                          pageSize
+                                                                                                  })
+                                                 : this.supplierServices.GetGroupSupplierList(this.Source,
+                                                                                                   new GetGroupSupplierListParameter
+                                                                                                       {
+                                                                                                           FeatureId =
+                                                                                                               featureId ==
+                                                                                                               -1
+                                                                                                                   ? null
+                                                                                                                   : featureId,
+                                                                                                           SupplierGroupId
+                                                                                                               =
+                                                                                                               supplierGroupId,
+                                                                                                           CityId =
+                                                                                                               cityId,
+                                                                                                           PageIndex =
+                                                                                                               pageIndex,
+                                                                                                           PageSize =
+                                                                                                               pageSize
+                                                                                                       });
 
             if (getGroupSupplierListResult.Result == null || getGroupSupplierListResult.Result.Count == 0)
             {
@@ -350,6 +372,7 @@ namespace Ets.SingleApi.Controllers
                     ParkingInfo = p.ParkingInfo ?? string.Empty,
                     Telephone = p.Telephone ?? string.Empty,
                     LogoUrl = p.LogoUrl ?? string.Empty,
+                    Distance = p.Distance,
                     SupplierFeatureList = p.SupplierFeatureList.Select(q => new SupplierFeature
                         {
                             SupplierFeatureId = q.SupplierFeatureId,

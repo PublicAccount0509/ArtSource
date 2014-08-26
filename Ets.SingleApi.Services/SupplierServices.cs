@@ -1026,11 +1026,14 @@
                                                      supplierEntity.BaIduLong
                                                  });
 
+
             var tempSupplierList = parameter.PageIndex == null
                                        ? queryable.ToList()
                                        : queryable.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize)
                                                   .Take(parameter.PageSize)
                                                   .ToList();
+
+
             if (tempSupplierList.Count == 0)
             {
                 return new ServicesResultList<GroupSupplierModel>
@@ -1099,6 +1102,153 @@
                 Result = groupSupplierList
             };
         }
+
+
+        /// <summary>
+        /// 获取餐厅分店列表（黄太吉）
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回餐厅分店列表
+        /// </returns>
+        /// 创建者：李红杰
+        /// 创建日期：08/21/2014 15:56
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<GroupSupplierModel> GetGroupSupplierListByHtj(string source,
+                                                                                GetGroupSupplierListParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                    {
+                        Result = new List<GroupSupplierModel>(),
+                        StatusCode = (int) StatusCode.System.InvalidRequest
+                    };
+            }
+
+            if (ServicesCommon.TestSupplierGroupId.Contains(parameter.SupplierGroupId))
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                    {
+                        Result = new List<GroupSupplierModel>()
+                    };
+            }
+
+            var tempQueryable =
+                this.supplierEntityRepository.EntityQueryable.Where(
+                    p => p.SupplierGroupId == parameter.SupplierGroupId && p.Login.IsEnabled);
+            if (parameter.CityId != null)
+            {
+                var regionEntity = this.regionEntityRepository.FindSingleByExpression(p => p.Id == parameter.CityId);
+                if (regionEntity != null)
+                {
+                    tempQueryable = tempQueryable.Where(p => p.RegionCode.StartsWith(regionEntity.Code));
+                }
+            }
+
+            if (parameter.FeatureId != null)
+            {
+                tempQueryable =
+                    tempQueryable.Where(q => q.SupplierFeatureList.Any(p => p.Feature.FeatureId == parameter.FeatureId));
+            }
+
+            var queryable = tempQueryable.Select(supplierEntity =>
+                                                 new
+                                                     {
+                                                         supplierEntity.SupplierId,
+                                                         supplierEntity.SupplierName,
+                                                         supplierEntity.SupplierDescription,
+                                                         Address = supplierEntity.Address1,
+                                                         supplierEntity.Averageprice,
+                                                         supplierEntity.ParkingInfo,
+                                                         supplierEntity.Telephone,
+                                                         supplierEntity.SupplierGroupId,
+                                                         supplierEntity.DateJoined,
+                                                         supplierEntity.IsOpenDoor,
+                                                         supplierEntity.DefaultCuisineId,
+                                                         supplierEntity.BaIduLat,
+                                                         supplierEntity.BaIduLong,
+                                                         supplierEntity.FreeMiles
+                                                     });
+
+            var tempSupplierList = parameter.PageIndex == null
+                                       ? queryable.ToList()
+                                       : queryable.Skip((parameter.PageIndex.Value - 1)*parameter.PageSize)
+                                                  .Take(parameter.PageSize)
+                                                  .ToList();
+            if (tempSupplierList.Count == 0)
+            {
+                return new ServicesResultList<GroupSupplierModel>
+                    {
+                        StatusCode = (int) StatusCode.Succeed.Empty,
+                        Result = new List<GroupSupplierModel>()
+                    };
+            }
+
+            var supplierIdList = tempSupplierList.Select(p => p.SupplierId).ToList();
+            var supplierImageList = this.supplierImageEntityRepository.EntityQueryable.Where(
+                p => supplierIdList.Contains(p.Supplier.SupplierId) && p.Online == true)
+                                        .Select(p => new
+                                            {
+                                                p.Supplier.SupplierId,
+                                                p.ImagePath
+                                            }).ToList();
+
+            var supplierFeatureList = this.supplierFeatureEntityRepository.EntityQueryable.Where(
+                p => supplierIdList.Contains(p.Supplier.SupplierId) && p.IsEnabled == true)
+                                          .Select(
+                                              p =>
+                                              new
+                                                  {
+                                                      p.SupplierFeatureId,
+                                                      p.Supplier.SupplierId,
+                                                      p.Feature.Feature,
+                                                      p.Feature.FeatureId
+                                                  })
+                                          .ToList();
+
+            var groupSupplierList = tempSupplierList.Select(item => new GroupSupplierModel
+                {
+                    SupplierId = item.SupplierId,
+                    SupplierName = item.SupplierName,
+                    Address = item.Address,
+                    Telephone = item.Telephone,
+                    Averageprice = item.Averageprice,
+                    BaIduLat = item.BaIduLat,
+                    BaIduLong = item.BaIduLong,
+                    ParkingInfo = item.ParkingInfo,
+                    CuisineId = item.DefaultCuisineId,
+                    DateJoined = item.DateJoined,
+                    IsOpenDoor = item.IsOpenDoor,
+                    Distance = 0,
+                    SupplierDescription = item.SupplierDescription,
+                    LogoUrl =
+                        string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
+                                      (supplierImageList.FirstOrDefault(p => p.SupplierId == item.SupplierId) ??
+                                       new {item.SupplierId, ImagePath = string.Empty}).ImagePath),
+                    SupplierFeatureList =
+                        supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
+                                           .Select(
+                                               p =>
+                                               new SupplierFeatureModel
+                                                   {
+                                                       FeatureId = p.FeatureId,
+                                                       FeatureName = p.Feature,
+                                                       SupplierFeatureId = p.SupplierFeatureId
+                                                   })
+                                           .ToList()
+                }).ToList();
+
+            return new ServicesResultList<GroupSupplierModel>
+                {
+                    ResultTotalCount = groupSupplierList.Count,
+                    Result = groupSupplierList
+                };
+        }
+
 
         /// <summary>
         /// Gets the search group supplier list.
