@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using System.Web;
-using System.Xml;
-using Ets.SingleApi.Model;
+﻿using Ets.SingleApi.Model;
 using Ets.SingleApi.Services.Payment;
 using Ets.SingleApi.Utility;
+using System;
 
 namespace Ets.SingleApi.Services
 {
@@ -167,6 +159,18 @@ namespace Ets.SingleApi.Services
                     StatusCode = (int)StatusCode.Succeed.Ok,
                     Result = verifyResult
                 };
+        }
+
+
+        public PaymentResult<string> PaymentQr(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public PaymentResult<WechatResponsePaymentDataQrPackage> PaymentQrPackage(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

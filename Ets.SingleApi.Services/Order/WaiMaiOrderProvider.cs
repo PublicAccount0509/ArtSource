@@ -257,5 +257,11 @@ namespace Ets.SingleApi.Services
             int.TryParse(jsonValue["Result"], out orderNumber);
             return orderNumber;
         }
+
+
+        public ServicesResult<TangShiOrderBaseModel> GetOrderBase(string source, int orderId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

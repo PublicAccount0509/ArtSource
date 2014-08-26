@@ -205,6 +205,37 @@
         private readonly INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository;
 
         /// <summary>
+        /// 餐厅菜与选项组的关系表
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/19 16:16
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierDishCustomizationEntity> supplierDishCustomizationEntity;
+
+        /// <summary>
+        /// 餐厅菜与选项组的关系表 - 所有餐厅菜的选项组
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/19 16:17
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<OptionGroupEntity> optionGroupEntity;
+
+        /// <summary>
+        /// 餐厅菜与选项组的关系表 - 选项表
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/19 16:17
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<CustomizationOptionEntity> customizationOptionEntity;
+
+
+        /// <summary>
         /// 字段supplierDetailServices
         /// </summary>
         /// 创建者：周超
@@ -241,6 +272,9 @@
         /// <param name="supplierDetailServices">The supplierDetailServices</param>
         /// <param name="supplierPlatformPaymentMethodRelationEntity">餐厅平台支付方式表</param>
         /// <param name="platformPaymentRelationEntity">平台支付方式列表</param>
+        /// <param name="supplierDishCustomizationEntity">餐厅菜与选项组的关系表</param>
+        /// <param name="optionGroupEntity">餐厅菜与选项组的关系表 - 所有餐厅菜的选项组</param>
+        /// <param name="customizationOptionEntity">餐厅菜与选项组的关系表 - 选项表</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
         /// 修改者：
@@ -267,7 +301,10 @@
             INHibernateRepository<SupplierDeskEntity> supplierDeskEntityRepository,
             ISupplierDetailServices supplierDetailServices,
             INHibernateRepository<SupplierPlatformPaymentMethodRelationEntity> supplierPlatformPaymentMethodRelationEntity,
-            INHibernateRepository<PlatformPaymentRelationEntity> platformPaymentRelationEntity)
+            INHibernateRepository<PlatformPaymentRelationEntity> platformPaymentRelationEntity,
+            INHibernateRepository<SupplierDishCustomizationEntity> supplierDishCustomizationEntity,
+            INHibernateRepository<OptionGroupEntity> optionGroupEntity,
+            INHibernateRepository<CustomizationOptionEntity> customizationOptionEntity)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
@@ -290,6 +327,9 @@
             this.supplierDetailServices = supplierDetailServices;
             this.supplierPlatformPaymentMethodRelationEntity = supplierPlatformPaymentMethodRelationEntity;
             this.platformPaymentRelationEntity = platformPaymentRelationEntity;
+            this.supplierDishCustomizationEntity = supplierDishCustomizationEntity;
+            this.optionGroupEntity = optionGroupEntity;
+            this.customizationOptionEntity = customizationOptionEntity;
         }
 
         /// <summary>
@@ -409,13 +449,13 @@
             };
 
             /**** 餐厅热线电话 BEGIN ****/
-            
+
             // 该餐厅配送类型(26 易淘送，61 趣活快送，62 易代送，63 美食送，其他为自送）为非自送，则
             if (supplierFeatureList.Any(c => c.FeatureId == 26 || c.FeatureId == 61 || c.FeatureId == 62 || c.FeatureId == 63))
             {
                 supplier.Telephone = tempSupplier.OrderHotline;
             }
-            
+
             /**** 餐厅热线电话 END ****/
 
             if (supplier.SupplierGroupId != null &&
@@ -1478,8 +1518,7 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResultList<SupplierCuisineModel> GetMenu(string source, int supplierId,
-                                                                int supplierMenuCategoryTypeId)
+        public ServicesResultList<SupplierCuisineModel> GetMenu(string source, int supplierId, int supplierMenuCategoryTypeId)
         {
             if (!this.supplierEntityRepository.EntityQueryable.Any(p => p.SupplierId == supplierId))
             {
@@ -1490,26 +1529,20 @@
                 };
             }
 
-            var supplierMenuCategoryId =
-                this.supplierMenuCategoryEntityRepository.EntityQueryable.Where(
-                    p =>
-                    p.SupplierId == supplierId &&
-                    p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == supplierMenuCategoryTypeId)
-                    .Select(p => p.SupplierMenuCategoryId)
-                    .FirstOrDefault();
-            var tempSupplierCategoryList =
-                (from supplierCategoryEntity in this.supplierCategoryEntityRepository.EntityQueryable
-                 where
-                     supplierCategoryEntity.SupplierId == supplierId &&
-                     supplierCategoryEntity.SupplierMenuCategoryId == supplierMenuCategoryId
-                 select new
-                 {
-                     supplierCategoryEntity.Category,
-                     supplierCategoryEntity.SupplierId,
-                     supplierCategoryEntity.SupplierCategoryId
-                 }).ToList();
+            var supplierMenuCategoryId = this.supplierMenuCategoryEntityRepository.EntityQueryable.Where(
+                p => p.SupplierId == supplierId && p.SupplierMenuCategoryType.SupplierMenuCategoryTypeId == supplierMenuCategoryTypeId)
+                    .Select(p => p.SupplierMenuCategoryId).FirstOrDefault();
 
-            if (tempSupplierCategoryList.Count == 0)
+            var supplierCategoryListSource = this.supplierCategoryEntityRepository.EntityQueryable.Where(
+                p => p.SupplierId == supplierId && p.SupplierMenuCategoryId == supplierMenuCategoryId)
+                    .Select(item => new
+                                           {
+                                               item.Category,
+                                               item.SupplierId,
+                                               item.SupplierCategoryId
+                                           }).ToArray();
+
+            if (supplierCategoryListSource.Length == 0)
             {
                 return new ServicesResultList<SupplierCuisineModel>
                 {
@@ -1517,96 +1550,123 @@
                 };
             }
 
-            var supplierCategoryList = (from entity in tempSupplierCategoryList
-                                        where entity.Category != null
-                                        && entity.Category.Isdel == false
-                                        && entity.Category.Isonline
-                                        select new
-                                        {
-                                            entity.Category.CategoryId,
-                                            entity.Category.CategoryName,
-                                            entity.Category.CategoryNo,
-                                            entity.SupplierId,
-                                            entity.SupplierCategoryId
-                                        }).OrderBy(p => p.CategoryNo).ToList();
+            var supplierCategorys = supplierCategoryListSource.Where(
+                item => item.Category != null && item.Category.Isdel == false && item.Category.Isonline)
+                    .Select(item => new
+                    {
+                        item.Category.CategoryId,
+                        item.Category.CategoryName,
+                        item.Category.CategoryNo,
+                        item.SupplierId
+                    }).OrderBy(item => item.CategoryNo).ToArray();
 
-            var categoryIdList = supplierCategoryList.Select(p => p.CategoryId).Distinct().Cast<int?>().ToList();
-            var supplierDishList = (from supplierDishEntity in this.supplierDishEntityRepository.EntityQueryable
-                                    where supplierDishEntity.Supplier.SupplierId == supplierId
-                                          && supplierDishEntity.Online && supplierDishEntity.IsDel == false
-                                          && categoryIdList.Contains(supplierDishEntity.SupplierCategoryId)
-                                    select new
-                                    {
-                                        supplierDishEntity.SupplierCategoryId,
-                                        supplierDishEntity.DishNo,
-                                        supplierDishEntity.Price,
-                                        supplierDishEntity.SupplierDishId,
-                                        supplierDishEntity.SupplierDishName,
-                                        supplierDishEntity.SuppllierDishDescription,
-                                        supplierDishEntity.SpicyLevel,
-                                        supplierDishEntity.AverageRating,
-                                        supplierDishEntity.IsCommission,
-                                        supplierDishEntity.IsDiscount,
-                                        supplierDishEntity.Recipe,
-                                        supplierDishEntity.Recommended,
-                                        supplierDishEntity.PackagingFee,
-                                        SupplierId =
-                                    supplierDishEntity.Supplier == null ? 0 : supplierDishEntity.Supplier.SupplierId,
-                                        ImagePath = string.Empty
-                                    }).OrderBy(p => p.DishNo).ToList();
+            var categoryIdList = supplierCategorys.Select(p => p.CategoryId).Distinct().Cast<int?>().ToArray();
 
-            var supplierDishIdList = supplierDishList.Select(p => p.SupplierDishId).ToList();
-            var supplierDishImageList = (from entity in this.supplierDishImageEntityRepository.EntityQueryable
-                                         where
-                                             supplierDishIdList.Contains(entity.SupplierDishId) && entity.Online == true
-                                         select new { entity.SupplierDishId, entity.ImagePath }).ToList();
+            var supplierDishes = (from item in this.supplierDishEntityRepository.EntityQueryable
+                                  where
+                                      item.Supplier.SupplierId == supplierId && item.Online && item.IsDel == false
+                                      && categoryIdList.Contains(item.SupplierCategoryId)
+                                  select new
+                                             {
+                                                 item.SupplierCategoryId,
+                                                 item.DishNo,
+                                                 item.Price,
+                                                 item.SupplierDishId,
+                                                 item.SupplierDishName,
+                                                 item.SuppllierDishDescription,
+                                                 item.SpicyLevel,
+                                                 item.AverageRating,
+                                                 item.IsCommission,
+                                                 item.IsDiscount,
+                                                 item.Recipe,
+                                                 item.Recommended,
+                                                 item.PackagingFee,
+                                                 SupplierId = item.Supplier == null ? 0 : item.Supplier.SupplierId,
+                                                 ImagePath = string.Empty
+                                             }).ToArray();
 
+            var supplierDishDic =
+                (from p in supplierDishes group p by p.SupplierCategoryId into g select g).ToDictionary(
+                    item => item.Key, item => item.ToArray());
 
+            var supplierDishIds = supplierDishes.Select(item => item.SupplierDishId).ToArray();
 
-            var list = new List<SupplierCuisineModel>();
-            foreach (var supplierCategory in supplierCategoryList)
-            {
-                var categoryId = supplierCategory.CategoryId;
-                if (list.Exists(p => p.CategoryId == categoryId))
-                {
-                    continue;
-                }
+            var supplierDishImageDic = this.supplierDishImageEntityRepository.EntityQueryable.Where(item => supplierDishIds.Contains(item.SupplierDishId) && item.Online == true).Select(item => new { item.SupplierDishId, item.ImagePath }).ToDictionary(item => item.SupplierDishId, item => item.ImagePath);
 
-                var dishList =
-                    (from supplierDishEntity in supplierDishList.Where(p => p.SupplierCategoryId == categoryId)
-                     let supplierDishImage =
-                         supplierDishImageList.FirstOrDefault(p => p.SupplierDishId == supplierDishEntity.SupplierDishId)
-                     select new SupplierDishModel
-                     {
-                         Price = supplierDishEntity.Price,
-                         ImagePath =
-                             string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
-                                           supplierDishImage == null ? string.Empty : supplierDishImage.ImagePath),
-                         SupplierDishId = supplierDishEntity.SupplierDishId,
-                         SupplierDishName = supplierDishEntity.SupplierDishName,
-                         SuppllierDishDescription = supplierDishEntity.SuppllierDishDescription,
-                         AverageRating = supplierDishEntity.AverageRating,
-                         IsCommission = supplierDishEntity.IsCommission,
-                         IsDiscount = supplierDishEntity.IsDiscount,
-                         Recipe = supplierDishEntity.Recipe,
-                         Recommended = supplierDishEntity.Recommended,
-                         PackagingFee = supplierDishEntity.PackagingFee
-                     }).ToList();
+            var supplierDishOptionGroups = (from p in supplierDishCustomizationEntity.EntityQueryable
+                                            where supplierDishIds.Contains(p.SupplierDishId)
+                                            from k in this.optionGroupEntity.EntityQueryable
+                                            where k.OptionGroupId == p.OptionGroupId
+                                            select new SupplierDishOptionGroupModel
+                                                       {
+                                                           SupplierDishId = p.SupplierDishId,
+                                                           OptionGroupId = k.OptionGroupId,
+                                                           OptionGroupTitle = k.OptionGroupTitle,
+                                                           IsMultiple = k.IsMultiple.HasValue && k.IsMultiple.Value,
+                                                           FreeNum = k.FreeNum.HasValue ? k.FreeNum.Value : 0,
+                                                           IsMandatory = k.IsMandatory.HasValue && k.IsMandatory.Value
+                                                       }).ToArray();
+
+            var optionGroupIds = supplierDishOptionGroups.Select(item => item.OptionGroupId).ToArray();
+            var customizationOptions = (from p in this.customizationOptionEntity.EntityQueryable
+                                        where optionGroupIds.Contains(p.OptionGroup.OptionGroupId)
+                                        select new SupplierDishCustomizationOptionModel
+                                                   {
+                                                       OptionId = p.OptionId,
+                                                       OptionGroupId = p.OptionGroup.OptionGroupId,
+                                                       OptionTitle = p.OptionTitle,
+                                                       Price = p.Price.HasValue ? p.Price.Value : 0m
+                                                   }).ToArray();
+
+            var customizationOptionDic =
+                (from p in customizationOptions
+                 group p by p.OptionGroupId
+                     into g
+                     select new { key = g.Key, val = g.ToArray() }).ToDictionary(item => item.key, item => item.val);
 
 
-                if (dishList.Count == 0)
-                {
-                    continue;
-                }
+            var optionGroupDic = (from p in supplierDishOptionGroups
+                                  group p by p.SupplierDishId
+                                      into g
+                                      select new
+                                      {
+                                          key = g.Key,
+                                          val = from i in g
+                                                select new SupplierDishOptionGroupModel
+                                                           {
+                                                               SupplierDishId = i.SupplierDishId,
+                                                               OptionGroupId = i.OptionGroupId,
+                                                               OptionGroupTitle = i.OptionGroupTitle,
+                                                               IsMultiple = i.IsMultiple,
+                                                               SupplierDishCustomizationOption = customizationOptionDic.ContainsKey(i.OptionGroupId) ? customizationOptionDic[i.OptionGroupId] : new SupplierDishCustomizationOptionModel[0]
+                                                           }
+                                      }).ToDictionary(
+                                      item => item.key, item => item.val.ToArray());
 
-                list.Add(new SupplierCuisineModel
-                {
-                    CategoryId = supplierCategory.CategoryId,
-                    CategoryName = supplierCategory.CategoryName,
-                    SupplierDishList = dishList
-                });
-            }
+            var list = (from cate in supplierCategorys
+                        select new SupplierCuisineModel
+                        {
+                            CategoryId = cate.CategoryId,
+                            CategoryName = cate.CategoryName,
+                            SupplierDishList = supplierDishDic.ContainsKey(cate.CategoryId) ? supplierDishDic[cate.CategoryId].Select(
+                            p => new SupplierDishModel
+                                     {
+                                         Price = p.Price,
+                                         ImagePath = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl, supplierDishImageDic.ContainsKey(p.SupplierDishId) ? supplierDishImageDic[p.SupplierDishId] : string.Empty),
+                                         SupplierDishId = p.SupplierDishId,
+                                         SupplierDishName = p.SupplierDishName,
+                                         SuppllierDishDescription = p.SuppllierDishDescription,
+                                         AverageRating = p.AverageRating,
+                                         IsCommission = p.IsCommission,
+                                         IsDiscount = p.IsDiscount,
+                                         Recipe = p.Recipe,
+                                         Recommended = p.Recommended,
+                                         PackagingFee = p.PackagingFee,
+                                         SupplierDishOptionGroup = optionGroupDic.ContainsKey(p.SupplierDishId) ? optionGroupDic[p.SupplierDishId] : new SupplierDishOptionGroupModel[0]
+                                     }).ToList() : new List<SupplierDishModel>()
+                        }).ToList();
 
+            //var list = new List<SupplierCuisineModel>();
             return new ServicesResultList<SupplierCuisineModel>
             {
                 ResultTotalCount = list.Count,
@@ -3498,7 +3558,7 @@
             var supplierPlatformPaymentMethodList =
                 (from entity in this.supplierPlatformPaymentMethodRelationEntity.EntityQueryable
                  where entity.SupplierId == supplierId && entity.PlatformId == platformId
-                 select new PaymentMethodModel{PaymentMethodId = entity.PaymentMethodId ?? 0}).ToList();
+                 select new PaymentMethodModel { PaymentMethodId = entity.PaymentMethodId ?? 0 }).ToList();
 
             if (supplierPlatformPaymentMethodList.Count > 0)
             {

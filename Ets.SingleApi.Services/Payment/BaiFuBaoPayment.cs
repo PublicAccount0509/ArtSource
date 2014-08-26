@@ -181,5 +181,17 @@ namespace Ets.SingleApi.Services
             var end = str.Substring(n, 3).Trim('.');
             return pre + end;
         }
+
+
+        public PaymentResult<string> PaymentQr(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public PaymentResult<WechatResponsePaymentDataQrPackage> PaymentQrPackage(IPaymentData parameter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace Ets.SingleApi.Controllers.IServices
 {
+    using System.Collections.Generic;
+
     using Ets.SingleApi.Model.Services;
 
     /// <summary>
@@ -14,6 +16,40 @@
     /// ----------------------------------------------------------------------------------------
     public interface IBusinessAreaServices
     {
+
+
+        /// <summary>
+        /// 根据regioncode获取城市名称
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="regionCode">The regionCode</param>
+        /// <returns>
+        /// The ServicesResult{BusinessAreaModel}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/7/28 18:11
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<BusinessAreaModel> BusinessCityName(string source, int regionCode);
+
+
+        /// <summary>
+        /// 根据supplierGroupId获取RegionCode
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="provinceCode">The provinceCode</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <returns>
+        /// Int32}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/7/25 15:59
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<BusinessAreaModel> GetCityListBySupplierGroupId(string source, string provinceCode, int supplierGroupId);
+
         /// <summary>
         /// 获取国家列表信息
         /// </summary>

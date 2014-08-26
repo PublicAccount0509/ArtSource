@@ -11,9 +11,9 @@
 
 namespace Ets.SingleApi.Model.Repository
 {
-	using System;
-	using System.Collections.Generic;
-		
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Class:OptionGroupEntity
     /// Namespace:Ets.SingleApi.Model.Repository
@@ -27,61 +27,101 @@ namespace Ets.SingleApi.Model.Repository
     [Serializable]
     public class OptionGroupEntity
     {
-		#region private member
+        #region private member
 
-			/// <summary>
-		/// The OptionGroupID
+        /// <summary>
+        /// The OptionGroupID
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/12/25 15:16:51
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private int optionGroupId;
+        private int optionGroupId;
 
-			/// <summary>
-		/// The OptionGroupTitle
+        /// <summary>
+        /// The OptionGroupTitle
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/12/25 15:16:51
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string optionGroupTitle;
+        private string optionGroupTitle;
 
-			/// <summary>
-		/// The Description
+        /// <summary>
+        /// The Description
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/12/25 15:16:51
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private string description;
+        private string description;
 
-			/// <summary>
-		/// The IsMultiple
+        /// <summary>
+        /// The IsMultiple
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/12/25 15:16:51
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private bool? isMultiple;
+        private bool? isMultiple;
 
-			/// <summary>
-		/// The CustomizationOptionList
+        /// <summary>
+        /// 字段OptionUnit
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/20 15:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private string optionUnit;
+
+        /// <summary>
+        /// 字段FreeNum
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/20 15:25
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int? freeNum;
+
+        /// <summary>
+        /// 字段isMandatory
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/20 15:25
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private bool? isMandatory;
+
+        /// <summary>
+        /// 字段sortId
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/20 15:27
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private int? sortId;
+
+        /// <summary>
+        /// The CustomizationOptionList
         /// </summary>
         /// Creator:周超
         /// Creation Date:2013/12/25 15:16:51
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		private IList<CustomizationOptionEntity> customizationOptionList;
+        private IList<CustomizationOptionEntity> customizationOptionList;
 
-		#endregion
+        #endregion
 
-		/// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="OptionGroupEntity"/> class.
         /// </summary>
         /// Creator:周超
@@ -91,14 +131,14 @@ namespace Ets.SingleApi.Model.Repository
         /// ----------------------------------------------------------------------------------------
         public OptionGroupEntity()
         {
-			this.optionGroupId = 0;
-			this.optionGroupTitle = string.Empty;
-			this.description = string.Empty;
-		}
+            this.optionGroupId = 0;
+            this.optionGroupTitle = string.Empty;
+            this.description = string.Empty;
+        }
 
-		#region public member
+        #region public member
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OptionGroupID of OptionGroupEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -106,8 +146,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual int OptionGroupId
-		{
+        public virtual int OptionGroupId
+        {
             get
             {
                 return this.optionGroupId;
@@ -119,7 +159,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the OptionGroupTitle of OptionGroupEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -127,8 +167,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string OptionGroupTitle
-		{
+        public virtual string OptionGroupTitle
+        {
             get
             {
                 return this.optionGroupTitle;
@@ -140,7 +180,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value mapping the Description of OptionGroupEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -148,8 +188,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual string Description
-		{
+        public virtual string Description
+        {
             get
             {
                 return this.description;
@@ -161,7 +201,7 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
         /// Gets or sets a value indicating whether mapping the IsMultiple of OptionGroupEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -169,8 +209,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual bool? IsMultiple
-		{
+        public virtual bool? IsMultiple
+        {
             get
             {
                 return this.isMultiple;
@@ -182,7 +222,100 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-			/// <summary>
+        /// <summary>
+        /// Gets or sets the OptionUnit of OptionGroupEntity
+        /// </summary>
+        /// <value>
+        /// The OptionUnit
+        /// </value>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/20 15:27
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public virtual string OptionUnit
+        {
+            get
+            {
+                return this.optionUnit;
+            }
+            set
+            {
+                this.optionUnit = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the FreeNum of OptionGroupEntity
+        /// </summary>
+        /// <value>
+        /// The FreeNum
+        /// </value>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/20 15:28
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? FreeNum
+        {
+            get
+            {
+                return this.freeNum;
+            }
+            set
+            {
+                this.freeNum = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the IsMandatory of OptionGroupEntity
+        /// </summary>
+        /// <value>
+        /// The IsMandatory
+        /// </value>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/20 15:28
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public virtual bool? IsMandatory
+        {
+            get
+            {
+                return this.isMandatory;
+            }
+            set
+            {
+                this.isMandatory = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the SortID of OptionGroupEntity
+        /// </summary>
+        /// <value>
+        /// The SortID
+        /// </value>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/20 15:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public virtual int? SortID
+        {
+            get
+            {
+                return this.sortId;
+            }
+            set
+            {
+                this.sortId = value;
+            }
+        }
+
+
+        /// <summary>
         /// Gets or sets a value mapping the CustomizationOptionList of OptionGroupEntity table in the database.
         /// </summary>
         /// Creator:周超
@@ -190,8 +323,8 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public virtual IList<CustomizationOptionEntity> CustomizationOptionList
-		{
+        public virtual IList<CustomizationOptionEntity> CustomizationOptionList
+        {
             get
             {
                 return this.customizationOptionList;
@@ -203,9 +336,9 @@ namespace Ets.SingleApi.Model.Repository
             }
         }
 
-		#endregion
+        #endregion
 
-			/// <summary>
+        /// <summary>
         /// Determines whether the specified is equal to this instance.
         /// </summary>
         /// <param name="obj">The to compare with this instance.</param>
@@ -228,7 +361,7 @@ namespace Ets.SingleApi.Model.Repository
             return this.OptionGroupId == castObj.OptionGroupId;
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
@@ -239,11 +372,11 @@ namespace Ets.SingleApi.Model.Repository
         /// Modifier:
         /// Last Modified:
         /// ----------------------------------------------------------------------------------------
-		public override int GetHashCode()
-		{
-			var hash = 57; 
-			hash = 27 * hash * this.OptionGroupId.GetHashCode();
-			return hash;
-		}
-	}
+        public override int GetHashCode()
+        {
+            var hash = 57;
+            hash = 27 * hash * this.OptionGroupId.GetHashCode();
+            return hash;
+        }
+    }
 }

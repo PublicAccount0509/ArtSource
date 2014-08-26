@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Ets.SingleApi.Model.Services;
+﻿
 
 namespace Ets.SingleApi.Controllers
 {
-    using System.Web.Http;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Controller;
+    using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System.Collections.Generic;
+    using System.Web.Http;
 
     /// <summary>
     /// 类名称：OrdersController
@@ -33,17 +33,29 @@ namespace Ets.SingleApi.Controllers
         private readonly IOrderServices orderServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrdersController"/> class.
+        /// 字段paymentServices
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/5 17:44
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly IPaymentServices paymentServices;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrdersController" /> class.
         /// </summary>
         /// <param name="orderServices">The orderServices</param>
+        /// <param name="paymentServices">The paymentServices</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 17:57
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public OrdersController(IOrderServices orderServices)
+        public OrdersController(IOrderServices orderServices, IPaymentServices paymentServices)
         {
             this.orderServices = orderServices;
+            this.paymentServices = paymentServices;
         }
 
         /// <summary>
@@ -112,6 +124,58 @@ namespace Ets.SingleApi.Controllers
                 Result = getOrderResult.Result
             };
         }
+
+        /// <summary>
+        ///  主动查询订单基本状态，如未支付则去查询微信端
+        /// </summary>
+        /// <param name="id">订单号</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞 3 etswap</param>
+        /// <returns>
+        /// Response{TangShiOrderBaseModel}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/11 15:00
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<TangShiOrderBaseModel> GetOrderWithWechat(int id, int orderType, int orderSourceType = 3)
+        {
+            var getOrderResult = this.orderServices.GetOrderBase(this.GetSource(orderType), id, orderType, orderSourceType);
+
+            if (getOrderResult.Result == null)
+            {
+                return new Response<TangShiOrderBaseModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
+                    }
+                };
+            }
+            //如果库内未支付则去查询微信端
+            if (!getOrderResult.Result.IsPaId)
+            {
+                var result = this.paymentServices.WeChatPaymentState(this.Source, new WechatPaymentStateParameter
+                                                                                      {
+                                                                                          OrderId = id,
+                                                                                          out_trade_no = id.ToString(),
+                                                                                          OrderType = orderType
+                                                                                      });
+                getOrderResult.Result.IsPaId = result.Result;//==
+            }
+
+            return new Response<TangShiOrderBaseModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderResult.StatusCode
+                },
+                Result = getOrderResult.Result
+            };
+        }
+
 
         /// <summary>
         /// 保存订单信息
@@ -410,7 +474,7 @@ namespace Ets.SingleApi.Controllers
                     }
                 };
             }
-
+            
             var getOrderResult = this.orderServices.SaveTempOrder(new SaveTangShiOrdersParameter
             {
                 Source = requst.Source,
@@ -422,7 +486,8 @@ namespace Ets.SingleApi.Controllers
                 Remark = requst.Remark,
                 TempOrderNumber = requst.TempOrderNumber,
                 PayMentMethodId = requst.PayMentMethodId,
-                SupplierDishList = requst.SupplierDishList.Deserialize<List<SupplierDishItem>>() ?? new List<SupplierDishItem>()
+                SupplierDishList = requst.SupplierDishList.Deserialize<List<SupplierDishItem>>() ?? new List<SupplierDishItem>(),
+                DeviceNumber = requst.DeviceNumber
             }, this.AppKey, this.AppPassword);
 
             if (getOrderResult.Result == null)
@@ -437,6 +502,22 @@ namespace Ets.SingleApi.Controllers
                 };
             }
 
+            if (getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok && requst.IsQr)
+            {
+                var wechatPaymentQrResult = this.paymentServices.WechatPaymentQr(this.Source, new WechatPaymentParameterQr
+                {
+                    Productid = getOrderResult.Result
+                });
+                string.Format("===============================\r\n THE SaveTangShiOrder \r\n {0} \r\n===============================", wechatPaymentQrResult.Result).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                return new Response<string>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = wechatPaymentQrResult.StatusCode
+                    },
+                    Result = wechatPaymentQrResult.Result
+                };
+            }
             return new Response<string>
             {
                 Message = new ApiMessage

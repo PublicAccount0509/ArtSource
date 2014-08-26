@@ -26,6 +26,408 @@ namespace Ets.SingleApi.Services.Payment
     /// ----------------------------------------------------------------------------------------
     public class WechatPaymentCommon
     {
+        /// <summary>
+        /// 类名称：PaymentQrPackage
+        /// 命名空间：Ets.SingleApi.Services.Payment.WechatPaymentCommon
+        /// 类功能：二维码支付package
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 10:51
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public class PaymentQrPackage
+        {
+            /// <summary>
+            /// 字段WechatPaymentDataQrPackageRequest
+            /// </summary>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 11:43
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            private readonly WechatPaymentDataQrPackage wechatPaymentDataQrPackageRequest;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="PaymentQrPackage"/> class.
+            /// </summary>
+            /// <param name="paymentData">The paymentData</param>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 10:53
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public PaymentQrPackage(WechatPaymentDataQrPackage paymentData)
+            {
+                this.wechatPaymentDataQrPackageRequest = paymentData;
+
+                this.AppId = paymentData.AppId;
+                this.AppSignature = paymentData.AppSignature;
+                this.IsSubscribe = paymentData.IsSubscribe;
+                this.OpenId = paymentData.OpenId;
+                this.ProductId = paymentData.ProductId;
+                this.SignMethod = paymentData.SignMethod;
+
+                this.NonceStr = Guid.NewGuid().ToString("N");
+                this.TimeStamp = WinDateToLinuxDate(DateTime.Now).ToString();
+
+                this.AppKey = ControllersCommon.ConstWechatPaymentPaySignKey;
+            }
+
+            /// <summary>
+            /// The method will 
+            /// </summary>
+            /// <returns>
+            /// The Boolean
+            /// </returns>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 11:37
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public bool Authentication()
+            {
+                var signature = this.BuildPaySign(new Dictionary<string, string>{
+                                                                                    { "appid",this.wechatPaymentDataQrPackageRequest.AppId },
+                                                                                    { "appkey", this.AppKey },
+                                                                                    { "productid", this.wechatPaymentDataQrPackageRequest.ProductId },
+                                                                                    { "timestamp", this.wechatPaymentDataQrPackageRequest.TimeStamp },
+                                                                                    { "noncestr", this.wechatPaymentDataQrPackageRequest.NonceStr },
+                                                                                    { "openid", this.wechatPaymentDataQrPackageRequest.OpenId },
+                                                                                    { "issubscribe", this.wechatPaymentDataQrPackageRequest.IsSubscribe }
+                                                                                });
+                return this.AppSignature.Equals(signature);
+            }
+            /// <summary>
+            /// Builds the pay sign.
+            /// </summary>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 11:33
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            private string BuildPaySign(Dictionary<string, string> dictionary)
+            {
+                var string1 = BrandWechatPaySign.AsciiOrderAscKeyToLower(dictionary);
+                return BrandWechatPaySign.Sha1String1(string1);
+            }
+
+            /// <summary>
+            /// To the payment package.
+            /// </summary>
+            /// <param name="package">The package</param>
+            /// <param name="retcode">The retcode</param>
+            /// <param name="reterrmsg">The reterrmsg</param>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙
+            /// 创建日期：2014/8/6 11:38
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string GetAppSignature(string package, string retcode, string reterrmsg)
+            {
+                return this.BuildPaySign(new Dictionary<string, string>
+                                             {
+                                                 { "appid", this.AppId },
+                                                 { "appkey", this.AppKey },
+                                                 { "package", package },
+                                                 { "timestamp", this.TimeStamp },
+                                                 { "noncestr", this.NonceStr },
+                                                 { "retcode", retcode },
+                                                 { "reterrmsg", reterrmsg }
+                                             });
+            }
+
+            /// <summary>
+            /// Gets or sets the AppKey of PaymentQrPackage
+            /// </summary>
+            /// <value>
+            /// The AppKey
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 11:35
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string AppKey { get; set; }
+
+            /// <summary>
+            /// Gets or sets the OpenId of WechatPaymentRequestQrPackage
+            /// </summary>
+            /// <value>
+            /// The OpenId
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 9:48
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string OpenId { get; set; }
+
+            /// <summary>
+            /// Gets or sets the AppId of WechatPaymentRequestQrPackage
+            /// </summary>
+            /// <value>
+            /// The AppId
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 9:48
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string AppId { get; set; }
+
+            /// <summary>
+            /// Gets or sets the IsSubscribe of WechatPaymentRequestQrPackage
+            /// </summary>
+            /// <value>
+            /// The IsSubscribe
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 9:51
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string IsSubscribe { get; set; }
+
+            /// <summary>
+            /// Gets or sets the ProductId of WechatPaymentRequestQrPackage
+            /// </summary>
+            /// <value>
+            /// The ProductId
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 9:51
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string ProductId { get; set; }
+
+            /// <summary>
+            /// Gets or sets the TimeStamp of WechatPaymentRequestQrPackage
+            /// </summary>
+            /// <value>
+            /// The TimeStamp
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 9:51
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string TimeStamp { get; set; }
+
+            /// <summary>
+            /// Gets or sets the NonceStr of WechatPaymentRequestQrPackage
+            /// </summary>
+            /// <value>
+            /// The NonceStr
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 9:51
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string NonceStr { get; set; }
+
+            /// <summary>
+            /// Gets or sets the AppSignature of WechatPaymentRequestQrPackage
+            /// </summary>
+            /// <value>
+            /// The AppSignature
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 9:52
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string AppSignature { get; set; }
+
+            /// <summary>
+            /// Gets or sets the SignMethod of WechatPaymentRequestQrPackage
+            /// </summary>
+            /// <value>
+            /// The SignMethod
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/6 9:52
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string SignMethod { get; set; }
+        }
+
+        /// <summary>
+        /// 类名称：PaymentQr
+        /// 命名空间：Ets.SingleApi.Services.Payment.WechatPaymentCommon
+        /// 类功能：二维码支付
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/5 17:19
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public class PaymentQr
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="PaymentQr"/> class.
+            /// </summary>
+            /// <param name="_productid">The _productid</param>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:24
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public PaymentQr(string _productid)
+            {
+                this.appid = ControllersCommon.ConstWechatPaymentAppId;
+                this.appkey = ControllersCommon.ConstWechatPaymentPaySignKey;
+                this.noncestr = Guid.NewGuid().ToString("N");
+                this.timestamp = WinDateToLinuxDate(DateTime.Now).ToString();
+                //(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds.ToString("#");
+                this.productid = _productid;
+            }
+
+            /// <summary>
+            /// Gets the appid.
+            /// </summary>
+            /// <value>
+            /// The appid.
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:20
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string appid { get; internal set; }
+
+            /// <summary>
+            /// Gets the appkey.
+            /// </summary>
+            /// <value>
+            /// The appkey.
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:21
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string appkey { get; internal set; }
+
+            /// <summary>
+            /// Gets the noncestr.
+            /// </summary>
+            /// <value>
+            /// The noncestr.
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:21
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string noncestr { get; set; }
+
+            /// <summary>
+            /// Gets or sets the timestamp of PaymentQr
+            /// </summary>
+            /// <value>
+            /// The timestamp
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:21
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string timestamp { get; set; }
+
+            /// <summary>
+            /// Gets or sets the productid of PaymentQr
+            /// </summary>
+            /// <value>
+            /// The productid
+            /// </value>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:22
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string productid { get; set; }
+
+            /// <summary>
+            /// Builds the pay sign.
+            /// </summary>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:25
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            private string BuildPaySign()
+            {
+                var string1 = BrandWechatPaySign.AsciiOrderAscKeyToLower(new Dictionary<string, string>
+                                                                                {
+                                                                                    { "appid",this.appid },
+                                                                                    { "appkey", this.appkey },
+                                                                                    { "noncestr", this.noncestr },
+                                                                                    { "timestamp", this.timestamp },
+                                                                                    { "productid", this.productid }
+                                                                                });
+                return BrandWechatPaySign.Sha1String1(string1);
+            }
+
+            /// <summary>
+            /// To the payment qr.
+            /// </summary>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:30
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            public string ToPaymentQr()
+            {
+                // "weixin://wxpay/bizpayurl?sign=" + sign + "&appid=" + TenpayUtil.appid + "&productid=" + productid + "&timeStamp=" + timeStamp + "&nonceStr=" + nonceStr;
+                var sign = this.BuildPaySign();
+
+                string qr = string.Format("weixin://wxpay/bizpayurl?sign={0}&appid={1}&productid={2}&timeStamp={3}&nonceStr={4}", sign, this.appid, this.productid, this.timestamp, this.noncestr);
+
+                string template = "{ \"Qr\": \"$$Qr$$\", \"OrderId\": \"$$OrderId$$\" }";
+
+
+                // string.Format("===============================\r\n THE SaveTangShiOrder 002 \r\n {0} \r\n===============================", this.ToString()).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                return template.Replace("$$Qr$$", qr).Replace("$$OrderId$$", this.productid);
+            }
+
+            /// <summary>
+            /// Returns a <see cref="System.String" /> that represents this instance.
+            /// </summary>
+            /// <returns>
+            /// A <see cref="System.String" /> that represents this instance.
+            /// </returns>
+            /// 创建者：孟祺宙 
+            /// 创建日期：2014/8/5 17:31
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
+            override public string ToString()
+            {
+                string str = String.Empty;
+                str = String.Concat(str, "appid = ", appid, "\r\n");
+                //str = String.Concat(str, "appkey = ", appkey, "\r\n");
+                str = String.Concat(str, "noncestr = ", noncestr, "\r\n");
+                str = String.Concat(str, "timestamp = ", timestamp, "\r\n");
+                str = String.Concat(str, "productid = ", productid, "\r\n");
+                return str;
+            }
+        }
 
         //JSAPI 支付接口（getBrandWCPayRequest）定义
         public class BrandWcPayRequest
@@ -130,7 +532,7 @@ namespace Ets.SingleApi.Services.Payment
                 this.attach = _attach;
                 this.partner = ControllersCommon.ConstWechatPaymentPartnerId;
                 this.out_trade_no = _out_trade_no;
-                this.total_fee = ((int)Math.Round(_total_fee * 100)).ToString();//元转成分
+                this.total_fee = "1";//((int)Math.Round(_total_fee * 100)).ToString();//元转成分
                 this.fee_type = "1";
                 this.notify_url = _notify_url;
                 this.spbill_create_ip = _spbill_create_ip;
@@ -417,13 +819,18 @@ namespace Ets.SingleApi.Services.Payment
             /// 修改者：
             /// 修改时间：
             /// ----------------------------------------------------------------------------------------
-            private static Dictionary<string, string> AsciiOrderAscByColumnDic(Dictionary<string, string> sourceDic, Func<string, string> func = null)
+            private static SortedDictionary<string, string> AsciiOrderAscByColumnDic(Dictionary<string, string> sourceDic, Func<string, string> func = null)
             {
                 var keys = sourceDic.Keys.ToArray();
                 Array.Sort(keys, string.CompareOrdinal);
 
-                return keys.ToDictionary(item => item, item => func != null ? func(sourceDic[item]) : sourceDic[item]);
-                //return sourceDic.Keys.ToDictionary(item => item, item => (int)Encoding.UTF8.GetBytes(item)[0]).OrderBy(item => item.Value).ToDictionary(item => item.Key, item => func != null ? func(sourceDic[item.Key]) : sourceDic[item.Key]);
+                var sortedDict = new SortedDictionary<string, string>();
+                foreach (var key in keys)
+                {
+                    sortedDict.Add(key, func != null ? func(sourceDic[key]) : sourceDic[key]);
+                }
+                return sortedDict;
+                //return keys.ToDictionary(item => item, item => func != null ? func(sourceDic[item]) : sourceDic[item]);
             }
         }
 
@@ -501,9 +908,8 @@ namespace Ets.SingleApi.Services.Payment
                                         "\", \"timestamp\":\"" + timestamp + "\", \"app_signature\":\"" +
                                         app_signature +
                                         "\", \"sign_method\":\"sha1\" }";
-                string access_token = GetAccessToken();
 
-                string.Format("\r\n===============================\r\n THE QueryState Call Wechat OrderQuery BEGIN \r\n {0} \r\n {1}\r\n===============================\r\n", access_token, postJsonString).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                string access_token = GetAccessToken();
 
                 string resultJson = HttpRequestPost(postJsonString,
                                                     string.Format(
@@ -518,7 +924,6 @@ namespace Ets.SingleApi.Services.Payment
                 string ret_code = jsonObject["order_info"]["ret_code"].ToString();
                 string trade_state = jsonObject["order_info"]["trade_state"].ToString();
 
-                string.Format("\r\n===============================\r\n THE QueryState Call Wechat OrderQuery END \r\n {0} \r\n \r\n===============================\r\n", resultJson).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
 
 
                 return ret_code == "0" && trade_state == "0";
@@ -540,7 +945,7 @@ namespace Ets.SingleApi.Services.Payment
             /// 修改者：
             /// 修改时间：
             /// ----------------------------------------------------------------------------------------
-            public static bool DeliveryNotify(string out_trade_no, string transid, string openid)
+            public static bool Notify(string out_trade_no, string transid, string openid)
             {
                 var dic = new Dictionary<string, string>
                 {
@@ -562,8 +967,6 @@ namespace Ets.SingleApi.Services.Payment
 
                 string resultJson = HttpRequestPost(postJsonString, string.Format("https://api.weixin.qq.com/pay/delivernotify?access_token={0}", access_token), (ex) => string.Format("===============================\r\n THE DeliveryNotify _HTTP_POST_EX \r\n {0} \r\n {1} \r\n===============================", ex.Message, ex.ToString(), ex.StackTrace).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info));
 
-                string.Format("===============================\r\n THE DeliveryNotify _HTTP_POST_END \r\n {0} \r\n===============================", resultJson).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);//==
-
                 JObject jObject = JObject.Parse(resultJson);
                 return jObject["errcode"].ToString() == "0";
             }
@@ -581,9 +984,9 @@ namespace Ets.SingleApi.Services.Payment
             /// ----------------------------------------------------------------------------------------
             private static string GetAccessToken()
             {
-                string retJson = HttpRequestGetRetString(string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", ControllersCommon.ConstWechatPaymentAppId, ControllersCommon.ConstWechatPaymentAppSecret), (content) => content);
-                JsonValue jsonValue = JsonValue.Parse(retJson);
-                return jsonValue["access_token"];
+                    string retJson = HttpRequestGetRetString(string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", ControllersCommon.ConstWechatPaymentAppId, ControllersCommon.ConstWechatPaymentAppSecret), (content) => content);
+                    JsonValue jsonValue = JsonValue.Parse(retJson);
+                    return jsonValue["access_token"];
             }
 
             /// <summary>

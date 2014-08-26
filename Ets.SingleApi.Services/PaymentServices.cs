@@ -2,13 +2,15 @@
 
 namespace Ets.SingleApi.Services
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Xml;
 
     /// <summary>
     /// 类名称：PaymentServices
@@ -508,7 +510,7 @@ namespace Ets.SingleApi.Services
                 StatusCode = verifyResult.StatusCode
             };
         }
-        
+
         /// <summary>
         /// 获取支付宝支付请求Url
         /// </summary>
@@ -754,6 +756,403 @@ namespace Ets.SingleApi.Services
             };
         }
 
+        /// <summary>
+        /// 生成 微信支付JS 请求参数
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙 创建日期：2014/3/17 10:49
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> WechatPayment(string source, WechatPaymentParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var orderType = (OrderType)parameter.OrderType;
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var existResult = orderBaseProvider.Exist(source, parameter.OrderId);
+            if (existResult == null || existResult.Result == 0)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            if (existResult.Result == 1)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.DoublePayment
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.WechatPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            var result = payment.Payment(new WechatPaymentData
+            {
+                Amount = parameter.Amount,
+                Attach = parameter.Attach,
+                OrderId = parameter.OrderId,
+                NotifyUrl = parameter.NotifyUrl,
+                Body = parameter.Body,
+                SpbillCreateIp = parameter.SpbillCreateIp,
+                WechatId = parameter.WechatId
+            });
+
+            if (result == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = result.Result,
+                StatusCode = result.StatusCode
+            };
+        }
+
+
+
+        /// <summary>
+        /// 微信二维码支付
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/5 16:57
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> WechatPaymentQr(string source, WechatPaymentParameterQr parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.WechatPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            var result = payment.PaymentQr(new WechatPaymentDataQr
+            {
+                Productid = parameter.Productid
+            });
+
+            if (result == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = result.Result,
+                StatusCode = result.StatusCode
+            };
+
+        }
+
+
+        /// <summary>
+        /// Wechats the payment qr package.
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// ServicesResult{WechatResponsePaymentDataQrPackage}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 16:17
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> WechatPaymentQrPackage(string source, WechatPaymentParameterQrPackage parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.WechatPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            var responsePaymentData = payment.PaymentQrPackage(new WechatPaymentDataQrPackage
+                                                      {
+                                                          AppId = parameter.AppId,
+                                                          AppSignature = parameter.AppSignature,
+                                                          IsSubscribe = parameter.IsSubscribe,
+                                                          NonceStr = parameter.NonceStr,
+                                                          OpenId = parameter.OpenId,
+                                                          ProductId = parameter.ProductId,
+                                                          SignMethod = parameter.SignMethod,
+                                                          TimeStamp = parameter.TimeStamp,
+                                                          SpbillCreateIp = parameter.SpbillCreateIp,
+                                                          TotalFee = parameter.TotalFee,
+                                                          IsConfirm = parameter.IsConfirm,
+                                                          IsPaid = parameter.IsPaid,
+                                                          OrderType = parameter.OrderType,
+                                                          DeviceNumber = parameter.DeviceNumber
+                                                      });
+
+            if (responsePaymentData == null || responsePaymentData.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            var xmlDoc = new XmlDocument();
+            var result = new WechatPaymentResponseQrPackage
+                                                        {
+                                                            AppId = xmlDoc.CreateCDataSection(responsePaymentData.Result.AppId),
+                                                            NonceStr = xmlDoc.CreateCDataSection(responsePaymentData.Result.NonceStr),
+                                                            TimeStamp = responsePaymentData.Result.TimeStamp,
+                                                            Package = xmlDoc.CreateCDataSection(responsePaymentData.Result.Package),
+                                                            RetCode = responsePaymentData.Result.RetCode,
+                                                            RetErrMsg = xmlDoc.CreateCDataSection(responsePaymentData.Result.RetErrMsg),
+                                                            SignMethod = xmlDoc.CreateCDataSection(responsePaymentData.Result.SignMethod),
+                                                            AppSignature = xmlDoc.CreateCDataSection(responsePaymentData.Result.AppSignature)
+                                                        };
+
+            return new ServicesResult<string>
+            {
+                Result = XmlSerializationUtility<WechatPaymentResponseQrPackage>.XmlSerialize(result),
+                StatusCode = responsePaymentData.StatusCode
+            };
+        }
+        /// <summary>
+        /// 微信 支付状态
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回支付状态
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：3/10/2014 6:00 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> WeChatPaymentState(string source, WechatPaymentStateParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var orderType = (OrderType)parameter.OrderType;
+            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
+            if (orderBaseProvider == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.WechatPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            //验证签名，订单状态为支付
+            var result = payment.QueryState(new WechatPaymentQueryData
+            {
+                sign_type = parameter.sign_type,
+                service_version = parameter.service_version,
+                input_charset = parameter.input_charset,
+                sign = parameter.sign,
+                sign_key_index = parameter.sign_key_index,
+                trade_mode = parameter.trade_mode,
+                trade_state = parameter.trade_state,
+                pay_info = parameter.pay_info,
+                partner = parameter.partner,
+                bank_type = parameter.bank_type,
+                bank_billno = parameter.bank_billno,
+                total_fee = parameter.total_fee,
+                fee_type = parameter.fee_type,
+                notify_id = parameter.notify_id,
+                transaction_id = parameter.transaction_id,
+                out_trade_no = parameter.out_trade_no,
+                attach = parameter.attach,
+                time_end = parameter.time_end,
+                transport_fee = parameter.transport_fee,
+                product_fee = parameter.product_fee,
+                discount = parameter.discount,
+                buyer_alias = parameter.buyer_alias,
+                OpenId = parameter.OpenId,
+                AppId = parameter.AppId,
+                IsSubscribe = parameter.IsSubscribe,
+                TimeStamp = parameter.TimeStamp,
+                NonceStr = parameter.NonceStr,
+                AppSignature = parameter.AppSignature,
+                SignMethod = parameter.SignMethod
+
+            });
+
+
+            if (result == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            if (result.StatusCode != (int)StatusCode.Succeed.Ok)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = result.Result,
+                    StatusCode = result.StatusCode
+                };
+            }
+
+            //订单是否存在
+            var orderId = parameter.OrderId;
+            var existResult = orderBaseProvider.Exist(source, orderId);
+
+            string.Format("===============================\r\n THE WeChatPaymentState Exist OrderId:{0} source:{1} \r\n===============================", orderId, source).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+
+
+            if (existResult == null || existResult.Result == 0)
+            {
+                return new ServicesResult<bool>
+                {
+                    Result = false,
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
+                };
+            }
+
+            //保存订单支付完成
+            var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, orderId, true);
+            string.Format("===============================\r\n THE WeChatPaymentState Success \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+
+
+            return new ServicesResult<bool>
+            {
+                Result = saveOrderPaidResult.Result,
+                StatusCode = saveOrderPaidResult.StatusCode
+            };
+        }
+
+
+
+        /// <summary>
+        /// 在收到支付通知发货后，一定调用发货通知接口，否则可能影响商户信誉和资金结算。
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：孟祺宙 创建日期：2014/3/19 15:16
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<bool> WechatPaymentDeliveryNotify(string source, WechatPaymentStateParameter parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+            string outTradeNo = parameter.out_trade_no,
+                   transactionId = parameter.transaction_id,
+                   openId = parameter.OpenId;
+            var isNotify = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.Notify(outTradeNo, transactionId, openId);
+
+            if (!isNotify)
+            {
+                return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+                    Result = false
+                };
+            }
+            return new ServicesResult<bool>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = true
+                };
+        }
+        #region
         ///// <summary>
         ///// 获取新浪微博支付请求Url
         ///// </summary>
@@ -932,268 +1331,35 @@ namespace Ets.SingleApi.Services
         //        StatusCode = saveOrderPaidResult.StatusCode
         //    };
         //}
+        #endregion
 
 
         /// <summary>
-        /// Wechats the payment.
+        /// 推送APP
         /// </summary>
         /// <param name="source">The source</param>
-        /// <param name="parameter">The parameter</param>
+        /// <param name="pushAppParameter">The pushAppParameter</param>
         /// <returns>
         /// String}
         /// </returns>
-        /// 创建者：孟祺宙 创建日期：2014/3/17 10:49
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<string> WechatPayment(string source, WechatPaymentParameter parameter)
-        {
-            if (parameter == null)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
-            }
-
-            var orderType = (OrderType)parameter.OrderType;
-            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
-            if (orderBaseProvider == null)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
-                };
-            }
-
-            var existResult = orderBaseProvider.Exist(source, parameter.OrderId);
-            if (existResult == null || existResult.Result == 0)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
-                };
-            }
-
-            if (existResult.Result == 1)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.Validate.DoublePayment
-                };
-            }
-
-            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.WechatPayment);
-            if (payment == null)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
-                };
-            }
-
-            var result = payment.Payment(new WechatPaymentData
-            {
-                Amount = parameter.Amount,
-                Attach = parameter.Attach,
-                OrderId = parameter.OrderId,
-                NotifyUrl = parameter.NotifyUrl,
-                Body = parameter.Body,
-                SpbillCreateIp = parameter.SpbillCreateIp,
-                WechatId = parameter.WechatId
-            });
-
-            if (result == null)
-            {
-                return new ServicesResult<string>
-                {
-                    Result = string.Empty,
-                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
-                };
-            }
-
-            return new ServicesResult<string>
-            {
-                Result = result.Result,
-                StatusCode = result.StatusCode
-            };
-        }
-
-        /// <summary>
-        /// 微信 支付状态
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="parameter">The parameter</param>
-        /// <returns>
-        /// 返回支付状态
-        /// </returns>
         /// 创建者：孟祺宙
-        /// 创建日期：3/10/2014 6:00 PM
+        /// 创建日期：2014/8/11 17:26
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> WeChatPaymentState(string source, WechatPaymentStateParameter parameter)
+        public ServicesResult<string> PushApp(string source, PushAppParameter pushAppParameter)
         {
-            if (parameter == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
-            }
+            if (pushAppParameter == null || string.IsNullOrEmpty(pushAppParameter.DeviceNumber)) return new ServicesResult<string>
+                                                                                                            {
+                                                                                                                StatusCode = (int)StatusCode.Succeed.Empty
+                                                                                                            };
 
-            var orderType = (OrderType)parameter.OrderType;
-            var orderBaseProvider = this.orderBaseProviderList.FirstOrDefault(p => p.OrderType == orderType);
-            if (orderBaseProvider == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
-                };
-            }
-
-            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.WechatPayment);
-            if (payment == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
-                };
-            }
-
-            //验证签名，订单状态为支付
-            var result = payment.QueryState(new WechatPaymentQueryData
-            {
-                sign_type = parameter.sign_type,
-                service_version = parameter.service_version,
-                input_charset = parameter.input_charset,
-                sign = parameter.sign,
-                sign_key_index = parameter.sign_key_index,
-                trade_mode = parameter.trade_mode,
-                trade_state = parameter.trade_state,
-                pay_info = parameter.pay_info,
-                partner = parameter.partner,
-                bank_type = parameter.bank_type,
-                bank_billno = parameter.bank_billno,
-                total_fee = parameter.total_fee,
-                fee_type = parameter.fee_type,
-                notify_id = parameter.notify_id,
-                transaction_id = parameter.transaction_id,
-                out_trade_no = parameter.out_trade_no,
-                attach = parameter.attach,
-                time_end = parameter.time_end,
-                transport_fee = parameter.transport_fee,
-                product_fee = parameter.product_fee,
-                discount = parameter.discount,
-                buyer_alias = parameter.buyer_alias,
-                OpenId = parameter.OpenId,
-                AppId = parameter.AppId,
-                IsSubscribe = parameter.IsSubscribe,
-                TimeStamp = parameter.TimeStamp,
-                NonceStr = parameter.NonceStr,
-                AppSignature = parameter.AppSignature,
-                SignMethod = parameter.SignMethod
-
-            });
-
-
-            if (result == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
-                };
-            }
-
-            if (result.StatusCode != (int)StatusCode.Succeed.Ok)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = result.Result,
-                    StatusCode = result.StatusCode
-                };
-            }
-
-            //订单是否存在
-            var orderId = parameter.OrderId;
-            var existResult = orderBaseProvider.Exist(source, orderId);
-
-            string.Format("===============================\r\n THE WeChatPaymentState Exist OrderId:{0} source:{1} \r\n===============================", orderId, source).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
-
-
-            if (existResult == null || existResult.Result == 0)
-            {
-                return new ServicesResult<bool>
-                {
-                    Result = false,
-                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode
-                };
-            }
-
-            //保存订单支付完成
-            var saveOrderPaidResult = orderBaseProvider.SaveOrderPaid(source, orderId, true);
-            string.Format("===============================\r\n THE WeChatPaymentState Success \r\n===============================").WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
-
-            return new ServicesResult<bool>
-            {
-                Result = saveOrderPaidResult.Result,
-                StatusCode = saveOrderPaidResult.StatusCode
-            };
+            var result = new WechatPaymentPushService().NotifyMsg(pushAppParameter.OrderId, pushAppParameter.DeviceNumber);
+            return new ServicesResult<string>
+                       {
+                           StatusCode = (int)StatusCode.Succeed.Ok,
+                           Result = result
+                       };
         }
-
-
-
-        /// <summary>
-        /// 在收到支付通知发货后，一定调用发货通知接口，否则可能影响商户信誉和资金结算。
-        /// </summary>
-        /// <param name="source">The source</param>
-        /// <param name="parameter">The parameter</param>
-        /// <returns>
-        /// Boolean}
-        /// </returns>
-        /// 创建者：孟祺宙 创建日期：2014/3/19 15:16
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        /// 创建者：孟祺宙 创建日期：2014/3/19 15:22
-        /// 修改者：
-        /// 修改时间：
-        /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> WechatPaymentDeliveryNotify(string source, WechatPaymentStateParameter parameter)
-        {
-            if (parameter == null)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidRequest
-                };
-            }
-            string out_trade_no = parameter.out_trade_no,
-                   transaction_id = parameter.transaction_id,
-                   openId = parameter.OpenId;
-            var isNotify = WechatPaymentCommon.BrandWechatPayCallBackQueryOrNotify.DeliveryNotify(out_trade_no, transaction_id, openId);
-
-            if (!isNotify)
-            {
-                return new ServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
-                    Result = false
-                };
-            }
-            return new ServicesResult<bool>
-                {
-                    StatusCode = (int)StatusCode.Succeed.Ok,
-                    Result = true
-                };
-        }
-
     }
 }

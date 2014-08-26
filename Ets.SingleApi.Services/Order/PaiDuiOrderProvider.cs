@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using Ets.SingleApi.Model;
-using Ets.SingleApi.Model.Controller;
+﻿using Ets.SingleApi.Model;
 using Ets.SingleApi.Model.Repository;
 using Ets.SingleApi.Model.Services;
 using Ets.SingleApi.Services.IRepository;
 using Ets.SingleApi.Utility;
+using System.Linq;
 
 namespace Ets.SingleApi.Services
 {
@@ -273,6 +272,12 @@ namespace Ets.SingleApi.Services
                             OrderStatusId = 1
                         }
                 };
+        }
+
+
+        public ServicesResult<TangShiOrderBaseModel> GetOrderBase(string source, int orderId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

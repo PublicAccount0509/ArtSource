@@ -2,15 +2,14 @@
 
 namespace Ets.SingleApi.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Http;
-
     using Ets.SingleApi.Controllers.IServices;
     using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Services;
     using Ets.SingleApi.Utility;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Http;
 
     /// <summary>
     /// 类名称：SupplierController
@@ -674,7 +673,25 @@ namespace Ets.SingleApi.Controllers
                             IsDiscount = q.IsDiscount,
                             Recipe = q.Recipe ?? string.Empty,
                             Recommended = q.Recommended,
-                            PackagingFee = q.PackagingFee ?? 0
+                            PackagingFee = q.PackagingFee ?? 0,
+                            SupplierDishOptionGroup = q.SupplierDishOptionGroup.Select(k => new SupplierDishOptionGroup
+                                                                                              {
+                                                                                                  SupplierDishId = k.SupplierDishId,
+                                                                                                  OptionGroupId = k.OptionGroupId,
+                                                                                                  OptionGroupTitle = k.OptionGroupTitle,
+                                                                                                  IsMultiple = k.IsMultiple,
+                                                                                                  FreeNum = k.FreeNum,
+                                                                                                  IsMandatory = k.IsMandatory,
+                                                                                                  MinValue = k.MinValue,
+                                                                                                  MaxValue = k.MaxValue,
+                                                                                                  SupplierDishCustomizationOption = k.SupplierDishCustomizationOption.Select(i => new SupplierDishCustomizationOption
+                                                                                                                                                                                      {
+                                                                                                                                                                                          OptionId = i.OptionId,
+                                                                                                                                                                                          OptionGroupId = i.OptionGroupId,
+                                                                                                                                                                                          OptionTitle = i.OptionTitle,
+                                                                                                                                                                                          Price = i.Price
+                                                                                                                                                                                      }).ToArray()
+                                                                                              }).ToArray()
                         }).ToList()
                 }).ToList();
 

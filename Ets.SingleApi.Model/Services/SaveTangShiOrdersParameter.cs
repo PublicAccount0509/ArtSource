@@ -137,5 +137,18 @@ namespace Ets.SingleApi.Model.Services
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public List<SupplierDishItem> SupplierDishList { get; set; }
+
+        /// <summary>
+        /// 设备号或者MAC地址
+        /// </summary>
+        /// <value>
+        /// The DeviceNumber
+        /// </value>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/14 9:44
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public string DeviceNumber { get; set; }
     }
 }

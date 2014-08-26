@@ -1,5 +1,4 @@
-﻿using Ets.SingleApi.Model.Controller;
-
+﻿
 namespace Ets.SingleApi.Services
 {
     using Ets.SingleApi.Model;
@@ -45,6 +44,21 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId);
 
+        /// <summary>
+        /// 取得订单基本信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// ServicesResult{IOrderDetailModel}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/6 13:51
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<TangShiOrderBaseModel> GetOrderBase(string source, int orderId);
+        
         /// <summary>
         /// 保存订单信息
         /// </summary>

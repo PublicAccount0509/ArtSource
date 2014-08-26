@@ -155,6 +155,40 @@
                 Result = result.Result
             };
         }
+        /// <summary>
+        /// 取得订单基本信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">订单号</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞；默认为 0</param>
+        /// <returns>
+        /// ServicesResult{IOrderModel}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/6 13:48
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<TangShiOrderBaseModel> GetOrderBase(string source, int orderId, int orderType, int orderSourceType)
+        {
+            var orderProvider = this.orderProviderList.FirstOrDefault(p => p.OrderProviderType.OrderType == (OrderType)orderType && p.OrderProviderType.OrderSourceType == (OrderSourceType)orderSourceType);
+            if (orderProvider == null)
+            {
+                return new ServicesResult<TangShiOrderBaseModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderTypeCode
+                };
+            }
+
+            var result = orderProvider.GetOrderBase(source, orderId);
+            return new ServicesResult<TangShiOrderBaseModel>
+            {
+                StatusCode = result.StatusCode,
+                Result = result.Result
+            };
+        }
+        
 
         /// <summary>
         /// 保存订单信息
@@ -661,5 +695,8 @@
                 Result = jsonValue["Result"]
             };
         }
+
+
+
     }
 }

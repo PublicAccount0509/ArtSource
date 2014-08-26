@@ -455,7 +455,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public const string ConstWechatPaymentAppId = "wx3207ade26406c657";
+        public const string ConstWechatPaymentAppId = "wx75b95d84726db237";
 
         /// <summary>
         /// 微信AppSecret
@@ -465,7 +465,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public const string ConstWechatPaymentAppSecret = "53102510efe4fb577b1cd8250fe386c9";
+        public const string ConstWechatPaymentAppSecret = "c7aa42d95405a9b9ea9523380c49a263";
 
         /// <summary>
         /// 微信PaySignKey 在支付的时候很蛋疼的叫AppKey
@@ -475,7 +475,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public const string ConstWechatPaymentPaySignKey = "UxYlsn744dzUA4CmCV7j0rJf32RGfamsv96Khs77tWMQNc1bTSgR7NnpB1S0t3SNWejZudTfstT2saYEjyjIEsU4e6YwTD6DFHoWIAXWPCLAAv4FR9aknn0UgUeXj6mK";
+        public const string ConstWechatPaymentPaySignKey = "Vn4I8Pdul1Y1bwdXW2flysRWjYyBx4jMCapeuQ2bM7QTSHFeaxAr2GzsorPF9mM4UGftfYJq5mP8DDwNFg3glmXdFiWnnEp1M7W9Z0qN3tvsKPoEeChiQhd1wGGgLbA4";
 
         /// <summary>
         /// 微信分配财付通PartnerKey
@@ -484,7 +484,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public const string ConstWechatPaymentPartnerKey = "0fdc444bcd4d9e700abb12e1871e183c";
+        public const string ConstWechatPaymentPartnerKey = "35585d777e8dc9e86f627a2003e03069";
 
         /// <summary>
         /// 微信分配财付通PartnerId
@@ -494,8 +494,7 @@ namespace Ets.SingleApi.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public const string ConstWechatPaymentPartnerId = "1218067401";
-
+        public const string ConstWechatPaymentPartnerId = "1219830301";
 
         /// <summary>
         /// 百度统计用AppId

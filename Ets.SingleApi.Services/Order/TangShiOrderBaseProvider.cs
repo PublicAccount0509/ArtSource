@@ -124,7 +124,7 @@ namespace Ets.SingleApi.Services
         /// 取得订单是否存在以及支付支付状态
         /// </summary>
         /// <param name="source">应用来源</param>
-        /// <param name="orderId">订单状态</param>
+        /// <param name="orderId">订单OrderNumber</param>
         /// <returns>
         /// 返回结果 0 不存在 1 支付 2 未支付
         /// </returns>

@@ -31,7 +31,7 @@
         private readonly IBusinessAreaServices businessAreaServices;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessAreaController"/> class.
+        /// Initializes a new instance of the <see cref="BusinessAreaController" /> class.
         /// </summary>
         /// <param name="businessAreaServices">The businessAreaServices</param>
         /// 创建者：周超
@@ -43,6 +43,55 @@
         {
             this.businessAreaServices = businessAreaServices;
         }
+
+        /// <summary>
+        /// Businesses the name of the city.
+        /// </summary>
+        /// <param name="regionCode">The regionCode</param>
+        /// <returns>
+        /// The Response{BusinessArea}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/7/28 18:09
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<BusinessArea> BusinessCityName(int regionCode)
+        {
+            var result = this.businessAreaServices.BusinessCityName(this.Source, regionCode);
+            if (result.Result == null)
+            {
+                return new Response<BusinessArea>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = result.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : result.StatusCode
+                    },
+                    Result = new BusinessArea()
+                };
+            }
+
+            var model = new BusinessArea
+            {
+                Id = (result.Result.Id ?? string.Empty),
+                Name = (result.Result.Name ?? string.Empty),
+                Code = (result.Result.Code ?? string.Empty),
+                Depth = result.Result.Depth,
+                ParentCode = (result.Result.ParentCode ?? string.Empty)
+            };
+
+            return new Response<BusinessArea>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = result.StatusCode
+                },
+                ResultTotalCount = result.ResultTotalCount,
+                Result = model
+            };
+        }
+
 
         /// <summary>
         /// 获取区域和商圈信息列表
@@ -89,6 +138,54 @@
                     ResultTotalCount = result.Count,
                     Result = result
                 };
+        }
+
+        /// <summary>
+        /// Opens the city list by supplier group identifier.
+        /// </summary>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <returns>
+        /// ListResponse{BusinessArea}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/7/25 14:34
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<BusinessArea> OpenCityListBySupplierGroupId(int supplierGroupId)
+        {
+
+            var list = this.businessAreaServices.GetCityListBySupplierGroupId(this.Source, string.Empty, supplierGroupId);
+            if (list.Result == null || list.Result.Count == 0)
+            {
+                return new ListResponse<BusinessArea>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = list.StatusCode
+                    },
+                    Result = new List<BusinessArea>()
+                };
+            }
+            var result = list.Result.Select(p => new BusinessArea
+            {
+                Id = (p.Id ?? string.Empty),
+                Name = (p.Name ?? string.Empty),
+                Code = (p.Code ?? string.Empty),
+                Depth = p.Depth,
+                ParentCode = (p.ParentCode ?? string.Empty)
+            }).OrderBy(p => p.Code).ToList();
+
+            return new ListResponse<BusinessArea>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = list.StatusCode
+                },
+                ResultTotalCount = result.Count,
+                Result = result
+            };
         }
 
         /// <summary>

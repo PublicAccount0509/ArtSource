@@ -1,10 +1,6 @@
-﻿using Ets.SingleApi.Model.Controller;
-
+﻿
 namespace Ets.SingleApi.Services
 {
-    using System.Json;
-    using System.Linq;
-
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.ExternalServices;
     using Ets.SingleApi.Model.Repository;
@@ -12,6 +8,8 @@ namespace Ets.SingleApi.Services
     using Ets.SingleApi.Services.IExternalServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
+    using System.Json;
+    using System.Linq;
 
     /// <summary>
     /// 类名称：TangShiOrderProvider
@@ -132,6 +130,21 @@ namespace Ets.SingleApi.Services
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public abstract ServicesResult<IOrderDetailModel> GetOrder(string source, int orderId);
+
+        /// <summary>
+        /// 取得订单基本信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// ServicesResult{IOrderDetailModel}
+        /// </returns>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/6 13:51
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public abstract ServicesResult<TangShiOrderBaseModel> GetOrderBase(string source, int orderId);
 
         /// <summary>
         /// 保存订单信息
@@ -258,5 +271,8 @@ namespace Ets.SingleApi.Services
             int.TryParse(jsonValue["Result"], out orderNumber);
             return orderNumber;
         }
+
+
+
     }
 }

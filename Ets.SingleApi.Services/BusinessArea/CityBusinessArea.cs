@@ -163,22 +163,39 @@
 
             var cityIdList = list.Where(p => p.Name.EndsWith(ServicesCommon.MunicipalitySign)).Select(p => p.ParentId).ToList();
             var cityList = list.Where(p => !cityIdList.Contains(p.ParentId)).ToList();
+
+            //var tempList = this.regionEntityRepository.EntityQueryable.Where(p => cityIdList.Contains(p.Id)).Select(p => new BusinessAreaModel
+            //   {
+            //       Id = p.Id.ToString(),
+            //       Name = p.Name,
+            //       BriefName = p.BriefName,
+            //       ChnName = p.ChnName,
+            //       EnName = p.EnName,
+            //       BriefJPing = p.BriefJPing,
+            //       BriefQPing = p.BriefQPing,
+            //       Depth = p.Depth,
+            //       Code = p.Code,
+            //       Host = p.Host,
+            //       JPing = p.JPing,
+            //       QPing = p.QPing,
+            //       ParentId = p.F
+            //   }).ToList();
             var tempList = this.regionEntityRepository.EntityQueryable.Where(p => p.Depth == depth - 1 && cityIdList.Contains(p.Id)).Select(p => new BusinessAreaModel
-               {
-                   Id = p.Id.ToString(),
-                   Name = p.Name,
-                   BriefName = p.BriefName,
-                   ChnName = p.ChnName,
-                   EnName = p.EnName,
-                   BriefJPing = p.BriefJPing,
-                   BriefQPing = p.BriefQPing,
-                   Depth = p.Depth,
-                   Code = p.Code,
-                   Host = p.Host,
-                   JPing = p.JPing,
-                   QPing = p.QPing,
-                   ParentId = p.F
-               }).ToList();
+            {
+                Id = p.Id.ToString(),
+                Name = p.Name,
+                BriefName = p.BriefName,
+                ChnName = p.ChnName,
+                EnName = p.EnName,
+                BriefJPing = p.BriefJPing,
+                BriefQPing = p.BriefQPing,
+                Depth = p.Depth,
+                Code = p.Code,
+                Host = p.Host,
+                JPing = p.JPing,
+                QPing = p.QPing,
+                ParentId = p.F
+            }).ToList();
             if (tempList.Count > 0)
             {
                 cityList.AddRange(tempList);

@@ -26,6 +26,12 @@
         /// ----------------------------------------------------------------------------------------
         public static void Register(HttpConfiguration config)
         {
+            ////微信支付
+            //config.Routes.MapHttpRoute(
+            //    "WechatPaymentRoute",
+            //    "api/payment/WechatPaymentNotify/{orderType}",
+            //    new { controller = "Payment", action = "WechatPaymentNotify", httpMethod = new HttpMethodConstraint("GET", "PUT", "DELETE", "POST") });
+
             //首页
             config.Routes.MapHttpRoute(
                  "Home",
@@ -45,6 +51,8 @@
                  "api/{shoppingcart}/{controller}/{action}/{id}",
                  new { id = RouteParameter.Optional, httpMethod = new HttpMethodConstraint("GET", "PUT", "DELETE", "POST") },
                  new { shoppingcart = new ShoppingCartConstraint() });
+
+
         }
     }
 }

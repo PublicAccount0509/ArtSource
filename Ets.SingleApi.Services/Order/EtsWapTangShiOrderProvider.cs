@@ -1,20 +1,19 @@
-﻿using Ets.SingleApi.Model.Controller;
+﻿
 
 namespace Ets.SingleApi.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     using Castle.Services.Transaction;
-
     using Ets.SingleApi.Model;
+    using Ets.SingleApi.Model.Controller;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.ICacheServices;
     using Ets.SingleApi.Services.IExternalServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
-    using Ets.SingleApi.Services.ICacheServices;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// 类名称：EtsWapTangShiOrderProvider
@@ -135,8 +134,8 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<OrderNumberDtEntity> orderNumberDtEntityRepository,
             IEtsWapTangShiShoppingCartProvider etsWapShoppingCartProvider,
             IShoppingCartBaseCacheServices shoppingCartBaseCacheServices,
-            ISingleApiOrdersExternalService singleApiOrdersExternalService, 
-            INHibernateRepository<CustomerEntity> customerEntityRepository, 
+            ISingleApiOrdersExternalService singleApiOrdersExternalService,
+            INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<SupplierDishEntity> supplierDishEntityRepository)
             : base(orderNumberDtEntityRepository, singleApiOrdersExternalService)
         {
@@ -391,6 +390,56 @@ namespace Ets.SingleApi.Services
             }
 
             return new ServicesResult<IOrderDetailModel>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = result
+            };
+        }
+
+
+        /// <summary>
+        /// 取得订单基本信息
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// ServicesResult{IOrderDetailModel}
+        /// </returns>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/6 13:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public override ServicesResult<TangShiOrderBaseModel> GetOrderBase(string source, int orderId)
+        {
+            var tableReservationEntity = (from entity in this.tableReservationEntityRepository.EntityQueryable
+                                          where entity.OrderNumber == orderId
+                                          select entity).FirstOrDefault();
+
+            if (tableReservationEntity == null)
+            {
+                return new ServicesResult<TangShiOrderBaseModel>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidOrderIdCode,
+                    Result = new TangShiOrderBaseModel()
+                };
+            }
+
+            var tableReservationId = tableReservationEntity.TableReservationId.ToString();
+            var paymentEntity = this.paymentRecordEntityRepository.EntityQueryable.FirstOrDefault(p => p.OrderId == tableReservationId);
+            var result = new TangShiOrderBaseModel
+                             {
+                                 OrderNumber = tableReservationEntity.OrderNumber.HasValue ? tableReservationEntity.OrderNumber.Value : orderId,
+                                 DateReserved = tableReservationEntity.DateReserved,
+                                 PaymentId = tableReservationEntity.PaymentId,
+                                 TableStatus = tableReservationEntity.TableStatus,
+                                 CustomerTotal = tableReservationEntity.CustomerTotal.Value,
+                                 IsConfirm = paymentEntity != null,
+                                 IsPaId = tableReservationEntity.IsPaId.HasValue ? tableReservationEntity.IsPaId.Value : false,
+                                 DeviceNumber = tableReservationEntity.ContactName //设备号或者MAC
+                             };
+
+            return new ServicesResult<TangShiOrderBaseModel>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,
                 Result = result
@@ -756,6 +805,7 @@ namespace Ets.SingleApi.Services
                 IsService = true
             };
 
+            tableReservationEntity.ContactName = tangShiOrdersParameter.DeviceNumber;
             tableReservationEntity.Notes = tangShiOrdersParameter.Remark + tangShiOrdersParameter.TempOrderNumber;
             tableReservationEntity.CustomerTotal = customerTotalFee;
             tableReservationEntity.Total = customerTotalFee;
@@ -767,10 +817,11 @@ namespace Ets.SingleApi.Services
             //tableReservationEntity.CouponCode = order.CouponCode;
             //tableReservationEntity.ContactNumber = delivery.Telephone;
             tableReservationEntity.Contactsex = tangShiOrdersParameter.CustomerSex;
-            tableReservationEntity.ContactName = tangShiOrdersParameter.CustomerName;
+            //tableReservationEntity.ContactName = tangShiOrdersParameter.CustomerName;
             //tableReservationEntity.InvoiceRequired = order.InvoiceRequired;
             //tableReservationEntity.InvoiceTitle = order.InvoiceTitle;
             tableReservationEntity.Path = tangShiOrdersParameter.Path;
+            tableReservationEntity.TemplateId = tangShiOrdersParameter.Source;
             //tableReservationEntity.TemplateId = order.Template;
 
             this.tableReservationEntityRepository.Save(tableReservationEntity);
@@ -869,7 +920,7 @@ namespace Ets.SingleApi.Services
             var paymentRecordEntity = this.paymentRecordEntityRepository.EntityQueryable.FirstOrDefault(p => p.OrderId == tableReservationId)
                                  ?? new PaymentRecordEntity
                                  {
-                                     PaymentTypeId = 1,
+                                     PaymentTypeId = 1,//个人
                                      OrderId = tableReservationId,
                                      PaymentDate = DateTime.Now
                                  };
@@ -880,5 +931,7 @@ namespace Ets.SingleApi.Services
             paymentRecordEntity.PayBank = payBank;
             this.paymentRecordEntityRepository.Save(paymentRecordEntity);
         }
+
+
     }
 }
