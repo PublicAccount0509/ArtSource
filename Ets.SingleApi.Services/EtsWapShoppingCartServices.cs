@@ -433,34 +433,47 @@ namespace Ets.SingleApi.Services
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
-            var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
-            if (shoppingList.Count == 0)
+            var oldShoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
+            if (oldShoppingList.Count == 0)
             {
                 saveDeliveryMethodId = false;
             }
 
-            foreach (var shoppingCartItem in shoppingCartItemList)
+            foreach (var curDish in shoppingCartItemList)
             {
-                var item = shoppingList.FirstOrDefault(p => p.ItemId == shoppingCartItem.ItemId && (p.Instruction ?? string.Empty).Trim() == (shoppingCartItem.Instruction ?? string.Empty).Trim());
-                if (item == null)
+                //是否存在
+                var oldDish = oldShoppingList.FirstOrDefault(p => p.ItemId == curDish.ItemId && (p.Instruction ?? string.Empty).Trim() == (curDish.Instruction ?? string.Empty).Trim());
+                if (oldDish == null)
                 {
-                    shoppingList.Add(shoppingCartItem);
+                    oldShoppingList.Add(curDish);
                     continue;
                 }
+                //是否需要合并
+                var oldDishOptionIds = oldDish.SupplierDishOptionGroup.SelectMany(item => item.SupplierDishCustomizationOption.Select(p => p.OptionId)).ToArray();
+                var curDishOptionIds = curDish.SupplierDishOptionGroup.SelectMany(item => item.SupplierDishCustomizationOption.Select(p => p.OptionId)).ToArray();
+                var exceptDishOptionIds = curDishOptionIds.Except(oldDishOptionIds).ToArray();
 
-                item.Quantity += shoppingCartItem.Quantity;
-                if (shoppingCartItem.CategoryIdList == null)
+                if (exceptDishOptionIds.Length == 0)
                 {
-                    continue;
+                    oldDish.Quantity += curDish.Quantity;
+
+                    if (curDish.CategoryIdList == null)
+                    {
+                        continue;
+                    }
+
+                    foreach (var categoryId in curDish.CategoryIdList.Where(categoryId => !oldDish.CategoryIdList.Contains(categoryId)))
+                    {
+                        oldDish.CategoryIdList.Add(categoryId);
+                    }
                 }
-
-                foreach (var categoryId in shoppingCartItem.CategoryIdList.Where(categoryId => !item.CategoryIdList.Contains(categoryId)))
+                else
                 {
-                    item.CategoryIdList.Add(categoryId);
+                    oldShoppingList.Add(curDish);
                 }
             }
 
-            foreach (var shoppingCartItem in shoppingList)
+            foreach (var shoppingCartItem in oldShoppingList)
             {
                 if (shoppingCartItem.CategoryIdList != null)
                 {
@@ -470,10 +483,10 @@ namespace Ets.SingleApi.Services
                 shoppingCartItem.CategoryIdList = new List<int>();
             }
 
-            shoppingCart.ShoppingList = shoppingList;
+            shoppingCart.ShoppingList = oldShoppingList;
             this.etsWapShoppingCartProvider.SaveShoppingCart(source, shoppingCart);
             order.CouponFee = 0;
-            this.SaveShoppingCartOrder(source, shoppingList, supplier, order, saveDeliveryMethodId);
+            this.SaveShoppingCartOrder(source, oldShoppingList, supplier, order, saveDeliveryMethodId);
             return new ServicesResult<bool>
             {
                 Result = true
@@ -997,7 +1010,12 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private void SaveShoppingCartOrder(string source, List<ShoppingCartItem> shoppingList, ShoppingCartSupplier supplier, ShoppingCartOrder order, bool saveDeliveryMethodId)
         {
-            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            //var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+
+            var shoppingPrice = (from item in shoppingList
+                                 let groupPrice = item.SupplierDishOptionGroup.Select(p => p.SupplierDishCustomizationOption.Sum(k => k.Price)).Sum()
+                                 select item.Quantity * (item.Price + groupPrice)).Sum();
+
             var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
             {
                 PackagingFee = p.PackagingFee,
