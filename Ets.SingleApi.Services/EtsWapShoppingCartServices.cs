@@ -354,6 +354,13 @@ namespace Ets.SingleApi.Services
                 };
             }
 
+            //foreach (var shoppingCartItem in shoppingCartItemList)
+            //{
+                
+            //}
+
+
+
             var shoppingCart = getShoppingCartResult.Result;
             var supplier = getShoppingCartSupplierResult.Result;
             var order = getShoppingCartOrderResult.Result;
