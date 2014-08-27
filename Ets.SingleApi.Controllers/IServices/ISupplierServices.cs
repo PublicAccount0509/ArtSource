@@ -138,6 +138,21 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
+        ServicesResultList<GroupSupplierModel> GetGroupSupplierListByHtj(string source, GetGroupSupplierListParameter parameter);
+
+        /// <summary>
+        /// 获取餐厅分店列表
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// 返回餐厅分店列表
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：10/22/2013 11:38 AM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         ServicesResultList<GroupSupplierModel> GetSearchGroupSupplierList(string source, GetSearchGroupSupplierListParameter parameter);
 
         /// <summary>

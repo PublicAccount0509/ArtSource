@@ -264,7 +264,80 @@
                     StatusCode = (int)StatusCode.OAuth.InvalidClient
                 };
             }
+            //修改  如果Login表存在，则补全loginOAuth跟customer表信息
 
+            var loginInfo = this.loginEntityRepository.FindByExpression(item => item.Username == parameter.UserName);
+
+            if (loginInfo.Count > 0)
+            {
+                var FirstLogin = loginInfo.OrderBy(o => o.LoginId).FirstOrDefault();
+
+                if (
+                    this.loginOAuthEntityRepository.FindByExpression(item => item.Login.LoginId == FirstLogin.LoginId)
+                        .Count == 0)
+                {
+                    var loginOAuthEntityNew = new LoginOAuthEntity
+                    {
+                        Login = FirstLogin,
+                        JointLoginType = parameter.JointLoginType,
+                        KeyName = parameter.KeyName,
+                        SafeCode = null
+                    };
+
+                    //保存 LoginOAuth
+                    this.loginOAuthEntityRepository.Save(loginOAuthEntityNew);
+                }
+
+                if (this.customerEntityRepository.FindByExpression(item => item.LoginId == FirstLogin.LoginId).Count ==
+                    0)
+                {
+                    var customerEntityNew = new CustomerEntity
+                    {
+                        Mobile = null,
+                        Email = null,
+                        LoginId = FirstLogin.LoginId,
+                        Forename = string.Empty,
+                        DateJoined = DateTime.Now,
+                        IsValId = false,
+                        IsRegAllowed = true,
+                        Path =
+                            parameter.SourceType.IsEmptyOrNull()
+                                ? null
+                                : this.sourcePathEntityRepository.FindSingleByExpression(
+                                    p => p.Value == parameter.SourceType),
+                        Source = parameter.Template
+                    };
+
+                    //保存Customer
+                    this.customerEntityRepository.Save(customerEntityNew);
+                }
+                var accessTokenNew = Guid.NewGuid().ToString("N");
+                var refreshTokenNew = Guid.NewGuid().ToString("N");
+                var tokenEntityNew = new TokenEntity
+                {
+                    AccessToken = accessTokenNew,
+                    RefreshToken = refreshTokenNew,
+                    AppKey = appEntity,
+                    CreatedTime = DateTime.Now,
+                    UserId = FirstLogin.LoginId
+                };
+
+                //保存Token
+                this.tokenEntityRepository.Save(tokenEntityNew);
+
+                return new DetailServicesResult<RegisterUserModel>
+                {
+                    StatusCode = (int)StatusCode.Succeed.Ok,
+                    Result = new RegisterUserModel
+                    {
+                        AccessToken = accessTokenNew,
+                        RefreshToken = refreshTokenNew,
+                        UserId = FirstLogin.LoginId,
+                        TokenType = CommonUtility.GetTokenType()
+                    }
+                };
+
+            }
             var loginEntity = new LoginEntity
             {
                 Username = parameter.UserName,
