@@ -1,6 +1,7 @@
 ﻿namespace Ets.SingleApi.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Ets.SingleApi.Model;
@@ -317,12 +318,12 @@
             var customer = new ShoppingCartCustomer
             {
                 UserId = tempCustomer.UserId ?? 0,
-                Telephone = tempCustomer.Telephone,
-                Email = tempCustomer.Email,
+                Telephone = tempCustomer.Telephone??"",
+                Email = tempCustomer.Email??"",
                 CustomerId = tempCustomer.CustomerId,
                 Gender = string.Equals(tempCustomer.Gender, ServicesCommon.FemaleGender, StringComparison.OrdinalIgnoreCase) ? "1" : "0",
-                Name = string.Format("{0}{1}", tempCustomer.Forename, tempCustomer.Surname),
-                Username = tempLogin.Username
+                Name = string.Format("{0}{1}", tempCustomer.Forename, tempCustomer.Surname)??"",
+                Username = tempLogin.Username??""
             };
 
             this.etsWapShoppingCartCacheServices.SaveShoppingCartCustomer(source, customer);
@@ -359,7 +360,8 @@
             var shoppingCart = new ShoppingCart
             {
                 ShoppingCartId = id,
-                IsActive = true
+                IsActive = true,
+                ShoppingList = new List<ShoppingCartItem>()
             };
 
             this.etsWapShoppingCartCacheServices.SaveShoppingCart(source, shoppingCart);

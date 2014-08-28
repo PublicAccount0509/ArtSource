@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using Ets.SingleApi.Model.Controller;
+
     /// <summary>
     /// 类名称：ShoppingCartItem
     /// 命名空间：Ets.SingleApi.Model
@@ -156,6 +158,19 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         public string GroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SupplierDishOptionGroup of ShoppingCartItem
+        /// </summary>
+        /// <value>
+        /// The SupplierDishOptionGroup
+        /// </value>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/26 16:41
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public SupplierDishOptionGroup[] SupplierDishOptionGroup { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShoppingCartItem"/> class.
