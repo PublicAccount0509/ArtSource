@@ -981,18 +981,21 @@
                 };
             }
 
-            var list = this.usersServices.GetUserOrderList(this.Source, id, (OrderType)orderType, new GetUserOrderParameter
-                                                            {
-                                                                OrderStatus = orderStatus,
-                                                                PaidStatus = paidStatus,
-                                                                SupplierId = supplierId == 0 ? null : supplierId,
-                                                                SupplierGroupId = supplierGroupId == 0 ? null : supplierGroupId,
-                                                                IsEtaoshi = this.IsEtaoshi,
-                                                                PageIndex = pageIndex,
-                                                                PageSize = pageSize,
-                                                                Cancelled = cancelled,
-                                                                PlatformId = platformId
-                                                            });
+            var list = this.usersServices.GetUserOrderList(this.Source, id, (OrderType) orderType,
+                                                           new GetUserOrderParameter
+                                                               {
+                                                                   OrderStatus = orderStatus,
+                                                                   PaidStatus = paidStatus,
+                                                                   SupplierId = supplierId == 0 ? null : supplierId,
+                                                                   SupplierGroupId =
+                                                                       supplierGroupId == 0 ? null : supplierGroupId,
+                                                                   IsEtaoshi =
+                                                                       supplierGroupId == 17 ? false : this.IsEtaoshi,
+                                                                   PageIndex = pageIndex,
+                                                                   PageSize = pageSize,
+                                                                   Cancelled = cancelled,
+                                                                   PlatformId = platformId
+                                                               });
 
             if (list.Result == null || list.Result.Count == 0)
             {
