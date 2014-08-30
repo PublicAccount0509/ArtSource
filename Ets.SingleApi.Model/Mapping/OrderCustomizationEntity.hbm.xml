@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ets.SingleApi.Model.Repository.OrderCustomizationEntity, Ets.SingleApi.Model" table="OrderCustomization" dynamic-update="true" optimistic-lock="all" >
+	 <!--The cache-->
+	 <cache usage="read-write"/>
+	 <!--The primary keys-->
+		<id name="OrderCustomizationId" column="OrderCustomizationID" type="Int32" >
+			<generator class="native"/>
+		</id>
+		<!--The propertys-->
+		<property name="OrderId" column="OrderID" type="Int32" />
+		<property name="OptionId" column="OptionID" type="Int32" />
+		<property name="Number" column="Number" type="Int32" not-null="false" />
+		<property name="Price" column="Price" type="Decimal" not-null="false" />
+		<property name="Describe" column="Describe" type="String" not-null="false" />
+	</class>
+</hibernate-mapping>

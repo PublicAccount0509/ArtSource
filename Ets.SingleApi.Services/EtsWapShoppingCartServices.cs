@@ -779,7 +779,13 @@ namespace Ets.SingleApi.Services
             var deliveryMethodId = shoppingCartOrder.DeliveryMethodId ?? ServicesCommon.DefaultDeliveryMethodId;
             var shoppingCart = getShoppingCartResult.Result;
             var shoppingList = shoppingCart.ShoppingList ?? new List<ShoppingCartItem>();
-            var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+            //var shoppingPrice = shoppingList.Sum(p => p.Quantity * p.Price);
+
+            var shoppingPrice = (from item in shoppingList
+                                 let groupPrice = item.SupplierDishOptionGroup.Select(p => p.SupplierDishCustomizationOption.Sum(k => k.Price)).Sum()
+                                 select item.Quantity * (item.Price + groupPrice)).Sum();
+
+
             var packagingFee = ServicesCommon.GetPackagingFee(supplier.IsPackLadder, supplier.PackagingFee, supplier.PackLadder, shoppingList.Select(p => new PackagingFeeItem
             {
                 PackagingFee = p.PackagingFee,
@@ -858,6 +864,8 @@ namespace Ets.SingleApi.Services
             shoppingCartOrder.TotalFee = total;
             shoppingCartOrder.CustomerTotalFee = customerTotal;
             shoppingCartOrder.CouponFee = coupon;
+            shoppingCartOrder.DeliveryDate = shoppingCartOrder.DeliveryDate;
+            shoppingCartOrder.DeliveryDateTime = shoppingCartOrder.DeliveryDateTime;
             this.etsWapShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {

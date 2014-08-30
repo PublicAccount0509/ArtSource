@@ -2,19 +2,17 @@
 
 namespace Ets.SingleApi.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     using Castle.Services.Transaction;
-
     using Ets.SingleApi.Model;
     using Ets.SingleApi.Model.Repository;
     using Ets.SingleApi.Model.Services;
+    using Ets.SingleApi.Services.ICacheServices;
     using Ets.SingleApi.Services.IExternalServices;
     using Ets.SingleApi.Services.IRepository;
     using Ets.SingleApi.Utility;
-    using Ets.SingleApi.Services.ICacheServices;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// 类名称：WaiMaiOrderProvider
@@ -149,6 +147,7 @@ namespace Ets.SingleApi.Services
         /// ----------------------------------------------------------------------------------------
         private readonly IShoppingCartBaseCacheServices shoppingCartBaseCacheServices;
 
+
         /// <summary>
         /// 同步订单数据
         /// </summary>
@@ -163,6 +162,16 @@ namespace Ets.SingleApi.Services
         private readonly INHibernateRepository<CustomerEntity> customerEntity;
         private readonly INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository;
         private readonly INHibernateRepository<DeliveryBaiFuBaoCouponEntity> deliveryBaiFuBaoCouponEntityRepository;
+
+        /// <summary>
+        /// 外卖订单辅菜记录表
+        /// </summary>
+        /// 创建者：孟祺宙 
+        /// 创建日期：2014/8/30 16:23
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<OrderCustomizationEntity> orderCustomizationEntityRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WaiMaiOrderProvider" /> class.
@@ -181,11 +190,12 @@ namespace Ets.SingleApi.Services
         /// <param name="etsWapShoppingCartProvider">The shoppingCartProvider</param>
         /// <param name="shoppingCartBaseCacheServices">The shoppingCartBaseCacheServices</param>
         /// <param name="singleApiOrdersExternalService">The singleApiOrdersExternalService</param>
-        /// <param name="synchronousOrderExternalServices"></param>
-        /// <param name="loginEntity"></param>
-        /// <param name="customerEntity"></param>
-        /// <param name="supplierFeatureEntityRepository"></param>
-        /// <param name="deliveryBaiFuBaoCouponEntityRepository"></param>
+        /// <param name="synchronousOrderExternalServices">The synchronousOrderExternalServices</param>
+        /// <param name="loginEntity">The loginEntity</param>
+        /// <param name="customerEntity">The customerEntity</param>
+        /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
+        /// <param name="deliveryBaiFuBaoCouponEntityRepository">The deliveryBaiFuBaoCouponEntityRepository</param>
+        /// <param name="orderCustomizationEntityRepository">The orderCustomizationEntityRepository</param>
         /// 创建者：周超
         /// 创建日期：10/22/2013 8:41 PM
         /// 修改者：
@@ -210,7 +220,8 @@ namespace Ets.SingleApi.Services
             INHibernateRepository<LoginEntity> loginEntity,
             INHibernateRepository<CustomerEntity> customerEntity,
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
-            INHibernateRepository<DeliveryBaiFuBaoCouponEntity> deliveryBaiFuBaoCouponEntityRepository)
+            INHibernateRepository<DeliveryBaiFuBaoCouponEntity> deliveryBaiFuBaoCouponEntityRepository,
+            INHibernateRepository<OrderCustomizationEntity> orderCustomizationEntityRepository)
             : base(orderNumberDcEntityRepository, singleApiOrdersExternalService)
         {
             this.deliveryEntityRepository = deliveryEntityRepository;
@@ -230,6 +241,7 @@ namespace Ets.SingleApi.Services
             this.customerEntity = customerEntity;
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.deliveryBaiFuBaoCouponEntityRepository = deliveryBaiFuBaoCouponEntityRepository;
+            this.orderCustomizationEntityRepository = orderCustomizationEntityRepository;
         }
 
         /// <summary>
@@ -698,7 +710,7 @@ namespace Ets.SingleApi.Services
             var customerId = customer.CustomerId;
 
             //送餐地址坐标信息
-            var customerLocation = distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty)??
+            var customerLocation = distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty) ??
                                    distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}", customerAddressEntity.Address1), string.Empty);
 
             //若有送餐地址坐标信息，则取 餐厅坐标 与 送餐坐标 的距离
@@ -734,7 +746,9 @@ namespace Ets.SingleApi.Services
             var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
             this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
+            this.SaveOrderCustomization(orderId, shoppingList);
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
+
 
             this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
             this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
@@ -905,7 +919,7 @@ namespace Ets.SingleApi.Services
             deliveryEntity.ContactPhone = deliveryAddressEntity.Telephone;
             deliveryEntity.Gender = deliveryAddressEntity.Sex.ToString();
             deliveryEntity.Contact = deliveryAddressEntity.Recipient;
-            deliveryEntity.DeliveryDate = order.DeliveryDateTime;
+            deliveryEntity.DeliveryDate = order.DeliveryDate;
             deliveryEntity.Template = this.sourceTypeEntityRepository.EntityQueryable.FirstOrDefault(p => p.Value == order.Template);
             deliveryEntity.InvoiceRequired = order.InvoiceRequired;
             deliveryEntity.InvoiceTitle = order.InvoiceTitle;
@@ -1046,6 +1060,33 @@ namespace Ets.SingleApi.Services
                              }).ToList();
 
             this.orderEntityRepository.Save(orderList);
+        }
+
+        /// <summary>
+        /// Saves the order customization.
+        /// </summary>
+        /// <param name="orderId">订单号</param>
+        /// <param name="shoppingList">The shoppingList</param>
+        /// 创建者：孟祺宙
+        /// 创建日期：2014/8/30 16:18
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private void SaveOrderCustomization(int orderId, IEnumerable<ShoppingCartItem> shoppingList)
+        {
+            var insData = (from item in shoppingList
+                           from p in item.SupplierDishOptionGroup
+                           from k in p.SupplierDishCustomizationOption
+                           select new OrderCustomizationEntity
+                                      {
+                                          OrderId = orderId,
+                                          OptionId = k.OptionId,
+                                          Number = 1,
+                                          Price = k.Price,
+                                          Describe = k.OptionTitle
+                                      }).ToList();
+
+            if (insData.Count > 0) this.orderCustomizationEntityRepository.Save(insData);
         }
 
         /// <summary>

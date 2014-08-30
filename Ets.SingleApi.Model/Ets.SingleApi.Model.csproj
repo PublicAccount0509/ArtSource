@@ -158,6 +158,7 @@
     <Compile Include="Mapping\Repository\DeskTypeLockLogEntity.cs" />
     <Compile Include="Mapping\Repository\DirectPayEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
+    <Compile Include="Mapping\Repository\OrderCustomizationEntity.cs" />
     <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
     <Compile Include="Mapping\Repository\OrderNumberDpEntity.cs" />
     <Compile Include="Mapping\Repository\PackageClassificationEntity.cs" />
@@ -753,6 +754,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\DeliveryBaiFuBaoCouponEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\OrderCustomizationEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
