@@ -268,7 +268,7 @@
 
             var loginInfo = this.loginEntityRepository.FindByExpression(item => item.Username == parameter.UserName);
 
-            if (loginInfo.Count > 0)
+            if (loginInfo != null && loginInfo.Count > 0)
             {
                 var FirstLogin = loginInfo.OrderBy(o => o.LoginId).FirstOrDefault();
 

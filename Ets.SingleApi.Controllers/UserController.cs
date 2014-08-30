@@ -391,11 +391,11 @@
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public Response<bool> CustomerAddress(int id, CustomerAddressRequst requst)
+        public Response<SaveCustomerAddressModel> CustomerAddress(int id, CustomerAddressRequst requst)
         {
             if (requst == null)
             {
-                return new Response<bool>
+                return new Response<SaveCustomerAddressModel>
                 {
                     Message = new ApiMessage
                     {
@@ -406,7 +406,7 @@
 
             if (!this.ValidateUserId(id))
             {
-                return new Response<bool>
+                return new Response<SaveCustomerAddressModel>
                 {
                     Message = new ApiMessage
                     {
@@ -429,7 +429,7 @@
                     AddressDetail = (requst.AddressDetail ?? string.Empty).Trim()
                 });
 
-            return new Response<bool>
+            return new Response<SaveCustomerAddressModel>
             {
                 Message = new ApiMessage
                 {

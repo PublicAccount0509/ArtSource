@@ -572,13 +572,13 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public ServicesResult<bool> SaveCustomerAddress(string source, int userId, CustomerAddressParameter parameter)
+        public ServicesResult<SaveCustomerAddressModel> SaveCustomerAddress(string source, int userId, CustomerAddressParameter parameter)
         {
             if (parameter == null)
             {
-                return new ServicesResult<bool>
+                return new ServicesResult<SaveCustomerAddressModel>
                 {
-                    Result = false,
+                    Result = new SaveCustomerAddressModel(),
                     StatusCode = (int)StatusCode.System.InvalidRequest
                 };
             }
@@ -586,10 +586,10 @@
             var customerEntity = this.customerEntityRepository.FindSingleByExpression(p => p.LoginId == userId);
             if (customerEntity == null)
             {
-                return new ServicesResult<bool>
+                return new ServicesResult<SaveCustomerAddressModel>
                 {
                     StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
-                    Result = false
+                    Result = new SaveCustomerAddressModel()
                 };
             }
 
@@ -630,9 +630,14 @@
             if (isDefault != true)
             {
                 this.customerAddressEntityRepository.Save(customerAddressEntity);
-                return new ServicesResult<bool>
+                return new ServicesResult<SaveCustomerAddressModel>
                 {
-                    Result = true
+                    Result = new SaveCustomerAddressModel()
+                        {
+                            CustomerAddressId = customerAddressEntity.CustomerAddressId,
+                            IsTrue = true
+
+                        }
                 };
             }
 
@@ -644,10 +649,16 @@
             }
 
             customerAddressEntityList.Add(customerAddressEntity);
+
+           
             this.customerAddressEntityRepository.SaveTransaction(customerAddressEntityList);
-            return new ServicesResult<bool>
+            return new ServicesResult<SaveCustomerAddressModel>
             {
-                Result = true
+                Result = new SaveCustomerAddressModel()
+                {
+                    CustomerAddressId = customerAddressEntity.CustomerAddressId,
+                    IsTrue = true
+                }
             };
         }
 

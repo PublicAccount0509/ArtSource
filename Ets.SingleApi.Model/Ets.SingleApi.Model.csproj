@@ -216,6 +216,7 @@
     <Compile Include="Services\PushAppParameter.cs" />
     <Compile Include="Services\QueueModel.cs" />
     <Compile Include="Services\QueueDetailModel.cs" />
+    <Compile Include="Services\SaveCustomerAddressModel.cs" />
     <Compile Include="Services\SaveQueueDeskParameter.cs" />
     <Compile Include="Services\SaveTangShiOrdersParameter.cs" />
     <Compile Include="Services\ShoppingCartModel.cs" />

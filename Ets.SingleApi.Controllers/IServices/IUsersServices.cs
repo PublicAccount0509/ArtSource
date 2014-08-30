@@ -94,7 +94,8 @@
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        ServicesResult<bool> SaveCustomerAddress(string source, int userId, CustomerAddressParameter parameter);
+        ServicesResult<SaveCustomerAddressModel> SaveCustomerAddress(string source, int userId,
+                                                                     CustomerAddressParameter parameter);
 
         /// <summary>
         /// 管理用户地址
