@@ -569,67 +569,78 @@ namespace Ets.SingleApi.Services
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [Transaction(TransactionMode.RequiresNew)]
-        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey, string appPassword)
+        public override ServicesResult<string> SaveOrder(string source, string shoppingCartId, string appKey,
+                                                         string appPassword)
         {
+
             var getShoppingCartLinkResult = this.etsWapShoppingCartProvider.GetShoppingCartLink(source, shoppingCartId);
-            if (getShoppingCartLinkResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            if (getShoppingCartLinkResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartLinkResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartLinkResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
             var shoppingCartLink = getShoppingCartLinkResult.Result;
-            var getShoppingCartResult = this.etsWapShoppingCartProvider.GetShoppingCart(source, shoppingCartLink.ShoppingCartId);
-            if (getShoppingCartResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartResult = this.etsWapShoppingCartProvider.GetShoppingCart(source,
+                                                                                        shoppingCartLink.ShoppingCartId);
+            if (getShoppingCartResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
-            var getShoppingCartSupplierResult = this.etsWapShoppingCartProvider.GetShoppingCartSupplier(source, shoppingCartLink.SupplierId);
-            if (getShoppingCartSupplierResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartSupplierResult = this.etsWapShoppingCartProvider.GetShoppingCartSupplier(source,
+                                                                                                        shoppingCartLink
+                                                                                                            .SupplierId);
+            if (getShoppingCartSupplierResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartSupplierResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartSupplierResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
-            var getShoppingCartCustomerResult = this.etsWapShoppingCartProvider.GetShoppingCartCustomer(source, shoppingCartLink.UserId);
-            if (getShoppingCartCustomerResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartCustomerResult = this.etsWapShoppingCartProvider.GetShoppingCartCustomer(source,
+                                                                                                        shoppingCartLink
+                                                                                                            .UserId);
+            if (getShoppingCartCustomerResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartCustomerResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartCustomerResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
-            var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source, shoppingCartLink.OrderId);
-            if (getShoppingCartOrderResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartOrderResult = this.etsWapShoppingCartProvider.GetShoppingCartOrder(source,
+                                                                                                  shoppingCartLink
+                                                                                                      .OrderId);
+            if (getShoppingCartOrderResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartOrderResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartOrderResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
-            var getShoppingCartDeliveryResult = this.etsWapShoppingCartProvider.GetShoppingCartDelivery(source, shoppingCartLink.DeliveryId);
-            if (getShoppingCartDeliveryResult.StatusCode != (int)StatusCode.Succeed.Ok)
+            var getShoppingCartDeliveryResult = this.etsWapShoppingCartProvider.GetShoppingCartDelivery(source,
+                                                                                                        shoppingCartLink
+                                                                                                            .DeliveryId);
+            if (getShoppingCartDeliveryResult.StatusCode != (int) StatusCode.Succeed.Ok)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = getShoppingCartDeliveryResult.StatusCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = getShoppingCartDeliveryResult.StatusCode,
+                        Result = string.Empty
+                    };
             }
 
             var shoppingCart = getShoppingCartResult.Result;
@@ -641,19 +652,20 @@ namespace Ets.SingleApi.Services
             if (deliveryTime <= DateTime.Now)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidDeliveryTimeCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidDeliveryTimeCode,
+                        Result = string.Empty
+                    };
             }
 
-            if (order.TotalPrice - order.CouponFee < supplier.DelMinOrderAmount && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
+            if (order.TotalPrice - order.CouponFee < supplier.DelMinOrderAmount &&
+                order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.NotFixedDeliveryFeeCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.NotFixedDeliveryFeeCode,
+                        Result = string.Empty
+                    };
             }
 
             var shoppingCartBase = this.shoppingCartBaseCacheServices.GetShoppingCartBase(source, shoppingCartId);
@@ -669,10 +681,10 @@ namespace Ets.SingleApi.Services
             if (shoppingList.Count == 0)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.EmptyShoppingCartCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.EmptyShoppingCartCode,
+                        Result = string.Empty
+                    };
             }
 
             var supplierId = supplier.SupplierId;
@@ -680,38 +692,49 @@ namespace Ets.SingleApi.Services
             if (supplierEntity == null)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidSupplierIdCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidSupplierIdCode,
+                        Result = string.Empty
+                    };
             }
 
-            var customerAddressEntity = this.customerAddressEntityRepository.FindSingleByExpression(p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customer.CustomerId);
+            var customerAddressEntity =
+                this.customerAddressEntityRepository.FindSingleByExpression(
+                    p => p.CustomerAddressId == delivery.CustomerAddressId && p.CustomerId == customer.CustomerId);
             if (customerAddressEntity == null && order.DeliveryMethodId != ServicesCommon.PickUpDeliveryMethodId)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.Validate.InvalidCustomerAddressIdCode,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidCustomerAddressIdCode,
+                        Result = string.Empty
+                    };
             }
 
-            var orderId = shoppingCartBase.Result.OrderNumber <= 0 ? this.GetOrderNumberId(source, appKey, appPassword) : shoppingCartBase.Result.OrderNumber;
+            var orderId = shoppingCartBase.Result.OrderNumber <= 0
+                              ? this.GetOrderNumberId(source, appKey, appPassword)
+                              : shoppingCartBase.Result.OrderNumber;
             if (orderId <= 0)
             {
                 return new ServicesResult<string>
-                {
-                    StatusCode = (int)StatusCode.General.OrderNumberNotFound,
-                    Result = string.Empty
-                };
+                    {
+                        StatusCode = (int) StatusCode.General.OrderNumberNotFound,
+                        Result = string.Empty
+                    };
             }
 
             var cashCommisionFee = supplierEntity.CashCommisionFee ?? 0;
             var customerId = customer.CustomerId;
 
             //送餐地址坐标信息
-            var customerLocation = distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2), string.Empty) ??
-                                   distance.GetLocation(customerAddressEntity == null ? string.Empty : string.Format("{0}", customerAddressEntity.Address1), string.Empty);
+            var customerLocation =
+                distance.GetLocation(
+                    customerAddressEntity == null
+                        ? string.Empty
+                        : string.Format("{0}{1}", customerAddressEntity.Address1, customerAddressEntity.Address2),
+                    string.Empty) ??
+                distance.GetLocation(
+                    customerAddressEntity == null ? string.Empty : string.Format("{0}", customerAddressEntity.Address1),
+                    string.Empty);
 
             //若有送餐地址坐标信息，则取 餐厅坐标 与 送餐坐标 的距离
             if (customerLocation != null)
@@ -724,7 +747,7 @@ namespace Ets.SingleApi.Services
                 var freeMiles = supplierEntity.FreeMiles;
 
                 // 最大送餐半径： 若“餐厅配置的送餐半径”为 0，则取 配置文件中配置的最大送餐半径；反正，则去“餐厅配置的送餐半径”。
-                var maxDeliveryDistance = freeMiles == 0 ? ServicesCommon.DeliveryMaxDistance : freeMiles * 1000;
+                var maxDeliveryDistance = freeMiles == 0 ? ServicesCommon.DeliveryMaxDistance : freeMiles*1000;
 
                 //（餐厅没有地址 或 超过最大送餐半径）且 配送方式是“送餐” 且 开启送餐最大距离判断
                 if ((distanceResult == null || deliveryDistance > double.Parse(maxDeliveryDistance.ToString()))
@@ -732,16 +755,18 @@ namespace Ets.SingleApi.Services
                     && ServicesCommon.DeliveryMaxDistanceEnable)
                 {
                     return new ServicesResult<string>
-                    {
-                        StatusCode = (int)StatusCode.Validate.MoreThanDeliveryMaxDistance,
-                        Result = string.Empty
-                    };
+                        {
+                            StatusCode = (int) StatusCode.Validate.MoreThanDeliveryMaxDistance,
+                            Result = string.Empty
+                        };
                 }
             }
 
             var deliveryId = order.DeliveryMethodId == ServicesCommon.PickUpDeliveryMethodId
-                ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order)
-                : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId, cashCommisionFee, delivery, order);
+                                 ? this.SavePickUpDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId,
+                                                                 cashCommisionFee, delivery, order)
+                                 : this.SaveDeliveryEntity(orderId, supplier.SupplierId, customer.CustomerId,
+                                                           cashCommisionFee, delivery, order);
 
             var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
             this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
@@ -761,16 +786,19 @@ namespace Ets.SingleApi.Services
                                                                                         new SingleApiExternalServiceAuthenParameter
                                                                                             {
                                                                                                 AppKey = appKey,
-                                                                                                AppPassword = appPassword,
+                                                                                                AppPassword =
+                                                                                                    appPassword,
                                                                                                 Source = source
                                                                                             });
             }
 
             return new ServicesResult<string>
-            {
-                StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = orderId.ToString()
-            };
+                {
+                    StatusCode = (int) StatusCode.Succeed.Ok,
+                    Result = orderId.ToString()
+                };
+
+
         }
 
         /// <summary>

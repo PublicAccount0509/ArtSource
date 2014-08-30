@@ -266,78 +266,134 @@
             }
             //修改  如果Login表存在，则补全loginOAuth跟customer表信息
 
-            var loginInfo = this.loginEntityRepository.FindByExpression(item => item.Username == parameter.UserName);
+            var loginCustomerTuple = HasCreateEntity(parameter.UserName.Trim());//item1 login item2 customer item3 loginEntity
 
-            if (loginInfo != null && loginInfo.Count > 0)
+            int loginId = loginCustomerTuple.Item3.LoginId;
+            if (!loginCustomerTuple.Item1)//login不存在
             {
-                var FirstLogin = loginInfo.OrderBy(o => o.LoginId).FirstOrDefault();
-
-                if (
-                    this.loginOAuthEntityRepository.FindByExpression(item => item.Login.LoginId == FirstLogin.LoginId)
-                        .Count == 0)
-                {
-                    var loginOAuthEntityNew = new LoginOAuthEntity
-                    {
-                        Login = FirstLogin,
-                        JointLoginType = parameter.JointLoginType,
-                        KeyName = parameter.KeyName,
-                        SafeCode = null
-                    };
-
-                    //保存 LoginOAuth
-                    this.loginOAuthEntityRepository.Save(loginOAuthEntityNew);
-                }
-
-                if (this.customerEntityRepository.FindByExpression(item => item.LoginId == FirstLogin.LoginId).Count ==
-                    0)
-                {
-                    var customerEntityNew = new CustomerEntity
-                    {
-                        Mobile = null,
-                        Email = null,
-                        LoginId = FirstLogin.LoginId,
-                        Forename = string.Empty,
-                        DateJoined = DateTime.Now,
-                        IsValId = false,
-                        IsRegAllowed = true,
-                        Path =
-                            parameter.SourceType.IsEmptyOrNull()
-                                ? null
-                                : this.sourcePathEntityRepository.FindSingleByExpression(
-                                    p => p.Value == parameter.SourceType),
-                        Source = parameter.Template
-                    };
-
-                    //保存Customer
-                    this.customerEntityRepository.Save(customerEntityNew);
-                }
-                var accessTokenNew = Guid.NewGuid().ToString("N");
-                var refreshTokenNew = Guid.NewGuid().ToString("N");
-                var tokenEntityNew = new TokenEntity
-                {
-                    AccessToken = accessTokenNew,
-                    RefreshToken = refreshTokenNew,
-                    AppKey = appEntity,
-                    CreatedTime = DateTime.Now,
-                    UserId = FirstLogin.LoginId
-                };
-
-                //保存Token
-                this.tokenEntityRepository.Save(tokenEntityNew);
-
-                return new DetailServicesResult<RegisterUserModel>
-                {
-                    StatusCode = (int)StatusCode.Succeed.Ok,
-                    Result = new RegisterUserModel
-                    {
-                        AccessToken = accessTokenNew,
-                        RefreshToken = refreshTokenNew,
-                        UserId = FirstLogin.LoginId,
-                        TokenType = CommonUtility.GetTokenType()
-                    }
-                };
-
+                loginId = InsertLoginAndCustomer(parameter);
             }
+            else if (!loginCustomerTuple.Item2)//customer不存在
+            {
+                InsertCustomer(loginId,parameter);
+            }
+            var loginOAuthEntity = new LoginOAuthEntity
+            {
+                Login = loginCustomerTuple.Item3,
+                JointLoginType = parameter.JointLoginType,
+                KeyName = parameter.KeyName,
+                SafeCode = null
+            };
+            //保存 LoginOAuth
+            this.loginOAuthEntityRepository.Save(loginOAuthEntity);
+
+            var accessToken = Guid.NewGuid().ToString("N");
+            var refreshToken = Guid.NewGuid().ToString("N");
+            var tokenEntity = new TokenEntity
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                AppKey = appEntity,
+                CreatedTime = DateTime.Now,
+                UserId = loginId
+            };
+            //保存Token
+            this.tokenEntityRepository.Save(tokenEntity);
+
+            return new DetailServicesResult<RegisterUserModel>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = new RegisterUserModel
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    UserId = loginId,
+                    TokenType = CommonUtility.GetTokenType()
+                }
+            };
+
+            //==============
+            #region
+            //var loginEntity = new LoginEntity
+            //{
+            //    Username = parameter.UserName,
+            //    Password = CommonUtility.RandNum(6).Md5(),
+            //    Level = new LevelEntity
+            //    {
+            //        LevelId = (int)UserLevel.User
+            //    },
+            //    IsEnabled = true
+            //};
+
+            ////保存Login
+            //this.loginEntityRepository.Save(loginEntity);
+
+            //var loginOAuthEntity = new LoginOAuthEntity
+            //{
+            //    Login = loginEntity,
+            //    JointLoginType = parameter.JointLoginType,
+            //    KeyName = parameter.KeyName,
+            //    SafeCode = null
+            //};
+
+            ////保存 LoginOAuth
+            //this.loginOAuthEntityRepository.Save(loginOAuthEntity);
+
+            //var loginId = loginEntity.LoginId;
+            //var customerEntity = new CustomerEntity
+            //{
+            //    Mobile = null,
+            //    Email = null,
+            //    LoginId = loginId,
+            //    Forename = string.Empty,
+            //    DateJoined = DateTime.Now,
+            //    IsValId = false,
+            //    IsRegAllowed = true,
+            //    Path = parameter.SourceType.IsEmptyOrNull() ? null : this.sourcePathEntityRepository.FindSingleByExpression(p => p.Value == parameter.SourceType),
+            //    Source = parameter.Template
+            //};
+
+            ////保存Customer
+            //this.customerEntityRepository.Save(customerEntity);
+
+            //var accessToken = Guid.NewGuid().ToString("N");
+            //var refreshToken = Guid.NewGuid().ToString("N");
+            //var tokenEntity = new TokenEntity
+            //{
+            //    AccessToken = accessToken,
+            //    RefreshToken = refreshToken,
+            //    AppKey = appEntity,
+            //    CreatedTime = DateTime.Now,
+            //    UserId = loginId
+            //};
+
+            ////保存Token
+            //this.tokenEntityRepository.Save(tokenEntity);
+
+            //return new DetailServicesResult<RegisterUserModel>
+            //{
+            //    StatusCode = (int)StatusCode.Succeed.Ok,
+            //    Result = new RegisterUserModel
+            //    {
+            //        AccessToken = accessToken,
+            //        RefreshToken = refreshToken,
+            //        UserId = loginId,
+            //        TokenType = CommonUtility.GetTokenType()
+            //    }
+            //};
+            #endregion
+        }
+
+        private int InsertLoginAndCustomer(RegisterUserOAuthParameter parameter)
+        {
+            var loginId = InsertLogin(parameter);
+            InsertCustomer(loginId, parameter);
+            return loginId;
+
+        }
+
+        private int InsertLogin(RegisterUserOAuthParameter parameter)
+        {
             var loginEntity = new LoginEntity
             {
                 Username = parameter.UserName,
@@ -351,19 +407,11 @@
 
             //保存Login
             this.loginEntityRepository.Save(loginEntity);
+            return loginEntity.LoginId;
+        }
 
-            var loginOAuthEntity = new LoginOAuthEntity
-            {
-                Login = loginEntity,
-                JointLoginType = parameter.JointLoginType,
-                KeyName = parameter.KeyName,
-                SafeCode = null
-            };
-
-            //保存 LoginOAuth
-            this.loginOAuthEntityRepository.Save(loginOAuthEntity);
-
-            var loginId = loginEntity.LoginId;
+        private void InsertCustomer(int loginId, RegisterUserOAuthParameter parameter)
+        {
             var customerEntity = new CustomerEntity
             {
                 Mobile = null,
@@ -379,32 +427,78 @@
 
             //保存Customer
             this.customerEntityRepository.Save(customerEntity);
+        }
 
-            var accessToken = Guid.NewGuid().ToString("N");
-            var refreshToken = Guid.NewGuid().ToString("N");
-            var tokenEntity = new TokenEntity
-            {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                AppKey = appEntity,
-                CreatedTime = DateTime.Now,
-                UserId = loginId
-            };
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mobileno">The mobileno</param>
+        /// <returns></returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/8/31 1:49
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private Tuple<bool, bool, LoginEntity> HasCreateEntity(string mobileno)
+        {
+            var loginTup = GetLogins(mobileno);
+            var customerTup = GetCustomers(mobileno);
 
-            //保存Token
-            this.tokenEntityRepository.Save(tokenEntity);
+            //全部存在
+            if (loginTup.Item1 && customerTup.Item1) return Tuple.Create(true, true, loginTup.Item2);
 
-            return new DetailServicesResult<RegisterUserModel>
-            {
-                StatusCode = (int)StatusCode.Succeed.Ok,
-                Result = new RegisterUserModel
-                {
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken,
-                    UserId = loginId,
-                    TokenType = CommonUtility.GetTokenType()
-                }
-            };
+            //全部不存在
+            if (!loginTup.Item1 && !customerTup.Item1) return Tuple.Create(false, false, new LoginEntity());
+
+            //login存在 customer不存在
+            if (loginTup.Item1 && !customerTup.Item1) return Tuple.Create(true, false, loginTup.Item2);
+            //customer 存在， login也会关联存在
+            return Tuple.Create(true, true, customerTup.Item2);
+        }
+
+
+        /// <summary>
+        ///判断是否存在Login表，如果存在多条，取最早一条
+        /// </summary>
+        /// <param name="mobileno">The mobileno</param>
+        /// <returns>
+        /// BooleanLoginEntity}
+        /// </returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/8/31 1:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private Tuple<bool, LoginEntity> GetLogins(string mobileno)
+        {
+            var oldLogin = this.loginEntityRepository.EntityQueryable.Where(item => item.Username == mobileno).ToArray();
+
+            return oldLogin.Length == 0 ? Tuple.Create(false, new LoginEntity()) : Tuple.Create(true, oldLogin.OrderBy(item => item.LoginId).First());
+        }
+
+
+        /// <summary>
+        ///判断是否存在Customer表，如果存在多条，取最早一条
+        /// </summary>
+        /// <param name="mobileno">The mobileno</param>
+        /// <returns>
+        /// BooleanLoginEntityCustomerEntity}
+        /// </returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/8/31 1:47
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private Tuple<bool, LoginEntity, CustomerEntity> GetCustomers(string mobileno)
+        {
+            var oldCustomers = this.customerEntityRepository.EntityQueryable.Where(item => item.Mobile == mobileno).ToArray();
+
+            if (oldCustomers.Length == 0) return Tuple.Create(false, new LoginEntity(), new CustomerEntity());
+
+            var customer = oldCustomers.OrderBy(item => item.CustomerId).First();
+            var oldLogin = this.loginEntityRepository.EntityQueryable.First(item => item.LoginId == customer.LoginId);
+
+            return Tuple.Create(true, oldLogin, customer);
         }
     }
 }
