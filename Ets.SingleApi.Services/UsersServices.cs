@@ -74,6 +74,17 @@
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository;
 
+
+        /// <summary>
+        /// 字段customerAddressEntityRepository
+        /// </summary>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 18:54
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository;
+
         /// <summary>
         /// 字段supplierEntityRepository
         /// </summary>
@@ -225,6 +236,7 @@
             INHibernateRepository<CustomerEntity> customerEntityRepository,
             INHibernateRepository<CustomerFavoriteEntity> customerFavoriteEntityRepository,
             INHibernateRepository<CustomerAddressEntity> customerAddressEntityRepository,
+            INHibernateRepository<DeliveryAddressEntity> deliveryAddressEntityRepository,
             INHibernateRepository<SupplierEntity> supplierEntityRepository,
             INHibernateRepository<SupplierCuisineEntity> supplierCuisineEntityRepository,
             INHibernateRepository<SupplierImageEntity> supplierImageEntityRepository,
@@ -243,6 +255,8 @@
             this.customerEntityRepository = customerEntityRepository;
             this.customerFavoriteEntityRepository = customerFavoriteEntityRepository;
             this.customerAddressEntityRepository = customerAddressEntityRepository;
+            this.deliveryAddressEntityRepository = deliveryAddressEntityRepository;
+
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierCuisineEntityRepository = supplierCuisineEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
@@ -352,6 +366,149 @@
                     Result = customerModel
                 };
         }
+
+
+        /// <summary>
+        /// 获取用户信息(地址信息为订单地址帅选结果)
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="userId">用户Id</param>
+        /// <returns>
+        /// 返回用户信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 18:44
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<CustomerModel> GetUserWaiMaiAddress(string source, int userId)
+        {
+            var loginEntity =
+                this.loginEntityRepository.EntityQueryable.Where(p => p.LoginId == userId)
+                    .Select(p => new {p.Username})
+                    .FirstOrDefault();
+
+            var customerModel = (from customer in this.customerEntityRepository.EntityQueryable
+                                 where customer.LoginId == userId
+                                 select new CustomerModel
+                                     {
+                                         CustomerId = customer.CustomerId,
+                                         UserId = customer.LoginId.Value,
+                                         //UserName = loginEntity == null ? string.Empty : loginEntity.Username,
+                                         Avatar = customer.Avatar,
+                                         Email = customer.Email,
+                                         Telephone = customer.Mobile
+                                     }).FirstOrDefault();
+            if (customerModel == null)
+            {
+                return new ServicesResult<CustomerModel>
+                    {
+                        StatusCode = (int) StatusCode.Validate.InvalidUserIdCode,
+                        Result = new CustomerModel()
+                    };
+            }
+
+            customerModel.UserName = loginEntity == null ? string.Empty : loginEntity.Username;
+            var supplierEntity =
+                this.supplierEntityRepository.EntityQueryable.Where(p => p.Login.LoginId == userId).Select(p => new
+                    {
+                        p.SupplierId,
+                        p.SupplierName
+                    }).FirstOrDefault();
+            if (supplierEntity != null)
+            {
+                customerModel.SupplierId = supplierEntity.SupplierId;
+            }
+
+            var deliveryAddressList = (from deliveryAddress in this.deliveryAddressEntityRepository.EntityQueryable
+                                       where
+                                           deliveryAddress.CustomerId == customerModel.CustomerId &&
+                                           deliveryAddress.IsDel == false
+                                       select new
+                                           {
+                                               Address = deliveryAddress.Address1 + deliveryAddress.Address2
+                                           }).ToList();
+            var q = (from e in deliveryAddressList
+                     select e)
+                      .Distinct();
+            deliveryAddressList = q.ToList();
+
+            
+            var customerAddressList = (from customerAddress in this.customerAddressEntityRepository.EntityQueryable
+                                       where
+                                           customerAddress.CustomerId == customerModel.CustomerId &&
+                                           customerAddress.IsDel == false
+                                       select new
+                                           {
+                                               customerAddress.CustomerAddressId,
+                                               customerAddress.Address1,
+                                               customerAddress.Address2,
+                                               customerAddress.AddressBuilding,
+                                               customerAddress.AddressDetail,
+                                               customerAddress.AddressAlias,
+                                               Name = customerAddress.Recipient,
+                                               customerAddress.Telephone,
+                                               HomePhone = customerAddress.Plane,
+                                               customerAddress.IsDefault,
+                                               customerAddress.CityId,
+                                               customerAddress.CountyId,
+                                               ProvinceId = customerAddress.CountryId,
+                                               customerAddress.RegionCode,
+                                               customerAddress.Sex
+                                           }).ToList();
+
+            var newCustomerAddressList = (from coItem in customerAddressList
+                                          from doItem in deliveryAddressList
+                                          where coItem.Address1 + coItem.Address2 == doItem.Address
+                                          select new CustomerAddressEntity
+                                              {
+                                                  CustomerAddressId = coItem.CustomerAddressId, 
+                                                  Address1 = coItem.Address1, 
+                                                  Address2 = coItem.Address2, 
+                                                  AddressBuilding = coItem.AddressBuilding, 
+                                                  AddressDetail = coItem.AddressDetail, 
+                                                  AddressAlias = coItem.AddressAlias, 
+                                                  Recipient = coItem.Name, 
+                                                  Telephone = coItem.Telephone, 
+                                                  Plane = coItem.HomePhone, 
+                                                  IsDefault = coItem.IsDefault, 
+                                                  CityId = coItem.CityId, 
+                                                  CountyId = coItem.CountyId, 
+                                                  CountryId = coItem.ProvinceId, 
+                                                  RegionCode = coItem.RegionCode, 
+                                                  Sex = coItem.Sex
+                                              }).ToList();
+
+
+            customerModel.CustomerAddressList = newCustomerAddressList.Select(p => new CustomerAddressModel
+                {
+                    CustomerAddressId = p.CustomerAddressId,
+                    Address = p.Address1,
+                    AddressBuilding = p.AddressBuilding,
+                    AddressDetail = p.AddressDetail,
+                    AddressAlias = p.AddressAlias,
+                    Name = p.Recipient,
+                    Telephone = this.GetTelephone(p.Telephone, p.Plane),
+                    IsDefault = p.IsDefault,
+                    CityId = p.CityId,
+                    CountyId = p.CountyId,
+                    ProvinceId = p.CountryId,
+                    RegionCode = p.RegionCode,
+                    Sex = p.Sex
+                }).ToList();
+
+            if (!customerModel.Avatar.IsEmptyOrNull())
+            {
+                customerModel.Avatar = string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl.Trim('/'),
+                                                     customerModel.Avatar.TrimStart('/'));
+            }
+
+            return new ServicesResult<CustomerModel>
+                {
+                    Result = customerModel
+                };
+        }
+
 
         /// <summary>
         /// 获取用户信息

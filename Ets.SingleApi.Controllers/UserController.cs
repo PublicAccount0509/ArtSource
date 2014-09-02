@@ -204,6 +204,92 @@
                 };
         }
 
+
+        /// <summary>
+        /// 获取用户信息(地址信息为订单地址帅选结果)
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <returns>
+        /// The GetUserResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 18:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        [TokenFilter]
+        public Response<Customer> GetUserWaiMaiAddress(int id)
+        {
+            if (!this.ValidateUserId(id))
+            {
+                return new Response<Customer>
+                    {
+                        Message = new ApiMessage
+                            {
+                                StatusCode = (int) StatusCode.OAuth.AccessDenied
+                            },
+                        Result = new Customer()
+                    };
+            }
+
+            var getUserResult = this.usersServices.GetUserWaiMaiAddress(this.Source, id);
+            if (getUserResult.Result == null)
+            {
+                return new Response<Customer>
+                    {
+                        Message = new ApiMessage
+                            {
+                                StatusCode =
+                                    getUserResult.StatusCode == (int) StatusCode.Succeed.Ok
+                                        ? (int) StatusCode.Succeed.Empty
+                                        : getUserResult.StatusCode
+                            },
+                        Result = new Customer()
+                    };
+            }
+
+            var customerAddressList =
+                getUserResult.Result.CustomerAddressList.Select(customerAddress => new CustomerAddress
+                    {
+                        CustomerAddressId = customerAddress.CustomerAddressId,
+                        Address = (customerAddress.Address ?? string.Empty),
+                        Name = (customerAddress.Name ?? string.Empty),
+                        Telephone = (customerAddress.Telephone ?? string.Empty),
+                        IsDefault = customerAddress.IsDefault ?? false,
+                        CityId = customerAddress.CityId,
+                        CountyId = customerAddress.CountyId,
+                        ProvinceId = customerAddress.ProvinceId,
+                        RegionCode = (customerAddress.RegionCode ?? string.Empty),
+                        Sex = customerAddress.Sex,
+                        AddressBuilding = customerAddress.AddressBuilding ?? string.Empty,
+                        AddressDetail = customerAddress.AddressDetail ?? string.Empty,
+                        AddressAlias = customerAddress.AddressAlias ?? string.Empty
+                    }).ToList();
+
+            var result = new Customer
+                {
+                    UserId = getUserResult.Result.UserId,
+                    UserName = (getUserResult.Result.UserName ?? string.Empty),
+                    Avatar = (getUserResult.Result.Avatar ?? string.Empty),
+                    Email = (getUserResult.Result.Email ?? string.Empty),
+                    Telephone = (getUserResult.Result.Telephone ?? string.Empty),
+                    SupplierId = getUserResult.Result.SupplierId,
+                    CustomerAddressList = customerAddressList
+                };
+
+            return new Response<Customer>
+                {
+                    Message = new ApiMessage
+                        {
+                            StatusCode = getUserResult.StatusCode
+                        },
+                    Result = result
+                };
+        }
+
+
+
         /// <summary>
         /// 获取用户信息
         /// </summary>

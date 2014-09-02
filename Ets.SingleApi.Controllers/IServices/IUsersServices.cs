@@ -33,6 +33,21 @@
         ServicesResult<CustomerModel> GetUser(string source, int userId);
 
         /// <summary>
+        /// 获取用户信息(地址信息为订单地址帅选结果)
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="userId">用户Id</param>
+        /// <returns>
+        /// 返回用户信息
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 18:44
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<CustomerModel> GetUserWaiMaiAddress(string source, int userId);
+
+        /// <summary>
         /// 获取用户信息
         /// </summary>
         /// <param name="source">The source</param>
