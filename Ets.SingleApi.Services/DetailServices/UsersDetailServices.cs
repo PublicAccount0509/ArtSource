@@ -277,9 +277,16 @@
             {
                 InsertCustomer(loginId,parameter);
             }
+            var loginEntity = new LoginEntity();
+
+            if (loginId > 0)
+            {
+                loginEntity = this.loginEntityRepository.EntityQueryable.FirstOrDefault(o => o.LoginId == loginId);
+            }
+
             var loginOAuthEntity = new LoginOAuthEntity
             {
-                Login = loginCustomerTuple.Item3,
+                Login = loginEntity,
                 JointLoginType = parameter.JointLoginType,
                 KeyName = parameter.KeyName,
                 SafeCode = null

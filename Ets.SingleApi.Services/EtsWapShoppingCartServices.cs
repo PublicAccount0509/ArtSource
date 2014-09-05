@@ -794,7 +794,10 @@ namespace Ets.SingleApi.Services
             }).ToList());
 
             var totalfee = shoppingPrice;
-            shoppingCartOrder.DeliveryDateTime = order.DeliveryDateTime;
+            order.DeliveryDateTime = shoppingCartOrder.DeliveryDate;
+            shoppingCartOrder.DeliveryDateTime = Convert.ToDateTime(shoppingCartOrder.DeliveryTime);
+
+         //   shoppingCartOrder.DeliveryDateTime = order.DeliveryDateTime;
             if (isValidateDeliveryTime)
             {
                 int supplierDeliveryTime;
@@ -864,8 +867,8 @@ namespace Ets.SingleApi.Services
             shoppingCartOrder.TotalFee = total;
             shoppingCartOrder.CustomerTotalFee = customerTotal;
             shoppingCartOrder.CouponFee = coupon;
-            shoppingCartOrder.DeliveryDate = shoppingCartOrder.DeliveryDate;
-            shoppingCartOrder.DeliveryDateTime = shoppingCartOrder.DeliveryDateTime;
+            shoppingCartOrder.DeliveryDate = Convert.ToDateTime(shoppingCartOrder.DeliveryTime);
+            shoppingCartOrder.DeliveryDateTime = Convert.ToDateTime(shoppingCartOrder.DeliveryTime);
             this.etsWapShoppingCartProvider.SaveShoppingCartOrder(source, shoppingCartOrder);
             return new ServicesResult<bool>
             {
