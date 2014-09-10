@@ -47,6 +47,23 @@
         /// ----------------------------------------------------------------------------------------
         ServicesResult<CustomerModel> GetUserWaiMaiAddress(string source, int userId);
 
+
+        /// <summary>
+        /// 获取用户所下订单金额占当前集团订单总金额的百分比
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <param name="orderId">The orderId</param>
+        /// <returns>
+        /// Double}
+        /// </returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/9 16:44
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> GetUserWaiMaiOrderPercentage(int id, int supplierGroupId, int orderId);
+
         /// <summary>
         /// 获取用户信息
         /// </summary>

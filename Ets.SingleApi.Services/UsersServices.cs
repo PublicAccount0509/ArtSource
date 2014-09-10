@@ -155,6 +155,18 @@
         /// ----------------------------------------------------------------------------------------
         private readonly INHibernateRepository<UserFeedbackEntity> userFeedbackEntityRepository;
 
+
+
+        /// <summary>
+        /// 字段userDeliveryEntityRepository
+        /// </summary>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/9 11:48
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<DeliveryEntity> userDeliveryEntityRepository;
+
         /// <summary>
         /// 字段usersDetailServices
         /// </summary>
@@ -205,6 +217,8 @@
         /// ----------------------------------------------------------------------------------------
         private readonly List<IAccount> accountList;
 
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersServices" /> class.
         /// </summary>
@@ -220,6 +234,7 @@
         /// <param name="supplierFeatureEntityRepository">The supplierFeatureEntityRepository</param>
         /// <param name="supplierGroupPlatformEntityRepository">The supplierGroupPlatformEntityRepositoryDefault documentation</param>
         /// <param name="userFeedbackEntityRepository">用户意见反馈</param>
+        /// <param name="userDeliveryEntityRepository">用户订单</param>
         /// <param name="usersDetailServices">The usersDetailServices</param>
         /// <param name="smsDetailServices">The smsDetailServices</param>
         /// <param name="userOrdersList">The userOrdersList</param>
@@ -244,6 +259,7 @@
             INHibernateRepository<SupplierFeatureEntity> supplierFeatureEntityRepository,
             INHibernateRepository<SupplierGroupPlatformEntity> supplierGroupPlatformEntityRepository,
             INHibernateRepository<UserFeedbackEntity> userFeedbackEntityRepository,
+             INHibernateRepository<DeliveryEntity> userDeliveryEntityRepository,
             IUsersDetailServices usersDetailServices,
             ISmsDetailServices smsDetailServices,
             List<IUserOrders> userOrdersList,
@@ -264,6 +280,7 @@
             this.supplierFeatureEntityRepository = supplierFeatureEntityRepository;
             this.supplierGroupPlatformEntityRepository = supplierGroupPlatformEntityRepository;
             this.userFeedbackEntityRepository = userFeedbackEntityRepository;
+            this.userDeliveryEntityRepository = userDeliveryEntityRepository;
             this.usersDetailServices = usersDetailServices;
             this.smsDetailServices = smsDetailServices;
             this.userOrdersList = userOrdersList;
@@ -508,6 +525,92 @@
                     Result = customerModel
                 };
         }
+
+
+
+        /// <summary>
+        /// 获取用户所下订单金额占当前集团订单总金额的百分比
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <returns>
+        /// Double}
+        /// </returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/9 11:29
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResult<string> GetUserWaiMaiOrderPercentage(int userId, int supplierGroupId, int orderId)
+        {
+           
+
+            var customerModel = (from customer in this.customerEntityRepository.EntityQueryable
+                                 where customer.LoginId == userId
+                                 select new CustomerModel
+                                 {
+                                     CustomerId = customer.CustomerId,
+                                     UserId = customer.LoginId.Value,
+                                     //UserName = loginEntity == null ? string.Empty : loginEntity.Username,
+                                     Avatar = customer.Avatar,
+                                     Email = customer.Email,
+                                     Telephone = customer.Mobile
+                                 }).FirstOrDefault();
+            if (customerModel == null)
+            {
+                return new ServicesResult<string>
+                {
+                    StatusCode = (int)StatusCode.Validate.InvalidUserIdCode,
+                    Result = "0%"
+                };
+            }
+
+            var supplierEntity =
+                this.supplierEntityRepository.EntityQueryable.Where(item => item.SupplierGroupId == supplierGroupId);
+            if (!supplierEntity.Any())
+            {
+                return new ServicesResult<string>
+                    {
+                        StatusCode = (int)StatusCode.Validate.InvalidSupplierIdListCode,
+                        Result = "0%"
+                    };
+            }
+
+            var supplierDeliveryList =
+                this.userDeliveryEntityRepository.EntityQueryable.Where(
+                    p =>
+                    p.OrderStatusId != 3 && p.OrderStatusId != 6 &&
+                    supplierEntity.Any(se => se.SupplierId == p.SupplierId))
+                    .OrderByDescending(item => item.CustomerTotal)
+                    .ToList();
+
+          //  var userOrderTwo = supplierDeliveryList.Where(item => item.CustomerId == customerModel.CustomerId);
+
+            var userOrder = supplierDeliveryList.FirstOrDefault(item => item.OrderNumber == orderId);
+
+            if (userOrder == null)
+            {
+                userOrder =
+                    supplierDeliveryList.Where(item => item.CustomerId == customerModel.CustomerId)
+                                        .OrderByDescending(item => item.CustomerTotal)
+                                        .FirstOrDefault();
+            }
+
+            int idx = supplierDeliveryList.IndexOf(userOrder);
+
+            var Percentage =
+                (Convert.ToDouble(supplierDeliveryList.Count - idx + 1)/Convert.ToDouble(supplierDeliveryList.Count))
+                    .ToString("p");
+
+          
+
+
+            return new ServicesResult<string>
+            {
+                Result = Percentage
+            };
+        }
+
 
 
         /// <summary>

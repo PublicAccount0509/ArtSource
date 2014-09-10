@@ -291,6 +291,51 @@
 
 
         /// <summary>
+        /// 获取用户所下订单金额占当前集团订单总金额的百分比
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <returns>
+        /// Double}
+        /// </returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/9 11:31
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        [TokenFilter]
+        public Response<string> GetUserWaiMaiOrderPercentage(int id, int supplierGroupId, int orderId)
+        {
+            if (!this.ValidateUserId(id))
+            {
+                return new Response<string>
+                    {
+                        Message = new ApiMessage
+                            {
+                                StatusCode = (int) StatusCode.OAuth.AccessDenied
+                            },
+                        Result = "0%"
+                    };
+            }
+
+            var getUserResult = this.usersServices.GetUserWaiMaiOrderPercentage(id, supplierGroupId, orderId);
+          
+
+            return new Response<string>
+                {
+                    Message = new ApiMessage
+                        {
+                            StatusCode = getUserResult.StatusCode
+                        },
+                    Result = getUserResult.Result
+                };
+        }
+
+
+
+
+        /// <summary>
         /// 获取用户信息
         /// </summary>
         /// <param name="account">账号</param>

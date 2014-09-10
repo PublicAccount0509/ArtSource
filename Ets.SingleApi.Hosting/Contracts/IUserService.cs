@@ -52,6 +52,25 @@
         Response<Customer> GetUser(string id);
 
         /// <summary>
+        /// 获取用户所下订单金额占当前集团订单总金额的百分比
+        /// </summary>
+        /// <param name="id">用户Id</param>
+        /// <param name="supplierGroupId"></param>
+        /// <returns>
+        /// The GetUserResponse
+        /// </returns>
+        /// 创建者：周超
+        /// 创建日期：2013/10/19 18:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [OperationContract]
+        [Description("方法功能：获取用户所下订单金额占当前集团订单总金额的百分比")]
+        Response<double> GetUserWaiMaiOrderPercentage(string id, string supplierGroupId, string orderId);
+
+
+
+        /// <summary>
         /// 获取用户信息
         /// </summary>
         /// <param name="account">账号</param>

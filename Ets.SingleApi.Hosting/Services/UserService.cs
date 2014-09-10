@@ -56,6 +56,22 @@
             return new Response<Customer>();
         }
 
+
+        /// <summary>
+        /// 获取用户所下订单金额占当前集团订单总金额的百分比
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="supplierGroupId">The supplierGroupId</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// ----------------------------------------------------------------------------------------
+        [WebGet(UriTemplate = "/GetUserWaiMaiOrderPercentage?id={id}&supplierGroupId={supplierGroupId}&orderId={orderId}", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        public Response<double> GetUserWaiMaiOrderPercentage(string id, string supplierGroupId, string orderId)
+        {
+            return new Response<double>();
+        }
+
         /// <summary>
         /// 获取用户信息
         /// </summary>
