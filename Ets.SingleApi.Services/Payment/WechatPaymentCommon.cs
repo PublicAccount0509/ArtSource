@@ -532,7 +532,8 @@ namespace Ets.SingleApi.Services.Payment
                 this.attach = _attach;
                 this.partner = ControllersCommon.ConstWechatPaymentPartnerId;
                 this.out_trade_no = _out_trade_no;
-                this.total_fee = "1";//((int)Math.Round(_total_fee * 100)).ToString();//元转成分
+               //this.total_fee = "1";//((int)Math.Round(_total_fee * 100)).ToString();//元转成分
+                this.total_fee = ((int)Math.Round(_total_fee * 100)).ToString(); //((int)Math.Round(_total_fee * 100)).ToString();//元转成分
                 this.fee_type = "1";
                 this.notify_url = _notify_url;
                 this.spbill_create_ip = _spbill_create_ip;
