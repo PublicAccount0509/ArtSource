@@ -770,11 +770,27 @@ namespace Ets.SingleApi.Services
 
             var totalFee = order.TotalFee - order.PackagingFee - order.FixedDeliveryFee;
             this.SaveSupplierCommission(deliveryId, totalFee, supplierEntity);
+         
+
             this.SaveOrderEntity(customerId, deliveryId, shoppingList);
-            this.SaveOrderCustomization(orderId, shoppingList);
+
+            var userOrders =
+                this.orderEntityRepository.EntityQueryable.Where(
+                    item => item.Delivery.DeliveryId == deliveryId && item.CustomerId == customerId);
+
+            if (userOrders.Any())
+            {
+                foreach (var o in userOrders)
+                {
+                    this.SaveOrderCustomization(o.OrderId, shoppingList.Where(s => s.ItemId == o.SupplierDishId));
+                }
+             
+            }
+
+        
+
+
             this.SavePaymentEntity(deliveryId, order.CustomerTotalFee, order.PaymentMethodId, order.PayBank);
-
-
             this.shoppingCartBaseCacheServices.SaveShoppingCartId(source, orderId, shoppingCartId);
             this.shoppingCartBaseCacheServices.SaveShoppingCartComplete(source, shoppingCartId, true);
 

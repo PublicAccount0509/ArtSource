@@ -121,7 +121,7 @@ namespace Ets.SingleApi.Model.Controller
         /// <summary>
         /// 此分组下的详细选项
         /// </summary>
-        /// 创建者：孟祺宙 
+        /// 创建者：孟祺宙
         /// 创建日期：2014/8/19 17:26
         /// 修改者：
         /// 修改时间：
