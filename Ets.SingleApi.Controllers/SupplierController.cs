@@ -1896,6 +1896,58 @@ namespace Ets.SingleApi.Controllers
             };
         }
 
+
+        /// <summary>
+        /// 验证坐标是否在配送片区内如果存在，返回SupplierLogisticsArea列表
+        /// </summary>
+        /// <param name="supplierGroupID">The supplierGroupID</param>
+        /// <param name="lng">The lng</param>
+        /// <param name="lat">The lat</param>
+        /// <returns></returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/25 17:30
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public ListResponse<SupplierLogisticsArea> IsInLogisticsArea(int supplierGroupID, string lng, string lat)
+        {
+            var list = this.supplierServices.IsInLogisticsArea(supplierGroupID, lng, lat);
+            if (list.Result == null)
+            {
+                return new ListResponse<SupplierLogisticsArea>
+                    {
+                        Message = new ApiMessage
+                            {
+                                StatusCode =
+                                    list.StatusCode == (int) StatusCode.Succeed.Ok
+                                        ? (int) StatusCode.Succeed.Empty
+                                        : list.StatusCode
+                            },
+                        Result = new List<SupplierLogisticsArea>()
+                    };
+            }
+
+            var result = list.Result.Select(p => new SupplierLogisticsArea
+            {
+               ID = p.ID,
+               LogisticsAreaID = p.LogisticsAreaID,
+               Priority = p.Priority,
+               SupplierID = p.SupplierID
+            }).ToList();
+
+            return new ListResponse<SupplierLogisticsArea>
+                {
+                    Message = new ApiMessage
+                        {
+                            StatusCode = list.StatusCode
+                        },
+                    Result = result
+                };
+        }
+
+
+
         /// <summary>
         /// 为百度轻应用提供统计结果
         /// </summary>

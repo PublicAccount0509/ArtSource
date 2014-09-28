@@ -249,6 +249,27 @@
         private readonly INHibernateRepository<PlatformPaymentRelationEntity> platformPaymentRelationEntity;
 
         /// <summary>
+        /// 字段supplierLogisticsAreaEntity(商户所在的片区表)
+        /// </summary>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/25 15:28
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<SupplierLogisticsAreaEntity> supplierLogisticsAreaEntity;
+
+
+        /// <summary>
+        /// 字段logisticsAreaEntity
+        /// </summary>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/25 19:17
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        private readonly INHibernateRepository<LogisticsAreaEntity> logisticsAreaEntity;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SupplierServices" /> class.
         /// </summary>
         /// <param name="supplierEntityRepository">The supplierEntityRepository</param>
@@ -275,6 +296,8 @@
         /// <param name="supplierDishCustomizationEntity">餐厅菜与选项组的关系表</param>
         /// <param name="optionGroupEntity">餐厅菜与选项组的关系表 - 所有餐厅菜的选项组</param>
         /// <param name="customizationOptionEntity">餐厅菜与选项组的关系表 - 选项表</param>
+        /// <param name="supplierLogisticsAreaEntity">餐厅所在片区表</param>
+        /// <param name="logisticsAreaEntity">片区表</param>
         /// 创建者：周超
         /// 创建日期：2013/10/15 18:10
         /// 修改者：
@@ -304,7 +327,9 @@
             INHibernateRepository<PlatformPaymentRelationEntity> platformPaymentRelationEntity,
             INHibernateRepository<SupplierDishCustomizationEntity> supplierDishCustomizationEntity,
             INHibernateRepository<OptionGroupEntity> optionGroupEntity,
-            INHibernateRepository<CustomizationOptionEntity> customizationOptionEntity)
+            INHibernateRepository<CustomizationOptionEntity> customizationOptionEntity,
+            INHibernateRepository<SupplierLogisticsAreaEntity> supplierLogisticsAreaEntity,
+            INHibernateRepository<LogisticsAreaEntity> logisticsAreaEntity)
         {
             this.supplierEntityRepository = supplierEntityRepository;
             this.supplierImageEntityRepository = supplierImageEntityRepository;
@@ -330,6 +355,8 @@
             this.supplierDishCustomizationEntity = supplierDishCustomizationEntity;
             this.optionGroupEntity = optionGroupEntity;
             this.customizationOptionEntity = customizationOptionEntity;
+            this.supplierLogisticsAreaEntity = supplierLogisticsAreaEntity;
+            this.logisticsAreaEntity = logisticsAreaEntity;
         }
 
         /// <summary>
@@ -1165,7 +1192,7 @@
                 return new ServicesResultList<GroupSupplierModel>
                     {
                         Result = new List<GroupSupplierModel>(),
-                        StatusCode = (int) StatusCode.System.InvalidRequest
+                        StatusCode = (int)StatusCode.System.InvalidRequest
                     };
             }
 
@@ -1216,14 +1243,14 @@
 
             var tempSupplierList = parameter.PageIndex == null
                                        ? queryable.ToList()
-                                       : queryable.Skip((parameter.PageIndex.Value - 1)*parameter.PageSize)
+                                       : queryable.Skip((parameter.PageIndex.Value - 1) * parameter.PageSize)
                                                   .Take(parameter.PageSize)
                                                   .ToList();
             if (tempSupplierList.Count == 0)
             {
                 return new ServicesResultList<GroupSupplierModel>
                     {
-                        StatusCode = (int) StatusCode.Succeed.Empty,
+                        StatusCode = (int)StatusCode.Succeed.Empty,
                         Result = new List<GroupSupplierModel>()
                     };
             }
@@ -1268,7 +1295,7 @@
                     LogoUrl =
                         string.Format("{0}/{1}", ServicesCommon.ImageSiteUrl,
                                       (supplierImageList.FirstOrDefault(p => p.SupplierId == item.SupplierId) ??
-                                       new {item.SupplierId, ImagePath = string.Empty}).ImagePath),
+                                       new { item.SupplierId, ImagePath = string.Empty }).ImagePath),
                     SupplierFeatureList =
                         supplierFeatureList.Where(p => p.SupplierId == item.SupplierId)
                                            .Select(
@@ -3451,6 +3478,60 @@
                 Result = supplierDesk.DeskNo
             };
         }
+        /// <summary>
+        /// 验证坐标是否在配送片区内
+        /// </summary>
+        /// <param name="supplierGroupID">The supplierGroupID</param>
+        /// <param name="lng">The lng</param>
+        /// <param name="lat">The lat</param>
+        /// <returns></returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/25 17:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public ServicesResultList<SupplierLogisticsAreaModel> IsInLogisticsArea(int supplierGroupID, string lng, string lat)
+        {
+            var tempQueryable =
+              this.supplierEntityRepository.EntityQueryable.Where(
+                  p => p.SupplierGroupId == supplierGroupID && p.Login.IsEnabled);
+
+            var supplierIdList = tempQueryable.Select(p => p.SupplierId).Distinct().Cast<int?>().ToArray();
+
+            var supplierLogisticsAreaList =
+                this.supplierLogisticsAreaEntity.EntityQueryable.Where(p => supplierIdList.Contains(p.SupplierId));
+
+            var list =
+                this.logisticsAreaEntity.NamedQuery("Pro_LogisticsArea")
+                    .SetString("Lng", lng)
+                    .SetString("Lat", lat)
+                    .List<int>();
+
+            var areaIdList = list.Select(p => p).Distinct().Cast<int?>().ToArray();
+
+
+            supplierLogisticsAreaList = supplierLogisticsAreaList.Where(p => areaIdList.Contains(p.LogisticsAreaId));
+
+            var supplierLogisticsAreaModelList = supplierLogisticsAreaList.Select(o => new SupplierLogisticsAreaModel
+                {
+                    ID = o.Id,
+                    LogisticsAreaID = o.LogisticsAreaId,
+                    Priority = o.Priority,
+                    SupplierID = o.SupplierId
+                }).ToList();
+
+
+            //  return supplierLogisticsAreaList;
+
+            return new ServicesResultList<SupplierLogisticsAreaModel>
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                Result = supplierLogisticsAreaModelList
+            };
+
+
+        }
+
 
         /// <summary>
         /// 百度轻应用统计

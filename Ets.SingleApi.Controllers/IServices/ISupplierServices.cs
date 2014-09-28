@@ -562,5 +562,20 @@
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         ServicesResultList<PaymentMethodModel> GetPaymentMethodList(string source, int supplierId, int platformId);
+
+
+        /// <summary>
+        /// 验证坐标是否在配送片区内
+        /// </summary>
+        /// <param name="supplierGroupID">The supplierGroupID</param>
+        /// <param name="lng">The lng</param>
+        /// <param name="lat">The lat</param>
+        /// <returns></returns>
+        /// 创建者：李红杰
+        /// 创建日期：2014/9/25 17:24
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResultList<SupplierLogisticsAreaModel> IsInLogisticsArea(int supplierGroupID, string lng, string lat);
     }
 }

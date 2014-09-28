@@ -89,6 +89,7 @@
     <Compile Include="Controller\SupplierDishCustomizationOption.cs" />
     <Compile Include="Controller\SupplierDishItem.cs" />
     <Compile Include="Controller\SupplierDishOptionGroup.cs" />
+    <Compile Include="Controller\SupplierLogisticsArea.cs" />
     <Compile Include="Controller\SupplierRecommendedDish.cs" />
     <Compile Include="Controller\SupplierServiceTime.cs" />
     <Compile Include="Controller\Response.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Mapping\Repository\DeskTypeEntity.cs" />
     <Compile Include="Mapping\Repository\DeskTypeLockLogEntity.cs" />
     <Compile Include="Mapping\Repository\DirectPayEntity.cs" />
+    <Compile Include="Mapping\Repository\LogisticsAreaEntity.cs" />
     <Compile Include="Mapping\Repository\OptionGroupEntity.cs" />
     <Compile Include="Mapping\Repository\OrderCustomizationEntity.cs" />
     <Compile Include="Mapping\Repository\OrderDetailEntity.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="Mapping\Repository\SupplierGroupLogoImageEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupPlatformEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierGroupTemplateEntity.cs" />
+    <Compile Include="Mapping\Repository\SupplierLogisticsAreaEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierPlatformPaymentMethodRelationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierPlatformRelationEntity.cs" />
     <Compile Include="Mapping\Repository\SupplierThirdActivitiesEntity.cs" />
@@ -227,6 +230,7 @@
     <Compile Include="Services\SupplierDishCustomizationModel.cs" />
     <Compile Include="Services\SupplierDishCustomizationOptionModel.cs" />
     <Compile Include="Services\SupplierDishOptionGroupModel.cs" />
+    <Compile Include="Services\SupplierLogisticsAreaModel.cs" />
     <Compile Include="Services\SupplierServiceTimeModel.cs" />
     <Compile Include="Services\SupplierDeliveryTimeModel.cs" />
     <Compile Include="Controller\UserToken.cs" />
@@ -757,6 +761,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\OrderCustomizationEntity.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\LogisticsAreaEntity.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\SupplierLogisticsAreaEntity.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
