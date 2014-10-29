@@ -1,5 +1,7 @@
 ﻿
 
+using Ets.MessagePlat.Extention;
+
 namespace Ets.SingleApi.Services
 {
     using Castle.Services.Transaction;
@@ -611,6 +613,8 @@ namespace Ets.SingleApi.Services
                 };
             }
 
+            //测试值 （当前时间+2位随机 ： 2909582635） 黄磊
+            //var orderId = System.DateTime.Now.ToString("ddHHmmss") + new Random(System.DateTime.Now.ToString("ddHHmmss").ToInt()).Next(99).ToString().PadLeft(2,'0');
             var orderId = this.GetOrderNumberId(tangShiOrdersParameter.Source, appKey, appPassword);
             if (orderId <= 0)
             {
@@ -684,7 +688,6 @@ namespace Ets.SingleApi.Services
             this.SaveTempOrderDetailEntity(customer.CustomerId, tableReservationId, dishlist);
             this.SavePaymentEntity(tableReservationId, customerTotalFee,
                                    tangShiOrdersParameter.PayMentMethodId, string.Empty);
-
             return new ServicesResult<string>
             {
                 StatusCode = (int)StatusCode.Succeed.Ok,

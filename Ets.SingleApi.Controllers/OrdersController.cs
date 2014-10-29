@@ -461,13 +461,13 @@ namespace Ets.SingleApi.Controllers
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
         [HttpPost]
-        public Response<string> SaveTangShiOrder(SaveTangShiOrdersRequst requst)
+        public Response<SaveTangShiOrderResult> SaveTangShiOrder(SaveTangShiOrdersRequst requst)
         {
             if (requst == null)
             {
-                return new Response<string>
+                return new Response<SaveTangShiOrderResult>
                 {
-                    Result = string.Empty,
+                    Result = null,
                     Message = new ApiMessage
                     {
                         StatusCode = (int)StatusCode.System.InvalidRequest
@@ -492,39 +492,48 @@ namespace Ets.SingleApi.Controllers
 
             if (getOrderResult.Result == null)
             {
-                return new Response<string>
+                return new Response<SaveTangShiOrderResult>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
                     },
-                    Result = string.Empty
+                    Result = null
                 };
             }
 
             if (getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok && requst.IsQr)
             {
-                var wechatPaymentQrResult = this.paymentServices.WechatPaymentQr(this.Source, new WechatPaymentParameterQr
+                var wechatPaymentQrResult = this.paymentServices.AlipayPaymentQr(this.Source, new AlipayPaymentParameterQr
                 {
-                    Productid = getOrderResult.Result
+                    Productid = getOrderResult.Result,
+                    DeviceNumber = requst.DeviceNumber
                 });
                 string.Format("===============================\r\n THE SaveTangShiOrder \r\n {0} \r\n===============================", wechatPaymentQrResult.Result).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
-                return new Response<string>
+                return new Response<SaveTangShiOrderResult>
                 {
                     Message = new ApiMessage
                     {
                         StatusCode = wechatPaymentQrResult.StatusCode
                     },
-                    Result = wechatPaymentQrResult.Result
+                    Result = new SaveTangShiOrderResult
+                        {
+                            QrBigPicUrl = wechatPaymentQrResult.Result,
+                            TradeNo = getOrderResult.Result
+                        }
                 };
             }
-            return new Response<string>
+            return new Response<SaveTangShiOrderResult>
             {
                 Message = new ApiMessage
                 {
                     StatusCode = getOrderResult.StatusCode
                 },
-                Result = getOrderResult.Result
+                Result = new SaveTangShiOrderResult
+                {
+                    QrBigPicUrl = string.Empty,
+                    TradeNo = getOrderResult.Result
+                }
             };
         }
 

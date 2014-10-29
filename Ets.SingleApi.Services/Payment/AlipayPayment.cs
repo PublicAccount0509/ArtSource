@@ -83,8 +83,8 @@ namespace Ets.SingleApi.Services
         /// <returns>
         /// 返回结果
         /// </returns>
-        /// 创建者：周超
-        /// 创建日期：10/28/2013 1:50 PM
+        /// 创建者：黄磊
+        /// 创建日期：10/28/2014 4:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
@@ -100,32 +100,19 @@ namespace Ets.SingleApi.Services
             }
 
             //验签名
-            var isdsd = AlipayPaymentCommon.VerifyMd5(alipayPaymentQueryData.NotSign, alipayPaymentQueryData.Sign, Controllers.ControllersCommon.AlipayKey, Controllers.ControllersCommon.AlipayInputCharSet);
+            //var isdsd = AlipayPaymentCommon.VerifyMd5(alipayPaymentQueryData.NotSign, alipayPaymentQueryData.Sign, Controllers.ControllersCommon.AlipayKey, Controllers.ControllersCommon.AlipayInputCharSet);
 
-            if (!isdsd)
-            {
-                return new PaymentResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
-                    Result = false
-                };
-            }
+            //if (!isdsd)
+            //{
+            //    return new PaymentResult<bool>
+            //    {
+            //        StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
+            //        Result = false
+            //    };
+            //}
+            var isPayment = AlipayPaymentCommon.OrderQuery(alipayPaymentQueryData.OrderId);
 
-            //result：success
-            if (alipayPaymentQueryData.Result != "success")
-            {
-                return new PaymentResult<bool>
-                {
-                    StatusCode = (int)StatusCode.System.InvalidPaymentRequest,
-                    Result = false
-                };
-            }
-
-            return new PaymentResult<bool>
-            {
-                StatusCode = (int)StatusCode.UmPayment.Ok,
-                Result = true
-            };
+            return isPayment;
         }
 
         /// <summary>
@@ -161,10 +148,33 @@ namespace Ets.SingleApi.Services
                 };
         }
 
-
+        /// <summary>
+        /// 二维码支付功能
+        /// </summary>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：2014/10/27 14:14
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public PaymentResult<string> PaymentQr(IPaymentData parameter)
         {
-            throw new NotImplementedException();
+            var paymentData = parameter as AlipayPaymentDataQr;
+
+            if (paymentData == null)
+            {
+                return new PaymentResult<string> { Result = string.Empty, StatusCode = (int)StatusCode.System.InvalidPaymentRequest };
+            }
+
+            var paymentQr = new AlipayPaymentCommon.PaymentQr(paymentData.Productid,paymentData.DeviceNumber);
+
+
+            string requestPaymentJsonStr = paymentQr.ToPaymentQr();
+
+            return new PaymentResult<string> { Result = requestPaymentJsonStr, StatusCode = (int)StatusCode.Succeed.Ok };
         }
 
 

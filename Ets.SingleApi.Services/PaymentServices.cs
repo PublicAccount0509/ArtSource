@@ -599,6 +599,50 @@ namespace Ets.SingleApi.Services
             };
         }
 
+        public ServicesResult<string> AlipayPaymentQr(string source, AlipayPaymentParameterQr parameter)
+        {
+            if (parameter == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.System.InvalidRequest
+                };
+            }
+
+            var payment = this.paymentList.FirstOrDefault(p => p.PaymentType == PaymentType.AlipayPayment);
+            if (payment == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.Validate.InvalidPaymentType
+                };
+            }
+
+            var result = payment.PaymentQr(new AlipayPaymentDataQr
+            {
+                Productid = parameter.Productid,
+                DeviceNumber = parameter.DeviceNumber
+            });
+
+            if (result == null)
+            {
+                return new ServicesResult<string>
+                {
+                    Result = string.Empty,
+                    StatusCode = (int)StatusCode.UmPayment.TradeFailCode
+                };
+            }
+
+            return new ServicesResult<string>
+            {
+                Result = result.Result,
+                StatusCode = result.StatusCode
+            };
+
+        }
+
         /// <summary>
         /// 支付宝支付状态
         /// </summary>

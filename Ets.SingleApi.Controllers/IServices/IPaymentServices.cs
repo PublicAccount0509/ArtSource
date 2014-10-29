@@ -106,6 +106,21 @@ namespace Ets.SingleApi.Controllers.IServices
         ServicesResult<string> AlipayPayment(string source, AlipayPaymentParameter parameter);
 
         /// <summary>
+        /// 支付宝二维码支付
+        /// </summary>
+        /// <param name="source">The source</param>
+        /// <param name="parameter">The parameter</param>
+        /// <returns>
+        /// String}
+        /// </returns>
+        /// 创建者：黄磊 
+        /// 创建日期：2014/10/27 14:07
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        ServicesResult<string> AlipayPaymentQr(string source, AlipayPaymentParameterQr parameter);
+
+        /// <summary>
         /// 支付宝支付状态
         /// </summary>
         /// <param name="source">The sourceDefault documentation</param>

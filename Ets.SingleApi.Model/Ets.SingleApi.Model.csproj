@@ -198,6 +198,7 @@
     <Compile Include="Mapping\Repository\ETaoShiLightStatisticsDataModelEntity.cs" />
     <Compile Include="OrderProviderType.cs" />
     <Compile Include="OrderSourceType.cs" />
+    <Compile Include="SaveTangShiOrderResult.cs" />
     <Compile Include="Services\AlipayPaymentParameter.cs" />
     <Compile Include="Services\AlipayPaymentStateParameter.cs" />
     <Compile Include="Services\BaiDuLightStatistics\BaiDuLightStatisticsModel.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Services\AlipayPaymentReturnParameter.cs" />
     <Compile Include="Services\GetSearchActivitiesSupplierListParameter.cs" />
     <Compile Include="Services\PaymentMethodModel.cs" />
+    <Compile Include="Services\AlipayPaymentParameterQr.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCart.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartLink.cs" />
     <Compile Include="ShoppingCart\EtsWapDingTaiShoppingCartOrder.cs" />

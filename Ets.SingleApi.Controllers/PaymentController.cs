@@ -399,11 +399,23 @@ namespace Ets.SingleApi.Controllers
             };
         }
 
+        /// <summary>
+        /// 支付宝支付状态
+        /// </summary>
+        /// <param name="request">The requestDefault documentation</param>
+        /// <returns>
+        /// Boolean}
+        /// </returns>
+        /// 创建者：黄磊
+        /// 创建日期：10/28/2014 4:12 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         [HttpPost]
         [TokenFilter]
-        public Response<bool> AlipayPaymentState(AlipayPaymentStateRequst requst)
+        public Response<bool> AlipayPaymentState(AlipayPaymentStateRequst request)
         {
-            if (requst == null)
+            if (request == null)
             {
                 return new Response<bool>
                 {
@@ -414,7 +426,7 @@ namespace Ets.SingleApi.Controllers
                 };
             }
 
-            if (!this.ValidateUserId(requst.UserId))
+            if (!this.ValidateUserId(request.UserId))
             {
                 return new Response<bool>
                 {
@@ -427,11 +439,11 @@ namespace Ets.SingleApi.Controllers
 
             var result = this.paymentServices.AlipayPaymentState(this.Source, new AlipayPaymentStateParameter
             {
-                NotSign = requst.NotSign,
-                Sign = requst.Sign,
-                OrderId = requst.OrderId,
-                Result = requst.Result,
-                OrderType = requst.OrderType
+                NotSign = request.NotSign,
+                Sign = request.Sign,
+                OrderId = request.OrderId,
+                Result = request.Result,
+                OrderType = request.OrderType
             });
 
             return new Response<bool>

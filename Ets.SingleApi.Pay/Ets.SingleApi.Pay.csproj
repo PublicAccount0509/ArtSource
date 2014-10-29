@@ -73,11 +73,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alipay\AlipayBiztypEnum.cs" />
     <Compile Include="Alipay\AlipayConfig.cs" />
+    <Compile Include="Alipay\AlipayConfig_Old.cs" />
     <Compile Include="Alipay\AlipayCore.cs" />
+    <Compile Include="Alipay\AlipayCore_Old.cs" />
+    <Compile Include="Alipay\AlipayMethodEnum.cs" />
     <Compile Include="Alipay\AlipayNotify.cs" />
-    <Compile Include="Alipay\AlipayService.cs" />
+    <Compile Include="Alipay\AlipayNotify_Old.cs" />
+    <Compile Include="Alipay\Service_Old.cs" />
     <Compile Include="Alipay\AlipaySubmit.cs" />
+    <Compile Include="Alipay\AlipaySubmit_Old.cs" />
+    <Compile Include="Alipay\MD5.cs" />
+    <Compile Include="Alipay\Service.cs" />
     <Compile Include="Allscore\AllscoreConfig.cs" />
     <Compile Include="Allscore\AllscoreCore.cs" />
     <Compile Include="Allscore\AllscoreNotify.cs" />

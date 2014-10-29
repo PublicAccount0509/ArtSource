@@ -30,7 +30,7 @@ namespace Ets.SingleApi.Services
             //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
             //合作身份者ID，以2088开头由16位纯数字组成的字符串
-            partner = "2088701474861893";
+            partner = "2088211414008373";
 
             //交易安全检验码，由数字和字母组成的32位字符串
             //如果签名方式设置为“MD5”时，请设置该参数
@@ -38,7 +38,7 @@ namespace Ets.SingleApi.Services
 
             //商户的私钥
             //如果签名方式设置为“0001”时，请设置该参数
-            privateKey = @"";
+            privateKey = @"mo4h0xascl7yzt0ebv1k7oeohkgwn2uk";
 
             //支付宝的公钥
             //如果签名方式设置为“0001”时，请设置该参数
@@ -54,7 +54,7 @@ namespace Ets.SingleApi.Services
             //无线的产品中，签名方式为rsa时，sign_type需赋值为0001而不是RSA
 
             //支付宝网关地址
-            gatewayNew = "http://wappaygw.alipay.com/service/rest.htm?";
+            gatewayNew = "https://mapi.alipay.com/gateway.do?";
 
             //返回格式
             format = "xml";

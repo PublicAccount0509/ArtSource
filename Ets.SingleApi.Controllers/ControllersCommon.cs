@@ -379,7 +379,10 @@ namespace Ets.SingleApi.Controllers
         /// 移动端即时到账支付接口（不要求登录百度钱包）
         /// </summary>
         public static string InstantToAccountUrlWapNotBaiDuLogin = "https://www.baifubao.com/api/0/pay/0/wapdirect";
-
+        /// <summary>
+        /// 支付宝网关地址（新）
+        /// </summary>
+        public static string AlipayGatewayNew = "https://mapi.alipay.com/gateway.do?";
         /// <summary>
         /// 支付宝合作身份者ID
         /// </summary>
@@ -406,8 +409,17 @@ namespace Ets.SingleApi.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public const string AlipayKey = "x308rxivwttfzs431i4ogeme1mt1n5jz";
+        public const string AlipayKey = "mo4h0xascl7yzt0ebv1k7oeohkgwn2uk";
 
+        /// <summary>
+        /// 支付宝账号
+        /// </summary>
+        /// 创建者：黄磊
+        /// 创建日期：27/10/2014 17:01 PM
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public const string AlipaySellerEmail = "2336172035@qq.com";
         /// <summary>
         /// 字符编码格式(目前支持 utf-8)
         /// </summary>

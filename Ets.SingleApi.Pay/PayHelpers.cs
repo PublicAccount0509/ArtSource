@@ -117,6 +117,14 @@ namespace Ets.SingleApi.Pay
         }
 
         /// <summary>
+        /// 支付宝交易,二维码模式
+        /// </summary>
+        public void Alpay_qrcode(string OrderNo, string amount, string desc, string return_url, string notify_url, string subjectTitle, HttpResponseBase Response)
+        {
+            
+        }
+
+        /// <summary>
         /// 支付宝交易,根据支付类型交易
         /// </summary>
         /// <param name="OrderNo">订单号</param>

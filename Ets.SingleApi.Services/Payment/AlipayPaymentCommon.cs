@@ -8,7 +8,9 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using Ets.SingleApi.Controllers;
+using Ets.SingleApi.Model.Controller;
 using Ets.SingleApi.Utility;
+using Newtonsoft.Json.Linq;
 
 namespace Ets.SingleApi.Services
 {
@@ -47,7 +49,7 @@ namespace Ets.SingleApi.Services
             var url = BuildRequestTokenUrl(alipayPaymentData);
 
             //MD5加密字符串
-            var urlSignMd5 = SignMd5(url, alipayPaymentData.Key, alipayPaymentData.InputCharSet);
+            var urlSignMd5 = SignMd5(url, Key, alipayPaymentData.InputCharSet);
 
             //待请求参数数组字符串
             var strRequestData = urlEncode + String.Format("&sign={0}", urlSignMd5);
@@ -219,7 +221,7 @@ namespace Ets.SingleApi.Services
         /// <summary>
         /// 字符串MD5加密
         /// </summary>
-        /// <param name="data">待加密字符串</param>
+        /// <param name="prestr">待加密字符串</param>
         /// <param name="key">加密Key</param>
         /// <param name="inputCharSet">编码设置</param>
         /// <returns>
@@ -230,19 +232,18 @@ namespace Ets.SingleApi.Services
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public static string SignMd5(string data, string key, string inputCharSet)
+        public static string SignMd5(string prestr, string key, string inputCharSet)
         {
             var sb = new StringBuilder(32);
 
-            data = data + key;
+            prestr = prestr + key;
 
             MD5 md5 = new MD5CryptoServiceProvider();
-            var t = md5.ComputeHash(Encoding.GetEncoding(inputCharSet).GetBytes(data));
-            for (var i = 0; i < t.Length; i++)
+            byte[] t = md5.ComputeHash(Encoding.GetEncoding(inputCharSet).GetBytes(prestr));
+            for (int i = 0; i < t.Length; i++)
             {
                 sb.Append(t[i].ToString("x").PadLeft(2, '0'));
             }
-
             return sb.ToString();
         }
 
@@ -331,7 +332,7 @@ namespace Ets.SingleApi.Services
         /// <returns>过滤后的参数组</returns>
         private static Dictionary<string, string> FilterPara(Dictionary<string, string> dicArrayPre)
         {
-            return dicArrayPre.Where(temp => temp.Key.ToLower() != "sign" && temp.Key.ToLower() != "sign_type" && !String.IsNullOrEmpty(temp.Value)).ToDictionary(temp => temp.Key, temp => temp.Value);
+            return dicArrayPre.Where(temp => temp.Key.ToLower() != "sign" && temp.Key.ToLower() != "sign_type" && !String.IsNullOrEmpty(temp.Value)).OrderBy(temp=>temp.Key).ToDictionary(temp => temp.Key, temp => temp.Value);
         }
 
         /// <summary>
@@ -472,6 +473,289 @@ namespace Ets.SingleApi.Services
             var strResult = strBuilder.ToString();
 
             return strResult;
+        }
+
+        public class PaymentQr
+        {
+            private string _productid = "";
+            private string _deviceNumber = "";
+            public PaymentQr(){}
+            public PaymentQr(string productid, string deviceNumber)
+            {
+                _productid = productid;
+                _deviceNumber = deviceNumber;
+            }
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns></returns>
+            public string ToPaymentQr()
+            {
+                var code = Encoding.GetEncoding(ControllersCommon.AlipayInputCharSet);
+                var sParaTemp = new Dictionary<string, string>();
+                //合作者身份ID
+                sParaTemp.Add("partner", ControllersCommon.AlipayPartnerId);
+                //参数编码字符集
+                sParaTemp.Add("_input_charset", ControllersCommon.AlipayInputCharSet);
+                sParaTemp.Add("service", "alipay.acquire.precreate");
+                sParaTemp.Add("out_trade_no", _productid);
+                sParaTemp.Add("subject","支付订单");
+                sParaTemp.Add("product_code", "QR_CODE_OFFLINE");
+                sParaTemp.Add("total_fee", "0.01");
+                //sParaTemp.Add("seller_email", "15140510108");
+                sParaTemp.Add("body", "{\"DeviceNumber\":\"" + _deviceNumber + "\"}");
+                sParaTemp.Add("notify_url", ControllersCommon.AlipayBackgroundNoticeUrl);
+                sParaTemp = BuildRequestPara(sParaTemp);
+                sParaTemp["notify_url"] = HttpUtility.UrlEncode(sParaTemp["notify_url"]);
+                var uri = ControllersCommon.AlipayGatewayNew + CreateLinkString(sParaTemp);
+
+                //把数组转换成流中所需字节数组类型
+                //var bytesRequestData = code.GetBytes(strHtml);
+
+                //设置HttpWebRequest基本信息
+                var myReq = (HttpWebRequest)WebRequest.Create(uri);
+                myReq.Method = "get";
+                myReq.ContentType = "application/x-www-form-urlencoded";
+
+                //填充POST数据
+                //myReq.ContentLength = bytesRequestData.Length;
+
+                //Stream requestStream = myReq.GetRequestStream();
+                //requestStream.Write(bytesRequestData, 0, bytesRequestData.Length);
+                //requestStream.Close();
+
+                //发送POST数据请求服务器
+                var httpWResp = (HttpWebResponse)myReq.GetResponse();
+                var myStream = httpWResp.GetResponseStream();
+
+                if (myStream == null)
+                {
+                    return String.Empty;
+                }
+
+                //获取服务器返回信息
+                var reader = new StreamReader(myStream, code);
+                var responseData = new StringBuilder();
+                String line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    responseData.Append(line);
+                }
+
+                //释放
+                myStream.Close();
+
+                //请求远程HTTP
+                var strRequestResult = responseData.ToString();
+
+                var sHtmlText = HttpUtility.UrlDecode(strRequestResult, code);
+                if (sHtmlText == null)
+                {
+                    return String.Empty;
+                }
+                var bigPicUrl = String.Empty;
+                if (strRequestResult.Length > 0)
+                {
+                    var xmlDoc = new XmlDocument();
+                    xmlDoc.LoadXml(strRequestResult);
+                    var selectSingleNode = xmlDoc.SelectSingleNode("/alipay/response/alipay/big_pic_url");
+                    if (selectSingleNode == null)
+                    {
+                        return "返回结果解析错误";
+                    }
+                    bigPicUrl = selectSingleNode.InnerText;
+                }
+                return bigPicUrl;
+            }
+        }
+
+        /// <summary>
+        /// 建立请求，以表单HTML形式构造（默认）
+        /// </summary>
+        /// <param name="sParaTemp">请求参数数组</param>
+        /// <param name="strMethod">提交方式。两个值可选：post、get</param>
+        /// <param name="strButtonValue">确认按钮显示文字</param>
+        /// <returns>提交表单HTML文本</returns>
+        public static string BuildRequest(Dictionary<string, string> sParaTemp, string strMethod, string strButtonValue)
+        {
+            //待请求参数数组
+            Dictionary<string, string> dicPara = new Dictionary<string, string>();
+            dicPara = BuildRequestPara(sParaTemp);
+
+            StringBuilder sbHtml = new StringBuilder();
+
+            sbHtml.Append("<form id='alipaysubmit' name='alipaysubmit' action='" + ControllersCommon.AlipayGatewayNew + "_input_charset=" + ControllersCommon.AlipayInputCharSet + "' method='" + strMethod.ToLower().Trim() + "'>");
+
+            foreach (KeyValuePair<string, string> temp in dicPara)
+            {
+                sbHtml.Append("<input type='hidden' name='" + temp.Key + "' value='" + temp.Value + "'/>");
+            }
+
+            //submit按钮控件请不要含有name属性
+            sbHtml.Append("<input type='submit' value='" + strButtonValue + "' style='display:none;'></form>");
+
+            sbHtml.Append("<script>document.forms['alipaysubmit'].submit();</script>");
+
+            return sbHtml.ToString();
+        }
+        /// <summary>
+        /// 查询订单支付状态
+        /// </summary>
+        /// <param name="out_trade_no">The out_trade_no</param>
+        /// <returns>
+        /// 是否已经支付 True 已经支付 False 未支付
+        /// </returns>
+        /// 创建者：孟祺宙 创建日期：2014/3/17 18:37
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public static PaymentResult<bool> OrderQuery(string out_trade_no)
+        {
+            var code = Encoding.GetEncoding(ControllersCommon.AlipayInputCharSet);
+            var sParaTemp = new Dictionary<string, string>();
+            //合作者身份ID
+            sParaTemp.Add("partner", ControllersCommon.AlipayPartnerId);
+            //参数编码字符集
+            sParaTemp.Add("_input_charset", ControllersCommon.AlipayInputCharSet);
+            sParaTemp.Add("service", "alipay.acquire.query");
+            sParaTemp.Add("out_trade_no", out_trade_no);
+            sParaTemp = BuildRequestPara(sParaTemp);
+            var uri = ControllersCommon.AlipayGatewayNew + CreateLinkString(sParaTemp);
+
+            //设置HttpWebRequest基本信息
+            var myReq = (HttpWebRequest)WebRequest.Create(uri);
+            myReq.Method = "get";
+            myReq.ContentType = "application/x-www-form-urlencoded";
+
+            //发送POST数据请求服务器
+            var httpWResp = (HttpWebResponse)myReq.GetResponse();
+            var myStream = httpWResp.GetResponseStream();
+
+            if (myStream == null)
+            {
+                return new PaymentResult<bool>
+                    {
+                        StatusCode = (int)StatusCode.UmPayment.InvalidPaymentNoCode,
+                        Result = false
+                    };
+            }
+
+            //获取服务器返回信息
+            var reader = new StreamReader(myStream, code);
+            var responseData = new StringBuilder();
+            String line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                responseData.Append(line);
+            }
+
+            //释放
+            myStream.Close();
+
+            //请求远程HTTP
+            var strRequestResult = responseData.ToString();
+
+            var sHtmlText = HttpUtility.UrlDecode(strRequestResult, code);
+            if (sHtmlText == null)
+            {
+                return new PaymentResult<bool>
+                {
+                    StatusCode = (int)StatusCode.UmPayment.InvalidPaymentNoCode,
+                    Result = false
+                };
+            }
+            var tradeStatus = String.Empty;
+            if (strRequestResult.Length > 0)
+            {
+                var xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(strRequestResult);
+                var selectSingleNode = xmlDoc.SelectSingleNode("/alipay/response/alipay/trade_status");
+                if (selectSingleNode == null)
+                {
+                    string.Format("===============================\r\n THE AlipayPaymentCommon OrderQuery not exit /alipay/response/alipay/trade_status:{0} \r\n===============================", out_trade_no).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    return new PaymentResult<bool>
+                    {
+                        StatusCode = (int)StatusCode.UmPayment.InvalidPaymentNoCode,
+                        Result = false
+                    };
+                }
+                tradeStatus = selectSingleNode.InnerText;
+            }
+            var payCode = 0;
+            var payStatus = false;
+            if (tradeStatus.Equals("TRADE_SUCCESS"))
+            {
+                //交易成功，且可对该交易做操作，如：多级分润、退款等。
+                payCode = (int) StatusCode.UmPayment.Ok;
+                payStatus = true;
+            }
+            else if (tradeStatus.Equals("TRADE_FINISHED"))
+            {
+                //交易成功且结束，即不可再做任何操作 
+                payCode = (int) StatusCode.UmPayment.TradeSuccessCode;
+                payStatus = true;
+            }
+            else if (tradeStatus.Equals("TRADE_CLOSED"))
+            {
+                //在指定时间段内未支付时关闭的交易； 
+                //在交易完成全额退款成功时关闭的交易。
+                payCode = (int) StatusCode.UmPayment.TradeClosedCode;
+                payStatus = false;
+            }
+            else if (tradeStatus.Equals("TRADE_PENDING"))
+            {
+                //等待卖家收款（买家付款后，如果卖家账号被冻结）。 
+                payCode = (int) StatusCode.UmPayment.TradeFailCode;
+                payStatus = false;
+            }
+            else if (tradeStatus.Equals("WAIT_BUYER_PAY"))
+            {
+                //交易创建，等待买家付款。 
+                payCode = (int) StatusCode.UmPayment.WaitBuyerPayCode;
+                payStatus = false;
+            }
+            return new PaymentResult<bool>
+            {
+                StatusCode = payCode,
+                Result = payStatus
+            };
+        }
+
+        /// <summary>
+        /// 生成要请求给支付宝的参数数组
+        /// </summary>
+        /// <param name="sParaTemp">请求前的参数数组</param>
+        /// <returns>要请求的参数数组</returns>
+        private static Dictionary<string, string> BuildRequestPara(Dictionary<string, string> sParaTemp)
+        {
+            //待签名请求参数数组
+            //签名结果
+            var mysign = "";
+
+            //过滤签名参数数组
+            Dictionary<string, string> sPara = FilterPara(sParaTemp);
+
+            //获得签名结果
+            mysign = BuildRequestMysign(sPara);
+
+            //签名结果与签名方式加入请求提交参数组中
+            sPara.Add("sign", mysign);
+            sPara.Add("sign_type", "MD5");
+
+            return sPara;
+        }
+        /// <summary>
+        /// 生成请求时的签名
+        /// </summary>
+        /// <param name="sPara">请求给支付宝的参数数组</param>
+        /// <returns>签名结果</returns>
+        private static string BuildRequestMysign(Dictionary<string, string> sPara)
+        {
+            //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
+            var prestr = CreateLinkString(sPara);
+            //把最终的字符串签名，获得签名结果
+            var mysign = SignMd5(prestr, Key, ControllersCommon.AlipayInputCharSet);
+            return mysign;
         }
     }
 }

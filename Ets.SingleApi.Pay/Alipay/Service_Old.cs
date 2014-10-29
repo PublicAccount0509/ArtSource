@@ -20,7 +20,7 @@ namespace Ets.SingleApi.Pay.Alipay
     /// 
     /// 要传递的参数要么不允许为空，要么就不要出现在数组与隐藏控件或URL链接里。
     /// </summary>
-    public class Service
+    public class Service_Old
     {
         #region 字段
         //合作者身份ID
@@ -41,13 +41,13 @@ namespace Ets.SingleApi.Pay.Alipay
         /// 构造函数
         /// 从配置文件及入口文件中初始化变量
         /// </summary>
-        public Service()
+        public Service_Old()
         {
-            _partner = Config.Partner.Trim();
-            _input_charset = Config.Input_charset.Trim().ToLower();
-            _seller_email = Config.Seller_email.Trim();
-            _return_url = Config.Return_url.Trim();
-            _notify_url = Config.Notify_url.Trim();
+            _partner = Config_Old.Partner.Trim();
+            _input_charset = Config_Old.Input_charset.Trim().ToLower();
+            _seller_email = Config_Old.Seller_email.Trim();
+            _return_url = Config_Old.Return_url.Trim();
+            _notify_url = Config_Old.Notify_url.Trim();
         }
 
         /// <summary>
@@ -56,11 +56,11 @@ namespace Ets.SingleApi.Pay.Alipay
         /// </summary>
         /// <param name="_return_url"></param>
         /// <param name="_notify_url"></param>
-        public Service(string _r_url, string _n_url)
+        public Service_Old(string _r_url, string _n_url)
         {
-            _partner = Config.Partner.Trim();
-            _input_charset = Config.Input_charset.Trim().ToLower();
-            _seller_email = Config.Seller_email.Trim();
+            _partner = Config_Old.Partner.Trim();
+            _input_charset = Config_Old.Input_charset.Trim().ToLower();
+            _seller_email = Config_Old.Seller_email.Trim();
             _return_url = _r_url;
             _notify_url = _n_url;
         }
@@ -86,7 +86,7 @@ namespace Ets.SingleApi.Pay.Alipay
             string strHtml = "";
 
             //构造表单提交HTML数据
-            strHtml = Submit.BuildFormHtml(sParaTemp, GATEWAY_NEW, "get", strButtonValue);
+            strHtml = Submit_Old.BuildFormHtml(sParaTemp, GATEWAY_NEW, "get", strButtonValue);
 
             return strHtml;
         }
