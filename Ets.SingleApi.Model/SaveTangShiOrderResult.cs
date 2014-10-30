@@ -22,26 +22,26 @@ namespace Ets.SingleApi.Model
         /// Gets or sets a value indicating whether
         /// </summary>
         /// <value>
-        /// The TradeNo
+        /// The OrderId
         /// </value>
         /// 创建者：黄磊
         /// 创建日期：10/28/2014 3:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string TradeNo { get; set; }
+        public string OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether
         /// </summary>
         /// <value>
-        /// The QrBigPicUrl
+        /// The Qr
         /// </value>
         /// 创建者：黄磊
         /// 创建日期：10/28/2014 3:08 PM
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        public string QrBigPicUrl { get; set; }
+        public string Qr { get; set; }
     }
 }

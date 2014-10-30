@@ -1,5 +1,8 @@
 ﻿
 
+using System.Json;
+using Ets.MessagePlat.Extention;
+
 namespace Ets.SingleApi.Controllers
 {
     using Ets.SingleApi.Controllers.IServices;
@@ -176,6 +179,119 @@ namespace Ets.SingleApi.Controllers
             };
         }
 
+        /// <summary>
+        ///  主动查询订单基本状态，如未支付则去查询支付宝端
+        /// </summary>
+        /// <param name="id">订单号</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞 3 etswap</param>
+        /// <returns>
+        /// Response{TangShiOrderBaseModel}
+        /// </returns>
+        /// 创建者：黄磊 
+        /// 创建日期：2014/10/30 09:17
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<TangShiOrderBaseModel> GetOrderWithAlipay(int id, int orderType, int orderSourceType = 3)
+        {
+            var getOrderResult = this.orderServices.GetOrderBase(this.GetSource(orderType), id, orderType, orderSourceType);
+
+            if (getOrderResult.Result == null)
+            {
+                return new Response<TangShiOrderBaseModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
+                    }
+                };
+            }
+            //如果库内未支付则去查询支付宝端
+            if (!getOrderResult.Result.IsPaId)
+            {
+                var result = this.paymentServices.AlipayPaymentState(this.Source, new AlipayPaymentStateParameter
+                {
+                    OrderId = id.ToString(),
+                    OrderType = orderType
+                });
+                getOrderResult.Result.IsPaId = result.Result;//==
+            }
+
+            return new Response<TangShiOrderBaseModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderResult.StatusCode
+                },
+                Result = getOrderResult.Result
+            };
+        }
+
+        /// <summary>
+        ///  主动查询订单基本状态，如未支付则去查询第三方支付平台端
+        /// </summary>
+        /// <param name="id">订单号</param>
+        /// <param name="orderType">订单类型：0 外卖，1 堂食，2 订台</param>
+        /// <param name="orderSourceType">订单来源：0 默认类型，1 海底捞 3 etswap</param>
+        /// <returns>
+        /// Response{TangShiOrderBaseModel}
+        /// </returns>
+        /// 创建者：黄磊 
+        /// 创建日期：2014/10/30 09:17
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        [HttpGet]
+        public Response<TangShiOrderBaseModel> GetOrderWithOtherPlatform(int id, int orderType, int orderSourceType = 3)
+        {
+            var getOrderResult = this.orderServices.GetOrderBase(this.GetSource(orderType), id, orderType, orderSourceType);
+
+            if (getOrderResult.Result == null)
+            {
+                return new Response<TangShiOrderBaseModel>
+                {
+                    Message = new ApiMessage
+                    {
+                        StatusCode = getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok ? (int)StatusCode.Succeed.Empty : getOrderResult.StatusCode
+                    }
+                };
+            }
+            //如果库内未支付则去查询第三方支付平台
+            if (!getOrderResult.Result.IsPaId)
+            {
+                //支付宝
+                if (getOrderResult.Result.PaymentId == 12)
+                {
+                    var result = this.paymentServices.AlipayPaymentState(this.Source, new AlipayPaymentStateParameter
+                        {
+                            OrderId = id.ToString(),
+                            OrderType = orderType
+                        });
+                    getOrderResult.Result.IsPaId = result.Result;
+                }
+                //微信
+                if (getOrderResult.Result.PaymentId == 10)
+                {
+                    var result = this.paymentServices.AlipayPaymentState(this.Source, new AlipayPaymentStateParameter
+                    {
+                        OrderId = id.ToString(),
+                        OrderType = orderType
+                    });
+                    getOrderResult.Result.IsPaId = result.Result;
+                }
+            }
+
+            return new Response<TangShiOrderBaseModel>
+            {
+                Message = new ApiMessage
+                {
+                    StatusCode = getOrderResult.StatusCode
+                },
+                Result = getOrderResult.Result
+            };
+        }
 
         /// <summary>
         /// 保存订单信息
@@ -501,25 +617,57 @@ namespace Ets.SingleApi.Controllers
                     Result = null
                 };
             }
+            //查找订单信息
+            var orderBaseResult = this.orderServices.GetOrderBase(requst.Source, getOrderResult.Result.ToInt(), 1, 3);
 
             if (getOrderResult.StatusCode == (int)StatusCode.Succeed.Ok && requst.IsQr)
             {
-                var wechatPaymentQrResult = this.paymentServices.AlipayPaymentQr(this.Source, new AlipayPaymentParameterQr
+                ServicesResult<string> qrResult = null;
+                //PayMentMethodId: 1 代表现金，10微信 12 支付宝 11 银行卡
+                if (requst.PayMentMethodId == 12)
                 {
-                    Productid = getOrderResult.Result,
-                    DeviceNumber = requst.DeviceNumber
-                });
-                string.Format("===============================\r\n THE SaveTangShiOrder \r\n {0} \r\n===============================", wechatPaymentQrResult.Result).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
+                    if (orderBaseResult.Result.CustomerTotal > 0)
+                    {
+                        qrResult = this.paymentServices.AlipayPaymentQr(this.Source, new AlipayPaymentParameterQr
+                            {
+                                Productid = getOrderResult.Result,
+                                DeviceNumber = requst.DeviceNumber,
+                                CustomerTotal = orderBaseResult.Result.CustomerTotal
+                            });
+                    }
+                }
+                if (requst.PayMentMethodId == 10)
+                {
+                    qrResult = this.paymentServices.WechatPaymentQr(this.Source, new WechatPaymentParameterQr
+                    {
+                        Productid = getOrderResult.Result
+                    });
+                    var jsonValue = JsonValue.Parse(qrResult.Result);
+                    if (jsonValue != null)
+                        qrResult.Result = jsonValue["Qr"];
+                }
+                if (qrResult == null)
+                {
+                    return new Response<SaveTangShiOrderResult>
+                    {
+                        Result = null,
+                        Message = new ApiMessage
+                        {
+                            StatusCode = (int)StatusCode.System.InvalidRequest
+                        }
+                    };
+                }
+                string.Format("===============================\r\n THE SaveTangShiOrder \r\n {0} \r\n===============================", qrResult.Result).WriteLog("Ets.SingleApi.Debug", Log4NetType.Info);
                 return new Response<SaveTangShiOrderResult>
                 {
                     Message = new ApiMessage
                     {
-                        StatusCode = wechatPaymentQrResult.StatusCode
+                        StatusCode = qrResult.StatusCode
                     },
                     Result = new SaveTangShiOrderResult
                         {
-                            QrBigPicUrl = wechatPaymentQrResult.Result,
-                            TradeNo = getOrderResult.Result
+                            Qr = qrResult.Result,
+                            OrderId = getOrderResult.Result
                         }
                 };
             }
@@ -531,8 +679,8 @@ namespace Ets.SingleApi.Controllers
                 },
                 Result = new SaveTangShiOrderResult
                 {
-                    QrBigPicUrl = string.Empty,
-                    TradeNo = getOrderResult.Result
+                    Qr = string.Empty,
+                    OrderId = getOrderResult.Result
                 }
             };
         }

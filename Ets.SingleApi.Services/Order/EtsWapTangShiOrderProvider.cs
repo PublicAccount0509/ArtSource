@@ -433,9 +433,10 @@ namespace Ets.SingleApi.Services
                              {
                                  OrderNumber = tableReservationEntity.OrderNumber.HasValue ? tableReservationEntity.OrderNumber.Value : orderId,
                                  DateReserved = tableReservationEntity.DateReserved,
-                                 PaymentId = tableReservationEntity.PaymentId,
+                                 PaymentId = paymentEntity == null ? null : paymentEntity.PaymentMethodId,
                                  TableStatus = tableReservationEntity.TableStatus,
                                  CustomerTotal = tableReservationEntity.CustomerTotal.Value,
+                                 Amount = paymentEntity == null ? 0 : paymentEntity.Amount ?? 0,
                                  IsConfirm = paymentEntity != null,
                                  IsPaId = tableReservationEntity.IsPaId.HasValue ? tableReservationEntity.IsPaId.Value : false,
                                  DeviceNumber = tableReservationEntity.ContactName //设备号或者MAC

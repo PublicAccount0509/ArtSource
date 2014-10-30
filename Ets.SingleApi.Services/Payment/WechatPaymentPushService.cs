@@ -40,15 +40,16 @@ namespace Ets.SingleApi.Services.Payment
             TransmissionTemplate template = new TransmissionTemplate();
             // token
             template.AppId = "user_wechat_huangtaiji";        //token
+            //emplate.AppKey = "36f02c9bee5412389bd701c0f500fa7";      //appkey
             template.AppKey = "36f02c9bee5412389bd701c0f500fa7";      //appkey
             template.ClientId = "user_wechat_singleapi_huangtaiji";  //clientid
             //template.PackageName = info.fromPackageName;    //packagename
             template.TransmissionContent = JsonConvert.SerializeObject(new
-                                                                           {
-                                                                               StatusCode = (int)StatusCode.Succeed.Ok,
-                                                                               OrderId = orderId,
-                                                                               IsPaid = true
-                                                                           });
+            {
+                StatusCode = (int)StatusCode.Succeed.Ok,
+                OrderId = orderId,
+                IsPaid = true
+            });
 
             //通知模板
             NotificationTemplate notify = new NotificationTemplate();

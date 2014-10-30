@@ -169,7 +169,7 @@ namespace Ets.SingleApi.Services
                 return new PaymentResult<string> { Result = string.Empty, StatusCode = (int)StatusCode.System.InvalidPaymentRequest };
             }
 
-            var paymentQr = new AlipayPaymentCommon.PaymentQr(paymentData.Productid,paymentData.DeviceNumber);
+            var paymentQr = new AlipayPaymentCommon.PaymentQr(paymentData.Productid, paymentData.DeviceNumber, paymentData.CustomerTotal);
 
 
             string requestPaymentJsonStr = paymentQr.ToPaymentQr();

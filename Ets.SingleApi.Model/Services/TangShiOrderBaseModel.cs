@@ -83,6 +83,16 @@ namespace Ets.SingleApi.Model.Services
         public decimal CustomerTotal { get; set; }
 
         /// <summary>
+        /// 付款总金额
+        /// </summary>
+        /// 创建者：黄磊 
+        /// 创建日期：2014/10/30 17:03
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal Amount { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether
         /// </summary>
         /// <value>

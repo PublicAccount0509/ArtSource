@@ -1,5 +1,7 @@
 ﻿
 
+using Ets.MessagePlat.Extention;
+
 namespace Ets.SingleApi.Controllers
 {
     using System;
@@ -402,7 +404,8 @@ namespace Ets.SingleApi.Controllers
         /// <summary>
         /// 支付宝支付状态
         /// </summary>
-        /// <param name="request">The requestDefault documentation</param>
+        /// <param name="id">The requestDefault documentation</param>
+        /// <param name="orderType">订单类型</param>
         /// <returns>
         /// Boolean}
         /// </returns>
@@ -411,11 +414,11 @@ namespace Ets.SingleApi.Controllers
         /// 修改者：
         /// 修改时间：
         /// ----------------------------------------------------------------------------------------
-        [HttpPost]
-        [TokenFilter]
-        public Response<bool> AlipayPaymentState(AlipayPaymentStateRequst request)
+        [HttpGet]
+        //[TokenFilter]
+        public Response<bool> AlipayPaymentState(string id, string orderType)
         {
-            if (request == null)
+            if (id.IsEmptyOrNull() || orderType.IsEmptyOrNull())
             {
                 return new Response<bool>
                 {
@@ -426,24 +429,21 @@ namespace Ets.SingleApi.Controllers
                 };
             }
 
-            if (!this.ValidateUserId(request.UserId))
-            {
-                return new Response<bool>
-                {
-                    Message = new ApiMessage
-                    {
-                        StatusCode = (int)StatusCode.OAuth.AccessDenied
-                    }
-                };
-            }
+            //if (!this.ValidateUserId(request.UserId))
+            //{
+            //    return new Response<bool>
+            //    {
+            //        Message = new ApiMessage
+            //        {
+            //            StatusCode = (int)StatusCode.OAuth.AccessDenied
+            //        }
+            //    };
+            //}
 
             var result = this.paymentServices.AlipayPaymentState(this.Source, new AlipayPaymentStateParameter
             {
-                NotSign = request.NotSign,
-                Sign = request.Sign,
-                OrderId = request.OrderId,
-                Result = request.Result,
-                OrderType = request.OrderType
+                OrderId = id,
+                OrderType = orderType.ToInt()
             });
 
             return new Response<bool>
@@ -877,7 +877,15 @@ namespace Ets.SingleApi.Controllers
             };
         }
 
-        /// <summary>
+        [HttpGet]
+        public Response<string> PushAppTest()
+        {
+            return new Response<string>
+                {
+                    Result=this.paymentServices.PushApp(this.Source, new PushAppParameter { OrderId = 2020919906.ToString(), DeviceNumber = "H4F6RA9322000071" }).Result
+                };
+        }
+            /// <summary>
         /// 二维码扫描支付成功回调
         /// </summary>
         /// <param name="requst">The requst</param>

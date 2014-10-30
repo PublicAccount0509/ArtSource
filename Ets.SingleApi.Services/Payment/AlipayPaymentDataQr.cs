@@ -28,6 +28,19 @@ namespace Ets.SingleApi.Services.Payment
         public string Productid { get; set; }
 
         /// <summary>
+        /// 用户应付金额
+        /// </summary>
+        /// <value>
+        /// The CustomerTotal
+        /// </value>
+        /// 创建者：黄磊 
+        /// 创建日期：2014/10/30 16:05
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
+        public decimal CustomerTotal { get; set; }
+
+        /// <summary>
         /// 设备号或者MAC地址
         /// </summary>
         /// <value>

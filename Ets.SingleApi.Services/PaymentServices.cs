@@ -623,7 +623,8 @@ namespace Ets.SingleApi.Services
             var result = payment.PaymentQr(new AlipayPaymentDataQr
             {
                 Productid = parameter.Productid,
-                DeviceNumber = parameter.DeviceNumber
+                DeviceNumber = parameter.DeviceNumber,
+                CustomerTotal = parameter.CustomerTotal
             });
 
             if (result == null)
@@ -704,7 +705,7 @@ namespace Ets.SingleApi.Services
                 };
             }
 
-            if (result.StatusCode != (int)StatusCode.Succeed.Ok)
+            if (!result.Result)
             {
                 return new ServicesResult<bool>
                 {

@@ -479,11 +479,13 @@ namespace Ets.SingleApi.Services
         {
             private string _productid = "";
             private string _deviceNumber = "";
+            private decimal _customerTotal = 0;
             public PaymentQr(){}
-            public PaymentQr(string productid, string deviceNumber)
+            public PaymentQr(string productid, string deviceNumber, decimal customerTotal)
             {
                 _productid = productid;
                 _deviceNumber = deviceNumber;
+                _customerTotal = customerTotal;
             }
             /// <summary>
             /// 
@@ -501,7 +503,7 @@ namespace Ets.SingleApi.Services
                 sParaTemp.Add("out_trade_no", _productid);
                 sParaTemp.Add("subject","支付订单");
                 sParaTemp.Add("product_code", "QR_CODE_OFFLINE");
-                sParaTemp.Add("total_fee", "0.01");
+                sParaTemp.Add("total_fee", _customerTotal.ToString("F2"));
                 //sParaTemp.Add("seller_email", "15140510108");
                 sParaTemp.Add("body", "{\"DeviceNumber\":\"" + _deviceNumber + "\"}");
                 sParaTemp.Add("notify_url", ControllersCommon.AlipayBackgroundNoticeUrl);
@@ -558,7 +560,7 @@ namespace Ets.SingleApi.Services
                 {
                     var xmlDoc = new XmlDocument();
                     xmlDoc.LoadXml(strRequestResult);
-                    var selectSingleNode = xmlDoc.SelectSingleNode("/alipay/response/alipay/big_pic_url");
+                    var selectSingleNode = xmlDoc.SelectSingleNode("/alipay/response/alipay/qr_code");
                     if (selectSingleNode == null)
                     {
                         return "返回结果解析错误";
