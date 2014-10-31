@@ -475,6 +475,16 @@ namespace Ets.SingleApi.Services
             return strResult;
         }
 
+        /// <summary>
+        /// 类名称：PaymentQr
+        /// 命名空间：Ets.SingleApi.Services.Payment.AlipayPaymentCommon
+        /// 类功能：支付宝二维码支付
+        /// </summary>
+        /// 创建者：黄磊 
+        /// 创建日期：2014/10/27 17:19
+        /// 修改者：
+        /// 修改时间：
+        /// ----------------------------------------------------------------------------------------
         public class PaymentQr
         {
             private string _productid = "";
@@ -488,9 +498,17 @@ namespace Ets.SingleApi.Services
                 _customerTotal = customerTotal;
             }
             /// <summary>
-            /// 
+            /// 调用支付宝端，生成二维码
             /// </summary>
             /// <returns></returns>
+            /// <returns>
+            /// String
+            /// </returns>
+            /// 创建者：黄磊
+            /// 创建日期：31/10/2014 3:06 PM
+            /// 修改者：
+            /// 修改时间：
+            /// ----------------------------------------------------------------------------------------
             public string ToPaymentQr()
             {
                 var code = Encoding.GetEncoding(ControllersCommon.AlipayInputCharSet);
@@ -499,16 +517,26 @@ namespace Ets.SingleApi.Services
                 sParaTemp.Add("partner", ControllersCommon.AlipayPartnerId);
                 //参数编码字符集
                 sParaTemp.Add("_input_charset", ControllersCommon.AlipayInputCharSet);
+                //请求的服务名
                 sParaTemp.Add("service", "alipay.acquire.precreate");
+                //单号
                 sParaTemp.Add("out_trade_no", _productid);
-                sParaTemp.Add("subject","支付订单");
+                //标题
+                sParaTemp.Add("subject", "黄太吉传统美食，堂食");
+                //二维码
                 sParaTemp.Add("product_code", "QR_CODE_OFFLINE");
+                //金额
                 sParaTemp.Add("total_fee", _customerTotal.ToString("F2"));
                 //sParaTemp.Add("seller_email", "15140510108");
+                //主体 这里可以放置一些变量 供回调时取出
                 sParaTemp.Add("body", "{\"DeviceNumber\":\"" + _deviceNumber + "\"}");
+                //支付成功后的回调地址
                 sParaTemp.Add("notify_url", ControllersCommon.AlipayBackgroundNoticeUrl);
+                //生成数组 包括验证信息等
                 sParaTemp = BuildRequestPara(sParaTemp);
+                //把回调地址加密
                 sParaTemp["notify_url"] = HttpUtility.UrlEncode(sParaTemp["notify_url"]);
+                //生成最终的请求链接串
                 var uri = ControllersCommon.AlipayGatewayNew + CreateLinkString(sParaTemp);
 
                 //把数组转换成流中所需字节数组类型
@@ -619,7 +647,9 @@ namespace Ets.SingleApi.Services
             sParaTemp.Add("partner", ControllersCommon.AlipayPartnerId);
             //参数编码字符集
             sParaTemp.Add("_input_charset", ControllersCommon.AlipayInputCharSet);
+            //请求的服务名
             sParaTemp.Add("service", "alipay.acquire.query");
+            //单号
             sParaTemp.Add("out_trade_no", out_trade_no);
             sParaTemp = BuildRequestPara(sParaTemp);
             var uri = ControllersCommon.AlipayGatewayNew + CreateLinkString(sParaTemp);
